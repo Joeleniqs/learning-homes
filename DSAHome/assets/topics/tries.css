@@ -1,0 +1,51 @@
+/* Tries: topic-only styles. Colours come from shared CSS variables only. */
+
+/* Wide visualizers: stage on top, code + variables side by side underneath */
+.viz.tr-wide .viz-body.with-code { grid-template-columns: minmax(0, 1fr); }
+.viz.tr-wide .viz-side { border-left: 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(220px, 1fr); }
+.viz.tr-wide .viz-vars { border-top: 0; border-left: 1px solid var(--line); align-content: start; }
+@media (max-width: 760px) {
+  .viz.tr-wide .viz-side { grid-template-columns: minmax(0, 1fr); }
+  .viz.tr-wide .viz-vars { border-left: 0; border-top: 1px solid var(--line); }
+}
+
+.tr-col { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; }
+.tr-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 22px 34px; width: 100%; }
+
+/* nodes that do not exist yet (or were cut off) keep their place in the layout */
+.viz[data-viz^="tries-"] svg.v-graph .tr-hide { visibility: hidden; }
+.viz[data-viz^="tries-"] svg.v-graph .n .nl { paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+/* a word ends at this node: thick ring */
+.viz[data-viz^="tries-"] svg.v-graph .n.tr-end circle { stroke-width: 4.5; }
+.viz[data-viz^="tries-"] svg.v-graph .n.tr-end:not(.active):not(.visit):not(.done):not(.bad):not(.path) circle { stroke: var(--text); }
+.viz[data-viz^="tries-"] .viz-legend .lg-tr-end::before { border-radius: 50%; border-width: 3px; border-color: var(--text); }
+/* radix edge labels are the data: make them readable */
+.viz[data-viz^="tries-"] svg.v-graph .ew { font-size: 12.5px; fill: var(--text); }
+
+/* call stack cards */
+.tr-stack { display: flex; flex-direction: column; gap: 5px; width: 210px; max-width: 100%; }
+.tr-frame { border: 1.5px solid var(--line); border-radius: 8px; padding: 4px 9px; background: var(--surface); font-size: 13px; line-height: 1.35; }
+.tr-frame.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.tr-frame.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.tr-frame.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.tr-frame.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.tr-fhead { display: flex; justify-content: space-between; gap: 10px; font-family: "Cascadia Code", Consolas, monospace; }
+.tr-fhead span { color: var(--muted); font-size: 11.5px; white-space: nowrap; }
+.tr-more { color: var(--muted); font-size: 12px; text-align: center; padding: 3px; border: 1px dashed var(--line); border-radius: 8px; }
+.tr-floor { margin-top: 2px; padding: 3px; text-align: center; font-size: 11px; color: var(--muted); border-top: 3px double var(--line); letter-spacing: .03em; }
+
+/* word chips and result lists */
+.tr-words { display: flex; flex-wrap: wrap; gap: 6px; max-width: 520px; justify-content: center; }
+.tr-chip { font: 600 13px "Cascadia Code", Consolas, monospace; padding: 3px 9px; border-radius: 7px; border: 1.5px solid var(--line); background: var(--surface); }
+.tr-chip.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.tr-chip.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.tr-chip.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.tr-chip.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.tr-chip.dim { opacity: .45; }
+.tr-none { color: var(--muted); font-size: 12px; padding: 4px; }
+.tr-seq .v-cell { min-width: 32px; height: 32px; font-size: 13.5px; }
+
+/* autocomplete answer table */
+.tr-res { display: flex; flex-direction: column; gap: 4px; min-width: 260px; }
+.tr-resrow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.tr-pre { font: 600 12.5px "Cascadia Code", Consolas, monospace; color: var(--muted); min-width: 74px; text-align: right; padding-right: 4px; }

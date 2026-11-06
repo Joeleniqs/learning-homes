@@ -1,0 +1,1425 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Anti-Patterns &amp; Code Smells | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/anti-patterns.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/anti-patterns.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track" open><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html" aria-current="page">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Anti-Patterns &amp; Code Smells</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">DESIGN PATTERNS</p><h1>Anti-Patterns &amp; Code Smells</h1><p class="lede">God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes.</p><div class="meta"><span class="level level-intermediate">Intermediate</span><span>~35 min study</span><span>Builds on: <a href="design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="anti-patterns" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-code-that-fights-every-change">The problem: code that fights every change</h2>
+<p>A team gets a simple ticket: "add a Platinum customer tier with 15% off and free express shipping". The estimate is half a day. Here is what they find:</p>
+<pre><code class="language-csharp">public class OrderManager                                   // 3,400 lines, 41 fields, 120 methods
+{
+    public decimal Checkout(string customerId, string tier, bool express, bool giftWrap, bool isTest)
+    {
+        var db = ServiceLocator.Get&lt;IDb&gt;();                 // hidden dependency
+        if (tier == &quot;Gold&quot;) discount = 0.10m;               // tier rules #1 of 7, in 7 files
+        else if (tier == &quot;gold&quot;) discount = 0.10m;          // someone fixed a bug in one copy
+        var rate = Settings.Current.TaxRate;                // static global, changed by tests
+        var stock = _inventory.CheckAsync(sku).Result;      // blocks a thread-pool thread
+        try { _mailer.Send(receipt); }
+        catch (Exception) { /* emails are flaky, ignore */ }
+        if (total &gt; 250) shipping = 0;                      // what is 250? in which currency?
+        // ... 300 more lines
+    }
+}
+</code></pre>
+<p>Half a day becomes two weeks. Tier names are compared as strings in seven files, one of them lowercase. <code>OrderManager</code> does pricing, stock, email and PDFs, so every change collides with someone else's. The tests are flaky because two of them write the same static tax rate. Under Black Friday load the site hangs with low CPU, because <code>.Result</code> holds threads that the continuations need.</p>
+<p>None of these lines is a bug on its own. Each is an <strong>anti-pattern</strong>: a solution that looks reasonable locally, is common enough to have a name, and makes the code steadily more expensive to change. Naming them gives you a vocabulary for code review ("this is feature envy") and, more usefully, a known way out.</p>
+<div class="rule">
+<p><strong>An anti-pattern is a recurring solution whose costs show up later than its benefits.</strong> Learn to spot the smell early, know the refactoring that removes it, and know when it is actually fine. A smell is a reason to look closer, not an automatic defect.</p>
+</div>
+<p>This page builds on <a href="design-principles.html">design principles</a>: most smells here are a broken principle with a name. It also links to the patterns that fix them in <a href="creational-patterns.html">creational patterns</a>, <a href="structural-patterns.html">structural patterns</a>, <a href="behavioral-patterns.html">behavioral patterns</a> and <a href="functional-patterns.html">functional patterns</a>.</p>
+<h2 id="the-mental-model-smells-at-five-scales">The mental model: smells at five scales</h2>
+<p>Smells live at different scales, and the cost of fixing them grows with the scale. A magic number takes a minute to name. A big ball of mud can take years to untangle.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 300" width="900" role="img" aria-label="Five columns of anti-patterns from code level to architecture, with the cost of fixing growing to the right">
+<text class="title" x="20" y="26">Where the smell lives, and how expensive it is to remove</text>
+<rect class="box done" x="20" y="48" width="160" height="196" rx="10"/>
+<text x="100" y="72" text-anchor="middle" font-weight="700">Code</text>
+<text class="small" x="100" y="98" text-anchor="middle">boolean flag params</text>
+<text class="small" x="100" y="118" text-anchor="middle">magic numbers/strings</text>
+<text class="small" x="100" y="138" text-anchor="middle">exception control flow</text>
+<text class="small" x="100" y="158" text-anchor="middle">sync over async</text>
+<text class="small muted" x="100" y="226" text-anchor="middle">minutes to fix</text>
+<rect class="box visit" x="196" y="48" width="160" height="196" rx="10"/>
+<text x="276" y="72" text-anchor="middle" font-weight="700">Class</text>
+<text class="small" x="276" y="98" text-anchor="middle">god object</text>
+<text class="small" x="276" y="118" text-anchor="middle">anemic domain model</text>
+<text class="small" x="276" y="138" text-anchor="middle">primitive obsession</text>
+<text class="small" x="276" y="158" text-anchor="middle">feature envy</text>
+<text class="small" x="276" y="178" text-anchor="middle">shotgun surgery</text>
+<text class="small muted" x="276" y="226" text-anchor="middle">hours to days</text>
+<rect class="box path" x="372" y="48" width="160" height="196" rx="10"/>
+<text x="452" y="72" text-anchor="middle" font-weight="700">Dependencies, state</text>
+<text class="small" x="452" y="98" text-anchor="middle">service locator</text>
+<text class="small" x="452" y="118" text-anchor="middle">singleton abuse</text>
+<text class="small" x="452" y="138" text-anchor="middle">global mutable state</text>
+<text class="small" x="452" y="158" text-anchor="middle">leaky abstractions</text>
+<text class="small muted" x="452" y="226" text-anchor="middle">days</text>
+<rect class="box accent" x="548" y="48" width="160" height="196" rx="10"/>
+<text x="628" y="72" text-anchor="middle" font-weight="700">Design process</text>
+<text class="small" x="628" y="98" text-anchor="middle">golden hammer</text>
+<text class="small" x="628" y="118" text-anchor="middle">premature abstraction</text>
+<text class="small" x="628" y="138" text-anchor="middle">speculative generality</text>
+<text class="small" x="628" y="158" text-anchor="middle">copy-paste divergence</text>
+<text class="small muted" x="628" y="226" text-anchor="middle">days to weeks</text>
+<rect class="box bad" x="724" y="48" width="160" height="196" rx="10"/>
+<text x="804" y="72" text-anchor="middle" font-weight="700">Architecture</text>
+<text class="small" x="804" y="98" text-anchor="middle">distributed monolith</text>
+<text class="small" x="804" y="118" text-anchor="middle">big ball of mud</text>
+<text class="small muted" x="804" y="226" text-anchor="middle">months to years</text>
+<path class="edge" d="M40,272 L860,272"/><polygon class="muted" points="868,272 858,267 858,277"/>
+<text class="small muted" x="450" y="292" text-anchor="middle">cost of removal grows → so catch smells at the left, in code review</text>
+</svg>
+<figcaption>Small smells compound into large ones: copied tier strings become shotgun surgery, which becomes a god object, which becomes a ball of mud.</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th>Smell</th>
+<th>You feel it as</th>
+<th>First move out</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>God object</td>
+<td>every change touches the same file, merge conflicts</td>
+<td>extract class along field clusters</td>
+</tr>
+<tr>
+<td>Anemic domain model</td>
+<td>rules duplicated across services</td>
+<td>move behaviour onto the entity</td>
+</tr>
+<tr>
+<td>Primitive obsession</td>
+<td>swapped arguments, validation everywhere</td>
+<td>value objects / branded types</td>
+</tr>
+<tr>
+<td>Feature envy</td>
+<td>a method full of <code>other.X</code></td>
+<td>move method to the data's owner</td>
+</tr>
+<tr>
+<td>Shotgun surgery</td>
+<td>one change, many files</td>
+<td>gather the knowledge into one type</td>
+</tr>
+<tr>
+<td>Service locator</td>
+<td>hidden dependencies, runtime failures</td>
+<td>constructor injection</td>
+</tr>
+<tr>
+<td>Singleton abuse / global state</td>
+<td>flaky tests, order dependence</td>
+<td>inject an instance, scope it in DI</td>
+</tr>
+<tr>
+<td>Leaky abstraction</td>
+<td>"fast" call that is really N queries</td>
+<td>make the cost visible, batch</td>
+</tr>
+<tr>
+<td>Golden hammer</td>
+<td>the same tool for every problem</td>
+<td>compare two options before choosing</td>
+</tr>
+<tr>
+<td>Premature abstraction</td>
+<td>interfaces with one implementation, unused options</td>
+<td>inline it, wait for the third case</td>
+</tr>
+<tr>
+<td>Copy-paste divergence</td>
+<td>a fix lands in one copy only</td>
+<td>extract after the rule of three</td>
+</tr>
+<tr>
+<td>Boolean flag params</td>
+<td><code>Export(r, true, false, true)</code></td>
+<td>separate methods, enum, options object</td>
+</tr>
+<tr>
+<td>Magic numbers/strings</td>
+<td><code>if (x &gt; 250)</code></td>
+<td>named constants, enums, config</td>
+</tr>
+<tr>
+<td>Exception control flow</td>
+<td>slow paths, swallowed errors</td>
+<td><code>TryX</code>, Result types, explicit checks</td>
+</tr>
+<tr>
+<td>Sync over async</td>
+<td>hangs under load, deadlocks</td>
+<td>async all the way</td>
+</tr>
+<tr>
+<td>Distributed monolith</td>
+<td>deploy 6 services together</td>
+<td>async events, own your data</td>
+</tr>
+<tr>
+<td>Big ball of mud</td>
+<td>nobody can explain the structure</td>
+<td>find cycles, cut edges, strangle</td>
+</tr>
+</tbody>
+</table>
+<p>The rest of the page takes each smell in turn: what it is, a <strong>smell detector</strong> checklist, an interactive visual where the cost is dynamic, a before/after refactoring, and when the "smell" is actually the right call.</p>
+<h2 id="class-level-smells">Class-level smells</h2>
+<h3 id="god-object">God object</h3>
+<p>A <strong>god object</strong> (or god class, or blob) knows and does too much: <code>OrderManager</code>, <code>Utils</code>, <code>Helper</code>, <code>AppService</code>, <code>MainForm</code>. It starts as a reasonable home for "order stuff" and grows because adding a method to the class everyone already depends on is always the easiest path. Eventually it has dozens of fields, hundreds of methods, and every feature branch edits it.</p>
+<p>The cost is not the line count. It is that <strong>unrelated reasons to change share one file</strong>: the pricing team, the warehouse team and the email team all edit <code>OrderManager</code>, so changes collide, tests need every dependency mocked, and nobody can hold the class in their head.</p>
+<div class="recognize">
+<p><strong>Smell detector: god object</strong></p>
+<ul>
+<li>The class name is vague (<code>Manager</code>, <code>Service</code>, <code>Helper</code>, <code>Utils</code>, <code>Processor</code>) or names the whole domain.</li>
+<li>More than ~10 constructor dependencies, or tests need a page of mocks before the first assertion.</li>
+<li>Methods split into groups that use <strong>disjoint</strong> fields (low cohesion; LCOM4 &gt; 1).</li>
+<li>It is in the top 5 most-changed files in <code>git log</code> and causes most merge conflicts.</li>
+<li>You can't describe what it does without the word "and".</li>
+</ul>
+</div>
+<p>The visualizer below runs the cohesion measurement from <a href="design-principles.html#measure-cohesion-lcom4">design principles</a>. Each method lists the fields it uses. Methods that share a field belong together; the algorithm merges them step by step (union-find) and the number of groups left is <strong>LCOM4</strong>. Each group is a class waiting to be extracted. Try the presets, or type your own class.</p>
+<div class="viz" data-viz="anti-patterns-god"></div>
+
+<p>The default class splits into four groups: ordering (<code>cart</code>, <code>stock</code>, <code>prices</code>, <code>warehouse</code>), payments (<code>payments</code>, <code>ledger</code>), documents (<code>smtp</code>, <code>templates</code>, <code>pdf</code>) and audit. The shopping-cart preset is the counter-example: five methods, one group, LCOM4 = 1. A long class can still be cohesive.</p>
+<div class="code-tabs" data-labels="Before,After">
+<pre><code class="language-csharp">public class OrderManager
+{
+    private readonly IDb _db; private readonly IPaymentGateway _payments;
+    private readonly ILedger _ledger; private readonly ISmtp _smtp;
+    private readonly ITemplates _templates; private readonly IPdf _pdf;
+    private readonly IStock _stock; private readonly IPrices _prices;
+
+    public Order PlaceOrder(Cart cart) { /* prices, stock */ }
+    public void ReserveStock(Order o) { /* stock */ }
+    public Receipt Charge(Order o) { /* payments, ledger */ }
+    public void Refund(Order o) { /* payments, ledger */ }
+    public void EmailReceipt(Receipt r) { /* smtp, templates */ }
+    public byte[] RenderInvoicePdf(Order o) { /* templates, pdf */ }
+}
+</code></pre>
+<pre><code class="language-csharp">// One class per field cluster. Each has one reason to change.
+public sealed class OrderPlacement(IStock stock, IPrices prices)
+{
+    public Order Place(Cart cart) { /* ... */ }
+    public void Reserve(Order o) { /* ... */ }
+}
+public sealed class Billing(IPaymentGateway payments, ILedger ledger)
+{
+    public Receipt Charge(Order o) { /* ... */ }
+    public void Refund(Order o) { /* ... */ }
+}
+public sealed class ReceiptDocuments(ITemplates templates, ISmtp smtp, IPdf pdf)
+{
+    public void Email(Receipt r) { /* ... */ }
+    public byte[] InvoicePdf(Order o) { /* ... */ }
+}
+// A thin coordinator (or a handler per use case) composes them:
+public sealed class CheckoutHandler(OrderPlacement place, Billing billing, ReceiptDocuments docs)
+{
+    public Receipt Handle(Cart cart)
+    {
+        var order = place.Place(cart);
+        var receipt = billing.Charge(order);
+        docs.Email(receipt);
+        return receipt;
+    }
+}
+</code></pre>
+</div>
+<p><strong>How to get out safely.</strong> Don't rewrite. Pin current behaviour with <a href="#refactoring-safely-characterization-tests-and-the-strangler">characterization tests</a>, then extract one field cluster at a time, leaving the old method delegating until every caller has moved.</p>
+<p><strong>When it's fine.</strong> A composition root (<code>Program.cs</code>, <code>main.go</code>) legitimately knows everything. So does a <a href="structural-patterns.html#facade-one-simple-entry-point-over-a-subsystem">facade</a>, as long as it only delegates. A 300-line script that runs once is not worth splitting. Size alone is not the smell; mixed responsibilities are.</p>
+<h3 id="anemic-domain-model">Anemic domain model</h3>
+<p>In an <strong>anemic domain model</strong>, the domain objects are bags of getters and setters, and all the rules live in "service" classes that pull the data out, decide, and push it back. Martin Fowler named it in 2003: you pay for an object model (ORM mapping, classes) but get procedural code. Because the object can't protect itself, every service that touches it must remember every rule, and some of them won't.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 250" width="900" role="img" aria-label="Anemic: three services each reach into a data bag and repeat the rules; rich: the services call one method on an entity that enforces its own rules">
+<text class="title" x="20" y="26">Anemic: every caller must know the rules</text>
+<text class="title" x="480" y="26">Rich: the object enforces its own rules</text>
+<rect class="box" x="30" y="50" width="140" height="34" rx="8"/><text class="small" x="100" y="72" text-anchor="middle">CheckoutService</text>
+<rect class="box" x="30" y="104" width="140" height="34" rx="8"/><text class="small" x="100" y="126" text-anchor="middle">AdminService</text>
+<rect class="box" x="30" y="158" width="140" height="34" rx="8"/><text class="small" x="100" y="180" text-anchor="middle">ImportJob</text>
+<rect class="box bad" x="270" y="80" width="150" height="90" rx="10"/>
+<text x="345" y="104" text-anchor="middle" font-weight="700">Order</text>
+<text class="small mono" x="345" y="126" text-anchor="middle">Status { get; set; }</text>
+<text class="small mono" x="345" y="144" text-anchor="middle">Lines { get; set; }</text>
+<text class="small mono" x="345" y="162" text-anchor="middle">Total { get; set; }</text>
+<path class="edge" d="M170,67 L264,104"/><polygon class="muted" points="270,106 260,107 263,99"/>
+<path class="edge" d="M170,121 L264,124"/><polygon class="muted" points="270,124 261,119.5 261,128.5"/>
+<path class="edge" d="M170,175 L264,150"/><polygon class="muted" points="270,148 263,155 261,147"/>
+<text class="small muted" x="225" y="216" text-anchor="middle">3 copies of "can't cancel a shipped order"; ImportJob forgot it</text>
+<rect class="box" x="480" y="50" width="140" height="34" rx="8"/><text class="small" x="550" y="72" text-anchor="middle">CheckoutService</text>
+<rect class="box" x="480" y="104" width="140" height="34" rx="8"/><text class="small" x="550" y="126" text-anchor="middle">AdminService</text>
+<rect class="box" x="480" y="158" width="140" height="34" rx="8"/><text class="small" x="550" y="180" text-anchor="middle">ImportJob</text>
+<rect class="box done" x="700" y="70" width="180" height="110" rx="10"/>
+<text x="790" y="94" text-anchor="middle" font-weight="700">Order</text>
+<text class="small mono" x="790" y="116" text-anchor="middle">Cancel(reason)</text>
+<text class="small mono" x="790" y="134" text-anchor="middle">AddLine(sku, qty)</text>
+<text class="small mono" x="790" y="152" text-anchor="middle">Status { get; }</text>
+<text class="small muted" x="790" y="170" text-anchor="middle">rules live here, once</text>
+<path class="edge done" d="M620,67 L694,100"/><polygon class="fill-done" points="700,103 690,103 694,95"/>
+<path class="edge done" d="M620,121 L694,123"/><polygon class="fill-done" points="700,123 691,118.5 691,127.5"/>
+<path class="edge done" d="M620,175 L694,148"/><polygon class="fill-done" points="700,146 693,153 691,145"/>
+<text class="small muted" x="680" y="216" text-anchor="middle">callers say what they want; the order decides if it is allowed</text>
+</svg>
+<figcaption>"Tell, don't ask": an object with public setters can be put into any state by anyone, so the rules have to be repeated by everyone.</figcaption>
+</figure>
+
+<div class="recognize">
+<p><strong>Smell detector: anemic domain model</strong></p>
+<ul>
+<li>Entities have public setters for everything and no methods besides getters/setters.</li>
+<li>Services named after entities (<code>OrderService</code>, <code>CustomerService</code>) hold <code>if (order.Status == ...)</code> logic.</li>
+<li>The same validation appears in the controller, the service and the import job.</li>
+<li>Invalid objects are easy to create (<code>new Order { Status = Shipped, Lines = null }</code>).</li>
+<li>Feature envy is everywhere: service methods mostly read other objects' fields.</li>
+</ul>
+</div>
+<div class="code-tabs" data-labels="Before,After">
+<pre><code class="language-csharp">public class Order
+{
+    public OrderStatus Status { get; set; }
+    public List&lt;OrderLine&gt; Lines { get; set; } = new();
+    public decimal Total { get; set; }
+}
+
+public class OrderService
+{
+    public void Cancel(Order order, string reason)
+    {
+        if (order.Status == OrderStatus.Shipped)
+            throw new InvalidOperationException(&quot;Already shipped&quot;);
+        order.Status = OrderStatus.Cancelled;   // AdminService does the same, minus the check
+    }
+}
+</code></pre>
+<pre><code class="language-csharp">public class Order
+{
+    private readonly List&lt;OrderLine&gt; _lines = new();
+    public OrderStatus Status { get; private set; } = OrderStatus.Draft;
+    public IReadOnlyList&lt;OrderLine&gt; Lines =&gt; _lines;
+    public decimal Total =&gt; _lines.Sum(l =&gt; l.Price * l.Qty);
+
+    public void AddLine(Sku sku, int qty, decimal price)
+    {
+        if (Status != OrderStatus.Draft) throw new InvalidOperationException(&quot;Order is locked&quot;);
+        if (qty &lt;= 0) throw new ArgumentOutOfRangeException(nameof(qty));
+        _lines.Add(new OrderLine(sku, qty, price));
+    }
+
+    public void Cancel(string reason)
+    {
+        if (Status == OrderStatus.Shipped) throw new InvalidOperationException(&quot;Already shipped&quot;);
+        Status = OrderStatus.Cancelled;
+    }
+}
+</code></pre>
+</div>
+<p><strong>When it's fine.</strong> Anemic is not always wrong:</p>
+<ul>
+<li><strong>CRUD with little logic.</strong> If the "rules" are "save what the form sent", a rich model is ceremony. A data class plus validation attributes is honest.</li>
+<li><strong>DTOs, API contracts, messages, view models</strong> are supposed to be data only. The smell is when the <em>domain</em> model looks like a DTO.</li>
+<li><strong>Functional style.</strong> Immutable records plus pure functions over them (<a href="functional-patterns.html#functional-core-imperative-shell">functional core</a>) is not anemic: the data can't be put into an invalid state, because it can't be mutated at all, and constructors validate. The smell is <em>mutable</em> data with rules elsewhere.</li>
+</ul>
+<h3 id="primitive-obsession">Primitive obsession</h3>
+<p><strong>Primitive obsession</strong> is using <code>string</code>, <code>int</code>, <code>decimal</code> and <code>bool</code> for domain concepts that have rules: an email address, a money amount with a currency, a customer id, a percentage. The type system can't tell a <code>CustomerId</code> from an <code>OrderId</code> when both are <code>string</code>, so it can't stop you swapping them, and every function that receives one has to re-validate it (or trust that someone did).</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 210" width="900" role="img" aria-label="A method with four string and decimal parameters accepts swapped arguments; with value types the compiler rejects the swap">
+<text class="title" x="20" y="26">Primitives: the compiler sees four interchangeable values</text>
+<rect class="box bad" x="20" y="44" width="420" height="40" rx="8"/>
+<text class="mono small" x="230" y="69" text-anchor="middle">Transfer(string from, string to, decimal amount, string ccy)</text>
+<rect class="box" x="20" y="104" width="420" height="40" rx="8"/>
+<text class="mono small" x="230" y="129" text-anchor="middle">Transfer(toAcct, fromAcct, 100m, "EUR")  // compiles</text>
+<text class="small muted" x="230" y="170" text-anchor="middle">money flows the wrong way; found in production</text>
+<text class="title" x="470" y="26">Value types: the mistake does not compile</text>
+<rect class="box done" x="470" y="44" width="410" height="40" rx="8"/>
+<text class="mono small" x="675" y="69" text-anchor="middle">Transfer(AccountId from, AccountId to, Money amount)</text>
+<rect class="box done" x="470" y="104" width="410" height="40" rx="8"/>
+<text class="mono small" x="675" y="129" text-anchor="middle">new Money(100m, Currency.Eur)  // validated once</text>
+<text class="small muted" x="675" y="170" text-anchor="middle">Money can't be negative or mix currencies: checked in one constructor</text>
+<text class="small muted" x="675" y="190" text-anchor="middle">(two AccountIds can still be swapped: name the arguments at call sites)</text>
+</svg>
+<figcaption>A value type moves validation from every caller into one constructor, and turns some mix-ups into compile errors.</figcaption>
+</figure>
+
+<div class="recognize">
+<p><strong>Smell detector: primitive obsession</strong></p>
+<ul>
+<li>Several parameters of the same primitive type in a row (<code>string, string, string</code>).</li>
+<li>The same validation (<code>Regex.IsMatch(email, ...)</code>, <code>amount &gt;= 0</code>) in many places.</li>
+<li>Parallel parameters that always travel together: <code>amount</code> + <code>currency</code>, <code>lat</code> + <code>lng</code>, <code>start</code> + <code>end</code>.</li>
+<li>Comments explaining the format: <code>// ISO country code</code>, <code>// cents</code>, <code>// UTC</code>.</li>
+<li>Bugs where units are mixed: seconds vs milliseconds, cents vs euros.</li>
+</ul>
+</div>
+<p>Every language can express a small validated value type; how cheap it is differs:</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">public readonly record struct Money
+{
+    public decimal Amount { get; }
+    public string Currency { get; }
+    public Money(decimal amount, string currency)
+    {
+        if (amount &lt; 0) throw new ArgumentOutOfRangeException(nameof(amount));
+        if (currency is not { Length: 3 }) throw new ArgumentException(&quot;ISO 4217 code&quot;, nameof(currency));
+        (Amount, Currency) = (amount, currency.ToUpperInvariant());
+    }
+    public Money Add(Money other) =&gt; other.Currency == Currency
+        ? new Money(Amount + other.Amount, Currency)
+        : throw new InvalidOperationException(&quot;Currency mismatch&quot;);
+}
+
+public readonly record struct CustomerId(Guid Value);   // can't be passed as an OrderId
+</code></pre>
+<pre><code class="language-java">public record Money(BigDecimal amount, String currency) {
+    public Money {                                   // compact constructor validates
+        if (amount.signum() &lt; 0) throw new IllegalArgumentException(&quot;negative&quot;);
+        if (currency == null || currency.length() != 3) throw new IllegalArgumentException(&quot;ISO 4217&quot;);
+        currency = currency.toUpperCase(Locale.ROOT);
+    }
+    public Money add(Money other) {
+        if (!other.currency.equals(currency)) throw new IllegalStateException(&quot;Currency mismatch&quot;);
+        return new Money(amount.add(other.amount), currency);
+    }
+}
+
+public record CustomerId(UUID value) {}
+</code></pre>
+<pre><code class="language-python">from dataclasses import dataclass
+from decimal import Decimal
+from typing import NewType
+
+CustomerId = NewType(&quot;CustomerId&quot;, str)   # zero-cost; checked by mypy/pyright only
+
+
+@dataclass(frozen=True)
+class Money:
+    amount: Decimal
+    currency: str
+
+    def __post_init__(self):
+        if self.amount &lt; 0:
+            raise ValueError(&quot;negative amount&quot;)
+        if len(self.currency) != 3:
+            raise ValueError(&quot;ISO 4217 code expected&quot;)
+        object.__setattr__(self, &quot;currency&quot;, self.currency.upper())
+
+    def __add__(self, other: &quot;Money&quot;) -&gt; &quot;Money&quot;:
+        if other.currency != self.currency:
+            raise ValueError(&quot;currency mismatch&quot;)
+        return Money(self.amount + other.amount, self.currency)
+
+
+print(Money(Decimal(&quot;10.50&quot;), &quot;eur&quot;) + Money(Decimal(&quot;2&quot;), &quot;EUR&quot;))
+# Money(amount=Decimal('12.50'), currency='EUR')
+</code></pre>
+<pre><code class="language-go">type CustomerID string // a distinct type: a plain string won't be accepted without a conversion
+
+type Money struct {
+    cents    int64 // unexported: only NewMoney can build a valid one
+    currency string
+}
+
+func NewMoney(cents int64, currency string) (Money, error) {
+    if cents &lt; 0 {
+        return Money{}, errors.New(&quot;negative amount&quot;)
+    }
+    if len(currency) != 3 {
+        return Money{}, errors.New(&quot;ISO 4217 code expected&quot;)
+    }
+    return Money{cents, strings.ToUpper(currency)}, nil
+}
+
+func (m Money) Add(o Money) (Money, error) {
+    if m.currency != o.currency {
+        return Money{}, errors.New(&quot;currency mismatch&quot;)
+    }
+    return Money{m.cents + o.cents, m.currency}, nil
+}
+</code></pre>
+<pre><code class="language-typescript">// Branded types: structurally a string, but not assignable from a plain string.
+type CustomerId = string &amp; { readonly __brand: &quot;CustomerId&quot; };
+type OrderId = string &amp; { readonly __brand: &quot;OrderId&quot; };
+const CustomerId = (s: string) =&gt; s as CustomerId;
+
+function loadOrders(customer: CustomerId) { /* ... */ }
+loadOrders(CustomerId(&quot;c-42&quot;));
+// loadOrders(&quot;o-17&quot; as OrderId);   // error: OrderId is not assignable to CustomerId
+
+class Money {
+  private constructor(readonly amount: number, readonly currency: string) {}
+  static of(amount: number, currency: string): Money {
+    if (amount &lt; 0) throw new RangeError(&quot;negative amount&quot;);
+    if (currency.length !== 3) throw new RangeError(&quot;ISO 4217 code expected&quot;);
+    return new Money(amount, currency.toUpperCase());
+  }
+  add(o: Money): Money {
+    if (o.currency !== this.currency) throw new Error(&quot;currency mismatch&quot;);
+    return Money.of(this.amount + o.amount, this.currency);
+  }
+}
+</code></pre>
+</div>
+<p>The differences are about cost. C# <code>readonly record struct</code> and Java records are one line for the simple id case and allocate nothing extra (the struct) or very little. Go's defined types (<code>type CustomerID string</code>) are free, but a constant string still converts implicitly to them, so unexported fields plus a constructor are what really protect <code>Money</code>. Python's <code>NewType</code> vanishes at runtime and only helps if you run a type checker. TypeScript is structural, so two <code>string</code> aliases are the same type; the "brand" intersection is the standard trick to make them different. Money in floating point (<code>number</code>, <code>double</code>) is its own bug: use integer cents or a decimal type.</p>
+<p><strong>When it's fine.</strong> Inside a small private function, or at the boundary where you parse JSON or database rows, primitives are normal. Convert to the value type as soon as you've parsed, and back at the very end. Don't wrap every <code>int</code> loop counter: wrap concepts that have <strong>rules</strong> or that get <strong>confused</strong> with each other.</p>
+<h3 id="feature-envy">Feature envy</h3>
+<p>A method has <strong>feature envy</strong> when it is more interested in another class's data than in its own: it reads five fields from <code>customer</code> and none from <code>this</code>. The method is in the wrong place. Wherever the data changes shape, this method must change too, but it lives somewhere else, so people don't find it. It's the class-level version of the <a href="design-principles.html#law-of-demeter-talk-to-friends-not-strangers">Law of Demeter</a> problem.</p>
+<div class="recognize">
+<p><strong>Smell detector: feature envy</strong></p>
+<ul>
+<li>A method's body is mostly <code>other.X</code>, <code>other.Y</code>, <code>other.Z</code>, with few or no <code>this.</code> accesses.</li>
+<li>Chains like <code>order.Customer.Address.Country.TaxRules</code>.</li>
+<li>The same set of fields of one class is read together in several places.</li>
+<li>A method's parameters are one object, and every line reads from it.</li>
+</ul>
+</div>
+<p>The visualizer counts whose members a method touches, in order. When most reads belong to one other object, it suggests moving the method there. When the reads are split between two other objects, it suggests splitting the method so each part moves to its data.</p>
+<div class="viz" data-viz="anti-patterns-envy"></div>
+
+<div class="code-tabs" data-labels="Before,After">
+<pre><code class="language-csharp">public class InvoiceService
+{
+    private readonly Rates _rates;
+    public decimal LoyaltyDiscount(Customer customer, Order order)
+    {
+        var pct = customer.Tier switch { Tier.Gold =&gt; 0.10m, Tier.Silver =&gt; 0.05m, _ =&gt; 0m };
+        if (customer.YearsActive &gt; 5) pct += 0.02m;
+        if (customer.IsEmployee) pct = Math.Max(pct, 0.20m);
+        if (customer.Country == &quot;NO&quot;) pct = Math.Min(pct, _rates.NorwayCap);
+        return order.Total * pct;
+    }
+}
+</code></pre>
+<pre><code class="language-csharp">public class Customer
+{
+    // The rule now lives next to the data it depends on.
+    public decimal LoyaltyPercent(decimal countryCap)
+    {
+        var pct = Tier switch { Tier.Gold =&gt; 0.10m, Tier.Silver =&gt; 0.05m, _ =&gt; 0m };
+        if (YearsActive &gt; 5) pct += 0.02m;
+        if (IsEmployee) pct = Math.Max(pct, 0.20m);
+        return Country == &quot;NO&quot; ? Math.Min(pct, countryCap) : pct;
+    }
+}
+
+public class InvoiceService
+{
+    private readonly Rates _rates;
+    public decimal LoyaltyDiscount(Customer customer, Order order)
+        =&gt; order.Total * customer.LoyaltyPercent(_rates.NorwayCap);
+}
+</code></pre>
+</div>
+<p><strong>When it's fine.</strong> Some patterns separate behaviour from data <strong>on purpose</strong>: a <a href="behavioral-patterns.html">Strategy or Visitor</a> operates on another object's data so that you can vary the algorithm independently; mappers and serializers read every field of a DTO by definition; reporting queries read many entities. Feature envy is a smell when the logic is a <em>rule of that object</em> that will change when the object changes.</p>
+<h3 id="shotgun-surgery">Shotgun surgery</h3>
+<p><strong>Shotgun surgery</strong> is the opposite of a god object: one change forces small edits in many places. Adding a customer tier means touching pricing, shipping, the email templates, the admin UI, the reports and the CSV export, each with its own <code>if (tier == "Gold")</code>. The danger is the place you <strong>don't</strong> find. Search is the only tool, and search is literal: someone wrote <code>"gold"</code> in lowercase, or <code>tier.StartsWith("G")</code>.</p>
+<p>The visualizer simulates the ticket "add a Platinum tier". In the scattered design, the developer searches for a term; every file the search finds gets updated, and every file it misses ships a bug. Switch to the consolidated design (one <code>CustomerTier</code> type that owns the rules) and the same ticket is one file.</p>
+<div class="viz" data-viz="anti-patterns-shotgun"></div>
+
+<div class="recognize">
+<p><strong>Smell detector: shotgun surgery</strong></p>
+<ul>
+<li>A feature request's diff touches many files with one or two lines each.</li>
+<li>The same <code>switch</code>/<code>if</code> over a type code (<code>tier</code>, <code>status</code>, <code>country</code>) appears in several classes.</li>
+<li>"Did you remember to also update X?" is a regular code-review comment.</li>
+<li><code>git log</code> shows sets of files that always change together but live in different modules.</li>
+<li>Bugs where "it works everywhere except the export" (the place nobody remembered).</li>
+</ul>
+</div>
+<div class="code-tabs" data-labels="Before,After">
+<pre><code class="language-csharp">// Pricing.cs
+if (customer.Tier == &quot;Gold&quot;) discount = 0.10m;
+// Shipping.cs
+var free = customer.Tier == &quot;Gold&quot; || customer.Tier == &quot;Silver&quot;;
+// ReceiptEmail.cs
+var badge = customer.Tier == &quot;Gold&quot; ? &quot;★ Gold member&quot; : &quot;&quot;;
+// CsvExport.cs
+row.Add(customer.Tier.ToLower() == &quot;gold&quot; ? &quot;G&quot; : &quot;S&quot;);
+// ... and 4 more files
+</code></pre>
+<pre><code class="language-csharp">// CustomerTier.cs: everything a tier means, in one place.
+public sealed record CustomerTier(string Name, decimal Discount, bool FreeShipping, string Badge, string ExportCode)
+{
+    public static readonly CustomerTier Standard = new(&quot;Standard&quot;, 0.00m, false, &quot;&quot;, &quot;S&quot;);
+    public static readonly CustomerTier Silver   = new(&quot;Silver&quot;,   0.05m, true,  &quot;Silver member&quot;, &quot;V&quot;);
+    public static readonly CustomerTier Gold     = new(&quot;Gold&quot;,     0.10m, true,  &quot;★ Gold member&quot;, &quot;G&quot;);
+    public static readonly CustomerTier Platinum = new(&quot;Platinum&quot;, 0.15m, true,  &quot;◆ Platinum&quot;,    &quot;P&quot;); // the whole ticket
+}
+// Callers ask the tier: customer.Tier.Discount, customer.Tier.FreeShipping, customer.Tier.Badge ...
+</code></pre>
+</div>
+<p>Replacing the scattered conditional with a type that <strong>owns</strong> the variation is the classic "replace conditional with polymorphism" (or, when the variants only differ in data, "replace type code with a table/record", as above). If tiers differ in <em>behaviour</em>, use a <a href="behavioral-patterns.html">Strategy</a> per tier; if the set is closed and you prefer functions, a <a href="functional-patterns.html#pattern-matching-and-discriminated-unions">discriminated union with an exhaustive match</a> makes the compiler find every place for you.</p>
+<p><strong>When it's fine.</strong> A change that crosses <em>layers</em> (a new field goes in the database, the API, and the UI) touches several files by nature. Vertical slices (one folder per feature with its endpoint, handler and query) keep those edits next to each other. The smell is when one <strong>business rule</strong> is spread across many places.</p>
+<h2 id="dependency-and-state-smells">Dependency and state smells</h2>
+<h3 id="service-locator">Service locator</h3>
+<p>A <strong>service locator</strong> is a registry that code calls to fetch its dependencies: <code>ServiceLocator.Get&lt;IDb&gt;()</code>, <code>provider.GetService&lt;T&gt;()</code> inside a business class, Spring's <code>context.getBean(...)</code>, a global <code>registry["mailer"]</code>. It looks like dependency injection, because a container is involved, but it inverts the benefit. The class's constructor no longer tells you what it needs, so the dependencies are <strong>hidden</strong>, they fail at <strong>run time</strong> instead of start-up, and every test has to configure the global registry. The full comparison is in <a href="di-fundamentals.html#service-locator-the-look-alike">DI fundamentals</a>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 200" width="900" role="img" aria-label="Locator: the constructor shows only the locator, and three dependencies are fetched inside methods; injection: the constructor lists all three">
+<text class="title" x="20" y="26">Service locator: the signature lies</text>
+<text class="title" x="480" y="26">Constructor injection: the signature is the truth</text>
+<rect class="box bad" x="20" y="44" width="200" height="120" rx="10"/>
+<text x="120" y="68" text-anchor="middle" font-weight="700">CheckoutHandler</text>
+<text class="small mono" x="120" y="90" text-anchor="middle">ctor(IServiceProvider sp)</text>
+<text class="small muted" x="120" y="116" text-anchor="middle">needs: ?</text>
+<text class="small muted" x="120" y="134" text-anchor="middle">read 400 lines to find out</text>
+<rect class="box path" x="300" y="44" width="140" height="26" rx="6" stroke-dasharray="5 4"/><text class="small" x="370" y="62" text-anchor="middle">sp.Get&lt;IDb&gt;()</text>
+<rect class="box path" x="300" y="86" width="140" height="26" rx="6" stroke-dasharray="5 4"/><text class="small" x="370" y="104" text-anchor="middle">sp.Get&lt;IMailer&gt;()</text>
+<rect class="box path" x="300" y="128" width="140" height="26" rx="6" stroke-dasharray="5 4"/><text class="small" x="370" y="146" text-anchor="middle">sp.Get&lt;IClock&gt;()</text>
+<path class="edge path" d="M220,80 L294,58"/><path class="edge path" d="M220,100 L294,99"/><path class="edge path" d="M220,120 L294,140"/>
+<text class="small muted" x="230" y="188" text-anchor="middle">missing registration → exception on the first checkout, in production</text>
+<rect class="box done" x="480" y="44" width="400" height="120" rx="10"/>
+<text x="680" y="68" text-anchor="middle" font-weight="700">CheckoutHandler</text>
+<text class="small mono" x="680" y="92" text-anchor="middle">ctor(IDb db, IMailer mailer, TimeProvider clock)</text>
+<text class="small muted" x="680" y="118" text-anchor="middle">needs: exactly these three, visible to every reader</text>
+<text class="small muted" x="680" y="136" text-anchor="middle">container validates the graph at start-up (ValidateOnBuild)</text>
+<text class="small muted" x="680" y="188" text-anchor="middle">tests: new CheckoutHandler(fakeDb, fakeMailer, fakeClock)</text>
+</svg>
+<figcaption>The locator moves dependency information from the type signature into method bodies, where neither the compiler nor the reader can see it.</figcaption>
+</figure>
+
+<div class="recognize">
+<p><strong>Smell detector: service locator</strong></p>
+<ul>
+<li><code>IServiceProvider</code>, <code>ApplicationContext</code>, <code>Injector</code> or a global <code>Container</code> passed into or referenced from business classes.</li>
+<li>Static <code>ServiceLocator.Current</code>, <code>Locator.Get</code>, <code>registry.get("...")</code> calls inside methods.</li>
+<li>Tests start with "register these five fakes in the global container" and must reset it afterwards.</li>
+<li>Missing registrations are discovered by a user, not by start-up validation.</li>
+</ul>
+</div>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Smell: the class asks for the whole container
+public class CheckoutHandler(IServiceProvider sp)
+{
+    public void Handle(Cart c) =&gt; sp.GetRequiredService&lt;IMailer&gt;().Send(/* ... */);
+}
+
+// Fix: ask for what you use; register with builder.Services and
+// turn on ValidateOnBuild/ValidateScopes so mistakes fail at start-up.
+public class CheckoutHandler(IDb db, IMailer mailer, TimeProvider clock)
+{
+    public void Handle(Cart c) =&gt; mailer.Send(/* ... */);
+}
+</code></pre>
+<pre><code class="language-java">// Smell: reaching into the Spring context
+@Service
+class CheckoutHandler {
+    @Autowired ApplicationContext ctx;
+    void handle(Cart c) { ctx.getBean(Mailer.class).send(/* ... */); }
+}
+
+// Fix: constructor injection (no @Autowired needed with one constructor)
+@Service
+class CheckoutHandler {
+    private final Mailer mailer;
+    private final Clock clock;
+    CheckoutHandler(Mailer mailer, Clock clock) { this.mailer = mailer; this.clock = clock; }
+    void handle(Cart c) { mailer.send(/* ... */); }
+}
+</code></pre>
+<pre><code class="language-python"># Smell: a module-level registry looked up at call time
+REGISTRY: dict[str, object] = {}
+
+def handle(cart):
+    REGISTRY[&quot;mailer&quot;].send(...)
+
+
+# Fix: pass collaborators in; wire them once in main() or with FastAPI's Depends
+class CheckoutHandler:
+    def __init__(self, db: Db, mailer: Mailer, clock: Callable[[], datetime]):
+        self._db, self._mailer, self._clock = db, mailer, clock
+
+    def handle(self, cart):
+        self._mailer.send(...)
+</code></pre>
+<pre><code class="language-go">// Smell: package-level registry
+var services = map[string]any{}
+
+func Handle(c Cart) { services[&quot;mailer&quot;].(Mailer).Send( /* ... */ ) } // panics if missing
+
+// Fix: dependencies are struct fields set by a constructor; main() wires them.
+type CheckoutHandler struct {
+    db     DB
+    mailer Mailer
+    now    func() time.Time
+}
+
+func NewCheckoutHandler(db DB, m Mailer, now func() time.Time) *CheckoutHandler {
+    return &amp;CheckoutHandler{db: db, mailer: m, now: now}
+}
+</code></pre>
+<pre><code class="language-typescript">// Smell: a global container queried inside methods
+class CheckoutHandler {
+  handle(c: Cart) { container.get&lt;Mailer&gt;(&quot;mailer&quot;).send(/* ... */); }
+}
+
+// Fix: constructor parameters (with or without a DI library such as NestJS or tsyringe)
+class CheckoutHandler {
+  constructor(private readonly db: Db, private readonly mailer: Mailer, private readonly now: () =&gt; Date) {}
+  handle(c: Cart) { this.mailer.send(/* ... */); }
+}
+</code></pre>
+</div>
+<p><strong>When it's fine.</strong> Framework glue that genuinely can't use constructors: the composition root itself, a factory that creates per-request objects (<code>IServiceScopeFactory</code> in a background service), attribute/filter infrastructure, or a plugin host resolving types by name. Keep it at the edge, never in domain code.</p>
+<h3 id="singleton-abuse-and-global-state">Singleton abuse and global state</h3>
+<p>A <strong>singleton</strong> is fine as a lifetime ("one instance per application"). The anti-pattern is the <strong>static, mutable, globally reachable</strong> singleton: <code>Settings.Current.TaxRate = 0.25m</code> from anywhere, <code>Cache.Instance</code>, <code>Logger.Default</code>, a module-level dict in Python, a package <code>var</code> in Go. Any code can read it without declaring it and change it without telling anyone, so every function that touches it has a hidden input and a hidden output (exactly what <a href="functional-patterns.html#pure-functions-and-referential-transparency">pure functions</a> avoid).</p>
+<p>The first place it bites is tests. Test runners run tests in parallel and in an order they choose. The visualizer runs two tests, A and B, that each set a tax rate and then read it back. You choose the interleaving; it also counts how many of the 20 possible interleavings fail. With the static global, test A passes when run alone and fails when B sneaks in between its write and its read. With an injected config, every interleaving passes.</p>
+<div class="viz" data-viz="anti-patterns-global"></div>
+
+<div class="recognize">
+<p><strong>Smell detector: singleton abuse and global state</strong></p>
+<ul>
+<li><code>static</code> (or module-level, or package-level) fields that are written after start-up.</li>
+<li><code>X.Instance</code> / <code>X.Current</code> / <code>getInstance()</code> called from inside business logic.</li>
+<li>Tests pass alone and fail together, or need <code>[Collection]</code>/<code>@NotThreadSafe</code>/<code>-p 1</code> to be stable.</li>
+<li>Tests contain "reset" calls in setup/teardown for static state.</li>
+<li><code>DateTime.Now</code>, <code>Random.Shared</code>, <code>Environment</code> reads deep inside the domain (ambient globals).</li>
+</ul>
+</div>
+<div class="code-tabs" data-labels="Before,After">
+<pre><code class="language-csharp">public static class TaxConfig { public static decimal Rate = 0.20m; }
+
+public class PriceCalculator
+{
+    public decimal Gross(decimal net) =&gt; net * (1 + TaxConfig.Rate);   // hidden input
+}
+
+[Fact] public void Uses_reduced_rate()
+{
+    TaxConfig.Rate = 0.05m;                                              // hidden output: leaks into other tests
+    Assert.Equal(105m, new PriceCalculator().Gross(100m));
+}
+</code></pre>
+<pre><code class="language-csharp">public sealed record TaxConfig(decimal Rate);
+
+public class PriceCalculator(TaxConfig tax)
+{
+    public decimal Gross(decimal net) =&gt; net * (1 + tax.Rate);
+}
+
+// Program.cs: still exactly one instance, but the container owns it
+builder.Services.AddSingleton(new TaxConfig(builder.Configuration.GetValue&lt;decimal&gt;(&quot;Tax:Rate&quot;)));
+
+[Fact] public void Uses_reduced_rate()
+    =&gt; Assert.Equal(105m, new PriceCalculator(new TaxConfig(0.05m)).Gross(100m));
+</code></pre>
+</div>
+<p>The fix keeps "one instance" but moves it from a static field to the container, as explained in <a href="creational-patterns.html#why-a-di-singleton-beats-a-static-singleton">why a DI singleton beats a static singleton</a>. The same move in other ecosystems: a Spring <code>@Bean</code> (singleton scope is the default), a Go struct created in <code>main</code> and passed down, a Python object created in <code>main()</code> or a FastAPI dependency, a TypeScript module that exports a <em>factory</em> instead of an instance. For time, inject <code>TimeProvider</code> (.NET 8+), <code>java.time.Clock</code>, or a <code>now</code> function.</p>
+<p><strong>When it's fine.</strong> Immutable globals are constants, not state: <code>static readonly</code> lookup tables, compiled regexes, <code>HttpClient</code> / <code>JsonSerializerOptions</code> instances configured once and never changed. Logging facades (<code>ILogger&lt;T&gt;</code> via DI, or SLF4J's static loggers) are an accepted compromise because they are write-only and have no effect on behaviour.</p>
+<h3 id="leaky-abstractions">Leaky abstractions</h3>
+<p>Joel Spolsky's <em>Law of Leaky Abstractions</em>: "all non-trivial abstractions, to some degree, are leaky". An abstraction hides details so you can ignore them, until the hidden details (latency, failure modes, memory, ordering) start dominating behaviour and you have to understand what's underneath anyway. The <strong>anti-pattern</strong> is designing or using an abstraction that hides a cost so well that callers can't see it, then acting surprised in production.</p>
+<p>The classic case is an ORM's lazy loading. <code>order.Customer.Name</code> reads like a field access, but if the customer isn't loaded, it runs a SQL query. In a loop, that is the <strong>N+1 query problem</strong>: one query for the list, plus one per item. Step through the visualizer with lazy loading, then switch to <code>Include</code> or a batched <code>IN (...)</code> query and compare the round trips. Change the round-trip time to see why the same code is fine on a laptop and slow in the cloud.</p>
+<div class="viz" data-viz="anti-patterns-nplus1"></div>
+
+<p>Other leaks you will meet:</p>
+<ul>
+<li><strong>Remote calls that look local.</strong> A repository interface backed by an HTTP service; a "getter" that calls another microservice. Latency, timeouts and partial failure don't exist in the interface but dominate in practice (see <a href="resilience.html#timeouts-the-strategy-everything-else-depends-on">resilience</a>).</li>
+<li><strong><code>IEnumerable</code> / <code>Iterable</code> hiding a query.</strong> Enumerating twice runs the query twice (<a href="functional-patterns.html#lazy-sequences-work-on-demand">lazy sequences</a>).</li>
+<li><strong>Generic repositories over <code>IQueryable</code>.</strong> <code>IRepository&lt;T&gt;.Query()</code> leaks the ORM's translation rules: a C# method call that EF can't translate fails at run time.</li>
+<li><strong>Caches</strong> that hide staleness: callers can't tell fresh data from five-minute-old data (<a href="caching.html">caching</a>).</li>
+</ul>
+<div class="recognize">
+<p><strong>Smell detector: leaky abstraction</strong></p>
+<ul>
+<li>Performance depends on how the caller uses the API (order of calls, which properties are touched).</li>
+<li>The SQL log shows the same query shape repeated with different ids.</li>
+<li>To use the abstraction correctly you must read its implementation.</li>
+<li>Interfaces that return <code>IQueryable</code>, lazy collections or proxies across layer boundaries.</li>
+<li>Method names that hide I/O: <code>GetPrice()</code> that calls a remote service without <code>Async</code> or a cancellation token.</li>
+</ul>
+</div>
+<p>The fix is to make the cost <strong>visible</strong> and <strong>batchable</strong>. Every ecosystem's data layer has the same three options: eager-load in the query, batch-load with <code>IN (...)</code>, or write the query by hand.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// EF Core: eager load, and see the SQL in development
+var orders = await db.Orders
+    .Include(o =&gt; o.Customer)
+    .Where(o =&gt; o.Date == today)
+    .AsSplitQuery()            // optional: avoid huge JOIN row duplication
+    .ToListAsync(ct);
+// options.LogTo(Console.WriteLine, LogLevel.Information) shows every query
+</code></pre>
+<pre><code class="language-java">// JPA / Hibernate: fetch join or an entity graph
+@Query(&quot;select o from Order o join fetch o.customer where o.date = :d&quot;)
+List&lt;Order&gt; findWithCustomer(@Param(&quot;d&quot;) LocalDate d);
+
+// or: @EntityGraph(attributePaths = &quot;customer&quot;)
+// spring.jpa.properties.hibernate.default_batch_fetch_size=50 batches the rest
+</code></pre>
+<pre><code class="language-python"># SQLAlchemy 2.x: selectinload issues ONE extra &quot;WHERE id IN (...)&quot; query
+stmt = (
+    select(Order)
+    .where(Order.date == today)
+    .options(selectinload(Order.customer))
+)
+orders = session.scalars(stmt).all()
+# Django equivalent: Order.objects.filter(date=today).select_related(&quot;customer&quot;)
+</code></pre>
+<pre><code class="language-go">// Go has no lazy-loading ORM in the standard toolkit: queries are explicit,
+// so N+1 is visible as a query inside a loop. Batch it.
+rows, err := db.QueryContext(ctx,
+    `SELECT o.id, c.name FROM orders o
+     JOIN customers c ON c.id = o.customer_id
+     WHERE o.date = $1`, today)
+</code></pre>
+<pre><code class="language-typescript">// Prisma: include runs a second batched query, not one per order
+const orders = await prisma.order.findMany({
+  where: { date: today },
+  include: { customer: true },
+});
+// GraphQL resolvers: use DataLoader to batch per-field lookups into one IN query
+</code></pre>
+</div>
+<p><strong>When it's fine.</strong> All abstractions leak; that alone is not a reason to drop them. Keep the ORM, keep lazy loading for admin screens that touch one record. Just know the leak, log the SQL, and put a test or a query-count assertion on the hot paths.</p>
+<h2 id="design-process-smells">Design-process smells</h2>
+<h3 id="golden-hammer">Golden hammer</h3>
+<p>"If all you have is a hammer, everything looks like a nail." The <strong>golden hammer</strong> is reaching for the tool you know best, or the one that worked last time, regardless of the problem: microservices for a three-person team, Kafka for a queue of ten messages an hour, a NoSQL store for highly relational data, regex for parsing HTML, a design pattern in every class, or the whole team's favourite framework for a 50-line script.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 220" width="900" role="img" aria-label="One favourite tool applied to five different problems; it fits one and is costly or wrong for the others">
+<text class="title" x="20" y="26">One hammer, five problems</text>
+<rect class="box accent" x="30" y="90" width="170" height="54" rx="10"/>
+<text x="115" y="114" text-anchor="middle" font-weight="700">our favourite tool</text>
+<text class="small muted" x="115" y="132" text-anchor="middle">"it worked last time"</text>
+<rect class="box done" x="380" y="40" width="250" height="28" rx="6"/><text class="small" x="505" y="59" text-anchor="middle">event streaming at 50k msg/s</text>
+<rect class="box bad" x="380" y="76" width="250" height="28" rx="6"/><text class="small" x="505" y="95" text-anchor="middle">a nightly batch of 200 rows</text>
+<rect class="box bad" x="380" y="112" width="250" height="28" rx="6"/><text class="small" x="505" y="131" text-anchor="middle">request/reply with an answer needed now</text>
+<rect class="box bad" x="380" y="148" width="250" height="28" rx="6"/><text class="small" x="505" y="167" text-anchor="middle">a list of 30 config values</text>
+<rect class="box path" x="380" y="184" width="250" height="28" rx="6"/><text class="small" x="505" y="203" text-anchor="middle">audit log you must query by user</text>
+<path class="edge" d="M200,110 L374,54"/><path class="edge" d="M200,114 L374,90"/><path class="edge" d="M200,117 L374,126"/><path class="edge" d="M200,120 L374,162"/><path class="edge" d="M200,124 L374,198"/>
+<text class="small" x="650" y="59">fits: this is what it is for</text>
+<text class="small" x="650" y="95">a cron job and a table</text>
+<text class="small" x="650" y="131">an HTTP call</text>
+<text class="small" x="650" y="167">a config file</text>
+<text class="small" x="650" y="203">works, but a DB index is simpler</text>
+</svg>
+<figcaption>The tool is not the problem. Using it without comparing it to the simplest alternative is.</figcaption>
+</figure>
+
+<div class="recognize">
+<p><strong>Smell detector: golden hammer</strong></p>
+<ul>
+<li>Architecture decisions without a written alternative ("we'll use X" with no "instead of Y because").</li>
+<li>The same technology appears in every design doc, regardless of scale or shape.</li>
+<li>Workarounds to make the tool fit (fake request/reply over a log, joins in application code over a key-value store).</li>
+<li>The reason given is familiarity, or a conference talk, not a property of the problem.</li>
+</ul>
+</div>
+<p><strong>Way out.</strong> Write a short decision record with <strong>two</strong> options and the simplest one that could work. Ask what the problem needs (consistency, latency, volume, query shape, team size), then which tool has those properties. Spikes are cheap; migrations are not.</p>
+<p><strong>When it's fine.</strong> Standardising on a few well-understood tools is a real benefit: shared expertise, one way to operate, fewer pager surprises. "Boring technology" is a deliberate choice. The smell is when the standard tool is clearly wrong for the shape of the problem and nobody is allowed to say so.</p>
+<h3 id="premature-abstraction-and-speculative-generality">Premature abstraction and speculative generality</h3>
+<p><strong>Speculative generality</strong> is building for needs you imagine: an <code>IPaymentProcessorFactoryProvider</code> for the one payment provider, a plugin system nobody plugs into, abstract base classes with one subclass, configuration options for things that never vary, a <code>Repository&lt;T&gt;</code> wrapper over an ORM that is already a repository. <strong>Premature abstraction</strong> is the closely related habit of extracting a shared function or base class after seeing the <em>second</em> similar piece of code, before you know what actually varies.</p>
+<p>Both cost you twice. You pay to build and read the indirection now, and you pay again when the real second case arrives and doesn't fit the shape you guessed. Sandi Metz's summary: "duplication is far cheaper than the wrong abstraction". A wrong abstraction grows parameters and boolean flags (<code>if (isLegacy) ...</code>) until every caller passes a different combination, which is the <a href="#boolean-flag-parameters">flag parameter</a> smell.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 230" width="900" role="img" aria-label="Five layers of interfaces and factories wrap a single concrete class; the direct version calls the class">
+<text class="title" x="20" y="26">Speculative: 5 types to send one kind of email</text>
+<rect class="box dim" x="30" y="42" width="300" height="28" rx="6" stroke-dasharray="5 4"/><text class="small mono" x="180" y="61" text-anchor="middle">INotificationChannelFactoryProvider</text>
+<rect class="box dim" x="30" y="78" width="300" height="28" rx="6" stroke-dasharray="5 4"/><text class="small mono" x="180" y="97" text-anchor="middle">INotificationChannelFactory</text>
+<rect class="box dim" x="30" y="114" width="300" height="28" rx="6" stroke-dasharray="5 4"/><text class="small mono" x="180" y="133" text-anchor="middle">AbstractNotificationChannel&lt;TMsg&gt;</text>
+<rect class="box dim" x="30" y="150" width="300" height="28" rx="6" stroke-dasharray="5 4"/><text class="small mono" x="180" y="169" text-anchor="middle">INotificationChannel&lt;TMsg&gt;</text>
+<rect class="box bad" x="30" y="186" width="300" height="28" rx="6"/><text class="small mono" x="180" y="205" text-anchor="middle">SmtpEmailChannel (the only implementation)</text>
+<text class="title" x="480" y="26">Direct: 1 type, extract later if needed</text>
+<rect class="box done" x="480" y="100" width="300" height="40" rx="8"/><text class="small mono" x="630" y="125" text-anchor="middle">EmailSender(SmtpClient smtp)</text>
+<text class="small muted" x="630" y="170" text-anchor="middle">when SMS arrives: extract IMessageSender</text>
+<text class="small muted" x="630" y="188" text-anchor="middle">from two real cases, in an hour, with an IDE</text>
+</svg>
+<figcaption>Abstractions are cheap to add when the second and third real cases show you what varies, and expensive to remove once everything depends on them.</figcaption>
+</figure>
+
+<div class="recognize">
+<p><strong>Smell detector: speculative generality</strong></p>
+<ul>
+<li>Interfaces with exactly one implementation <strong>and</strong> no test double, no second assembly boundary, no plugin need.</li>
+<li>Abstract classes with one subclass; generic type parameters that are always the same type.</li>
+<li>Parameters, options or hooks that every caller passes the same value for, or nobody uses.</li>
+<li>Names with stacked suffixes: <code>FactoryProvider</code>, <code>ManagerFactory</code>, <code>BaseAbstractHandler</code>.</li>
+<li>"We might need to support X later" in the PR description, with no ticket for X.</li>
+</ul>
+</div>
+<div class="code-tabs" data-labels="Before,After">
+<pre><code class="language-csharp">public interface IReportFormatterFactory { IReportFormatter Create(ReportKind kind); }
+public interface IReportFormatter { string Format(Report r, FormatOptions o); }
+public abstract class ReportFormatterBase : IReportFormatter { /* template method nobody overrides */ }
+public sealed class CsvReportFormatter : ReportFormatterBase { /* the only one */ }
+public sealed class FormatOptions { public bool Legacy { get; init; } public string? Culture { get; init; } } // always default
+</code></pre>
+<pre><code class="language-csharp">public static class CsvReport
+{
+    public static string Format(Report r) =&gt; /* 20 straightforward lines */;
+}
+// Need a second format later? Extract an interface from two concrete, working versions.
+</code></pre>
+</div>
+<p><strong>When abstraction up front is right.</strong> When the variation is <strong>known</strong>, not imagined: a public library API that can't break later, an interface at an I/O boundary that you need to fake in tests, a plugin point you are contractually building, or a module boundary between teams. The rule of thumb is the <a href="design-principles.html#dry-wet-and-the-rule-of-three">rule of three</a>: write it once, tolerate it twice, abstract on the third time, when you can see what really varies. See also <a href="design-principles.html#yagni-you-arent-gonna-need-it">YAGNI</a>.</p>
+<h3 id="copy-paste-and-divergence">Copy-paste and divergence</h3>
+<p>Copy-paste is the fastest way to write the second version of something. The anti-pattern is what happens next: the copies <strong>diverge</strong>. A bug is fixed in one copy; a rule changes in two of three; someone copies the stale copy to create a fourth. Eventually nobody knows which version is right, and the copies disagree in production.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 220" width="900" role="img" aria-label="Timeline: a validation function is copied twice; a bug fix lands in one copy; a fourth copy is made from a stale one">
+<text class="title" x="20" y="26">How three copies of one rule drift apart</text>
+<path class="edge" d="M60,60 L860,60"/><path class="edge" d="M60,110 L860,110"/><path class="edge" d="M60,160 L860,160"/><path class="edge" d="M380,200 L860,200"/>
+<text class="small" x="20" y="64">A</text><text class="small" x="20" y="114">B</text><text class="small" x="20" y="164">C</text><text class="small" x="340" y="204">D</text>
+<rect class="box done" x="70" y="46" width="110" height="28" rx="6"/><text class="small" x="125" y="65" text-anchor="middle">validate v1</text>
+<rect class="box done" x="140" y="96" width="110" height="28" rx="6"/><text class="small" x="195" y="115" text-anchor="middle">copy of v1</text>
+<rect class="box done" x="200" y="146" width="110" height="28" rx="6"/><text class="small" x="255" y="165" text-anchor="middle">copy of v1</text>
+<rect class="box active" x="430" y="46" width="130" height="28" rx="6"/><text class="small" x="495" y="65" text-anchor="middle">bug fixed: v2</text>
+<rect class="box bad" x="430" y="96" width="130" height="28" rx="6"/><text class="small" x="495" y="115" text-anchor="middle">still v1 (bug)</text>
+<rect class="box path" x="600" y="146" width="160" height="28" rx="6"/><text class="small" x="680" y="165" text-anchor="middle">v1 + local tweak</text>
+<rect class="box bad" x="600" y="186" width="160" height="28" rx="6"/><text class="small" x="680" y="205" text-anchor="middle">copied from C: bug + tweak</text>
+<path class="edge" d="M255,174 L600,196"/>
+</svg>
+<figcaption>Duplication is cheap on the day it happens. The cost is every later change that must find and update all copies, and the ones it misses.</figcaption>
+</figure>
+
+<div class="recognize">
+<p><strong>Smell detector: copy-paste divergence</strong></p>
+<ul>
+<li>Duplicate-code reports (SonarQube, PMD CPD, jscpd, pylint <code>duplicate-code</code>, <code>dupl</code> for Go) show blocks with small differences.</li>
+<li>A bug fix PR touches one file, and the same bug is reported again a month later from another screen.</li>
+<li>Functions named <code>ValidateOrder2</code>, <code>calcNew</code>, <code>handler_copy</code>.</li>
+<li>Similar code that differs in one literal or one condition, with no comment saying why.</li>
+</ul>
+</div>
+<p><strong>Way out.</strong> Extract the shared <strong>knowledge</strong> into one function, type or table, and make the differences explicit parameters. Before extracting, ask whether the copies represent the <em>same rule</em> or two rules that <em>happen to look alike today</em>. DRY is about knowledge, not text: two validation rules owned by different teams that coincidentally match should stay separate, or you'll couple them (the premature abstraction above). See <a href="design-principles.html#dry-wet-and-the-rule-of-three">DRY, WET and the rule of three</a>.</p>
+<p><strong>When it's fine.</strong> Tests often read better with some repetition (each test self-contained). Copying across service boundaries can be intentional, to avoid a shared library that couples deploys. Generated code is duplicated by design.</p>
+<h2 id="code-level-smells">Code-level smells</h2>
+<h3 id="boolean-flag-parameters">Boolean flag parameters</h3>
+<p><code>Export(report, true, false, true, false)</code>. What does the third <code>true</code> mean? A <strong>flag argument</strong> says "this method does two different things, and the caller picks one". Each flag doubles the behaviours the method has, and the signature can't say which combinations make sense. The visualizer enumerates every combination for a set of flags and marks the ones your rules say are nonsense. Each still compiles.</p>
+<div class="viz" data-viz="anti-patterns-flags"></div>
+
+<div class="recognize">
+<p><strong>Smell detector: boolean flag parameters</strong></p>
+<ul>
+<li>Call sites with bare <code>true</code>/<code>false</code> literals that need a comment or an IDE hint to read.</li>
+<li>The method body starts with <code>if (flag) { ...one thing... } else { ...another... }</code>.</li>
+<li>Pairs of flags that contradict each other (<code>dryRun</code> and <code>overwrite</code>, <code>includeDeleted</code> and <code>onlyDeleted</code>).</li>
+<li>A flag added to an existing shared method "so it works for my case too" (a wrong abstraction growing).</li>
+</ul>
+</div>
+<p>There are three ways out, and the right one depends on what the flag does. If it <strong>switches the whole behaviour</strong>, split the method (<code>Preview</code> vs <code>Export</code>). If it chooses <strong>one of several modes</strong>, use an enum. If several flags are <strong>independent options</strong>, use a named options object (or keyword arguments).</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">public enum Delivery { Download, Email }
+public sealed record ExportOptions(bool Zip = false, bool Overwrite = false);
+
+public void Export(Report r, Delivery delivery, ExportOptions? options = null) { /* ... */ }
+public ExportPreview Preview(Report r) { /* dry run is a different operation */ }
+
+Export(report, Delivery.Email, new(Zip: true));     // reads like a sentence
+</code></pre>
+<pre><code class="language-java">enum Delivery { DOWNLOAD, EMAIL }
+record ExportOptions(boolean zip, boolean overwrite) {
+    static ExportOptions defaults() { return new ExportOptions(false, false); }
+    ExportOptions withZip() { return new ExportOptions(true, overwrite); }
+}
+
+void export(Report r, Delivery delivery, ExportOptions options) { /* ... */ }
+ExportPreview preview(Report r) { /* ... */ }
+
+export(report, Delivery.EMAIL, ExportOptions.defaults().withZip());
+</code></pre>
+<pre><code class="language-python">from enum import Enum
+
+
+class Delivery(Enum):
+    DOWNLOAD = &quot;download&quot;
+    EMAIL = &quot;email&quot;
+
+
+def export(report, delivery: Delivery, *, zip: bool = False, overwrite: bool = False) -&gt; str:
+    # The bare * makes zip and overwrite keyword-only: export(r, Delivery.EMAIL, True) is a TypeError.
+    return f&quot;{report}:{delivery.value}:zip={zip}:overwrite={overwrite}&quot;
+
+
+def preview(report) -&gt; str:
+    return f&quot;preview of {report}&quot;
+
+
+print(export(&quot;q3&quot;, Delivery.EMAIL, zip=True))   # q3:email:zip=True:overwrite=False
+</code></pre>
+<pre><code class="language-go">type Delivery int
+
+const (
+    Download Delivery = iota
+    Email
+)
+
+type ExportOptions struct {
+    Zip       bool
+    Overwrite bool
+}
+
+func Export(r Report, d Delivery, opt ExportOptions) error { /* ... */ return nil }
+func Preview(r Report) (Preview, error)                    { /* ... */ return Preview{}, nil }
+
+// Field names at the call site; zero values are the defaults.
+err := Export(report, Email, ExportOptions{Zip: true})
+</code></pre>
+<pre><code class="language-typescript">type Delivery = &quot;download&quot; | &quot;email&quot;;
+interface ExportOptions { zip?: boolean; overwrite?: boolean }
+
+function exportReport(r: Report, delivery: Delivery, { zip = false, overwrite = false }: ExportOptions = {}) { /* ... */ }
+function previewReport(r: Report) { /* ... */ }
+
+exportReport(report, &quot;email&quot;, { zip: true });
+</code></pre>
+</div>
+<p><strong>When it's fine.</strong> A single, obviously named boolean whose meaning is clear at the call site with named arguments (<code>list.Sort(descending: true)</code>, Python's <code>sorted(xs, reverse=True)</code>). Setters like <code>SetVisible(bool)</code> aren't flags: the boolean is the <em>data</em>, not a switch between behaviours.</p>
+<h3 id="magic-numbers-and-strings">Magic numbers and strings</h3>
+<p>A <strong>magic number</strong> is an unexplained literal with meaning: <code>if (total &gt; 250)</code>, <code>Thread.Sleep(3000)</code>, <code>status == 4</code>, <code>role == "adm"</code>. The reader can't tell what it means, which unit it is in, or whether the <code>250</code> in <code>Shipping.cs</code> is the same rule as the <code>250</code> in <code>Checkout.cs</code>. Changing it means searching for a number, which also finds every unrelated 250. Magic strings add typos that compile (<code>"Gold"</code> vs <code>"gold"</code>, as in <a href="#shotgun-surgery">shotgun surgery</a>).</p>
+<div class="recognize">
+<p><strong>Smell detector: magic numbers and strings</strong></p>
+<ul>
+<li>Numeric literals other than 0, 1 and -1 in conditions, timeouts, sizes and calculations.</li>
+<li>The same literal in several files.</li>
+<li>Durations without units (<code>Sleep(3000)</code>, <code>timeout=30</code>).</li>
+<li>String comparisons against status, role or type names.</li>
+<li>Analyzers already flag them: Sonar S109, Checkstyle <code>MagicNumber</code>, ESLint <code>no-magic-numbers</code>, pylint <code>magic-value-comparison</code>, <code>gomnd</code>.</li>
+</ul>
+</div>
+<div class="code-tabs" data-labels="Before,After">
+<pre><code class="language-csharp">if (order.Total &gt; 250 &amp;&amp; customer.Country == &quot;DE&quot;) shipping = 0;
+if (user.Role == &quot;adm&quot;) ShowAuditLog();
+await Task.Delay(3000);
+</code></pre>
+<pre><code class="language-csharp">public static class ShippingRules
+{
+    public static readonly Money FreeShippingThreshold = new(250m, &quot;EUR&quot;);   // from the 2024 pricing policy
+}
+public enum Role { Customer, Support, Admin }
+
+if (order.Total &gt;= ShippingRules.FreeShippingThreshold &amp;&amp; customer.Country == Country.Germany) shipping = Money.Zero;
+if (user.Role == Role.Admin) ShowAuditLog();
+await Task.Delay(TimeSpan.FromSeconds(3));          // the unit is in the type
+</code></pre>
+</div>
+<p>Name the concept (not the value: <code>TWO_HUNDRED_FIFTY = 250</code> is no better), put units in types (<code>TimeSpan</code>, <code>Duration</code>, <code>time.Duration</code>, <code>timedelta</code>), and move values that change per environment or per business decision to <strong>configuration</strong>. Fixed sets of strings become enums or union types.</p>
+<p><strong>When it's fine.</strong> Literals whose meaning is the literal itself: <code>x * 2</code> to double, <code>% 2 == 0</code> for even, <code>100</code> in a percentage formula, HTTP status codes in tests (<code>Assert.Equal(404, ...)</code>), and test data. Over-extracting (<code>const int Zero = 0</code>) is noise.</p>
+<h3 id="exception-driven-control-flow">Exception-driven control flow</h3>
+<p>Exceptions are for situations the code can't handle locally: a bug, a broken invariant, an unavailable database. Using them for <strong>expected outcomes</strong> (validation, "not found", "end of input", "user said no") is the anti-pattern. It is slow (capturing a stack trace costs microseconds, hundreds of times a normal return), it hides the outcome from the signature, and broad <code>catch</code> blocks end up swallowing real bugs along with the expected case.</p>
+<div class="recognize">
+<p><strong>Smell detector: exception-driven control flow</strong></p>
+<ul>
+<li><code>try { int.Parse(s) } catch { ... }</code> around input you expect to be invalid sometimes.</li>
+<li><code>catch (Exception)</code> that returns a default, logs nothing, or has an empty body.</li>
+<li>Exceptions thrown and caught in the same method, or used to <code>break</code> out of nested loops.</li>
+<li>Profiling shows exception throwing on the hot path; first-chance exception counters are high.</li>
+<li>Custom exceptions like <code>OrderNotFoundException</code> thrown for every 404.</li>
+</ul>
+</div>
+<p>How "exceptional" an expected failure should be depends on the language's conventions, which is why the fixes differ:</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Smell
+int qty;
+try { qty = int.Parse(input); } catch (FormatException) { qty = 1; }
+
+// Fix: Try pattern for expected failure; exceptions for bugs.
+int qty = int.TryParse(input, out var n) &amp;&amp; n &gt; 0 ? n : 1;
+
+// For domain outcomes, return a result type the caller must look at:
+public Result&lt;Order, OrderError&gt; Place(Cart cart) { /* ... */ }
+</code></pre>
+<pre><code class="language-java">// Java has no TryParse; wrap the check once and return Optional.
+static Optional&lt;Integer&gt; tryParseInt(String s) {
+    if (s == null || !s.matches(&quot;-?\\d{1,9}&quot;)) return Optional.empty();
+    return Optional.of(Integer.parseInt(s));
+}
+int qty = tryParseInt(input).filter(n -&gt; n &gt; 0).orElse(1);
+
+// Lookups: map.getOrDefault / repo.findById(id) returning Optional, not a thrown NotFound.
+</code></pre>
+<pre><code class="language-python"># Python's culture is EAFP (&quot;easier to ask forgiveness&quot;): narrow try/except IS idiomatic.
+def parse_qty(text: str) -&gt; int:
+    try:
+        n = int(text)
+    except ValueError:          # narrow, expected, cheap enough in Python
+        return 1
+    return n if n &gt; 0 else 1
+
+# The smell in Python is the BROAD catch that hides bugs:
+#     except Exception: pass
+print(parse_qty(&quot;3&quot;), parse_qty(&quot;x&quot;), parse_qty(&quot;-2&quot;))   # 3 1 1
+</code></pre>
+<pre><code class="language-go">// Go: errors are values. The anti-pattern is panic/recover as control flow.
+n, err := strconv.Atoi(input)
+if err != nil || n &lt;= 0 {
+    n = 1
+}
+
+// Expected outcomes are sentinel errors the caller checks with errors.Is:
+var ErrNotFound = errors.New(&quot;order not found&quot;)
+if errors.Is(err, ErrNotFound) { /* 404 */ }
+</code></pre>
+<pre><code class="language-typescript">// Return a discriminated union for expected outcomes; throw for bugs.
+type ParseResult = { ok: true; value: number } | { ok: false; error: string };
+
+function parseQty(s: string): ParseResult {
+  const n = Number(s);
+  return Number.isInteger(n) &amp;&amp; n &gt; 0 ? { ok: true, value: n } : { ok: false, error: `bad qty: ${s}` };
+}
+const r = parseQty(input);
+const qty = r.ok ? r.value : 1;
+</code></pre>
+</div>
+<p>The full treatment of <code>Result</code>/<code>Either</code> and railway-oriented composition is in <a href="functional-patterns.html#optionmaybe-and-resulteither">functional patterns</a>.</p>
+<p><strong>When it's fine.</strong> Truly exceptional paths: a missing config file at start-up, a lost database connection, an invariant violation. In Python, narrow <code>try/except KeyError</code> and <code>StopIteration</code> are the language's normal protocol. Crossing a boundary that can only signal failure by throwing (some framework callbacks) is fine; catch at the edge and translate.</p>
+<h3 id="sync-over-async">Sync over async</h3>
+<p><strong>Sync over async</strong> is blocking a thread to wait for asynchronous work: <code>.Result</code>, <code>.Wait()</code>, <code>.GetAwaiter().GetResult()</code> in C#, <code>future.get()</code> / <code>join()</code> on a shared pool in Java, or a blocking call inside an async event loop in Python and JavaScript. It feels harmless because it works on your machine. Under load it <strong>starves the thread pool</strong>: every blocked thread is a thread that can't run the continuations that would unblock the others. The pool slowly adds threads (in .NET, roughly one or two per second once it is starved), so requests pile up, latency explodes, and the process looks hung with low CPU. In apps with a single-threaded synchronization context (WinForms, WPF, classic ASP.NET) it deadlocks outright.</p>
+<p>The visualizer runs a small thread pool. Each request starts (S), awaits I/O for three ticks, and then needs a thread to run its continuation (C). With <code>.Result</code>, the starting thread stays blocked until its own continuation has run on <strong>another</strong> thread. Run a burst of 8 requests on 4 threads in both modes and compare the Gantt charts and the thread count. For the theory, see <a href="concurrency-async.html#thread-pool-starvation">thread-pool starvation</a>.</p>
+<div class="viz" data-viz="anti-patterns-starvation"></div>
+
+<div class="recognize">
+<p><strong>Smell detector: sync over async</strong></p>
+<ul>
+<li><code>.Result</code>, <code>.Wait()</code>, <code>GetAwaiter().GetResult()</code>, <code>Task.Run(...).Result</code> in request-handling code.</li>
+<li><code>CompletableFuture.join()</code> / <code>get()</code> inside code that itself runs on <code>ForkJoinPool.commonPool()</code>.</li>
+<li><code>requests.get</code>, <code>time.sleep</code> or a CPU loop inside <code>async def</code>; <code>fs.readFileSync</code> in a Node request handler.</li>
+<li>Thread count climbing steadily under load, with long latency and low CPU (<code>dotnet-counters</code>: thread pool queue length).</li>
+<li><code>async void</code> methods, or sync interfaces implemented by calling async code.</li>
+</ul>
+</div>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Smell: blocks a pool thread for the whole I/O wait
+public IActionResult Get(int id) =&gt; Ok(_client.GetStockAsync(id).Result);
+
+// Fix: async all the way up to the framework
+public async Task&lt;IActionResult&gt; Get(int id, CancellationToken ct)
+    =&gt; Ok(await _client.GetStockAsync(id, ct));
+</code></pre>
+<pre><code class="language-java">// Smell: blocking join() inside an async stage on the shared common pool
+CompletableFuture.supplyAsync(() -&gt; stockClient.getAsync(id).join());
+
+// Fix 1: compose instead of blocking
+stockClient.getAsync(id).thenApply(Stock::available);
+
+// Fix 2 (Java 21+): virtual threads make blocking cheap; write plain blocking code
+try (var exec = Executors.newVirtualThreadPerTaskExecutor()) {
+    exec.submit(() -&gt; stockClient.get(id));
+}
+</code></pre>
+<pre><code class="language-python">import asyncio
+
+
+# Smell: a blocking call inside the event loop freezes every other request
+async def get_stock_bad(item_id):
+    import time
+    time.sleep(0.05)            # stands in for requests.get(...): blocks the whole loop
+    return item_id
+
+
+# Fix: use an async client (httpx.AsyncClient, aiohttp), or push blocking work to a thread
+async def get_stock(item_id):
+    await asyncio.sleep(0.05)   # or: await asyncio.to_thread(blocking_call, item_id)
+    return item_id
+
+
+async def main():
+    return await asyncio.gather(*(get_stock(i) for i in range(20)))
+
+print(len(asyncio.run(main())))   # 20 requests in ~0.05 s, not 1 s
+</code></pre>
+<pre><code class="language-go">// Go has no async/await colouring: blocking a goroutine is normal and cheap,
+// because the runtime parks it and reuses the OS thread.
+resp, err := http.Get(url)
+
+// The Go version of this smell: holding a scarce resource while you wait.
+mu.Lock()
+resp, err := http.Get(url)  // every other goroutine needing mu now waits on the network
+mu.Unlock()
+</code></pre>
+<pre><code class="language-typescript">import { readFile } from &quot;node:fs/promises&quot;;
+
+// Smell: synchronous I/O in a request handler blocks the single event-loop thread
+app.get(&quot;/report&quot;, (req, res) =&gt; res.send(fs.readFileSync(&quot;report.json&quot;, &quot;utf8&quot;)));
+
+// Fix: await the async API; move CPU-heavy work to worker_threads
+app.get(&quot;/report&quot;, async (req, res) =&gt; res.send(await readFile(&quot;report.json&quot;, &quot;utf8&quot;)));
+</code></pre>
+</div>
+<p>The rules are in <a href="concurrency-async.html#async-all-the-way-the-rules">async all the way</a>. The difference across ecosystems is instructive: in C#, Python and JavaScript, async is a property of the function's type ("coloured functions"), so mixing sync and async needs care at every boundary. Go and Java 21 virtual threads make blocking cheap at the runtime level, which removes this particular smell (but not the ones about holding locks).</p>
+<p><strong>When it's fine.</strong> <code>Main</code> in an old console app before <code>async Task Main</code> existed; a one-off script; tests in frameworks that don't support async (rare today). If you must, block at the very top, once, never in library code.</p>
+<h2 id="architecture-smells">Architecture smells</h2>
+<h3 id="distributed-monolith">Distributed monolith</h3>
+<p>A <strong>distributed monolith</strong> is a system split into services that still can't change or run independently. Every request walks a synchronous chain of HTTP calls; services share a database; deploys have to be coordinated; one service's outage takes down the others. You got the operational cost of microservices (network, serialization, observability, partial failure) and kept the coupling of a monolith.</p>
+<p>The arithmetic is unforgiving. If a request synchronously needs five services, each 99.9% available, the request succeeds only when <strong>all</strong> of them do: 0.999⁵ ≈ 99.5%, about 3.6 hours of failures a month instead of 43 minutes. Latencies add up too. The visualizer multiplies availability and sums latency along your chain, then checks the result with a Monte Carlo of 20,000 requests. Switch to "async events + local data": each service keeps a local copy of what it needs (updated by events), so only the first service is on the request path.</p>
+<div class="viz" data-viz="anti-patterns-distmono"></div>
+
+<div class="recognize">
+<p><strong>Smell detector: distributed monolith</strong></p>
+<ul>
+<li>"We have to deploy Orders, Pricing and Stock together" (lock-step releases, shared version numbers).</li>
+<li>Services read and write the same database tables.</li>
+<li>One user request fans out into a deep synchronous call chain; a slow service makes everything slow.</li>
+<li>A shared "common" library with domain models that every service must upgrade at once.</li>
+<li>Teams can't ship without another team's change.</li>
+</ul>
+</div>
+<div class="compare">
+<div class="bad">
+<h4 id="distributed-monolith_1">Distributed monolith</h4>
+<ul>
+<li>Synchronous chains: availability multiplies down.</li>
+<li>Shared database: schema changes need every team.</li>
+<li>Lock-step deploys, shared domain library.</li>
+</ul>
+</div>
+<div class="good">
+<h4 id="independent-services">Independent services</h4>
+<ul>
+<li>Each service owns its data; others get it via events or APIs.</li>
+<li>Asynchronous messages for anything not needed in the response.</li>
+<li>Contracts versioned; deploy one service at a time.</li>
+</ul>
+</div>
+<div class="warn">
+<h4 id="modular-monolith">Modular monolith</h4>
+<ul>
+<li>Often the honest answer: one deployable, strict module boundaries.</li>
+<li>In-process calls, one database with schema per module.</li>
+<li>Split a module out later, when it has a real reason to scale or ship alone.</li>
+</ul>
+</div>
+</div>
+<p><strong>When it's fine.</strong> A few synchronous calls are normal; queries that need fresh data across services have to call. The smell is when the coupling makes the "micro" in microservices impossible. More in <a href="distributed-architecture.html">distributed architecture</a>.</p>
+<h3 id="big-ball-of-mud">Big ball of mud</h3>
+<p>Brian Foote and Joseph Yoder's 1997 paper: "a haphazardly structured, sprawling, sloppy, duct-tape-and-baling-wire, spaghetti-code jungle". A <strong>big ball of mud</strong> has no recognisable architecture: every module depends on every other, often in cycles, so nothing can be understood, tested or replaced on its own. It isn't designed; it's what every other smell on this page adds up to over years of deadline pressure.</p>
+<p>The measurable part is <strong>dependency cycles</strong>. If Orders uses Billing, Billing uses Customer and Customer uses Orders, those three are one module in practice: you can't build, test, version or extract any of them alone. The visualizer runs Tarjan's algorithm on your module graph to find every tangle (strongly connected component) in one pass, then tries removing each edge inside the largest tangle and suggests the cut that shrinks it the most.</p>
+<div class="viz" data-viz="anti-patterns-mud"></div>
+
+<div class="recognize">
+<p><strong>Smell detector: big ball of mud</strong></p>
+<ul>
+<li>Nobody can draw the architecture, or the drawing doesn't match the code.</li>
+<li>Dependency tools (NDepend, ArchUnit, dependency-cruiser/madge, import-linter, <code>go list</code>) report cycles between modules or namespaces.</li>
+<li>Every change needs a full regression run because "anything could break".</li>
+<li>New developers take months to become productive; knowledge lives in a few people.</li>
+<li>Layers exist in folder names only: the UI calls the database, the domain references the web framework.</li>
+</ul>
+</div>
+<p>Some ecosystems prevent the worst of it: Go <strong>refuses to compile</strong> import cycles between packages, and .NET and Maven/Gradle reject cyclic project references. Cycles between namespaces or classes inside one project are still allowed in all five languages, so add an architecture test that fails the build:</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// NetArchTest (or ArchUnitNET): the domain must not depend on infrastructure.
+var result = Types.InAssembly(typeof(Order).Assembly)
+    .That().ResideInNamespace(&quot;Shop.Domain&quot;)
+    .ShouldNot().HaveDependencyOn(&quot;Shop.Infrastructure&quot;)
+    .GetResult();
+Assert.True(result.IsSuccessful);
+</code></pre>
+<pre><code class="language-java">// ArchUnit
+@ArchTest
+static final ArchRule noCycles =
+    slices().matching(&quot;com.shop.(*)..&quot;).should().beFreeOfCycles();
+
+@ArchTest
+static final ArchRule layers = layeredArchitecture().consideringAllDependencies()
+    .layer(&quot;Web&quot;).definedBy(&quot;..web..&quot;)
+    .layer(&quot;Domain&quot;).definedBy(&quot;..domain..&quot;)
+    .whereLayer(&quot;Web&quot;).mayNotBeAccessedByAnyLayer();
+</code></pre>
+<pre><code class="language-python"># import-linter, configured in pyproject.toml, run in CI with: lint-imports
+# [tool.importlinter]
+# root_package = &quot;shop&quot;
+# [[tool.importlinter.contracts]]
+# name = &quot;Layers&quot;
+# type = &quot;layers&quot;
+# layers = [&quot;shop.web&quot;, &quot;shop.services&quot;, &quot;shop.domain&quot;]
+</code></pre>
+<pre><code class="language-go">// The compiler rejects package import cycles (&quot;import cycle not allowed&quot;).
+// Enforce direction too, e.g. with depguard in golangci-lint:
+//   domain may not import &quot;shop/internal/http&quot; or &quot;database/sql&quot;.
+</code></pre>
+<pre><code class="language-typescript">// dependency-cruiser (.dependency-cruiser.js), run in CI: npx depcruise src
+module.exports = {
+  forbidden: [
+    { name: &quot;no-circular&quot;, severity: &quot;error&quot;, from: {}, to: { circular: true } },
+    { name: &quot;domain-is-pure&quot;, severity: &quot;error&quot;,
+      from: { path: &quot;^src/domain&quot; }, to: { path: &quot;^src/(web|db)&quot; } },
+  ],
+};
+</code></pre>
+</div>
+<p><strong>Way out.</strong> Not a rewrite (big-bang rewrites of mud usually produce new mud, late). Find the cycles, cut the cheapest edges by inverting dependencies (<a href="design-principles.html#d-dependency-inversion-principle">dependency inversion</a>) or by publishing events, draw module boundaries around what's left, then enforce them with the tests above. Replace the worst areas incrementally with the strangler fig, below.</p>
+<h2 id="refactoring-safely-characterization-tests-and-the-strangler">Refactoring safely: characterization tests and the strangler</h2>
+<p>Every "way out" above is a refactoring of code that is in production. Two techniques make that safe.</p>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1</small><strong>Pin the behaviour</strong><p>Write characterization tests: call the code with real-looking inputs and assert whatever it returns today, bugs included. Snapshot/approval tests (Verify, ApprovalTests, syrupy, Jest snapshots) make this fast.</p></div>
+<div class="flow-step"><small>2</small><strong>Make the change easy</strong><p>Small, behaviour-preserving steps with IDE refactorings: extract method, extract class, move method, introduce parameter object. Commit after each green run.</p></div>
+<div class="flow-step"><small>3</small><strong>Then make the easy change</strong><p>Only now add the feature or fix the bug, in the newly clean place. Kent Beck: "make the change easy (warning: this may be hard), then make the easy change".</p></div>
+<div class="flow-step"><small>4</small><strong>Strangle what is too big to refactor</strong><p>Put a facade or routing layer in front, send one use case at a time to new code, and delete the old path when traffic reaches zero.</p></div>
+</div>
+
+<div class="tip">
+<p><strong>Use <code>git</code> as a smell detector.</strong> <code>git log --format= --name-only | sort | uniq -c | sort -rn | head</code> lists the most-changed files: your god objects. Files that keep appearing in the same commits but live in different folders are your shotgun surgery. Hotspots (high churn × high complexity) are where refactoring pays back first.</p>
+</div>
+<h2 id="deciding-what-to-fix-first">Deciding what to fix first</h2>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1</small><strong>Is it causing incidents now?</strong><p>Sync over async, N+1 on a hot path, swallowed exceptions, flaky tests from global state. Fix these first; they cost money every day.</p></div>
+<div class="flow-step"><small>2</small><strong>Is it in a hotspot?</strong><p>High churn plus high complexity: god objects, shotgun surgery, copy-paste. Refactor as part of the next feature that touches it.</p></div>
+<div class="flow-step"><small>3</small><strong>Will it spread?</strong><p>Service locators, flag parameters and magic strings get copied as "how we do it here". Stop new instances in review and with analyzers.</p></div>
+<div class="flow-step"><small>4</small><strong>Is it stable and rarely touched?</strong><p>Leave it. Ugly code that never changes costs almost nothing. Refactoring it adds risk without payback.</p></div>
+</div>
+
+<h2 id="pitfalls">Pitfalls</h2>
+<div class="pitfall">
+<p><strong>The refactoring rewrite.</strong> A team "fixed" a 6,000-line god class by rewriting it from scratch over four months; the new version missed dozens of undocumented edge cases and was rolled back. <strong>Fix:</strong> characterization tests first, then extract one cluster at a time, shipping after each step.</p>
+</div>
+<div class="pitfall">
+<p><strong>Swapping one smell for another.</strong> Breaking up a god object into twelve classes with interfaces, factories and one implementation each traded a god object for speculative generality. <strong>Fix:</strong> extract along the cohesion groups the code actually has, and add interfaces only where you need a seam.</p>
+</div>
+<div class="pitfall">
+<p><strong>DRY across bounded contexts.</strong> Two services shared a <code>Customer</code> class "to avoid duplication"; every change to it needed both teams and a lock-step deploy (a distributed monolith in miniature). <strong>Fix:</strong> duplicate the data shape per context and translate at the boundary.</p>
+</div>
+<div class="pitfall">
+<p><strong><code>.Result</code> in a constructor.</strong> An ASP.NET Core service loaded settings with <code>GetSettingsAsync().Result</code> in its constructor, registered as scoped. Fine in testing; under load, every request blocked a thread and the pool starved within seconds of a traffic spike. <strong>Fix:</strong> load once at start-up (<code>IHostedService</code> or <code>await</code> in <code>Program.cs</code>), inject the result.</p>
+</div>
+<div class="pitfall">
+<p><strong>Smell metrics as targets.</strong> A team enforced "no class over 200 lines"; developers split classes at line 199 into <code>OrderManagerPart2</code>. <strong>Fix:</strong> use metrics to find candidates for review, not as gates. Cohesion and change patterns matter more than size.</p>
+</div>
+<h2 id="checklist">Checklist</h2>
+<ul>
+<li>Classes have one reason to change; vague names (<code>Manager</code>, <code>Helper</code>, <code>Utils</code>) are challenged in review.</li>
+<li>Domain objects protect their invariants; setters aren't public by default.</li>
+<li>Concepts with rules (money, ids, emails, durations) have their own types.</li>
+<li>Each business rule lives in one place; type-code <code>switch</code>es aren't repeated across files.</li>
+<li>Dependencies arrive through constructors; no locator calls or mutable statics in business code.</li>
+<li>Hot data-access paths have query counts checked (log the SQL in development).</li>
+<li>New abstractions are justified by two or three real cases, not by "later".</li>
+<li>No bare <code>true</code>/<code>false</code> arguments; no unexplained literals; units are in types.</li>
+<li>Exceptions for the unexpected; <code>Try</code>/<code>Result</code>/<code>Optional</code> for expected failures; no empty <code>catch</code>.</li>
+<li>Async code is async all the way; no <code>.Result</code>, <code>.Wait()</code>, <code>readFileSync</code> or <code>time.sleep</code> on request paths.</li>
+<li>Module dependencies are acyclic and enforced by an architecture test in CI.</li>
+<li>Services own their data, and a request's synchronous call chain is short.</li>
+</ul>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<p><summary>A class has 800 lines, but LCOM4 = 1. Is it a god object?</summary></p>
+<p>Probably not. LCOM4 = 1 means every method is connected through shared fields: the class has one cohesive responsibility, it's just big. Look for long methods to extract <em>within</em> the class instead. A 200-line class with LCOM4 = 3 is the stronger smell: three classes in one.</p>
+</details>
+<details class="quiz">
+<p><summary>Your tests pass individually and fail when run together. What smell do you suspect, and how do you prove it?</summary></p>
+<p>Shared mutable state: a static field, a singleton with mutable properties, a module-level dict, or an environment variable. Run the failing pair in both orders, or with the runner's random-order option, and log the shared value at each step. The fix is to make the state an injected instance per test.</p>
+</details>
+<details class="quiz">
+<p><summary>A page lists 200 orders and runs 201 SQL queries. Name the smell and two fixes.</summary></p>
+<p>The N+1 query problem, a leaky abstraction from lazy loading. Fix by eager loading in the original query (<code>Include</code>, <code>join fetch</code>, <code>select_related</code>, Prisma <code>include</code>) or by batching the lookups into one <code>WHERE id IN (...)</code> query (<code>selectinload</code>, <code>default_batch_fetch_size</code>, DataLoader).</p>
+</details>
+<details class="quiz">
+<p><summary>Five services in a synchronous chain are each 99.9% available. What is the best-case availability of the request?</summary></p>
+<p>0.999⁵ ≈ 0.995, so 99.5%: about 3.6 hours of failed requests per 30-day month, versus about 43 minutes for one service. Retries can help with transient errors but add latency; the structural fix is fewer synchronous hops.</p>
+</details>
+<details class="quiz">
+<p><summary>You see the same eight-line validation block in two places. Should you extract it now?</summary></p>
+<p>Not automatically. Ask whether it's the same <strong>rule</strong> (same owner, must change together) or two rules that look alike today. If it's the same knowledge, extract it. If unsure, wait for the third case (rule of three); duplication is cheaper than the wrong abstraction.</p>
+</details>
+<details class="quiz">
+<p><summary>Why does blocking with <code>.Result</code> hurt an ASP.NET Core app even though there is no synchronization context to deadlock on?</summary></p>
+<p>The blocked thread can't do any other work while it waits, and the continuation that would complete the task needs <strong>another</strong> pool thread. Under a burst, all threads end up blocked waiting for continuations that are queued behind them. The pool adds threads slowly, so throughput collapses and latency grows: thread-pool starvation.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>God object</strong>LCOM4 &gt; 1 → extract class per field cluster</div>
+<div><strong>Anemic model</strong>public setters + rule services → behaviour on the entity</div>
+<div><strong>Primitive obsession</strong>string ids, decimal money → value types, brands</div>
+<div><strong>Feature envy</strong>reads another's data → move method there</div>
+<div><strong>Shotgun surgery</strong>one change, many files → one owning type</div>
+<div><strong>Service locator</strong>hidden deps → constructor injection</div>
+<div><strong>Global state</strong>flaky tests → injected instance, container singleton</div>
+<div><strong>Leaky abstraction</strong>N+1 → eager load, batch IN, log SQL</div>
+<div><strong>Golden hammer</strong>always X → compare two options in writing</div>
+<div><strong>Speculative generality</strong>one-impl interfaces → inline; rule of three</div>
+<div><strong>Copy-paste</strong>diverging copies → extract shared knowledge</div>
+<div><strong>Flag params</strong>2ⁿ behaviours → split method, enum, options</div>
+<div><strong>Magic values</strong>bare 250 → named constant, enum, config, units</div>
+<div><strong>Exception flow</strong>expected failure → Try / Result / Optional</div>
+<div><strong>Sync over async</strong>.Result → await all the way</div>
+<div><strong>Distributed monolith</strong>sync chains, shared DB → events, own data</div>
+<div><strong>Big ball of mud</strong>cycles → cut edges, architecture tests, strangler</div>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/aspnet/core/fundamentals/best-practices#avoid-blocking-calls">ASP.NET Core best practices: avoid blocking calls</a> and <a href="https://learn.microsoft.com/ef/core/performance/efficient-querying">EF Core: efficient querying, related data</a></li>
+<li><a href="https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/">.NET code quality rules</a>, <a href="https://www.archunit.org/userguide/html/000_Index.html">ArchUnit user guide</a>, <a href="https://import-linter.readthedocs.io/">import-linter</a>, <a href="https://github.com/sverweij/dependency-cruiser">dependency-cruiser</a></li>
+<li><a href="https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#fetching">Hibernate ORM user guide: fetching</a>, <a href="https://docs.sqlalchemy.org/en/20/orm/queryguide/relationships.html">SQLAlchemy relationship loading techniques</a></li>
+<li><a href="https://go.dev/ref/spec#Import_declarations">Go FAQ and spec: import cycles</a> and <a href="https://go.dev/doc/effective_go">Effective Go</a></li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="functional-patterns.html"><small>&larr; PREVIOUS</small>Functional Patterns in Mainstream Languages</a><a class="next" href="application-architecture.html"><small>NEXT &rarr;</small>Application Architecture Styles</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-code-that-fights-every-change">The problem: code that fights every change</a></li>
+<li><a href="#the-mental-model-smells-at-five-scales">The mental model: smells at five scales</a></li>
+<li><a href="#class-level-smells">Class-level smells</a><ul>
+<li><a href="#god-object">God object</a></li>
+<li><a href="#anemic-domain-model">Anemic domain model</a></li>
+<li><a href="#primitive-obsession">Primitive obsession</a></li>
+<li><a href="#feature-envy">Feature envy</a></li>
+<li><a href="#shotgun-surgery">Shotgun surgery</a></li>
+</ul>
+</li>
+<li><a href="#dependency-and-state-smells">Dependency and state smells</a><ul>
+<li><a href="#service-locator">Service locator</a></li>
+<li><a href="#singleton-abuse-and-global-state">Singleton abuse and global state</a></li>
+<li><a href="#leaky-abstractions">Leaky abstractions</a></li>
+</ul>
+</li>
+<li><a href="#design-process-smells">Design-process smells</a><ul>
+<li><a href="#golden-hammer">Golden hammer</a></li>
+<li><a href="#premature-abstraction-and-speculative-generality">Premature abstraction and speculative generality</a></li>
+<li><a href="#copy-paste-and-divergence">Copy-paste and divergence</a></li>
+</ul>
+</li>
+<li><a href="#code-level-smells">Code-level smells</a><ul>
+<li><a href="#boolean-flag-parameters">Boolean flag parameters</a></li>
+<li><a href="#magic-numbers-and-strings">Magic numbers and strings</a></li>
+<li><a href="#exception-driven-control-flow">Exception-driven control flow</a></li>
+<li><a href="#sync-over-async">Sync over async</a></li>
+</ul>
+</li>
+<li><a href="#architecture-smells">Architecture smells</a><ul>
+<li><a href="#distributed-monolith">Distributed monolith</a></li>
+<li><a href="#big-ball-of-mud">Big ball of mud</a></li>
+</ul>
+</li>
+<li><a href="#refactoring-safely-characterization-tests-and-the-strangler">Refactoring safely: characterization tests and the strangler</a></li>
+<li><a href="#deciding-what-to-fix-first">Deciding what to fix first</a></li>
+<li><a href="#pitfalls">Pitfalls</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

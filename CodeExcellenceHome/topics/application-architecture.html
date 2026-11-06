@@ -1,0 +1,2226 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Application Architecture Styles | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/application-architecture.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/application-architecture.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track" open><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html" aria-current="page">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Application Architecture Styles</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">ARCHITECTURE</p><h1>Application Architecture Styles</h1><p class="lede">Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits.</p><div class="meta"><span class="level level-intermediate">Intermediate → Advanced</span><span>~60 min study</span><span>Builds on: <a href="design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a>, <a href="di-fundamentals.html">DI Fundamentals</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="application-architecture" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-where-does-the-business-rule-live">The problem: where does the business rule live?</h2>
+<p>Open almost any five-year-old business application and look for the rule "an order over $10,000 needs manual approval". You will usually find it in several places. Part of it is in a controller action that also parses JSON, opens a <code>SqlConnection</code> and calls Stripe. A copy sits in a background job that "re-checks orders", and another copy is in a stored procedure someone added during an incident. None of these places can be unit-tested without a database. Changing the rule means a search across the whole repository, and upgrading the ORM means touching business code.</p>
+<div class="code-tabs" data-labels="Before: everything in the controller">
+<pre><code class="language-csharp">[ApiController, Route(&quot;orders&quot;)]
+public class OrdersController : ControllerBase
+{
+    [HttpPost]
+    public async Task&lt;IActionResult&gt; Place(PlaceOrderDto dto)
+    {
+        using var db = new SqlConnection(Environment.GetEnvironmentVariable(&quot;DB&quot;));     // infrastructure
+        var customer = await db.QuerySingleAsync&lt;CustomerRow&gt;(
+            &quot;select * from customers where id = @id&quot;, new { dto.CustomerId });          // SQL in the web layer
+        var total = dto.Lines.Sum(l =&gt; l.Qty * l.UnitPrice);                             // business rule #1
+        if (total &gt; 10_000 &amp;&amp; !customer.IsTrusted) return StatusCode(202);               // business rule #2
+        var charge = await new StripeClient(Environment.GetEnvironmentVariable(&quot;STRIPE&quot;))
+            .ChargeAsync(customer.CardToken, total);                                     // vendor SDK
+        if (!charge.Ok) return BadRequest(&quot;card declined&quot;);
+        await db.ExecuteAsync(&quot;insert into orders ...&quot;, new { dto.CustomerId, total });  // persistence
+        await new SmtpClient(&quot;smtp.corp&quot;).SendMailAsync(&quot;shop@corp&quot;, customer.Email, &quot;Thanks!&quot;, &quot;...&quot;); // email
+        return Ok();
+    }
+}
+</code></pre>
+</div>
+<p>This controller mixes four concerns: HTTP, SQL, Stripe and SMTP, and the business rule is buried in the middle of them. The rule cannot be tested without all four, cannot be reused from a message consumer, and is rewritten by anyone who needs it elsewhere. <strong>Application architecture</strong> is the set of decisions about <em>where code goes and which code may know about which</em>, so that this does not happen.</p>
+<div class="rule">
+<p><strong>The one rule behind every modern style:</strong> source-code dependencies point <em>toward</em> the business rules. The code that decides (domain + use cases) never names the code that delivers (HTTP, UI, queues) or the code that stores and calls out (databases, SDKs). Those details depend on the core, through interfaces the core owns.</p>
+</div>
+<p>This page builds on <a href="design-principles.html">Design Principles</a>, especially the Dependency Inversion Principle, and on <a href="di-fundamentals.html">Dependency Injection Fundamentals</a>, which explains how the concrete adapters get plugged in. It compares the four classic styles (layered, hexagonal, onion and clean), then covers vertical slices, CQRS, modular monoliths and per-language project layout. It finishes with the part most tutorials skip: <strong>when not to</strong> use any of these.</p>
+<h2 id="two-pictures-of-every-application">Two pictures of every application</h2>
+<p>The most important idea on this page is that every application has <strong>two</strong> dependency graphs, and they do not have to match.</p>
+<ul>
+<li><strong>Runtime flow:</strong> who <em>calls</em> whom while a request is being served. Control always flows from the outside in and back out: HTTP → your code → database → your code → HTTP.</li>
+<li><strong>Source dependencies:</strong> whose <em>name</em> appears in whose source file (<code>import</code>, <code>using</code>, a constructor parameter type). This graph decides what must be recompiled, retested and understood when something changes.</li>
+</ul>
+<p>In a naive design the two graphs are identical: the order service calls the SQL repository, so it imports the SQL repository. Every architecture style on this page is a way of making the source graph <strong>differ</strong> from the runtime graph, so that the source arrows point at the stable thing (the business rules) instead of the volatile thing (the database, the framework, the vendor SDK).</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 940 330" width="940" role="img" aria-label="Top: at runtime the controller calls PlaceOrder, which calls SqlOrderRepo, which calls SQL Server, all left to right. Bottom: in source code, controller and PlaceOrder both point at the core, PlaceOrder points at the IOrderRepo port inside the core, and SqlOrderRepo outside the core points back left at IOrderRepo, which it implements.">
+<defs>
+<marker id="application-architecture-ar-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker>
+<marker id="application-architecture-ar-done" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker>
+</defs>
+<text x="15" y="26" class="title">Runtime: control flows out to the database and back</text>
+<rect class="box" x="20" y="44" width="160" height="50" rx="8"/><text x="100" y="66" text-anchor="middle" class="mono">Controller</text><text x="100" y="84" text-anchor="middle" class="small muted">HTTP adapter</text>
+<rect class="box accent" x="260" y="44" width="170" height="50" rx="8"/><text x="345" y="66" text-anchor="middle" class="mono">PlaceOrder</text><text x="345" y="84" text-anchor="middle" class="small muted">use case</text>
+<rect class="box" x="510" y="44" width="170" height="50" rx="8"/><text x="595" y="66" text-anchor="middle" class="mono">SqlOrderRepo</text><text x="595" y="84" text-anchor="middle" class="small muted">SQL adapter</text>
+<rect class="box" x="760" y="44" width="160" height="50" rx="8"/><text x="840" y="66" text-anchor="middle" class="mono">SQL Server</text><text x="840" y="84" text-anchor="middle" class="small muted">infrastructure</text>
+<path class="edge accent" d="M182 69 L256 69" marker-end="url(#application-architecture-ar-acc)"/><text x="219" y="61" text-anchor="middle" class="small mono">calls</text>
+<path class="edge accent" d="M432 69 L506 69" marker-end="url(#application-architecture-ar-acc)"/><text x="469" y="61" text-anchor="middle" class="small mono">calls</text>
+<path class="edge accent" d="M682 69 L756 69" marker-end="url(#application-architecture-ar-acc)"/><text x="719" y="61" text-anchor="middle" class="small mono">SQL</text>
+<text x="15" y="146" class="title">Source code: every arrow points at the core</text>
+<rect class="box" x="240" y="164" width="420" height="120" rx="14"/><text x="254" y="184" class="small muted">CORE: owns the rules and the port</text>
+<rect class="box" x="20" y="200" width="160" height="50" rx="8"/><text x="100" y="222" text-anchor="middle" class="mono">Controller</text><text x="100" y="240" text-anchor="middle" class="small muted">imports PlaceOrder</text>
+<rect class="box accent" x="260" y="200" width="170" height="50" rx="8"/><text x="345" y="222" text-anchor="middle" class="mono">PlaceOrder</text><text x="345" y="240" text-anchor="middle" class="small muted">imports IOrderRepo</text>
+<rect class="box accent" x="460" y="200" width="180" height="50" rx="25"/><text x="550" y="222" text-anchor="middle" class="mono">IOrderRepo</text><text x="550" y="240" text-anchor="middle" class="small muted">port (interface)</text>
+<rect class="box" x="740" y="200" width="180" height="50" rx="8"/><text x="830" y="222" text-anchor="middle" class="mono">SqlOrderRepo</text><text x="830" y="240" text-anchor="middle" class="small muted">implements IOrderRepo</text>
+<path class="edge done" d="M182 225 L256 225" marker-end="url(#application-architecture-ar-done)"/>
+<path class="edge done" d="M432 225 L456 225" marker-end="url(#application-architecture-ar-done)"/>
+<path class="edge done" d="M738 225 L644 225" marker-end="url(#application-architecture-ar-done)"/><text x="691" y="216" text-anchor="middle" class="small mono">implements</text>
+<text x="470" y="314" text-anchor="middle" class="small muted">The SQL adapter's source arrow points left, against the runtime flow. That flip is dependency inversion.</text>
+</svg>
+<figcaption>The runtime path is the same in every style. The styles differ in which way the <em>source</em> arrows point. Here the core owns <code>IOrderRepo</code>, so the database adapter depends on the core and not the other way round.</figcaption>
+</figure>
+
+<div class="insight">
+<p><strong>Why the source graph is the one that matters</strong>
+If <code>PlaceOrder.cs</code> contains the word <code>SqlConnection</code>, then you cannot compile, test or read <code>PlaceOrder</code> without SQL. If it only contains <code>IOrderRepo</code>, a five-line in-memory fake replaces the whole database in a test. Changing ORMs then touches only the adapter, and a second adapter (a message consumer, a CLI or a batch job) can drive the same use case. The runtime path is identical in both cases, so none of this costs any performance.</p>
+</div>
+<h2 id="four-styles-at-a-glance">Four styles at a glance</h2>
+<p>The four classic styles are, at heart, two ideas. <strong>Layered</strong> architecture arranges code in horizontal tiers that call downward, with the database at the bottom. <strong>Hexagonal, onion and clean</strong> architecture are three vocabularies for one idea: put the business rules in the centre and make everything else point inward. They differ mostly in how many rings they name.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 940 330" width="940" role="img" aria-label="Four small diagrams. Layered: four stacked boxes Presentation, Business, Data access, Database with arrows pointing down. Hexagonal: an inner hexagon labelled core inside an outer hexagon of adapters, with a driving adapter arrow from the left and a driven adapter arrow from the right, both pointing inward. Onion: four concentric circles labelled infrastructure, application, domain services and model, with an arrow pointing to the centre. Clean: four concentric circles labelled frameworks, adapters, use cases and entities, with an arrow pointing to the centre.">
+<defs>
+<marker id="application-architecture-ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker>
+</defs>
+<text x="117" y="24" text-anchor="middle" class="title">Layered (n-tier)</text>
+<rect class="box" x="25" y="44" width="185" height="44" rx="8"/><text x="117" y="71" text-anchor="middle" class="mono small">Presentation</text>
+<rect class="box accent" x="25" y="104" width="185" height="44" rx="8"/><text x="117" y="131" text-anchor="middle" class="mono small">Business logic</text>
+<rect class="box" x="25" y="164" width="185" height="44" rx="8"/><text x="117" y="191" text-anchor="middle" class="mono small">Data access</text>
+<rect class="box" x="25" y="224" width="185" height="44" rx="8"/><text x="117" y="251" text-anchor="middle" class="mono small">Database</text>
+<path class="edge accent" d="M117 89 L117 101" marker-end="url(#application-architecture-ar2)"/>
+<path class="edge accent" d="M117 149 L117 161" marker-end="url(#application-architecture-ar2)"/>
+<path class="edge accent" d="M117 209 L117 221" marker-end="url(#application-architecture-ar2)"/>
+<text x="117" y="296" text-anchor="middle" class="small muted">arrows point down:</text>
+<text x="117" y="312" text-anchor="middle" class="small muted">the rules depend on the DB</text>
+<text x="352" y="24" text-anchor="middle" class="title">Hexagonal</text>
+<polygon class="box" points="252,160 302,73 402,73 452,160 402,247 302,247"/>
+<polygon class="box accent" points="304,160 328,118 376,118 400,160 376,202 328,202"/>
+<text x="352" y="157" text-anchor="middle" class="mono small">core</text><text x="352" y="173" text-anchor="middle" class="small muted">+ ports</text>
+<text x="352" y="96" text-anchor="middle" class="small muted">adapters</text>
+<path class="edge accent" d="M258 160 L300 160" marker-end="url(#application-architecture-ar2)"/><text x="270" y="190" text-anchor="middle" class="small mono">HTTP</text>
+<path class="edge accent" d="M446 160 L404 160" marker-end="url(#application-architecture-ar2)"/><text x="434" y="190" text-anchor="middle" class="small mono">SQL</text>
+<text x="352" y="296" text-anchor="middle" class="small muted">driving and driven adapters</text>
+<text x="352" y="312" text-anchor="middle" class="small muted">both point at the core</text>
+<text x="587" y="24" text-anchor="middle" class="title">Onion</text>
+<circle class="box" cx="587" cy="160" r="108"/><circle class="box" cx="587" cy="160" r="80"/><circle class="box" cx="587" cy="160" r="54"/><circle class="box accent" cx="587" cy="160" r="28"/>
+<text x="587" y="70" text-anchor="middle" class="small muted">infrastructure</text>
+<text x="587" y="96" text-anchor="middle" class="small muted">application</text>
+<text x="587" y="122" text-anchor="middle" class="small muted">domain svc</text>
+<text x="587" y="164" text-anchor="middle" class="mono small">model</text>
+<path class="edge accent" d="M693 232 L612 176" marker-end="url(#application-architecture-ar2)"/>
+<text x="587" y="296" text-anchor="middle" class="small muted">repository interfaces live</text>
+<text x="587" y="312" text-anchor="middle" class="small muted">in the domain rings</text>
+<text x="822" y="24" text-anchor="middle" class="title">Clean</text>
+<circle class="box" cx="822" cy="160" r="108"/><circle class="box" cx="822" cy="160" r="80"/><circle class="box" cx="822" cy="160" r="54"/><circle class="box accent" cx="822" cy="160" r="28"/>
+<text x="822" y="70" text-anchor="middle" class="small muted">frameworks</text>
+<text x="822" y="96" text-anchor="middle" class="small muted">adapters</text>
+<text x="822" y="122" text-anchor="middle" class="small muted">use cases</text>
+<text x="822" y="164" text-anchor="middle" class="mono small">entities</text>
+<path class="edge accent" d="M928 232 L847 176" marker-end="url(#application-architecture-ar2)"/>
+<text x="822" y="296" text-anchor="middle" class="small muted">the Dependency Rule:</text>
+<text x="822" y="312" text-anchor="middle" class="small muted">source arrows only point in</text>
+</svg>
+<figcaption>Layered stacks tiers on top of the database. The other three put the rules in the middle and differ mainly in vocabulary and in how many rings they name.</figcaption>
+</figure>
+
+<h3 id="layered-n-tier">Layered (n-tier)</h3>
+<p>The oldest and still the most common style. You have a presentation layer (controllers, views), a business layer (services), a data-access layer (repositories, ORM entities), and the database underneath. Each layer may call only the layer directly below it (<strong>strict</strong> layering) or any layer below it (<strong>relaxed</strong> layering). It is easy to explain, and every framework tutorial produces it by default.</p>
+<p>Its weakness is the direction of the arrows. The business layer sits <em>above</em> data access, so it imports data-access types. In practice the ORM entity becomes the domain model, with public setters, navigation properties and lazy loading, and every schema change ripples upward. You can still unit-test the services, but only by mocking repositories that return ORM entities. Layered is a fine choice for CRUD-heavy apps where there are few rules to protect.</p>
+<h3 id="hexagonal-ports-and-adapters">Hexagonal (ports and adapters)</h3>
+<p>Alistair Cockburn's 2005 idea: the application is a hexagon (the number of sides does not matter) with <strong>ports</strong> on its boundary and <strong>adapters</strong> outside. Ports come in two kinds:</p>
+<ul>
+<li><strong>Driving (primary) ports</strong> are the use-case interfaces that the outside world calls into, such as <code>IPlaceOrder</code>. HTTP controllers, CLI commands, message consumers and tests are driving adapters.</li>
+<li><strong>Driven (secondary) ports</strong> are the interfaces the application calls out through, such as <code>OrderRepository</code>, <code>Payments</code> or <code>Clock</code>. They are <strong>declared by the application, in its own vocabulary</strong>. A SQL repository, a Stripe client and a fake are driven adapters that <em>implement</em> them.</li>
+</ul>
+<p>The original motivation was symmetry: <em>"allow an application to equally be driven by users, programs, automated test or batch scripts, and to be developed and tested in isolation from its eventual run-time devices and databases."</em> The style says nothing about what is inside the hexagon, so you can organise it however you like.</p>
+<h3 id="onion">Onion</h3>
+<p>Jeffrey Palermo's 2008 refinement names the inside. The <strong>domain model</strong> sits at the centre, wrapped in <strong>domain services</strong> and then <strong>application services</strong>. The outer ring holds infrastructure, UI <em>and tests</em>. Its signature rule is that <strong>repository interfaces belong to the domain rings</strong>, and only their implementations live outside. All coupling points toward the centre; the outer ring is the only one allowed to touch the database or the framework.</p>
+<h3 id="clean">Clean</h3>
+<p>Robert C. Martin's 2012 synthesis has four rings. <strong>Entities</strong> hold enterprise-wide business rules; <strong>use cases</strong> (interactors) hold application-specific rules; <strong>interface adapters</strong> hold controllers, presenters and gateways; <strong>frameworks and drivers</strong> hold the web framework, the database and devices. Its one hard rule is the <strong>Dependency Rule</strong>: <em>source code dependencies can only point inwards</em>. Clean also adds explicit <strong>input ports</strong>, <strong>output ports</strong> and <strong>presenters</strong>. Most real projects skip presenters and return a result object instead.</p>
+<div class="tip">
+<p><strong>Same idea, different words</strong></p>
+<table>
+<thead>
+<tr>
+<th>Hexagonal</th>
+<th>Onion</th>
+<th>Clean</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>inside of the hexagon</td>
+<td>domain model + domain/application services</td>
+<td>entities + use cases</td>
+<td>the code that decides</td>
+</tr>
+<tr>
+<td>driving port</td>
+<td>application service interface</td>
+<td>input port (use-case boundary)</td>
+<td>how the outside asks for something</td>
+</tr>
+<tr>
+<td>driven port</td>
+<td>repository / service interface in the domain</td>
+<td>output port / gateway interface</td>
+<td>what the core needs from outside</td>
+</tr>
+<tr>
+<td>driving adapter</td>
+<td>UI</td>
+<td>controller</td>
+<td>translates a request into a use-case call</td>
+</tr>
+<tr>
+<td>driven adapter</td>
+<td>infrastructure</td>
+<td>gateway / repository implementation</td>
+<td>talks to a real DB, broker or SDK</td>
+</tr>
+</tbody>
+</table>
+<p>If a team argues about whether they are "doing onion or clean", the answer is usually "yes". Pick one vocabulary per codebase and write it down.</p>
+</div>
+<p>Step through the same feature in each style below. The first half of each run animates the <strong>runtime calls</strong>, which look identical in every style. The second half draws the <strong>source dependencies</strong> and checks each one against the style's rule. The final step searches for any path from the business rules to a driver or SDK. Try layered first: every arrow is legal, but the rules can still reach the database. Then switch on the shortcut and watch a single <code>new</code> break a clean architecture.</p>
+<div class="viz ax-wide" data-viz="application-architecture-styles"></div>
+
+<div class="compare">
+<div class="warn">
+<h4 id="layered">Layered</h4>
+<p><strong>Arrows point at the database.</strong> Business code names data-access types, and the ORM entity often <em>is</em> the domain model. Simple, familiar and fast to start. Fine for CRUD; it gets expensive when the rules grow or when the persistence technology changes.</p>
+</div>
+<div class="good">
+<h4 id="hexagonal">Hexagonal</h4>
+<p><strong>Symmetric ports.</strong> Driving adapters (HTTP, CLI, tests, consumers) and driven adapters (DB, SDKs) sit outside, and both depend on the core. It says nothing about the core's internals. It has the smallest vocabulary and is a good default for "rules + several integrations".</p>
+</div>
+<div class="good">
+<h4 id="onion_1">Onion</h4>
+<p><strong>Names the domain rings.</strong> It puts repository interfaces in the domain, and tests live in the outer ring with infrastructure. Its vocabulary is close to DDD (domain services, application services).</p>
+</div>
+<div class="good">
+<h4 id="clean_1">Clean</h4>
+<p><strong>Four rings and the Dependency Rule.</strong> It adds input and output ports and presenters. It is the most prescriptive, and the easiest to over-apply: one interface per use case plus a presenter per screen is a lot of files for a small app.</p>
+</div>
+</div>
+<h2 id="the-same-feature-in-code-place-order">The same feature in code: place order</h2>
+<p>Words are cheap, so here is the same feature written in ports-and-adapters style in five ecosystems. The rules are:</p>
+<ul>
+<li>an order needs at least one line, and quantities must be positive;</li>
+<li>an order over $10,000 waits for manual approval instead of being charged;</li>
+<li>otherwise the customer's card is charged, and the order becomes <code>Paid</code> or <code>PaymentFailed</code>.</li>
+</ul>
+<p>Money is kept in integer cents everywhere, which avoids floating-point errors and keeps the five versions comparable.</p>
+<h3 id="the-core-domain-and-use-case-with-zero-framework-imports">The core: domain and use case, with zero framework imports</h3>
+<p>Read the <code>import</code> and <code>using</code> lines first. The core names no web framework, ORM, HTTP client or vendor SDK. It declares two <strong>driven ports</strong>, <code>OrderRepository</code> and <code>Payments</code>, in its own vocabulary, and one use case that a driving adapter calls.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Shop.Core/Ordering/Order.cs  (project references: none)
+namespace Shop.Core.Ordering;
+
+public sealed class DomainException(string message) : Exception(message);
+
+public sealed record OrderLine(string Sku, int Qty, long UnitPriceCents)
+{
+    public long TotalCents =&gt; Qty * UnitPriceCents;
+}
+
+public enum OrderStatus { New, AwaitingApproval, Paid, PaymentFailed }
+
+public sealed class Order
+{
+    public const long ApprovalLimitCents = 10_000_00;
+    private readonly List&lt;OrderLine&gt; _lines;
+
+    public Guid Id { get; }
+    public string CustomerId { get; }
+    public OrderStatus Status { get; private set; }
+    public IReadOnlyList&lt;OrderLine&gt; Lines =&gt; _lines;
+    public long TotalCents =&gt; _lines.Sum(l =&gt; l.TotalCents);
+
+    private Order(Guid id, string customerId, List&lt;OrderLine&gt; lines)
+    {
+        (Id, CustomerId, _lines) = (id, customerId, lines);
+        Status = TotalCents &gt; ApprovalLimitCents ? OrderStatus.AwaitingApproval : OrderStatus.New;
+    }
+
+    public static Order Place(string customerId, IEnumerable&lt;OrderLine&gt; lines)
+    {
+        var list = lines.ToList();
+        if (list.Count == 0) throw new DomainException(&quot;An order needs at least one line.&quot;);
+        if (list.Any(l =&gt; l.Qty &lt;= 0)) throw new DomainException(&quot;Quantities must be positive.&quot;);
+        return new Order(Guid.NewGuid(), customerId, list);
+    }
+
+    public void MarkPaid() =&gt; Status = Status == OrderStatus.New ? OrderStatus.Paid
+        : throw new DomainException($&quot;Cannot pay an order that is {Status}.&quot;);
+    public void MarkPaymentFailed() =&gt; Status = Status == OrderStatus.New ? OrderStatus.PaymentFailed
+        : throw new DomainException($&quot;Cannot fail payment of an order that is {Status}.&quot;);
+}
+
+// Shop.Core/Ordering/PlaceOrder.cs: the ports are declared here, by the code that needs them
+public interface IOrderRepository { Task SaveAsync(Order order, CancellationToken ct); }
+public interface IPayments { Task&lt;bool&gt; ChargeAsync(string customerId, long amountCents, CancellationToken ct); }
+
+public sealed record PlaceOrderCommand(string CustomerId, IReadOnlyList&lt;OrderLine&gt; Lines);
+public sealed record PlaceOrderResult(Guid OrderId, OrderStatus Status, long TotalCents);
+
+public sealed class PlaceOrder(IOrderRepository orders, IPayments payments)
+{
+    public async Task&lt;PlaceOrderResult&gt; HandleAsync(PlaceOrderCommand cmd, CancellationToken ct = default)
+    {
+        var order = Order.Place(cmd.CustomerId, cmd.Lines);          // rules live on the entity
+        if (order.Status == OrderStatus.New)
+        {
+            if (await payments.ChargeAsync(order.CustomerId, order.TotalCents, ct)) order.MarkPaid();
+            else order.MarkPaymentFailed();
+        }
+        await orders.SaveAsync(order, ct);
+        return new(order.Id, order.Status, order.TotalCents);
+    }
+}
+</code></pre>
+<pre><code class="language-java">// shop-core/src/main/java/com/shop/ordering/Order.java   (no Spring, no JPA imports)
+package com.shop.ordering;
+
+import java.util.List;
+import java.util.UUID;
+
+public final class Order {
+    public static final long APPROVAL_LIMIT_CENTS = 10_000_00L;
+    public enum Status { NEW, AWAITING_APPROVAL, PAID, PAYMENT_FAILED }
+    public record Line(String sku, int qty, long unitPriceCents) {
+        public long totalCents() { return qty * unitPriceCents; }
+    }
+
+    private final UUID id;
+    private final String customerId;
+    private final List&lt;Line&gt; lines;
+    private Status status;
+
+    private Order(UUID id, String customerId, List&lt;Line&gt; lines) {
+        this.id = id; this.customerId = customerId; this.lines = List.copyOf(lines);
+        this.status = totalCents() &gt; APPROVAL_LIMIT_CENTS ? Status.AWAITING_APPROVAL : Status.NEW;
+    }
+
+    public static Order place(String customerId, List&lt;Line&gt; lines) {
+        if (lines.isEmpty()) throw new DomainException(&quot;An order needs at least one line.&quot;);
+        if (lines.stream().anyMatch(l -&gt; l.qty() &lt;= 0)) throw new DomainException(&quot;Quantities must be positive.&quot;);
+        return new Order(UUID.randomUUID(), customerId, lines);
+    }
+
+    public void markPaid()          { requireNew(); status = Status.PAID; }
+    public void markPaymentFailed() { requireNew(); status = Status.PAYMENT_FAILED; }
+    private void requireNew() {
+        if (status != Status.NEW) throw new DomainException(&quot;Order is &quot; + status);
+    }
+
+    public long totalCents() { return lines.stream().mapToLong(Line::totalCents).sum(); }
+    public UUID id() { return id; }
+    public String customerId() { return customerId; }
+    public Status status() { return status; }
+    public List&lt;Line&gt; lines() { return lines; }
+}
+
+// DomainException.java, OrderRepository.java, Payments.java, PlaceOrder.java (same package)
+public class DomainException extends RuntimeException {
+    public DomainException(String message) { super(message); }
+}
+public interface OrderRepository { void save(Order order); }
+public interface Payments { boolean charge(String customerId, long amountCents); }
+
+public final class PlaceOrder {
+    public record Command(String customerId, List&lt;Order.Line&gt; lines) {}
+    public record Result(UUID orderId, Order.Status status, long totalCents) {}
+
+    private final OrderRepository orders;
+    private final Payments payments;
+    public PlaceOrder(OrderRepository orders, Payments payments) {
+        this.orders = orders; this.payments = payments;
+    }
+
+    public Result handle(Command cmd) {
+        Order order = Order.place(cmd.customerId(), cmd.lines());
+        if (order.status() == Order.Status.NEW) {
+            if (payments.charge(order.customerId(), order.totalCents())) order.markPaid();
+            else order.markPaymentFailed();
+        }
+        orders.save(order);
+        return new Result(order.id(), order.status(), order.totalCents());
+    }
+}
+</code></pre>
+<pre><code class="language-python"># shop/ordering/core.py  (standard library only)
+from __future__ import annotations
+
+import uuid
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Protocol
+
+APPROVAL_LIMIT_CENTS = 10_000_00
+
+
+class DomainError(Exception):
+    pass
+
+
+class Status(str, Enum):
+    NEW = &quot;new&quot;
+    AWAITING_APPROVAL = &quot;awaiting_approval&quot;
+    PAID = &quot;paid&quot;
+    PAYMENT_FAILED = &quot;payment_failed&quot;
+
+
+@dataclass(frozen=True)
+class Line:
+    sku: str
+    qty: int
+    unit_price_cents: int
+
+    @property
+    def total_cents(self) -&gt; int:
+        return self.qty * self.unit_price_cents
+
+
+@dataclass
+class Order:
+    customer_id: str
+    lines: tuple[Line, ...]
+    id: uuid.UUID = field(default_factory=uuid.uuid4)
+    status: Status = field(init=False)
+
+    def __post_init__(self) -&gt; None:
+        self.status = Status.AWAITING_APPROVAL if self.total_cents &gt; APPROVAL_LIMIT_CENTS else Status.NEW
+
+    @classmethod
+    def place(cls, customer_id: str, lines: list[Line]) -&gt; Order:
+        if not lines:
+            raise DomainError(&quot;An order needs at least one line.&quot;)
+        if any(l.qty &lt;= 0 for l in lines):
+            raise DomainError(&quot;Quantities must be positive.&quot;)
+        return cls(customer_id, tuple(lines))
+
+    @property
+    def total_cents(self) -&gt; int:
+        return sum(l.total_cents for l in self.lines)
+
+    def mark_paid(self) -&gt; None:
+        self._require_new()
+        self.status = Status.PAID
+
+    def mark_payment_failed(self) -&gt; None:
+        self._require_new()
+        self.status = Status.PAYMENT_FAILED
+
+    def _require_new(self) -&gt; None:
+        if self.status is not Status.NEW:
+            raise DomainError(f&quot;Order is {self.status.value}&quot;)
+
+
+class OrderRepository(Protocol):          # driven port: structural, no base class needed
+    async def save(self, order: Order) -&gt; None: ...
+
+
+class Payments(Protocol):
+    async def charge(self, customer_id: str, amount_cents: int) -&gt; bool: ...
+
+
+@dataclass(frozen=True)
+class PlaceOrderCommand:
+    customer_id: str
+    lines: list[Line]
+
+
+@dataclass(frozen=True)
+class PlaceOrderResult:
+    order_id: uuid.UUID
+    status: Status
+    total_cents: int
+
+
+class PlaceOrder:
+    def __init__(self, orders: OrderRepository, payments: Payments) -&gt; None:
+        self._orders, self._payments = orders, payments
+
+    async def __call__(self, cmd: PlaceOrderCommand) -&gt; PlaceOrderResult:
+        order = Order.place(cmd.customer_id, cmd.lines)
+        if order.status is Status.NEW:
+            if await self._payments.charge(order.customer_id, order.total_cents):
+                order.mark_paid()
+            else:
+                order.mark_payment_failed()
+        await self._orders.save(order)
+        return PlaceOrderResult(order.id, order.status, order.total_cents)
+</code></pre>
+<pre><code class="language-go">// internal/ordering/order.go  (imports: standard library + a UUID value type)
+package ordering
+
+import (
+    &quot;context&quot;
+    &quot;errors&quot;
+    &quot;fmt&quot;
+
+    &quot;github.com/google/uuid&quot; // a value library, not infrastructure
+)
+
+const ApprovalLimitCents int64 = 10_000_00
+
+var ErrInvalidOrder = errors.New(&quot;invalid order&quot;)
+
+type Status string
+
+const (
+    StatusNew              Status = &quot;new&quot;
+    StatusAwaitingApproval Status = &quot;awaiting_approval&quot;
+    StatusPaid             Status = &quot;paid&quot;
+    StatusPaymentFailed    Status = &quot;payment_failed&quot;
+)
+
+type Line struct {
+    SKU            string
+    Qty            int
+    UnitPriceCents int64
+}
+
+type Order struct {
+    ID         uuid.UUID
+    CustomerID string
+    Lines      []Line
+    status     Status // unexported: only methods in this package change it
+}
+
+func Place(customerID string, lines []Line) (*Order, error) {
+    if len(lines) == 0 {
+        return nil, fmt.Errorf(&quot;%w: an order needs at least one line&quot;, ErrInvalidOrder)
+    }
+    for _, l := range lines {
+        if l.Qty &lt;= 0 {
+            return nil, fmt.Errorf(&quot;%w: quantities must be positive&quot;, ErrInvalidOrder)
+        }
+    }
+    o := &amp;Order{ID: uuid.New(), CustomerID: customerID, Lines: append([]Line(nil), lines...), status: StatusNew}
+    if o.TotalCents() &gt; ApprovalLimitCents {
+        o.status = StatusAwaitingApproval
+    }
+    return o, nil
+}
+
+func (o *Order) TotalCents() (t int64) {
+    for _, l := range o.Lines {
+        t += int64(l.Qty) * l.UnitPriceCents
+    }
+    return t
+}
+
+func (o *Order) Status() Status { return o.status }
+
+func (o *Order) settle(paid bool) error {
+    if o.status != StatusNew {
+        return fmt.Errorf(&quot;%w: order is %s&quot;, ErrInvalidOrder, o.status)
+    }
+    o.status = map[bool]Status{true: StatusPaid, false: StatusPaymentFailed}[paid]
+    return nil
+}
+
+// Ports: in Go the consumer declares the interface, which is exactly what a port is.
+type Repository interface {
+    Save(ctx context.Context, o *Order) error
+}
+
+type Payments interface {
+    Charge(ctx context.Context, customerID string, amountCents int64) (bool, error)
+}
+
+type PlaceOrderCommand struct {
+    CustomerID string
+    Lines      []Line
+}
+
+type PlaceOrder struct {
+    Orders   Repository
+    Payments Payments
+}
+
+func (uc PlaceOrder) Handle(ctx context.Context, cmd PlaceOrderCommand) (*Order, error) {
+    o, err := Place(cmd.CustomerID, cmd.Lines)
+    if err != nil {
+        return nil, err
+    }
+    if o.status == StatusNew {
+        ok, err := uc.Payments.Charge(ctx, o.CustomerID, o.TotalCents())
+        if err != nil {
+            return nil, fmt.Errorf(&quot;charge: %w&quot;, err)
+        }
+        if err := o.settle(ok); err != nil {
+            return nil, err
+        }
+    }
+    if err := uc.Orders.Save(ctx, o); err != nil {
+        return nil, fmt.Errorf(&quot;save order: %w&quot;, err)
+    }
+    return o, nil
+}
+</code></pre>
+<pre><code class="language-typescript">// src/ordering/core/order.ts  (no @nestjs/*, no ORM imports)
+import { randomUUID } from &quot;node:crypto&quot;;
+
+export const APPROVAL_LIMIT_CENTS = 10_000_00;
+export class DomainError extends Error {}
+export type Status = &quot;new&quot; | &quot;awaiting_approval&quot; | &quot;paid&quot; | &quot;payment_failed&quot;;
+export interface Line { readonly sku: string; readonly qty: number; readonly unitPriceCents: number }
+
+export class Order {
+  private constructor(
+    readonly id: string,
+    readonly customerId: string,
+    readonly lines: readonly Line[],
+    private _status: Status,
+  ) {}
+
+  static place(customerId: string, lines: Line[]): Order {
+    if (lines.length === 0) throw new DomainError(&quot;An order needs at least one line.&quot;);
+    if (lines.some((l) =&gt; l.qty &lt;= 0)) throw new DomainError(&quot;Quantities must be positive.&quot;);
+    const total = lines.reduce((s, l) =&gt; s + l.qty * l.unitPriceCents, 0);
+    return new Order(randomUUID(), customerId, [...lines], total &gt; APPROVAL_LIMIT_CENTS ? &quot;awaiting_approval&quot; : &quot;new&quot;);
+  }
+
+  get status(): Status { return this._status; }
+  get totalCents(): number { return this.lines.reduce((s, l) =&gt; s + l.qty * l.unitPriceCents, 0); }
+
+  markPaid(): void { this.requireNew(); this._status = &quot;paid&quot;; }
+  markPaymentFailed(): void { this.requireNew(); this._status = &quot;payment_failed&quot;; }
+  private requireNew(): void {
+    if (this._status !== &quot;new&quot;) throw new DomainError(`Order is ${this._status}`);
+  }
+}
+
+// src/ordering/core/ports.ts: abstract classes double as Nest DI tokens, but import nothing from Nest
+export abstract class OrderRepository { abstract save(order: Order): Promise&lt;void&gt;; }
+export abstract class Payments { abstract charge(customerId: string, amountCents: number): Promise&lt;boolean&gt;; }
+
+// src/ordering/core/place-order.ts
+export interface PlaceOrderCommand { customerId: string; lines: Line[] }
+
+export class PlaceOrder {
+  constructor(private readonly orders: OrderRepository, private readonly payments: Payments) {}
+
+  async execute(cmd: PlaceOrderCommand) {
+    const order = Order.place(cmd.customerId, cmd.lines);
+    if (order.status === &quot;new&quot;) {
+      if (await this.payments.charge(order.customerId, order.totalCents)) order.markPaid();
+      else order.markPaymentFailed();
+    }
+    await this.orders.save(order);
+    return { orderId: order.id, status: order.status, totalCents: order.totalCents };
+  }
+}
+</code></pre>
+</div>
+<p>Notice what is <strong>not</strong> here. There are no <code>[Table]</code> attributes, no <code>@Entity</code>, no <code>Depends</code>, no <code>@Injectable()</code> and no <code>*sql.DB</code>. The core is plain code in each language, which makes it the easiest code in the whole system to read and to test.</p>
+<div class="tip">
+<p><strong>Language notes</strong></p>
+<ul>
+<li><strong>Go</strong> gets ports almost for free. Interfaces are satisfied implicitly and are idiomatically declared by the <em>consumer</em>, so <code>ordering.Repository</code> sits next to the code that uses it, and the Postgres package never has to import a shared "interfaces" package.</li>
+<li><strong>Python</strong> <code>Protocol</code> gives the same structural typing, so an adapter does not need to inherit from anything.</li>
+<li><strong>TypeScript and NestJS</strong> need a runtime token for DI, because interfaces disappear at compile time. An <code>abstract class</code> works both as the type and as the token, with no Nest import in the core.</li>
+<li><strong>Java</strong> commonly splits the core into its own Maven or Gradle module with no Spring dependency, so the build tool itself enforces the rule.</li>
+<li><strong>C#</strong> does the same with a separate <code>Shop.Core.csproj</code> that has no package references.</li>
+</ul>
+</div>
+<h3 id="the-adapters-and-the-composition-root">The adapters and the composition root</h3>
+<p>Everything that knows about a framework, a database or a vendor lives out here. Each driven adapter implements a core port. The driving adapter (the HTTP endpoint) translates JSON into a command and maps domain errors to status codes. The <strong>composition root</strong> is the only place that names every concrete type; see <a href="di-fundamentals.html">Dependency Injection Fundamentals</a> for why there should be only one.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Shop.Infrastructure (references Shop.Core + EF Core): driven adapters
+public sealed class OrderRow
+{
+    public Guid Id { get; set; }
+    public string CustomerId { get; set; } = &quot;&quot;;
+    public string Status { get; set; } = &quot;&quot;;
+    public long TotalCents { get; set; }
+}
+
+public sealed class ShopDb(DbContextOptions&lt;ShopDb&gt; options) : DbContext(options)
+{
+    public DbSet&lt;OrderRow&gt; Orders =&gt; Set&lt;OrderRow&gt;();
+}
+
+public sealed class EfOrderRepository(ShopDb db) : IOrderRepository
+{
+    public async Task SaveAsync(Order order, CancellationToken ct)
+    {
+        db.Orders.Add(new OrderRow { Id = order.Id, CustomerId = order.CustomerId,
+                                     Status = order.Status.ToString(), TotalCents = order.TotalCents });
+        await db.SaveChangesAsync(ct);
+    }
+}
+
+public sealed class StripePayments(HttpClient http) : IPayments      // auth header set in Program.cs
+{
+    public async Task&lt;bool&gt; ChargeAsync(string customerId, long amountCents, CancellationToken ct)
+    {
+        var form = new FormUrlEncodedContent(new Dictionary&lt;string, string&gt;
+        {
+            [&quot;amount&quot;] = amountCents.ToString(), [&quot;currency&quot;] = &quot;usd&quot;,
+            [&quot;customer&quot;] = customerId, [&quot;confirm&quot;] = &quot;true&quot;,
+        });
+        using var res = await http.PostAsync(&quot;v1/payment_intents&quot;, form, ct);
+        return res.IsSuccessStatusCode;
+    }
+}
+
+// Shop.Api/Program.cs: composition root + driving adapter
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext&lt;ShopDb&gt;(o =&gt; o.UseSqlServer(builder.Configuration.GetConnectionString(&quot;Shop&quot;)));
+builder.Services.AddScoped&lt;IOrderRepository, EfOrderRepository&gt;();
+builder.Services.AddHttpClient&lt;IPayments, StripePayments&gt;(c =&gt;
+{
+    c.BaseAddress = new Uri(&quot;https://api.stripe.com/&quot;);
+    c.DefaultRequestHeaders.Authorization = new(&quot;Bearer&quot;, builder.Configuration[&quot;Stripe:Key&quot;]);
+});
+builder.Services.AddScoped&lt;PlaceOrder&gt;();
+var app = builder.Build();
+
+app.MapPost(&quot;/orders&quot;, async (PlaceOrderRequest req, PlaceOrder placeOrder, CancellationToken ct) =&gt;
+{
+    try
+    {
+        var lines = req.Lines.Select(l =&gt; new OrderLine(l.Sku, l.Qty, l.UnitPriceCents)).ToList();
+        var result = await placeOrder.HandleAsync(new(req.CustomerId, lines), ct);
+        return Results.Created($&quot;/orders/{result.OrderId}&quot;, result);
+    }
+    catch (DomainException e) { return Results.Problem(e.Message, statusCode: 422); }
+});
+app.Run();
+
+public sealed record LineDto(string Sku, int Qty, long UnitPriceCents);
+public sealed record PlaceOrderRequest(string CustomerId, List&lt;LineDto&gt; Lines);
+</code></pre>
+<pre><code class="language-java">// shop-adapters (depends on shop-core + Spring Boot): driven adapters
+@Entity @Table(name = &quot;orders&quot;)
+class OrderEntity {
+    @Id UUID id;
+    String customerId;
+    String status;
+    long totalCents;
+    protected OrderEntity() {}
+    OrderEntity(UUID id, String customerId, String status, long totalCents) {
+        this.id = id; this.customerId = customerId; this.status = status; this.totalCents = totalCents;
+    }
+}
+
+interface OrderJpa extends JpaRepository&lt;OrderEntity, UUID&gt; {}
+
+@Component
+class JpaOrderRepository implements OrderRepository {
+    private final OrderJpa jpa;
+    JpaOrderRepository(OrderJpa jpa) { this.jpa = jpa; }
+
+    @Override public void save(Order o) {
+        jpa.save(new OrderEntity(o.id(), o.customerId(), o.status().name(), o.totalCents()));
+    }
+}
+
+@Component
+class StripePayments implements Payments {
+    private final RestClient http;
+    StripePayments(RestClient.Builder builder, @Value(&quot;${stripe.key}&quot;) String key) {
+        this.http = builder.baseUrl(&quot;https://api.stripe.com&quot;)
+                           .defaultHeaders(h -&gt; h.setBearerAuth(key)).build();
+    }
+
+    @Override public boolean charge(String customerId, long amountCents) {
+        var form = new LinkedMultiValueMap&lt;String, String&gt;();
+        form.add(&quot;amount&quot;, Long.toString(amountCents));
+        form.add(&quot;currency&quot;, &quot;usd&quot;);
+        form.add(&quot;customer&quot;, customerId);
+        form.add(&quot;confirm&quot;, &quot;true&quot;);
+        return http.post().uri(&quot;/v1/payment_intents&quot;)
+                   .contentType(MediaType.APPLICATION_FORM_URLENCODED).body(form)
+                   .exchange((req, res) -&gt; res.getStatusCode().is2xxSuccessful());
+    }
+}
+
+// composition root: the core has no annotations, so wire it with @Bean
+@Configuration
+class OrderingConfig {
+    @Bean PlaceOrder placeOrder(OrderRepository orders, Payments payments) {
+        return new PlaceOrder(orders, payments);
+    }
+}
+
+// driving adapter
+@RestController @RequestMapping(&quot;/orders&quot;)
+class OrdersController {
+    record LineDto(String sku, int qty, long unitPriceCents) {}
+    record PlaceOrderRequest(String customerId, List&lt;LineDto&gt; lines) {}
+
+    private final PlaceOrder placeOrder;
+    OrdersController(PlaceOrder placeOrder) { this.placeOrder = placeOrder; }
+
+    @PostMapping
+    ResponseEntity&lt;PlaceOrder.Result&gt; place(@RequestBody PlaceOrderRequest req) {
+        var lines = req.lines().stream().map(l -&gt; new Order.Line(l.sku(), l.qty(), l.unitPriceCents())).toList();
+        var result = placeOrder.handle(new PlaceOrder.Command(req.customerId(), lines));
+        return ResponseEntity.created(URI.create(&quot;/orders/&quot; + result.orderId())).body(result);
+    }
+
+    @ExceptionHandler(DomainException.class)
+    ProblemDetail invalid(DomainException e) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
+    }
+}
+</code></pre>
+<pre><code class="language-python"># shop/ordering/adapters.py: driven adapters (SQLAlchemy + httpx)
+import httpx
+from sqlalchemy import insert
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from shop.db import orders_table
+from shop.ordering.core import Order
+
+
+class SqlOrderRepository:                 # satisfies the OrderRepository Protocol structurally
+    def __init__(self, session: AsyncSession) -&gt; None:
+        self._session = session
+
+    async def save(self, order: Order) -&gt; None:
+        await self._session.execute(insert(orders_table).values(
+            id=order.id, customer_id=order.customer_id,
+            status=order.status.value, total_cents=order.total_cents))
+        await self._session.commit()
+
+
+class StripePayments:
+    def __init__(self, client: httpx.AsyncClient) -&gt; None:
+        self._client = client
+
+    async def charge(self, customer_id: str, amount_cents: int) -&gt; bool:
+        r = await self._client.post(&quot;/v1/payment_intents&quot;, data={
+            &quot;amount&quot;: amount_cents, &quot;currency&quot;: &quot;usd&quot;, &quot;customer&quot;: customer_id, &quot;confirm&quot;: &quot;true&quot;})
+        return r.is_success
+
+
+# shop/api.py: composition root + driving adapter
+from contextlib import asynccontextmanager
+from typing import Annotated
+
+import httpx
+from fastapi import Depends, FastAPI, HTTPException, Request
+from pydantic import BaseModel
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from shop.db import SessionLocal, settings
+from shop.ordering.adapters import SqlOrderRepository, StripePayments
+from shop.ordering.core import DomainError, Line, PlaceOrder, PlaceOrderCommand
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    async with httpx.AsyncClient(base_url=&quot;https://api.stripe.com&quot;,
+                                 auth=(settings.stripe_key, &quot;&quot;)) as stripe:
+        app.state.stripe = stripe
+        yield
+
+app = FastAPI(lifespan=lifespan)
+
+
+async def get_session():
+    async with SessionLocal() as session:
+        yield session
+
+
+def get_place_order(request: Request,
+                    session: Annotated[AsyncSession, Depends(get_session)]) -&gt; PlaceOrder:
+    return PlaceOrder(SqlOrderRepository(session), StripePayments(request.app.state.stripe))
+
+
+class LineIn(BaseModel):
+    sku: str
+    qty: int
+    unit_price_cents: int
+
+
+class PlaceOrderIn(BaseModel):
+    customer_id: str
+    lines: list[LineIn]
+
+
+@app.post(&quot;/orders&quot;, status_code=201)
+async def place_order(body: PlaceOrderIn,
+                      place: Annotated[PlaceOrder, Depends(get_place_order)]) -&gt; dict:
+    try:
+        r = await place(PlaceOrderCommand(body.customer_id,
+                                          [Line(**l.model_dump()) for l in body.lines]))
+    except DomainError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+    return {&quot;order_id&quot;: str(r.order_id), &quot;status&quot;: r.status.value, &quot;total_cents&quot;: r.total_cents}
+</code></pre>
+<pre><code class="language-go">// internal/adapters/postgres/orders.go: driven adapter
+package postgres
+
+type OrderRepository struct{ DB *sql.DB }
+
+func (r OrderRepository) Save(ctx context.Context, o *ordering.Order) error {
+    _, err := r.DB.ExecContext(ctx,
+        `INSERT INTO orders (id, customer_id, status, total_cents) VALUES ($1, $2, $3, $4)`,
+        o.ID, o.CustomerID, string(o.Status()), o.TotalCents())
+    return err
+}
+
+// internal/adapters/stripe/payments.go: driven adapter
+package stripe
+
+type Payments struct {
+    Client *http.Client
+    Key    string
+}
+
+func (p Payments) Charge(ctx context.Context, customerID string, amountCents int64) (bool, error) {
+    form := url.Values{&quot;amount&quot;: {strconv.FormatInt(amountCents, 10)}, &quot;currency&quot;: {&quot;usd&quot;},
+        &quot;customer&quot;: {customerID}, &quot;confirm&quot;: {&quot;true&quot;}}
+    req, err := http.NewRequestWithContext(ctx, http.MethodPost,
+        &quot;https://api.stripe.com/v1/payment_intents&quot;, strings.NewReader(form.Encode()))
+    if err != nil {
+        return false, err
+    }
+    req.Header.Set(&quot;Content-Type&quot;, &quot;application/x-www-form-urlencoded&quot;)
+    req.SetBasicAuth(p.Key, &quot;&quot;)
+    res, err := p.Client.Do(req)
+    if err != nil {
+        return false, err
+    }
+    defer res.Body.Close()
+    return res.StatusCode &lt; 300, nil
+}
+
+// internal/httpapi/orders.go: driving adapter
+package httpapi
+
+type lineIn struct {
+    SKU            string `json:&quot;sku&quot;`
+    Qty            int    `json:&quot;qty&quot;`
+    UnitPriceCents int64  `json:&quot;unitPriceCents&quot;`
+}
+
+func PlaceOrder(uc ordering.PlaceOrder) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        var in struct {
+            CustomerID string   `json:&quot;customerId&quot;`
+            Lines      []lineIn `json:&quot;lines&quot;`
+        }
+        if err := json.NewDecoder(r.Body).Decode(&amp;in); err != nil {
+            http.Error(w, err.Error(), http.StatusBadRequest)
+            return
+        }
+        cmd := ordering.PlaceOrderCommand{CustomerID: in.CustomerID}
+        for _, l := range in.Lines {
+            cmd.Lines = append(cmd.Lines, ordering.Line{SKU: l.SKU, Qty: l.Qty, UnitPriceCents: l.UnitPriceCents})
+        }
+        o, err := uc.Handle(r.Context(), cmd)
+        switch {
+        case errors.Is(err, ordering.ErrInvalidOrder):
+            http.Error(w, err.Error(), http.StatusUnprocessableEntity)
+            return
+        case err != nil:
+            http.Error(w, &quot;internal error&quot;, http.StatusInternalServerError)
+            return
+        }
+        w.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+        w.WriteHeader(http.StatusCreated)
+        _ = json.NewEncoder(w).Encode(map[string]any{&quot;orderId&quot;: o.ID, &quot;status&quot;: o.Status(), &quot;totalCents&quot;: o.TotalCents()})
+    }
+}
+
+// cmd/shop/main.go: composition root
+package main
+
+import _ &quot;github.com/jackc/pgx/v5/stdlib&quot; // registers the &quot;pgx&quot; database/sql driver
+
+func main() {
+    db, err := sql.Open(&quot;pgx&quot;, os.Getenv(&quot;DATABASE_URL&quot;))
+    if err != nil {
+        log.Fatal(err)
+    }
+    uc := ordering.PlaceOrder{
+        Orders:   postgres.OrderRepository{DB: db},
+        Payments: stripe.Payments{Client: &amp;http.Client{Timeout: 10 * time.Second}, Key: os.Getenv(&quot;STRIPE_KEY&quot;)},
+    }
+    r := chi.NewRouter()
+    r.Use(middleware.Logger, middleware.Recoverer)
+    r.Post(&quot;/orders&quot;, httpapi.PlaceOrder(uc))
+    log.Fatal(http.ListenAndServe(&quot;:8080&quot;, r))
+}
+</code></pre>
+<pre><code class="language-typescript">// src/ordering/adapters/prisma-order.repository.ts: driven adapter
+@Injectable()
+export class PrismaOrderRepository extends OrderRepository {
+  constructor(private readonly prisma: PrismaService) { super(); }
+
+  async save(o: Order): Promise&lt;void&gt; {
+    await this.prisma.order.create({
+      data: { id: o.id, customerId: o.customerId, status: o.status, totalCents: o.totalCents },
+    });
+  }
+}
+
+// src/ordering/adapters/stripe.payments.ts: driven adapter
+@Injectable()
+export class StripePayments extends Payments {
+  constructor(private readonly config: ConfigService) { super(); }
+
+  async charge(customerId: string, amountCents: number): Promise&lt;boolean&gt; {
+    const res = await fetch(&quot;https://api.stripe.com/v1/payment_intents&quot;, {
+      method: &quot;POST&quot;,
+      headers: { Authorization: `Bearer ${this.config.getOrThrow&lt;string&gt;(&quot;STRIPE_KEY&quot;)}` },
+      body: new URLSearchParams({ amount: String(amountCents), currency: &quot;usd&quot;, customer: customerId, confirm: &quot;true&quot; }),
+    });
+    return res.ok;
+  }
+}
+
+// src/ordering/orders.controller.ts: driving adapter
+class LineDto {
+  @IsString() sku!: string;
+  @IsInt() @Min(1) qty!: number;
+  @IsInt() unitPriceCents!: number;
+}
+
+class PlaceOrderDto {
+  @IsString() customerId!: string;
+  @IsArray() @ValidateNested({ each: true }) @Type(() =&gt; LineDto) lines!: LineDto[];
+}
+
+@Controller(&quot;orders&quot;)
+export class OrdersController {
+  constructor(private readonly placeOrder: PlaceOrder) {}
+
+  @Post()
+  async place(@Body() body: PlaceOrderDto) {
+    try {
+      return await this.placeOrder.execute(body);
+    } catch (e) {
+      if (e instanceof DomainError) throw new UnprocessableEntityException(e.message);
+      throw e;
+    }
+  }
+}
+
+// src/ordering/ordering.module.ts: composition root for the feature
+@Module({
+  controllers: [OrdersController],
+  providers: [
+    PrismaService,
+    { provide: OrderRepository, useClass: PrismaOrderRepository },
+    { provide: Payments, useClass: StripePayments },
+    {
+      provide: PlaceOrder,                                  // the core class has no @Injectable()
+      useFactory: (orders: OrderRepository, payments: Payments) =&gt; new PlaceOrder(orders, payments),
+      inject: [OrderRepository, Payments],
+    },
+  ],
+})
+export class OrderingModule {}
+</code></pre>
+</div>
+<h3 id="the-payoff-testing-the-rules-with-fakes">The payoff: testing the rules with fakes</h3>
+<p>Because the core only knows its ports, a test replaces the database and Stripe with a few lines of in-memory code. These tests need no containers, no network and no mocking library, and they run in milliseconds.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">sealed class InMemoryOrders : IOrderRepository
+{
+    public List&lt;Order&gt; Saved { get; } = [];
+    public Task SaveAsync(Order order, CancellationToken ct) { Saved.Add(order); return Task.CompletedTask; }
+}
+sealed class FakePayments(bool approve) : IPayments
+{
+    public int Calls { get; private set; }
+    public Task&lt;bool&gt; ChargeAsync(string c, long amount, CancellationToken ct) { Calls++; return Task.FromResult(approve); }
+}
+
+public class PlaceOrderTests
+{
+    [Fact]
+    public async Task Big_orders_wait_for_approval_and_are_not_charged()
+    {
+        var orders = new InMemoryOrders(); var payments = new FakePayments(approve: true);
+        var result = await new PlaceOrder(orders, payments)
+            .HandleAsync(new(&quot;c-1&quot;, [new OrderLine(&quot;TV&quot;, 2, 6_000_00)]));
+
+        Assert.Equal(OrderStatus.AwaitingApproval, result.Status);
+        Assert.Equal(0, payments.Calls);
+        Assert.Single(orders.Saved);
+    }
+}
+</code></pre>
+<pre><code class="language-java">class PlaceOrderTest {
+    static class InMemoryOrders implements OrderRepository {
+        final List&lt;Order&gt; saved = new ArrayList&lt;&gt;();
+        public void save(Order o) { saved.add(o); }
+    }
+
+    @Test
+    void declinedCardMarksPaymentFailed() {
+        var orders = new InMemoryOrders();
+        Payments declines = (customerId, amount) -&gt; false;      // a port with one method is a lambda
+        var result = new PlaceOrder(orders, declines)
+            .handle(new PlaceOrder.Command(&quot;c-1&quot;, List.of(new Order.Line(&quot;BOOK&quot;, 1, 25_00))));
+
+        assertEquals(Order.Status.PAYMENT_FAILED, result.status());
+        assertEquals(1, orders.saved.size());
+    }
+}
+</code></pre>
+<pre><code class="language-python">import asyncio
+
+from shop.ordering.core import Line, PlaceOrder, PlaceOrderCommand, Status
+
+
+class InMemoryOrders:
+    def __init__(self) -&gt; None:
+        self.saved = []
+
+    async def save(self, order) -&gt; None:
+        self.saved.append(order)
+
+
+class FakePayments:
+    def __init__(self, approve: bool) -&gt; None:
+        self.approve, self.calls = approve, 0
+
+    async def charge(self, customer_id: str, amount_cents: int) -&gt; bool:
+        self.calls += 1
+        return self.approve
+
+
+def test_small_order_is_charged_and_paid():
+    orders, payments = InMemoryOrders(), FakePayments(approve=True)
+    result = asyncio.run(PlaceOrder(orders, payments)(
+        PlaceOrderCommand(&quot;c-1&quot;, [Line(&quot;BOOK&quot;, 2, 25_00)])))
+    assert result.status is Status.PAID
+    assert result.total_cents == 50_00
+    assert payments.calls == 1 and len(orders.saved) == 1
+</code></pre>
+<pre><code class="language-go">type memOrders struct{ saved []*ordering.Order }
+
+func (m *memOrders) Save(_ context.Context, o *ordering.Order) error { m.saved = append(m.saved, o); return nil }
+
+type fakePayments struct{ approve bool }
+
+func (f fakePayments) Charge(context.Context, string, int64) (bool, error) { return f.approve, nil }
+
+func TestEmptyOrderIsRejected(t *testing.T) {
+    uc := ordering.PlaceOrder{Orders: &amp;memOrders{}, Payments: fakePayments{approve: true}}
+    _, err := uc.Handle(context.Background(), ordering.PlaceOrderCommand{CustomerID: &quot;c-1&quot;})
+    if !errors.Is(err, ordering.ErrInvalidOrder) {
+        t.Fatalf(&quot;want ErrInvalidOrder, got %v&quot;, err)
+    }
+}
+</code></pre>
+<pre><code class="language-typescript">class InMemoryOrders extends OrderRepository {
+  saved: Order[] = [];
+  async save(o: Order) { this.saved.push(o); }
+}
+class FakePayments extends Payments {
+  calls = 0;
+  constructor(private readonly approve: boolean) { super(); }
+  async charge() { this.calls++; return this.approve; }
+}
+
+test(&quot;orders over the limit are not charged&quot;, async () =&gt; {
+  const orders = new InMemoryOrders(), payments = new FakePayments(true);
+  const r = await new PlaceOrder(orders, payments).execute({
+    customerId: &quot;c-1&quot;, lines: [{ sku: &quot;TV&quot;, qty: 2, unitPriceCents: 6_000_00 }],
+  });
+  expect(r.status).toBe(&quot;awaiting_approval&quot;);
+  expect(payments.calls).toBe(0);
+});
+</code></pre>
+</div>
+<p><a href="testing-strategy.html">Testing Strategy</a> covers where these fast core tests sit relative to adapter tests (against a real database in a container) and a few end-to-end tests.</p>
+<h2 id="enforcing-the-rule-architecture-tests">Enforcing the rule: architecture tests</h2>
+<p>A dependency rule that only lives in a wiki page will be broken within a month, usually by someone fixing an incident at 2 a.m. The fix is to make the rule a <strong>test</strong> that fails the build. Every ecosystem has a tool that reads the compiled code (or the import graph), checks each dependency against your rules, and looks for cycles.</p>
+<p>Try it below. Each module has a level, and each arrow is an import. The default input contains the most common violation, <code>Application -&gt; Infrastructure</code> (a use case newing up a repository), plus the cycle it usually creates. Switch the rule to compare ring rules with strict and relaxed layering.</p>
+<div class="viz ax-wide" data-viz="application-architecture-rule-checker"></div>
+
+<div class="code-tabs" data-labels="C# · NetArchTest,Java · ArchUnit,Python · import-linter,Go · go list test,TypeScript · dependency-cruiser">
+<pre><code class="language-csharp">// Shop.ArchitectureTests: runs in CI with every other unit test
+using NetArchTest.Rules;
+
+public class ArchitectureTests
+{
+    private static readonly Assembly Core = typeof(Shop.Core.Ordering.Order).Assembly;
+
+    [Fact]
+    public void Core_does_not_reference_frameworks_or_adapters()
+    {
+        var result = Types.InAssembly(Core)
+            .ShouldNot()
+            .HaveDependencyOnAny(&quot;Microsoft.AspNetCore&quot;, &quot;Microsoft.EntityFrameworkCore&quot;,
+                                 &quot;Shop.Infrastructure&quot;, &quot;Shop.Api&quot;, &quot;Stripe&quot;)
+            .GetResult();
+
+        Assert.True(result.IsSuccessful,
+            &quot;Core types with forbidden dependencies: &quot; + string.Join(&quot;, &quot;, result.FailingTypeNames ?? []));
+    }
+}
+// Cheaper still: Shop.Core.csproj simply has no PackageReference/ProjectReference to them,
+// so the compiler enforces the rule. The test guards against someone adding one.
+</code></pre>
+<pre><code class="language-java">// src/test/java/com/shop/ArchitectureTest.java
+@AnalyzeClasses(packages = &quot;com.shop&quot;, importOptions = ImportOption.DoNotIncludeTests.class)
+class ArchitectureTest {
+
+    @ArchTest
+    static final ArchRule coreIsFrameworkFree = noClasses()
+        .that().resideInAPackage(&quot;..core..&quot;)
+        .should().dependOnClassesThat()
+        .resideInAnyPackage(&quot;org.springframework..&quot;, &quot;jakarta.persistence..&quot;, &quot;..adapters..&quot;);
+
+    @ArchTest   // ArchUnit ships the onion rule ready-made
+    static final ArchRule onion = onionArchitecture()
+        .domainModels(&quot;..core.domain..&quot;)
+        .domainServices(&quot;..core.domain.service..&quot;)
+        .applicationServices(&quot;..core.application..&quot;)
+        .adapter(&quot;persistence&quot;, &quot;..adapters.persistence..&quot;)
+        .adapter(&quot;rest&quot;, &quot;..adapters.rest..&quot;);
+
+    @ArchTest
+    static final ArchRule noCycles = slices().matching(&quot;com.shop.(*)..&quot;).should().beFreeOfCycles();
+}
+</code></pre>
+<pre><code class="language-python"># pyproject.toml, then run `lint-imports` in CI
+[tool.importlinter]
+root_package = &quot;shop&quot;
+include_external_packages = true
+
+[[tool.importlinter.contracts]]
+name = &quot;Core is framework-free&quot;
+type = &quot;forbidden&quot;
+source_modules = [&quot;shop.ordering.core&quot;]
+forbidden_modules = [&quot;fastapi&quot;, &quot;sqlalchemy&quot;, &quot;httpx&quot;, &quot;shop.ordering.adapters&quot;, &quot;shop.api&quot;]
+
+[[tool.importlinter.contracts]]
+name = &quot;Dependencies point inward&quot;
+type = &quot;layers&quot;
+layers = [&quot;shop.api&quot;, &quot;shop.ordering.adapters&quot;, &quot;shop.ordering.core&quot;]
+</code></pre>
+<pre><code class="language-go">// internal/ordering/arch_test.go: Go has no ArchUnit, but `go list -deps` gives the full import graph
+func TestCoreImportsNoInfrastructure(t *testing.T) {
+    out, err := exec.Command(&quot;go&quot;, &quot;list&quot;, &quot;-deps&quot;, &quot;example.com/shop/internal/ordering&quot;).Output()
+    if err != nil {
+        t.Fatal(err)
+    }
+    bannedExact := map[string]bool{&quot;database/sql&quot;: true, &quot;net/http&quot;: true}
+    bannedPrefix := []string{&quot;github.com/go-chi/&quot;, &quot;github.com/jackc/&quot;, &quot;example.com/shop/internal/adapters/&quot;}
+    for _, pkg := range strings.Fields(string(out)) {
+        if bannedExact[pkg] {
+            t.Errorf(&quot;ordering depends on %s&quot;, pkg)
+        }
+        for _, p := range bannedPrefix {
+            if strings.HasPrefix(pkg, p) {
+                t.Errorf(&quot;ordering depends on %s&quot;, pkg)
+            }
+        }
+    }
+}
+// Cycles are impossible in Go: the compiler rejects import cycles between packages.
+</code></pre>
+<pre><code class="language-javascript">// .dependency-cruiser.cjs, then run `depcruise src` in CI
+module.exports = {
+  forbidden: [
+    {
+      name: &quot;core-is-framework-free&quot;,
+      severity: &quot;error&quot;,
+      from: { path: &quot;^src/[^/]+/core/&quot; },
+      to: { path: [&quot;^src/[^/]+/adapters/&quot;, &quot;node_modules/@nestjs/&quot;, &quot;node_modules/@prisma/&quot;] },
+    },
+    { name: &quot;no-circular&quot;, severity: &quot;error&quot;, from: {}, to: { circular: true } },
+  ],
+  options: { tsConfig: { fileName: &quot;tsconfig.json&quot; } },
+};
+</code></pre>
+</div>
+<div class="tip">
+<p><strong>Let the build tool do it first</strong>
+The strongest enforcement is to put the core in its own compilation unit that physically cannot see the adapters: a separate <code>.csproj</code>, a separate Maven or Gradle module, a separate Python package with its own dependency list, or a Go package under <code>internal/</code>. Architecture tests then guard the finer-grained rules <em>inside</em> each unit.</p>
+</div>
+<h2 id="vertical-slice-architecture">Vertical slice architecture</h2>
+<p>Layers and rings slice the code <strong>horizontally</strong>, by technical role. But changes rarely arrive horizontally. Nobody files a ticket that says "please change all repositories". Tickets say "add a gift note to checkout", and that one change cuts <strong>vertically</strong> through the endpoint, the validation, the logic and the data access of a single feature.</p>
+<p><strong>Vertical slice architecture</strong> (named by Jimmy Bogard) organises code around those cuts. Each request or use case is a slice that owns everything it needs, usually in one file or one folder. Slices share as little as possible: a domain model where real rules live, and infrastructure such as the <code>DbContext</code>. Each slice may choose its own approach. A simple query can hit the database directly, while a complex command can go through a rich domain model.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 940 300" width="940" role="img" aria-label="A grid with four feature columns (Place order, Cancel order, Get order, Register customer) and four technical rows (Endpoint, Validation, Logic, Data access). A horizontal band highlights the Logic row across all features, labelled layer. A vertical band highlights the Cancel order column through all rows, labelled slice.">
+<text x="15" y="24" class="title">Layers cut across features; slices cut across layers</text>
+<rect class="box visit" x="10" y="160" width="910" height="46" rx="8"/>
+<rect class="box done" x="340" y="40" width="190" height="236" rx="10"/>
+<text x="230" y="58" text-anchor="middle" class="mono small">Place order</text>
+<text x="435" y="58" text-anchor="middle" class="mono small">Cancel order</text>
+<text x="630" y="58" text-anchor="middle" class="mono small">Get order</text>
+<text x="825" y="58" text-anchor="middle" class="mono small">Register customer</text>
+<text x="20" y="96" class="small">Endpoint</text>
+<text x="20" y="144" class="small">Validation</text>
+<text x="20" y="188" class="small">Logic</text>
+<text x="20" y="236" class="small">Data access</text>
+<rect class="box" x="160" y="76" width="140" height="32" rx="6"/><rect class="box" x="365" y="76" width="140" height="32" rx="6"/><rect class="box" x="560" y="76" width="140" height="32" rx="6"/><rect class="box" x="755" y="76" width="140" height="32" rx="6"/>
+<rect class="box" x="160" y="124" width="140" height="32" rx="6"/><rect class="box" x="365" y="124" width="140" height="32" rx="6"/><rect class="box" x="560" y="124" width="140" height="32" rx="6"/><rect class="box" x="755" y="124" width="140" height="32" rx="6"/>
+<rect class="box" x="160" y="168" width="140" height="32" rx="6"/><rect class="box" x="365" y="168" width="140" height="32" rx="6"/><rect class="box" x="560" y="168" width="140" height="32" rx="6"/><rect class="box" x="755" y="168" width="140" height="32" rx="6"/>
+<rect class="box" x="160" y="216" width="140" height="32" rx="6"/><rect class="box" x="365" y="216" width="140" height="32" rx="6"/><rect class="box" x="560" y="216" width="140" height="32" rx="6"/><rect class="box" x="755" y="216" width="140" height="32" rx="6"/>
+<text x="20" y="201" class="small muted">(a layer)</text>
+<text x="435" y="270" text-anchor="middle" class="small">a slice</text>
+<text x="630" y="290" text-anchor="middle" class="small muted">One ticket usually touches one column. Organise by column and the change stays in one place.</text>
+</svg>
+<figcaption>The highlighted row is a layer: one technical role across every feature. The highlighted column is a slice: one feature through every technical role. Tickets almost always arrive as columns.</figcaption>
+</figure>
+
+<p>The visualizer below runs two realistic changes in parallel, made by two developers, against both folder layouts. It counts the files and folders each change touches and the files both changes edit, which is where merge conflicts happen.</p>
+<div class="viz ax-wide" data-viz="application-architecture-folders"></div>
+
+<h3 id="one-file-per-use-case">One file per use case</h3>
+<p>A slice is usually a single file containing the request type, the validation, the handler and the endpoint mapping. You can read the whole feature without jumping around, and deleting the feature means deleting the file.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Features/Orders/CancelOrder.cs: the whole feature in one place
+namespace Shop.Features.Orders;
+
+public static class CancelOrder
+{
+    public sealed record Body(string Reason);
+
+    public static IEndpointRouteBuilder MapCancelOrder(this IEndpointRouteBuilder app)
+    {
+        app.MapPost(&quot;/orders/{id:guid}/cancel&quot;, Handle).WithTags(&quot;Orders&quot;);
+        return app;
+    }
+
+    private static async Task&lt;IResult&gt; Handle(Guid id, Body body, ShopDb db, CancellationToken ct)
+    {
+        if (string.IsNullOrWhiteSpace(body.Reason)) return Results.ValidationProblem(
+            new Dictionary&lt;string, string[]&gt; { [&quot;reason&quot;] = [&quot;A reason is required.&quot;] });
+
+        var order = await db.Orders.FindAsync([id], ct);
+        if (order is null) return Results.NotFound();
+
+        order.Cancel(body.Reason);          // the rule itself stays on the entity
+        await db.SaveChangesAsync(ct);      // no repository: DbContext already is one
+        return Results.NoContent();
+    }
+}
+// Program.cs: app.MapCancelOrder();
+</code></pre>
+<pre><code class="language-java">// com/shop/orders/cancel/CancelOrderEndpoint.java: package-per-feature, package-private types
+package com.shop.orders.cancel;
+
+@RestController
+class CancelOrderEndpoint {
+    record Body(@NotBlank String reason) {}
+
+    private final OrderJpa orders;
+    CancelOrderEndpoint(OrderJpa orders) { this.orders = orders; }
+
+    @PostMapping(&quot;/orders/{id}/cancel&quot;)
+    @Transactional
+    ResponseEntity&lt;Void&gt; cancel(@PathVariable UUID id, @Valid @RequestBody Body body) {
+        var order = orders.findById(id).orElse(null);
+        if (order == null) return ResponseEntity.notFound().build();
+        order.cancel(body.reason());        // JPA dirty-checking saves on commit
+        return ResponseEntity.noContent().build();
+    }
+}
+</code></pre>
+<pre><code class="language-python"># shop/features/orders/cancel_order.py: one router per slice
+from typing import Annotated
+from uuid import UUID
+
+from fastapi import APIRouter, Depends, HTTPException, Response
+from pydantic import BaseModel, Field
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from shop.db import get_session
+from shop.domain.order import Order
+
+router = APIRouter(tags=[&quot;orders&quot;])
+
+
+class CancelBody(BaseModel):
+    reason: str = Field(min_length=1)
+
+
+@router.post(&quot;/orders/{order_id}/cancel&quot;, status_code=204)
+async def cancel_order(order_id: UUID, body: CancelBody,
+                       session: Annotated[AsyncSession, Depends(get_session)]) -&gt; Response:
+    order = await session.get(Order, order_id)
+    if order is None:
+        raise HTTPException(status_code=404)
+    order.cancel(body.reason)
+    await session.commit()
+    return Response(status_code=204)
+
+# shop/main.py: app.include_router(cancel_order.router)
+</code></pre>
+<pre><code class="language-go">// internal/features/orders/cancel.go: a feature package exposes Routes
+package orders
+
+type cancelBody struct {
+    Reason string `json:&quot;reason&quot;`
+}
+
+func (f Feature) cancel(w http.ResponseWriter, r *http.Request) {
+    id := chi.URLParam(r, &quot;id&quot;)
+    var body cancelBody
+    if err := json.NewDecoder(r.Body).Decode(&amp;body); err != nil || body.Reason == &quot;&quot; {
+        http.Error(w, &quot;a reason is required&quot;, http.StatusBadRequest)
+        return
+    }
+    res, err := f.DB.ExecContext(r.Context(),
+        `UPDATE orders SET status = 'cancelled', cancel_reason = $2
+         WHERE id = $1 AND status IN ('new', 'paid')`, id, body.Reason)
+    if err != nil {
+        http.Error(w, &quot;internal error&quot;, http.StatusInternalServerError)
+        return
+    }
+    if n, _ := res.RowsAffected(); n == 0 {
+        http.Error(w, &quot;order not found or not cancellable&quot;, http.StatusConflict)
+        return
+    }
+    w.WriteHeader(http.StatusNoContent)
+}
+
+type Feature struct{ DB *sql.DB }
+
+func (f Feature) Routes(r chi.Router) {
+    r.Post(&quot;/orders/{id}/cancel&quot;, f.cancel)
+}
+</code></pre>
+<pre><code class="language-typescript">// src/features/orders/cancel-order.ts: controller and handler side by side
+export class CancelOrderBody {
+  @IsString() @IsNotEmpty() reason!: string;
+}
+
+@Controller(&quot;orders&quot;)
+export class CancelOrderController {
+  constructor(private readonly prisma: PrismaService) {}
+
+  @Post(&quot;:id/cancel&quot;)
+  @HttpCode(204)
+  async cancel(@Param(&quot;id&quot;, ParseUUIDPipe) id: string, @Body() body: CancelOrderBody): Promise&lt;void&gt; {
+    const row = await this.prisma.order.findUnique({ where: { id } });
+    if (!row) throw new NotFoundException();
+    const order = Order.fromRow(row);
+    order.cancel(body.reason);                       // domain rule
+    await this.prisma.order.update({ where: { id }, data: order.toRow() });
+  }
+}
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Slices and rings are not rivals</strong>
+Vertical slices decide how you <strong>group</strong> code (by feature). Hexagonal and clean decide which way <strong>dependencies point</strong> (inward). Most healthy codebases use both: feature folders at the top level, a framework-free domain model that the slices share, and ports only where something really needs swapping or faking. The Go example above shows the cheap end of the scale, with SQL straight in the handler and the rule enforced by the <code>WHERE</code> clause. That is fine for a simple state change, and it is not fine once the rule grows beyond a single condition.</p>
+</div>
+<h2 id="cqrs-from-light-to-full">CQRS: from light to full</h2>
+<p><strong>Command Query Responsibility Segregation</strong> means that the code which <em>changes</em> state (commands) and the code which <em>reads</em> state (queries) take different paths. The motivation is simple. Writes need invariants, transactions and an aggregate loaded in full. Reads need joins, projections, paging and speed, and they never change anything. A single model that serves both ends up as a compromise that does neither job well: entities bloated with display properties, or queries that load whole aggregate graphs just to show three columns.</p>
+<p>CQRS is a <strong>dial</strong>, not a switch. Most teams should stop at the second step.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 940 250" width="940" role="img" aria-label="A spectrum of four steps from left to right: one model, CQRS light (separate handlers sharing one database), separate read model in the same database updated in the transaction, and full CQRS with a separate read store updated asynchronously by events. Arrows below show cost and staleness growing towards the right.">
+<defs><marker id="application-architecture-cq-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker></defs>
+<text x="15" y="24" class="title">The CQRS dial</text>
+<rect class="box" x="15" y="44" width="210" height="130" rx="10"/>
+<text x="120" y="68" text-anchor="middle" class="title">1. One model</text>
+<text x="120" y="94" text-anchor="middle" class="small">OrderService.Place()</text>
+<text x="120" y="112" text-anchor="middle" class="small">OrderService.GetSummary()</text>
+<text x="120" y="138" text-anchor="middle" class="small muted">same entities and</text>
+<text x="120" y="154" text-anchor="middle" class="small muted">repository both ways</text>
+<rect class="box done" x="245" y="44" width="210" height="130" rx="10"/>
+<text x="350" y="68" text-anchor="middle" class="title">2. CQRS light</text>
+<text x="350" y="94" text-anchor="middle" class="small">commands: aggregate + repo</text>
+<text x="350" y="112" text-anchor="middle" class="small">queries: SQL / projection</text>
+<text x="350" y="138" text-anchor="middle" class="small muted">one database,</text>
+<text x="350" y="154" text-anchor="middle" class="small muted">always consistent</text>
+<rect class="box visit" x="475" y="44" width="210" height="130" rx="10"/>
+<text x="580" y="68" text-anchor="middle" class="title">3. Read tables</text>
+<text x="580" y="94" text-anchor="middle" class="small">denormalised view table</text>
+<text x="580" y="112" text-anchor="middle" class="small">written in same transaction</text>
+<text x="580" y="138" text-anchor="middle" class="small muted">fast reads,</text>
+<text x="580" y="154" text-anchor="middle" class="small muted">still consistent</text>
+<rect class="box active" x="705" y="44" width="220" height="130" rx="10"/>
+<text x="815" y="68" text-anchor="middle" class="title">4. Full CQRS</text>
+<text x="815" y="94" text-anchor="middle" class="small">separate read store</text>
+<text x="815" y="112" text-anchor="middle" class="small">fed by events (async)</text>
+<text x="815" y="138" text-anchor="middle" class="small muted">scales independently,</text>
+<text x="815" y="154" text-anchor="middle" class="small muted">eventually consistent</text>
+<line class="edge" x1="30" y1="212" x2="910" y2="212" marker-end="url(#application-architecture-cq-arr)"/>
+<text x="470" y="234" text-anchor="middle" class="small">more moving parts, more staleness, more ways to fail</text>
+<text x="350" y="194" text-anchor="middle" class="small">the sweet spot for most apps</text>
+</svg>
+<figcaption>Each step to the right buys read performance or independent scaling, and pays for it in infrastructure and in staleness. Step 2 costs almost nothing and is where most teams should land.</figcaption>
+</figure>
+
+<p>Run the same script of operations through each mode. Watch the read side in full mode: a query issued right after a command can miss it until the projector catches up. This is the "I clicked Save and my order is not in the list" bug that full CQRS introduces.</p>
+<div class="viz ax-wide" data-viz="application-architecture-cqrs"></div>
+
+<h3 id="cqrs-light-in-code">CQRS light in code</h3>
+<p>The idiom in each ecosystem: commands are handled by something that loads an aggregate and saves it, while queries go straight to the database and return a DTO shaped for the screen.</p>
+<div class="code-tabs" data-labels="C# · MediatR,Java · Spring,Python · FastAPI,Go,TypeScript · @nestjs/cqrs">
+<pre><code class="language-csharp">// Command: goes through the domain model
+public sealed record PlaceOrder(Guid CustomerId, IReadOnlyList&lt;LineDto&gt; Lines) : IRequest&lt;Guid&gt;;
+
+public sealed class PlaceOrderHandler(IOrderRepository orders) : IRequestHandler&lt;PlaceOrder, Guid&gt;
+{
+    public async Task&lt;Guid&gt; Handle(PlaceOrder cmd, CancellationToken ct)
+    {
+        var order = Order.Place(cmd.CustomerId, cmd.Lines.Select(l =&gt; l.ToLine()));
+        await orders.AddAsync(order, ct);
+        return order.Id;
+    }
+}
+
+// Query: no aggregate, no repository, a projection straight to the screen's DTO
+public sealed record GetOrderSummaries(Guid CustomerId) : IRequest&lt;IReadOnlyList&lt;OrderSummary&gt;&gt;;
+
+public sealed class GetOrderSummariesHandler(ShopDb db)
+    : IRequestHandler&lt;GetOrderSummaries, IReadOnlyList&lt;OrderSummary&gt;&gt;
+{
+    public async Task&lt;IReadOnlyList&lt;OrderSummary&gt;&gt; Handle(GetOrderSummaries q, CancellationToken ct) =&gt;
+        await db.Orders.AsNoTracking()
+            .Where(o =&gt; o.CustomerId == q.CustomerId)
+            .OrderByDescending(o =&gt; o.PlacedAt)
+            .Select(o =&gt; new OrderSummary(o.Id, o.Status.ToString(), o.Lines.Sum(l =&gt; l.Qty * l.UnitPriceCents)))
+            .ToListAsync(ct);
+}
+
+// Endpoint: app.MapPost(&quot;/orders&quot;, (PlaceOrder cmd, ISender s) =&gt; s.Send(cmd));
+// Cross-cutting (logging, validation, transactions) goes in IPipelineBehavior&lt;,&gt;.
+</code></pre>
+<pre><code class="language-java">// Spring has no mediator by default: separate command and query services are the idiom.
+@Service
+class OrderCommands {
+    private final OrderRepository orders;
+    OrderCommands(OrderRepository orders) { this.orders = orders; }
+
+    @Transactional
+    UUID place(PlaceOrder cmd) {
+        var order = Order.place(cmd.customerId(), cmd.lines());
+        orders.save(order);
+        return order.id();
+    }
+}
+
+@Service
+class OrderQueries {
+    private final JdbcClient jdbc;
+    OrderQueries(JdbcClient jdbc) { this.jdbc = jdbc; }
+
+    @Transactional(readOnly = true)
+    List&lt;OrderSummary&gt; summaries(UUID customerId) {
+        return jdbc.sql(&quot;&quot;&quot;
+                SELECT o.id, o.status, SUM(l.qty * l.unit_price_cents) AS total_cents
+                FROM orders o JOIN order_lines l ON l.order_id = o.id
+                WHERE o.customer_id = :cid GROUP BY o.id, o.status, o.placed_at
+                ORDER BY o.placed_at DESC&quot;&quot;&quot;)
+            .param(&quot;cid&quot;, customerId)
+            .query(OrderSummary.class)
+            .list();
+    }
+}
+// Going further: Axon Framework adds command/query buses, event sourcing and projections.
+</code></pre>
+<pre><code class="language-python"># Commands: a use case that loads and saves the aggregate
+class PlaceOrderHandler:
+    def __init__(self, orders: OrderRepository) -&gt; None:
+        self._orders = orders
+
+    async def __call__(self, cmd: PlaceOrder) -&gt; UUID:
+        order = Order.place(cmd.customer_id, cmd.lines)
+        await self._orders.add(order)
+        return order.id
+
+
+# Queries: raw SQL into a Pydantic model shaped for the screen
+class OrderSummary(BaseModel):
+    id: UUID
+    status: str
+    total_cents: int
+
+
+async def order_summaries(session: AsyncSession, customer_id: UUID) -&gt; list[OrderSummary]:
+    rows = await session.execute(text(&quot;&quot;&quot;
+        SELECT o.id, o.status, SUM(l.qty * l.unit_price_cents) AS total_cents
+        FROM orders o JOIN order_lines l ON l.order_id = o.id
+        WHERE o.customer_id = :cid GROUP BY o.id, o.status, o.placed_at
+        ORDER BY o.placed_at DESC&quot;&quot;&quot;), {&quot;cid&quot;: customer_id})
+    return [OrderSummary.model_validate(r, from_attributes=True) for r in rows]
+
+# In Python a mediator library adds little: FastAPI's Depends already wires handlers to routes.
+</code></pre>
+<pre><code class="language-go">// Command side: a handler struct with a repository port
+type PlaceOrderHandler struct{ Orders OrderRepository }
+
+func (h PlaceOrderHandler) Handle(ctx context.Context, cmd PlaceOrder) (uuid.UUID, error) {
+    order, err := PlaceNewOrder(cmd.CustomerID, cmd.Lines)
+    if err != nil {
+        return uuid.Nil, err
+    }
+    return order.ID, h.Orders.Add(ctx, order)
+}
+
+// Query side: plain SQL into a view struct, no domain types involved
+type OrderSummary struct {
+    ID         uuid.UUID `json:&quot;id&quot;`
+    Status     string    `json:&quot;status&quot;`
+    TotalCents int64     `json:&quot;totalCents&quot;`
+}
+
+type OrderQueries struct{ DB *sql.DB }
+
+func (q OrderQueries) Summaries(ctx context.Context, customerID uuid.UUID) ([]OrderSummary, error) {
+    rows, err := q.DB.QueryContext(ctx, `
+        SELECT o.id, o.status, SUM(l.qty * l.unit_price_cents)
+        FROM orders o JOIN order_lines l ON l.order_id = o.id
+        WHERE o.customer_id = $1 GROUP BY o.id, o.status, o.placed_at
+        ORDER BY o.placed_at DESC`, customerID)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+    var out []OrderSummary
+    for rows.Next() {
+        var s OrderSummary
+        if err := rows.Scan(&amp;s.ID, &amp;s.Status, &amp;s.TotalCents); err != nil {
+            return nil, err
+        }
+        out = append(out, s)
+    }
+    return out, rows.Err()
+}
+</code></pre>
+<pre><code class="language-typescript">// @nestjs/cqrs: CommandBus and QueryBus with decorated handlers
+export class PlaceOrderCommand {
+  constructor(public readonly customerId: string, public readonly lines: LineDto[]) {}
+}
+
+@CommandHandler(PlaceOrderCommand)
+export class PlaceOrderHandler implements ICommandHandler&lt;PlaceOrderCommand, string&gt; {
+  constructor(@Inject(ORDER_REPOSITORY) private readonly orders: OrderRepository) {}
+
+  async execute(cmd: PlaceOrderCommand): Promise&lt;string&gt; {
+    const order = Order.place(cmd.customerId, cmd.lines);
+    await this.orders.add(order);
+    return order.id;
+  }
+}
+
+export class GetOrderSummariesQuery {
+  constructor(public readonly customerId: string) {}
+}
+
+@QueryHandler(GetOrderSummariesQuery)
+export class GetOrderSummariesHandler implements IQueryHandler&lt;GetOrderSummariesQuery&gt; {
+  constructor(private readonly prisma: PrismaService) {}
+
+  execute({ customerId }: GetOrderSummariesQuery) {
+    return this.prisma.order.findMany({
+      where: { customerId },
+      orderBy: { placedAt: &quot;desc&quot; },
+      select: { id: true, status: true, totalCents: true },
+    });
+  }
+}
+// Controller: this.commandBus.execute(new PlaceOrderCommand(...))
+</code></pre>
+</div>
+<div class="compare">
+<div class="good">
+<h4 id="cqrs-is">CQRS is</h4>
+<ul>
+<li>Separate code paths for writes and reads.</li>
+<li>Free to use different models: aggregates for writes, flat DTOs for reads.</li>
+<li>Optionally separate stores, but only when read load or shape really demands it.</li>
+<li>Compatible with any architecture style: layered, hexagonal or slices.</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="cqrs-is-not">CQRS is not</h4>
+<ul>
+<li><strong>Event sourcing.</strong> You can do CQRS with plain tables, and that is the normal case. Event sourcing is covered in <a href="distributed-architecture.html">distributed architecture</a>.</li>
+<li><strong>A message bus.</strong> MediatR and <code>@nestjs/cqrs</code> are in-process dispatchers, so a "command bus" is just a method call with indirection.</li>
+<li><strong>Mandatory for every entity.</strong> Apply it to the parts with complex rules or heavy reads, and keep simple CRUD simple.</li>
+<li><strong>Free.</strong> Full CQRS makes every read potentially stale, and the UI must cope with that.</li>
+</ul>
+</div>
+</div>
+<div class="pitfall">
+<p><strong>The mediator tax</strong>
+MediatR-style dispatch adds a level of indirection: "Go to definition" on <code>Send(cmd)</code> lands on an interface, not the handler. That is worth it when you use pipeline behaviours for validation, logging and transactions in one place (see <a href="behavioral-patterns.html">behavioral patterns</a> and <a href="outbound-pipelines.html">outbound pipelines</a>). It is pure overhead when every handler is called from exactly one endpoint and you have no behaviours. A plain handler class injected into the endpoint gives you the command/query split without the bus.</p>
+</div>
+<h2 id="modular-monolith">Modular monolith</h2>
+<p>A <strong>modular monolith</strong> is one deployable unit split into modules along business boundaries such as Catalog, Ordering, Billing and Shipping. Each module has a small <strong>public API</strong> and hides everything else. Modules talk only through those APIs (in-process calls) or through events. Each module owns its own tables, and no other module may query them.</p>
+<p>This gives you most of the design benefits people want from microservices (clear ownership, independent reasoning, the option to extract later) without the network, the distributed transactions, or the operational bill. For most teams it is the right default; <a href="distributed-architecture.html">distributed architecture</a> covers when to go further.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 940 310" width="940" role="img" aria-label="One deployable process box containing three modules: Ordering, Billing and Catalog. Each module has a small public API on its edge and hidden internals and its own schema in a shared database. A green arrow shows Ordering calling Billing's API. A red dashed arrow shows Ordering reaching into Billing's internals, marked forbidden. A red dashed arrow shows Ordering querying the billing schema, also forbidden.">
+<defs>
+<marker id="application-architecture-mm-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker>
+<marker id="application-architecture-mm-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker>
+</defs>
+<text x="15" y="24" class="title">One process, hard internal walls</text>
+<rect class="box" x="15" y="40" width="910" height="186" rx="12"/>
+<text x="910" y="219" text-anchor="end" class="small muted">shop.exe: one deployable, one transaction scope available, in-process calls</text>
+<rect class="box accent" x="40" y="74" width="250" height="130" rx="10"/>
+<text x="165" y="96" text-anchor="middle" class="title">Ordering</text>
+<text x="165" y="120" text-anchor="middle" class="small muted">internal: Order, handlers,</text>
+<text x="165" y="136" text-anchor="middle" class="small muted">OrderDb, validators</text>
+<rect class="box done" x="230" y="160" width="56" height="30" rx="6"/><text x="258" y="180" text-anchor="middle" class="small">API</text>
+<rect class="box accent" x="345" y="74" width="250" height="130" rx="10"/>
+<text x="470" y="96" text-anchor="middle" class="title">Billing</text>
+<rect class="box done" x="350" y="160" width="56" height="30" rx="6"/><text x="378" y="180" text-anchor="middle" class="small">API</text>
+<rect class="box" x="450" y="112" width="130" height="34" rx="6"/><text x="515" y="134" text-anchor="middle" class="small">InvoiceRepo</text>
+<rect class="box accent" x="650" y="74" width="250" height="130" rx="10"/>
+<text x="775" y="96" text-anchor="middle" class="title">Catalog</text>
+<text x="775" y="120" text-anchor="middle" class="small muted">publishes PriceChanged</text>
+<text x="775" y="136" text-anchor="middle" class="small muted">events in-process</text>
+<rect class="box done" x="655" y="160" width="56" height="30" rx="6"/><text x="683" y="180" text-anchor="middle" class="small">API</text>
+<line class="edge done" x1="286" y1="175" x2="346" y2="175" marker-end="url(#application-architecture-mm-ok)"/>
+<path class="edge bad dash" d="M 260 108 C 330 60, 420 70, 452 120" fill="none" marker-end="url(#application-architecture-mm-bad)"/>
+<text x="345" y="62" text-anchor="middle" class="small">forbidden: internals</text>
+<rect class="box" x="15" y="242" width="910" height="60" rx="10"/>
+<text x="30" y="260" class="small muted">one database server, one schema per module</text>
+<rect class="box" x="80" y="268" width="170" height="24" rx="6"/><text x="165" y="285" text-anchor="middle" class="small mono">ordering.*</text>
+<rect class="box" x="385" y="268" width="170" height="24" rx="6"/><text x="470" y="285" text-anchor="middle" class="small mono">billing.*</text>
+<rect class="box" x="690" y="268" width="170" height="24" rx="6"/><text x="775" y="285" text-anchor="middle" class="small mono">catalog.*</text>
+<path class="edge bad dash" d="M 120 204 C 160 236, 380 244, 420 266" fill="none" marker-end="url(#application-architecture-mm-bad)"/>
+<text x="430" y="258" class="small">forbidden: other schema</text>
+</svg>
+<figcaption>The green arrow is the only legal kind of cross-module call: through the target's published API. Reaching into internals or another module's tables is exactly what turns a modular monolith back into a big ball of mud, and what makes later extraction impossible.</figcaption>
+</figure>
+
+<p>Build your own module graph below. Each reference names its target and how it is reached: <code>.Api</code> and <code>.Events</code> are legal, <code>.Internal</code> and <code>db:</code> are violations. The tool selector shows how the same rule is written in your ecosystem's checker.</p>
+<div class="viz ax-wide" data-viz="application-architecture-modules"></div>
+
+<h3 id="enforcing-module-boundaries">Enforcing module boundaries</h3>
+<div class="code-tabs" data-labels="C# · internal + NetArchTest,Java · Spring Modulith,Python · import-linter,Go · internal/,TypeScript · eslint-plugin-boundaries">
+<pre><code class="language-csharp">// Each module is a project. Only the contracts are public; everything else is `internal`.
+// Shop.Billing/Contracts/IBillingApi.cs
+public interface IBillingApi
+{
+    Task&lt;InvoiceId&gt; InvoiceAsync(OrderId order, Money amount, CancellationToken ct);
+}
+
+// Shop.Billing/Internal/InvoiceRepository.cs: invisible to Shop.Ordering at compile time
+internal sealed class InvoiceRepository(BillingDb db) { /* ... */ }
+
+// Shop.Billing/BillingModule.cs: the one public registration entry point
+public static class BillingModule
+{
+    public static IServiceCollection AddBilling(this IServiceCollection s, IConfiguration c) =&gt;
+        s.AddDbContext&lt;BillingDb&gt;(o =&gt; o.UseNpgsql(c.GetConnectionString(&quot;Shop&quot;),
+                                        x =&gt; x.MigrationsHistoryTable(&quot;__ef_history&quot;, &quot;billing&quot;)))
+         .AddScoped&lt;IBillingApi, BillingApi&gt;();
+}
+
+// Architecture test: modules may only depend on each other's Contracts namespace
+[Fact]
+public void Ordering_uses_only_billing_contracts() =&gt;
+    Assert.True(Types.InAssembly(typeof(OrderingModule).Assembly)
+        .ShouldNot().HaveDependencyOn(&quot;Shop.Billing.Internal&quot;)
+        .GetResult().IsSuccessful);
+</code></pre>
+<pre><code class="language-java">// Spring Modulith: each direct sub-package of the main package is a module.
+// com.shop.billing           &lt;- public API (top-level package)
+// com.shop.billing.internal  &lt;- hidden from other modules
+package com.shop.billing;
+
+public interface BillingApi {
+    InvoiceId invoice(OrderId order, Money amount);
+}
+
+// Cross-module events, delivered after commit, with an event publication log
+@Component
+class OrderPlacedListener {
+    @ApplicationModuleListener
+    void on(OrderPlaced event) { /* create the invoice */ }
+}
+
+// src/test/java/com/shop/ModularityTest.java
+class ModularityTest {
+    @Test
+    void verifiesModuleBoundaries() {
+        ApplicationModules.of(ShopApplication.class).verify();   // fails on internal access or cycles
+    }
+}
+</code></pre>
+<pre><code class="language-python"># pyproject.toml: each module may import only the others' public `api` package
+[[tool.importlinter.contracts]]
+name = &quot;Modules are independent except through their api&quot;
+type = &quot;independence&quot;
+modules = [&quot;shop.ordering&quot;, &quot;shop.billing&quot;, &quot;shop.catalog&quot;]
+ignore_imports = [
+    &quot;shop.ordering.** -&gt; shop.billing.api&quot;,
+    &quot;shop.ordering.** -&gt; shop.catalog.api&quot;,
+    &quot;shop.billing.** -&gt; shop.catalog.api&quot;,
+]
+
+# shop/billing/api.py: the only module other modules may import
+from shop.billing._service import invoice_order   # leading underscore = private by convention
+__all__ = [&quot;invoice_order&quot;]
+</code></pre>
+<pre><code class="language-go">// The Go compiler enforces it: packages under internal/ can only be imported
+// from the directory tree rooted at internal's parent.
+//
+// shop/
+//   billing/
+//     billing.go          &lt;- package billing: the public API (Invoice func, types)
+//     internal/
+//       store/store.go    &lt;- importable only from shop/billing/...
+//   ordering/
+//     ordering.go         &lt;- may import &quot;example.com/shop/billing&quot;
+//                            importing &quot;example.com/shop/billing/internal/store&quot; fails:
+//                            &quot;use of internal package ... not allowed&quot;
+package billing
+
+func New(db *sql.DB) *API { return &amp;API{store: store.New(db)} }
+
+type API struct{ store *store.Store }
+
+func (a *API) Invoice(ctx context.Context, order OrderID, amount Money) (InvoiceID, error) {
+    return a.store.CreateInvoice(ctx, order, amount)
+}
+</code></pre>
+<pre><code class="language-javascript">// eslint.config.js with eslint-plugin-boundaries
+import boundaries from &quot;eslint-plugin-boundaries&quot;;
+
+export default [{
+  plugins: { boundaries },
+  settings: {
+    &quot;boundaries/elements&quot;: [
+      { type: &quot;module-api&quot;, pattern: &quot;src/modules/*/index.ts&quot;, mode: &quot;file&quot;, capture: [&quot;module&quot;] },
+      { type: &quot;module-internal&quot;, pattern: &quot;src/modules/*/**&quot;, capture: [&quot;module&quot;] },
+    ],
+  },
+  rules: {
+    &quot;boundaries/element-types&quot;: [&quot;error&quot;, {
+      default: &quot;disallow&quot;,
+      rules: [
+        { from: &quot;module-internal&quot;, allow: [[&quot;module-internal&quot;, { module: &quot;${from.module}&quot; }], &quot;module-api&quot;] },
+        { from: &quot;module-api&quot;, allow: [[&quot;module-internal&quot;, { module: &quot;${from.module}&quot; }]] },
+      ],
+    }],
+  },
+}];
+// NestJS: only list in a module's `exports` what other modules may inject.
+</code></pre>
+</div>
+<div class="tip">
+<p><strong>The extraction test</strong>
+A good module boundary passes this test: "Could we move this module to its own service by replacing the in-process API with an HTTP client and the in-process events with a broker, without touching any other module's code?" If the answer is no because someone joins across schemas or shares an entity class, the boundary is not real yet.</p>
+</div>
+<h2 id="project-and-package-layout-per-language">Project and package layout per language</h2>
+<p>The same ideas take different physical shapes in each ecosystem, because each has a different unit of enforcement: an assembly, a Maven or Gradle module, a Python package, a Go package or a TypeScript path. These are sensible starting layouts for a mid-sized service with a real domain. A CRUD service needs only the feature folders.</p>
+<div class="code-tabs" data-labels="C# / .NET,Java / Spring,Python / FastAPI,Go,TypeScript / NestJS">
+<pre><code class="language-bash">Shop.sln
+src/
+  Shop.Api/                      # host: Program.cs (composition root), endpoints, middleware
+    Features/Orders/PlaceOrder.cs  # vertical slices: endpoint + request + handler
+    Features/Orders/CancelOrder.cs
+  Shop.Core/                     # domain + use cases; NO package refs to ASP.NET/EF
+    Ordering/Order.cs
+    Ordering/Ports/IOrderRepository.cs
+  Shop.Infrastructure/           # EF Core DbContext, repositories, Stripe client
+    Persistence/ShopDb.cs
+    Payments/StripePayments.cs
+tests/
+  Shop.Core.Tests/               # fast unit tests with fakes
+  Shop.Api.Tests/                # WebApplicationFactory integration tests
+  Shop.ArchitectureTests/        # NetArchTest rules
+# References: Api -&gt; Core, Api -&gt; Infrastructure, Infrastructure -&gt; Core. Never Core -&gt; anything.
+</code></pre>
+<pre><code class="language-bash">shop/
+  build.gradle.kts               # or a multi-module Maven/Gradle build for hard walls
+  src/main/java/com/shop/
+    ShopApplication.java         # @SpringBootApplication = composition root
+    ordering/                    # Spring Modulith: one top-level package per module
+      PlaceOrderController.java  # package-private where possible
+      Order.java
+      OrderRepository.java       # port (or Spring Data interface if you accept the coupling)
+      internal/JpaOrderAdapter.java
+    billing/
+      BillingApi.java            # public API of the module
+      internal/...
+  src/test/java/com/shop/
+    ModularityTest.java          # ApplicationModules.verify()
+    ArchitectureTest.java        # ArchUnit rules
+</code></pre>
+<pre><code class="language-bash">pyproject.toml                   # import-linter contracts live here
+src/shop/
+  main.py                        # FastAPI app, include_router(...), wiring = composition root
+  ordering/
+    api.py                       # public surface for other modules
+    routes.py                    # FastAPI router (driving adapter)
+    core/                        # pure Python: no fastapi/sqlalchemy imports
+      order.py
+      ports.py                   # typing.Protocol definitions
+      place_order.py
+    adapters/
+      sql_repository.py          # SQLAlchemy
+      stripe_payments.py         # httpx
+  billing/ ...
+tests/
+  ordering/test_place_order.py   # uses in-memory fakes
+</code></pre>
+<pre><code class="language-bash">go.mod                           # module example.com/shop
+cmd/
+  shop/main.go                   # composition root: open DB, build adapters, start chi router
+internal/                        # nothing below here is importable by other repos
+  ordering/
+    order.go                     # domain types + rules (package ordering)
+    service.go                   # use cases; ports declared here as small interfaces
+    http.go                      # chi handlers (or a separate orderinghttp package)
+    postgres/                    # adapter package: implements ordering.Repository
+      repository.go
+  billing/
+    billing.go                   # public API of the module
+    internal/store/              # private to billing
+# Go idiom: no &quot;models/&quot;, &quot;controllers/&quot;, &quot;services/&quot; packages. Name packages by what they provide.
+</code></pre>
+<pre><code class="language-bash">src/
+  main.ts                        # NestFactory.create(AppModule)
+  app.module.ts                  # imports feature modules
+  ordering/
+    ordering.module.ts           # providers + exports: the module's public surface
+    index.ts                     # barrel = public API for other modules
+    core/                        # no @nestjs or @prisma imports
+      order.ts
+      ports.ts                   # interfaces + injection tokens
+      place-order.ts
+    adapters/
+      prisma-order.repository.ts
+      orders.controller.ts
+  billing/ ...
+.dependency-cruiser.cjs          # or eslint-plugin-boundaries
+</code></pre>
+</div>
+<div class="recognize">
+<p><strong>Spotting a technical-folder codebase</strong>
+Top-level folders named <code>Controllers</code>, <code>Services</code>, <code>Repositories</code>, <code>Models</code>, <code>DTOs</code> and <code>Helpers</code>, each holding forty files with a common prefix (<code>Order*</code>, <code>Customer*</code>, <code>Invoice*</code>). The prefixes are the features trying to escape. Moving them into <code>Orders/</code>, <code>Customers/</code> and <code>Invoices/</code> is usually the cheapest architecture improvement available.</p>
+</div>
+<h2 id="when-not-to-the-cost-of-extra-layers">When NOT to: the cost of extra layers</h2>
+<p>Every layer and interface is a bet that something will vary or need isolating. When the bet does not pay off, you are left with <strong>pass-through layers</strong>: classes whose only job is to call the next class with the same arguments. They double the files you touch per change, hide the real logic, and teach newcomers that architecture means typing.</p>
+<p>Classic symptoms:</p>
+<ul>
+<li><code>IOrderService</code> with exactly one implementation, <code>OrderService</code>, which forwards every method to <code>IOrderManager</code>, which forwards to <code>IOrderRepository</code>.</li>
+<li>DTO → Model → Entity → Record mappers where all four types have identical fields.</li>
+<li>A "domain" layer of classes with only getters and setters (an <strong>anemic model</strong>), while all the rules live in services. This is covered in <a href="domain-driven-design.html">domain-driven design</a>.</li>
+<li>Unit tests that mock the next layer and assert it was called, so they test the wiring rather than any behaviour.</li>
+</ul>
+<p>Mark each layer below as <code>map</code> (translates between shapes), <code>pass</code> (forwards unchanged) or <code>logic</code> (makes a decision). The visualizer counts the hops, the files touched by a new field, and how many layers actually earn their place. Then it shows the lean version.</p>
+<div class="viz ax-wide" data-viz="application-architecture-layers-cost"></div>
+
+<div class="compare">
+<div class="bad">
+<h4 id="over-layered-crud">Over-layered CRUD</h4>
+<pre><code class="language-csharp">public class CustomersController(ICustomerService s)
+{ [HttpGet(&quot;{id}&quot;)] public Task&lt;CustomerDto&gt; Get(int id) =&gt; s.GetAsync(id); }
+
+public class CustomerService(ICustomerManager m, IMapper map) : ICustomerService
+{ public async Task&lt;CustomerDto&gt; GetAsync(int id) =&gt; map.Map&lt;CustomerDto&gt;(await m.GetAsync(id)); }
+
+public class CustomerManager(ICustomerRepository r) : ICustomerManager
+{ public Task&lt;Customer&gt; GetAsync(int id) =&gt; r.GetAsync(id); }
+// ...plus ICustomerRepository, CustomerRepository, CustomerEntity, AutoMapper profile
+</code></pre>
+<p>Seven files, three interfaces and no rule anywhere.</p>
+</div>
+<div class="good">
+<h4 id="what-it-should-have-been">What it should have been</h4>
+<pre><code class="language-csharp">app.MapGet(&quot;/customers/{id:int}&quot;, async (int id, ShopDb db) =&gt;
+    await db.Customers.AsNoTracking()
+        .Where(c =&gt; c.Id == id)
+        .Select(c =&gt; new CustomerDto(c.Id, c.Name, c.Email))
+        .SingleOrDefaultAsync() is { } dto
+        ? Results.Ok(dto) : Results.NotFound());
+</code></pre>
+<p>One slice, one query and one DTO. If rules show up later, extract a domain type <strong>then</strong>, driven by the rule.</p>
+</div>
+</div>
+<div class="insight">
+<p><strong>Interfaces are for seams, not for every class</strong>
+Introduce an interface (a port) when at least one of these is true: there is more than one real implementation, the dependency is slow, non-deterministic or external (database, HTTP, clock, random, queue), or the core must not know about it. "Every class gets an <code>I</code> twin" meets none of these conditions. See <a href="di-fundamentals.html">DI fundamentals</a> for registering concrete types without interfaces.</p>
+</div>
+<h2 id="choosing-a-style">Choosing a style</h2>
+<p>Architecture style should follow from the <strong>complexity of the domain</strong> and the <strong>shape of the team</strong>, not from the last conference talk. The picture below is the short version, and the visualizer under it turns your answers into a concrete recipe.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 940 330" width="940" role="img" aria-label="Decision flow. Start: are the business rules mostly CRUD? Yes leads to feature folders with thin slices. No leads to: are there rich rules or many external systems to fake? Yes leads to a hexagonal or clean core, with vertical slices on top. Otherwise layered with a real domain model. A side branch: several teams on one codebase leads to a modular monolith with enforced boundaries. A second side branch: reads very different from writes leads to adding CQRS light.">
+<defs><marker id="application-architecture-dc-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="15" y="24" class="title">Pick the simplest thing that holds your rules</text>
+<rect class="box accent" x="30" y="44" width="250" height="46" rx="10"/>
+<text x="155" y="64" text-anchor="middle" class="small">Mostly CRUD forms,</text>
+<text x="155" y="80" text-anchor="middle" class="small">few real rules?</text>
+<rect class="box done" x="30" y="130" width="250" height="56" rx="10"/>
+<text x="155" y="153" text-anchor="middle" class="title">Feature folders</text>
+<text x="155" y="172" text-anchor="middle" class="small">thin slices, ORM direct, no ports</text>
+<line class="edge accent" x1="155" y1="90" x2="155" y2="128" marker-end="url(#application-architecture-dc-arr)"/>
+<text x="165" y="114" class="small">yes</text>
+<rect class="box accent" x="340" y="44" width="260" height="46" rx="10"/>
+<text x="470" y="64" text-anchor="middle" class="small">Rich, changing rules or many</text>
+<text x="470" y="80" text-anchor="middle" class="small">external systems to fake?</text>
+<line class="edge accent" x1="280" y1="67" x2="338" y2="67" marker-end="url(#application-architecture-dc-arr)"/>
+<text x="309" y="60" text-anchor="middle" class="small">no</text>
+<rect class="box done" x="340" y="130" width="260" height="56" rx="10"/>
+<text x="470" y="153" text-anchor="middle" class="title">Hexagonal / clean core</text>
+<text x="470" y="172" text-anchor="middle" class="small">+ vertical slices on top</text>
+<line class="edge accent" x1="470" y1="90" x2="470" y2="128" marker-end="url(#application-architecture-dc-arr)"/>
+<text x="480" y="114" class="small">yes</text>
+<rect class="box done" x="660" y="44" width="260" height="46" rx="10"/>
+<text x="790" y="64" text-anchor="middle" class="title">Layered + real domain</text>
+<text x="790" y="80" text-anchor="middle" class="small">3 layers, rules in entities</text>
+<line class="edge accent" x1="600" y1="67" x2="658" y2="67" marker-end="url(#application-architecture-dc-arr)"/>
+<text x="629" y="60" text-anchor="middle" class="small">no</text>
+<rect class="box visit" x="30" y="232" width="420" height="80" rx="10"/>
+<text x="240" y="256" text-anchor="middle" class="title">Several teams in one codebase?</text>
+<text x="240" y="278" text-anchor="middle" class="small">Wrap any of the above in a modular monolith</text>
+<text x="240" y="296" text-anchor="middle" class="small">with enforced module boundaries</text>
+<rect class="box visit" x="490" y="232" width="430" height="80" rx="10"/>
+<text x="705" y="256" text-anchor="middle" class="title">Reads very different from writes?</text>
+<text x="705" y="278" text-anchor="middle" class="small">Add CQRS light: query handlers return DTOs straight</text>
+<text x="705" y="296" text-anchor="middle" class="small">from SQL. Go further only when measured.</text>
+<text x="470" y="218" text-anchor="middle" class="small muted">modifiers that apply to whichever style you picked</text>
+</svg>
+<figcaption>The main path picks the style. The two blue boxes are modifiers that layer on top of whichever style you land on. None of them is permanent: slices can grow a clean core later, and a modular monolith can shed a module into a service later.</figcaption>
+</figure>
+
+<div class="viz ax-wide" data-viz="application-architecture-decision"></div>
+
+<h3 id="smells-and-what-they-are-telling-you">Smells and what they are telling you</h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Remedy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One small change touches 6+ files in 5 folders</td>
+<td>Technical folders, pass-through layers</td>
+<td>Feature folders; delete layers that only forward</td>
+</tr>
+<tr>
+<td>Unit tests need a database or web server</td>
+<td>Logic lives in controllers or ORM entities that depend on infrastructure</td>
+<td>Move rules into framework-free domain types; ports for I/O</td>
+</tr>
+<tr>
+<td><code>IFooService</code> with exactly one <code>FooService</code> and nothing to fake</td>
+<td>Interface by habit</td>
+<td>Register the concrete class; add the interface when a second implementation or a test seam appears</td>
+</tr>
+<tr>
+<td>Domain classes are bags of getters and setters; services are huge</td>
+<td>Anemic model</td>
+<td>Move each rule onto the type that owns the data (<a href="domain-driven-design.html">DDD</a>)</td>
+</tr>
+<tr>
+<td><code>using Microsoft.EntityFrameworkCore</code> (or <code>@Entity</code>, <code>sqlalchemy</code>) inside the core</td>
+<td>Dependency points outward</td>
+<td>Separate persistence model, or accept the coupling consciously and test that it stays limited</td>
+</tr>
+<tr>
+<td>Two features cannot be changed in parallel without merge conflicts</td>
+<td>Shared "god" service or shared folder per technical role</td>
+<td>Vertical slices; split the god service by use case</td>
+</tr>
+<tr>
+<td>Module A joins module B's tables "for performance"</td>
+<td>No data ownership</td>
+<td>Read through B's API or a read model B publishes</td>
+</tr>
+<tr>
+<td>Build or startup is slow and everyone touches everything</td>
+<td>Big ball of mud</td>
+<td>Modular monolith first; services only for modules with a real reason</td>
+</tr>
+<tr>
+<td>Every query loads the full aggregate to show 3 columns</td>
+<td>One model for reads and writes</td>
+<td>CQRS light: query handlers with projections</td>
+</tr>
+<tr>
+<td>"We can't upgrade the framework, it's everywhere"</td>
+<td>No adapter boundary around the framework</td>
+<td>Hexagonal edges: framework types stay in adapters</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pitfalls-and-war-stories">Pitfalls and war stories</h2>
+<div class="pitfall">
+<p><strong>The four-hour field</strong>
+A team with a textbook n-tier layout (Controller, Service, Manager, Repository, plus DTO, Model and Entity mappers) needed to add <code>PreferredName</code> to a customer. The change touched 14 files across 4 projects, and the AutoMapper profile silently dropped the field in one direction, so the value was saved but never returned. Feature slices with one DTO and a projection would have been 3 files, and the bug would have been visible in a single diff.</p>
+</div>
+<div class="pitfall">
+<p><strong>Ports that leak the adapter</strong>
+<code>IOrderRepository.Query(): IQueryable&lt;OrderEntity&gt;</code> <em>looks</em> like a port but exposes EF Core's query provider and the persistence entity. Every caller now writes LINQ that only works against EF, and the "swap the database" promise is fiction. Ports should speak the domain's language: <code>FindOpenOrdersFor(customerId)</code>, returning domain types.</p>
+</div>
+<div class="pitfall">
+<p><strong>The shared "Common" project</strong>
+It starts with <code>StringExtensions</code>. A year later it holds <code>OrderStatus</code>, <code>CustomerDto</code>, <code>EmailSender</code> and a static <code>DbHelper</code>, every module references it, and every change to it rebuilds and redeploys everything. Shared code should be either truly generic (and stable), or owned by one module and exposed through its API.</p>
+</div>
+<div class="pitfall">
+<p><strong>Clean architecture as a template</strong>
+Generating <code>Domain</code>, <code>Application</code>, <code>Infrastructure</code> and <code>WebApi</code> projects from a template for a 12-endpoint internal admin tool gives you four projects, a mediator, pipeline behaviours, AutoMapper and FluentValidation before the first rule exists. The ceremony is real and the benefit is hypothetical. Start with slices and <strong>earn</strong> each ring.</p>
+</div>
+<div class="pitfall">
+<p><strong>Architecture without enforcement</strong>
+The diagram in the README showed perfect onion rings. An <code>ArchUnit</code> run added two years later found 212 violations, mostly <code>@Entity</code> and <code>RestTemplate</code> imports in the domain package. A rule that is not tested is a wish. Add the architecture test on day one, when it has zero violations.</p>
+</div>
+<div class="pitfall">
+<p><strong>Transactions that span adapters by accident</strong>
+A use case saves the order and then calls the payment gateway inside the same database transaction. When the gateway is slow, the transaction holds row locks for 30 seconds and the whole orders table backs up. Keep external calls <strong>outside</strong> the database transaction, and use the outbox pattern from <a href="distributed-architecture.html">distributed architecture</a> when a state change and a message must both happen.</p>
+</div>
+<h2 id="best-practice-checklist">Best-practice checklist</h2>
+<ul>
+<li>I can draw my application's <strong>source</strong> dependency arrows, and they point inward towards the domain.</li>
+<li>The core (domain and use cases) has no references to the web framework, ORM, HTTP clients or cloud SDKs, and a <strong>test</strong> enforces that.</li>
+<li>There is exactly one composition root where adapters are created and wired.</li>
+<li>Each interface in the core has a reason: an external system, a second implementation, or a test seam.</li>
+<li>Code is grouped by <strong>feature</strong> at the top level; technical roles are subfolders, if anything.</li>
+<li>No layer exists only to forward calls; mappers exist only where the shapes really differ.</li>
+<li>Queries that only read return DTOs straight from a projection, not full aggregates.</li>
+<li>Modules own their data; nothing joins across module schemas.</li>
+<li>Cross-module calls go through a small published API or events, and an architecture test enforces this.</li>
+<li>External calls (payments, email, other services) happen outside database transactions.</li>
+<li>The most important business rules can be unit-tested in milliseconds without a database.</li>
+<li>I can explain why this codebase uses its style, in terms of its domain and team, not fashion.</li>
+</ul>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>1. In hexagonal architecture, where does the `IPaymentGateway` interface live, and where does `StripePaymentGateway` live? Why?</summary>
+<p>The interface (the <strong>port</strong>) lives in the core, next to the use case that needs it, and is written in the core's language: <code>Charge(Money, CustomerRef)</code>. The implementation (the <strong>adapter</strong>) lives outside, with the Stripe SDK. The runtime call goes core → adapter, but the source dependency goes adapter → core, because the adapter implements an interface the core owns. That inversion is what keeps the core free of Stripe.</p>
+</details>
+<details class="quiz">
+<summary>2. What is the real difference between onion and clean architecture?</summary>
+<p>Almost none in practice. Both put the domain at the centre and require dependencies to point inward. Clean names the rings Entities, Use Cases, Interface Adapters and Frameworks &amp; Drivers, and is explicit about use-case input/output boundaries and presenters. Onion names them Domain Model, Domain Services, Application Services and Infrastructure/UI/Tests. The shared idea, and the only one that matters, is the dependency rule.</p>
+</details>
+<details class="quiz">
+<summary>3. Your team adds a field and touches Controller, Service, Manager, Repository, three DTOs and two mapper profiles. What would you change first?</summary>
+<p>Delete the pass-through layers (Manager, and probably Service if it only forwards), and collapse mappers where the shapes are identical. Then move to feature folders so the remaining pieces of a feature sit together. Keep a layer only where it makes a decision or translates between shapes that really differ.</p>
+</details>
+<details class="quiz">
+<summary>4. Does using CQRS mean you need event sourcing or a message bus?</summary>
+<p>No. CQRS only means commands and queries take different paths. The most common and most useful form, CQRS light, uses one database: commands go through aggregates and repositories, and queries are SQL projections into DTOs, with no events and no staleness. Event sourcing and separate read stores are optional extras with real costs.</p>
+</details>
+<details class="quiz">
+<summary>5. In a modular monolith, Ordering needs the customer's credit limit, which Billing owns. Name two legal ways to get it and one illegal way.</summary>
+<p>Legal: call Billing's published API (<code>IBillingApi.GetCreditLimit(customerId)</code>) in-process, or subscribe to a <code>CreditLimitChanged</code> event and keep a local read copy in Ordering's own schema. Illegal: <code>SELECT credit_limit FROM billing.accounts</code> from Ordering, or referencing Billing's internal <code>AccountRepository</code>. Both couple Ordering to Billing's internals and block later extraction.</p>
+</details>
+<details class="quiz">
+<summary>6. How does Go enforce module boundaries without a separate tool, and what can it not enforce?</summary>
+<p>The compiler refuses imports of any package under an <code>internal/</code> directory from outside the tree rooted at its parent, so <code>billing/internal/store</code> is private to <code>billing</code>. Go also forbids import cycles between packages. It cannot enforce <em>direction</em> among packages that are allowed to see each other (for example "domain must not import <code>net/http</code>"). For that you need a test over <code>go list -deps</code>, or a linter such as depguard in golangci-lint.</p>
+</details>
+<details class="quiz">
+<summary>7. When is a plain layered architecture with three layers the right choice?</summary>
+<p>When the domain has some real rules but no need to swap infrastructure, the team is small, and everyone already understands it. Layered is fine as long as the business logic layer holds real decisions in a rich model and the layers are not pass-through. Its weakness, the domain depending on data access, is manageable when the data access is simple and stable.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>The rule</strong>Source dependencies point inward: adapters → use cases → domain. Never the reverse.</div>
+<div><strong>Layered</strong>UI → Logic → Data. Simple and familiar; the domain depends on data access.</div>
+<div><strong>Hexagonal</strong>The core owns ports (interfaces); adapters implement or drive them. Swap and fake I/O freely.</div>
+<div><strong>Onion / Clean</strong>Rings around the domain with the same dependency rule; clean names use cases explicitly.</div>
+<div><strong>Composition root</strong>One place (Program.cs, @Configuration, main.py, main.go, AppModule) wires adapters to ports.</div>
+<div><strong>Vertical slice</strong>Group by feature; one file per use case; each slice picks its own depth.</div>
+<div><strong>CQRS light</strong>Commands through aggregates; queries as SQL projections to DTOs; one DB.</div>
+<div><strong>Full CQRS</strong>Separate read store fed by events; reads become eventually consistent.</div>
+<div><strong>Modular monolith</strong>One deployable; modules with public APIs, private internals and owned schemas.</div>
+<div><strong>Enforce</strong>NetArchTest, ArchUnit and Spring Modulith, import-linter, Go internal/, dependency-cruiser and eslint-plugin-boundaries.</div>
+<div><strong>Port when</strong>External, slow or non-deterministic, a second implementation, or the core must not know.</div>
+<div><strong>Smell</strong>Pass-through layers, I-twins with one implementation, anemic entities, cross-module joins.</div>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures">Microsoft: Common web application architectures</a></li>
+<li><a href="https://alistair.cockburn.us/hexagonal-architecture/">Alistair Cockburn: Hexagonal architecture</a></li>
+<li><a href="https://jeffreypalermo.com/2008/07/the-onion-architecture-part-1/">Jeffrey Palermo: The Onion Architecture, part 1</a></li>
+<li><a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">Robert C. Martin: The Clean Architecture</a></li>
+<li><a href="https://www.jimmybogard.com/vertical-slice-architecture/">Jimmy Bogard: Vertical Slice Architecture</a></li>
+<li><a href="https://martinfowler.com/bliki/CQRS.html">Martin Fowler: CQRS</a></li>
+<li><a href="https://github.com/jbogard/MediatR">MediatR on GitHub</a></li>
+<li><a href="https://docs.nestjs.com/recipes/cqrs">NestJS: CQRS recipe</a></li>
+<li><a href="https://docs.spring.io/spring-modulith/reference/">Spring Modulith reference documentation</a></li>
+<li><a href="https://www.archunit.org/userguide/html/000_Index.html">ArchUnit user guide</a></li>
+<li><a href="https://github.com/BenMorris/NetArchTest">NetArchTest on GitHub</a></li>
+<li><a href="https://import-linter.readthedocs.io/">import-linter documentation</a></li>
+<li><a href="https://go.dev/doc/modules/layout">Go: Organizing a Go module</a></li>
+<li><a href="https://github.com/sverweij/dependency-cruiser">dependency-cruiser on GitHub</a></li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="anti-patterns.html"><small>&larr; PREVIOUS</small>Anti-Patterns &amp; Code Smells</a><a class="next" href="domain-driven-design.html"><small>NEXT &rarr;</small>Domain-Driven Design Essentials</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-where-does-the-business-rule-live">The problem: where does the business rule live?</a></li>
+<li><a href="#two-pictures-of-every-application">Two pictures of every application</a></li>
+<li><a href="#four-styles-at-a-glance">Four styles at a glance</a><ul>
+<li><a href="#layered-n-tier">Layered (n-tier)</a></li>
+<li><a href="#hexagonal-ports-and-adapters">Hexagonal (ports and adapters)</a></li>
+<li><a href="#onion">Onion</a></li>
+<li><a href="#clean">Clean</a></li>
+</ul>
+</li>
+<li><a href="#the-same-feature-in-code-place-order">The same feature in code: place order</a><ul>
+<li><a href="#the-core-domain-and-use-case-with-zero-framework-imports">The core: domain and use case, with zero framework imports</a></li>
+<li><a href="#the-adapters-and-the-composition-root">The adapters and the composition root</a></li>
+<li><a href="#the-payoff-testing-the-rules-with-fakes">The payoff: testing the rules with fakes</a></li>
+</ul>
+</li>
+<li><a href="#enforcing-the-rule-architecture-tests">Enforcing the rule: architecture tests</a></li>
+<li><a href="#vertical-slice-architecture">Vertical slice architecture</a><ul>
+<li><a href="#one-file-per-use-case">One file per use case</a></li>
+</ul>
+</li>
+<li><a href="#cqrs-from-light-to-full">CQRS: from light to full</a><ul>
+<li><a href="#cqrs-light-in-code">CQRS light in code</a></li>
+</ul>
+</li>
+<li><a href="#modular-monolith">Modular monolith</a><ul>
+<li><a href="#enforcing-module-boundaries">Enforcing module boundaries</a></li>
+</ul>
+</li>
+<li><a href="#project-and-package-layout-per-language">Project and package layout per language</a></li>
+<li><a href="#when-not-to-the-cost-of-extra-layers">When NOT to: the cost of extra layers</a></li>
+<li><a href="#choosing-a-style">Choosing a style</a><ul>
+<li><a href="#smells-and-what-they-are-telling-you">Smells and what they are telling you</a></li>
+</ul>
+</li>
+<li><a href="#pitfalls-and-war-stories">Pitfalls and war stories</a></li>
+<li><a href="#best-practice-checklist">Best-practice checklist</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

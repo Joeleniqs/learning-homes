@@ -1,0 +1,2817 @@
+<!doctype html>
+<html lang="en" data-home="dsa-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Segment Trees, Fenwick Trees &amp; Sparse Tables | DSA Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#4f46e5;--accent-soft:#eef0ff;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#a5b4fc;--accent-soft:#252a5c;}}:root[data-theme=dark]{--accent:#a5b4fc;--accent-soft:#252a5c;}</style>
+  <link rel="stylesheet" href="../assets/topics/segment-fenwick-trees.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/segment-fenwick-trees.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="DSA Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">DS</span>DSA Home</a>
+    <p class="sidebar-caption">Data structures &amp; algorithms, seen.<br>Every idea animated, every pattern drilled.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations</summary><ul class="topic-list"><li data-search="The Problem-Solving Playbook Foundations A visual decision map from input size, shape and question type to the right technique, plus a repeatable interview/contest workflow. pattern recognition constraints approach interview" data-slug="problem-solving-playbook"><a href="../topics/problem-solving-playbook.html">The Problem-Solving Playbook</a></li><li data-search="Complexity Analysis Foundations Big-O growth you can see, amortized cost, recursion trees and the Master theorem, and what 10^8 operations per second really buys you. big o amortized master theorem time space" data-slug="complexity-analysis"><a href="../topics/complexity-analysis.html">Complexity Analysis</a></li><li data-search="Recursion &amp; the Call Stack Foundations Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from. call stack recursion tree divide and conquer" data-slug="recursion"><a href="../topics/recursion.html">Recursion &amp; the Call Stack</a></li></ul></details><details class="nav-track"><summary>Arrays &amp; Strings</summary><ul class="topic-list"><li data-search="Two Pointers Arrays &amp; Strings Opposite-end, same-direction and fast/slow pointers: why moving one pointer is safe, with partitioning and k-sum. pair sum partition dutch flag 3sum" data-slug="two-pointers"><a href="../topics/two-pointers.html">Two Pointers</a></li><li data-search="Sliding Window Arrays &amp; Strings Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows. substring subarray window at most k" data-slug="sliding-window"><a href="../topics/sliding-window.html">Sliding Window</a></li><li data-search="Prefix Sums &amp; Difference Arrays Arrays &amp; Strings 1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR. subarray sum equals k range sum 2d prefix difference array" data-slug="prefix-sums"><a href="../topics/prefix-sums.html">Prefix Sums &amp; Difference Arrays</a></li><li data-search="Binary Search Arrays &amp; Strings One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection. lower bound upper bound search on answer rotated monotonic predicate" data-slug="binary-search"><a href="../topics/binary-search.html">Binary Search</a></li><li data-search="Sorting Algorithms Arrays &amp; Strings Animated bubble, insertion, merge, quick, heap, counting and radix sorts; stability, quickselect and custom comparators. merge sort quick sort quickselect counting sort inversions" data-slug="sorting"><a href="../topics/sorting.html">Sorting Algorithms</a></li><li data-search="Hashing Patterns Arrays &amp; Strings How hash tables work inside, then frequency maps, grouping by canonical keys, complement lookups and rolling hashes. hash map hash set anagram two sum collision" data-slug="hashing"><a href="../topics/hashing.html">Hashing Patterns</a></li><li data-search="Monotonic Stack &amp; Queue Arrays &amp; Strings Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight. next greater largest rectangle deque trapping rain water" data-slug="monotonic-stack-queue"><a href="../topics/monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a></li><li data-search="Intervals &amp; Sweep Line Arrays &amp; Strings Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline. merge intervals meeting rooms events skyline" data-slug="intervals-sweep-line"><a href="../topics/intervals-sweep-line.html">Intervals &amp; Sweep Line</a></li><li data-search="String Algorithms Arrays &amp; Strings KMP failure function, Z-algorithm, Rabin–Karp, Manacher&#x27;s palindromes and string hashing, each animated character by character. kmp z algorithm rabin karp manacher palindrome pattern matching" data-slug="string-algorithms"><a href="../topics/string-algorithms.html">String Algorithms</a></li></ul></details><details class="nav-track"><summary>Linked Lists, Stacks, Queues &amp; Heaps</summary><ul class="topic-list"><li data-search="Linked Lists Linked Lists, Stacks, Queues &amp; Heaps Pointer rewiring you can watch: reversal, dummy heads, fast/slow cycle detection, merging, and LRU cache design. reverse floyd cycle merge lru" data-slug="linked-lists"><a href="../topics/linked-lists.html">Linked Lists</a></li><li data-search="Stacks &amp; Queues Linked Lists, Stacks, Queues &amp; Heaps Balanced brackets, expression evaluation, min-stack, queues from stacks, deques and BFS queues. parentheses calculator deque min stack" data-slug="stacks-queues"><a href="../topics/stacks-queues.html">Stacks &amp; Queues</a></li><li data-search="Heaps &amp; Priority Queues Linked Lists, Stacks, Queues &amp; Heaps Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling. heap top k median k way merge priority queue" data-slug="heaps-priority-queues"><a href="../topics/heaps-priority-queues.html">Heaps &amp; Priority Queues</a></li></ul></details><details class="nav-track" open><summary>Trees</summary><ul class="topic-list"><li data-search="Tree Traversals Trees Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees. dfs bfs inorder level order morris" data-slug="tree-traversals"><a href="../topics/tree-traversals.html">Tree Traversals</a></li><li data-search="Binary Search Trees Trees Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters. bst validate successor avl red black" data-slug="binary-search-trees"><a href="../topics/binary-search-trees.html">Binary Search Trees</a></li><li data-search="Tree Problem Patterns Trees Return-value recursion (diameter, max path sum), top-down state, LCA, serialization, and binary lifting. lca diameter path sum binary lifting serialize" data-slug="tree-patterns"><a href="../topics/tree-patterns.html">Tree Problem Patterns</a></li><li data-search="Tries Trees Prefix trees animated insert by insert: autocomplete, word search on boards, and bitwise tries for max XOR. prefix tree autocomplete word search xor trie" data-slug="tries"><a href="../topics/tries.html">Tries</a></li><li data-search="Segment Trees, Fenwick Trees &amp; Sparse Tables Trees Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables. segment tree lazy propagation fenwick bit rmq" data-slug="segment-fenwick-trees"><a href="../topics/segment-fenwick-trees.html" aria-current="page">Segment Trees, Fenwick Trees &amp; Sparse Tables</a></li></ul></details><details class="nav-track"><summary>Graphs</summary><ul class="topic-list"><li data-search="Graph Fundamentals: BFS &amp; DFS Graphs Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS. bfs dfs grid islands connected components cycle" data-slug="graph-fundamentals"><a href="../topics/graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></li><li data-search="Topological Sort &amp; DAGs Graphs Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs. kahn course schedule dag dependency order" data-slug="topological-sort"><a href="../topics/topological-sort.html">Topological Sort &amp; DAGs</a></li><li data-search="Union-Find (Disjoint Set Union) Graphs Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries. dsu disjoint set path compression connectivity" data-slug="union-find"><a href="../topics/union-find.html">Union-Find (Disjoint Set Union)</a></li><li data-search="Shortest Paths Graphs BFS, 0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall and A* animated, and a chart to pick the right one every time. dijkstra bellman ford floyd warshall a star 0-1 bfs" data-slug="shortest-paths"><a href="../topics/shortest-paths.html">Shortest Paths</a></li><li data-search="Minimum Spanning Trees Graphs Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems. kruskal prim mst cut property" data-slug="minimum-spanning-trees"><a href="../topics/minimum-spanning-trees.html">Minimum Spanning Trees</a></li><li data-search="Advanced Graph Algorithms Graphs Strongly connected components, bridges and articulation points, bipartite checks, Euler paths, and max-flow / matching. tarjan kosaraju scc bridges euler max flow bipartite matching" data-slug="advanced-graphs"><a href="../topics/advanced-graphs.html">Advanced Graph Algorithms</a></li></ul></details><details class="nav-track"><summary>Backtracking &amp; Greedy</summary><ul class="topic-list"><li data-search="Backtracking Backtracking &amp; Greedy The choose/explore/un-choose template animated on a decision tree: subsets, permutations, combinations, N-Queens, Sudoku and pruning. subsets permutations n queens sudoku pruning" data-slug="backtracking"><a href="../topics/backtracking.html">Backtracking</a></li><li data-search="Greedy Algorithms Backtracking &amp; Greedy When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding. exchange argument interval scheduling jump game huffman" data-slug="greedy"><a href="../topics/greedy.html">Greedy Algorithms</a></li></ul></details><details class="nav-track"><summary>Dynamic Programming</summary><ul class="topic-list"><li data-search="The DP Framework Dynamic Programming Recursion → memoization → tabulation → space optimisation, visualised on one problem; how to design state and transitions. memoization tabulation state transition overlapping subproblems" data-slug="dp-framework"><a href="../topics/dp-framework.html">The DP Framework</a></li><li data-search="1D &amp; Grid DP Dynamic Programming Climbing stairs, house robber, decode ways, unique paths, min path sum, maximal square and dungeon game with animated tables. house robber unique paths grid dp maximal square" data-slug="dp-linear-grid"><a href="../topics/dp-linear-grid.html">1D &amp; Grid DP</a></li><li data-search="Knapsack Family Dynamic Programming 0/1 vs unbounded vs bounded knapsack, why loop direction matters, coin change, subset sum and target sum. knapsack coin change subset sum partition" data-slug="dp-knapsack"><a href="../topics/dp-knapsack.html">Knapsack Family</a></li><li data-search="Sequence &amp; String DP Dynamic Programming LIS with patience sorting, LCS, edit distance, palindromic subsequences, regex/wildcard matching and distinct subsequences. lis lcs edit distance regex matching palindrome" data-slug="dp-sequences-strings"><a href="../topics/dp-sequences-strings.html">Sequence &amp; String DP</a></li><li data-search="Interval &amp; Tree DP Dynamic Programming Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting). interval dp burst balloons matrix chain tree dp rerooting" data-slug="dp-intervals-trees"><a href="../topics/dp-intervals-trees.html">Interval &amp; Tree DP</a></li><li data-search="Bitmask &amp; Digit DP Dynamic Programming Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints. bitmask tsp digit dp subset dp" data-slug="dp-bitmask-digit"><a href="../topics/dp-bitmask-digit.html">Bitmask &amp; Digit DP</a></li><li data-search="State Machines &amp; DP Optimisations Dynamic Programming Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth. stock state machine convex hull trick knuth optimisation" data-slug="dp-advanced"><a href="../topics/dp-advanced.html">State Machines &amp; DP Optimisations</a></li></ul></details><details class="nav-track"><summary>Bits &amp; Math</summary><ul class="topic-list"><li data-search="Bit Manipulation Bits &amp; Math Bits drawn as switches: masks, XOR tricks, counting bits, subset enumeration and Gray codes. xor mask single number popcount subsets" data-slug="bit-manipulation"><a href="../topics/bit-manipulation.html">Bit Manipulation</a></li><li data-search="Math, Number Theory &amp; Combinatorics Bits &amp; Math GCD, sieves, fast power, modular inverses, nCr mod p, inclusion–exclusion, and the geometry primitives you need. gcd sieve modular fast exponentiation combinatorics geometry" data-slug="math-number-theory"><a href="../topics/math-number-theory.html">Math, Number Theory &amp; Combinatorics</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../CodeExcellenceHome/index.html">Code Excellence Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>DSA Home / Segment Trees, Fenwick Trees &amp; Sparse Tables</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">TREES</p><h1>Segment Trees, Fenwick Trees &amp; Sparse Tables</h1><p class="lede">Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables.</p><div class="meta"><span class="level level-advanced">Advanced → Expert</span><span>~75 min study</span><span>Builds on: <a href="prefix-sums.html">Prefix Sums &amp; Difference Arrays</a>, <a href="tree-traversals.html">Tree Traversals</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="segment-fenwick-trees" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><p><a href="prefix-sums.html">Prefix Sums</a> answer "sum of a[l..r]" in O(1), but only while the array stays frozen: change one
+element and up to n stored prefixes go stale. This page covers the structures that keep range answers cheap <strong>while
+the array changes</strong>. A <strong>Fenwick tree</strong> (binary indexed tree, BIT) is twelve lines of code built on one bit trick.
+A <strong>segment tree</strong> handles any associative combine (sum, min, max, gcd, "best subarray", matrix product). With
+<strong>lazy propagation</strong> it also handles <em>range</em> updates. A <strong>sparse table</strong> gives O(1) range-minimum queries on a static
+array. Then come the moves that make these structures solve hard problems: coordinate compression, counting with a
+BIT over value ranks, walking down a tree to find the k-th element, dynamic trees over coordinates up to 10⁹, and
+sweep lines with a cover-count tree.</p>
+<div class="rule">
+<p><strong>The invariant.</strong> Precompute answers for a set of <strong>blocks</strong> chosen so that every query range is a union of
+<strong>O(log n) blocks</strong> and every array position lies in <strong>O(log n) blocks</strong>. A query combines a few blocks; an update
+repairs a few blocks. Fenwick trees, segment trees and sparse tables differ only in which blocks they choose.</p>
+</div>
+<p>Prerequisites: <a href="prefix-sums.html">Prefix Sums</a> (prefix differences, difference arrays, 2D inclusion-exclusion) and
+<a href="tree-traversals.html">Tree Traversals</a> (a segment tree is a binary tree in an array, built in postorder). The
+doubling idea behind sparse tables also drives binary lifting in <a href="tree-patterns.html">Tree Problem Patterns</a>, and
+rank queries here complement the order statistics of <a href="binary-search-trees.html">Binary Search Trees</a>. The sweep-line
+problems (My Calendar, Rectangle Area II) were introduced with simpler tools in
+<a href="intervals-sweep-line.html">Intervals &amp; Sweep Line</a>; here they get their O(n log n) versions.</p>
+<h2 id="the-problem-queries-and-updates-on-the-same-array">The problem: queries and updates on the same array</h2>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 920 330" width="920" role="img" aria-label="Updating one element of a prefix-sum array makes every later prefix stale, while a tree of block sums changes one node per level">
+<defs><marker id="sft-problem-active" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-active"/></marker></defs>
+<text x="20" y="26" text-anchor="start" class="title">Prefix sums: O(1) query, O(n) update</text>
+<text x="484" y="26" text-anchor="start" class="title">A tree of block sums: O(log n) for both</text>
+<path class="edge  dash" d="M466 40 L466 316"/>
+<text x="22" y="79" text-anchor="start" class="mono">a</text>
+<text x="66" y="52" text-anchor="middle" class="small muted">0</text>
+<rect class="box " x="44" y="58" width="44" height="32" rx="4"/>
+<text x="66.0" y="78.5" text-anchor="middle" class="mono">3</text>
+<text x="114" y="52" text-anchor="middle" class="small muted">1</text>
+<rect class="box " x="92" y="58" width="44" height="32" rx="4"/>
+<text x="114.0" y="78.5" text-anchor="middle" class="mono">1</text>
+<text x="162" y="52" text-anchor="middle" class="small muted">2</text>
+<rect class="box active" x="140" y="58" width="44" height="32" rx="4"/>
+<text x="162.0" y="78.5" text-anchor="middle" class="mono">4→9</text>
+<text x="210" y="52" text-anchor="middle" class="small muted">3</text>
+<rect class="box " x="188" y="58" width="44" height="32" rx="4"/>
+<text x="210.0" y="78.5" text-anchor="middle" class="mono">1</text>
+<text x="258" y="52" text-anchor="middle" class="small muted">4</text>
+<rect class="box " x="236" y="58" width="44" height="32" rx="4"/>
+<text x="258.0" y="78.5" text-anchor="middle" class="mono">5</text>
+<text x="306" y="52" text-anchor="middle" class="small muted">5</text>
+<rect class="box " x="284" y="58" width="44" height="32" rx="4"/>
+<text x="306.0" y="78.5" text-anchor="middle" class="mono">9</text>
+<text x="354" y="52" text-anchor="middle" class="small muted">6</text>
+<rect class="box " x="332" y="58" width="44" height="32" rx="4"/>
+<text x="354.0" y="78.5" text-anchor="middle" class="mono">2</text>
+<text x="402" y="52" text-anchor="middle" class="small muted">7</text>
+<rect class="box " x="380" y="58" width="44" height="32" rx="4"/>
+<text x="402.0" y="78.5" text-anchor="middle" class="mono">6</text>
+<text x="22" y="171" text-anchor="start" class="mono">P</text>
+<text x="64" y="144" text-anchor="middle" class="small muted">P0</text>
+<rect class="box " x="44" y="150" width="40" height="32" rx="4"/>
+<text x="64.0" y="170.5" text-anchor="middle" class="mono">0</text>
+<text x="108" y="144" text-anchor="middle" class="small muted">P1</text>
+<rect class="box " x="88" y="150" width="40" height="32" rx="4"/>
+<text x="108.0" y="170.5" text-anchor="middle" class="mono">3</text>
+<text x="152" y="144" text-anchor="middle" class="small muted">P2</text>
+<rect class="box " x="132" y="150" width="40" height="32" rx="4"/>
+<text x="152.0" y="170.5" text-anchor="middle" class="mono">4</text>
+<text x="196" y="144" text-anchor="middle" class="small muted">P3</text>
+<rect class="box bad" x="176" y="150" width="40" height="32" rx="4"/>
+<text x="196.0" y="170.5" text-anchor="middle" class="mono">8</text>
+<text x="240" y="144" text-anchor="middle" class="small muted">P4</text>
+<rect class="box bad" x="220" y="150" width="40" height="32" rx="4"/>
+<text x="240.0" y="170.5" text-anchor="middle" class="mono">9</text>
+<text x="284" y="144" text-anchor="middle" class="small muted">P5</text>
+<rect class="box bad" x="264" y="150" width="40" height="32" rx="4"/>
+<text x="284.0" y="170.5" text-anchor="middle" class="mono">14</text>
+<text x="328" y="144" text-anchor="middle" class="small muted">P6</text>
+<rect class="box bad" x="308" y="150" width="40" height="32" rx="4"/>
+<text x="328.0" y="170.5" text-anchor="middle" class="mono">23</text>
+<text x="372" y="144" text-anchor="middle" class="small muted">P7</text>
+<rect class="box bad" x="352" y="150" width="40" height="32" rx="4"/>
+<text x="372.0" y="170.5" text-anchor="middle" class="mono">25</text>
+<text x="416" y="144" text-anchor="middle" class="small muted">P8</text>
+<rect class="box bad" x="396" y="150" width="40" height="32" rx="4"/>
+<text x="416.0" y="170.5" text-anchor="middle" class="mono">31</text>
+<path class="edge active" d="M162 92 L196 132" marker-end="url(#sft-problem-active)"/>
+<text x="150" y="112" text-anchor="end" class="small mono">a[2] += 5</text>
+<text x="240" y="214" text-anchor="middle" class="small">P[3..8] all still hold the old sums (red)</text>
+<text x="240" y="234" text-anchor="middle" class="small">fixing them means rewriting n − 2 cells: O(n) per update</text>
+<text x="240" y="262" text-anchor="middle" class="small muted">query sum(l..r) = P[r + 1] − P[l] stays O(1)</text>
+<text x="240" y="282" text-anchor="middle" class="small muted">fine if the array never changes, hopeless with 10⁵ updates</text>
+<line class="edge" x1="524.2" y1="207.6" x2="511.8" y2="236.4"/>
+<line class="edge" x1="537.8" y1="207.6" x2="550.2" y2="236.4"/>
+<line class="edge active" x1="628.2" y1="207.6" x2="615.8" y2="236.4"/>
+<line class="edge" x1="641.8" y1="207.6" x2="654.2" y2="236.4"/>
+<line class="edge" x1="732.2" y1="207.6" x2="719.8" y2="236.4"/>
+<line class="edge" x1="745.8" y1="207.6" x2="758.2" y2="236.4"/>
+<line class="edge" x1="836.2" y1="207.6" x2="823.8" y2="236.4"/>
+<line class="edge" x1="849.8" y1="207.6" x2="862.2" y2="236.4"/>
+<line class="edge" x1="571.9" y1="144.8" x2="542.1" y2="179.2"/>
+<line class="edge active" x1="594.1" y1="144.8" x2="623.9" y2="179.2"/>
+<line class="edge" x1="779.9" y1="144.8" x2="750.1" y2="179.2"/>
+<line class="edge" x1="802.1" y1="144.8" x2="831.9" y2="179.2"/>
+<line class="edge active" x1="672.3" y1="80.5" x2="597.7" y2="123.5"/>
+<line class="edge" x1="701.7" y1="80.5" x2="776.3" y2="123.5"/>
+<circle class="box done" cx="505" cy="252" r="17"/>
+<text x="505" y="256.5" text-anchor="middle" class="mono">3</text>
+<circle class="box done" cx="557" cy="252" r="17"/>
+<text x="557" y="256.5" text-anchor="middle" class="mono">1</text>
+<circle class="box active" cx="609" cy="252" r="17"/>
+<text x="609" y="256.5" text-anchor="middle" class="mono">9</text>
+<circle class="box done" cx="661" cy="252" r="17"/>
+<text x="661" y="256.5" text-anchor="middle" class="mono">1</text>
+<circle class="box done" cx="713" cy="252" r="17"/>
+<text x="713" y="256.5" text-anchor="middle" class="mono">5</text>
+<circle class="box done" cx="765" cy="252" r="17"/>
+<text x="765" y="256.5" text-anchor="middle" class="mono">9</text>
+<circle class="box done" cx="817" cy="252" r="17"/>
+<text x="817" y="256.5" text-anchor="middle" class="mono">2</text>
+<circle class="box done" cx="869" cy="252" r="17"/>
+<text x="869" y="256.5" text-anchor="middle" class="mono">6</text>
+<circle class="box visit" cx="531.0" cy="192" r="17"/>
+<text x="531.0" y="196.5" text-anchor="middle" class="mono">4</text>
+<circle class="box active" cx="635.0" cy="192" r="17"/>
+<text x="635.0" y="196.5" text-anchor="middle" class="mono">10</text>
+<circle class="box visit" cx="739.0" cy="192" r="17"/>
+<text x="739.0" y="196.5" text-anchor="middle" class="mono">14</text>
+<circle class="box visit" cx="843.0" cy="192" r="17"/>
+<text x="843.0" y="196.5" text-anchor="middle" class="mono">8</text>
+<circle class="box active" cx="583.0" cy="132" r="17"/>
+<text x="583.0" y="136.5" text-anchor="middle" class="mono">14</text>
+<circle class="box visit" cx="791.0" cy="132" r="17"/>
+<text x="791.0" y="136.5" text-anchor="middle" class="mono">22</text>
+<circle class="box active" cx="687.0" cy="72" r="17"/>
+<text x="687.0" y="76.5" text-anchor="middle" class="mono">36</text>
+<text x="505" y="286" text-anchor="middle" class="small mono muted">a0</text>
+<text x="557" y="286" text-anchor="middle" class="small mono muted">a1</text>
+<text x="609" y="286" text-anchor="middle" class="small mono muted">a2</text>
+<text x="661" y="286" text-anchor="middle" class="small mono muted">a3</text>
+<text x="713" y="286" text-anchor="middle" class="small mono muted">a4</text>
+<text x="765" y="286" text-anchor="middle" class="small mono muted">a5</text>
+<text x="817" y="286" text-anchor="middle" class="small mono muted">a6</text>
+<text x="869" y="286" text-anchor="middle" class="small mono muted">a7</text>
+<text x="484" y="50" text-anchor="start" class="small muted">each node stores the sum of the leaves below it</text>
+<text x="690" y="312" text-anchor="middle" class="small">a[2] += 5 changes 4 nodes: one per level</text>
+</svg>
+<figcaption>Why this page exists. Left: one update invalidates a whole suffix of the prefix array. Right: a tree of block sums changes only the nodes above the leaf, and a range sum can be assembled from a few blocks. Fenwick trees and segment trees are two ways to choose the blocks.</figcaption>
+</figure>
+
+<p>Every structure on this page is a trade between two costs. A plain array updates in O(1) but sums a range in O(n).
+A prefix array sums in O(1) but an update rewrites O(n) prefixes. When a problem interleaves 10⁵ updates and 10⁵
+queries, both are O(n · q) ≈ 10¹⁰: too slow. The structures below make <strong>both</strong> operations O(log n), which is about
+17 steps for n = 10⁵.</p>
+<table>
+<thead>
+<tr>
+<th>Structure</th>
+<th>Build</th>
+<th>Point update</th>
+<th>Range update</th>
+<th>Range query</th>
+<th>What it can combine</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plain array</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>O(len)</td>
+<td>O(len)</td>
+<td>anything</td>
+</tr>
+<tr>
+<td>Prefix sums</td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>invertible: sum, xor, count</td>
+</tr>
+<tr>
+<td>Difference array</td>
+<td>O(n)</td>
+<td>–</td>
+<td>O(1), offline</td>
+<td>O(n) to rebuild</td>
+<td>sum</td>
+</tr>
+<tr>
+<td><strong>Fenwick tree</strong></td>
+<td>O(n)</td>
+<td><strong>O(log n)</strong></td>
+<td>O(log n) with the difference trick</td>
+<td><strong>O(log n)</strong></td>
+<td>invertible (sum, xor, count); prefix-max if values only grow</td>
+</tr>
+<tr>
+<td><strong>Segment tree</strong></td>
+<td>O(n)</td>
+<td><strong>O(log n)</strong></td>
+<td><strong>O(log n)</strong> with lazy tags</td>
+<td><strong>O(log n)</strong></td>
+<td>any associative f: min, max, gcd, sum, tuples</td>
+</tr>
+<tr>
+<td><strong>Sparse table</strong></td>
+<td>O(n log n)</td>
+<td>rebuild</td>
+<td>rebuild</td>
+<td><strong>O(1)</strong></td>
+<td>idempotent f: min, max, gcd, and, or</td>
+</tr>
+<tr>
+<td>Sqrt decomposition</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>O(√n)</td>
+<td>O(√n)</td>
+<td>anything you can summarise per block</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fenwick-trees">Fenwick trees</h2>
+<p>A Fenwick tree stores n numbers <code>t[1..n]</code> (1-based: index 0 is unused). Each <code>t[i]</code> holds the sum of a <strong>block of the
+array that ends at i</strong>. How long is the block? That is decided by the binary form of i, and the whole data
+structure follows from that one rule.</p>
+<h3 id="lowbit-the-bit-trick-behind-it">lowbit: the bit trick behind it</h3>
+<p><code>lowbit(i) = i &amp; -i</code> keeps only the lowest set bit of i: 12 = <code>1100</code> gives <code>0100</code> = 4. It works because negative
+numbers are stored in two's complement: <code>-i = ~i + 1</code>. Flipping every bit turns the trailing zeros of i into ones;
+the <code>+1</code> then carries through them and stops at the first zero of <code>~i</code>, which is exactly where i had its lowest 1.
+Every bit above it differs between i and -i, every bit below it is 0 in both, so the AND keeps that one bit.</p>
+<p>The block rule: <strong>t[i] covers a[i − lowbit(i) + 1 .. i]</strong>, so its length is lowbit(i). Odd indices own one cell,
+multiples of 2 (not 4) own two, multiples of 4 (not 8) own four, and so on. Step through the visualizer: the bits on
+top, the block it implies below.</p>
+<div class="viz sft-wide" data-viz="segment-fenwick-trees-lowbit"></div>
+
+<figure class="figure">
+<svg class="dg" viewBox="0 0 920 350" width="920" role="img" aria-label="Fenwick tree blocks for n = 16: t[i] covers lowbit(i) positions ending at i; prefix(7) reads t[7], t[6], t[4]; add(9) updates t[9], t[10], t[12], t[16]">
+<text x="20" y="24" text-anchor="start" class="title">Block t[i] covers the lowbit(i) positions that end at i (n = 16)</text>
+<rect class="box " x="38" y="232" width="49" height="28" rx="5"/>
+<text x="62.5" y="250.5" text-anchor="middle" class="small mono">t[1]</text>
+<rect class="box " x="38" y="194" width="102" height="28" rx="5"/>
+<text x="89.0" y="212.5" text-anchor="middle" class="small mono">t[2]</text>
+<rect class="box " x="144" y="232" width="49" height="28" rx="5"/>
+<text x="168.5" y="250.5" text-anchor="middle" class="small mono">t[3]</text>
+<rect class="box done" x="38" y="156" width="208" height="28" rx="5"/>
+<text x="142.0" y="174.5" text-anchor="middle" class="small mono">t[4]</text>
+<rect class="box " x="250" y="232" width="49" height="28" rx="5"/>
+<text x="274.5" y="250.5" text-anchor="middle" class="small mono">t[5]</text>
+<rect class="box done" x="250" y="194" width="102" height="28" rx="5"/>
+<text x="301.0" y="212.5" text-anchor="middle" class="small mono">t[6]</text>
+<rect class="box done" x="356" y="232" width="49" height="28" rx="5"/>
+<text x="380.5" y="250.5" text-anchor="middle" class="small mono">t[7]</text>
+<rect class="box " x="38" y="118" width="420" height="28" rx="5"/>
+<text x="248.0" y="136.5" text-anchor="middle" class="small mono">t[8]</text>
+<rect class="box active" x="462" y="232" width="49" height="28" rx="5"/>
+<text x="486.5" y="250.5" text-anchor="middle" class="small mono">t[9]</text>
+<rect class="box active" x="462" y="194" width="102" height="28" rx="5"/>
+<text x="513.0" y="212.5" text-anchor="middle" class="small mono">t[10]</text>
+<rect class="box " x="568" y="232" width="49" height="28" rx="5"/>
+<text x="592.5" y="250.5" text-anchor="middle" class="small mono">t[11]</text>
+<rect class="box active" x="462" y="156" width="208" height="28" rx="5"/>
+<text x="566.0" y="174.5" text-anchor="middle" class="small mono">t[12]</text>
+<rect class="box " x="674" y="232" width="49" height="28" rx="5"/>
+<text x="698.5" y="250.5" text-anchor="middle" class="small mono">t[13]</text>
+<rect class="box " x="674" y="194" width="102" height="28" rx="5"/>
+<text x="725.0" y="212.5" text-anchor="middle" class="small mono">t[14]</text>
+<rect class="box " x="780" y="232" width="49" height="28" rx="5"/>
+<text x="804.5" y="250.5" text-anchor="middle" class="small mono">t[15]</text>
+<rect class="box active" x="38" y="80" width="844" height="28" rx="5"/>
+<text x="460.0" y="98.5" text-anchor="middle" class="small mono">t[16]</text>
+<text x="62.5" y="282" text-anchor="middle" class="mono">1</text>
+<text x="62.5" y="298" text-anchor="middle" class="small mono muted">00001</text>
+<text x="115.5" y="282" text-anchor="middle" class="mono">2</text>
+<text x="115.5" y="298" text-anchor="middle" class="small mono muted">00010</text>
+<text x="168.5" y="282" text-anchor="middle" class="mono">3</text>
+<text x="168.5" y="298" text-anchor="middle" class="small mono muted">00011</text>
+<text x="221.5" y="282" text-anchor="middle" class="mono">4</text>
+<text x="221.5" y="298" text-anchor="middle" class="small mono muted">00100</text>
+<text x="274.5" y="282" text-anchor="middle" class="mono">5</text>
+<text x="274.5" y="298" text-anchor="middle" class="small mono muted">00101</text>
+<text x="327.5" y="282" text-anchor="middle" class="mono">6</text>
+<text x="327.5" y="298" text-anchor="middle" class="small mono muted">00110</text>
+<text x="380.5" y="282" text-anchor="middle" class="mono">7</text>
+<text x="380.5" y="298" text-anchor="middle" class="small mono muted">00111</text>
+<text x="433.5" y="282" text-anchor="middle" class="mono">8</text>
+<text x="433.5" y="298" text-anchor="middle" class="small mono muted">01000</text>
+<text x="486.5" y="282" text-anchor="middle" class="mono">9</text>
+<text x="486.5" y="298" text-anchor="middle" class="small mono muted">01001</text>
+<text x="539.5" y="282" text-anchor="middle" class="mono">10</text>
+<text x="539.5" y="298" text-anchor="middle" class="small mono muted">01010</text>
+<text x="592.5" y="282" text-anchor="middle" class="mono">11</text>
+<text x="592.5" y="298" text-anchor="middle" class="small mono muted">01011</text>
+<text x="645.5" y="282" text-anchor="middle" class="mono">12</text>
+<text x="645.5" y="298" text-anchor="middle" class="small mono muted">01100</text>
+<text x="698.5" y="282" text-anchor="middle" class="mono">13</text>
+<text x="698.5" y="298" text-anchor="middle" class="small mono muted">01101</text>
+<text x="751.5" y="282" text-anchor="middle" class="mono">14</text>
+<text x="751.5" y="298" text-anchor="middle" class="small mono muted">01110</text>
+<text x="804.5" y="282" text-anchor="middle" class="mono">15</text>
+<text x="804.5" y="298" text-anchor="middle" class="small mono muted">01111</text>
+<text x="857.5" y="282" text-anchor="middle" class="mono">16</text>
+<text x="857.5" y="298" text-anchor="middle" class="small mono muted">10000</text>
+<rect class="box done" x="36" y="314" width="14" height="14" rx="3"/>
+<text x="58" y="325" text-anchor="start" class="small">prefix(7) = t[7] + t[6] + t[4]: 7 → 6 → 4 → 0, drop the lowest set bit each step</text>
+<rect class="box active" x="36" y="333" width="14" height="14" rx="3"/>
+<text x="58" y="344" text-anchor="start" class="small">add(9, x) updates t[9], t[10], t[12], t[16]: 9 → 10 → 12 → 16, add the lowest set bit each step</text>
+</svg>
+<figcaption>Each row is one block size: 1, 2, 4, 8, 16. The bar for t[i] ends at i and is as long as i's lowest set bit (binary under each index). A prefix query collects disjoint bars walking <b>left</b>; an update raises every bar that <b>contains</b> its position, walking <b>up</b>.</figcaption>
+</figure>
+
+<p>The picture is the whole data structure. To <strong>sum a prefix</strong> a[1..i], take block t[i], jump to the index just left of
+it (<code>i -= lowbit(i)</code>, which clears the lowest set bit) and repeat. Each jump removes one 1 bit, so the walk takes
+at most log₂ n + 1 steps: one block per set bit of i. To <strong>update</strong> a[i], every block that contains position i must
+change. They are t[i], then t[i + lowbit(i)] (the smallest block that swallows the current one), and so on up to n.
+Each step moves the lowest set bit at least one place left, so this is O(log n) too.</p>
+<h3 id="query-walks-left-update-walks-up">Query walks left, update walks up</h3>
+<p>Pick an operation. In <strong>range sum</strong> mode the green blocks are added (prefix(r)) and the red ones subtracted
+(prefix(l − 1)): the red part cancels out. <strong>build in O(n)</strong> shows why you never need n separate <code>add</code> calls.</p>
+<div class="viz sft-wide" data-viz="segment-fenwick-trees-bit" data-opts='{"op":"range sum(l, r)"}'></div>
+
+<div class="insight">
+<p><strong>Why the O(n) build works</strong>
+Visit i = 1..n in order. When we reach i, every block nested inside t[i] has a smaller index and has already added
+itself to t[i], so t[i] is final. Its parent block is t[i + lowbit(i)]: pass the total up once. Every index passes
+exactly once, so the build is n additions. The same idea builds a segment tree bottom-up.</p>
+</div>
+<h3 id="template">Template</h3>
+<div class="code-tabs">
+<pre><code class="language-python">class Fenwick:
+    &quot;&quot;&quot;Positions 1..n. add, prefix and lower_bound are O(log n).&quot;&quot;&quot;
+
+    def __init__(self, n):
+        self.n = n
+        self.t = [0] * (n + 1)          # t[0] is never used
+
+    @classmethod
+    def from_list(cls, a):              # O(n) build; a[0] goes to position 1
+        fw = cls(len(a))
+        fw.t[1:] = a
+        for i in range(1, fw.n + 1):
+            j = i + (i &amp; -i)            # the block directly above i
+            if j &lt;= fw.n:
+                fw.t[j] += fw.t[i]
+        return fw
+
+    def add(self, i, delta):            # a[i] += delta
+        while i &lt;= self.n:
+            self.t[i] += delta
+            i += i &amp; -i                 # next block that contains i
+
+    def prefix(self, i):                # a[1] + ... + a[i]; prefix(0) == 0
+        s = 0
+        while i &gt; 0:
+            s += self.t[i]
+            i -= i &amp; -i                 # drop the lowest set bit
+        return s
+
+    def range_sum(self, l, r):          # a[l] + ... + a[r], inclusive
+        return self.prefix(r) - self.prefix(l - 1)
+
+    def lower_bound(self, k):           # smallest i with prefix(i) &gt;= k; needs a[i] &gt;= 0
+        pos, step = 0, 1 &lt;&lt; self.n.bit_length()
+        while step:
+            nxt = pos + step
+            if nxt &lt;= self.n and self.t[nxt] &lt; k:
+                pos = nxt               # the whole block is still below k: skip it
+                k -= self.t[nxt]
+            step &gt;&gt;= 1
+        return pos + 1                  # n + 1 when the total is below k
+</code></pre>
+<pre><code class="language-csharp">public class Fenwick
+{
+    private readonly long[] t;          // t[0] is never used
+    public int N { get; }
+
+    public Fenwick(int n) { N = n; t = new long[n + 1]; }
+
+    public static Fenwick FromArray(IReadOnlyList&lt;long&gt; a)   // O(n); a[0] goes to position 1
+    {
+        var fw = new Fenwick(a.Count);
+        for (int i = 1; i &lt;= fw.N; i++) fw.t[i] = a[i - 1];
+        for (int i = 1; i &lt;= fw.N; i++)
+        {
+            int j = i + (i &amp; -i);       // the block directly above i
+            if (j &lt;= fw.N) fw.t[j] += fw.t[i];
+        }
+        return fw;
+    }
+
+    public void Add(int i, long delta)  // a[i] += delta
+    {
+        for (; i &lt;= N; i += i &amp; -i) t[i] += delta;
+    }
+
+    public long Prefix(int i)           // a[1] + ... + a[i]; Prefix(0) == 0
+    {
+        long s = 0;
+        for (; i &gt; 0; i -= i &amp; -i) s += t[i];
+        return s;
+    }
+
+    public long RangeSum(int l, int r) =&gt; Prefix(r) - Prefix(l - 1);
+
+    public int LowerBound(long k)       // smallest i with Prefix(i) &gt;= k; needs a[i] &gt;= 0
+    {
+        int pos = 0, step = 1;
+        while (step &lt;= N) step &lt;&lt;= 1;
+        for (; step &gt; 0; step &gt;&gt;= 1)
+        {
+            int nxt = pos + step;
+            if (nxt &lt;= N &amp;&amp; t[nxt] &lt; k) { pos = nxt; k -= t[nxt]; }
+        }
+        return pos + 1;                 // N + 1 when the total is below k
+    }
+}
+</code></pre>
+</div>
+<p><strong>Complexity.</strong> <code>add</code>, <code>prefix</code>, <code>range_sum</code>, <code>lower_bound</code>: O(log n). <code>from_list</code>: O(n). Space: n + 1 numbers, no
+pointers, no 4n array. That compactness is why Fenwick trees are the first choice whenever the combine is a sum.</p>
+<div class="warn">
+<p><strong>What a Fenwick tree cannot do directly</strong>
+<code>range_sum</code> works because sums can be <strong>subtracted</strong>: prefix(r) − prefix(l − 1). Minimum cannot: knowing min(a[1..r])
+and min(a[1..l−1]) tells you nothing about min(a[l..r]). A Fenwick tree can still keep a <strong>prefix</strong> max if values only
+increase (each update does <code>t[i] = max(t[i], v)</code> up the chain), which is enough for LIS-style DP. For arbitrary range
+min or max, use a segment tree or a sparse table.</p>
+</div>
+<h3 id="walking-down-the-k-th-smallest-in-olog-n">Walking down: the k-th smallest in O(log n)</h3>
+<p>Keep a Fenwick tree over <strong>counts</strong>: <code>cnt[v]</code> = how many copies of value v are in a multiset. Then prefix(v) is the
+number of elements ≤ v, and the k-th smallest is the first v with prefix(v) ≥ k. A binary search over v that calls
+prefix each time costs O(log² n). <code>lower_bound</code> does it in O(log n) by descending through the blocks themselves,
+exactly like binary lifting in <a href="tree-patterns.html">Tree Problem Patterns</a>: try the biggest jump first, keep it if it
+does not overshoot.</p>
+<div class="viz sft-wide" data-viz="segment-fenwick-trees-descend"></div>
+
+<p>Why is <code>t[pos + 2^s]</code> exactly the block a[pos + 1 .. pos + 2^s]? Because pos is built only from bigger powers of two
+than 2^s, so pos + 2^s has lowest set bit 2^s and its block has length 2^s, starting right after pos. Each step
+decides one bit of the answer, from the top bit down. This turns a Fenwick tree into an <strong>order-statistics multiset</strong>
+on a bounded value range: insert, delete, rank (<code>prefix(v − 1)</code>) and k-th, all O(log n). It is a common replacement
+for a balanced BST when the values are small or can be compressed.</p>
+<h3 id="range-updates-put-a-difference-array-inside">Range updates: put a difference array inside</h3>
+<p><a href="prefix-sums.html">Prefix Sums</a> showed the <strong>difference array</strong>: to add x to a[l..r], do <code>d[l] += x</code> and
+<code>d[r + 1] -= x</code>; then a[i] = d[1] + … + d[i]. Those are two point updates and one prefix sum, which is exactly what a
+Fenwick tree does well. So a BIT over d gives <strong>range add + point query</strong> in O(log n), and it works <em>online</em>
+(queries between updates), which the plain difference array cannot do.</p>
+<p><strong>Range add + range sum</strong> needs one more step. The sum of a[1..i] counts each d[j] once for every position from j to
+i, that is (i − j + 1) times:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 920 300" width="920" role="img" aria-label="Each difference d[j] contributes to every a[k] with k at least j, so prefix_sum(i) counts d[j] exactly i − j + 1 times">
+<text x="20" y="26" text-anchor="start" class="title">prefix_sum(5): d[j] appears once in every row k ≥ j</text>
+<text x="60" y="68.0" text-anchor="end" class="small mono">a[1]</text>
+<rect class="box visit" x="72" y="46" width="36" height="36" rx="4"/>
+<text x="90.0" y="68.5" text-anchor="middle" class="small mono">d1</text>
+<rect class="box " x="112" y="46" width="36" height="36" rx="4" stroke-dasharray="5 4"/>
+<rect class="box " x="152" y="46" width="36" height="36" rx="4" stroke-dasharray="5 4"/>
+<rect class="box " x="192" y="46" width="36" height="36" rx="4" stroke-dasharray="5 4"/>
+<rect class="box " x="232" y="46" width="36" height="36" rx="4" stroke-dasharray="5 4"/>
+<text x="60" y="108.0" text-anchor="end" class="small mono">a[2]</text>
+<rect class="box visit" x="72" y="86" width="36" height="36" rx="4"/>
+<text x="90.0" y="108.5" text-anchor="middle" class="small mono">d1</text>
+<rect class="box visit" x="112" y="86" width="36" height="36" rx="4"/>
+<text x="130.0" y="108.5" text-anchor="middle" class="small mono">d2</text>
+<rect class="box " x="152" y="86" width="36" height="36" rx="4" stroke-dasharray="5 4"/>
+<rect class="box " x="192" y="86" width="36" height="36" rx="4" stroke-dasharray="5 4"/>
+<rect class="box " x="232" y="86" width="36" height="36" rx="4" stroke-dasharray="5 4"/>
+<text x="60" y="148.0" text-anchor="end" class="small mono">a[3]</text>
+<rect class="box visit" x="72" y="126" width="36" height="36" rx="4"/>
+<text x="90.0" y="148.5" text-anchor="middle" class="small mono">d1</text>
+<rect class="box visit" x="112" y="126" width="36" height="36" rx="4"/>
+<text x="130.0" y="148.5" text-anchor="middle" class="small mono">d2</text>
+<rect class="box visit" x="152" y="126" width="36" height="36" rx="4"/>
+<text x="170.0" y="148.5" text-anchor="middle" class="small mono">d3</text>
+<rect class="box " x="192" y="126" width="36" height="36" rx="4" stroke-dasharray="5 4"/>
+<rect class="box " x="232" y="126" width="36" height="36" rx="4" stroke-dasharray="5 4"/>
+<text x="60" y="188.0" text-anchor="end" class="small mono">a[4]</text>
+<rect class="box visit" x="72" y="166" width="36" height="36" rx="4"/>
+<text x="90.0" y="188.5" text-anchor="middle" class="small mono">d1</text>
+<rect class="box visit" x="112" y="166" width="36" height="36" rx="4"/>
+<text x="130.0" y="188.5" text-anchor="middle" class="small mono">d2</text>
+<rect class="box visit" x="152" y="166" width="36" height="36" rx="4"/>
+<text x="170.0" y="188.5" text-anchor="middle" class="small mono">d3</text>
+<rect class="box visit" x="192" y="166" width="36" height="36" rx="4"/>
+<text x="210.0" y="188.5" text-anchor="middle" class="small mono">d4</text>
+<rect class="box " x="232" y="166" width="36" height="36" rx="4" stroke-dasharray="5 4"/>
+<text x="60" y="228.0" text-anchor="end" class="small mono">a[5]</text>
+<rect class="box visit" x="72" y="206" width="36" height="36" rx="4"/>
+<text x="90.0" y="228.5" text-anchor="middle" class="small mono">d1</text>
+<rect class="box visit" x="112" y="206" width="36" height="36" rx="4"/>
+<text x="130.0" y="228.5" text-anchor="middle" class="small mono">d2</text>
+<rect class="box visit" x="152" y="206" width="36" height="36" rx="4"/>
+<text x="170.0" y="228.5" text-anchor="middle" class="small mono">d3</text>
+<rect class="box visit" x="192" y="206" width="36" height="36" rx="4"/>
+<text x="210.0" y="228.5" text-anchor="middle" class="small mono">d4</text>
+<rect class="box visit" x="232" y="206" width="36" height="36" rx="4"/>
+<text x="250.0" y="228.5" text-anchor="middle" class="small mono">d5</text>
+<text x="90.0" y="262" text-anchor="middle" class="mono">×5</text>
+<text x="130.0" y="262" text-anchor="middle" class="mono">×4</text>
+<text x="170.0" y="262" text-anchor="middle" class="mono">×3</text>
+<text x="210.0" y="262" text-anchor="middle" class="mono">×2</text>
+<text x="250.0" y="262" text-anchor="middle" class="mono">×1</text>
+<text x="170.0" y="284" text-anchor="middle" class="small muted">column j: (5 − j + 1) copies</text>
+<text x="340" y="70" text-anchor="start" class="mono">a[k] = d[1] + d[2] + … + d[k]</text>
+<text x="340" y="104" text-anchor="start" class="mono">prefix_sum(i) = Σ d[j] · (i − j + 1)        (j = 1..i)</text>
+<text x="340" y="138" text-anchor="start" class="mono">             = i · Σ d[j]  −  Σ d[j] · (j − 1)</text>
+<rect class="box accent" x="340" y="160" width="250" height="50" rx="8"/>
+<text x="465" y="181" text-anchor="middle" class="mono">B1: Fenwick over d[j]</text>
+<text x="465" y="199" text-anchor="middle" class="small muted">gives Σ d[j], times i</text>
+<rect class="box done" x="610" y="160" width="290" height="50" rx="8"/>
+<text x="755" y="181" text-anchor="middle" class="mono">B2: Fenwick over d[j] · (j − 1)</text>
+<text x="755" y="199" text-anchor="middle" class="small muted">gives the correction term</text>
+<text x="340" y="240" text-anchor="start" class="small mono">range_add(l, r, x):  B1: +x at l, −x at r + 1</text>
+<text x="340" y="258" text-anchor="start" class="small mono">                     B2: +x·(l − 1) at l, −x·r at r + 1</text>
+<text x="340" y="284" text-anchor="start" class="small mono">prefix_sum(i) = B1.prefix(i) · i − B2.prefix(i)</text>
+</svg>
+<figcaption>Range add + range sum with two Fenwick trees. The weight (i − j + 1) depends on both i and j, so split it into a part that multiplies by i at query time and a part fixed at update time.</figcaption>
+</figure>
+
+<p>The term <code>i · Σ d[j]</code> is a prefix sum of d times i. The term <code>Σ d[j]·(j − 1)</code> is a prefix sum of a second array.
+Keep one Fenwick tree for each. A range add touches two entries of each, so it is four point updates. Step through:
+the top row is the array you are simulating, which nobody stores.</p>
+<div class="viz sft-wide" data-viz="segment-fenwick-trees-bitrange"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">class RangeFenwick:
+    &quot;&quot;&quot;Range add and range sum on positions 1..n, both O(log n).&quot;&quot;&quot;
+
+    def __init__(self, n):
+        self.n = n
+        self.b1 = [0] * (n + 1)         # Fenwick over d[j]
+        self.b2 = [0] * (n + 1)         # Fenwick over d[j] * (j - 1)
+
+    def _add(self, t, i, x):
+        while i &lt;= self.n:
+            t[i] += x
+            i += i &amp; -i
+
+    def _prefix(self, t, i):
+        s = 0
+        while i &gt; 0:
+            s += t[i]
+            i -= i &amp; -i
+        return s
+
+    def range_add(self, l, r, x):       # a[l..r] += x
+        self._add(self.b1, l, x)
+        self._add(self.b1, r + 1, -x)   # no-op when r == n
+        self._add(self.b2, l, x * (l - 1))
+        self._add(self.b2, r + 1, -x * r)
+
+    def prefix_sum(self, i):            # a[1] + ... + a[i]
+        return self._prefix(self.b1, i) * i - self._prefix(self.b2, i)
+
+    def range_sum(self, l, r):
+        return self.prefix_sum(r) - self.prefix_sum(l - 1)
+
+    def point(self, i):                 # a[i] alone needs only b1
+        return self._prefix(self.b1, i)
+</code></pre>
+<pre><code class="language-csharp">public class RangeFenwick
+{
+    private readonly long[] b1, b2;     // Fenwick over d[j] and over d[j] * (j - 1)
+    private readonly int n;
+
+    public RangeFenwick(int n) { this.n = n; b1 = new long[n + 1]; b2 = new long[n + 1]; }
+
+    private void Add(long[] t, int i, long x) { for (; i &lt;= n; i += i &amp; -i) t[i] += x; }
+
+    private static long Prefix(long[] t, int i) { long s = 0; for (; i &gt; 0; i -= i &amp; -i) s += t[i]; return s; }
+
+    public void RangeAdd(int l, int r, long x)   // a[l..r] += x
+    {
+        Add(b1, l, x);
+        Add(b1, r + 1, -x);             // no-op when r == n
+        Add(b2, l, x * (l - 1));
+        Add(b2, r + 1, -x * r);
+    }
+
+    public long PrefixSum(int i) =&gt; Prefix(b1, i) * i - Prefix(b2, i);
+
+    public long RangeSum(int l, int r) =&gt; PrefixSum(r) - PrefixSum(l - 1);
+
+    public long Point(int i) =&gt; Prefix(b1, i);
+}
+</code></pre>
+</div>
+<h3 id="2d-fenwick-trees">2D Fenwick trees</h3>
+<p>Nest the loops: <code>t[i][j]</code> covers the rectangle of rows <code>i − lowbit(i) + 1 .. i</code> and columns <code>j − lowbit(j) + 1 .. j</code>.
+A point update walks up in both dimensions, a prefix query walks left in both, and a rectangle sum uses the same
+inclusion-exclusion as 2D prefix sums. Both operations are O(log R · log C). This is the standard answer to
+"Range Sum Query 2D - Mutable".</p>
+<div class="code-tabs">
+<pre><code class="language-python">class Fenwick2D:
+    def __init__(self, rows, cols):
+        self.R, self.C = rows, cols
+        self.t = [[0] * (cols + 1) for _ in range(rows + 1)]
+
+    def add(self, r, c, delta):         # cell (r, c), 1-based
+        i = r
+        while i &lt;= self.R:
+            j = c
+            while j &lt;= self.C:
+                self.t[i][j] += delta
+                j += j &amp; -j
+            i += i &amp; -i
+
+    def prefix(self, r, c):             # sum of the rectangle (1, 1)..(r, c)
+        s, i = 0, r
+        while i &gt; 0:
+            j = c
+            while j &gt; 0:
+                s += self.t[i][j]
+                j -= j &amp; -j
+            i -= i &amp; -i
+        return s
+
+    def rect(self, r1, c1, r2, c2):     # inclusive corners
+        return (self.prefix(r2, c2) - self.prefix(r1 - 1, c2)
+                - self.prefix(r2, c1 - 1) + self.prefix(r1 - 1, c1 - 1))
+</code></pre>
+<pre><code class="language-csharp">public class Fenwick2D
+{
+    private readonly long[,] t;
+    private readonly int R, C;
+
+    public Fenwick2D(int rows, int cols) { R = rows; C = cols; t = new long[rows + 1, cols + 1]; }
+
+    public void Add(int r, int c, long delta)    // cell (r, c), 1-based
+    {
+        for (int i = r; i &lt;= R; i += i &amp; -i)
+            for (int j = c; j &lt;= C; j += j &amp; -j)
+                t[i, j] += delta;
+    }
+
+    public long Prefix(int r, int c)    // sum of the rectangle (1, 1)..(r, c)
+    {
+        long s = 0;
+        for (int i = r; i &gt; 0; i -= i &amp; -i)
+            for (int j = c; j &gt; 0; j -= j &amp; -j)
+                s += t[i, j];
+        return s;
+    }
+
+    public long Rect(int r1, int c1, int r2, int c2) =&gt;
+        Prefix(r2, c2) - Prefix(r1 - 1, c2) - Prefix(r2, c1 - 1) + Prefix(r1 - 1, c1 - 1);
+}
+</code></pre>
+</div>
+<h2 id="segment-trees">Segment trees</h2>
+<p>A segment tree is a binary tree over <strong>ranges</strong>. The root owns [0..n−1]; a node that owns [l..r] splits at
+m = (l + r) // 2 and gives [l..m] to its left child and [m+1..r] to its right child; leaves own one index. Each node
+stores f over its range. It is stored like a heap: node k has children 2k and 2k + 1, so no pointers are needed.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 920 390" width="920" role="img" aria-label="Segment tree over 8 elements answering query [2..6]: partial nodes split, covered nodes return their sum, disjoint nodes return 0">
+<text x="20" y="24" text-anchor="start" class="title">query(2, 6) on a = [5, 8, 6, 3, 2, 7, 2, 6]</text>
+<path class="edge accent" d="M458.5 100 L236.5 130"/>
+<path class="edge accent" d="M236.5 174 L125.5 204"/>
+<path class="edge  dash" d="M125.5 248 L70.0 278"/>
+<path class="edge  dash" d="M125.5 248 L181.0 278"/>
+<path class="edge accent" d="M236.5 174 L347.5 204"/>
+<path class="edge  dash" d="M347.5 248 L292.0 278"/>
+<path class="edge  dash" d="M347.5 248 L403.0 278"/>
+<path class="edge accent" d="M458.5 100 L680.5 130"/>
+<path class="edge accent" d="M680.5 174 L569.5 204"/>
+<path class="edge  dash" d="M569.5 248 L514.0 278"/>
+<path class="edge  dash" d="M569.5 248 L625.0 278"/>
+<path class="edge accent" d="M680.5 174 L791.5 204"/>
+<path class="edge accent" d="M791.5 248 L736.0 278"/>
+<path class="edge accent" d="M791.5 248 L847.0 278"/>
+<rect class="box active" x="406.5" y="56" width="104" height="44" rx="6"/>
+<text x="458.5" y="74" text-anchor="middle" class="mono">[0..7]</text>
+<text x="458.5" y="91" text-anchor="middle" class="small">sum 39</text>
+<text x="508.5" y="52" text-anchor="end" class="small muted">#1</text>
+<rect class="box active" x="184.5" y="130" width="104" height="44" rx="6"/>
+<text x="236.5" y="148" text-anchor="middle" class="mono">[0..3]</text>
+<text x="236.5" y="165" text-anchor="middle" class="small">sum 22</text>
+<text x="186.5" y="126" text-anchor="start" class="small muted">#2</text>
+<rect class="box bad" x="73.5" y="204" width="104" height="44" rx="6"/>
+<text x="125.5" y="222" text-anchor="middle" class="mono">[0..1]</text>
+<text x="125.5" y="239" text-anchor="middle" class="small">sum 13</text>
+<text x="75.5" y="200" text-anchor="start" class="small muted">#4</text>
+<rect class="box " x="25.0" y="278" width="90" height="44" rx="6" stroke-dasharray="5 4"/>
+<text x="70.0" y="296" text-anchor="middle" class="mono muted">[0]</text>
+<text x="70.0" y="313" text-anchor="middle" class="small muted">sum 5</text>
+<text x="27.0" y="274" text-anchor="start" class="small muted">#8</text>
+<rect class="box " x="136.0" y="278" width="90" height="44" rx="6" stroke-dasharray="5 4"/>
+<text x="181.0" y="296" text-anchor="middle" class="mono muted">[1]</text>
+<text x="181.0" y="313" text-anchor="middle" class="small muted">sum 8</text>
+<text x="224.0" y="274" text-anchor="end" class="small muted">#9</text>
+<rect class="box done" x="295.5" y="204" width="104" height="44" rx="6"/>
+<text x="347.5" y="222" text-anchor="middle" class="mono">[2..3]</text>
+<text x="347.5" y="239" text-anchor="middle" class="small">sum 9</text>
+<text x="397.5" y="200" text-anchor="end" class="small muted">#5</text>
+<rect class="box " x="247.0" y="278" width="90" height="44" rx="6" stroke-dasharray="5 4"/>
+<text x="292.0" y="296" text-anchor="middle" class="mono muted">[2]</text>
+<text x="292.0" y="313" text-anchor="middle" class="small muted">sum 6</text>
+<text x="249.0" y="274" text-anchor="start" class="small muted">#10</text>
+<rect class="box " x="358.0" y="278" width="90" height="44" rx="6" stroke-dasharray="5 4"/>
+<text x="403.0" y="296" text-anchor="middle" class="mono muted">[3]</text>
+<text x="403.0" y="313" text-anchor="middle" class="small muted">sum 3</text>
+<text x="446.0" y="274" text-anchor="end" class="small muted">#11</text>
+<rect class="box active" x="628.5" y="130" width="104" height="44" rx="6"/>
+<text x="680.5" y="148" text-anchor="middle" class="mono">[4..7]</text>
+<text x="680.5" y="165" text-anchor="middle" class="small">sum 17</text>
+<text x="730.5" y="126" text-anchor="end" class="small muted">#3</text>
+<rect class="box done" x="517.5" y="204" width="104" height="44" rx="6"/>
+<text x="569.5" y="222" text-anchor="middle" class="mono">[4..5]</text>
+<text x="569.5" y="239" text-anchor="middle" class="small">sum 9</text>
+<text x="519.5" y="200" text-anchor="start" class="small muted">#6</text>
+<rect class="box " x="469.0" y="278" width="90" height="44" rx="6" stroke-dasharray="5 4"/>
+<text x="514.0" y="296" text-anchor="middle" class="mono muted">[4]</text>
+<text x="514.0" y="313" text-anchor="middle" class="small muted">sum 2</text>
+<text x="471.0" y="274" text-anchor="start" class="small muted">#12</text>
+<rect class="box " x="580.0" y="278" width="90" height="44" rx="6" stroke-dasharray="5 4"/>
+<text x="625.0" y="296" text-anchor="middle" class="mono muted">[5]</text>
+<text x="625.0" y="313" text-anchor="middle" class="small muted">sum 7</text>
+<text x="668.0" y="274" text-anchor="end" class="small muted">#13</text>
+<rect class="box active" x="739.5" y="204" width="104" height="44" rx="6"/>
+<text x="791.5" y="222" text-anchor="middle" class="mono">[6..7]</text>
+<text x="791.5" y="239" text-anchor="middle" class="small">sum 8</text>
+<text x="841.5" y="200" text-anchor="end" class="small muted">#7</text>
+<rect class="box done" x="691.0" y="278" width="90" height="44" rx="6"/>
+<text x="736.0" y="296" text-anchor="middle" class="mono">[6]</text>
+<text x="736.0" y="313" text-anchor="middle" class="small">sum 2</text>
+<text x="693.0" y="274" text-anchor="start" class="small muted">#14</text>
+<rect class="box bad" x="802.0" y="278" width="90" height="44" rx="6"/>
+<text x="847.0" y="296" text-anchor="middle" class="mono">[7]</text>
+<text x="847.0" y="313" text-anchor="middle" class="small">sum 6</text>
+<text x="890.0" y="274" text-anchor="end" class="small muted">#15</text>
+<rect class="box active" x="40" y="346" width="14" height="14" rx="3"/>
+<text x="62" y="357" text-anchor="start" class="small">partial overlap: ask both children</text>
+<rect class="box done" x="260" y="346" width="14" height="14" rx="3"/>
+<text x="282" y="357" text-anchor="start" class="small">fully inside: return the node</text>
+<rect class="box bad" x="480" y="346" width="14" height="14" rx="3"/>
+<text x="502" y="357" text-anchor="start" class="small">disjoint: return 0</text>
+<rect class="box " x="700" y="346" width="14" height="14" rx="3" stroke-dasharray="5 4"/>
+<text x="722" y="357" text-anchor="start" class="small">never visited</text>
+<text x="460" y="382" text-anchor="middle" class="small">answer = 9 + 9 + 2 = 20, assembled from the three green nodes</text>
+</svg>
+<figcaption>Node #k owns a range and has children #2k and #2k + 1. Only the amber nodes, which contain an edge of the query, split. Green nodes are used whole; red ones are rejected immediately; dashed ones are never touched. At most two amber nodes per level keeps the query O(log n).</figcaption>
+</figure>
+
+<p><strong>Query.</strong> Ask each node one question: how does my range relate to [ql..qr]?</p>
+<ul>
+<li><strong>Disjoint</strong>: return the identity (0 for sum, +∞ for min). Do not look inside.</li>
+<li><strong>Fully inside</strong>: return the stored value as one piece. Do not look inside.</li>
+<li><strong>Partial overlap</strong>: ask both children and combine.</li>
+</ul>
+<p>Why O(log n)? At any depth, at most two nodes are <em>partial</em>: the ones that contain the query's left edge and its right
+edge. Everything strictly between them is fully inside, and their parents were already fully inside, so the recursion
+never reaches them. Two partial nodes per level, each with two children, means at most four visits per level.</p>
+<p><strong>Update.</strong> Change a leaf, then recompute every ancestor on the way back up: one node per level. Pick f and an
+operation below; green bars are the pieces the answer is assembled from.</p>
+<div class="viz sft-wide" data-viz="segment-fenwick-trees-segtree"></div>
+
+<h3 id="template-point-update-range-query-any-associative-f">Template: point update, range query, any associative f</h3>
+<div class="code-tabs">
+<pre><code class="language-python">class SegTree:
+    &quot;&quot;&quot;Point assign and range query for any associative f with identity ident.&quot;&quot;&quot;
+
+    def __init__(self, a, f=lambda x, y: x + y, ident=0):
+        self.n, self.f, self.ident = len(a), f, ident
+        self.tree = [ident] * (4 * max(1, self.n))   # 4n always suffices
+        if self.n:
+            self._build(a, 1, 0, self.n - 1)
+
+    def _build(self, a, node, l, r):
+        if l == r:
+            self.tree[node] = a[l]
+            return
+        m = (l + r) // 2
+        self._build(a, 2 * node, l, m)
+        self._build(a, 2 * node + 1, m + 1, r)
+        self.tree[node] = self.f(self.tree[2 * node], self.tree[2 * node + 1])
+
+    def update(self, i, val, node=1, l=0, r=None):   # a[i] = val
+        if r is None:
+            r = self.n - 1
+        if l == r:
+            self.tree[node] = val
+            return
+        m = (l + r) // 2
+        if i &lt;= m:
+            self.update(i, val, 2 * node, l, m)
+        else:
+            self.update(i, val, 2 * node + 1, m + 1, r)
+        self.tree[node] = self.f(self.tree[2 * node], self.tree[2 * node + 1])
+
+    def query(self, ql, qr, node=1, l=0, r=None):    # f(a[ql..qr]), inclusive
+        if r is None:
+            r = self.n - 1
+        if qr &lt; l or r &lt; ql:                         # disjoint
+            return self.ident
+        if ql &lt;= l and r &lt;= qr:                      # fully inside
+            return self.tree[node]
+        m = (l + r) // 2                             # partial: split
+        return self.f(self.query(ql, qr, 2 * node, l, m),
+                      self.query(ql, qr, 2 * node + 1, m + 1, r))
+</code></pre>
+<pre><code class="language-csharp">public class SegTree
+{
+    private readonly long[] tree;
+    private readonly int n;
+    private readonly Func&lt;long, long, long&gt; f;
+    private readonly long ident;
+
+    public SegTree(IReadOnlyList&lt;long&gt; a, Func&lt;long, long, long&gt; f, long ident)
+    {
+        n = a.Count; this.f = f; this.ident = ident;
+        tree = new long[4 * Math.Max(1, n)];          // 4n always suffices
+        Array.Fill(tree, ident);
+        if (n &gt; 0) Build(a, 1, 0, n - 1);
+    }
+
+    public int Count =&gt; n;
+    public long Node(int node) =&gt; tree[node];
+
+    private void Build(IReadOnlyList&lt;long&gt; a, int node, int l, int r)
+    {
+        if (l == r) { tree[node] = a[l]; return; }
+        int m = (l + r) / 2;
+        Build(a, 2 * node, l, m);
+        Build(a, 2 * node + 1, m + 1, r);
+        tree[node] = f(tree[2 * node], tree[2 * node + 1]);
+    }
+
+    public void Update(int i, long val) =&gt; Update(i, val, 1, 0, n - 1);
+
+    private void Update(int i, long val, int node, int l, int r)
+    {
+        if (l == r) { tree[node] = val; return; }
+        int m = (l + r) / 2;
+        if (i &lt;= m) Update(i, val, 2 * node, l, m);
+        else Update(i, val, 2 * node + 1, m + 1, r);
+        tree[node] = f(tree[2 * node], tree[2 * node + 1]);
+    }
+
+    public long Query(int ql, int qr) =&gt; Query(ql, qr, 1, 0, n - 1);
+
+    private long Query(int ql, int qr, int node, int l, int r)
+    {
+        if (qr &lt; l || r &lt; ql) return ident;               // disjoint
+        if (ql &lt;= l &amp;&amp; r &lt;= qr) return tree[node];        // fully inside
+        int m = (l + r) / 2;                              // partial: split
+        return f(Query(ql, qr, 2 * node, l, m), Query(ql, qr, 2 * node + 1, m + 1, r));
+    }
+}
+</code></pre>
+</div>
+<p><strong>Complexity.</strong> Build O(n), update O(log n), query O(log n), space 4n. Why 4n: the tree has depth ⌈log₂ n⌉, so heap
+indices reach 2^(⌈log₂ n⌉ + 1) &lt; 4n. With n = 6 there are only 2n − 1 = 11 nodes, but the heap numbering leaves gaps and the deepest leaf
+sits at index 13.</p>
+<h3 id="what-can-a-node-store">What can a node store?</h3>
+<p>Anything that <strong>combines associatively</strong>: <code>f(f(x, y), z) = f(x, f(y, z))</code>. The tree regroups the elements freely,
+but it never reorders them, so f does not need to be commutative. That opens up far more than sums:</p>
+<table>
+<thead>
+<tr>
+<th>Store per node</th>
+<th>Combine (left L, right R)</th>
+<th>Answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sum / min / max / gcd / xor</td>
+<td>the obvious one</td>
+<td>range aggregates</td>
+</tr>
+<tr>
+<td>(min, count of min)</td>
+<td>keep the smaller min; add counts on ties</td>
+<td>"how many times does the minimum occur"</td>
+</tr>
+<tr>
+<td>(sum, best prefix, best suffix, best)</td>
+<td>best = max(L.best, R.best, L.suffix + R.prefix)</td>
+<td><strong>maximum subarray sum in a range</strong>, with point updates</td>
+</tr>
+<tr>
+<td>(open, close, matched) brackets</td>
+<td>matched = L.m + R.m + min(L.open, R.close)</td>
+<td>longest correct bracket subsequence in a range</td>
+</tr>
+<tr>
+<td>2×2 matrix</td>
+<td>matrix product (order matters)</td>
+<td>linear recurrences with point edits (Fibonacci-like DP on a range)</td>
+</tr>
+<tr>
+<td>polynomial hash and length</td>
+<td><code>L.h · base^R.len + R.h</code></td>
+<td>compare substrings while the string changes</td>
+</tr>
+<tr>
+<td>sorted list (merge sort tree)</td>
+<td>merge</td>
+<td>count of values ≤ x in a range, O(log² n) per query</td>
+</tr>
+</tbody>
+</table>
+<h3 id="descending-the-tree-first-index-with-ai-x">Descending the tree: first index with a[i] ≥ x</h3>
+<p>A segment tree can also <strong>search</strong>. "Find the leftmost i with a[i] ≥ x" on a max tree: at each node, if the left
+child's max is ≥ x the answer is on the left, so go left; otherwise go right. Only one path is followed, so it is
+O(log n), the segment-tree version of the Fenwick descent above. The same walk answers "k-th one in a 0/1 array" on a
+sum tree and "first position where the prefix sum exceeds k".</p>
+<div class="code-tabs">
+<pre><code class="language-python">def first_at_least(st, x):
+    &quot;&quot;&quot;st is a SegTree built with f = max. Smallest i with a[i] &gt;= x, or -1. O(log n).&quot;&quot;&quot;
+    def go(node, l, r):
+        if st.tree[node] &lt; x:
+            return -1                   # nothing in this range is big enough
+        if l == r:
+            return l
+        m = (l + r) // 2
+        res = go(2 * node, l, m)        # if the left max is &gt;= x this succeeds
+        return res if res != -1 else go(2 * node + 1, m + 1, r)
+    return go(1, 0, st.n - 1) if st.n else -1
+</code></pre>
+<pre><code class="language-csharp">public static class SegTreeSearch
+{
+    // st must be built with f = Math.Max. Smallest i with a[i] &gt;= x, or -1. O(log n).
+    public static int FirstAtLeast(SegTree st, long x) =&gt; st.Count == 0 ? -1 : Go(st, x, 1, 0, st.Count - 1);
+
+    private static int Go(SegTree st, long x, int node, int l, int r)
+    {
+        if (st.Node(node) &lt; x) return -1;                 // nothing in this range is big enough
+        if (l == r) return l;
+        int m = (l + r) / 2;
+        int res = Go(st, x, 2 * node, l, m);              // if the left max is &gt;= x this succeeds
+        return res != -1 ? res : Go(st, x, 2 * node + 1, m + 1, r);
+    }
+}
+</code></pre>
+</div>
+<h3 id="lazy-propagation-range-updates">Lazy propagation: range updates</h3>
+<p>"Add 3 to a[2..8]" would touch every leaf in the range, which is O(n). Lazy propagation reuses the query's trick:
+decompose [2..8] into O(log n) fully covered nodes. Update <strong>only those nodes</strong>, and write a note on each one, a
+<strong>tag</strong>, saying "every element below me still owes +3". The children stay stale until someone needs to walk through
+this node. That walker first <strong>pushes</strong> the tag one level down: it applies the tag to both children (updating their
+values and adding to their tags) and clears it.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 920 340" width="920" role="img" aria-label="Lazy propagation: a range add writes a tag on the covered node; a later query that must descend pushes the tag to both children first">
+<defs><marker id="sft-lazy-active" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-active"/></marker></defs>
+<path class="edge  dash" d="M460 40 L460 320"/>
+<text x="20" y="26" text-anchor="start" class="title">1. add(0..3, +3) stops at a covered node</text>
+<path class="edge" d="M230 100 L120 146"/>
+<path class="edge" d="M230 100 L340 146"/>
+<path class="edge  dash" d="M120 190 L55 236"/>
+<path class="edge  dash" d="M120 190 L190 236"/>
+<rect class="box visit" x="178.0" y="56" width="104" height="44" rx="6"/>
+<text x="230" y="74" text-anchor="middle" class="mono">[0..7]</text>
+<text x="230" y="91" text-anchor="middle" class="small">sum 43</text>
+<rect class="box " x="288.0" y="146" width="104" height="44" rx="6"/>
+<text x="340" y="164" text-anchor="middle" class="mono">[4..7]</text>
+<text x="340" y="181" text-anchor="middle" class="small">sum 22</text>
+<text x="480" y="26" text-anchor="start" class="title">2. query(2..3) must descend: push first</text>
+<path class="edge" d="M690 100 L580 146"/>
+<path class="edge" d="M690 100 L800 146"/>
+<path class="edge active" d="M580 190 L515 236" marker-end="url(#sft-lazy-active)"/>
+<path class="edge active" d="M580 190 L650 236" marker-end="url(#sft-lazy-active)"/>
+<rect class="box visit" x="638.0" y="56" width="104" height="44" rx="6"/>
+<text x="690" y="74" text-anchor="middle" class="mono">[0..7]</text>
+<text x="690" y="91" text-anchor="middle" class="small">sum 43</text>
+<rect class="box " x="748.0" y="146" width="104" height="44" rx="6"/>
+<text x="800" y="164" text-anchor="middle" class="mono">[4..7]</text>
+<text x="800" y="181" text-anchor="middle" class="small">sum 22</text>
+<rect class="box done" x="68.0" y="146" width="104" height="44" rx="6"/>
+<text x="120" y="164" text-anchor="middle" class="mono">[0..3]</text>
+<text x="120" y="181" text-anchor="middle" class="small">sum 9 + 12 = 21</text>
+<rect class="box active" x="146.0" y="135" width="40" height="20" rx="10"/>
+<text x="166.0" y="149" text-anchor="middle" class="small mono">+3</text>
+<rect class="box " x="3.0" y="236" width="104" height="44" rx="6" stroke-dasharray="5 4"/>
+<text x="55" y="254" text-anchor="middle" class="mono muted">[0..1]</text>
+<text x="55" y="271" text-anchor="middle" class="small muted">sum 4 (stale)</text>
+<rect class="box " x="138.0" y="236" width="104" height="44" rx="6" stroke-dasharray="5 4"/>
+<text x="190" y="254" text-anchor="middle" class="mono muted">[2..3]</text>
+<text x="190" y="271" text-anchor="middle" class="small muted">sum 5 (stale)</text>
+<text x="230" y="302" text-anchor="middle" class="small">the children still hold the old sums;</text>
+<text x="230" y="320" text-anchor="middle" class="small muted">the debt (+3 each) is written on [0..3]</text>
+<rect class="box visit" x="528.0" y="146" width="104" height="44" rx="6"/>
+<text x="580" y="164" text-anchor="middle" class="mono">[0..3]</text>
+<text x="580" y="181" text-anchor="middle" class="small">sum 21, tag cleared</text>
+<rect class="box " x="463.0" y="236" width="104" height="44" rx="6"/>
+<text x="515" y="254" text-anchor="middle" class="mono">[0..1]</text>
+<text x="515" y="271" text-anchor="middle" class="small">4 + 3·2 = 10</text>
+<rect class="box active" x="541.0" y="225" width="40" height="20" rx="10"/>
+<text x="561.0" y="239" text-anchor="middle" class="small mono">+3</text>
+<rect class="box done" x="598.0" y="236" width="104" height="44" rx="6"/>
+<text x="650" y="254" text-anchor="middle" class="mono">[2..3]</text>
+<text x="650" y="271" text-anchor="middle" class="small">5 + 3·2 = 11</text>
+<rect class="box active" x="676.0" y="225" width="40" height="20" rx="10"/>
+<text x="696.0" y="239" text-anchor="middle" class="small mono">+3</text>
+<text x="582" y="222" text-anchor="middle" class="small mono">push</text>
+<text x="690" y="302" text-anchor="middle" class="small">the tag moved down exactly one level;</text>
+<text x="690" y="320" text-anchor="middle" class="small muted">the query reads 11 = a[2] + a[3] + 6</text>
+</svg>
+<figcaption>a = [3, 1, 4, 1, 5, 9, 2, 6]. A range update does the same O(log n) decomposition as a query and stops at covered nodes, leaving a tag. Tags are pushed one level at a time, only along paths that a later operation actually walks.</figcaption>
+</figure>
+
+<p>Two operations make up the whole technique:</p>
+<ul>
+<li><strong>apply(node, x)</strong>: bring the node's value up to date (sum += x · length) and remember x in its tag.</li>
+<li><strong>push(node)</strong>: apply the node's tag to both children, then clear the tag. Call it before you descend
+  into the children, in updates <em>and</em> queries.</li>
+</ul>
+<p>After recursing, recompute the node from its children as usual. Watch the tags (small amber labels) get written on
+covered nodes and pushed down only when a later operation needs to pass through:</p>
+<div class="viz sft-wide" data-viz="segment-fenwick-trees-lazy"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">class LazySegTree:
+    &quot;&quot;&quot;Range add and range sum on a[0..n-1], O(log n) each.&quot;&quot;&quot;
+
+    def __init__(self, a):
+        self.n = len(a)
+        size = 4 * max(1, self.n)
+        self.sum = [0] * size
+        self.tag = [0] * size           # pending add owed by every element of the node's range
+        if self.n:
+            self._build(a, 1, 0, self.n - 1)
+
+    def _build(self, a, node, l, r):
+        if l == r:
+            self.sum[node] = a[l]
+            return
+        m = (l + r) // 2
+        self._build(a, 2 * node, l, m)
+        self._build(a, 2 * node + 1, m + 1, r)
+        self.sum[node] = self.sum[2 * node] + self.sum[2 * node + 1]
+
+    def _apply(self, node, l, r, x):
+        self.sum[node] += x * (r - l + 1)
+        self.tag[node] += x
+
+    def _push(self, node, l, m, r):
+        if self.tag[node]:
+            self._apply(2 * node, l, m, self.tag[node])
+            self._apply(2 * node + 1, m + 1, r, self.tag[node])
+            self.tag[node] = 0
+
+    def add(self, ql, qr, x, node=1, l=0, r=None):   # a[ql..qr] += x
+        if r is None:
+            r = self.n - 1
+        if qr &lt; l or r &lt; ql:
+            return
+        if ql &lt;= l and r &lt;= qr:
+            self._apply(node, l, r, x)              # covered: tag it and stop
+            return
+        m = (l + r) // 2
+        self._push(node, l, m, r)                   # about to descend: settle the debt
+        self.add(ql, qr, x, 2 * node, l, m)
+        self.add(ql, qr, x, 2 * node + 1, m + 1, r)
+        self.sum[node] = self.sum[2 * node] + self.sum[2 * node + 1]
+
+    def query(self, ql, qr, node=1, l=0, r=None):   # a[ql] + ... + a[qr]
+        if r is None:
+            r = self.n - 1
+        if qr &lt; l or r &lt; ql:
+            return 0
+        if ql &lt;= l and r &lt;= qr:
+            return self.sum[node]
+        m = (l + r) // 2
+        self._push(node, l, m, r)
+        return (self.query(ql, qr, 2 * node, l, m)
+                + self.query(ql, qr, 2 * node + 1, m + 1, r))
+</code></pre>
+<pre><code class="language-csharp">public class LazySegTree
+{
+    private readonly long[] sum, tag;    // tag: pending add owed by every element of the node's range
+    private readonly int n;
+
+    public LazySegTree(IReadOnlyList&lt;long&gt; a)
+    {
+        n = a.Count;
+        sum = new long[4 * Math.Max(1, n)];
+        tag = new long[4 * Math.Max(1, n)];
+        if (n &gt; 0) Build(a, 1, 0, n - 1);
+    }
+
+    private void Build(IReadOnlyList&lt;long&gt; a, int node, int l, int r)
+    {
+        if (l == r) { sum[node] = a[l]; return; }
+        int m = (l + r) / 2;
+        Build(a, 2 * node, l, m);
+        Build(a, 2 * node + 1, m + 1, r);
+        sum[node] = sum[2 * node] + sum[2 * node + 1];
+    }
+
+    private void Apply(int node, int l, int r, long x) { sum[node] += x * (r - l + 1); tag[node] += x; }
+
+    private void Push(int node, int l, int m, int r)
+    {
+        if (tag[node] == 0) return;
+        Apply(2 * node, l, m, tag[node]);
+        Apply(2 * node + 1, m + 1, r, tag[node]);
+        tag[node] = 0;
+    }
+
+    public void Add(int ql, int qr, long x) =&gt; Add(ql, qr, x, 1, 0, n - 1);
+
+    private void Add(int ql, int qr, long x, int node, int l, int r)
+    {
+        if (qr &lt; l || r &lt; ql) return;
+        if (ql &lt;= l &amp;&amp; r &lt;= qr) { Apply(node, l, r, x); return; }   // covered: tag it and stop
+        int m = (l + r) / 2;
+        Push(node, l, m, r);                                         // about to descend: settle the debt
+        Add(ql, qr, x, 2 * node, l, m);
+        Add(ql, qr, x, 2 * node + 1, m + 1, r);
+        sum[node] = sum[2 * node] + sum[2 * node + 1];
+    }
+
+    public long Query(int ql, int qr) =&gt; Query(ql, qr, 1, 0, n - 1);
+
+    private long Query(int ql, int qr, int node, int l, int r)
+    {
+        if (qr &lt; l || r &lt; ql) return 0;
+        if (ql &lt;= l &amp;&amp; r &lt;= qr) return sum[node];
+        int m = (l + r) / 2;
+        Push(node, l, m, r);
+        return Query(ql, qr, 2 * node, l, m) + Query(ql, qr, 2 * node + 1, m + 1, r);
+    }
+}
+</code></pre>
+</div>
+<p><strong>Changing the operations.</strong> The skeleton never changes; only <code>apply</code>, the tag's meaning and the combine do. Ask two
+questions: <em>how does a tag change a node's value without looking at the children?</em> and <em>how do two tags merge into
+one?</em></p>
+<table>
+<thead>
+<tr>
+<th>Update / query</th>
+<th>apply(node, tag) to the value</th>
+<th>Merging a new tag into an old one</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add / sum</td>
+<td>sum += x · len</td>
+<td>add: old + x</td>
+</tr>
+<tr>
+<td>add / max or min</td>
+<td>max += x (every element moved by x)</td>
+<td>add: old + x</td>
+</tr>
+<tr>
+<td>assign / sum</td>
+<td>sum = v · len</td>
+<td>the new assign <strong>replaces</strong> the old one</td>
+</tr>
+<tr>
+<td>assign / max</td>
+<td>max = v</td>
+<td>replace</td>
+</tr>
+<tr>
+<td>assign <strong>and</strong> add / sum</td>
+<td>assign first, then add</td>
+<td>tag = (assign or none, add). New assign v → (v, 0). New add x → (a, add + x)</td>
+</tr>
+<tr>
+<td>multiply and add / sum</td>
+<td>sum = sum · m + a · len</td>
+<td>(m1, a1) then (m2, a2) = (m1·m2, a1·m2 + a2). The order matters</td>
+</tr>
+<tr>
+<td>flip bits / count of ones</td>
+<td>ones = len − ones</td>
+<td>two flips cancel: xor the tags</td>
+</tr>
+</tbody>
+</table>
+<div class="pitfall">
+<p><strong>Assign needs a "no tag" value</strong> Assigning 0 is a real update, so
+<code>tag == 0</code> cannot mean "nothing pending". Use <code>None</code> in Python or a separate <code>bool hasTag[]</code> (or a sentinel that can
+never be assigned) in C#. Forgetting this is the most common lazy-assign bug: assignments of 0 silently vanish.</p>
+</div>
+<h3 id="the-iterative-bottom-up-segment-tree">The iterative (bottom-up) segment tree</h3>
+<p>When f is all you need (no lazy tags), there is a shorter and roughly 2–3× faster version with no recursion and
+exactly <strong>2n</strong> cells. Put the leaves at <code>t[n..2n−1]</code>; node i has children 2i and 2i + 1, so its parent is i // 2.
+Build every internal node from n − 1 down to 1.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 920 410" width="920" role="img" aria-label="Bottom-up segment tree for n = 10 stored in 2n cells: leaves at t[10..19], node i has children 2i and 2i+1">
+<text x="20" y="24" text-anchor="start" class="title">n = 10: leaves at t[10..19], node i = t[2i] + t[2i + 1]</text>
+<line class="edge" x1="444.5" y1="60.1" x2="255.5" y2="109.9"/>
+<line class="edge" x1="475.5" y1="60.1" x2="664.5" y2="109.9"/>
+<line class="edge bad" x1="225.8" y1="121.5" x2="144.2" y2="164.5"/>
+<line class="edge bad" x1="254.2" y1="121.5" x2="335.8" y2="164.5"/>
+<line class="edge" x1="665.8" y1="121.5" x2="584.2" y2="164.5"/>
+<line class="edge" x1="694.2" y1="121.5" x2="775.8" y2="164.5"/>
+<line class="edge" x1="119.0" y1="183.6" x2="86.0" y2="218.4"/>
+<line class="edge" x1="141.0" y1="183.6" x2="174.0" y2="218.4"/>
+<line class="edge" x1="339.0" y1="183.6" x2="306.0" y2="218.4"/>
+<line class="edge" x1="361.0" y1="183.6" x2="394.0" y2="218.4"/>
+<line class="edge" x1="559.0" y1="183.6" x2="526.0" y2="218.4"/>
+<line class="edge" x1="581.0" y1="183.6" x2="614.0" y2="218.4"/>
+<line class="edge" x1="779.0" y1="183.6" x2="746.0" y2="218.4"/>
+<line class="edge" x1="801.0" y1="183.6" x2="834.0" y2="218.4"/>
+<line class="edge" x1="68.1" y1="244.5" x2="54.4" y2="273.5"/>
+<line class="edge" x1="81.9" y1="244.5" x2="95.6" y2="273.5"/>
+<line class="edge" x1="178.1" y1="244.5" x2="164.4" y2="273.5"/>
+<line class="edge" x1="191.9" y1="244.5" x2="205.6" y2="273.5"/>
+<circle class="box visit" cx="460.0" cy="56" r="16"/>
+<text x="460.0" y="60.5" text-anchor="middle" class="mono">49</text>
+<text x="478.0" y="43" text-anchor="start" class="small muted">#1</text>
+<circle class="box bad" cx="240.0" cy="114" r="16"/>
+<text x="240.0" y="118.5" text-anchor="middle" class="mono">31</text>
+<circle class="box visit" cx="680.0" cy="114" r="16"/>
+<text x="680.0" y="118.5" text-anchor="middle" class="mono">18</text>
+<text x="698.0" y="101" text-anchor="start" class="small">#3 = a2..a5</text>
+<circle class="box visit" cx="130.0" cy="172" r="16"/>
+<text x="130.0" y="176.5" text-anchor="middle" class="mono">18</text>
+<text x="112.0" y="159" text-anchor="end" class="small muted">#4</text>
+<circle class="box visit" cx="350.0" cy="172" r="16"/>
+<text x="350.0" y="176.5" text-anchor="middle" class="mono">13</text>
+<text x="368.0" y="159" text-anchor="start" class="small muted">#5</text>
+<circle class="box visit" cx="570.0" cy="172" r="16"/>
+<text x="570.0" y="176.5" text-anchor="middle" class="mono">9</text>
+<text x="552.0" y="159" text-anchor="end" class="small muted">#6</text>
+<circle class="box visit" cx="790.0" cy="172" r="16"/>
+<text x="790.0" y="176.5" text-anchor="middle" class="mono">9</text>
+<text x="808.0" y="159" text-anchor="start" class="small muted">#7</text>
+<circle class="box visit" cx="75.0" cy="230" r="16"/>
+<text x="75.0" y="234.5" text-anchor="middle" class="mono">8</text>
+<text x="57.0" y="217" text-anchor="end" class="small muted">#8</text>
+<circle class="box visit" cx="185.0" cy="230" r="16"/>
+<text x="185.0" y="234.5" text-anchor="middle" class="mono">10</text>
+<text x="203.0" y="217" text-anchor="start" class="small muted">#9</text>
+<circle class="box done" cx="295.0" cy="230" r="16"/>
+<text x="295.0" y="234.5" text-anchor="middle" class="mono">5</text>
+<text x="295.0" y="260" text-anchor="middle" class="small mono muted">#10=a0</text>
+<circle class="box done" cx="405.0" cy="230" r="16"/>
+<text x="405.0" y="234.5" text-anchor="middle" class="mono">8</text>
+<text x="405.0" y="260" text-anchor="middle" class="small mono muted">#11=a1</text>
+<circle class="box done" cx="515.0" cy="230" r="16"/>
+<text x="515.0" y="234.5" text-anchor="middle" class="mono">6</text>
+<text x="515.0" y="260" text-anchor="middle" class="small mono muted">#12=a2</text>
+<circle class="box done" cx="625.0" cy="230" r="16"/>
+<text x="625.0" y="234.5" text-anchor="middle" class="mono">3</text>
+<text x="625.0" y="260" text-anchor="middle" class="small mono muted">#13=a3</text>
+<circle class="box done" cx="735.0" cy="230" r="16"/>
+<text x="735.0" y="234.5" text-anchor="middle" class="mono">2</text>
+<text x="735.0" y="260" text-anchor="middle" class="small mono muted">#14=a4</text>
+<circle class="box done" cx="845.0" cy="230" r="16"/>
+<text x="845.0" y="234.5" text-anchor="middle" class="mono">7</text>
+<text x="845.0" y="260" text-anchor="middle" class="small mono muted">#15=a5</text>
+<circle class="box done" cx="47.5" cy="288" r="16"/>
+<text x="47.5" y="292.5" text-anchor="middle" class="mono">2</text>
+<text x="47.5" y="318" text-anchor="middle" class="small mono muted">#16=a6</text>
+<circle class="box done" cx="102.5" cy="288" r="16"/>
+<text x="102.5" y="292.5" text-anchor="middle" class="mono">6</text>
+<text x="102.5" y="318" text-anchor="middle" class="small mono muted">#17=a7</text>
+<circle class="box done" cx="157.5" cy="288" r="16"/>
+<text x="157.5" y="292.5" text-anchor="middle" class="mono">9</text>
+<text x="157.5" y="318" text-anchor="middle" class="small mono muted">#18=a8</text>
+<circle class="box done" cx="212.5" cy="288" r="16"/>
+<text x="212.5" y="292.5" text-anchor="middle" class="mono">1</text>
+<text x="212.5" y="318" text-anchor="middle" class="small mono muted">#19=a9</text>
+<text x="220.0" y="100" text-anchor="end" class="small">#2 = a6..a9 + a0..a1: not contiguous,</text>
+<text x="212.0" y="117" text-anchor="end" class="small muted">but no query ever takes it whole</text>
+<text x="22" y="361" text-anchor="start" class="mono">t</text>
+<rect class="box " x="40" y="340" width="40" height="30" rx="4" stroke-dasharray="5 4"/>
+<text x="60.0" y="359.5" text-anchor="middle" class="mono muted">–</text>
+<text x="60" y="388" text-anchor="middle" class="small mono muted">0</text>
+<rect class="box visit" x="82" y="340" width="40" height="30" rx="4"/>
+<text x="102.0" y="359.5" text-anchor="middle" class="mono">49</text>
+<text x="102" y="388" text-anchor="middle" class="small mono muted">1</text>
+<rect class="box bad" x="124" y="340" width="40" height="30" rx="4"/>
+<text x="144.0" y="359.5" text-anchor="middle" class="mono">31</text>
+<text x="144" y="388" text-anchor="middle" class="small mono muted">2</text>
+<rect class="box visit" x="166" y="340" width="40" height="30" rx="4"/>
+<text x="186.0" y="359.5" text-anchor="middle" class="mono">18</text>
+<text x="186" y="388" text-anchor="middle" class="small mono muted">3</text>
+<rect class="box visit" x="208" y="340" width="40" height="30" rx="4"/>
+<text x="228.0" y="359.5" text-anchor="middle" class="mono">18</text>
+<text x="228" y="388" text-anchor="middle" class="small mono muted">4</text>
+<rect class="box visit" x="250" y="340" width="40" height="30" rx="4"/>
+<text x="270.0" y="359.5" text-anchor="middle" class="mono">13</text>
+<text x="270" y="388" text-anchor="middle" class="small mono muted">5</text>
+<rect class="box visit" x="292" y="340" width="40" height="30" rx="4"/>
+<text x="312.0" y="359.5" text-anchor="middle" class="mono">9</text>
+<text x="312" y="388" text-anchor="middle" class="small mono muted">6</text>
+<rect class="box visit" x="334" y="340" width="40" height="30" rx="4"/>
+<text x="354.0" y="359.5" text-anchor="middle" class="mono">9</text>
+<text x="354" y="388" text-anchor="middle" class="small mono muted">7</text>
+<rect class="box visit" x="376" y="340" width="40" height="30" rx="4"/>
+<text x="396.0" y="359.5" text-anchor="middle" class="mono">8</text>
+<text x="396" y="388" text-anchor="middle" class="small mono muted">8</text>
+<rect class="box visit" x="418" y="340" width="40" height="30" rx="4"/>
+<text x="438.0" y="359.5" text-anchor="middle" class="mono">10</text>
+<text x="438" y="388" text-anchor="middle" class="small mono muted">9</text>
+<rect class="box done" x="460" y="340" width="40" height="30" rx="4"/>
+<text x="480.0" y="359.5" text-anchor="middle" class="mono">5</text>
+<text x="480" y="388" text-anchor="middle" class="small mono muted">10</text>
+<rect class="box done" x="502" y="340" width="40" height="30" rx="4"/>
+<text x="522.0" y="359.5" text-anchor="middle" class="mono">8</text>
+<text x="522" y="388" text-anchor="middle" class="small mono muted">11</text>
+<rect class="box done" x="544" y="340" width="40" height="30" rx="4"/>
+<text x="564.0" y="359.5" text-anchor="middle" class="mono">6</text>
+<text x="564" y="388" text-anchor="middle" class="small mono muted">12</text>
+<rect class="box done" x="586" y="340" width="40" height="30" rx="4"/>
+<text x="606.0" y="359.5" text-anchor="middle" class="mono">3</text>
+<text x="606" y="388" text-anchor="middle" class="small mono muted">13</text>
+<rect class="box done" x="628" y="340" width="40" height="30" rx="4"/>
+<text x="648.0" y="359.5" text-anchor="middle" class="mono">2</text>
+<text x="648" y="388" text-anchor="middle" class="small mono muted">14</text>
+<rect class="box done" x="670" y="340" width="40" height="30" rx="4"/>
+<text x="690.0" y="359.5" text-anchor="middle" class="mono">7</text>
+<text x="690" y="388" text-anchor="middle" class="small mono muted">15</text>
+<rect class="box done" x="712" y="340" width="40" height="30" rx="4"/>
+<text x="732.0" y="359.5" text-anchor="middle" class="mono">2</text>
+<text x="732" y="388" text-anchor="middle" class="small mono muted">16</text>
+<rect class="box done" x="754" y="340" width="40" height="30" rx="4"/>
+<text x="774.0" y="359.5" text-anchor="middle" class="mono">6</text>
+<text x="774" y="388" text-anchor="middle" class="small mono muted">17</text>
+<rect class="box done" x="796" y="340" width="40" height="30" rx="4"/>
+<text x="816.0" y="359.5" text-anchor="middle" class="mono">9</text>
+<text x="816" y="388" text-anchor="middle" class="small mono muted">18</text>
+<rect class="box done" x="838" y="340" width="40" height="30" rx="4"/>
+<text x="858.0" y="359.5" text-anchor="middle" class="mono">1</text>
+<text x="858" y="388" text-anchor="middle" class="small mono muted">19</text>
+<text x="250" y="404" text-anchor="middle" class="small">internal nodes t[1..9]</text>
+<text x="670" y="404" text-anchor="middle" class="small">leaves t[10..19] = a[0..9]</text>
+</svg>
+<figcaption>The whole tree is one flat array of 2n numbers; the picture is just the heap view of it. Parent = i // 2, children = 2i and 2i + 1, exactly as in a binary heap. When n is not a power of two the leaves sit on two levels.</figcaption>
+</figure>
+
+<p>The query uses a <strong>half-open</strong> range [l, r). Move l and r to their leaves, then climb both together:</p>
+<ul>
+<li>If <strong>l is a right child</strong> (odd), its parent also covers l − 1, which is outside the range. So take t[l] now and
+  step l one to the right before climbing.</li>
+<li>If <strong>r is a right child</strong> (odd), the cell r − 1 is a left child that belongs inside the range, but its parent also
+  covers r, which is outside. So step r back and take t[r].</li>
+<li>Climb: l //= 2, r //= 2, until l meets r.</li>
+</ul>
+<p>Keep the left and right results separate (<code>resl</code>, <code>resr</code>) so the order of elements is preserved when f is not
+commutative.</p>
+<div class="viz sft-wide" data-viz="segment-fenwick-trees-iterative"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">class IterSegTree:
+    &quot;&quot;&quot;Leaves at t[n..2n-1]. Point assign, f over the half-open range [l, r).&quot;&quot;&quot;
+
+    def __init__(self, a, f=lambda x, y: x + y, ident=0):
+        self.n, self.f, self.ident = len(a), f, ident
+        self.t = [ident] * self.n + list(a)
+        for i in range(self.n - 1, 0, -1):
+            self.t[i] = f(self.t[2 * i], self.t[2 * i + 1])
+
+    def update(self, i, val):
+        i += self.n
+        self.t[i] = val
+        while i &gt; 1:
+            i //= 2
+            self.t[i] = self.f(self.t[2 * i], self.t[2 * i + 1])
+
+    def query(self, l, r):              # f(a[l..r-1])
+        resl = resr = self.ident
+        l += self.n
+        r += self.n
+        while l &lt; r:
+            if l &amp; 1:                   # l is a right child: take it, move right
+                resl = self.f(resl, self.t[l])
+                l += 1
+            if r &amp; 1:                   # r is a right child: step back, take r - 1
+                r -= 1
+                resr = self.f(self.t[r], resr)
+            l //= 2
+            r //= 2
+        return self.f(resl, resr)
+</code></pre>
+<pre><code class="language-csharp">public class IterSegTree
+{
+    private readonly long[] t;
+    private readonly int n;
+    private readonly Func&lt;long, long, long&gt; f;
+    private readonly long ident;
+
+    public IterSegTree(IReadOnlyList&lt;long&gt; a, Func&lt;long, long, long&gt; f, long ident)
+    {
+        n = a.Count; this.f = f; this.ident = ident;
+        t = new long[2 * n];
+        for (int i = 0; i &lt; n; i++) t[n + i] = a[i];
+        for (int i = n - 1; i &gt; 0; i--) t[i] = f(t[2 * i], t[2 * i + 1]);
+    }
+
+    public void Update(int i, long val)
+    {
+        i += n;
+        t[i] = val;
+        for (i /= 2; i &gt;= 1; i /= 2) t[i] = f(t[2 * i], t[2 * i + 1]);
+    }
+
+    public long Query(int l, int r)     // f(a[l..r-1])
+    {
+        long resl = ident, resr = ident;
+        for (l += n, r += n; l &lt; r; l /= 2, r /= 2)
+        {
+            if ((l &amp; 1) == 1) resl = f(resl, t[l++]);   // l is a right child: take it, move right
+            if ((r &amp; 1) == 1) resr = f(t[--r], resr);   // r is a right child: step back, take r - 1
+        }
+        return f(resl, resr);
+    }
+}
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>When n is not a power of two</strong> Some internal nodes then combine
+leaves that are not next to each other (with n = 10, node 2 in the figure combines a[6..9] with a[0..1]).
+That is harmless: a query only ever takes nodes whose whole range is inside [l, r), and those are always contiguous.
+Descents like <code>first_at_least</code> do need contiguous ranges, so use the recursive tree (or pad n to a power of two) for
+them.</p>
+</div>
+<h3 id="dynamic-segment-trees-create-nodes-only-when-touched">Dynamic segment trees: create nodes only when touched</h3>
+<p>Sometimes the index range is huge, like [0, 10⁹], and the queries arrive <strong>online</strong>, so you cannot collect and
+compress the coordinates first. Then do not allocate the tree up front. Start with only the root, and create a
+child the first time an operation walks into it. Each operation creates at most one path, so q operations make
+O(q log C) nodes, where C is the size of the range. A missing child simply means "all zeros (or the identity)
+below here".</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 920 350" width="920" role="img" aria-label="Dynamic segment tree over 0 to one billion: only the two root-to-leaf paths touched by two updates exist">
+<text x="20" y="24" text-anchor="start" class="title">add(7) and add(600 000 000) on [0 .. 10⁹]: only two paths exist</text>
+<path class="edge accent" d="M460 84 L240 118"/>
+<path class="edge accent" d="M460 84 L680 118"/>
+<path class="edge accent" d="M240 154 L130 188"/>
+<path class="edge accent" d="M680 154 L570 188"/>
+<path class="edge  dash" d="M240 154 L350 188"/>
+<path class="edge  dash" d="M680 154 L790 188"/>
+<path class="edge accent dash" d="M130 224 L130 268"/>
+<text x="140" y="252" text-anchor="start" class="small muted">27 more levels</text>
+<path class="edge accent dash" d="M570 224 L570 268"/>
+<text x="580" y="252" text-anchor="start" class="small muted">27 more levels</text>
+<rect class="box visit" x="362.0" y="48" width="196" height="36" rx="6"/>
+<text x="460" y="71" text-anchor="middle" class="small mono">[0 .. 10⁹]  sum 2</text>
+<rect class="box visit" x="142.0" y="118" width="196" height="36" rx="6"/>
+<text x="240" y="141" text-anchor="middle" class="small mono">[0 .. 5·10⁸]  sum 1</text>
+<rect class="box visit" x="582.0" y="118" width="196" height="36" rx="6"/>
+<text x="680" y="141" text-anchor="middle" class="small mono">[5·10⁸+1 .. 10⁹]  sum 1</text>
+<rect class="box visit" x="32.0" y="188" width="196" height="36" rx="6"/>
+<text x="130" y="211" text-anchor="middle" class="small mono">[0 .. 2.5·10⁸]  sum 1</text>
+<rect class="box " x="252.0" y="188" width="196" height="36" rx="6" stroke-dasharray="5 4"/>
+<text x="350" y="211" text-anchor="middle" class="small mono muted">not created (all 0)</text>
+<rect class="box visit" x="472.0" y="188" width="196" height="36" rx="6"/>
+<text x="570" y="211" text-anchor="middle" class="small mono">[5·10⁸+1 .. 7.5·10⁸]  sum 1</text>
+<rect class="box " x="692.0" y="188" width="196" height="36" rx="6" stroke-dasharray="5 4"/>
+<text x="790" y="211" text-anchor="middle" class="small mono muted">not created (all 0)</text>
+<rect class="box done" x="32.0" y="268" width="196" height="36" rx="6"/>
+<text x="130" y="291" text-anchor="middle" class="small mono">[7 .. 7]  sum 1</text>
+<rect class="box done" x="472.0" y="268" width="196" height="36" rx="6"/>
+<text x="570" y="291" text-anchor="middle" class="small mono">[6·10⁸ .. 6·10⁸]  sum 1</text>
+<text x="460" y="334" text-anchor="middle" class="small">each operation creates at most one root-to-leaf path (≈ 30 nodes): q operations allocate O(q log C) nodes, not 4 · 10⁹</text>
+</svg>
+<figcaption>A missing child is treated as "all identity below here", so a query that reaches it returns 0 immediately. Memory grows with the number of operations, not with the size of the coordinate range.</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-python">class DynamicSegTree:
+    &quot;&quot;&quot;Point add and range sum over [lo, hi] without allocating the whole range.&quot;&quot;&quot;
+
+    def __init__(self, lo, hi):
+        self.lo, self.hi = lo, hi
+        self.left, self.right, self.sum = [0, 0], [0, 0], [0, 0]   # node 0 = null, node 1 = root
+
+    def _new(self):
+        self.left.append(0)
+        self.right.append(0)
+        self.sum.append(0)
+        return len(self.sum) - 1
+
+    def add(self, i, x):
+        node, l, r = 1, self.lo, self.hi
+        while True:
+            self.sum[node] += x
+            if l == r:
+                return
+            m = (l + r) // 2
+            if i &lt;= m:
+                if not self.left[node]:
+                    self.left[node] = self._new()
+                node, r = self.left[node], m
+            else:
+                if not self.right[node]:
+                    self.right[node] = self._new()
+                node, l = self.right[node], m + 1
+
+    def query(self, ql, qr, node=1, l=None, r=None):
+        if l is None:
+            l, r = self.lo, self.hi
+        if node == 0 or qr &lt; l or r &lt; ql:       # missing child = all zeros
+            return 0
+        if ql &lt;= l and r &lt;= qr:
+            return self.sum[node]
+        m = (l + r) // 2
+        return (self.query(ql, qr, self.left[node], l, m)
+                + self.query(ql, qr, self.right[node], m + 1, r))
+</code></pre>
+<pre><code class="language-csharp">public class DynamicSegTree
+{
+    private readonly List&lt;int&gt; left = new() { 0, 0 }, right = new() { 0, 0 };   // node 0 = null, node 1 = root
+    private readonly List&lt;long&gt; sum = new() { 0, 0 };
+    private readonly long lo, hi;
+
+    public DynamicSegTree(long lo, long hi) { this.lo = lo; this.hi = hi; }
+
+    private int NewNode() { left.Add(0); right.Add(0); sum.Add(0); return sum.Count - 1; }
+
+    public void Add(long i, long x)
+    {
+        int node = 1;
+        long l = lo, r = hi;
+        while (true)
+        {
+            sum[node] += x;
+            if (l == r) return;
+            long m = l + (r - l) / 2;
+            if (i &lt;= m)
+            {
+                if (left[node] == 0) { int c = NewNode(); left[node] = c; }
+                node = left[node]; r = m;
+            }
+            else
+            {
+                if (right[node] == 0) { int c = NewNode(); right[node] = c; }
+                node = right[node]; l = m + 1;
+            }
+        }
+    }
+
+    public long Query(long ql, long qr) =&gt; Query(ql, qr, 1, lo, hi);
+
+    private long Query(long ql, long qr, int node, long l, long r)
+    {
+        if (node == 0 || qr &lt; l || r &lt; ql) return 0;        // missing child = all zeros
+        if (ql &lt;= l &amp;&amp; r &lt;= qr) return sum[node];
+        long m = l + (r - l) / 2;
+        return Query(ql, qr, left[node], l, m) + Query(ql, qr, right[node], m + 1, r);
+    }
+}
+</code></pre>
+</div>
+<p>The same idea works with lazy tags: when you push into a missing child, create it first. That is the
+standard answer for <a href="#6-my-calendar-iii-hard">My Calendar III</a> when you do not want to sort the events.</p>
+<h3 id="trees-over-values-coordinate-compression">Trees over values: coordinate compression</h3>
+<p>Many counting problems ask "how many of the elements seen so far are smaller than x?". Index the tree by <strong>value</strong>
+instead of position: <code>cnt[v]</code> = how many times v has been seen. Then "how many seen are &lt; x" is <code>prefix(x − 1)</code>.
+Values can be negative or as large as 10⁹, but only their <strong>order</strong> matters, so replace each value by its rank among
+the distinct values. That is <strong>coordinate compression</strong>: sort the distinct values once
+(<a href="sorting.html">Sorting</a>), then look ranks up with binary search (<a href="binary-search.html">Binary Search</a>) or a dict
+(<a href="hashing.html">Hashing</a>).</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 920 310" width="920" role="img" aria-label="Coordinate compression maps each value to its rank among the sorted distinct values">
+<defs><marker id="sft-compress-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="20" y="70" text-anchor="start" class="">values</text>
+<text x="20" y="170" text-anchor="start" class="">sorted distinct</text>
+<text x="20" y="262" text-anchor="start" class="">ranks</text>
+<text x="20" y="278" text-anchor="start" class="small muted">(Fenwick index)</text>
+<path class="edge accent" d="M215 82 L585 150" marker-end="url(#sft-compress-accent)"/>
+<path class="edge accent" d="M363 82 L289 150" marker-end="url(#sft-compress-accent)"/>
+<path class="edge accent" d="M511 82 L733 150" marker-end="url(#sft-compress-accent)"/>
+<path class="edge accent" d="M659 82 L585 150" marker-end="url(#sft-compress-accent)"/>
+<path class="edge accent" d="M807 82 L437 150" marker-end="url(#sft-compress-accent)"/>
+<rect class="box " x="150" y="50" width="130" height="32" rx="4"/>
+<text x="215.0" y="70.5" text-anchor="middle" class="mono">40</text>
+<rect class="box done" x="150" y="246" width="130" height="32" rx="4"/>
+<text x="215.0" y="266.5" text-anchor="middle" class="mono">3</text>
+<rect class="box " x="298" y="50" width="130" height="32" rx="4"/>
+<text x="363.0" y="70.5" text-anchor="middle" class="mono">−7</text>
+<rect class="box done" x="298" y="246" width="130" height="32" rx="4"/>
+<text x="363.0" y="266.5" text-anchor="middle" class="mono">1</text>
+<rect class="box " x="446" y="50" width="130" height="32" rx="4"/>
+<text x="511.0" y="70.5" text-anchor="middle" class="mono">1000000000</text>
+<rect class="box done" x="446" y="246" width="130" height="32" rx="4"/>
+<text x="511.0" y="266.5" text-anchor="middle" class="mono">4</text>
+<rect class="box " x="594" y="50" width="130" height="32" rx="4"/>
+<text x="659.0" y="70.5" text-anchor="middle" class="mono">40</text>
+<rect class="box done" x="594" y="246" width="130" height="32" rx="4"/>
+<text x="659.0" y="266.5" text-anchor="middle" class="mono">3</text>
+<rect class="box " x="742" y="50" width="130" height="32" rx="4"/>
+<text x="807.0" y="70.5" text-anchor="middle" class="mono">15</text>
+<rect class="box done" x="742" y="246" width="130" height="32" rx="4"/>
+<text x="807.0" y="266.5" text-anchor="middle" class="mono">2</text>
+<rect class="box visit" x="224" y="154" width="130" height="32" rx="4"/>
+<text x="289.0" y="174.5" text-anchor="middle" class="mono">−7</text>
+<text x="289" y="202" text-anchor="middle" class="small mono">rank 1</text>
+<rect class="box visit" x="372" y="154" width="130" height="32" rx="4"/>
+<text x="437.0" y="174.5" text-anchor="middle" class="mono">15</text>
+<text x="437" y="202" text-anchor="middle" class="small mono">rank 2</text>
+<rect class="box visit" x="520" y="154" width="130" height="32" rx="4"/>
+<text x="585.0" y="174.5" text-anchor="middle" class="mono">40</text>
+<text x="585" y="202" text-anchor="middle" class="small mono">rank 3</text>
+<rect class="box visit" x="668" y="154" width="130" height="32" rx="4"/>
+<text x="733.0" y="174.5" text-anchor="middle" class="mono">1000000000</text>
+<text x="733" y="202" text-anchor="middle" class="small mono">rank 4</text>
+<text x="460" y="26" text-anchor="middle" class="title">only the ORDER of the values matters for "how many are smaller"</text>
+<text x="460" y="302" text-anchor="middle" class="small muted">the tree needs 4 slots instead of 10⁹ + 8, and every comparison gives the same answer</text>
+</svg>
+<figcaption>Sort the distinct values once; each value's rank is its position + 1. Equal values share a rank, so "strictly smaller" is prefix(rank − 1) and "at most" is prefix(rank).</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-python">def compress(values):
+    &quot;&quot;&quot;Map each value to its 1-based rank among the distinct values (Fenwick-ready).&quot;&quot;&quot;
+    order = sorted(set(values))
+    rank = {v: i + 1 for i, v in enumerate(order)}
+    return [rank[v] for v in values], len(order)
+</code></pre>
+<pre><code class="language-csharp">public static class Compression
+{
+    // Map each value to its 1-based rank among the distinct values (Fenwick-ready).
+    public static (int[] ranks, int m) Compress(IReadOnlyList&lt;long&gt; values)
+    {
+        long[] order = values.Distinct().OrderBy(v =&gt; v).ToArray();
+        var rank = new Dictionary&lt;long, int&gt;();
+        for (int i = 0; i &lt; order.Length; i++) rank[order[i]] = i + 1;
+        return (values.Select(v =&gt; rank[v]).ToArray(), order.Length);
+    }
+}
+</code></pre>
+</div>
+<div class="tip">
+<p><strong>Compress everything you will ever look up</strong> If a query asks about a value
+that is not in the array (like <code>x − lower</code> in <a href="#4-count-of-range-sum-hard">Count of Range Sum</a>), either add it to the list you
+compress, or look it up with <code>bisect_left</code> / <code>bisect_right</code> on the sorted list so you get the correct rank boundary
+without needing the exact value.</p>
+</div>
+<h2 id="sparse-tables-o1-queries-when-nothing-changes">Sparse tables: O(1) queries when nothing changes</h2>
+<p>If the array <strong>never changes</strong> and f is min, max or gcd, there is something faster than a segment tree. Precompute
+<code>st[k][i]</code> = f over the block of length 2^k that starts at i. Each level is built from the one below in O(n):
+<code>st[k][i] = f(st[k−1][i], st[k−1][i + 2^(k−1)])</code>, so the build is O(n log n).</p>
+<p>To answer [l..r], let k be the largest power with 2^k ≤ length. Two blocks of that length, one starting at l and one
+ending at r, together cover the whole range. They usually <strong>overlap</strong>, and for min that does not matter, because
+counting an element twice does not change a minimum. Functions with this property, f(x, x) = x, are called
+<strong>idempotent</strong>: min, max, gcd, bitwise and/or. Sum is not idempotent: the overlap would be counted twice. Pick
+"sum (breaks: overlap)" below to see exactly which elements get double-counted.</p>
+<div class="viz sft-wide" data-viz="segment-fenwick-trees-sparse"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">class SparseTable:
+    &quot;&quot;&quot;Static array, idempotent f (min, max, gcd, and, or). O(n log n) build, O(1) query.&quot;&quot;&quot;
+
+    def __init__(self, a, f=min):
+        self.f = f
+        n = len(a)
+        self.log = [0] * (n + 1)                 # log[x] = floor(log2(x))
+        for x in range(2, n + 1):
+            self.log[x] = self.log[x // 2] + 1
+        self.st = [list(a)]                      # st[k][i] = f(a[i .. i + 2^k - 1])
+        k = 1
+        while (1 &lt;&lt; k) &lt;= n:
+            prev, half = self.st[-1], 1 &lt;&lt; (k - 1)
+            self.st.append([f(prev[i], prev[i + half]) for i in range(n - (1 &lt;&lt; k) + 1)])
+            k += 1
+
+    def query(self, l, r):                       # inclusive
+        k = self.log[r - l + 1]
+        return self.f(self.st[k][l], self.st[k][r - (1 &lt;&lt; k) + 1])
+</code></pre>
+<pre><code class="language-csharp">public class SparseTable
+{
+    private readonly long[][] st;       // st[k][i] = f(a[i .. i + 2^k - 1])
+    private readonly int[] log;         // log[x] = floor(log2(x))
+    private readonly Func&lt;long, long, long&gt; f;
+
+    public SparseTable(IReadOnlyList&lt;long&gt; a, Func&lt;long, long, long&gt; f)
+    {
+        this.f = f;
+        int n = a.Count;
+        log = new int[n + 1];
+        for (int x = 2; x &lt;= n; x++) log[x] = log[x / 2] + 1;
+        int levels = n &gt; 0 ? log[n] + 1 : 1;
+        st = new long[levels][];
+        st[0] = a.ToArray();
+        for (int k = 1; k &lt; levels; k++)
+        {
+            int half = 1 &lt;&lt; (k - 1);
+            st[k] = new long[n - (1 &lt;&lt; k) + 1];
+            for (int i = 0; i &lt; st[k].Length; i++) st[k][i] = f(st[k - 1][i], st[k - 1][i + half]);
+        }
+    }
+
+    public long Query(int l, int r)     // inclusive
+    {
+        int k = log[r - l + 1];
+        return f(st[k][l], st[k][r - (1 &lt;&lt; k) + 1]);
+    }
+}
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Where sparse tables show up</strong> Range-minimum queries on a static array,
+the LCA of two nodes as the minimum depth between their positions in an Euler tour (see
+<a href="tree-patterns.html">Tree Patterns</a>), and the LCP of two suffixes as a range minimum over the LCP array
+(<a href="string-algorithms.html">String Algorithms</a>). For a <em>sum</em> on a static array you do not need any of this: plain
+<a href="prefix-sums.html">prefix sums</a> already answer in O(1). For non-idempotent f on a static array, use a disjoint
+sparse table or just a segment tree.</p>
+</div>
+<h2 id="beyond-the-basics">Beyond the basics</h2>
+<p>You will rarely need these in an interview, but knowing that they exist tells you when a problem is in reach.</p>
+<ul>
+<li><strong>Merge sort tree.</strong> Each node keeps its range <em>sorted</em>. "How many values ≤ x in a[l..r]?" becomes O(log n)
+  binary searches over the covered nodes, O(log² n) per query, O(n log n) memory. No updates.</li>
+<li><strong>Persistent segment tree.</strong> An update copies only the O(log n) nodes on its path and shares the rest, so every
+  old version survives. Build one version per prefix of the array over value ranks, and "k-th smallest in a[l..r]"
+  is a descent on version r minus version l − 1.</li>
+<li><strong>Offline tricks.</strong> When all queries are known up front, sort them. "Number of distinct values in a[l..r]": sort
+  queries by r, sweep r, keep a 1 in a Fenwick tree only at the <em>last</em> occurrence of each value, answer =
+  range_sum(l, r). Many "hard" range problems collapse into a sweep plus a BIT this way.</li>
+<li><strong>Segment tree beats.</strong> Supports "a[i] = min(a[i], x) on a range" with sums, in amortized O(log² n), by storing the
+  maximum and the second maximum per node.</li>
+<li><strong>Sqrt decomposition.</strong> Cut the array into √n blocks and keep one summary per block. Every operation is
+  O(√n): crude but very flexible, because a block can store anything, even a sorted copy. <strong>Mo's algorithm</strong>
+  reorders offline queries so a sliding [l, r] window moves O(n√n) steps in total.</li>
+<li><strong>Sorted containers.</strong> In Python, <code>sortedcontainers.SortedList</code> gives insert, delete and rank in about O(log n);
+  it is often the fastest thing to write for "count smaller than x so far" (where it is available). In C#,
+  <code>SortedSet&lt;T&gt;</code> has ordered insert and delete, but it <strong>cannot report ranks</strong>: <code>GetViewBetween(...).Count</code> walks
+  the view in O(k). For ranks in C#, use a Fenwick tree over compressed values.</li>
+</ul>
+<h2 id="choosing-a-structure">Choosing a structure</h2>
+<table>
+<thead>
+<tr>
+<th>Structure</th>
+<th>Build</th>
+<th>Point update</th>
+<th>Range query</th>
+<th>Range update</th>
+<th>Works for</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prefix sums</td>
+<td>O(n)</td>
+<td>O(n) rebuild</td>
+<td><strong>O(1)</strong></td>
+<td>O(n)</td>
+<td>sums (invertible f)</td>
+<td>3 lines</td>
+</tr>
+<tr>
+<td>Difference array</td>
+<td>O(n)</td>
+<td>–</td>
+<td>O(n) to read back</td>
+<td><strong>O(1)</strong>, offline</td>
+<td>adds</td>
+<td>3 lines</td>
+</tr>
+<tr>
+<td>Fenwick tree</td>
+<td>O(n)</td>
+<td>O(log n)</td>
+<td>O(log n)</td>
+<td>O(log n) with 2 BITs</td>
+<td>sums, xor, counts (invertible f)</td>
+<td>10 lines</td>
+</tr>
+<tr>
+<td>Segment tree</td>
+<td>O(n)</td>
+<td>O(log n)</td>
+<td>O(log n)</td>
+<td>O(log n) with lazy tags</td>
+<td><strong>any</strong> associative f</td>
+<td>30–60 lines</td>
+</tr>
+<tr>
+<td>Sparse table</td>
+<td>O(n log n)</td>
+<td>rebuild</td>
+<td><strong>O(1)</strong></td>
+<td>–</td>
+<td>idempotent f, static</td>
+<td>15 lines</td>
+</tr>
+<tr>
+<td>Sqrt decomposition</td>
+<td>O(n)</td>
+<td>O(1) to O(√n)</td>
+<td>O(√n)</td>
+<td>O(√n)</td>
+<td>almost anything</td>
+<td>30 lines</td>
+</tr>
+<tr>
+<td>Sorted container</td>
+<td>O(n log n)</td>
+<td>O(log n) insert/delete</td>
+<td>rank in O(log n)</td>
+<td>–</td>
+<td>order statistics</td>
+<td>library</td>
+</tr>
+</tbody>
+</table>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 920 480" width="920" role="img" aria-label="Decision guide from what a range problem needs to the data structure that fits">
+<defs><marker id="sft-decide-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="20" y="28" text-anchor="start" class="title">What does the problem need?</text>
+<text x="560" y="28" text-anchor="start" class="title">Reach for</text>
+<rect class="box " x="20" y="46" width="440" height="42" rx="8"/>
+<text x="34" y="64" text-anchor="start" class="">The array never changes; query sums</text>
+<text x="34" y="80" text-anchor="start" class="small muted">(range sums, many queries)</text>
+<path class="edge accent" d="M466 67 L548 67" marker-end="url(#sft-decide-accent)"/>
+<rect class="box visit" x="556" y="46" width="344" height="42" rx="8"/>
+<text x="570" y="72" text-anchor="start" class="">Prefix sums: O(1) per query</text>
+<rect class="box " x="20" y="98" width="440" height="42" rx="8"/>
+<text x="34" y="116" text-anchor="start" class="">Never changes; query min / max / gcd</text>
+<text x="34" y="132" text-anchor="start" class="small muted">(range minimum, LCA, LCP)</text>
+<path class="edge accent" d="M466 119 L548 119" marker-end="url(#sft-decide-accent)"/>
+<rect class="box visit" x="556" y="98" width="344" height="42" rx="8"/>
+<text x="570" y="124" text-anchor="start" class="">Sparse table: O(1) per query</text>
+<rect class="box " x="20" y="150" width="440" height="42" rx="8"/>
+<text x="34" y="168" text-anchor="start" class="">Point updates + range sums</text>
+<text x="34" y="184" text-anchor="start" class="small muted">(also xor, counts, frequencies)</text>
+<path class="edge accent" d="M466 171 L548 171" marker-end="url(#sft-decide-accent)"/>
+<rect class="box done" x="556" y="150" width="344" height="42" rx="8"/>
+<text x="570" y="176" text-anchor="start" class="">Fenwick tree</text>
+<rect class="box " x="20" y="202" width="440" height="42" rx="8"/>
+<text x="34" y="220" text-anchor="start" class="">Range add + point value or range sum</text>
+<text x="34" y="236" text-anchor="start" class="small muted">(add to a[l..r] between queries)</text>
+<path class="edge accent" d="M466 223 L548 223" marker-end="url(#sft-decide-accent)"/>
+<rect class="box done" x="556" y="202" width="344" height="42" rx="8"/>
+<text x="570" y="228" text-anchor="start" class="">Fenwick on differences / two Fenwicks</text>
+<rect class="box " x="20" y="254" width="440" height="42" rx="8"/>
+<text x="34" y="272" text-anchor="start" class="">Point updates + min / max / custom f</text>
+<text x="34" y="288" text-anchor="start" class="small muted">(gcd, (min, count), max subarray)</text>
+<path class="edge accent" d="M466 275 L548 275" marker-end="url(#sft-decide-accent)"/>
+<rect class="box accent" x="556" y="254" width="344" height="42" rx="8"/>
+<text x="570" y="280" text-anchor="start" class="">Segment tree (iterative if no descent)</text>
+<rect class="box " x="20" y="306" width="440" height="42" rx="8"/>
+<text x="34" y="324" text-anchor="start" class="">Range updates + range queries</text>
+<text x="34" y="340" text-anchor="start" class="small muted">(assign, add, flip, then max / sum)</text>
+<path class="edge accent" d="M466 327 L548 327" marker-end="url(#sft-decide-accent)"/>
+<rect class="box active" x="556" y="306" width="344" height="42" rx="8"/>
+<text x="570" y="332" text-anchor="start" class="">Lazy segment tree</text>
+<rect class="box " x="20" y="358" width="440" height="42" rx="8"/>
+<text x="34" y="376" text-anchor="start" class="">Count smaller / larger, k-th smallest</text>
+<text x="34" y="392" text-anchor="start" class="small muted">(values up to 10⁹, order matters)</text>
+<path class="edge accent" d="M466 379 L548 379" marker-end="url(#sft-decide-accent)"/>
+<rect class="box path" x="556" y="358" width="344" height="42" rx="8"/>
+<text x="570" y="384" text-anchor="start" class="">Compress + Fenwick over values</text>
+<rect class="box " x="20" y="410" width="440" height="42" rx="8"/>
+<text x="34" y="428" text-anchor="start" class="">Huge coordinates arriving online</text>
+<text x="34" y="444" text-anchor="start" class="small muted">(cannot sort all of them first)</text>
+<path class="edge accent" d="M466 431 L548 431" marker-end="url(#sft-decide-accent)"/>
+<rect class="box bad" x="556" y="410" width="344" height="42" rx="8"/>
+<text x="570" y="436" text-anchor="start" class="">Dynamic segment tree</text>
+</svg>
+<figcaption>Start from the top: the simplest structure that supports every operation you need wins. Fenwick trees are shorter and faster than segment trees, but only for invertible operations like sums.</figcaption>
+</figure>
+
+<div class="recognize">
+<p><strong>Recognize it when</strong></p>
+<ul>
+<li><strong>"update … then query a range"</strong>, interleaved, n and q up to 10⁵: you need O(log n) per operation, so a Fenwick
+  or segment tree. Prefix sums would cost O(n) per update.</li>
+<li><strong>"count of smaller / greater elements before or after i"</strong>, "inversions", "pairs with nums[i] &gt; 2·nums[j]": scan
+  in one direction and put a Fenwick tree over compressed values.</li>
+<li><strong>"number of subarrays whose sum is in [lower, upper]"</strong>: prefix sums plus a counting BIT (or merge sort, see
+  <a href="prefix-sums.html">Prefix Sums</a>).</li>
+<li><strong>"longest increasing subsequence with a constraint on the step"</strong>, "best dp[j] over j with value in a window":
+  a max segment tree indexed by value, so dp becomes a range query.</li>
+<li><strong>"add to every element in a range"</strong> together with "sum / max of a range": lazy propagation.</li>
+<li><strong>"maximum number of overlapping bookings"</strong>, "highest stack", huge coordinates arriving online: dynamic segment
+  tree, or compress and use a lazy tree.</li>
+<li><strong>"area / perimeter of a union of rectangles"</strong>: sweep line plus a segment tree that stores covered length.</li>
+<li><strong>"range minimum" on a static array, many queries</strong>: sparse table.</li>
+<li><strong>"k-th smallest so far"</strong>, "median of a stream with deletions": Fenwick tree over values plus a descent.</li>
+</ul>
+</div>
+<h3 id="complexity-at-a-glance">Complexity at a glance</h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Fenwick</th>
+<th>Segment tree</th>
+<th>Lazy segment tree</th>
+<th>Sparse table</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Build</td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td>O(n log n)</td>
+</tr>
+<tr>
+<td>Point update</td>
+<td>O(log n)</td>
+<td>O(log n)</td>
+<td>O(log n)</td>
+<td>rebuild</td>
+</tr>
+<tr>
+<td>Range query</td>
+<td>O(log n)</td>
+<td>O(log n)</td>
+<td>O(log n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Range update</td>
+<td>O(log n) (two BITs, sums only)</td>
+<td>O(n)</td>
+<td>O(log n)</td>
+<td>–</td>
+</tr>
+<tr>
+<td>k-th / first index ≥ x</td>
+<td>O(log n) descent</td>
+<td>O(log n) descent</td>
+<td>O(log n)</td>
+<td>–</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>n + 1</td>
+<td>4n (2n iterative)</td>
+<td>8n</td>
+<td>n log n</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pitfalls">Pitfalls</h2>
+<div class="pitfall">
+<p><strong>Index 0 in a Fenwick tree</strong>
+<code>i &amp; -i</code> is 0 when i = 0, so <code>add(0, x)</code> loops forever and <code>prefix(0)</code> silently returns 0. <strong>Fix:</strong> a Fenwick tree
+is 1-based. Shift with <code>i + 1</code> at the boundary, and give compressed ranks starting at 1.</p>
+</div>
+<div class="pitfall">
+<p><strong>Sending the new value instead of the delta</strong>
+<code>NumArray.update(i, val)</code> sets a[i] = val, but a Fenwick tree only knows how to <em>add</em>. Passing val adds it on top of
+the old value. <strong>Fix:</strong> keep a copy of the array and call <code>add(i, val − a[i])</code>, then store a[i] = val.</p>
+</div>
+<div class="pitfall">
+<p><strong>An array of size 2n for a recursive segment tree</strong>
+With n = 6 the recursive tree uses node 13, past 2·6 = 12, and some n need indices close to 4n. <strong>Fix:</strong> allocate 4n for
+the recursive version. Only the iterative version fits in exactly 2n.</p>
+</div>
+<div class="pitfall">
+<p><strong>Forgetting to push before descending</strong>
+A query that walks into the children of a tagged node reads stale values. <strong>Fix:</strong> call <code>push</code> on <em>every</em> path that
+goes below a node, in queries as well as updates, and recompute the node from its children after an update
+recurses.</p>
+</div>
+<div class="pitfall">
+<p><strong>Wrong identity for the disjoint case</strong>
+Returning 0 for a disjoint range in a min tree makes every query answer ≤ 0. <strong>Fix:</strong> the identity must not change
+any answer: 0 for sum and xor, +∞ for min, −∞ for max, 0 for gcd.</p>
+</div>
+<div class="pitfall">
+<p><strong>Mixing up inclusive and half-open ranges</strong>
+The recursive tree on this page uses [l..r] inclusive, the iterative one [l, r) half-open, and Fenwick prefix(i)
+includes i. Off-by-one errors here produce answers that are wrong by exactly one element. <strong>Fix:</strong> write the
+convention in a comment next to every <code>query</code> signature, and test the ranges [i..i] and [0..n−1].</p>
+</div>
+<div class="pitfall">
+<p><strong>Equal values in counting problems</strong>
+"Smaller than" excludes ties; "at most" includes them. Using <code>prefix(rank)</code> instead of <code>prefix(rank − 1)</code> (or
+inserting before querying) counts the current element or its equals. <strong>Fix:</strong> decide strict vs non-strict first,
+and in a one-pass scan always <strong>query, then insert</strong>.</p>
+</div>
+<div class="pitfall">
+<p><strong>Overflow in C#</strong>
+Sums of 10⁵ values up to 10⁹, or lengths times coordinates in rectangle area, exceed <code>int</code>. <strong>Fix:</strong> store <code>long</code>
+in the tree, multiply in <code>long</code>, and take the modulus only at the end.</p>
+</div>
+<h2 id="worked-problems">Worked problems</h2>
+<p>Every solution reuses the templates above (<code>Fenwick</code>, <code>compress</code>, <code>IterSegTree</code>). In an interview, write the
+template first; it is ten lines and the problem-specific part is usually five.</p>
+<h3 id="1-range-sum-query-mutable-medium">1. Range Sum Query - Mutable (Medium)</h3>
+<p><strong>Problem.</strong> Support <code>update(index, val)</code> (set nums[index] = val) and <code>sumRange(left, right)</code>, interleaved, up to
+3·10⁴ calls.</p>
+<p><strong>Insight.</strong> This is the problem that motivates the whole page: prefix sums make updates O(n). A Fenwick tree makes
+both O(log n). The one trap is that <code>update</code> <em>sets</em> a value, while the tree <em>adds</em>: send the difference.</p>
+<details class="solution">
+<summary>Solution</summary>
+<div class="code-tabs">
+<pre><code class="language-python">class NumArray:
+    def __init__(self, nums):
+        self.a = list(nums)
+        self.fw = Fenwick.from_list(nums)       # O(n) build
+
+    def update(self, index, val):
+        self.fw.add(index + 1, val - self.a[index])   # the tree adds: send the delta
+        self.a[index] = val
+
+    def sumRange(self, left, right):
+        return self.fw.range_sum(left + 1, right + 1)  # shift to 1-based
+</code></pre>
+<pre><code class="language-csharp">public class NumArray
+{
+    private readonly long[] a;
+    private readonly Fenwick fw;
+
+    public NumArray(int[] nums)
+    {
+        a = nums.Select(x =&gt; (long)x).ToArray();
+        fw = Fenwick.FromArray(a);                    // O(n) build
+    }
+
+    public void Update(int index, int val)
+    {
+        fw.Add(index + 1, val - a[index]);            // the tree adds: send the delta
+        a[index] = val;
+    }
+
+    public int SumRange(int left, int right) =&gt; (int)fw.RangeSum(left + 1, right + 1);   // shift to 1-based
+}
+</code></pre>
+</div>
+<p><strong>Complexity.</strong> O(n) build, O(log n) per call, O(n) space. <strong>Check:</strong> <code>[1, 3, 5]</code>: sumRange(0, 2) = 9; update(1, 2);
+sumRange(0, 2) = 8.</p>
+</details>
+<h3 id="2-count-of-smaller-numbers-after-self-hard">2. Count of Smaller Numbers After Self (Hard)</h3>
+<p><strong>Problem.</strong> For each i, count the j &gt; i with nums[j] &lt; nums[i].</p>
+<p><strong>Insight.</strong> Scan from the <strong>right</strong>. When you stand at i, the Fenwick tree holds exactly the elements to the right
+of i, indexed by value rank. "How many of them are smaller" is <code>prefix(rank − 1)</code>. Then insert nums[i]. Query
+before inserting, so an element never counts itself; <code>rank − 1</code> makes equal values not count. The visualizer below
+has three modes: this problem, plain inversions (the same scan, summed), and the next problem.</p>
+<div class="viz sft-wide" data-viz="segment-fenwick-trees-smaller"></div>
+
+<details class="solution">
+<summary>Solution</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def count_smaller(nums):
+    ranks, m = compress(nums)                   # ranks start at 1
+    fw = Fenwick(m)                             # fw counts values to the right of i
+    res = [0] * len(nums)
+    for i in range(len(nums) - 1, -1, -1):
+        res[i] = fw.prefix(ranks[i] - 1)        # strictly smaller ranks only
+        fw.add(ranks[i], 1)                     # query first, then insert
+    return res
+</code></pre>
+<pre><code class="language-csharp">public static class CountSmallerSolution
+{
+    public static IList&lt;int&gt; CountSmaller(int[] nums)
+    {
+        var (ranks, m) = Compression.Compress(nums.Select(x =&gt; (long)x).ToArray());   // ranks start at 1
+        var fw = new Fenwick(m);                      // fw counts values to the right of i
+        var res = new int[nums.Length];
+        for (int i = nums.Length - 1; i &gt;= 0; i--)
+        {
+            res[i] = (int)fw.Prefix(ranks[i] - 1);    // strictly smaller ranks only
+            fw.Add(ranks[i], 1);                      // query first, then insert
+        }
+        return res;
+    }
+}
+</code></pre>
+</div>
+<p><strong>Complexity.</strong> O(n log n) time, O(n) space. <strong>Check:</strong> <code>[5, 2, 6, 1]</code> → <code>[2, 1, 1, 0]</code>; <code>[-1, -1]</code> → <code>[0, 0]</code>.
+The merge-sort version is in <a href="sorting.html">Sorting</a>; the Fenwick version is shorter and generalizes to the next
+two problems.</p>
+</details>
+<h3 id="3-reverse-pairs-hard">3. Reverse Pairs (Hard)</h3>
+<p><strong>Problem.</strong> Count pairs i &lt; j with nums[i] &gt; 2 · nums[j].</p>
+<p><strong>Insight.</strong> Scan left to right. At j, the tree holds nums[0..j−1] by rank. The earlier values that are &gt; 2·nums[j]
+are all of them (<code>j</code>) minus those ≤ 2·nums[j]. The number 2·nums[j] usually is not in the array, so find its
+boundary with <code>bisect_right</code> on the sorted distinct values: every rank up to that position is ≤ 2·nums[j].</p>
+<details class="solution">
+<summary>Solution</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from bisect import bisect_left, bisect_right
+
+def reverse_pairs(nums):
+    order = sorted(set(nums))
+    fw = Fenwick(len(order))
+    count = 0
+    for j, v in enumerate(nums):                # j values have been inserted so far
+        at_most = fw.prefix(bisect_right(order, 2 * v))   # earlier values &lt;= 2v
+        count += j - at_most                    # the rest are &gt; 2v
+        fw.add(bisect_left(order, v) + 1, 1)    # rank of v, 1-based
+    return count
+</code></pre>
+<pre><code class="language-csharp">public static class Bounds
+{
+    // Number of elements &lt; x (LowerBound) or &lt;= x (UpperBound) in a sorted array.
+    public static int LowerBound(long[] a, long x)
+    {
+        int lo = 0, hi = a.Length;
+        while (lo &lt; hi) { int m = (lo + hi) / 2; if (a[m] &lt; x) lo = m + 1; else hi = m; }
+        return lo;
+    }
+
+    public static int UpperBound(long[] a, long x)
+    {
+        int lo = 0, hi = a.Length;
+        while (lo &lt; hi) { int m = (lo + hi) / 2; if (a[m] &lt;= x) lo = m + 1; else hi = m; }
+        return lo;
+    }
+}
+
+public static class ReversePairsSolution
+{
+    public static int ReversePairs(int[] nums)
+    {
+        long[] order = nums.Select(x =&gt; (long)x).Distinct().OrderBy(x =&gt; x).ToArray();
+        var fw = new Fenwick(order.Length);
+        long count = 0;
+        for (int j = 0; j &lt; nums.Length; j++)               // j values have been inserted so far
+        {
+            long atMost = fw.Prefix(Bounds.UpperBound(order, 2L * nums[j]));   // earlier values &lt;= 2v
+            count += j - atMost;                            // the rest are &gt; 2v
+            fw.Add(Bounds.LowerBound(order, nums[j]) + 1, 1);                  // rank of v, 1-based
+        }
+        return (int)count;
+    }
+}
+</code></pre>
+</div>
+<p><strong>Complexity.</strong> O(n log n). <strong>Check:</strong> <code>[1, 3, 2, 3, 1]</code> → 2 (3 &gt; 2·1 twice); <code>[2, 4, 3, 5, 1]</code> → 3. In C#,
+<code>2L * nums[j]</code> matters: 2 · 2³¹ − 2 overflows <code>int</code>.</p>
+</details>
+<h3 id="4-count-of-range-sum-hard">4. Count of Range Sum (Hard)</h3>
+<p><strong>Problem.</strong> Count the subarrays whose sum lies in [lower, upper].</p>
+<p><strong>Insight.</strong> With prefix sums P (P[0] = 0), subarray (i, j] has sum P[j] − P[i]. For each j, count earlier i with
+P[j] − upper ≤ P[i] ≤ P[j] − lower: a <strong>range count over values</strong> seen so far, so a Fenwick tree over compressed
+prefix sums. The two boundaries are not prefix values themselves, so locate them with <code>bisect</code>:
+<code>bisect_left(order, P[j] − upper)</code> ranks are too small, <code>bisect_right(order, P[j] − lower)</code> ranks are small enough,
+and the answer for j is the difference of the two prefix counts. <a href="prefix-sums.html">Prefix Sums</a> solves the same
+problem with merge sort; compare the two.</p>
+<details class="solution">
+<summary>Solution</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from bisect import bisect_left, bisect_right
+
+def count_range_sum(nums, lower, upper):
+    pre = [0]
+    for x in nums:
+        pre.append(pre[-1] + x)
+    order = sorted(set(pre))
+    fw = Fenwick(len(order))
+    count = 0
+    for p in pre:                               # p plays P[j]; fw holds P[0..j-1]
+        too_small = bisect_left(order, p - upper)   # ranks 1..too_small are &lt; p - upper
+        small_enough = bisect_right(order, p - lower)   # ranks 1..small_enough are &lt;= p - lower
+        count += fw.prefix(small_enough) - fw.prefix(too_small)
+        fw.add(bisect_left(order, p) + 1, 1)
+    return count
+</code></pre>
+<pre><code class="language-csharp">public static class CountRangeSumSolution
+{
+    public static int CountRangeSum(int[] nums, int lower, int upper)
+    {
+        var pre = new long[nums.Length + 1];
+        for (int i = 0; i &lt; nums.Length; i++) pre[i + 1] = pre[i] + nums[i];
+        long[] order = pre.Distinct().OrderBy(x =&gt; x).ToArray();
+        var fw = new Fenwick(order.Length);
+        long count = 0;
+        foreach (long p in pre)                                         // p plays P[j]; fw holds P[0..j-1]
+        {
+            int tooSmall = Bounds.LowerBound(order, p - upper);         // ranks 1..tooSmall are &lt; p - upper
+            int smallEnough = Bounds.UpperBound(order, p - lower);      // ranks 1..smallEnough are &lt;= p - lower
+            count += fw.Prefix(smallEnough) - fw.Prefix(tooSmall);
+            fw.Add(Bounds.LowerBound(order, p) + 1, 1);
+        }
+        return (int)count;
+    }
+}
+</code></pre>
+</div>
+<p><strong>Complexity.</strong> O(n log n) time, O(n) space. <strong>Check:</strong> <code>nums = [-2, 5, -1], lower = -2, upper = 2</code> → 3 (the
+subarrays [−2], [−1] and [−2, 5, −1]). Prefix sums reach 10⁵ · 2³¹, so they need <code>long</code> in C#.</p>
+</details>
+<h3 id="5-longest-increasing-subsequence-ii-hard">5. Longest Increasing Subsequence II (Hard)</h3>
+<p><strong>Problem.</strong> Find the longest strictly increasing subsequence in which adjacent elements differ by at most k.
+n and the values go up to 10⁵.</p>
+<p><strong>Insight.</strong> Let best[v] be the longest valid subsequence that ends with the value v. A new element v can follow any
+value in [v − k, v − 1], so best[v] = 1 + max(best[v − k .. v − 1]). That is a <strong>range max over values</strong>, and the
+O(n²) DP from <a href="dp-sequences-strings.html">Sequence DP</a> becomes O(n log V) with a max segment tree indexed by value.
+The half-open iterative tree is a perfect fit: query [v − k, v).</p>
+<details class="solution">
+<summary>Solution</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def length_of_lis(nums, k):
+    top = max(nums)
+    st = IterSegTree([0] * (top + 1), max, 0)   # st[v] = longest subsequence ending in value v
+    best = 0
+    for v in nums:
+        cur = 1 + st.query(max(0, v - k), v)    # values v-k .. v-1
+        st.update(v, cur)                       # never smaller than the old st[v]
+        best = max(best, cur)
+    return best
+</code></pre>
+<pre><code class="language-csharp">public static class LisTwoSolution
+{
+    public static int LengthOfLIS(int[] nums, int k)
+    {
+        int top = nums.Max();
+        var st = new IterSegTree(new long[top + 1], Math.Max, 0);   // st[v] = longest ending in value v
+        long best = 0;
+        foreach (int v in nums)
+        {
+            long cur = 1 + st.Query(Math.Max(0, v - k), v);        // values v-k .. v-1
+            st.Update(v, cur);                                      // never smaller than the old st[v]
+            best = Math.Max(best, cur);
+        }
+        return (int)best;
+    }
+}
+</code></pre>
+</div>
+<p><strong>Complexity.</strong> O(n log V) time, O(V) space, V = max value (compress first if values are huge).
+<strong>Check:</strong> <code>nums = [4, 2, 1, 4, 3, 4, 5, 8, 15], k = 3</code> → 5 (1, 3, 4, 5, 8); <code>[7, 4, 5, 1, 8, 12, 4, 7], k = 5</code> → 4.</p>
+</details>
+<h3 id="6-my-calendar-iii-hard">6. My Calendar III (Hard)</h3>
+<p><strong>Problem.</strong> Each call <code>book(start, end)</code> adds the half-open interval [start, end), with 0 ≤ start &lt; end ≤ 10⁹.
+After each call, return the largest number of intervals that overlap at one point.</p>
+<p><strong>Insight.</strong> This is range add +1 on [start, end − 1] followed by "global max". The coordinates are huge and arrive
+online, so use a <strong>dynamic</strong> tree keyed by heap id in a dictionary. Because we only ever read the <strong>root</strong>, tags never
+need to be pushed: keep them on the node permanently and add them on the way up,
+<code>mx[node] = tag[node] + max(mx[left], mx[right])</code>. <a href="intervals-sweep-line.html">Intervals &amp; Sweep Line</a> solves the same
+problem with a sorted delta map in O(n) per call; this version is O(log C) per call.</p>
+<details class="solution">
+<summary>Solution</summary>
+<div class="code-tabs">
+<pre><code class="language-python">class MyCalendarThree:
+    def __init__(self):
+        self.mx = {}                            # node -&gt; max overlap inside its range
+        self.tag = {}                           # node -&gt; bookings covering its whole range
+
+    def book(self, start, end):
+        self._add(start, end - 1, 1, 0, 10**9)
+        return self.mx[1]
+
+    def _add(self, ql, qr, node, l, r):
+        if qr &lt; l or r &lt; ql:
+            return
+        if ql &lt;= l and r &lt;= qr:                 # covered: permanent tag, no push ever
+            self.tag[node] = self.tag.get(node, 0) + 1
+            self.mx[node] = self.mx.get(node, 0) + 1
+            return
+        m = (l + r) // 2
+        self._add(ql, qr, 2 * node, l, m)
+        self._add(ql, qr, 2 * node + 1, m + 1, r)
+        self.mx[node] = self.tag.get(node, 0) + max(self.mx.get(2 * node, 0),
+                                                     self.mx.get(2 * node + 1, 0))
+</code></pre>
+<pre><code class="language-csharp">public class MyCalendarThree
+{
+    private readonly Dictionary&lt;long, int&gt; mx = new();    // node -&gt; max overlap inside its range
+    private readonly Dictionary&lt;long, int&gt; tag = new();   // node -&gt; bookings covering its whole range
+
+    public int Book(int start, int end)
+    {
+        Add(start, end - 1, 1, 0, 1_000_000_000);
+        return mx[1];
+    }
+
+    private void Add(int ql, int qr, long node, int l, int r)   // heap ids reach 2^31: long keys
+    {
+        if (qr &lt; l || r &lt; ql) return;
+        if (ql &lt;= l &amp;&amp; r &lt;= qr)                               // covered: permanent tag, no push ever
+        {
+            tag[node] = tag.GetValueOrDefault(node) + 1;
+            mx[node] = mx.GetValueOrDefault(node) + 1;
+            return;
+        }
+        int m = l + (r - l) / 2;
+        Add(ql, qr, 2 * node, l, m);
+        Add(ql, qr, 2 * node + 1, m + 1, r);
+        mx[node] = tag.GetValueOrDefault(node)
+                 + Math.Max(mx.GetValueOrDefault(2 * node), mx.GetValueOrDefault(2 * node + 1));
+    }
+}
+</code></pre>
+</div>
+<p><strong>Complexity.</strong> O(log C) per booking with C = 10⁹ (about 30 levels, at most four nodes per level), O(q log C) nodes in
+total. <strong>Check:</strong> book(10, 20), (50, 60), (10, 40), (5, 15), (5, 10), (25, 55) → 1, 1, 2, 3, 3, 3.</p>
+</details>
+<h3 id="7-falling-squares-hard">7. Falling Squares (Hard)</h3>
+<p><strong>Problem.</strong> Squares fall one by one; square i has its left edge at <code>left</code> and side <code>side</code>, so it covers
+[left, left + side) and lands on top of the highest square already below that span. After each drop, report the
+tallest stack so far.</p>
+<p><strong>Insight.</strong> Treat the ground as an array of heights. Each drop is "h = max(height over the span) + side" and then
+"assign h to the whole span": <strong>range max + range assign</strong>, so a lazy segment tree. Only the 2n endpoints matter,
+so compress the integer cells <code>left</code> and <code>left + side − 1</code> (compression keeps overlaps intact, because it keeps the
+order of all endpoints). The assign tag needs a "nothing pending" marker that is not a height.</p>
+<details class="solution">
+<summary>Solution</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def falling_squares(positions):
+    coords = sorted({x for left, side in positions for x in (left, left + side - 1)})
+    idx = {x: i for i, x in enumerate(coords)}
+    n = len(coords)
+    mx = [0] * (4 * n)
+    tag = [None] * (4 * n)                      # None = no assignment pending
+
+    def apply(node, v):
+        mx[node] = v
+        tag[node] = v
+
+    def push(node):
+        if tag[node] is not None:
+            apply(2 * node, tag[node])
+            apply(2 * node + 1, tag[node])
+            tag[node] = None
+
+    def query(ql, qr, node, l, r):
+        if qr &lt; l or r &lt; ql:
+            return 0
+        if ql &lt;= l and r &lt;= qr:
+            return mx[node]
+        push(node)
+        m = (l + r) // 2
+        return max(query(ql, qr, 2 * node, l, m), query(ql, qr, 2 * node + 1, m + 1, r))
+
+    def assign(ql, qr, v, node, l, r):
+        if qr &lt; l or r &lt; ql:
+            return
+        if ql &lt;= l and r &lt;= qr:
+            apply(node, v)
+            return
+        push(node)
+        m = (l + r) // 2
+        assign(ql, qr, v, 2 * node, l, m)
+        assign(ql, qr, v, 2 * node + 1, m + 1, r)
+        mx[node] = max(mx[2 * node], mx[2 * node + 1])
+
+    res, best = [], 0
+    for left, side in positions:
+        l, r = idx[left], idx[left + side - 1]
+        h = query(l, r, 1, 0, n - 1) + side     # land on the highest point below
+        assign(l, r, h, 1, 0, n - 1)
+        best = max(best, h)
+        res.append(best)
+    return res
+</code></pre>
+<pre><code class="language-csharp">public class FallingSquaresSolution
+{
+    private long[] mx = Array.Empty&lt;long&gt;(), tag = Array.Empty&lt;long&gt;();
+    private bool[] hasTag = Array.Empty&lt;bool&gt;();      // false = no assignment pending
+
+    public IList&lt;int&gt; FallingSquares(int[][] positions)
+    {
+        long[] coords = positions.SelectMany(p =&gt; new long[] { p[0], (long)p[0] + p[1] - 1 })
+                                 .Distinct().OrderBy(x =&gt; x).ToArray();
+        var idx = new Dictionary&lt;long, int&gt;();
+        for (int i = 0; i &lt; coords.Length; i++) idx[coords[i]] = i;
+        int n = coords.Length;
+        mx = new long[4 * n]; tag = new long[4 * n]; hasTag = new bool[4 * n];
+        var res = new List&lt;int&gt;();
+        long best = 0;
+        foreach (var p in positions)
+        {
+            int l = idx[p[0]], r = idx[(long)p[0] + p[1] - 1];
+            long h = Query(l, r, 1, 0, n - 1) + p[1];       // land on the highest point below
+            Assign(l, r, h, 1, 0, n - 1);
+            best = Math.Max(best, h);
+            res.Add((int)best);
+        }
+        return res;
+    }
+
+    private void Apply(int node, long v) { mx[node] = v; tag[node] = v; hasTag[node] = true; }
+
+    private void Push(int node)
+    {
+        if (!hasTag[node]) return;
+        Apply(2 * node, tag[node]);
+        Apply(2 * node + 1, tag[node]);
+        hasTag[node] = false;
+    }
+
+    private long Query(int ql, int qr, int node, int l, int r)
+    {
+        if (qr &lt; l || r &lt; ql) return 0;
+        if (ql &lt;= l &amp;&amp; r &lt;= qr) return mx[node];
+        Push(node);
+        int m = (l + r) / 2;
+        return Math.Max(Query(ql, qr, 2 * node, l, m), Query(ql, qr, 2 * node + 1, m + 1, r));
+    }
+
+    private void Assign(int ql, int qr, long v, int node, int l, int r)
+    {
+        if (qr &lt; l || r &lt; ql) return;
+        if (ql &lt;= l &amp;&amp; r &lt;= qr) { Apply(node, v); return; }
+        Push(node);
+        int m = (l + r) / 2;
+        Assign(ql, qr, v, 2 * node, l, m);
+        Assign(ql, qr, v, 2 * node + 1, m + 1, r);
+        mx[node] = Math.Max(mx[2 * node], mx[2 * node + 1]);
+    }
+}
+</code></pre>
+</div>
+<p><strong>Complexity.</strong> O(n log n) time, O(n) space. <strong>Check:</strong> <code>[[1, 2], [2, 3], [6, 1]]</code> → <code>[2, 5, 5]</code>;
+<code>[[100, 100], [200, 100]]</code> → <code>[100, 100]</code> (they only touch at x = 200, which is why the right end is
+<code>left + side − 1</code>).</p>
+</details>
+<h3 id="8-rectangle-area-ii-hard">8. Rectangle Area II (Hard)</h3>
+<p><strong>Problem.</strong> Return the total area covered by a list of axis-aligned rectangles (overlaps counted once), modulo
+10⁹ + 7. Coordinates go up to 10⁹.</p>
+<p><strong>Insight.</strong> Sweep a vertical line from left to right. Between two consecutive event x values, the covered area is
+(covered length on the line) × (distance moved). A rectangle adds +1 on its y-span when the line reaches x1 and −1
+at x2. So the tree needs "range add ±1" and "how much of the line has count &gt; 0". Each node stores <code>cnt</code> (rectangles
+that cover its <strong>whole</strong> range, never pushed) and <code>cov</code> (covered length inside its range):</p>
+<ul>
+<li>cnt &gt; 0: the whole range is covered, so cov = its full length.</li>
+<li>otherwise: cov = left.cov + right.cov (0 at a leaf).</li>
+</ul>
+<p>This works without push-down because every −1 removes exactly the nodes that its matching +1 added. The leaves are
+the gaps between consecutive compressed y values, so each leaf has a real length. Step through the sweep:</p>
+<div class="viz sft-wide" data-viz="segment-fenwick-trees-area"></div>
+
+<details class="solution">
+<summary>Solution</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def rectangle_area(rectangles):
+    MOD = 10**9 + 7
+    ys = sorted({y for _, y1, _, y2 in rectangles for y in (y1, y2)})
+    yi = {y: i for i, y in enumerate(ys)}
+    m = len(ys) - 1                             # leaf i = the gap ys[i] .. ys[i + 1]
+    cnt = [0] * (4 * m + 4)                     # rectangles covering the node's whole range
+    cov = [0] * (4 * m + 4)                     # covered length inside the node's range
+
+    def update(ql, qr, d, node, l, r):
+        if qr &lt; l or r &lt; ql:
+            return
+        if ql &lt;= l and r &lt;= qr:
+            cnt[node] += d
+        else:
+            mid = (l + r) // 2
+            update(ql, qr, d, 2 * node, l, mid)
+            update(ql, qr, d, 2 * node + 1, mid + 1, r)
+        if cnt[node] &gt; 0:
+            cov[node] = ys[r + 1] - ys[l]       # fully covered
+        elif l == r:
+            cov[node] = 0
+        else:
+            cov[node] = cov[2 * node] + cov[2 * node + 1]
+
+    events = []
+    for x1, y1, x2, y2 in rectangles:
+        events.append((x1, 1, y1, y2))
+        events.append((x2, -1, y1, y2))
+    events.sort()
+    area, prev_x = 0, events[0][0]
+    for x, d, y1, y2 in events:
+        area += cov[1] * (x - prev_x)           # the strip since the last event
+        prev_x = x
+        if yi[y1] &lt; yi[y2]:                     # skip zero-height rectangles
+            update(yi[y1], yi[y2] - 1, d, 1, 0, m - 1)
+    return area % MOD
+</code></pre>
+<pre><code class="language-csharp">public class RectangleAreaSolution
+{
+    private long[] ys = Array.Empty&lt;long&gt;(), cov = Array.Empty&lt;long&gt;();   // cov: covered length inside the node
+    private int[] cnt = Array.Empty&lt;int&gt;();                               // rectangles covering the whole node
+
+    public int RectangleArea(int[][] rectangles)
+    {
+        const long MOD = 1_000_000_007;
+        ys = rectangles.SelectMany(r =&gt; new long[] { r[1], r[3] }).Distinct().OrderBy(y =&gt; y).ToArray();
+        var yi = new Dictionary&lt;long, int&gt;();
+        for (int i = 0; i &lt; ys.Length; i++) yi[ys[i]] = i;
+        int m = ys.Length - 1;                        // leaf i = the gap ys[i] .. ys[i + 1]
+        cnt = new int[4 * m + 4];
+        cov = new long[4 * m + 4];
+        var events = new List&lt;(long x, int d, long y1, long y2)&gt;();
+        foreach (var r in rectangles)
+        {
+            events.Add((r[0], 1, r[1], r[3]));
+            events.Add((r[2], -1, r[1], r[3]));
+        }
+        events.Sort();
+        long area = 0, prevX = events[0].x;
+        foreach (var (x, d, y1, y2) in events)
+        {
+            area += cov[1] * (x - prevX);             // the strip since the last event
+            prevX = x;
+            if (yi[y1] &lt; yi[y2]) Update(yi[y1], yi[y2] - 1, d, 1, 0, m - 1);   // skip zero height
+        }
+        return (int)(area % MOD);
+    }
+
+    private void Update(int ql, int qr, int d, int node, int l, int r)
+    {
+        if (qr &lt; l || r &lt; ql) return;
+        if (ql &lt;= l &amp;&amp; r &lt;= qr) cnt[node] += d;
+        else
+        {
+            int mid = (l + r) / 2;
+            Update(ql, qr, d, 2 * node, l, mid);
+            Update(ql, qr, d, 2 * node + 1, mid + 1, r);
+        }
+        if (cnt[node] &gt; 0) cov[node] = ys[r + 1] - ys[l];   // fully covered
+        else if (l == r) cov[node] = 0;
+        else cov[node] = cov[2 * node] + cov[2 * node + 1];
+    }
+}
+</code></pre>
+</div>
+<p><strong>Complexity.</strong> O(n log n) time, O(n) space. <strong>Check:</strong> <code>[[0,0,2,2],[1,0,2,3],[1,0,3,1]]</code> → 6;
+<code>[[0,0,1000000000,1000000000]]</code> → 49 (10¹⁸ mod 10⁹ + 7). The area before the modulus reaches 10¹⁸, which fits in a
+<code>long</code> (about 9.2·10¹⁸) but not in 64-bit floating point exactly.</p>
+</details>
+<h2 id="problem-ladder">Problem ladder</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Level</th>
+<th>The key idea</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://leetcode.com/problems/range-sum-query-immutable/">Range Sum Query - Immutable</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>The baseline: no updates, so prefix sums and O(1) queries.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://leetcode.com/problems/range-sum-query-mutable/">Range Sum Query - Mutable</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Fenwick tree; <code>update</code> sends <code>val − a[i]</code>.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://leetcode.com/problems/queries-on-a-permutation-with-key/">Queries on a Permutation With Key</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Positions m+1..2m in a BIT; "move to front" = clear the old slot, fill a fresh slot on the left.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://leetcode.com/problems/range-sum-query-2d-mutable/">Range Sum Query 2D - Mutable</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>2D Fenwick tree, inclusion-exclusion on four prefixes.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://leetcode.com/problems/number-of-longest-increasing-subsequence/">Number of Longest Increasing Subsequence</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Segment tree over value ranks storing (best length, count); combine adds counts on ties.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://leetcode.com/problems/my-calendar-i/">My Calendar I</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Dynamic tree: "max over [s, e) is 0", then add 1. (A sorted list is simpler.)</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://leetcode.com/problems/count-of-smaller-numbers-after-self/">Count of Smaller Numbers After Self</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Scan right to left; query <code>rank − 1</code>, then insert.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://leetcode.com/problems/reverse-pairs/">Reverse Pairs</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Seen so far minus "≤ 2v" via <code>bisect_right</code> on the sorted values.</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://leetcode.com/problems/create-sorted-array-through-instructions/">Create Sorted Array through Instructions</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Cost = min(#smaller, #greater) from one BIT over values.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://leetcode.com/problems/count-of-range-sum/">Count of Range Sum</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Prefix sums; count earlier P in [P − upper, P − lower] with a BIT.</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://leetcode.com/problems/longest-increasing-subsequence-ii/">Longest Increasing Subsequence II</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Max tree over values; dp[v] = 1 + max over [v − k, v).</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://leetcode.com/problems/sliding-window-maximum/">Sliding Window Maximum</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>A sparse table answers every window in O(1); then learn the O(n) <a href="monotonic-stack-queue.html">monotonic deque</a>.</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://leetcode.com/problems/my-calendar-iii/">My Calendar III</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Dynamic tree, range +1, permanent tags, read the root.</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="https://leetcode.com/problems/falling-squares/">Falling Squares</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Compress; lazy range assign + range max.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="https://leetcode.com/problems/the-skyline-problem/">The Skyline Problem</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Compress x; "chmax over a range" then read every leaf (or a heap sweep).</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="https://leetcode.com/problems/range-module/">Range Module</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Dynamic tree with lazy assign 0/1 and "all covered" = min.</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="https://leetcode.com/problems/rectangle-area-ii/">Rectangle Area II</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Sweep x; tree stores (cnt, covered length); no push needed.</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="https://leetcode.com/problems/booking-concert-tickets-in-groups/">Booking Concert Tickets in Groups</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Max tree to <em>descend</em> to the first row with room; sum tree for "scatter".</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="https://leetcode.com/problems/longest-substring-of-one-repeating-character/">Longest Substring of One Repeating Character</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Node stores (prefix run, suffix run, best run); merge joins runs across the middle.</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="https://leetcode.com/problems/handling-sum-queries-after-update/">Handling Sum Queries After Update</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Lazy flip on a count-of-ones tree: ones = len − ones; flips xor.</td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="https://leetcode.com/problems/find-building-where-alice-and-bob-can-meet/">Find Building Where Alice and Bob Can Meet</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Max tree descent: first index &gt; max(a, b) with height &gt; both.</td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="https://leetcode.com/problems/count-good-triplets-in-an-array/">Count Good Triplets in an Array</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Relabel by position in nums2; per middle: (smaller on the left) × (greater on the right).</td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="https://leetcode.com/problems/minimum-possible-integer-after-at-most-k-adjacent-swaps-on-digits/">Minimum Possible Integer After at Most K Adjacent Swaps On Digits</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Greedy smallest reachable digit; a BIT counts already-moved digits to get the true swap cost.</td>
+</tr>
+<tr>
+<td>24</td>
+<td><a href="https://leetcode.com/problems/online-majority-element-in-subarray/">Online Majority Element In Subarray</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Tree of Boyer-Moore (candidate, votes) pairs; verify the count with binary search on positions.</td>
+</tr>
+<tr>
+<td>25</td>
+<td><a href="https://leetcode.com/problems/maximum-sum-queries/">Maximum Sum Queries</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Offline: sort points and queries by x descending; max tree over compressed y.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>In a Fenwick tree, which range does <code>t[12]</code> cover, and which cells does <code>prefix(13)</code> read?</summary>
+<p>lowbit(12) = 4 (12 = 1100₂), so t[12] covers the 4 positions [9..12]. prefix(13) reads t[13] = [13..13], then drops
+the lowest bit: t[12] = [9..12], then t[8] = [1..8], then 0 stops. Three disjoint blocks that tile [1..13], one per
+set bit of 13 = 1101₂.</p>
+</details>
+<details class="quiz">
+<summary>With n = 16, which cells does <code>add(5, x)</code> change, and why exactly those?</summary>
+<p>5 → 6 → 8 → 16 (add the lowest set bit each time). Those are precisely the blocks that <strong>contain</strong> position 5:
+[5..5], [5..6], [1..8] and [1..16]. Every other block either ends before 5 or starts after it.</p>
+</details>
+<details class="quiz">
+<summary>Why can a Fenwick tree give range sums but not range minimums, while a segment tree gives both?</summary>
+<p>A Fenwick tree only stores <strong>prefix</strong> blocks, so a range [l..r] must be computed as prefix(r) "minus" prefix(l − 1).
+Subtraction exists for sums (and xor), but there is no way to remove the elements of [1..l−1] from a minimum. A segment
+tree assembles [l..r] directly from O(log n) disjoint nodes that lie inside the range, so it only needs f to be
+associative, never invertible.</p>
+</details>
+<details class="quiz">
+<summary>Why does a segment-tree range query visit at most about 4 nodes per level?</summary>
+<p>Only nodes that <strong>partially</strong> overlap the query recurse. A partial node must contain one of the query's two edges
+(ql or qr) without being inside it, and at any one depth at most two nodes contain an edge. Those two nodes have at
+most four children between them, and those children are the only nodes visited on the next level. Every other node
+there is never reached, because its parent was fully inside or disjoint and returned without recursing. So the work
+is O(4 log n) = O(log n).</p>
+</details>
+<details class="quiz">
+<summary>A lazy add+sum tree has tag 3 on the node for [0..3] and nothing below it. A query asks for [2..3]. What must happen, and what goes wrong without it?</summary>
+<p>The query is partial on [0..3], so it must descend. Before it does, <strong>push</strong>: both children ([0..1] and [2..3]) get
+<code>sum += 3 · 2</code> and <code>tag += 3</code>, and the parent's tag becomes 0. The query then reads [2..3] directly. Without the push,
+[2..3] still holds the old sum, and the answer is short by 6.</p>
+</details>
+<details class="quiz">
+<summary>A sparse table answers range min with two overlapping blocks. Why does that fail for sum, and what would you use instead?</summary>
+<p>The elements in the overlap are counted twice. Min does not care (min(x, x) = x, <strong>idempotent</strong>), but sum does. For a
+static array, use plain prefix sums (O(1) and simpler); if updates exist, a Fenwick tree.</p>
+</details>
+<details class="quiz">
+<summary>In Count of Smaller Numbers After Self, what changes if you insert before querying, or query <code>prefix(rank)</code> instead of <code>prefix(rank − 1)</code>?</summary>
+<p>Insert first: every element counts itself, so every answer is one too large. <code>prefix(rank)</code>: elements <strong>equal</strong> to
+nums[i] on its right are counted as "smaller". The correct scan is: query strictly smaller ranks, then insert.</p>
+</details>
+<details class="quiz">
+<summary>Which structure would you pick? (a) static array, 10⁶ range-max queries; (b) point updates and range-gcd queries; (c) "add x to a[l..r]" and "sum of a[l..r]", interleaved; (d) count earlier elements less than x, values up to 10⁹.</summary>
+<p>(a) Sparse table: O(1) queries and max is idempotent. (b) Segment tree: gcd is not invertible, so no Fenwick.
+(c) Two Fenwick trees (range add, range sum) or a lazy segment tree. (d) Coordinate compression plus a Fenwick tree
+over ranks.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>lowbit</strong><code>i &amp; -i</code>: the lowest set bit. t[i] covers <code>(i − lowbit(i), i]</code>.</div>
+<div><strong>Fenwick query</strong><code>while i: s += t[i]; i -= i &amp; -i</code>. Walks left, one block per set bit.</div>
+<div><strong>Fenwick update</strong><code>while i &lt;= n: t[i] += d; i += i &amp; -i</code>. 1-based; send deltas.</div>
+<div><strong>Range sum</strong><code>prefix(r) − prefix(l − 1)</code>. Needs an invertible f (sum, xor, count).</div>
+<div><strong>Range add, point get</strong>BIT on the difference array: <code>add(l, x); add(r + 1, −x)</code>; a[i] = prefix(i).</div>
+<div><strong>Range add, range sum</strong>Two BITs: <code>prefix_sum(i) = B1(i)·i − B2(i)</code>.</div>
+<div><strong>k-th smallest</strong>BIT over counts; descend with powers of two from the top: O(log n).</div>
+<div><strong>Segment tree</strong>Node k has children 2k, 2k + 1; size 4n. Disjoint → identity, inside → node, else split.</div>
+<div><strong>Combine</strong>Any associative f: sum, min, max, gcd, (min, count), (sum, pre, suf, best), matrices.</div>
+<div><strong>Lazy</strong><code>apply</code> = update value + merge tag; <code>push</code> before descending; recompute after.</div>
+<div><strong>Assign tags</strong>Need a "none" marker (None / bool), because assigning 0 is a real update.</div>
+<div><strong>Iterative</strong>Leaves at <code>t[n + i]</code>; half-open [l, r); odd l: take and l++; odd r: --r and take.</div>
+<div><strong>Dynamic</strong>Create children on first touch; O(q log C) nodes. Read only the root? Keep tags permanent.</div>
+<div><strong>Compression</strong><code>sorted(set(vals))</code> + rank lookup; <code>bisect</code> for values not in the list.</div>
+<div><strong>Sparse table</strong><code>st[k][i] = f(st[k−1][i], st[k−1][i + 2^(k−1)])</code>; query two overlapping blocks. Idempotent f only.</div>
+<div><strong>Sweep + tree</strong>Rectangle union: (cnt, covered length) per node; +1 at x1, −1 at x2.</div>
+</div><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="tries.html"><small>&larr; PREVIOUS</small>Tries</a><a class="next" href="graph-fundamentals.html"><small>NEXT &rarr;</small>Graph Fundamentals: BFS &amp; DFS</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-queries-and-updates-on-the-same-array">The problem: queries and updates on the same array</a></li>
+<li><a href="#fenwick-trees">Fenwick trees</a><ul>
+<li><a href="#lowbit-the-bit-trick-behind-it">lowbit: the bit trick behind it</a></li>
+<li><a href="#query-walks-left-update-walks-up">Query walks left, update walks up</a></li>
+<li><a href="#template">Template</a></li>
+<li><a href="#walking-down-the-k-th-smallest-in-olog-n">Walking down: the k-th smallest in O(log n)</a></li>
+<li><a href="#range-updates-put-a-difference-array-inside">Range updates: put a difference array inside</a></li>
+<li><a href="#2d-fenwick-trees">2D Fenwick trees</a></li>
+</ul>
+</li>
+<li><a href="#segment-trees">Segment trees</a><ul>
+<li><a href="#template-point-update-range-query-any-associative-f">Template: point update, range query, any associative f</a></li>
+<li><a href="#what-can-a-node-store">What can a node store?</a></li>
+<li><a href="#descending-the-tree-first-index-with-ai-x">Descending the tree: first index with a[i] ≥ x</a></li>
+<li><a href="#lazy-propagation-range-updates">Lazy propagation: range updates</a></li>
+<li><a href="#the-iterative-bottom-up-segment-tree">The iterative (bottom-up) segment tree</a></li>
+<li><a href="#dynamic-segment-trees-create-nodes-only-when-touched">Dynamic segment trees: create nodes only when touched</a></li>
+<li><a href="#trees-over-values-coordinate-compression">Trees over values: coordinate compression</a></li>
+</ul>
+</li>
+<li><a href="#sparse-tables-o1-queries-when-nothing-changes">Sparse tables: O(1) queries when nothing changes</a></li>
+<li><a href="#beyond-the-basics">Beyond the basics</a></li>
+<li><a href="#choosing-a-structure">Choosing a structure</a><ul>
+<li><a href="#complexity-at-a-glance">Complexity at a glance</a></li>
+</ul>
+</li>
+<li><a href="#pitfalls">Pitfalls</a></li>
+<li><a href="#worked-problems">Worked problems</a><ul>
+<li><a href="#1-range-sum-query-mutable-medium">1. Range Sum Query - Mutable (Medium)</a></li>
+<li><a href="#2-count-of-smaller-numbers-after-self-hard">2. Count of Smaller Numbers After Self (Hard)</a></li>
+<li><a href="#3-reverse-pairs-hard">3. Reverse Pairs (Hard)</a></li>
+<li><a href="#4-count-of-range-sum-hard">4. Count of Range Sum (Hard)</a></li>
+<li><a href="#5-longest-increasing-subsequence-ii-hard">5. Longest Increasing Subsequence II (Hard)</a></li>
+<li><a href="#6-my-calendar-iii-hard">6. My Calendar III (Hard)</a></li>
+<li><a href="#7-falling-squares-hard">7. Falling Squares (Hard)</a></li>
+<li><a href="#8-rectangle-area-ii-hard">8. Rectangle Area II (Hard)</a></li>
+</ul>
+</li>
+<li><a href="#problem-ladder">Problem ladder</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

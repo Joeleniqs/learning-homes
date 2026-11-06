@@ -1,0 +1,1109 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>The Request Delegate Pipeline | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/request-pipeline.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/request-pipeline.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track" open><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html" aria-current="page">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / The Request Delegate Pipeline</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">REQUEST PIPELINES &AMP; MIDDLEWARE</p><h1>The Request Delegate Pipeline</h1><p class="lede">Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI.</p><div class="meta"><span class="level level-intermediate">Intermediate → Advanced</span><span>~60 min study</span><span>Builds on: <a href="behavioral-patterns.html">Behavioral Patterns</a>, <a href="di-fundamentals.html">DI Fundamentals</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="request-pipeline" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-every-endpoint-doing-everyones-job">The problem: every endpoint doing everyone's job</h2>
+<p>Here is a typical first version of an endpoint. One line does the actual work: it loads an order. Everything else is plumbing that every endpoint in the service needs too.</p>
+<div class="code-tabs" data-labels="Before: plumbing in every endpoint,After: one pipeline, thin endpoints">
+<pre><code class="language-csharp">app.MapGet(&quot;/orders/{id:int}&quot;, async (int id, HttpContext ctx, OrdersDb db, ILogger&lt;Program&gt; log) =&gt;
+{
+    var sw = Stopwatch.StartNew();                       // timing
+    log.LogInformation(&quot;→ GET /orders/{Id}&quot;, id);         // request logging
+    try
+    {
+        if (!ApiKeys.IsValid(ctx.Request.Headers[&quot;X-Api-Key&quot;]))
+            return Results.Unauthorized();               // auth
+        var order = await db.Orders.FindAsync(id);       // ← the only real work
+        return order is null ? Results.NotFound() : Results.Ok(order);
+    }
+    catch (Exception ex)                                 // error handling
+    {
+        log.LogError(ex, &quot;GET /orders/{Id} failed&quot;, id);
+        return Results.Problem(statusCode: 500);
+    }
+    finally
+    {
+        log.LogInformation(&quot;← {Ms} ms&quot;, sw.ElapsedMilliseconds);
+    }
+});
+// ...copied into the next 40 endpoints, each copy drifting a little.
+</code></pre>
+<pre><code class="language-csharp">builder.Services.AddProblemDetails();
+
+app.UseExceptionHandler();                       // errors → ProblemDetails, once
+app.UseMiddleware&lt;RequestTimingMiddleware&gt;();    // timing + logging, once
+app.UseMiddleware&lt;ApiKeyMiddleware&gt;();           // auth, once
+
+app.MapGet(&quot;/orders/{id:int}&quot;, async (int id, OrdersDb db) =&gt;
+    await db.Orders.FindAsync(id) is { } order ? Results.Ok(order) : Results.NotFound());
+</code></pre>
+</div>
+<p>The "before" version has three real problems. The plumbing is <strong>duplicated</strong>, so the copies drift: one endpoint forgets the auth check and nobody notices. It is <strong>mixed into business code</strong>, so you can't read what the endpoint does. And it is <strong>incomplete</strong>: errors thrown by model binding, by routing or by the JSON serializer happen <em>outside</em> the lambda, so its try/catch never sees them.</p>
+<p>The "after" version moves each concern into a <strong>layer</strong> that wraps every request. That is all middleware is. ASP.NET Core, Express, Koa, Go's <code>net/http</code>, servlet filters, Django and ASGI all use the same idea. This page builds ASP.NET Core's version from nothing, so that the ordering rules in <a href="middleware-patterns.html">Middleware: Order and Patterns</a> become obvious rather than memorised.</p>
+<div class="rule">
+<p><strong>The pipeline rule.</strong> A middleware is a function that receives the <em>next</em> handler and returns a new handler that wraps it. The pipeline is all of them folded into <strong>one</strong> delegate, so code <strong>before</strong> <code>next</code> runs on the way in, in registration order, and code <strong>after</strong> <code>next</code> runs on the way out, in <strong>reverse</strong> order. Not calling <code>next</code> short-circuits everything inside.</p>
+</div>
+<h2 id="the-mental-model-an-onion">The mental model: an onion</h2>
+<p>Draw each middleware as a layer around the endpoint. A request has to pass through every outer layer to reach the core, and the response has to pass back out through the same layers. Registration order in <code>Program.cs</code> is the order from the outside in.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 320" width="760" role="img" aria-label="Middleware drawn as nested layers around the endpoint, with the request going in and the response coming out, and a short-circuit at Auth">
+<defs><marker id="request-pipeline-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="request-pipeline-ard" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker><marker id="request-pipeline-arb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker></defs>
+<rect class="box" x="170" y="24" width="420" height="280" rx="20"/>
+<text x="186" y="45" class="small">① ExceptionHandler · registered first</text>
+<rect class="box" x="196" y="54" width="368" height="220" rx="17"/>
+<text x="212" y="75" class="small">② Logging</text>
+<rect class="box" x="222" y="84" width="316" height="160" rx="14"/>
+<text x="238" y="105" class="small">③ Auth</text>
+<rect class="box accent" x="248" y="114" width="264" height="66" rx="12"/>
+<text x="380" y="144" text-anchor="middle" class="title">④ Endpoint</text>
+<text x="380" y="162" text-anchor="middle" class="small mono">app.MapGet(...) · registered last</text>
+<path class="edge accent" d="M14 130 L244 130" marker-end="url(#request-pipeline-ar)"/>
+<text x="14" y="122" class="small">request</text>
+<text x="14" y="150" class="small muted">code before next()</text>
+<text x="14" y="165" class="small muted">runs ① → ② → ③</text>
+<path class="edge done" d="M514 166 L746 166" marker-end="url(#request-pipeline-ard)"/>
+<text x="746" y="158" text-anchor="end" class="small">response</text>
+<text x="746" y="186" text-anchor="end" class="small muted">code after next()</text>
+<text x="746" y="201" text-anchor="end" class="small muted">runs ③ → ② → ①</text>
+<path class="edge bad dash" d="M14 204 L330 204 Q352 204 352 218 Q352 232 330 232 L20 232" marker-end="url(#request-pipeline-arb)"/>
+<text x="364" y="214" class="small fill-bad">no token: Auth answers 401</text>
+<text x="364" y="229" class="small fill-bad">and never calls next()</text>
+<text x="14" y="252" class="small muted">401 still passes</text>
+<text x="14" y="267" class="small muted">back out via ② and ①</text>
+</svg>
+<figcaption>Outer layers wrap inner ones. A layer can only observe or catch what happens <em>inside</em> it, which is why the exception handler sits on the outside and the endpoint is the core.</figcaption>
+</figure>
+
+<p>The onion is not a metaphor laid on top of the code. It is the <strong>call stack</strong>. When layer ② runs <code>await next(ctx)</code>, it is literally calling layer ③ and waiting for it to return. So "the response travels back out" just means "the calls return". Step through it and change the inputs: remove the token to see a short-circuit, or make the endpoint throw to see an exception unwind.</p>
+<div class="viz" data-viz="request-pipeline-onion"></div>
+
+<p>Three things to notice in the visualizer:</p>
+<ol>
+<li><strong>Short-circuit.</strong> With no token, Auth sets 401 and returns without calling <code>next</code>. The endpoint is greyed out because it never ran. But Timing and Logging still run their after-code, because Auth <em>returned</em> to them normally.</li>
+<li><strong>Exceptions unwind the same stack.</strong> When the endpoint throws, Logging's line after <code>await next(ctx)</code> is skipped, because an <code>await</code> that throws skips the rest of the method. Timing's <code>finally</code> still runs. Only the outermost try/catch turns the exception into a 500.</li>
+<li><strong><code>HasStarted</code>.</strong> Once the endpoint writes the body, the status code and headers have been sent. Outer layers can still <em>read</em> the status on the way out, but they can no longer change it.</li>
+</ol>
+<p>Here is the same flow as a sequence diagram, which makes the "in, then out in reverse" shape explicit.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 340" width="760" role="img" aria-label="Sequence diagram: the server calls the exception handler, which calls logging, which calls auth, which calls the endpoint; then each call returns in reverse order">
+<defs><marker id="request-pipeline-sq" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="request-pipeline-sqd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker></defs>
+<rect class="box" x="20" y="10" width="110" height="32" rx="6"/><text x="75" y="31" text-anchor="middle" class="mono">Kestrel</text>
+<rect class="box" x="170" y="10" width="120" height="32" rx="6"/><text x="230" y="31" text-anchor="middle" class="mono">1 Errors</text>
+<rect class="box" x="330" y="10" width="120" height="32" rx="6"/><text x="390" y="31" text-anchor="middle" class="mono">2 Logging</text>
+<rect class="box" x="490" y="10" width="110" height="32" rx="6"/><text x="545" y="31" text-anchor="middle" class="mono">3 Auth</text>
+<rect class="box accent" x="636" y="10" width="110" height="32" rx="6"/><text x="691" y="31" text-anchor="middle" class="mono">4 Endpoint</text>
+<path class="edge dash" d="M75 42 L75 330"/><path class="edge dash" d="M230 42 L230 330"/><path class="edge dash" d="M390 42 L390 330"/><path class="edge dash" d="M545 42 L545 330"/><path class="edge dash" d="M691 42 L691 330"/>
+<rect class="box visit" x="224" y="66" width="12" height="250" rx="3"/>
+<rect class="box visit" x="384" y="94" width="12" height="196" rx="3"/>
+<rect class="box visit" x="539" y="138" width="12" height="122" rx="3"/>
+<rect class="box active" x="685" y="166" width="12" height="66" rx="3"/>
+<path class="edge accent" d="M75 70 L222 70" marker-end="url(#request-pipeline-sq)"/><text x="150" y="63" text-anchor="middle" class="small mono">app(ctx)</text>
+<path class="edge accent" d="M236 98 L382 98" marker-end="url(#request-pipeline-sq)"/><text x="310" y="91" text-anchor="middle" class="small mono">next(ctx)</text>
+<text x="404" y="117" class="small">before: log "→ GET /orders"</text>
+<path class="edge accent" d="M396 142 L537 142" marker-end="url(#request-pipeline-sq)"/><text x="468" y="135" text-anchor="middle" class="small mono">next(ctx)</text>
+<path class="edge accent" d="M551 170 L683 170" marker-end="url(#request-pipeline-sq)"/><text x="617" y="163" text-anchor="middle" class="small mono">next(ctx)</text>
+<text x="684" y="204" text-anchor="end" class="small">write 200 "Hello"</text>
+<path class="edge done" d="M685 230 L553 230" marker-end="url(#request-pipeline-sqd)"/><text x="617" y="223" text-anchor="middle" class="small mono">return</text>
+<path class="edge done" d="M539 258 L398 258" marker-end="url(#request-pipeline-sqd)"/><text x="468" y="251" text-anchor="middle" class="small mono">return</text>
+<text x="404" y="280" class="small">after: log "← 200"</text>
+<path class="edge done" d="M384 288 L238 288" marker-end="url(#request-pipeline-sqd)"/><text x="310" y="281" text-anchor="middle" class="small mono">return</text>
+<path class="edge done" d="M224 314 L77 314" marker-end="url(#request-pipeline-sqd)"/><text x="150" y="307" text-anchor="middle" class="small mono">response</text>
+</svg>
+<figcaption>The bars are stack frames. Logging's frame is open for the whole time the inner layers run, which is why it can measure them, catch their exceptions, or read the final status code.</figcaption>
+</figure>
+
+<div class="insight">
+<p><strong>Insight</strong>
+Every layer gets two chances to act: once with the request before the inner layers run, and once with the result after they finish. Everything else, including short-circuits, error handling and timing, follows from that.</p>
+</div>
+<h2 id="build-it-from-scratch">Build it from scratch</h2>
+<p>ASP.NET Core's whole pipeline rests on two types. If you understand these two lines, you understand the design:</p>
+<pre><code class="language-csharp">public delegate Task RequestDelegate(HttpContext context);   // &quot;handle this request&quot;
+// a middleware component:  Func&lt;RequestDelegate, RequestDelegate&gt;  // &quot;given next, make a handler&quot;
+</code></pre>
+<p>A <code>RequestDelegate</code> is anything that can handle a request: the endpoint, or the whole app. A <strong>component</strong> is a factory. You give it the <code>next</code> delegate and it returns a new delegate that does some work and (usually) calls <code>next</code>. <code>IApplicationBuilder.Use</code> just appends a component to a list:</p>
+<pre><code class="language-csharp">public interface IApplicationBuilder
+{
+    IApplicationBuilder Use(Func&lt;RequestDelegate, RequestDelegate&gt; middleware);
+    RequestDelegate Build();
+    // ...plus ApplicationServices, Properties, New()
+}
+</code></pre>
+<h3 id="folding-from-the-end">Folding from the end</h3>
+<p><code>Build()</code> turns the list into one delegate. It can't start at the front, because the first component needs its <code>next</code> to already exist. So it starts at the <strong>end</strong>, with a terminal delegate that returns 404, and walks backwards, wrapping each time.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 300" width="760" role="img" aria-label="Components A, B, C are folded from the end: C wraps 404, B wraps C, A wraps B, giving nested delegates">
+<defs><marker id="request-pipeline-fd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="20" y="22" class="title">_components (registration order)</text>
+<rect class="box" x="20" y="34" width="110" height="34" rx="6"/><text x="75" y="56" text-anchor="middle" class="mono">[0] Use A</text>
+<rect class="box" x="150" y="34" width="110" height="34" rx="6"/><text x="205" y="56" text-anchor="middle" class="mono">[1] Use B</text>
+<rect class="box" x="280" y="34" width="110" height="34" rx="6"/><text x="335" y="56" text-anchor="middle" class="mono">[2] Use C</text>
+<rect class="box done" x="410" y="34" width="110" height="34" rx="6"/><text x="465" y="56" text-anchor="middle" class="mono">terminal 404</text>
+<path class="edge accent" d="M520 82 L30 82" marker-end="url(#request-pipeline-fd)"/>
+<text x="540" y="86" class="small">Build() walks i = Count−1 down to 0</text>
+<text x="20" y="112" class="mono small">app = 404</text>
+<text x="20" y="130" class="mono small">i = 2:  app = C(next: 404)</text>
+<text x="280" y="130" class="mono small">i = 1:  app = B(next: C)</text>
+<text x="530" y="130" class="mono small">i = 0:  app = A(next: B)</text>
+<rect class="box visit" x="20" y="150" width="720" height="136" rx="14"/>
+<text x="36" y="222" class="mono">A</text><text x="36" y="240" class="small muted">next = B</text>
+<rect class="box visit" x="150" y="164" width="576" height="108" rx="12"/>
+<text x="166" y="222" class="mono">B</text><text x="166" y="240" class="small muted">next = C</text>
+<rect class="box visit" x="280" y="178" width="432" height="80" rx="10"/>
+<text x="296" y="222" class="mono">C</text><text x="296" y="240" class="small muted">next = 404</text>
+<rect class="box done" x="410" y="192" width="288" height="52" rx="8"/>
+<text x="554" y="223" text-anchor="middle" class="mono">404</text>
+</svg>
+<figcaption>Wrapping happens last-to-first at startup, so that calling happens first-to-last at request time. <code>Build()</code> returns <code>A</code>, the outermost layer.</figcaption>
+</figure>
+
+<p>Try it. Put a <code>Run</code> in the middle of the list and watch it throw away everything that was already built behind it.</p>
+<div class="viz" data-viz="request-pipeline-build"></div>
+
+<p>This is the real algorithm. <code>ApplicationBuilder.Build()</code> in ASP.NET Core loops over <code>_components</code> in reverse in exactly this way. Its terminal delegate has one extra check: if routing selected an endpoint but nothing ran it, it throws <em>"The request reached the end of the pipeline without executing the endpoint"</em> instead of returning 404.</p>
+<h3 id="the-whole-thing-in-about-40-lines">The whole thing in about 40 lines</h3>
+<p>Here is a working pipeline builder with <code>Use</code>, <code>Run</code>, <code>Map</code>, <code>MapWhen</code> and <code>UseWhen</code>. It compiles and runs on .NET 10 with a minimal <code>HttpContext</code> that has <code>Path</code>, <code>PathBase</code> and <code>StatusCode</code>.</p>
+<pre><code class="language-csharp">public delegate Task RequestDelegate(HttpContext context);
+
+public sealed class PipelineBuilder
+{
+    private readonly List&lt;Func&lt;RequestDelegate, RequestDelegate&gt;&gt; _components = new();
+
+    public PipelineBuilder Use(Func&lt;RequestDelegate, RequestDelegate&gt; component)
+    {
+        _components.Add(component);
+        return this;
+    }
+
+    public PipelineBuilder Use(Func&lt;HttpContext, RequestDelegate, Task&gt; middleware) =&gt;
+        Use(next =&gt; ctx =&gt; middleware(ctx, next));
+
+    public void Run(RequestDelegate handler) =&gt; Use(_ =&gt; handler);  // ignores next
+
+    public PipelineBuilder MapWhen(Func&lt;HttpContext, bool&gt; when, Action&lt;PipelineBuilder&gt; configure)
+    {
+        var branch = new PipelineBuilder();
+        configure(branch);
+        RequestDelegate branchApp = branch.Build();          // own 404 terminal
+        return Use(next =&gt; ctx =&gt; when(ctx) ? branchApp(ctx) : next(ctx));
+    }
+
+    public PipelineBuilder UseWhen(Func&lt;HttpContext, bool&gt; when, Action&lt;PipelineBuilder&gt; configure) =&gt;
+        Use(next =&gt;
+        {
+            var branch = new PipelineBuilder();
+            configure(branch);
+            RequestDelegate branchApp = branch.Build(next);  // terminal = main next
+            return ctx =&gt; when(ctx) ? branchApp(ctx) : next(ctx);
+        });
+
+    public PipelineBuilder Map(string prefix, Action&lt;PipelineBuilder&gt; configure) =&gt;
+        MapWhen(ctx =&gt; ctx.Path.Equals(prefix, StringComparison.OrdinalIgnoreCase)
+                    || ctx.Path.StartsWith(prefix + &quot;/&quot;, StringComparison.OrdinalIgnoreCase),
+            branch =&gt;
+            {
+                branch.Use(async (ctx, next) =&gt;                 // move prefix to PathBase
+                {
+                    var (path, pathBase) = (ctx.Path, ctx.PathBase);
+                    ctx.PathBase = pathBase + path[..prefix.Length];
+                    ctx.Path = path[prefix.Length..];
+                    try { await next(ctx); }
+                    finally { (ctx.Path, ctx.PathBase) = (path, pathBase); }
+                });
+                configure(branch);
+            });
+
+    public RequestDelegate Build(RequestDelegate? terminal = null)
+    {
+        RequestDelegate app = terminal ?? (ctx =&gt; { ctx.StatusCode = 404; return Task.CompletedTask; });
+        for (int i = _components.Count - 1; i &gt;= 0; i--)
+            app = _components[i](app);                          // wrap: last first
+        return app;
+    }
+}
+</code></pre>
+<p>Read it slowly, because every API you use in <code>Program.cs</code> falls out of it:</p>
+<ul>
+<li><strong><code>Use((ctx, next) =&gt; …)</code></strong> is sugar. It wraps your two-argument lambda in a component that captures <code>next</code>.</li>
+<li><strong><code>Run</code></strong> is a component that <strong>ignores</strong> <code>next</code>. That is the entire difference between <code>Use</code> and <code>Run</code>.</li>
+<li><strong><code>MapWhen</code></strong> builds a separate pipeline at startup. Its branch has its <em>own</em> 404 terminal, so a request that enters the branch can never come back.</li>
+<li><strong><code>UseWhen</code></strong> builds its branch <em>inside</em> the component factory, where <code>next</code> is in scope, and passes <code>next</code> as the branch's terminal. That single argument is what "rejoins the main pipeline" means.</li>
+<li><strong><code>Map</code></strong> is <code>MapWhen</code> with a segment-aware prefix test, plus a first branch layer that moves the prefix from <code>Path</code> to <code>PathBase</code> and <strong>restores</strong> it in <code>finally</code> on the way out.</li>
+</ul>
+<p>Running it against a few paths prints the onion order, the path rewriting and the short-circuit:</p>
+<pre><code class="language-text">A in  /api/orders          ← A is the outermost Use
+  api base=/api path=/orders   ← Map moved the prefix
+A out 200
+   after: base='' path='/api/orders'   ← and restored it
+A in  /apix                ← &quot;/apix&quot; is not the segment &quot;/api&quot;
+  main
+A out 200
+A in  /admin/x
+  audit                    ← UseWhen branch...
+  main                     ← ...rejoined the main pipeline
+A out 200
+A in  /secret
+A out 401                  ← short-circuited; main never ran
+</code></pre>
+<h3 id="use-run-map-mapwhen-and-usewhen">Use, Run, Map, MapWhen and UseWhen</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>What the component does with <code>next</code></th>
+<th>Rejoins main pipeline?</th>
+<th>Changes the path?</th>
+<th>Typical use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Use</code></td>
+<td>Calls it (or doesn't, to short-circuit)</td>
+<td>n/a</td>
+<td>No</td>
+<td>Almost all middleware</td>
+</tr>
+<tr>
+<td><code>Run</code></td>
+<td>Ignores it: terminal</td>
+<td>n/a</td>
+<td>No</td>
+<td>A catch-all final handler</td>
+</tr>
+<tr>
+<td><code>Map("/x", …)</code></td>
+<td>Calls the branch instead when the path starts with segment <code>/x</code></td>
+<td><strong>No</strong></td>
+<td>Moves <code>/x</code> to <code>PathBase</code></td>
+<td>Mounting a sub-app, e.g. a health or admin UI</td>
+</tr>
+<tr>
+<td><code>MapWhen(pred, …)</code></td>
+<td>Calls the branch instead when <code>pred</code> is true</td>
+<td><strong>No</strong></td>
+<td>No</td>
+<td>Splitting on header, query or host</td>
+</tr>
+<tr>
+<td><code>UseWhen(pred, …)</code></td>
+<td>Detours through the branch, whose terminal is <code>next</code></td>
+<td><strong>Yes</strong>, unless the branch short-circuits</td>
+<td>No</td>
+<td>Extra middleware for part of the app only</td>
+</tr>
+</tbody>
+</table>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 240" width="760" role="img" aria-label="Map and MapWhen fork into a branch that ends; UseWhen forks and rejoins the main pipeline">
+<defs><marker id="request-pipeline-br" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="request-pipeline-brp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker></defs>
+<text x="10" y="20" class="title">Map("/api", …)</text>
+<rect class="box" x="10" y="120" width="54" height="34" rx="6"/><text x="37" y="141" text-anchor="middle" class="mono">A</text>
+<rect class="box accent" x="82" y="120" width="76" height="34" rx="6"/><text x="120" y="141" text-anchor="middle" class="mono small">Map</text>
+<rect class="box" x="178" y="120" width="60" height="34" rx="6"/><text x="208" y="141" text-anchor="middle" class="mono">Main</text>
+<rect class="box path" x="82" y="40" width="76" height="34" rx="6"/><text x="120" y="61" text-anchor="middle" class="mono small">branch</text>
+<path class="edge accent" d="M64 137 L80 137" marker-end="url(#request-pipeline-br)"/><path class="edge accent" d="M158 137 L176 137" marker-end="url(#request-pipeline-br)"/>
+<path class="edge path" d="M120 120 L120 76" marker-end="url(#request-pipeline-brp)"/><text x="126" y="102" class="small">/api…</text>
+<text x="166" y="61" class="small muted">ends here</text>
+<text x="10" y="184" class="small">Path /api/orders becomes</text>
+<text x="10" y="200" class="small">PathBase /api + Path /orders</text>
+<text x="10" y="216" class="small muted">restored on the way out</text>
+<text x="260" y="20" class="title">MapWhen(pred, …)</text>
+<rect class="box" x="260" y="120" width="54" height="34" rx="6"/><text x="287" y="141" text-anchor="middle" class="mono">A</text>
+<rect class="box accent" x="332" y="120" width="76" height="34" rx="6"/><text x="370" y="141" text-anchor="middle" class="mono small">MapWhen</text>
+<rect class="box" x="428" y="120" width="60" height="34" rx="6"/><text x="458" y="141" text-anchor="middle" class="mono">Main</text>
+<rect class="box path" x="332" y="40" width="76" height="34" rx="6"/><text x="370" y="61" text-anchor="middle" class="mono small">branch</text>
+<path class="edge accent" d="M314 137 L330 137" marker-end="url(#request-pipeline-br)"/><path class="edge accent" d="M408 137 L426 137" marker-end="url(#request-pipeline-br)"/>
+<path class="edge path" d="M370 120 L370 76" marker-end="url(#request-pipeline-brp)"/><text x="376" y="102" class="small">true</text>
+<text x="416" y="61" class="small muted">ends here</text>
+<text x="260" y="184" class="small">Any predicate: header, query,</text>
+<text x="260" y="200" class="small">host. Path is unchanged.</text>
+<text x="260" y="216" class="small muted">Never comes back to Main.</text>
+<text x="510" y="20" class="title">UseWhen(pred, …)</text>
+<rect class="box" x="510" y="120" width="54" height="34" rx="6"/><text x="537" y="141" text-anchor="middle" class="mono">A</text>
+<rect class="box accent" x="582" y="120" width="76" height="34" rx="6"/><text x="620" y="141" text-anchor="middle" class="mono small">UseWhen</text>
+<rect class="box" x="684" y="120" width="60" height="34" rx="6"/><text x="714" y="141" text-anchor="middle" class="mono">Main</text>
+<rect class="box path" x="582" y="40" width="76" height="34" rx="6"/><text x="620" y="61" text-anchor="middle" class="mono small">branch</text>
+<path class="edge accent" d="M564 137 L580 137" marker-end="url(#request-pipeline-br)"/><path class="edge accent" d="M658 137 L682 137" marker-end="url(#request-pipeline-br)"/>
+<path class="edge path" d="M620 120 L620 76" marker-end="url(#request-pipeline-brp)"/><text x="626" y="102" class="small">true</text>
+<path class="edge path" d="M658 57 L714 57 L714 118" marker-end="url(#request-pipeline-brp)"/><text x="690" y="50" class="small">rejoin</text>
+<text x="510" y="184" class="small">The branch's terminal is the</text>
+<text x="510" y="200" class="small">main pipeline's next, so it</text>
+<text x="510" y="216" class="small muted">rejoins unless it short-circuits.</text>
+</svg>
+<figcaption>Map and MapWhen are forks; UseWhen is a detour. The difference is one argument: which delegate the branch uses as its terminal.</figcaption>
+</figure>
+
+<p>Type a path in the visualizer below. Try <code>/api/orders</code> without <code>?key=…</code>, <code>/apix</code>, <code>/API/Orders?key=1</code>, <code>/admin/users?health</code> and <code>/shop</code>.</p>
+<div class="viz" data-viz="request-pipeline-branch"></div>
+
+<div class="pitfall">
+<p><strong>Pitfall: Map strips the prefix</strong>
+Inside <code>app.Map("/api", …)</code>, <code>Request.Path</code> for <code>/api/orders</code> is <code>/orders</code>. Code that matches on <code>Path.StartsWithSegments("/api")</code> inside the branch silently never matches, and links built from <code>Path</code> alone lose the prefix. Build URLs from <code>PathBase + Path</code>. Also note that <code>Map</code> matches <strong>segments</strong>, case-insensitively: <code>/apix</code> does not match <code>/api</code>, but <code>/API</code> does.</p>
+</div>
+<h2 id="middleware-classes-and-dependency-injection">Middleware classes and dependency injection</h2>
+<p>Inline lambdas are fine for a few lines. Anything real belongs in a class. ASP.NET Core supports two class shapes, and the difference is about <strong>when the instance is created</strong>, which decides what you can safely inject. This builds on <a href="di-fundamentals.html">DI Fundamentals</a> and <a href="di-lifetimes.html">Lifetimes and Scopes</a>.</p>
+<div class="code-tabs" data-labels="Conventional (by convention),Factory-activated (IMiddleware)">
+<pre><code class="language-csharp">// Created ONCE, when the pipeline is built. Behaves like a singleton.
+public sealed class RequestTimingMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly ILogger&lt;RequestTimingMiddleware&gt; _log;   // singleton: safe here
+
+    public RequestTimingMiddleware(RequestDelegate next, ILogger&lt;RequestTimingMiddleware&gt; log)
+    {
+        _next = next;
+        _log = log;
+    }
+
+    // Extra parameters are resolved from ctx.RequestServices on EVERY call.
+    public async Task InvokeAsync(HttpContext ctx, IRequestMetrics metrics)   // scoped: safe here
+    {
+        long start = Stopwatch.GetTimestamp();
+        try
+        {
+            await _next(ctx);
+        }
+        finally
+        {
+            TimeSpan elapsed = Stopwatch.GetElapsedTime(start);
+            metrics.Record(ctx.Request.Path, ctx.Response.StatusCode, elapsed);
+            _log.LogInformation(&quot;{Method} {Path} -&gt; {Status} in {Ms:0.0} ms&quot;,
+                ctx.Request.Method, ctx.Request.Path, ctx.Response.StatusCode, elapsed.TotalMilliseconds);
+        }
+    }
+}
+
+app.UseMiddleware&lt;RequestTimingMiddleware&gt;();
+</code></pre>
+<pre><code class="language-csharp">// Resolved from the request scope on EVERY request by IMiddlewareFactory.
+public sealed class TenantMiddleware(TenantDbContext db) : IMiddleware   // scoped: safe here
+{
+    public async Task InvokeAsync(HttpContext ctx, RequestDelegate next)
+    {
+        string id = ctx.Request.Headers[&quot;X-Tenant&quot;].ToString();
+        Tenant? tenant = await db.Tenants.FindAsync(id);
+        if (tenant is null)
+        {
+            ctx.Response.StatusCode = StatusCodes.Status404NotFound;
+            return;                                   // short-circuit
+        }
+        ctx.Items[&quot;tenant&quot;] = tenant;
+        await next(ctx);
+    }
+}
+
+builder.Services.AddScoped&lt;TenantMiddleware&gt;();       // required: it must be registered
+app.UseMiddleware&lt;TenantMiddleware&gt;();
+</code></pre>
+</div>
+<p>The conventional class has no interface. <code>UseMiddleware&lt;T&gt;</code> finds a public <code>Invoke</code> or <code>InvokeAsync</code> method that returns <code>Task</code> and takes <code>HttpContext</code> first, constructs <code>T</code> with <code>ActivatorUtilities</code> (so <code>RequestDelegate next</code> plus any <strong>singleton</strong> services), and caches the instance. Because the constructor runs once, a scoped service injected there is captured for the app's lifetime. Put scoped services on <code>InvokeAsync</code> instead, or use <code>IMiddleware</code>, which is resolved per request. The visualizer shows all three choices.</p>
+<div class="viz" data-viz="request-pipeline-di"></div>
+
+<div class="compare">
+<div>
+<h4 id="inline-appuseasync-ctx-next">Inline <code>app.Use(async (ctx, next) =&gt; …)</code></h4>
+<p>Shortest. Captures whatever is in scope, so it is easy to accidentally capture a scoped service from <code>app.Services</code>. Good for a few lines of glue. Prefer the <code>RequestDelegate next</code> overload: the older <code>Func&lt;Task&gt; next</code> overload allocates a closure on every request.</p>
+</div>
+<div class="good">
+<h4 id="conventional-class">Conventional class</h4>
+<p>One instance for the app. Constructor takes <code>RequestDelegate</code> and singletons; <code>InvokeAsync</code> parameters take scoped services, per request. Testable, no registration needed. The default choice.</p>
+</div>
+<div class="warn">
+<h4 id="imiddleware"><code>IMiddleware</code></h4>
+<p>A new instance per request (or whatever lifetime you register). Strongly typed, constructor injection of scoped services just works. Costs a resolve per request and must be registered in DI, or the first request fails.</p>
+</div>
+</div>
+<h2 id="endpoint-routing-where-the-endpoint-becomes-known">Endpoint routing: where the endpoint becomes known</h2>
+<p>Since ASP.NET Core 3.0, routing is split into two middleware. <code>UseRouting</code> <strong>selects</strong> an endpoint and stores it on the context with <code>SetEndpoint</code>. <code>UseEndpoints</code> (the endpoint middleware) <strong>runs</strong> it. Everything between the two can call <code>ctx.GetEndpoint()</code> and read the endpoint's <strong>metadata</strong>: <code>[Authorize]</code>, CORS policies, rate-limit policies, your own attributes. That gap is the reason authorization, CORS and rate limiting must sit between them, and it is the main fact behind the ordering rules in <a href="middleware-patterns.html">Middleware: Order and Patterns</a>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 780 250" width="780" role="img" aria-label="UseRouting selects the endpoint; middleware after it can read endpoint metadata; UseEndpoints executes it">
+<defs><marker id="request-pipeline-rt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box" x="6" y="30" width="104" height="48" rx="8"/><text x="58" y="51" text-anchor="middle" class="small">GetEndpoint()</text><text x="58" y="67" text-anchor="middle" class="small mono">null</text>
+<rect class="box done" x="226" y="30" width="548" height="48" rx="8"/><text x="500" y="51" text-anchor="middle" class="small">GetEndpoint() = the matched endpoint, with its metadata:</text><text x="500" y="67" text-anchor="middle" class="small mono">[Authorize] · CORS policy · rate-limit policy · your attributes</text>
+<rect class="box" x="10" y="100" width="96" height="48" rx="8"/><text x="58" y="122" text-anchor="middle" class="mono small">Exception</text><text x="58" y="138" text-anchor="middle" class="small muted">Static files</text>
+<rect class="box accent" x="120" y="100" width="96" height="48" rx="8"/><text x="168" y="122" text-anchor="middle" class="mono small">UseRouting</text><text x="168" y="138" text-anchor="middle" class="small muted">match + Set</text>
+<rect class="box" x="230" y="100" width="96" height="48" rx="8"/><text x="278" y="122" text-anchor="middle" class="mono small">UseCors</text><text x="278" y="138" text-anchor="middle" class="small muted">policy</text>
+<rect class="box" x="340" y="100" width="96" height="48" rx="8"/><text x="388" y="122" text-anchor="middle" class="mono small">AuthN</text><text x="388" y="138" text-anchor="middle" class="small muted">sets User</text>
+<rect class="box" x="450" y="100" width="96" height="48" rx="8"/><text x="498" y="122" text-anchor="middle" class="mono small">AuthZ</text><text x="498" y="138" text-anchor="middle" class="small muted">[Authorize]</text>
+<rect class="box" x="560" y="100" width="96" height="48" rx="8"/><text x="608" y="122" text-anchor="middle" class="mono small">RateLimiter</text><text x="608" y="138" text-anchor="middle" class="small muted">policy</text>
+<rect class="box accent" x="670" y="100" width="100" height="48" rx="8"/><text x="720" y="122" text-anchor="middle" class="mono small">Endpoints</text><text x="720" y="138" text-anchor="middle" class="small muted">invoke it</text>
+<path class="edge accent" d="M106 124 L118 124" marker-end="url(#request-pipeline-rt)"/><path class="edge accent" d="M216 124 L228 124" marker-end="url(#request-pipeline-rt)"/><path class="edge accent" d="M326 124 L338 124" marker-end="url(#request-pipeline-rt)"/><path class="edge accent" d="M436 124 L448 124" marker-end="url(#request-pipeline-rt)"/><path class="edge accent" d="M546 124 L558 124" marker-end="url(#request-pipeline-rt)"/><path class="edge accent" d="M656 124 L668 124" marker-end="url(#request-pipeline-rt)"/>
+<rect class="box path" x="230" y="190" width="430" height="44" rx="8"/><text x="445" y="210" text-anchor="middle" class="small">Endpoint data source, built at startup from</text><text x="445" y="226" text-anchor="middle" class="small mono">MapGet · MapPost · MapControllers · MapHub</text>
+<path class="edge dash" d="M230 212 L168 212 L168 150" marker-end="url(#request-pipeline-rt)"/><text x="174" y="180" class="small muted">matches against</text>
+<path class="edge dash" d="M660 212 L720 212 L720 150" marker-end="url(#request-pipeline-rt)"/><text x="714" y="180" text-anchor="end" class="small muted">runs its delegate</text>
+</svg>
+<figcaption>Routing decides; the endpoint middleware executes. The middle section is where endpoint-aware middleware lives.</figcaption>
+</figure>
+
+<p><code>WebApplication</code> (the minimal hosting model) adds <code>UseRouting</code> at the start and <code>UseEndpoints</code> at the end for you if you map any endpoints and don't call them yourself. Call <code>app.UseRouting()</code> explicitly when something must run <strong>before</strong> route matching, for example static files or URL rewriting, and when you need your own middleware to sit between routing and the endpoint. Step through the visualizer with different users and paths: try <code>GET /admin</code> as <code>alice</code>, <code>POST /orders</code> anonymously, <code>GET /orders/abc</code> and <code>DELETE /orders</code>.</p>
+<div class="viz" data-viz="request-pipeline-routing"></div>
+
+<p>Your own middleware can use the same mechanism. Attach metadata to an endpoint and read it after routing:</p>
+<pre><code class="language-csharp">[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
+public sealed class AuditAttribute : Attribute { }
+
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+app.Use(async (ctx, next) =&gt;
+{
+    if (ctx.GetEndpoint()?.Metadata.GetMetadata&lt;AuditAttribute&gt;() is not null)
+    {
+        var audit = ctx.RequestServices.GetRequiredService&lt;IAuditLog&gt;();
+        audit.Write(ctx.User.Identity?.Name, ctx.Request.Method, ctx.Request.Path);
+    }
+    await next(ctx);
+});
+
+app.MapDelete(&quot;/orders/{id:int}&quot;, DeleteOrder).WithMetadata(new AuditAttribute());
+</code></pre>
+<div class="tip">
+<p><strong>Tip</strong>
+If middleware placed after <code>UseRouting</code> sees <code>GetEndpoint()</code> as <code>null</code>, no route matched: the request is heading for a 404. If middleware <em>before</em> <code>UseRouting</code> needs the endpoint, it is in the wrong place. Move it, don't re-match routes by hand.</p>
+</div>
+<h2 id="the-same-idea-in-other-stacks">The same idea in other stacks</h2>
+<p>Every major web stack has this pipeline. They differ in three ways: what <code>next</code> is (a delegate, a promise, a chain object, or an inner app), whether "after" code is really after the inner layers finish, and whether the chain is folded once at startup or walked by index on every request.</p>
+<h3 id="one-timing-layer-and-one-short-circuit-five-ways">One timing layer and one short-circuit, five ways</h3>
+<p>Each tab has a timing layer that wraps everything inside it, and an API-key layer that answers 401 without calling the next layer.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// ASP.NET Core: Func&lt;RequestDelegate, RequestDelegate&gt;, folded at startup
+app.Use(async (ctx, next) =&gt;
+{
+    long start = Stopwatch.GetTimestamp();
+    try
+    {
+        await next(ctx);                                     // the rest of the pipeline
+    }
+    finally
+    {
+        logger.LogInformation(&quot;{Method} {Path} -&gt; {Status} in {Ms:0.0} ms&quot;,
+            ctx.Request.Method, ctx.Request.Path, ctx.Response.StatusCode,
+            Stopwatch.GetElapsedTime(start).TotalMilliseconds);
+    }
+});
+
+app.Use(async (ctx, next) =&gt;
+{
+    if (!ctx.Request.Headers.ContainsKey(&quot;X-Api-Key&quot;))
+    {
+        ctx.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        return;                                              // short-circuit
+    }
+    await next(ctx);
+});
+</code></pre>
+<pre><code class="language-java">// Jakarta Servlet filters (Spring Boot registers Filter beans; @Order sets position)
+@Component
+@Order(1)
+public class TimingFilter implements Filter {
+    private static final Logger log = LoggerFactory.getLogger(TimingFilter.class);
+
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+            throws IOException, ServletException {
+        long t0 = System.nanoTime();
+        try {
+            chain.doFilter(req, res);                        // the rest of the pipeline
+        } finally {
+            HttpServletRequest http = (HttpServletRequest) req;
+            log.info(&quot;{} {} -&gt; {} in {} ms&quot;, http.getMethod(), http.getRequestURI(),
+                    ((HttpServletResponse) res).getStatus(), (System.nanoTime() - t0) / 1_000_000);
+        }
+    }
+}
+
+@Component
+@Order(2)
+public class ApiKeyFilter extends OncePerRequestFilter {
+    @Override
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res,
+                                    FilterChain chain) throws ServletException, IOException {
+        if (req.getHeader(&quot;X-Api-Key&quot;) == null) {
+            res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;                                          // chain.doFilter never called
+        }
+        chain.doFilter(req, res);
+    }
+}
+</code></pre>
+<pre><code class="language-python"># Starlette / FastAPI (ASGI). Pure ASGI middleware wraps the inner app.
+class TimingMiddleware:
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope[&quot;type&quot;] != &quot;http&quot;:
+            return await self.app(scope, receive, send)
+        start, status = time.perf_counter(), 500
+
+        async def send_wrapper(message):
+            nonlocal status
+            if message[&quot;type&quot;] == &quot;http.response.start&quot;:
+                status = message[&quot;status&quot;]
+            await send(message)
+
+        try:
+            await self.app(scope, receive, send_wrapper)   # the rest of the pipeline
+        finally:
+            log.info(&quot;%s %s -&gt; %s in %.1f ms&quot;, scope[&quot;method&quot;], scope[&quot;path&quot;],
+                     status, (time.perf_counter() - start) * 1000)
+
+class ApiKeyMiddleware(BaseHTTPMiddleware):  # Starlette's call_next style
+    async def dispatch(self, request, call_next):
+        if &quot;x-api-key&quot; not in request.headers:
+            return PlainTextResponse(&quot;missing key&quot;, status_code=401)  # short-circuit
+        return await call_next(request)
+
+app = Starlette(routes=routes, middleware=[
+    Middleware(TimingMiddleware),            # first in the list = outermost
+    Middleware(ApiKeyMiddleware),
+])
+</code></pre>
+<pre><code class="language-go">// net/http: a middleware is func(http.Handler) http.Handler
+type Middleware func(http.Handler) http.Handler
+
+func Timing(logger *slog.Logger) Middleware {
+    return func(next http.Handler) http.Handler {
+        return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+            rec := &amp;statusRecorder{ResponseWriter: w, status: http.StatusOK}
+            start := time.Now()
+            defer func() {
+                logger.Info(&quot;request&quot;, &quot;method&quot;, r.Method, &quot;path&quot;, r.URL.Path,
+                    &quot;status&quot;, rec.status, &quot;ms&quot;, time.Since(start).Milliseconds())
+            }()
+            next.ServeHTTP(rec, r) // the rest of the pipeline
+        })
+    }
+}
+
+func APIKey(next http.Handler) http.Handler {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        if r.Header.Get(&quot;X-Api-Key&quot;) == &quot;&quot; {
+            http.Error(w, &quot;missing key&quot;, http.StatusUnauthorized)
+            return // without this return, next still runs
+        }
+        next.ServeHTTP(w, r)
+    })
+}
+
+type statusRecorder struct {
+    http.ResponseWriter
+    status int
+}
+
+func (s *statusRecorder) WriteHeader(code int) {
+    s.status = code
+    s.ResponseWriter.WriteHeader(code)
+}
+
+// Chain folds from the end, exactly like ApplicationBuilder.Build.
+func Chain(h http.Handler, mws ...Middleware) http.Handler {
+    for i := len(mws) - 1; i &gt;= 0; i-- {
+        h = mws[i](h)
+    }
+    return h
+}
+
+// handler := Chain(mux, Timing(slog.Default()), APIKey)
+// chi:      r.Use(Timing(slog.Default())); r.Use(APIKey)  // before any route
+</code></pre>
+<pre><code class="language-typescript">// Koa: next() returns a Promise, so this is a true onion
+import Koa from &quot;koa&quot;;
+
+const app = new Koa();
+
+app.use(async (ctx, next) =&gt; {
+  const start = performance.now();
+  try {
+    await next();                                  // the rest of the pipeline
+  } finally {
+    const ms = (performance.now() - start).toFixed(1);
+    console.log(`${ctx.method} ${ctx.path} -&gt; ${ctx.status} in ${ms} ms`);
+  }
+});
+
+app.use(async (ctx, next) =&gt; {
+  if (!ctx.get(&quot;X-Api-Key&quot;)) {
+    ctx.status = 401;
+    ctx.body = &quot;missing key&quot;;
+    return;                                        // next() never called
+  }
+  await next();
+});
+
+app.use((ctx) =&gt; {
+  ctx.body = &quot;Hello&quot;;
+});
+</code></pre>
+</div>
+<p>Why they look different:</p>
+<ul>
+<li><strong>C#</strong> has <code>async</code>/<code>await</code> and first-class delegates, so <code>next</code> is just a <code>RequestDelegate</code> you await. The status code is readable on the way out because <code>HttpResponse</code> is a mutable object.</li>
+<li><strong>Java servlets</strong> predate lambdas, so <code>next</code> is a <code>FilterChain</code> object and you call <code>chain.doFilter</code>. The call is synchronous and blocking, which makes it a true onion. <code>OncePerRequestFilter</code> exists because a servlet container can run the same filter again on internal forwards and error dispatches.</li>
+<li><strong>Python ASGI</strong> has no response object at all: the response is a stream of <code>send</code> messages. To read the status you wrap <code>send</code>. <code>BaseHTTPMiddleware</code> gives you the friendlier <code>call_next</code>, at the cost of buffering and some overhead for streaming responses.</li>
+<li><strong>Go</strong> has no framework: <code>http.Handler</code> is a one-method interface and middleware is a plain higher-order function. <code>ResponseWriter</code> does not expose the status, so you wrap it. Forgetting <code>return</code> after <code>http.Error</code> is the classic Go middleware bug: the 401 is written <em>and</em> the handler still runs.</li>
+<li><strong>TypeScript with Koa</strong> gets the onion from Promises: <code>await next()</code> resolves only when everything inside has finished. Express is different, as the next section shows.</li>
+</ul>
+<h3 id="the-frameworks-side-by-side">The frameworks side by side</h3>
+<table>
+<thead>
+<tr>
+<th>Stack</th>
+<th>A middleware is…</th>
+<th><code>next</code> is…</th>
+<th>Composed</th>
+<th>"After" code waits for inner layers?</th>
+<th>Short-circuit by…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASP.NET Core</td>
+<td><code>Func&lt;RequestDelegate, RequestDelegate&gt;</code> or a class with <code>InvokeAsync</code></td>
+<td><code>RequestDelegate</code></td>
+<td>Folded once at startup</td>
+<td>Yes (<code>await next</code>)</td>
+<td>Not calling <code>next</code></td>
+</tr>
+<tr>
+<td>Koa</td>
+<td><code>async (ctx, next)</code></td>
+<td><code>() =&gt; Promise</code></td>
+<td>Indexed dispatch per request (<code>koa-compose</code>)</td>
+<td>Yes (<code>await next()</code>)</td>
+<td>Not calling <code>next</code></td>
+</tr>
+<tr>
+<td>Express 4/5</td>
+<td><code>(req, res, next)</code></td>
+<td>callback</td>
+<td>Router walks a layer stack per request</td>
+<td><strong>No</strong>: <code>next()</code> returns before async work finishes</td>
+<td>Sending a response, not calling <code>next</code></td>
+</tr>
+<tr>
+<td>NestJS</td>
+<td>middleware, then guards, interceptors, pipes</td>
+<td>Express/Fastify <code>next</code>; interceptors get an RxJS <code>CallHandler</code></td>
+<td>Framework-defined stages</td>
+<td>Interceptors: yes (Observable)</td>
+<td>Guard returns <code>false</code>, or throw</td>
+</tr>
+<tr>
+<td>Go <code>net/http</code> / chi</td>
+<td><code>func(http.Handler) http.Handler</code></td>
+<td><code>http.Handler</code></td>
+<td>Folded once (<code>Chain</code>, <code>r.Use</code>)</td>
+<td>Yes (synchronous call)</td>
+<td><code>return</code> without <code>next.ServeHTTP</code></td>
+</tr>
+<tr>
+<td>Jakarta Servlet</td>
+<td><code>Filter.doFilter(req, res, chain)</code></td>
+<td><code>FilterChain</code></td>
+<td>Container walks an array by position</td>
+<td>Yes (blocking call)</td>
+<td>Not calling <code>chain.doFilter</code></td>
+</tr>
+<tr>
+<td>Spring MVC interceptor</td>
+<td><code>HandlerInterceptor</code> callbacks</td>
+<td>none: three callbacks</td>
+<td><code>preHandle</code> forward, <code>afterCompletion</code> reverse</td>
+<td>Split into callbacks</td>
+<td><code>preHandle</code> returns <code>false</code></td>
+</tr>
+<tr>
+<td>Spring WebFlux</td>
+<td><code>WebFilter.filter(exchange, chain)</code></td>
+<td><code>WebFilterChain</code> returning <code>Mono&lt;Void&gt;</code></td>
+<td>Ordered list</td>
+<td>Yes, via operators like <code>doFinally</code></td>
+<td>Return without <code>chain.filter</code></td>
+</tr>
+<tr>
+<td>Django</td>
+<td>factory <code>get_response → middleware(request)</code></td>
+<td><code>get_response</code></td>
+<td>Folded once, from the bottom of <code>MIDDLEWARE</code></td>
+<td>Yes</td>
+<td>Return a response</td>
+</tr>
+<tr>
+<td>WSGI / ASGI</td>
+<td>callable wrapping an inner app</td>
+<td>the inner app</td>
+<td>Wrapped once, by hand or by the framework</td>
+<td>Yes</td>
+<td>Return a response without calling the app</td>
+</tr>
+</tbody>
+</table>
+<div class="recognize">
+<p><strong>Recognize it when</strong></p>
+<ul>
+<li>A framework function takes "the next handler" and returns a handler: Django's <code>get_response</code> factory and Go's <code>func(http.Handler) http.Handler</code> are exactly <code>Func&lt;RequestDelegate, RequestDelegate&gt;</code>.</li>
+<li>The framework has a list whose order is the request order: <code>MIDDLEWARE</code> in Django settings, <code>@Order</code> on Spring filters, <code>r.Use</code> calls in chi, <code>app.use</code> calls in Express.</li>
+</ul>
+</div>
+<h3 id="express-next-vs-koa-await-next">Express <code>next()</code> vs Koa <code>await next()</code></h3>
+<p>Express and Koa look almost identical, but in Express 4 <code>next()</code> returns <code>undefined</code>. If anything downstream is asynchronous, the call to <code>next()</code> returns at the first <code>await</code>, and the code after it runs <strong>before the response exists</strong>. Express 5 only adds handling for rejected promises from async handlers; <code>next()</code> is still not something you can await.</p>
+<div class="viz" data-viz="request-pipeline-express-koa"></div>
+
+<pre><code class="language-typescript">// Express: time with the response's 'finish' event, not with code after next()
+app.use((req, res, next) =&gt; {
+  const start = performance.now();
+  res.on(&quot;finish&quot;, () =&gt; {
+    const ms = (performance.now() - start).toFixed(1);
+    console.log(`${req.method} ${req.path} -&gt; ${res.statusCode} in ${ms} ms`);
+  });
+  next();
+});
+</code></pre>
+<h3 id="callback-shaped-interceptors">Callback-shaped interceptors</h3>
+<p>Some stacks don't give you <code>next</code> at all. They call you before and after, and you have to carry state between the two callbacks yourself. The order is still an onion: "before" callbacks run forward and "after" callbacks run in reverse.</p>
+<div class="code-tabs" data-labels="Spring HandlerInterceptor,Spring WebFlux WebFilter,Django middleware">
+<pre><code class="language-java">public class TimingInterceptor implements HandlerInterceptor {
+    @Override
+    public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) {
+        req.setAttribute(&quot;t0&quot;, System.nanoTime());   // no local variable survives to &quot;after&quot;
+        return true;                                 // false = short-circuit
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest req, HttpServletResponse res,
+                                Object handler, Exception ex) {
+        long t0 = (long) req.getAttribute(&quot;t0&quot;);      // runs even if the handler threw
+        log.info(&quot;{} -&gt; {} in {} ms&quot;, req.getRequestURI(), res.getStatus(),
+                (System.nanoTime() - t0) / 1_000_000);
+    }
+}
+// postHandle also exists, but it is skipped when the handler throws.
+// Register with WebMvcConfigurer.addInterceptors(registry).
+</code></pre>
+<pre><code class="language-java">@Component
+public class TimingWebFilter implements WebFilter {
+    private static final Logger log = LoggerFactory.getLogger(TimingWebFilter.class);
+
+    @Override
+    public Mono&lt;Void&gt; filter(ServerWebExchange exchange, WebFilterChain chain) {
+        long t0 = System.nanoTime();
+        return chain.filter(exchange)                 // the rest of the pipeline, lazily
+                .doFinally(signal -&gt; log.info(&quot;{} -&gt; {} in {} ms&quot;,
+                        exchange.getRequest().getPath(),
+                        exchange.getResponse().getStatusCode(),
+                        (System.nanoTime() - t0) / 1_000_000));
+    }
+}
+</code></pre>
+<pre><code class="language-python"># settings.py: MIDDLEWARE = [&quot;myapp.timing.timing_middleware&quot;, ...]  top = outermost
+def timing_middleware(get_response):         # runs once, at startup
+    def middleware(request):                 # runs per request
+        start = time.perf_counter()
+        response = get_response(request)     # the rest of the pipeline
+        response[&quot;Server-Timing&quot;] = f&quot;app;dur={(time.perf_counter() - start) * 1000:.1f}&quot;
+        return response
+    return middleware
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Insight</strong>
+Django's middleware factory <em>is</em> <code>Func&lt;RequestDelegate, RequestDelegate&gt;</code>. The outer function receives <code>get_response</code> (next) once, at startup, and returns the per-request function. Django builds the chain by walking <code>MIDDLEWARE</code> from the bottom up, the same reverse fold as <code>Build()</code>.</p>
+</div>
+<h3 id="fold-once-or-dispatch-by-index">Fold once, or dispatch by index?</h3>
+<p>There are two ways to turn a list of middleware into a running pipeline, and you'll meet both.</p>
+<div class="compare">
+<div class="good">
+<h4 id="fold-at-startup">Fold at startup</h4>
+<p>ASP.NET Core, Go <code>Chain</code>, chi, Django, WSGI/ASGI stacks. Each component is called once to produce a closure that holds <code>next</code>. A request just calls nested closures: no lookups, no allocation for the chain itself. The list can't change after <code>Build()</code>, which is why chi panics if you call <code>Use</code> after defining routes.</p>
+</div>
+<div class="warn">
+<h4 id="dispatch-by-index-per-request">Dispatch by index per request</h4>
+<p>Koa (<code>koa-compose</code>), the Express router, the servlet container's <code>FilterChain</code>. The chain keeps an index; <code>next()</code> means "call <code>stack[i + 1]</code>". This makes it easy to detect <code>next()</code> being called twice and to add middleware dynamically, at the cost of a little work per request.</p>
+</div>
+</div>
+<p>Here is <code>koa-compose</code> in miniature. The <code>index</code> check is how Koa reports "next() called multiple times":</p>
+<pre><code class="language-typescript">type Next = () =&gt; Promise&lt;void&gt;;
+type Middleware&lt;C&gt; = (ctx: C, next: Next) =&gt; Promise&lt;void&gt; | void;
+
+export function compose&lt;C&gt;(stack: Middleware&lt;C&gt;[]) {
+  return function run(ctx: C): Promise&lt;void&gt; {
+    let index = -1;
+    function dispatch(i: number): Promise&lt;void&gt; {
+      if (i &lt;= index) return Promise.reject(new Error(&quot;next() called multiple times&quot;));
+      index = i;
+      const fn = stack[i];
+      if (!fn) return Promise.resolve();          // past the end: nothing left
+      try {
+        return Promise.resolve(fn(ctx, () =&gt; dispatch(i + 1)));
+      } catch (err) {
+        return Promise.reject(err);
+      }
+    }
+    return dispatch(0);
+  };
+}
+</code></pre>
+<h2 id="which-design-patterns-is-this">Which design patterns is this?</h2>
+<p>A middleware pipeline combines two classic patterns from <a href="behavioral-patterns.html">Behavioral Patterns</a> and <a href="structural-patterns.html">Structural Patterns</a>, and seeing both explains its behaviour.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 230" width="760" role="img" aria-label="Chain of Responsibility passes a request along until a handler handles it; Decorator wraps an object with others that share its interface">
+<defs><marker id="request-pipeline-pt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="request-pipeline-ptb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker></defs>
+<text x="10" y="22" class="title">Chain of Responsibility</text>
+<rect class="box" x="10" y="50" width="96" height="40" rx="7"/><text x="58" y="75" text-anchor="middle" class="mono">Handler 1</text>
+<rect class="box" x="136" y="50" width="96" height="40" rx="7"/><text x="184" y="75" text-anchor="middle" class="mono">Handler 2</text>
+<rect class="box" x="262" y="50" width="96" height="40" rx="7"/><text x="310" y="75" text-anchor="middle" class="mono">Handler 3</text>
+<path class="edge accent" d="M106 70 L134 70" marker-end="url(#request-pipeline-pt)"/><path class="edge accent" d="M232 70 L260 70" marker-end="url(#request-pipeline-pt)"/>
+<path class="edge bad" d="M184 90 L184 126" marker-end="url(#request-pipeline-ptb)"/>
+<text x="184" y="144" text-anchor="middle" class="small">handled here: stop</text>
+<text x="10" y="176" class="small">Each link decides: handle the request,</text>
+<text x="10" y="192" class="small">or pass it to its successor.</text>
+<text x="404" y="22" class="title">Decorator</text>
+<rect class="box" x="404" y="40" width="346" height="126" rx="12"/><text x="418" y="60" class="small mono">Logging : IHandler</text>
+<rect class="box" x="424" y="68" width="306" height="88" rx="10"/><text x="438" y="88" class="small mono">Timing : IHandler</text>
+<rect class="box accent" x="444" y="96" width="266" height="50" rx="8"/><text x="577" y="126" text-anchor="middle" class="mono">Endpoint : IHandler</text>
+<text x="404" y="186" class="small">Same interface all the way down; each wrapper</text>
+<text x="404" y="202" class="small">adds behaviour before and after the inner call.</text>
+<text x="380" y="224" text-anchor="middle" class="small muted">A middleware is both: it decorates next, and like a chain link it may decide not to call it.</text>
+</svg>
+<figcaption>Decorator explains the in-and-out shape. Chain of Responsibility explains short-circuiting.</figcaption>
+</figure>
+
+<div class="compare">
+<div>
+<h4 id="chain-of-responsibility">Chain of Responsibility</h4>
+<p>Pass a request along a chain until someone handles it. Middleware borrows the <strong>"may stop the chain"</strong> part: auth answers 401, static files answer with a file, health checks answer 200. Classic CoR handlers usually do <em>either</em> handle <em>or</em> forward; middleware usually does both.</p>
+</div>
+<div>
+<h4 id="decorator">Decorator</h4>
+<p>Wrap an object in another with the same interface and add behaviour around the call. Middleware borrows the <strong>"same interface, wrapped"</strong> part: every layer is a <code>RequestDelegate</code> around a <code>RequestDelegate</code>. This is why the response comes back through the same layers.</p>
+</div>
+<div class="good">
+<h4 id="the-same-shape-elsewhere">The same shape elsewhere</h4>
+<p><code>HttpClient</code>'s <code>DelegatingHandler</code> is the same onion on the <strong>outbound</strong> side (see <a href="outbound-pipelines.html">Outbound Pipelines</a>). MediatR behaviours, gRPC interceptors and Polly's resilience pipelines are all "a handler that wraps the next handler" too.</p>
+</div>
+</div>
+<h2 id="when-to-use-middleware-and-when-not">When to use middleware, and when not</h2>
+<p>Middleware is the right tool when a concern applies to <strong>HTTP requests as such</strong>, mostly regardless of which endpoint handles them. It is the wrong tool when the concern needs to know about your <strong>actions, models or business rules</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>You need to…</th>
+<th>Use</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Handle errors, log, time, add correlation IDs, set security headers for every request</td>
+<td><strong>Middleware</strong></td>
+<td>Applies to all requests, including ones that never reach an endpoint (404s, static files).</td>
+</tr>
+<tr>
+<td>Reject requests early (auth, API keys, IP filtering, rate limits)</td>
+<td><strong>Middleware</strong>, after <code>UseRouting</code> if it depends on the endpoint</td>
+<td>Short-circuiting early is cheaper than doing the work and discarding it.</td>
+</tr>
+<tr>
+<td>Serve something that isn't an endpoint (static files, a health page, a sub-app)</td>
+<td><strong>Middleware</strong> or <code>Map</code>/<code>MapWhen</code></td>
+<td>It answers the request itself.</td>
+</tr>
+<tr>
+<td>Behaviour for one endpoint or a group</td>
+<td><strong>Endpoint metadata</strong> read by middleware, an endpoint filter, or a route group</td>
+<td>Keep the decision next to the endpoint, not in a path check inside global middleware.</td>
+</tr>
+<tr>
+<td>Validate bound arguments, change an action's result, handle errors per controller</td>
+<td><strong>MVC filters / endpoint filters</strong></td>
+<td>Middleware runs before model binding and can't see your arguments or <code>IActionResult</code>. See <a href="middleware-patterns.html">Middleware: Order and Patterns</a>.</td>
+</tr>
+<tr>
+<td>Business rules (discounts, permissions on a specific order)</td>
+<td><strong>Neither</strong>: application code</td>
+<td>Hiding business rules in the pipeline makes them invisible and untestable.</td>
+</tr>
+<tr>
+<td>Retry, log or authenticate <strong>outgoing</strong> HTTP calls</td>
+<td><strong><code>DelegatingHandler</code></strong></td>
+<td>Same pattern, client side. See <a href="outbound-pipelines.html">Outbound Pipelines</a>.</td>
+</tr>
+</tbody>
+</table>
+<p>Costs to keep in mind:</p>
+<ul>
+<li><strong>Every layer runs for every request.</strong> A slow or allocating middleware taxes the whole service, including health checks. Keep the per-request path cheap, and short-circuit early for things like static files.</li>
+<li><strong>Order is implicit coupling.</strong> Nothing in the type system says "auth must come after routing". The order is a contract that lives only in <code>Program.cs</code> and in your head, which is why <a href="middleware-patterns.html">Middleware: Order and Patterns</a> exists.</li>
+<li><strong>Debugging is indirect.</strong> A 401 or a missing header might come from any layer. Good middleware logs when it short-circuits.</li>
+</ul>
+<h2 id="pitfalls">Pitfalls</h2>
+<div class="pitfall">
+<p><strong>Pitfall: calling next twice, or after writing the response</strong>
+A retry layer that calls <code>await next(ctx)</code> again after a failure runs the endpoint twice on the same <code>HttpContext</code>. If the first attempt already wrote headers, the second throws <em>"StatusCode cannot be set because the response has already started"</em>. Retries belong on outgoing calls, not around the inbound pipeline. Likewise, never call <code>next</code> after you have written a response yourself.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: not awaiting next</strong>
+<code>next(ctx);</code> without <code>await</code> (or returning a <code>Task</code> you never await) lets your middleware finish before the inner layers do. Your after-code runs too early, exceptions from inside are not observed by your try/catch, and the <code>HttpContext</code> may be used after the request is finished, which can crash the server. Express has this behaviour built in; in C# it is always a bug.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: Run or a terminal component in the middle</strong>
+<code>app.Run(...)</code> ignores <code>next</code>, so every <code>Use</code> registered after it is dead code. There is no warning. The same is true for any middleware that never calls <code>next</code>, for example a catch-all <code>MapFallback</code> style handler registered too early.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: scoped services in a conventional middleware constructor</strong>
+The constructor runs once. A <code>DbContext</code> injected there becomes a single shared instance: not thread-safe, never disposed, and leaking state between requests. In Development, scope validation turns this into a startup error; in Production it silently works until it doesn't. Inject scoped services into <code>InvokeAsync</code>, or implement <code>IMiddleware</code>.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: per-request state in middleware fields</strong>
+For the same reason, a field like <code>private int _count</code> or <code>private string _currentUser</code> in a conventional middleware is shared by every concurrent request. Keep per-request state in locals, <code>HttpContext.Items</code>, or a feature on the context.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: changing headers after the response has started</strong>
+Code after <code>await next(ctx)</code> often wants to add a header, for example <code>Server-Timing</code>. If the endpoint already wrote the body, the headers are gone. Use <code>ctx.Response.OnStarting(...)</code> to add headers just before they are sent. <a href="middleware-patterns.html">Middleware: Order and Patterns</a> covers this in detail.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: Go middleware that forgets to return, Express middleware that never ends</strong>
+In Go, <code>http.Error(w, …, 401)</code> followed by <code>next.ServeHTTP(w, r)</code> writes the 401 <em>and</em> runs the handler, which then fails to write its own status ("superfluous WriteHeader call"). In Express, a middleware that neither sends a response nor calls <code>next()</code> leaves the request hanging until the client times out.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: blocking in middleware</strong>
+<code>.Result</code> or <code>.Wait()</code> on a task inside middleware blocks a thread-pool thread for every request in flight. Under load this starves the thread pool and the whole service stalls. Middleware is on the hot path: keep it fully async.</p>
+</div>
+<h2 id="checklist">Checklist</h2>
+<ul>
+<li>Each middleware does one cross-cutting job and is named after it.</li>
+<li>Code that must always run on the way out is in <code>finally</code> (or <code>defer</code> in Go, <code>doFinally</code> in WebFlux).</li>
+<li><code>next</code> is awaited exactly once, or deliberately not called (a short-circuit), never both.</li>
+<li>Short-circuits set a status code (and ideally a ProblemDetails body) and log why.</li>
+<li>Middleware that needs endpoint metadata sits after <code>UseRouting</code>; middleware that must avoid routing work sits before it.</li>
+<li>No <code>Run</code> or other terminal middleware before middleware that is supposed to run.</li>
+<li>Conventional middleware: only singletons in the constructor; scoped services on <code>InvokeAsync</code>.</li>
+<li>No per-request state in middleware fields.</li>
+<li>Headers added late use <code>Response.OnStarting</code>.</li>
+<li>Branches use <code>Map</code> for path prefixes (remembering <code>PathBase</code>), <code>UseWhen</code> when you need to rejoin.</li>
+<li>Middleware on the hot path is async, cheap and allocation-aware.</li>
+</ul>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>You register <code>Use A</code>, <code>Use B</code>, <code>Run C</code>, <code>Use D</code>. A and B log before and after <code>next</code>. What is logged for one request?</summary>
+<p><code>A before, B before, C, B after, A after</code>. <code>D</code> never runs: <code>Run C</code> ignored its <code>next</code>, so when <code>Build()</code> folded the list, the delegate for <code>D</code> was created and immediately thrown away.</p>
+</details>
+<details class="quiz">
+<summary>Why must the exception handler be registered first?</summary>
+<p>A layer can only catch exceptions thrown <em>inside</em> it, that is, by layers registered after it. If the exception handler were registered after authentication, an exception thrown by authentication would unwind straight past it to the server, which would return a bare 500 with no ProblemDetails and none of your logging.</p>
+</details>
+<details class="quiz">
+<summary>Inside <code>app.Map("/api", …)</code>, a request for <code>/api/orders/7</code> arrives. What are <code>Path</code> and <code>PathBase</code> in the branch, and after it returns?</summary>
+<p>In the branch: <code>PathBase = "/api"</code>, <code>Path = "/orders/7"</code>. After the branch returns, <code>Map</code> restores the originals: <code>PathBase = ""</code>, <code>Path = "/api/orders/7"</code>. <code>/apix/orders</code> would not enter the branch at all, because <code>Map</code> matches whole segments.</p>
+</details>
+<details class="quiz">
+<summary>Middleware registered before <code>UseRouting</code> calls <code>ctx.GetEndpoint()</code> to read an <code>[Audit]</code> attribute, and always gets <code>null</code>. Why, and what is the fix?</summary>
+<p>The endpoint is only selected inside <code>UseRouting</code>, which calls <code>SetEndpoint</code>. Before that there is nothing to read. Move the middleware after <code>UseRouting</code> (and after auth, if it needs the user).</p>
+</details>
+<details class="quiz">
+<summary>A conventional middleware takes <code>AppDbContext</code> in its constructor. What happens in Development, and in Production?</summary>
+<p>In Development, scope validation is on by default, so resolving a scoped service from the root provider throws at startup: <em>"Cannot resolve scoped service … from root provider"</em>. In Production validation is off, so one <code>AppDbContext</code> is created and shared by every request for the app's lifetime: a captive dependency that is not thread-safe. Move it to an <code>InvokeAsync</code> parameter.</p>
+</details>
+<details class="quiz">
+<summary>An Express timing middleware always logs about 0 ms even though requests take 100 ms. Why? What does the same code do in Koa?</summary>
+<p>In Express, <code>next()</code> returns as soon as the downstream handler reaches its first <code>await</code>, so the "after" line runs before the response is produced. Measure on <code>res.on("finish")</code>. In Koa, <code>await next()</code> waits until every inner layer has finished, so the same shape measures the full 100 ms.</p>
+</details>
+<details class="quiz">
+<summary>What is the one difference between <code>MapWhen</code> and <code>UseWhen</code> in the from-scratch builder?</summary>
+<p>The terminal delegate of the branch. <code>MapWhen</code> builds the branch with its own 404 terminal, so it never returns to the main pipeline. <code>UseWhen</code> builds the branch with the main pipeline's <code>next</code> as its terminal, so when the branch's last middleware calls <code>next</code>, control continues in the main pipeline.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Types</strong><code>RequestDelegate = HttpContext → Task</code>; a component is <code>RequestDelegate → RequestDelegate</code>.</div>
+<div><strong>Build()</strong>Start at a 404 terminal; wrap components from last to first; return the outermost.</div>
+<div><strong>Order</strong>Before <code>next</code>: registration order. After <code>next</code>: reverse order.</div>
+<div><strong>Short-circuit</strong>Don't call <code>next</code>. Inner layers never run; outer after-code still does.</div>
+<div><strong>Use / Run</strong><code>Run</code> ignores <code>next</code>; anything after it is dead.</div>
+<div><strong>Map / MapWhen</strong>Fork, never rejoin. <code>Map</code> moves the prefix to <code>PathBase</code>.</div>
+<div><strong>UseWhen</strong>Detour; the branch's terminal is the main <code>next</code>, so it rejoins.</div>
+<div><strong>DI</strong>Conventional: ctor once (singletons), <code>InvokeAsync</code> params per request. <code>IMiddleware</code>: resolved per request.</div>
+<div><strong>Routing</strong><code>UseRouting</code> selects (endpoint + metadata); the endpoint middleware runs it. Endpoint-aware middleware goes between.</div>
+<div><strong>Elsewhere</strong>Go <code>func(http.Handler) http.Handler</code>; Koa <code>await next()</code>; servlet <code>chain.doFilter</code>; Django <code>get_response</code>; ASGI wraps <code>app</code>.</div>
+<div><strong>Express</strong><code>next()</code> is not awaitable: measure on <code>res.on("finish")</code>.</div>
+<div><strong>Patterns</strong>Decorator (wraps next) + Chain of Responsibility (may stop).</div>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/aspnet/core/fundamentals/middleware/">ASP.NET Core Middleware</a> and <a href="https://learn.microsoft.com/aspnet/core/fundamentals/middleware/write">Write custom ASP.NET Core middleware</a> (Microsoft Learn)</li>
+<li><a href="https://learn.microsoft.com/aspnet/core/fundamentals/middleware/extensibility">Factory-based middleware activation (IMiddleware)</a> (Microsoft Learn)</li>
+<li><a href="https://learn.microsoft.com/aspnet/core/fundamentals/routing">Routing in ASP.NET Core</a> (Microsoft Learn)</li>
+<li><a href="https://expressjs.com/en/guide/using-middleware.html">Using middleware</a> (Express) and <a href="https://koajs.com/">Koa documentation</a></li>
+<li><a href="https://pkg.go.dev/net/http#Handler"><code>net/http</code> Handler</a> (Go) and <a href="https://go-chi.io/#/pages/middleware">chi middleware</a></li>
+<li><a href="https://jakarta.ee/specifications/servlet/6.0/apidocs/jakarta.servlet/jakarta/servlet/filter">Jakarta Servlet <code>Filter</code></a> and <a href="https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-config/interceptors.html">Spring MVC interceptors</a></li>
+<li><a href="https://docs.spring.io/spring-framework/reference/web/webflux/reactive-spring.html">Spring WebFlux <code>WebFilter</code></a></li>
+<li><a href="https://docs.djangoproject.com/en/stable/topics/http/middleware/">Django middleware</a>, <a href="https://www.starlette.io/middleware/">Starlette middleware</a>, <a href="https://asgi.readthedocs.io/en/latest/specs/main.html">ASGI specification</a> and <a href="https://peps.python.org/pep-3333/">PEP 3333 (WSGI)</a></li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="di-advanced.html"><small>&larr; PREVIOUS</small>Advanced DI: Decorators, Factories, Options &amp; Testing</a><a class="next" href="middleware-patterns.html"><small>NEXT &rarr;</small>Middleware Patterns &amp; Ordering</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-every-endpoint-doing-everyones-job">The problem: every endpoint doing everyone's job</a></li>
+<li><a href="#the-mental-model-an-onion">The mental model: an onion</a></li>
+<li><a href="#build-it-from-scratch">Build it from scratch</a><ul>
+<li><a href="#folding-from-the-end">Folding from the end</a></li>
+<li><a href="#the-whole-thing-in-about-40-lines">The whole thing in about 40 lines</a></li>
+<li><a href="#use-run-map-mapwhen-and-usewhen">Use, Run, Map, MapWhen and UseWhen</a></li>
+</ul>
+</li>
+<li><a href="#middleware-classes-and-dependency-injection">Middleware classes and dependency injection</a></li>
+<li><a href="#endpoint-routing-where-the-endpoint-becomes-known">Endpoint routing: where the endpoint becomes known</a></li>
+<li><a href="#the-same-idea-in-other-stacks">The same idea in other stacks</a><ul>
+<li><a href="#one-timing-layer-and-one-short-circuit-five-ways">One timing layer and one short-circuit, five ways</a></li>
+<li><a href="#the-frameworks-side-by-side">The frameworks side by side</a></li>
+<li><a href="#express-next-vs-koa-await-next">Express next() vs Koa await next()</a></li>
+<li><a href="#callback-shaped-interceptors">Callback-shaped interceptors</a></li>
+<li><a href="#fold-once-or-dispatch-by-index">Fold once, or dispatch by index?</a></li>
+</ul>
+</li>
+<li><a href="#which-design-patterns-is-this">Which design patterns is this?</a></li>
+<li><a href="#when-to-use-middleware-and-when-not">When to use middleware, and when not</a></li>
+<li><a href="#pitfalls">Pitfalls</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

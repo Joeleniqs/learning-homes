@@ -1,0 +1,1761 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Resilience Patterns | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/resilience.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/resilience.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track" open><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html" aria-current="page">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Resilience Patterns</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">PRODUCTION EXCELLENCE</p><h1>Resilience Patterns</h1><p class="lede">Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends).</p><div class="meta"><span class="level level-intermediate">Intermediate → Advanced</span><span>~60 min study</span><span>Builds on: <a href="outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="resilience" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-one-slow-dependency-takes-everything-down">The problem: one slow dependency takes everything down</h2>
+<p>Your checkout service has a pool of 40 workers (threads, connections, or async slots: it does not matter which). It handles 200 requests a second. One request in five also calls the <strong>recommendations</strong> service, which normally answers in 50 ms. At 10:00 recommendations does not fail: it <strong>hangs</strong>. No error, no 503, the socket simply stays open.</p>
+<p>Each request that touches recommendations now holds a worker for as long as the call takes. With no timeout that is "forever", so the 40 workers fill up within a second or two. From then on, requests that have <strong>nothing to do with recommendations</strong> (login, cart, payment) queue behind them and time out too. The dependency was optional; the outage is total. This is a <strong>cascading failure</strong>, and it is the most common way that distributed systems go down.</p>
+<p>Press play below and change the protection. The simulation runs 60 seconds of traffic with recommendations ("B") hanging from second 10 to second 40. Watch the pool, and watch what happens to the requests that <strong>never call B</strong>.</p>
+<div class="viz" data-viz="resilience-cascade"></div>
+
+<p>With the defaults, about half of the requests that never touch B fail during the outage when there is no timeout and one shared pool. A 1 s timeout limits the damage, because each stuck call now gives its worker back after a second, but B still occupies a share of the pool. A <strong>bulkhead</strong> (B may use at most 10 of the 40 workers) keeps every other request at 100%: B fails fast once its 10 slots are full, and everything else carries on. Timeout plus bulkhead also frees B's slots quickly, so B's own callers get faster errors.</p>
+<p>Every pattern on this page exists to stop one of four things: a <strong>blip</strong> that turns into an error, a <strong>slow</strong> call that eats your capacity, a <strong>dead</strong> dependency that you keep calling, or <strong>too much load</strong> that you keep accepting.</p>
+<div class="rule">
+<p><strong>Resilience is about time and load, not about errors.</strong> An error that comes back in 5 ms is cheap. A call that takes 30 s holds a thread, a socket, memory and a user's patience the whole time. Bound every wait (timeouts), bound every pool (bulkheads, rate limits, load shedding), retry only what is safe and only with jitter, and stop calling what is clearly down (circuit breakers). Then decide what the user sees instead (fallback).</p>
+</div>
+<p>This page is the sequel to <a href="outbound-pipelines.html">Outbound HTTP Pipelines</a>, where these strategies sit as handlers in the client's onion. Here we look <strong>inside</strong> each strategy: what it does to time and load, how to tune it, and where in the order it belongs.</p>
+<h2 id="the-mental-model-four-kinds-of-trouble-one-toolbox">The mental model: four kinds of trouble, one toolbox</h2>
+<p>Most production incidents involving a dependency fall into one of four shapes. Each strategy addresses a specific shape, and using the wrong one makes things worse: retrying an overloaded dependency, for example, adds more load to the thing that is already drowning.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 780 360" width="780" role="img" aria-label="Four kinds of dependency trouble and the strategies that address each">
+<text x="98" y="24" text-anchor="middle" class="title">Blip</text>
+<text x="293" y="24" text-anchor="middle" class="title">Slow / hanging</text>
+<text x="488" y="24" text-anchor="middle" class="title">Down</text>
+<text x="683" y="24" text-anchor="middle" class="title">Overloaded</text>
+<rect class="box visit" x="10" y="36" width="176" height="74" rx="10"/><text x="98" y="58" text-anchor="middle" class="small">one 503, a reset socket,</text><text x="98" y="76" text-anchor="middle" class="small">a leader election</text><text x="98" y="98" text-anchor="middle" class="small muted">lasts ms to a few s</text>
+<rect class="box visit" x="205" y="36" width="176" height="74" rx="10"/><text x="293" y="58" text-anchor="middle" class="small">GC pause, lock contention,</text><text x="293" y="76" text-anchor="middle" class="small">a black-holed packet</text><text x="293" y="98" text-anchor="middle" class="small muted">no error: just no answer</text>
+<rect class="box visit" x="400" y="36" width="176" height="74" rx="10"/><text x="488" y="58" text-anchor="middle" class="small">bad deploy, DB failover,</text><text x="488" y="76" text-anchor="middle" class="small">expired certificate</text><text x="488" y="98" text-anchor="middle" class="small muted">fails every time for minutes</text>
+<rect class="box visit" x="595" y="36" width="176" height="74" rx="10"/><text x="683" y="58" text-anchor="middle" class="small">traffic spike, retry storm,</text><text x="683" y="76" text-anchor="middle" class="small">a cold cache</text><text x="683" y="98" text-anchor="middle" class="small muted">more work than capacity</text>
+<rect class="box done" x="10" y="132" width="176" height="44" rx="8"/><text x="98" y="159" text-anchor="middle" class="small">Retry + backoff + jitter</text>
+<rect class="box done" x="10" y="186" width="176" height="44" rx="8"/><text x="98" y="213" text-anchor="middle" class="small">Idempotency keys</text>
+<rect class="box done" x="205" y="132" width="176" height="44" rx="8"/><text x="293" y="159" text-anchor="middle" class="small">Timeouts + deadlines</text>
+<rect class="box done" x="205" y="186" width="176" height="44" rx="8"/><text x="293" y="213" text-anchor="middle" class="small">Bulkheads</text>
+<rect class="box done" x="205" y="240" width="176" height="44" rx="8"/><text x="293" y="267" text-anchor="middle" class="small">Hedging (tail latency)</text>
+<rect class="box done" x="400" y="132" width="176" height="44" rx="8"/><text x="488" y="159" text-anchor="middle" class="small">Circuit breaker</text>
+<rect class="box done" x="400" y="186" width="176" height="44" rx="8"/><text x="488" y="213" text-anchor="middle" class="small">Fallback</text>
+<rect class="box done" x="595" y="132" width="176" height="44" rx="8"/><text x="683" y="159" text-anchor="middle" class="small">Rate limiting</text>
+<rect class="box done" x="595" y="186" width="176" height="44" rx="8"/><text x="683" y="213" text-anchor="middle" class="small">Load shedding</text>
+<rect class="box done" x="595" y="240" width="176" height="44" rx="8"/><text x="683" y="267" text-anchor="middle" class="small">Retry budgets</text>
+<rect class="box bad" x="10" y="300" width="760" height="48" rx="10"/><text x="390" y="320" text-anchor="middle" class="small">The wrong tool makes it worse: retries pile load on an overloaded service; a breaker</text><text x="390" y="338" text-anchor="middle" class="small">tuned too tightly turns a blip into an outage; a fallback that calls another busy service spreads the fire.</text>
+</svg>
+<figcaption>Classify the trouble first, then pick the strategy. Most real pipelines need one from each column, nested in the right order.</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Protects</th>
+<th>Costs</th>
+<th>Handles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Timeout</strong></td>
+<td>your threads, sockets and the user's wait</td>
+<td>some calls that would have succeeded are cut off</td>
+<td>slow, hanging</td>
+</tr>
+<tr>
+<td><strong>Retry</strong></td>
+<td>the success rate</td>
+<td>extra load on the dependency, extra latency</td>
+<td>blips</td>
+</tr>
+<tr>
+<td><strong>Circuit breaker</strong></td>
+<td>the dependency (time to recover) and your latency</td>
+<td>some good calls are rejected while open</td>
+<td>down</td>
+</tr>
+<tr>
+<td><strong>Bulkhead</strong></td>
+<td>the rest of your service from one dependency</td>
+<td>a hard cap on concurrency to that dependency</td>
+<td>slow, hanging</td>
+</tr>
+<tr>
+<td><strong>Rate limiter</strong></td>
+<td>the dependency, or your quota with it</td>
+<td>requests rejected or delayed above the rate</td>
+<td>overload (caused by you)</td>
+</tr>
+<tr>
+<td><strong>Load shedding</strong></td>
+<td>your own service</td>
+<td>some requests rejected early</td>
+<td>overload (caused by others)</td>
+</tr>
+<tr>
+<td><strong>Fallback</strong></td>
+<td>the user experience</td>
+<td>a degraded or stale answer, plus code that is rarely exercised</td>
+<td>down, slow</td>
+</tr>
+<tr>
+<td><strong>Hedging</strong></td>
+<td>tail latency</td>
+<td>extra load (a few percent if tuned)</td>
+<td>slow tail</td>
+</tr>
+</tbody>
+</table>
+<h2 id="timeouts-the-strategy-everything-else-depends-on">Timeouts: the strategy everything else depends on</h2>
+<p>A timeout is the only strategy that turns "slow" into "failed", and every other strategy can act only on failures. A retry can't retry a call that never ends; a circuit breaker can't count a failure that never arrives. <strong>No timeout, no resilience.</strong></p>
+<h3 id="kinds-of-timeouts">Kinds of timeouts</h3>
+<p>There are several clocks in an outbound call. You need a bound on each of them, and they nest.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 780 260" width="780" role="img" aria-label="Connect, attempt and total timeouts on a timeline with two attempts and a backoff">
+<defs><marker id="resilience-ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box path" x="20" y="40" width="44" height="34" rx="6"/><text x="42" y="62" text-anchor="middle" class="small mono">DNS</text>
+<rect class="box path" x="66" y="40" width="62" height="34" rx="6"/><text x="97" y="62" text-anchor="middle" class="small mono">TCP+TLS</text>
+<rect class="box visit" x="130" y="40" width="150" height="34" rx="6"/><text x="205" y="62" text-anchor="middle" class="small mono">waiting for headers</text>
+<rect class="box bad" x="282" y="40" width="40" height="34" rx="6"/><text x="302" y="62" text-anchor="middle" class="small mono">503</text>
+<rect class="box" x="324" y="40" width="120" height="34" rx="6"/><text x="384" y="62" text-anchor="middle" class="small muted">backoff (jittered)</text>
+<rect class="box visit" x="446" y="40" width="150" height="34" rx="6"/><text x="521" y="62" text-anchor="middle" class="small mono">waiting for headers</text>
+<rect class="box done" x="598" y="40" width="110" height="34" rx="6"/><text x="653" y="62" text-anchor="middle" class="small mono">body streams</text>
+<text x="20" y="28" class="small muted">attempt 1</text><text x="446" y="28" class="small muted">attempt 2 (connection reused)</text>
+<path class="edge accent" d="M20 98 L128 98" marker-start="url(#resilience-ar1)" marker-end="url(#resilience-ar1)"/><text x="74" y="116" text-anchor="middle" class="small">connect timeout</text>
+<path class="edge accent" d="M20 140 L322 140" marker-start="url(#resilience-ar1)" marker-end="url(#resilience-ar1)"/><text x="171" y="158" text-anchor="middle" class="small">attempt timeout (per try)</text>
+<path class="edge accent" d="M446 140 L708 140" marker-start="url(#resilience-ar1)" marker-end="url(#resilience-ar1)"/><text x="577" y="158" text-anchor="middle" class="small">attempt timeout (per try)</text>
+<path class="edge accent" d="M598 182 L708 182" marker-start="url(#resilience-ar1)" marker-end="url(#resilience-ar1)"/><text x="653" y="200" text-anchor="middle" class="small">idle / read timeout</text>
+<path class="edge accent" d="M20 226 L760 226" marker-start="url(#resilience-ar1)" marker-end="url(#resilience-ar1)"/><text x="390" y="248" text-anchor="middle" class="small">total timeout = the caller's deadline: covers every attempt AND every backoff</text>
+</svg>
+<figcaption>The attempt timeout lets a retry happen; the total timeout guarantees an answer in bounded time. Without a total timeout, "3 retries with a 10 s attempt timeout" means a user can wait 40 s plus backoff.</figcaption>
+</figure>
+
+<ul>
+<li><strong>Connect timeout</strong>: how long to wait for TCP and TLS. It should be short (1–3 s inside a data centre): a host that does not accept a connection in a second is probably not there, and failing fast lets a retry go to a <strong>different</strong> instance.</li>
+<li><strong>Attempt timeout</strong> (also called a request or per-try timeout): one try, from sending to receiving the response headers (and usually the body). This is the one that makes retries possible.</li>
+<li><strong>Read / idle timeout</strong>: the maximum gap between bytes. It protects long streaming downloads, where a total timeout would be wrong, from a peer that stops sending halfway.</li>
+<li><strong>Total timeout</strong> (the deadline): the whole logical operation, including every attempt and every backoff. This is the number the <strong>caller</strong> cares about, and the one you should derive from your own SLO.</li>
+</ul>
+<h3 id="the-defaults-are-not-safe">The defaults are not safe</h3>
+<p>Most HTTP clients ship with a timeout that is either missing or far too long for a service-to-service call. Know yours:</p>
+<table>
+<thead>
+<tr>
+<th>Client</th>
+<th>Default total timeout</th>
+<th>Other defaults worth knowing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.NET <code>HttpClient</code></td>
+<td><strong>100 s</strong></td>
+<td><code>SocketsHttpHandler.ConnectTimeout</code> is infinite, bounded only by the 100 s</td>
+</tr>
+<tr>
+<td>.NET standard resilience handler</td>
+<td>30 s total, 10 s per attempt</td>
+<td>see <a href="#the-standard-pipelines-in-net">the standard pipeline</a></td>
+</tr>
+<tr>
+<td>Java <code>java.net.http.HttpClient</code></td>
+<td><strong>none</strong></td>
+<td>no connect timeout either unless you call <code>connectTimeout(...)</code></td>
+</tr>
+<tr>
+<td>OkHttp</td>
+<td><strong>none</strong> (<code>callTimeout</code> 0)</td>
+<td>connect, read and write: 10 s each</td>
+</tr>
+<tr>
+<td>Spring <code>RestTemplate</code> / <code>RestClient</code> (JDK factory)</td>
+<td><strong>none</strong></td>
+<td>set connect and read timeouts on the request factory</td>
+</tr>
+<tr>
+<td>Python <code>requests</code></td>
+<td><strong>none</strong>: waits forever</td>
+<td><code>timeout=(connect, read)</code> must be passed on every call</td>
+</tr>
+<tr>
+<td>Python <code>httpx</code></td>
+<td>5 s</td>
+<td>connect, read, write and pool: 5 s each, no overall deadline</td>
+</tr>
+<tr>
+<td>Go <code>http.Client</code></td>
+<td><strong>none</strong> (<code>Timeout: 0</code>)</td>
+<td><code>DefaultTransport</code>: dial 30 s, TLS handshake 10 s, no response-header timeout</td>
+</tr>
+<tr>
+<td>Node <code>fetch</code> (undici)</td>
+<td><strong>none</strong> overall</td>
+<td>connect 10 s; headers and body 300 s each</td>
+</tr>
+<tr>
+<td>axios</td>
+<td><strong>none</strong> (<code>timeout: 0</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td>gRPC (all languages)</td>
+<td><strong>no deadline</strong></td>
+<td>set one on every call; it propagates to the server</td>
+</tr>
+</tbody>
+</table>
+<div class="warn">
+<p><strong>"None" means the call can wait until TCP gives up</strong>, which on Linux is about 15 minutes for an established connection whose peer vanished. Python <code>requests</code> without <code>timeout=</code> is the classic way a worker pool freezes silently. Linters can catch it: Ruff/Bandit rule <code>S113</code> flags <code>requests</code> calls without a timeout.</p>
+</div>
+<h3 id="choosing-the-value">Choosing the value</h3>
+<p>A timeout is a <strong>prediction</strong>: "if no answer has come by now, one is unlikely to come soon enough to be useful". Two inputs decide it:</p>
+<ol>
+<li><strong>The dependency's latency distribution.</strong> Look at its p99 (or p99.9) under normal load. An attempt timeout slightly above it (say p99 × 1.5, or p99.9) cuts off only the calls that were genuinely stuck. Set it below the p99 and you time out 1% or more of healthy calls, and if you then retry them you add load exactly when the dependency is slowest.</li>
+<li><strong>The caller's budget.</strong> If your own SLO is 2 s, a dependency call with a 5 s timeout is meaningless: by the time it fires, your caller has already given up. The total timeout of every downstream call must fit inside your remaining budget, which is the next idea.</li>
+</ol>
+<h3 id="deadline-propagation-stop-working-for-someone-who-has-left">Deadline propagation: stop working for someone who has left</h3>
+<p>Per-hop timeouts have a flaw: each hop chooses its own number, without knowing how much time its caller has left. The client gives up after 2 s, but the gateway allows 3 s, so does orders, and payments grinds on for another second, for a response that nobody will read. That wasted work is pure load, and it arrives exactly when the system is slow.</p>
+<p><strong>Deadline propagation</strong> fixes this by sending the absolute deadline (or the remaining budget) along with the request. Each hop subtracts what it has used and passes on the rest; when the deadline passes, every hop cancels together. gRPC does this automatically (the <code>grpc-timeout</code> header); Go's <code>context.Context</code> does it inside a process; over plain HTTP you do it yourself with a header.</p>
+<div class="viz" data-viz="resilience-deadline"></div>
+
+<p>With fixed per-hop timeouts, the default scenario wastes about 3 seconds of work after the client gave up (red segments). With a propagated deadline, every hop is cancelled at 2000 ms and nothing is wasted. Notice the <strong>minimum budget</strong> check: a hop that receives less than 100 ms of budget refuses immediately instead of starting work it cannot finish. That is cheap load shedding, and it is why you should also subtract a small margin for network time at each hop.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// ASP.NET Core: RequestAborted fires when the caller disconnects.
+// Link it with our own budget, and pass the token to EVERY await.
+app.MapGet(&quot;/checkout/{id}&quot;, async (int id, HttpContext ctx, OrdersClient orders) =&gt;
+{
+    // Deadline is a small helper of ours: reads x-request-timeout-ms, or uses the default
+    var budget = Deadline.FromHeader(ctx.Request, fallback: TimeSpan.FromSeconds(2));
+    using var cts = CancellationTokenSource.CreateLinkedTokenSource(ctx.RequestAborted);
+    cts.CancelAfter(budget - TimeSpan.FromMilliseconds(50));      // margin for our own response
+
+    var order = await orders.GetAsync(id, cts.Token);              // cancelled together
+    return Results.Ok(order);
+});
+
+// Outbound: a DelegatingHandler forwards the remaining budget to the next hop.
+public sealed class DeadlineHandler(TimeProvider clock) : DelegatingHandler
+{
+    protected override Task&lt;HttpResponseMessage&gt; SendAsync(HttpRequestMessage req, CancellationToken ct)
+    {
+        if (req.Options.TryGetValue(Deadline.Key, out var deadline))
+        {
+            var left = deadline - clock.GetUtcNow();
+            if (left &lt; TimeSpan.FromMilliseconds(100))
+                throw new TimeoutRejectedException(&quot;Not enough budget left to start this call.&quot;);
+            req.Headers.Add(&quot;x-request-timeout-ms&quot;, ((int)left.TotalMilliseconds).ToString());
+        }
+        return base.SendAsync(req, ct);
+    }
+}
+</code></pre>
+<pre><code class="language-java">// gRPC: the deadline travels with the call and is enforced on both sides.
+OrderReply reply = ordersStub
+        .withDeadlineAfter(2, TimeUnit.SECONDS)     // absolute deadline for this call
+        .getOrder(OrderRequest.newBuilder().setId(id).build());
+
+// On the server, the deadline is already on the Context. Calls made from here
+// inherit it automatically when they run in the same gRPC Context.
+Deadline left = Context.current().getDeadline();
+if (left != null &amp;&amp; left.timeRemaining(TimeUnit.MILLISECONDS) &lt; 100) {
+    throw Status.DEADLINE_EXCEEDED.withDescription(&quot;budget too small&quot;).asRuntimeException();
+}
+
+// Plain HTTP (java.net.http): compute the remaining budget per call.
+HttpRequest req = HttpRequest.newBuilder(URI.create(url))
+        .timeout(Duration.between(Instant.now(), deadline))      // per-request timeout
+        .header(&quot;x-request-timeout-ms&quot;, String.valueOf(Duration.between(Instant.now(), deadline).toMillis()))
+        .build();
+</code></pre>
+<pre><code class="language-python"># asyncio (3.11+): one deadline for the whole operation, enforced by cancellation.
+import asyncio, time, httpx
+
+async def checkout(order_id: int, budget_s: float, client: httpx.AsyncClient):
+    deadline = time.monotonic() + budget_s
+    async with asyncio.timeout_at(asyncio.get_running_loop().time() + budget_s):
+        order = await get_json(client, f&quot;/orders/{order_id}&quot;, deadline)
+        stock = await get_json(client, f&quot;/stock/{order['sku']}&quot;, deadline)
+        return order, stock
+
+async def get_json(client, url, deadline):
+    left = deadline - time.monotonic()
+    if left &lt; 0.1:
+        raise TimeoutError(&quot;not enough budget left to start this call&quot;)
+    r = await client.get(url, timeout=left,          # httpx: per-call timeout
+                         headers={&quot;x-request-timeout-ms&quot;: str(int(left * 1000))})
+    r.raise_for_status()
+    return r.json()
+</code></pre>
+<pre><code class="language-go">// Go: the deadline lives in ctx. Derive, never replace: WithTimeout keeps the
+// EARLIER of the parent's deadline and the new one.
+func (h *Handler) Checkout(w http.ResponseWriter, r *http.Request) {
+    ctx, cancel := context.WithTimeout(r.Context(), 2*time.Second) // r.Context() ends if the client leaves
+    defer cancel()
+
+    order, err := h.orders.Get(ctx, r.PathValue(&quot;id&quot;))
+    if errors.Is(err, context.DeadlineExceeded) {
+        http.Error(w, &quot;timed out&quot;, http.StatusGatewayTimeout)
+        return
+    }
+    // ...
+}
+
+func (c *OrdersClient) Get(ctx context.Context, id string) (*Order, error) {
+    if dl, ok := ctx.Deadline(); ok &amp;&amp; time.Until(dl) &lt; 100*time.Millisecond {
+        return nil, errBudgetTooSmall // shed before doing any work
+    }
+    req, _ := http.NewRequestWithContext(ctx, http.MethodGet, c.base+&quot;/orders/&quot;+id, nil)
+    res, err := c.http.Do(req) // cancelled when ctx is
+    // ...
+}
+</code></pre>
+<pre><code class="language-typescript">// Fetch: AbortSignal.timeout for a budget, AbortSignal.any to combine it with
+// the incoming request's own signal (client disconnect).
+export async function checkout(req: Request, id: string) {
+  const deadline = Date.now() + 2_000;
+  const signal = AbortSignal.any([req.signal, AbortSignal.timeout(2_000)]);
+
+  const order = await getJson(`/orders/${id}`, deadline, signal);
+  const stock = await getJson(`/stock/${order.sku}`, deadline, signal);
+  return { order, stock };
+}
+
+async function getJson(url: string, deadline: number, signal: AbortSignal) {
+  const left = deadline - Date.now();
+  if (left &lt; 100) throw new Error(&quot;not enough budget left to start this call&quot;);
+  const res = await fetch(url, {
+    signal,
+    headers: { &quot;x-request-timeout-ms&quot;: String(left) },
+  });
+  if (!res.ok) throw new HttpError(res.status);
+  return res.json();
+}
+</code></pre>
+</div>
+<p>How the ecosystems differ, and why:</p>
+<ul>
+<li><strong>Go</strong> makes it the default: every blocking call takes a <code>ctx</code>, and <code>WithTimeout</code> can only <strong>shorten</strong> an inherited deadline. The discipline is to never use <code>context.Background()</code> inside a request.</li>
+<li><strong>.NET</strong> passes a <code>CancellationToken</code> instead of a deadline. Tokens compose (<code>CreateLinkedTokenSource</code>), but forgetting to pass one to a single <code>await</code> silently disables cancellation there; analyzer CA2016 warns about it.</li>
+<li><strong>Java</strong> has no ambient cancellation for blocking calls; gRPC's <code>Context</code> and reactive operators (<code>Mono.timeout</code>) carry it. With virtual threads and structured concurrency (<code>StructuredTaskScope</code>) this is getting closer to Go's model.</li>
+<li><strong>Python</strong> asyncio cancels by raising <code>CancelledError</code> into the task. <code>asyncio.timeout</code> turns that into <code>TimeoutError</code> at the boundary. Never swallow <code>CancelledError</code>.</li>
+<li><strong>TypeScript</strong> uses <code>AbortSignal</code>. <code>AbortSignal.any</code> and <code>AbortSignal.timeout</code> are available in all current runtimes; libraries must accept and forward a <code>signal</code> for cancellation to reach the socket.</li>
+<li><strong>gRPC</strong> propagates deadlines across processes for you: it sends the remaining time as <code>grpc-timeout</code> and the server's context is cancelled when it expires. Over HTTP there is no standard header; teams use something like <code>x-request-timeout-ms</code> (Envoy uses <code>x-envoy-expected-rq-timeout-ms</code>). Send a <strong>relative</strong> budget rather than an absolute timestamp, so clock skew between machines doesn't matter.</li>
+</ul>
+<h2 id="retries-only-the-right-failures-only-with-jitter">Retries: only the right failures, only with jitter</h2>
+<p>A retry is a bet that the next attempt will meet a different world: a different instance behind the load balancer, a lock that has been released, a leader that has been elected. For a <strong>blip</strong> that bet usually pays. For a dependency that is <strong>down</strong> or <strong>overloaded</strong> it doesn't: every retry is one more request against a service that can't serve the ones it already has.</p>
+<h3 id="should-i-retry-this">Should I retry this?</h3>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 780 410" width="780" role="img" aria-label="Decision tree: should this call be retried">
+<defs><marker id="resilience-ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box accent" x="150" y="10" width="360" height="46" rx="8"/><text x="330" y="30" text-anchor="middle" class="small">Is the operation idempotent,</text><text x="330" y="47" text-anchor="middle" class="small">or protected by an idempotency key?</text>
+<rect class="box accent" x="150" y="96" width="360" height="46" rx="8"/><text x="330" y="116" text-anchor="middle" class="small">Is the failure transient?</text><text x="330" y="133" text-anchor="middle" class="small mono">timeout, reset, 408, 429, 502, 503, 504</text>
+<rect class="box accent" x="150" y="182" width="360" height="46" rx="8"/><text x="330" y="202" text-anchor="middle" class="small">Is there budget left?</text><text x="330" y="219" text-anchor="middle" class="small muted">deadline, attempts, retry budget</text>
+<rect class="box accent" x="150" y="268" width="360" height="46" rx="8"/><text x="330" y="288" text-anchor="middle" class="small">Is this the one layer</text><text x="330" y="305" text-anchor="middle" class="small">that owns retries for this hop?</text>
+<rect class="box done" x="150" y="352" width="360" height="48" rx="8"/><text x="330" y="372" text-anchor="middle" class="small">Retry: exponential backoff + jitter,</text><text x="330" y="390" text-anchor="middle" class="small">honour Retry-After, re-check the deadline</text>
+<path class="edge accent" d="M330 56 L330 94" marker-end="url(#resilience-ar2)"/><text x="340" y="80" class="small muted">yes</text>
+<path class="edge accent" d="M330 142 L330 180" marker-end="url(#resilience-ar2)"/><text x="340" y="166" class="small muted">yes</text>
+<path class="edge accent" d="M330 228 L330 266" marker-end="url(#resilience-ar2)"/><text x="340" y="252" class="small muted">yes</text>
+<path class="edge accent" d="M330 314 L330 350" marker-end="url(#resilience-ar2)"/><text x="340" y="337" class="small muted">yes</text>
+<path class="edge accent" d="M510 33 L566 33" marker-end="url(#resilience-ar2)"/><text x="528" y="26" class="small muted">no</text>
+<path class="edge accent" d="M510 119 L566 119" marker-end="url(#resilience-ar2)"/><text x="528" y="112" class="small muted">no</text>
+<path class="edge accent" d="M510 205 L566 205" marker-end="url(#resilience-ar2)"/><text x="528" y="198" class="small muted">no</text>
+<path class="edge accent" d="M510 291 L566 291" marker-end="url(#resilience-ar2)"/><text x="528" y="284" class="small muted">no</text>
+<rect class="box bad" x="568" y="8" width="204" height="50" rx="8"/><text x="670" y="29" text-anchor="middle" class="small">Don't retry</text><text x="670" y="47" text-anchor="middle" class="small muted">unless it surely never left</text>
+<rect class="box bad" x="568" y="94" width="204" height="50" rx="8"/><text x="670" y="115" text-anchor="middle" class="small">Don't retry</text><text x="670" y="133" text-anchor="middle" class="small mono">400 401 403 404 409 422</text>
+<rect class="box visit" x="568" y="180" width="204" height="50" rx="8"/><text x="670" y="201" text-anchor="middle" class="small">Stop</text><text x="670" y="219" text-anchor="middle" class="small muted">fail fast, or fall back</text>
+<rect class="box visit" x="568" y="266" width="204" height="50" rx="8"/><text x="670" y="287" text-anchor="middle" class="small">Fail fast</text><text x="670" y="305" text-anchor="middle" class="small muted">let the owner retry</text>
+</svg>
+<figcaption>Four questions, in this order. Most retry bugs come from skipping the first (double charges) or the last (retry storms).</figcaption>
+</figure>
+
+<p>A few details behind the boxes:</p>
+<ul>
+<li><strong>"It surely never left"</strong>: if the connection was refused or DNS failed, the server never saw the request, so even a <code>POST</code> is safe to retry. Once any byte has been sent, you can't know. A timeout after sending is the dangerous case: the server may have done the work.</li>
+<li><strong>500 is a judgement call.</strong> A 500 usually means a bug, and the same request will hit the same bug. Many teams retry 500 once at most, or not at all; the .NET standard handler retries all 5xx by default. 502, 503 and 504 are the classic transient responses from proxies and overloaded servers.</li>
+<li><strong>429 means "you are sending too much"</strong>: retry only after the time in <code>Retry-After</code>, never immediately, and never more aggressively than the server asked.</li>
+<li><strong>Never retry</strong> validation errors (400, 422), auth errors (401, 403: refresh the credential once, which is a different thing), 404, or 409 conflicts. The same request gives the same answer.</li>
+</ul>
+<h3 id="backoff-and-jitter">Backoff and jitter</h3>
+<p>When a dependency recovers from a one-second outage, every client that failed during that second wants to retry. If they all wait the same amount of time, they all come back <strong>at the same moment</strong>, and the recovering dependency sees a spike far above its capacity, fails again, and the cycle repeats. That is the thundering herd, and <strong>exponential backoff alone does not fix it</strong>: it spreads the retries out over time, but each wave is still synchronised.</p>
+<p>The fix is <strong>jitter</strong>: randomise each delay so that the herd turns into a smooth trickle. Run the simulation below with 200 clients and a dependency that can serve 20 requests per 100 ms, then compare the strategies.</p>
+<div class="viz" data-viz="resilience-backoff"></div>
+
+<p>With the defaults (200 clients, a 1 s outage, 10 attempts each):</p>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Delay before retry <em>n</em></th>
+<th>Result in the simulation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Immediate</td>
+<td>0</td>
+<td>all 2,000 attempts are wasted: every client gives up</td>
+</tr>
+<tr>
+<td>Fixed</td>
+<td><code>base</code></td>
+<td>most clients give up: the waves stay synchronised</td>
+</tr>
+<tr>
+<td>Exponential, no jitter</td>
+<td><code>min(cap, base·2ⁿ)</code></td>
+<td>everyone succeeds, but only after about 33 s: the waves are synchronised and ever further apart</td>
+</tr>
+<tr>
+<td><strong>Full jitter</strong></td>
+<td><code>random(0, min(cap, base·2ⁿ))</code></td>
+<td>done in about 4 s</td>
+</tr>
+<tr>
+<td><strong>Equal jitter</strong></td>
+<td><code>t/2 + random(0, t/2)</code>, with <code>t = min(cap, base·2ⁿ)</code></td>
+<td>about 3 s; never retries "too early"</td>
+</tr>
+<tr>
+<td><strong>Decorrelated jitter</strong></td>
+<td><code>min(cap, random(base, prev·3))</code></td>
+<td>about 3 s; each delay depends on the previous one, not on <em>n</em></td>
+</tr>
+</tbody>
+</table>
+<p>The three jittered strategies are close to each other, and much better than any unjittered one. That matches the measurements in the AWS Architecture Blog post that popularised them. Which jitter you pick matters far less than <strong>having</strong> jitter. Use whatever your library offers: Polly's <code>UseJitter</code> (decorrelated for exponential backoff), cockatiel's default (decorrelated), tenacity's <code>wait_random_exponential</code> (full), Resilience4j's randomised exponential backoff (±50% around the exponential value).</p>
+<div class="tip">
+<p><strong>Always cap the delay, and always cap the attempts.</strong> A cap of a few seconds (the delay) and 3–4 attempts (the count) is right for synchronous calls on behalf of a user. Background jobs and queue consumers can use longer caps and more attempts, because nobody is waiting, but they still need jitter: 10,000 messages that failed together will otherwise be retried together.</p>
+</div>
+<p>Here is the whole thing written out: classify, back off with full jitter, honour <code>Retry-After</code>, and never sleep past the deadline. In C# and Java you would use the library (the configuration is shown); in the other three the loop is short enough to read in full.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Microsoft.Extensions.Http.Resilience (Polly v8 underneath)
+builder.Services.AddHttpClient&lt;InventoryClient&gt;(c =&gt; c.BaseAddress = new(&quot;https://inventory.internal&quot;))
+    .AddResilienceHandler(&quot;inventory&quot;, pipeline =&gt;
+    {
+        pipeline.AddRetry(new HttpRetryStrategyOptions
+        {
+            // ShouldHandle defaults to: 5xx, 408, 429, HttpRequestException, TimeoutRejectedException
+            MaxRetryAttempts = 3,                       // 4 attempts in total
+            BackoffType = DelayBackoffType.Exponential,
+            UseJitter = true,                           // decorrelated jitter
+            Delay = TimeSpan.FromMilliseconds(200),
+            MaxDelay = TimeSpan.FromSeconds(5),
+            ShouldRetryAfterHeader = true,              // Retry-After wins over the computed delay
+        });
+    });
+</code></pre>
+<pre><code class="language-java">// Resilience4j Retry
+RetryConfig config = RetryConfig.&lt;HttpResponse&lt;String&gt;&gt;custom()
+        .maxAttempts(4)                                        // includes the first call
+        .intervalFunction(IntervalFunction.ofExponentialRandomBackoff(
+                Duration.ofMillis(200), 2.0, 0.5))             // 200, 400, 800 ms ±50%
+        .retryExceptions(IOException.class, HttpTimeoutException.class)
+        .ignoreExceptions(ValidationException.class)
+        .retryOnResult(res -&gt; res.statusCode() == 429 || res.statusCode() &gt;= 502)
+        .failAfterMaxAttempts(true)
+        .build();
+Retry retry = Retry.of(&quot;inventory&quot;, config);
+
+Supplier&lt;HttpResponse&lt;String&gt;&gt; call =
+        Retry.decorateSupplier(retry, () -&gt; send(http, request));
+</code></pre>
+<pre><code class="language-python">import random, time, email.utils
+
+TRANSIENT_STATUS = {408, 429, 500, 502, 503, 504}
+
+def full_jitter(attempt: int, base: float = 0.1, cap: float = 5.0) -&gt; float:
+    return random.uniform(0, min(cap, base * 2 ** attempt))
+
+def retry_after_seconds(value: str | None) -&gt; float | None:
+    &quot;&quot;&quot;Retry-After is either delay-seconds (&quot;120&quot;) or an HTTP date.&quot;&quot;&quot;
+    if not value:
+        return None
+    if value.strip().isdigit():
+        return float(value)
+    try:
+        when = email.utils.parsedate_to_datetime(value)
+    except (TypeError, ValueError):
+        return None
+    return max(0.0, when.timestamp() - time.time())
+
+def call_with_retry(send, *, max_attempts=4, deadline=None,
+                    sleep=time.sleep, clock=time.monotonic):
+    &quot;&quot;&quot;send() makes ONE attempt. Wrap only idempotent operations.&quot;&quot;&quot;
+    for attempt in range(max_attempts):
+        last = attempt == max_attempts - 1
+        err = resp = None
+        try:
+            resp = send()
+        except (ConnectionError, TimeoutError) as e:
+            if last:
+                raise
+            err, delay = e, full_jitter(attempt)
+        else:
+            if resp.status_code not in TRANSIENT_STATUS or last:
+                return resp
+            hint = retry_after_seconds(resp.headers.get(&quot;Retry-After&quot;))
+            delay = hint if hint is not None else full_jitter(attempt)
+        if deadline is not None and clock() + delay &gt;= deadline:
+            if err is not None:
+                raise err                  # no time to retry: surface the real failure
+            return resp
+        sleep(delay)
+</code></pre>
+<pre><code class="language-go">var transient = map[int]bool{408: true, 429: true, 500: true, 502: true, 503: true, 504: true}
+
+// Do retries an idempotent request. newReq must build a fresh request (and body) per attempt.
+func Do(ctx context.Context, c *http.Client, newReq func(context.Context) (*http.Request, error), maxAttempts int) (*http.Response, error) {
+    for attempt := 0; ; attempt++ {
+        req, err := newReq(ctx)
+        if err != nil {
+            return nil, err
+        }
+        res, err := c.Do(req)
+        last := attempt == maxAttempts-1
+        var delay time.Duration
+        switch {
+        case err != nil:
+            if last || ctx.Err() != nil { // the caller has given up: don't retry for nobody
+                return nil, err
+            }
+            delay = fullJitter(attempt)
+        case !transient[res.StatusCode] || last:
+            return res, nil
+        default:
+            delay = retryAfter(res.Header.Get(&quot;Retry-After&quot;))
+            if delay &lt;= 0 {
+                delay = fullJitter(attempt)
+            }
+            if !fits(ctx, delay) {
+                return res, nil // no time left: hand back the real 503
+            }
+            io.Copy(io.Discard, io.LimitReader(res.Body, 64&lt;&lt;10))
+            res.Body.Close() // otherwise every retry leaks a connection
+        }
+        if !fits(ctx, delay) {
+            return nil, err
+        }
+        t := time.NewTimer(delay)
+        select {
+        case &lt;-ctx.Done():
+            t.Stop()
+            return nil, ctx.Err()
+        case &lt;-t.C:
+        }
+    }
+}
+
+func fullJitter(attempt int) time.Duration {
+    const base, ceiling = 100 * time.Millisecond, 5 * time.Second
+    d := ceiling
+    if attempt &lt; 6 {
+        d = min(ceiling, base&lt;&lt;attempt)
+    }
+    return rand.N(d + 1) // math/rand/v2
+}
+
+func retryAfter(v string) time.Duration {
+    if secs, err := strconv.Atoi(v); err == nil {
+        return time.Duration(secs) * time.Second
+    }
+    if t, err := http.ParseTime(v); err == nil {
+        return time.Until(t)
+    }
+    return 0
+}
+
+func fits(ctx context.Context, d time.Duration) bool {
+    dl, ok := ctx.Deadline()
+    return !ok || time.Until(dl) &gt; d
+}
+</code></pre>
+<pre><code class="language-typescript">const TRANSIENT = new Set([408, 429, 500, 502, 503, 504]);
+
+const fullJitter = (attempt: number, base = 100, cap = 5_000) =&gt;
+  Math.random() * Math.min(cap, base * 2 ** attempt);
+
+function retryAfterMs(v: string | null): number | undefined {
+  if (!v) return undefined;
+  if (/^\d+$/.test(v.trim())) return Number(v) * 1000;
+  const at = Date.parse(v);                       // HTTP date form
+  return Number.isNaN(at) ? undefined : Math.max(0, at - Date.now());
+}
+
+const sleep = (ms: number, signal?: AbortSignal) =&gt;
+  new Promise&lt;void&gt;((resolve, reject) =&gt; {
+    const t = setTimeout(resolve, ms);
+    signal?.addEventListener(&quot;abort&quot;, () =&gt; { clearTimeout(t); reject(signal.reason); }, { once: true });
+  });
+
+/** Retries an idempotent request. Pass the caller's deadline and signal. */
+export async function fetchWithRetry(url: string, init: RequestInit &amp; { deadline: number },
+                                     maxAttempts = 4): Promise&lt;Response&gt; {
+  for (let attempt = 0; ; attempt++) {
+    const last = attempt === maxAttempts - 1;
+    let delay: number;
+    try {
+      const res = await fetch(url, init);
+      if (!TRANSIENT.has(res.status) || last) return res;
+      delay = retryAfterMs(res.headers.get(&quot;retry-after&quot;)) ?? fullJitter(attempt);
+      if (Date.now() + delay &gt;= init.deadline) return res;    // no time left: return the real 503
+      await res.body?.cancel();                               // release the connection
+    } catch (err) {
+      if (last || init.signal?.aborted) throw err;            // the caller gave up
+      delay = fullJitter(attempt);
+      if (Date.now() + delay &gt;= init.deadline) throw err;
+    }
+    await sleep(delay, init.signal ?? undefined);
+  }
+}
+</code></pre>
+</div>
+<p>Things worth noticing in all five:</p>
+<ul>
+<li>The <strong>attempt</strong> is a function (<code>send</code>, <code>newReq</code>, <code>fetch(url, init)</code>) that can be called again. A request body that is a stream can't be replayed; buffer it, or don't retry.</li>
+<li>The loop checks the <strong>deadline before sleeping</strong>. A retry that can't finish in time is pure waste, and returning the real failure (<code>503</code>, the original exception) is more useful to the caller than a generic timeout.</li>
+<li>Go and TypeScript <strong>drain or cancel the body</strong> of a discarded response. Otherwise each retry leaks a connection from the pool, which is exactly the resource you are short of during an incident.</li>
+</ul>
+<h3 id="retry-amplification-why-only-one-layer-may-retry">Retry amplification: why only one layer may retry</h3>
+<p>Retries compose by <strong>multiplication</strong>. If the edge retries 3 times, and each attempt calls service A which retries 3 times, and each of those calls B which retries 3 times, then one user click becomes up to 3 × 3 × 3 = <strong>27</strong> calls on the database at the bottom. The database is usually the thing that is struggling in the first place.</p>
+<div class="viz" data-viz="resilience-amplify"></div>
+
+<p>With the leaf failing 100% of the time, "every layer retries" produces exactly 27 database calls per click, and the simulation's average matches the exact formula. Switch to "only the edge retries" or "only the last hop retries" and it drops to 3. Lower the failure rate to 10% and the difference nearly disappears, because most calls succeed first time. <strong>Amplification only bites during an incident</strong>, which is why it hides so well in normal testing.</p>
+<p>The fixes, from simplest to most robust:</p>
+<ol>
+<li><strong>Retry at one layer per hop, and fail fast everywhere else.</strong> Usually that is the layer closest to the failing dependency (it knows the most about which errors are transient), or the edge (it knows the user's deadline). Pick one and write it down. SDKs count as a layer: the Azure SDK, AWS SDK and gRPC client all retry by default.</li>
+<li><strong>Tell the caller not to retry.</strong> If you already retried and failed, return an error that says so. Google's SRE guidance is to return an "overloaded; don't retry" status so that upstream layers fail fast. In HTTP, a 503 <strong>without</strong> <code>Retry-After</code> from a server that has already retried is a common convention, but it is a convention: document it.</li>
+<li><strong>Retry budgets.</strong> Limit retries to a fraction of normal traffic, per client. When most calls succeed, the budget is full and an occasional retry is free. When most calls fail, the budget empties and retries stop, so a hard outage costs about 1× load instead of 27×. Switch the simulation to "every layer + retry budget" to see it.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Where</th>
+<th>Retry budget mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gRPC</td>
+<td><code>retryThrottling: { maxTokens, tokenRatio }</code> in the service config. Each failure costs 1 token, each success earns <code>tokenRatio</code>; retries stop while tokens ≤ <code>maxTokens / 2</code></td>
+</tr>
+<tr>
+<td>AWS SDKs</td>
+<td>a client-side retry quota: each retry withdraws tokens (more for timeouts), each success refunds; the quota empties during an outage</td>
+</tr>
+<tr>
+<td>Envoy / Istio</td>
+<td><code>retry_budget</code> on the cluster: retries may be at most a percentage of active requests</td>
+</tr>
+<tr>
+<td>Google SRE book</td>
+<td>per-request cap of 3 attempts, plus a per-client budget of 10% retries</td>
+</tr>
+<tr>
+<td>Polly, Resilience4j, tenacity, cockatiel</td>
+<td><strong>none built in</strong>: add a small budget yourself (below) or use the mesh</td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs" data-labels="Python: a gRPC-style budget,gRPC service config">
+<pre><code class="language-python">import threading
+
+class RetryBudget:
+    &quot;&quot;&quot;gRPC-style retry throttling: failures cost 1 token, successes earn
+    `ratio`; retries are allowed only while the bucket is more than half full.&quot;&quot;&quot;
+    def __init__(self, max_tokens: float = 10, ratio: float = 0.1):
+        self.max, self.ratio, self.tokens = max_tokens, ratio, float(max_tokens)
+        self._lock = threading.Lock()
+
+    def record(self, ok: bool) -&gt; None:
+        with self._lock:
+            self.tokens = (min(self.max, self.tokens + self.ratio) if ok
+                           else max(0.0, self.tokens - 1))
+
+    def can_retry(self) -&gt; bool:
+        with self._lock:
+            return self.tokens &gt; self.max / 2
+
+# In the retry loop: record() after every attempt; before sleeping, check
+# can_retry() and give up early if it says no. One budget per downstream.
+</code></pre>
+<pre><code class="language-json">{
+  &quot;methodConfig&quot;: [{
+    &quot;name&quot;: [{ &quot;service&quot;: &quot;inventory.Inventory&quot; }],
+    &quot;timeout&quot;: &quot;2s&quot;,
+    &quot;retryPolicy&quot;: {
+      &quot;maxAttempts&quot;: 3,
+      &quot;initialBackoff&quot;: &quot;0.1s&quot;,
+      &quot;maxBackoff&quot;: &quot;1s&quot;,
+      &quot;backoffMultiplier&quot;: 2,
+      &quot;retryableStatusCodes&quot;: [&quot;UNAVAILABLE&quot;]
+    }
+  }],
+  &quot;retryThrottling&quot;: { &quot;maxTokens&quot;: 10, &quot;tokenRatio&quot;: 0.1 }
+}
+</code></pre>
+</div>
+<p>With these numbers, after a long run of failures only 4 retries get through before the bucket drops to half (10 → 5), and each further retry needs 10 successes to earn it back. gRPC's retry policy also applies jitter to its backoff, and only retries when the server's response says it hasn't processed the request, or for the status codes you list.</p>
+<h3 id="honour-retry-after">Honour <code>Retry-After</code></h3>
+<p><code>Retry-After</code> is the server telling you exactly when to come back. It appears on <strong>429 Too Many Requests</strong> and <strong>503 Service Unavailable</strong> (and on 3xx redirects, which is a different use), as either a number of seconds or an HTTP date. Honouring it is not optional politeness: a server that sends it is usually shedding load, and a client that ignores it is part of the reason.</p>
+<ul>
+<li>If <code>Retry-After</code> is longer than your remaining budget, <strong>don't wait</strong>: return the 429/503 to your caller (or fall back) now.</li>
+<li>Add a little jitter on top of it. Every client that got <code>Retry-After: 2</code> at the same moment will otherwise come back at the same moment.</li>
+<li>Treat it as a minimum, not an invitation: you may wait longer, never shorter.</li>
+<li>Rate-limit headers (<code>RateLimit-Policy</code> and <code>RateLimit</code> from the IETF draft, or the older <code>X-RateLimit-Remaining</code>) let a client slow down <strong>before</strong> it is rejected. If your dependency sends them, a client-side rate limiter (see <a href="#rate-limiting-protect-a-dependency-or-a-quota">Rate limiting</a>) can use them.</li>
+</ul>
+<h3 id="idempotency-make-the-retried-request-safe">Idempotency: make the retried request safe</h3>
+<p>A retry is only safe if doing the operation twice has the same effect as doing it once. <code>GET</code>, <code>PUT</code> and <code>DELETE</code> are idempotent by definition in HTTP (if the server implements them correctly). <code>POST</code> and <code>PATCH</code> are not: "charge this card €50" twice is two charges.</p>
+<p>The dangerous moment is a <strong>timeout after the request was sent</strong>. The client can't tell "the request never arrived" from "it was processed and the response was lost" from "it is still being processed". An <strong>idempotency key</strong> removes the ambiguity: the client generates a unique key per logical operation (not per attempt), sends it on every attempt, and the server stores the result under that key. A retry with the same key gets the <strong>stored</strong> result instead of a second charge.</p>
+<div class="viz" data-viz="resilience-idempotency"></div>
+
+<p>Walk through each scenario with and without the key. With the key, every scenario ends with exactly <strong>one</strong> charge. Without it, "response lost" and "client times out while the server still works" both charge twice, and nothing in the client's logs reveals it. The fourth scenario shows why the server must also store a <strong>fingerprint of the request body</strong>: a retry that reuses a key with a different body is a client bug, and <code>422</code> is safer than silently returning the first result.</p>
+<p>The server's rules, which the visualizer follows:</p>
+<ol>
+<li><strong>Insert the key first</strong>, atomically, as "in progress" (a unique constraint or <code>INSERT ... ON CONFLICT DO NOTHING</code>). Two concurrent attempts can't both win.</li>
+<li>Key exists and is <strong>completed</strong> with the same body hash: return the stored response (status and body), without doing the work.</li>
+<li>Key exists and is <strong>in progress</strong>: return <code>409 Conflict</code> (with <code>Retry-After</code>), so the client retries later instead of starting a second charge.</li>
+<li>Key exists with a <strong>different body hash</strong>: return <code>422</code>.</li>
+<li>Do the work and <strong>store the response in the same transaction</strong> as the side effect, where you can. If the side effect is in another system (a payment provider), pass the key on to it: Stripe, Adyen and most payment APIs accept their own idempotency key for exactly this reason.</li>
+<li>Expire keys after a window that is longer than any client will keep retrying (Stripe uses 24 hours).</li>
+</ol>
+<div class="code-tabs">
+<pre><code class="language-csharp">app.MapPost(&quot;/payments&quot;, async (PaymentRequest body, [FromHeader(Name = &quot;Idempotency-Key&quot;)] string? key,
+                                PaymentsDb db, PaymentGateway gateway, CancellationToken ct) =&gt;
+{
+    if (string.IsNullOrEmpty(key)) return Results.BadRequest(&quot;Idempotency-Key is required.&quot;);
+    var hash = Hash(body);
+
+    await using var tx = await db.Database.BeginTransactionAsync(ct);
+    var inserted = await db.Database.ExecuteSqlAsync($&quot;&quot;&quot;
+        INSERT INTO idempotency_keys (key, request_hash, status, created_at)
+        VALUES ({key}, {hash}, 'in_progress', now()) ON CONFLICT (key) DO NOTHING
+        &quot;&quot;&quot;, ct);
+    if (inserted == 0)
+    {
+        var existing = await db.IdempotencyKeys.SingleAsync(k =&gt; k.Key == key, ct);
+        if (existing.RequestHash != hash) return Results.UnprocessableEntity(&quot;Key reused with a different body.&quot;);
+        if (existing.Status == &quot;in_progress&quot;)
+        {
+            return Results.Conflict(new { retryAfterSeconds = 1 });   // and set Retry-After: 1
+        }
+        return Results.Json(existing.ResponseBody, statusCode: existing.ResponseStatus);
+    }
+    await tx.CommitAsync(ct);                                          // the claim is visible to others now
+
+    var charge = await gateway.ChargeAsync(body, idempotencyKey: key, ct);   // pass the key on
+    await db.CompleteAsync(key, status: 201, response: charge, ct);
+    return Results.Created($&quot;/payments/{charge.Id}&quot;, charge);
+});
+</code></pre>
+<pre><code class="language-java">@PostMapping(&quot;/payments&quot;)
+ResponseEntity&lt;?&gt; pay(@RequestHeader(&quot;Idempotency-Key&quot;) String key, @RequestBody PaymentRequest body) {
+    String hash = hash(body);
+    int inserted = jdbc.update(&quot;&quot;&quot;
+        INSERT INTO idempotency_keys (key, request_hash, status, created_at)
+        VALUES (?, ?, 'in_progress', now()) ON CONFLICT (key) DO NOTHING&quot;&quot;&quot;, key, hash);
+    if (inserted == 0) {
+        StoredKey k = keys.find(key);
+        if (!k.requestHash().equals(hash)) return ResponseEntity.unprocessableEntity().body(&quot;key reused&quot;);
+        if (k.inProgress()) return ResponseEntity.status(409).header(&quot;Retry-After&quot;, &quot;1&quot;).build();
+        return ResponseEntity.status(k.responseStatus()).body(k.responseBody());
+    }
+    Charge charge = gateway.charge(body, key);            // the provider dedupes on the same key
+    keys.complete(key, 201, charge);
+    return ResponseEntity.created(URI.create(&quot;/payments/&quot; + charge.id())).body(charge);
+}
+</code></pre>
+<pre><code class="language-python">@app.post(&quot;/payments&quot;, status_code=201)
+async def pay(body: PaymentRequest, response: Response,
+              idempotency_key: str = Header(...)):
+    h = hashlib.sha256(body.model_dump_json().encode()).hexdigest()
+    async with db.transaction():
+        inserted = await db.execute(
+            &quot;INSERT INTO idempotency_keys (key, request_hash, status, created_at) &quot;
+            &quot;VALUES ($1, $2, 'in_progress', now()) ON CONFLICT (key) DO NOTHING&quot;,
+            idempotency_key, h)
+    if inserted == &quot;INSERT 0 0&quot;:                       # asyncpg's status string
+        k = await db.fetchrow(&quot;SELECT * FROM idempotency_keys WHERE key = $1&quot;, idempotency_key)
+        if k[&quot;request_hash&quot;] != h:
+            raise HTTPException(422, &quot;Idempotency-Key reused with a different body&quot;)
+        if k[&quot;status&quot;] == &quot;in_progress&quot;:
+            raise HTTPException(409, &quot;in progress&quot;, headers={&quot;Retry-After&quot;: &quot;1&quot;})
+        response.status_code = k[&quot;response_status&quot;]
+        return json.loads(k[&quot;response_body&quot;])
+    charge = await gateway.charge(body, idempotency_key=idempotency_key)
+    await complete(idempotency_key, 201, charge)
+    return charge
+</code></pre>
+<pre><code class="language-go">func (s *Server) Pay(w http.ResponseWriter, r *http.Request) {
+    key := r.Header.Get(&quot;Idempotency-Key&quot;)
+    body, _ := io.ReadAll(io.LimitReader(r.Body, 1&lt;&lt;20))
+    sum := sha256.Sum256(body)
+    hash := hex.EncodeToString(sum[:])
+
+    tag, err := s.db.Exec(r.Context(), `
+        INSERT INTO idempotency_keys (key, request_hash, status, created_at)
+        VALUES ($1, $2, 'in_progress', now()) ON CONFLICT (key) DO NOTHING`, key, hash)
+    if err != nil { http.Error(w, &quot;db&quot;, 500); return }
+    if tag.RowsAffected() == 0 {
+        k, _ := s.keys.Find(r.Context(), key)
+        switch {
+        case k.RequestHash != hash:
+            http.Error(w, &quot;key reused with a different body&quot;, http.StatusUnprocessableEntity)
+        case k.Status == &quot;in_progress&quot;:
+            w.Header().Set(&quot;Retry-After&quot;, &quot;1&quot;)
+            w.WriteHeader(http.StatusConflict)
+        default:
+            w.WriteHeader(k.ResponseStatus)
+            w.Write(k.ResponseBody)
+        }
+        return
+    }
+    charge, err := s.gateway.Charge(r.Context(), body, key) // the provider dedupes on the key too
+    // ... store the response under key, then write it
+}
+</code></pre>
+<pre><code class="language-typescript">app.post(&quot;/payments&quot;, async (req, res) =&gt; {
+  const key = req.header(&quot;Idempotency-Key&quot;);
+  if (!key) return res.status(400).send(&quot;Idempotency-Key is required&quot;);
+  const hash = createHash(&quot;sha256&quot;).update(JSON.stringify(req.body)).digest(&quot;hex&quot;);
+
+  const { rowCount } = await db.query(
+    `INSERT INTO idempotency_keys (key, request_hash, status, created_at)
+     VALUES ($1, $2, 'in_progress', now()) ON CONFLICT (key) DO NOTHING`, [key, hash]);
+  if (rowCount === 0) {
+    const k = await keys.find(key);
+    if (k.requestHash !== hash) return res.status(422).send(&quot;key reused with a different body&quot;);
+    if (k.status === &quot;in_progress&quot;) return res.status(409).set(&quot;Retry-After&quot;, &quot;1&quot;).end();
+    return res.status(k.responseStatus).json(k.responseBody);
+  }
+  const charge = await gateway.charge(req.body, { idempotencyKey: key });
+  await keys.complete(key, 201, charge);
+  res.status(201).json(charge);
+});
+
+// Client side: ONE key per logical operation, reused on every retry.
+const key = crypto.randomUUID();
+await fetchWithRetry(&quot;/payments&quot;, { method: &quot;POST&quot;, body, headers: { &quot;Idempotency-Key&quot;: key }, deadline });
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: a new key per attempt</strong>
+The client generated the key inside the retry loop. Every attempt looked like a new operation, so the key protected nothing. <strong>Fix:</strong> create the key when the user expresses intent (the "Pay" click, the message being handled) and store it with that operation, so that even a client restart reuses it.</p>
+</div>
+<p>If you own both sides, prefer <strong>natural idempotency</strong> where you can: <code>PUT /orders/{client-generated-id}</code> instead of <code>POST /orders</code>, "set status to shipped" instead of "advance status", a unique constraint on <code>(order_id, line_no)</code>. Messaging systems need the same idea on the consumer side (deduplicate by message id), because at-least-once delivery means every message can arrive twice.</p>
+<h2 id="circuit-breakers-stop-calling-what-is-clearly-down">Circuit breakers: stop calling what is clearly down</h2>
+<p>Retries handle blips. When a dependency is <strong>down</strong>, every call to it still costs a timeout's worth of waiting, and every one of those calls is load on something trying to restart. A circuit breaker watches the outcomes of recent calls and, when too many fail, <strong>opens</strong>: for a while, calls are rejected instantly without touching the network. Then it lets a few <strong>probe</strong> calls through to see whether the dependency has recovered.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 300" width="760" role="img" aria-label="Circuit breaker state machine: closed, open and half-open">
+<defs><marker id="resilience-ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box done" x="30" y="40" width="200" height="86" rx="12"/><text x="130" y="68" text-anchor="middle" class="title">CLOSED</text><text x="130" y="90" text-anchor="middle" class="small">calls pass through;</text><text x="130" y="108" text-anchor="middle" class="small">outcomes are recorded</text>
+<rect class="box bad" x="530" y="40" width="200" height="86" rx="12"/><text x="630" y="68" text-anchor="middle" class="title">OPEN</text><text x="630" y="90" text-anchor="middle" class="small">calls fail instantly,</text><text x="630" y="108" text-anchor="middle" class="small">no network at all</text>
+<rect class="box visit" x="280" y="196" width="200" height="86" rx="12"/><text x="380" y="224" text-anchor="middle" class="title">HALF-OPEN</text><text x="380" y="246" text-anchor="middle" class="small">a few probe calls pass;</text><text x="380" y="264" text-anchor="middle" class="small">the rest are rejected</text>
+<path class="edge accent" d="M230 70 L528 70" marker-end="url(#resilience-ar3)"/><text x="380" y="52" text-anchor="middle" class="small">failure rate ≥ threshold</text><text x="380" y="88" text-anchor="middle" class="small muted">(only after min calls in the window)</text>
+<path class="edge accent" d="M640 126 L480 222" marker-end="url(#resilience-ar3)"/><text x="610" y="182" class="small">break duration</text><text x="610" y="198" class="small">has elapsed</text>
+<path class="edge accent" d="M280 222 L130 128" marker-end="url(#resilience-ar3)"/><text x="58" y="182" class="small">probes succeed</text><text x="58" y="198" class="small muted">(reset counters)</text>
+<path class="edge accent" d="M480 252 C 640 270, 700 200, 690 128" marker-end="url(#resilience-ar3)"/><text x="600" y="282" class="small">a probe fails</text>
+</svg>
+<figcaption>Three states. The two numbers that matter most are the threshold (when to open) and the break duration (how long to stay open before probing).</figcaption>
+</figure>
+
+<p>Pick a dependency behaviour and run it with and without the breaker. The chart shows the failure rate in the sliding window against the threshold; the strip underneath shows each call: succeeded, failed (after waiting), or short-circuited: rejected instantly by the breaker (see the legend).</p>
+<div class="viz" data-viz="resilience-breaker"></div>
+
+<p>What to look for:</p>
+<ul>
+<li><strong>Hard outage</strong>: without a breaker, every call during the outage waits and fails. With one, after the first handful of failures the calls fail in microseconds, and a probe every few seconds discovers the recovery.</li>
+<li><strong>Overloaded, heals after 1.5 s of quiet</strong>: this is the case breakers exist for. Without a breaker the dependency never gets 1.5 s of quiet, so it <strong>never recovers</strong>. With one, the open period gives it room. Set "open for (s)" to 1 and watch it fail to recover even with the breaker: the break duration must be longer than the dependency needs to recover.</li>
+<li><strong>Flaky, 30% failures</strong>: a breaker is not a tool for partial failure, but random clusters can still trip it. With a 20-call window, some seeds push the window over 50% and the breaker opens for no good reason; with a 50-call window it stays closed. Lower the threshold to 20% and it opens repeatedly, rejecting calls of which 70% would have succeeded.</li>
+<li><strong>Short blip</strong>: with a 20-call window, the 0.6 s blip is only a few failures out of 20, and nothing trips. Shrink the window to 6 calls (min calls 3) and the same blip opens the breaker: 3 real failures become about 30 rejected calls. Small windows and low minimum throughput make breakers jumpy.</li>
+</ul>
+<h3 id="tuning-a-breaker">Tuning a breaker</h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>What it means</th>
+<th>Rule of thumb</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Failure threshold</td>
+<td>the ratio (or count) of failures in the window that opens it</td>
+<td>50% is common; well above the normal error rate, well below 100%</td>
+</tr>
+<tr>
+<td>Sampling window</td>
+<td>how much history counts: the last N calls, or the last N seconds</td>
+<td>long enough to hold min-calls at normal traffic; 10–30 s</td>
+</tr>
+<tr>
+<td>Minimum throughput</td>
+<td>don't decide on fewer calls than this</td>
+<td>10–100 depending on traffic; stops one failure out of two calls opening it</td>
+</tr>
+<tr>
+<td>Break duration</td>
+<td>how long to stay open before probing</td>
+<td>longer than the dependency's restart time; 5–60 s</td>
+</tr>
+<tr>
+<td>Half-open probes</td>
+<td>how many trial calls decide closed vs open</td>
+<td>1–10; more probes, more confidence, more load on a sick service</td>
+</tr>
+<tr>
+<td>What counts as failure</td>
+<td>which exceptions and status codes are recorded</td>
+<td>5xx, timeouts, connection errors. <strong>Not</strong> 4xx: a 404 says nothing about health</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consecutive-failure</strong> breakers (open after N failures in a row: gobreaker's default is more than 5, cockatiel's <code>ConsecutiveBreaker</code>) are simple and fine at low traffic. <strong>Ratio</strong> breakers over a window (Polly, Resilience4j, cockatiel's <code>SamplingBreaker</code>) are better at high traffic, where a few failures in a row are normal noise.</p>
+<div class="callout">
+<p><strong>One breaker per dependency, per instance</strong>
+A breaker shared across unrelated endpoints opens for all of them when one is broken: if <code>/search</code> is down, <code>/orders</code> on the same host gets rejected too. Key breakers by the thing that fails together, usually host (or host + route class). In .NET, <code>AddStandardResilienceHandler</code> gives each named client its own pipeline; <code>SelectPipelineByAuthority()</code> gives one per host. Breakers are also <strong>per process</strong>: 50 pods each learn about an outage separately, which is normally fine (it costs each pod a handful of calls). Gobreaker's <code>DistributedCircuitBreaker</code> shares state through a store, if you really need that.</p>
+</div>
+<h2 id="bulkheads-limit-what-one-dependency-can-take-from-you">Bulkheads: limit what one dependency can take from you</h2>
+<p>The cascade at the top of this page is the problem bulkheads solve. A ship's bulkheads stop one flooded compartment from sinking the ship; a software bulkhead stops one slow dependency from occupying every worker. It is a <strong>concurrency limit per dependency</strong>: at most N calls in flight, optionally a small queue, and everything beyond is rejected immediately.</p>
+<ul>
+<li><strong>Size it from Little's law</strong>: concurrent calls ≈ request rate × latency. 50 calls/s at 100 ms is 5 in flight on average; a limit of 10–20 leaves room for spikes. When latency rises tenfold, the limit is what stops 50 in flight turning into 500.</li>
+<li><strong>Queue little or not at all.</strong> A queue in front of a bulkhead is waiting time, and waiting time is what you are trying to bound. Polly's concurrency limiter and the .NET standard handler use a queue of 0 by default.</li>
+<li><strong>Choose between rejecting and degrading.</strong> A rejected call is a fast failure, so it can go straight to a fallback.</li>
+<li>Thread-pool bulkheads (a separate pool per dependency, as in Hystrix and Resilience4j's <code>ThreadPoolBulkhead</code>) also isolate CPU and blocking I/O, at the cost of context switches. Semaphore bulkheads are cheaper and are the default almost everywhere now, especially with async I/O, virtual threads and goroutines, where threads are not the scarce resource.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Ecosystem</th>
+<th>Bulkhead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.NET</td>
+<td>Polly <code>AddConcurrencyLimiter(permitLimit, queueLimit)</code> (System.Threading.RateLimiting underneath)</td>
+</tr>
+<tr>
+<td>Java</td>
+<td>Resilience4j <code>Bulkhead</code> (semaphore) or <code>ThreadPoolBulkhead</code>; Spring 7 <code>@ConcurrencyLimit</code></td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>asyncio.Semaphore</code> with a zero-wait check (<code>if sem.locked(): reject</code>)</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>a buffered channel used as a semaphore, or <code>golang.org/x/sync/semaphore</code> with <code>TryAcquire</code></td>
+</tr>
+<tr>
+<td>TypeScript</td>
+<td>cockatiel <code>bulkhead(limit, queue)</code>, or <code>p-limit</code> (which queues: be careful)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="rate-limiting-protect-a-dependency-or-a-quota">Rate limiting: protect a dependency, or a quota</h2>
+<p>Rate limiting answers "how much traffic is allowed per unit of time?". There are two very different users of it:</p>
+<ul>
+<li><strong>Server side</strong>, to protect yourself from clients. That is middleware, covered in <a href="middleware-patterns.html">Middleware Patterns</a> (ASP.NET Core's <code>AddRateLimiter</code>, Spring with Bucket4j, <code>slowapi</code>, <code>x/time/rate</code> in a handler, <code>express-rate-limit</code>).</li>
+<li><strong>Client side</strong>, to stay under someone else's limit: a payment provider's 100 requests/s, a partner API's daily quota, a database you promised not to hammer. This belongs in the outbound pipeline, <strong>outside</strong> the retry, so that retries count towards the limit too.</li>
+</ul>
+<p>Both use the same small set of algorithms, and they differ most in how they treat <strong>bursts</strong>. Compare them on the same traffic:</p>
+<div class="viz" data-viz="resilience-ratelimit"></div>
+
+<p>Try "burst at the window boundary": the fixed window admits 20 requests in two ticks against a limit of 10 per window, because the counter resets in between. The sliding log and the sliding window counter both hold the line at 10. Try "bursty": the token bucket admits a burst up to B and then settles at the refill rate, while the leaky bucket <strong>queues</strong> the burst and drains it at a constant rate, so nothing is rejected until the queue is full, but everything waits.</p>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>State per key</th>
+<th>Bursts</th>
+<th>Use it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Token bucket</td>
+<td>tokens + last refill time</td>
+<td>allows up to B, then the rate</td>
+<td>the default choice: APIs, client-side throttling (<code>x/time/rate</code>, Guava, Polly, Bucket4j)</td>
+</tr>
+<tr>
+<td>Leaky bucket (queue)</td>
+<td>a queue</td>
+<td>smooths into a constant rate</td>
+<td>shaping traffic to a strict downstream (adds latency)</td>
+</tr>
+<tr>
+<td>Fixed window</td>
+<td>one counter</td>
+<td>up to 2× at the boundary</td>
+<td>cheap quotas ("1,000 per day"); simple Redis <code>INCR</code> + <code>EXPIRE</code></td>
+</tr>
+<tr>
+<td>Sliding log</td>
+<td>a timestamp per request</td>
+<td>exact</td>
+<td>low volumes where exactness matters</td>
+</tr>
+<tr>
+<td>Sliding window counter</td>
+<td>two counters</td>
+<td>close to exact</td>
+<td>high volumes; the usual distributed choice</td>
+</tr>
+</tbody>
+</table>
+<p>In a cluster, a per-instance limit of L/n works if traffic is spread evenly; for a strict global limit you need a shared store (Redis with a Lua script), and you pay a network hop per decision.</p>
+<h2 id="load-shedding-say-no-early-to-the-right-requests">Load shedding: say no early, to the right requests</h2>
+<p>Rate limiting caps traffic at a number you chose in advance. <strong>Load shedding</strong> responds to your <strong>actual</strong> capacity right now: when you are overloaded, reject some work immediately so that the rest completes in time. The insight is that during overload, a request that is served too late is worse than one rejected at once: it used capacity <strong>and</strong> failed.</p>
+<p>Run the spike below with each policy. Capacity is 10 requests per tick, normal traffic is 8, the spike brings 18 for 20 ticks, and clients give up after 10 ticks.</p>
+<div class="viz" data-viz="resilience-shed"></div>
+
+<p>With an <strong>unbounded FIFO queue</strong>, the queue grows during the spike, every request waits longer than the client's timeout, and about half of all the work done is wasted on requests nobody is waiting for anymore (374 useful against 376 wasted with the defaults). The service is 100% busy and nearly useless. A <strong>bounded queue</strong> rejects the excess at the door and almost doubles the useful work. <strong>LIFO</strong> (serve the newest first) keeps recent requests fresh while old ones expire. <strong>Dropping expired requests before working on them</strong> does best of all here: it never spends capacity on a request whose client has left.</p>
+<p>Techniques that real systems use:</p>
+<ul>
+<li><strong>Bound every queue</strong>, including the ones you don't think of as queues: the server's accept backlog, thread-pool queues, channel buffers, Kafka consumer lag.</li>
+<li><strong>Carry the deadline</strong> (see <a href="#deadline-propagation-stop-working-for-someone-who-has-left">deadline propagation</a>) and check it when the work is dequeued, not only when it arrives.</li>
+<li><strong>Shed by priority</strong>: health checks and paying users' checkout before analytics and prefetches. Mark low-priority traffic with a header so that every layer can shed it first.</li>
+<li><strong>Adaptive LIFO and CoDel</strong>: Facebook's servers switch the queue to LIFO under load, and CoDel-style queues reject when the <strong>minimum</strong> queueing delay over an interval stays above a target (for example 5 ms over 100 ms), which separates a standing queue from a short burst.</li>
+<li><strong>Client-side adaptive throttling</strong> (Google SRE): each client tracks <code>requests</code> and <code>accepts</code> over two minutes and rejects locally with probability <code>max(0, (requests − K·accepts) / (requests + 1))</code>, with K = 2. When the backend rejects a lot, the clients stop sending most of the traffic before it leaves their process.</li>
+<li>In .NET, <code>System.Threading.RateLimiting.ConcurrencyLimiter</code> with a small queue in ASP.NET Core's rate-limiting middleware is a simple concurrency-based shedder; Kestrel's <code>MaxConcurrentConnections</code> is a blunt one.</li>
+</ul>
+<h2 id="fallbacks-decide-what-the-user-sees-instead">Fallbacks: decide what the user sees instead</h2>
+<p>When the call fails for good (retries exhausted, breaker open, bulkhead full, deadline gone), something still has to be returned. A fallback is that decision, made in advance rather than as an unhandled exception.</p>
+<table>
+<thead>
+<tr>
+<th>Fallback</th>
+<th>Example</th>
+<th>Watch out for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stale data</td>
+<td>last known prices from a cache, flagged as stale</td>
+<td>how stale is acceptable? See stale-while-revalidate in <a href="caching.html">Caching</a></td>
+</tr>
+<tr>
+<td>A static default</td>
+<td>empty recommendations; a generic banner</td>
+<td>hiding a real outage from your dashboards: count fallbacks</td>
+</tr>
+<tr>
+<td>Degrade the feature</td>
+<td>checkout without the "estimated delivery" line</td>
+<td>the UI must handle the missing piece</td>
+</tr>
+<tr>
+<td>A different source</td>
+<td>a secondary region, a read replica</td>
+<td>it may be overloaded by the same incident, or by your failover</td>
+</tr>
+<tr>
+<td>Queue it for later</td>
+<td>accept the order, charge asynchronously</td>
+<td>you now owe the user an eventual outcome and a notification</td>
+</tr>
+<tr>
+<td>Fail clearly and fast</td>
+<td>a 503 with <code>Retry-After</code></td>
+<td>often the honest choice for writes</td>
+</tr>
+</tbody>
+</table>
+<p>Two rules. A fallback must be <strong>cheaper and more reliable</strong> than the thing it replaces: a fallback that calls another remote service under load is how fires spread. And it must be <strong>exercised</strong>: fallback code that runs only during incidents is the least-tested code you own, so test it (see <a href="#testing-resilience">Testing resilience</a>) and alert on how often it fires.</p>
+<div class="warn">
+<p><strong>Never fall back silently on writes or money.</strong> "Payment service down, so mark the order as paid and sort it out later" is a business decision with fraud and accounting consequences, not a resilience setting. Fallbacks for reads are usually safe; fallbacks for writes need a product owner's sign-off.</p>
+</div>
+<h2 id="hedging-buy-a-shorter-tail-with-a-little-extra-load">Hedging: buy a shorter tail with a little extra load</h2>
+<p>Some slow calls aren't failures. They are the tail: a GC pause, a cold cache, a noisy neighbour on one replica. Retrying after a timeout fixes them too late, because you have already waited for the timeout. <strong>Hedging</strong> sends a second copy of the request to another replica if the first hasn't answered within a short delay <em>d</em> (typically around the p95), uses whichever answers first, and cancels the other.</p>
+<div class="viz" data-viz="resilience-hedge"></div>
+
+<p>With 3% slow responses, the defaults give a p99 of about 750 ms without hedging. Hedging after 50 ms brings the p99 down to about 75 ms for only about 4% extra requests, because 96% of calls finish before the hedge would be sent. "Always send 2" cuts the tail a little further, but doubles the load, and with load sensitivity switched on the extra load makes the <strong>median</strong> worse. Google's "The Tail at Scale" reports the same shape on a real system: hedging after the p95 cut the 99.9th percentile from 1,800 ms to 74 ms for 2% more requests.</p>
+<p>Hedging is only safe when:</p>
+<ul>
+<li>the operation is <strong>idempotent</strong> (two copies may both run to completion),</li>
+<li>the copies go to <strong>different replicas</strong> (two requests to the same overloaded instance help nobody),</li>
+<li>the hedge delay is adaptive or at least set from measured latency (around p95), and hedges are <strong>capped</strong> (a budget, as for retries),</li>
+<li>you <strong>cancel the loser</strong>, so the extra load lasts only as long as needed.</li>
+</ul>
+<p>The .NET standard <strong>hedging</strong> handler (<code>AddStandardHedgingHandler</code>) is built for this; gRPC has a <code>hedgingPolicy</code> in the service config (a call can have a retry policy or a hedging policy, not both). Don't combine hedging with an aggressive retry on the same call: you get both multipliers.</p>
+<h2 id="putting-it-together-the-order-of-strategies">Putting it together: the order of strategies</h2>
+<p>Each strategy is a layer of middleware around the call, exactly like the <a href="outbound-pipelines.html">outbound handler chain</a>: the outer layer sees one logical call, the inner layers see every attempt. So the <strong>order changes the behaviour</strong>, not just the style. Here is the order nearly every mature library converges on, outermost first:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Layer</th>
+<th>Why it sits here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Fallback</strong></td>
+<td>Outermost, so it catches <em>everything</em> that escapes: the final error after retries, an open breaker, the total timeout, a full bulkhead. Put it inside the retry and the first error becomes a "success" that nothing retries.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Total timeout</strong></td>
+<td>The caller's budget for the whole operation, <strong>including</strong> every retry and every backoff. Without it, 4 attempts × 1 s + backoff = 4.4 s, not the 3 s you promised.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Bulkhead / concurrency limit</strong></td>
+<td>One permit per <em>logical</em> call, so a retry sequence doesn't need a new slot (and can't deadlock waiting for one). Rejected calls fail in microseconds. The .NET standard handler puts its rate limiter here, outermost of all.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Retry</strong></td>
+<td>Outside the breaker, so each attempt goes through the breaker: the breaker counts every failure, and once it opens, the next attempt short-circuits instead of hitting the dependency.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Circuit breaker</strong></td>
+<td>Sees each attempt. Inside the retry, an open breaker turns "4 slow attempts" into "1 instant rejection".</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Attempt timeout</strong></td>
+<td>Innermost: it bounds one try, so a hung attempt is abandoned in time for a retry to run within the total budget.</td>
+</tr>
+</tbody>
+</table>
+<p>Now break the order on purpose. Pick an ordering and a scenario; the bars show each layer's work in time, and the log explains who caught what.</p>
+<div class="viz" data-viz="resilience-pipeline"></div>
+
+<p>What the presets show (the dependency's healthy answer takes 50 ms; backoff is 200, 400, 800 ms):</p>
+<table>
+<thead>
+<tr>
+<th>Ordering</th>
+<th>Two 503s, then 200</th>
+<th>First attempt hangs</th>
+<th>Dependency down (503)</th>
+<th>Dependency hangs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Recommended</strong> F › T › R › B › A</td>
+<td>fresh, 800 ms</td>
+<td>fresh, 1,300 ms</td>
+<td>stale, 1,550 ms (breaker opens, attempt 4 short-circuits)</td>
+<td>stale, 3,000 ms (total budget)</td>
+</tr>
+<tr>
+<td>Timeout outside retry</td>
+<td>fresh, 800 ms</td>
+<td><strong>stale, 1,000 ms</strong>: the timeout killed the retry loop</td>
+<td>stale, 1,000 ms</td>
+<td>stale, 1,000 ms (only 1 attempt)</td>
+</tr>
+<tr>
+<td>Breaker outside retry</td>
+<td>fresh, 800 ms</td>
+<td>fresh, 1,300 ms</td>
+<td>stale, 1,600 ms, <strong>4 attempts</strong>, breaker at 1/3</td>
+<td>stale, 3,000 ms</td>
+</tr>
+<tr>
+<td>Fallback inside retry</td>
+<td><strong>stale, 50 ms</strong>: never retried</td>
+<td>stale, 1,000 ms</td>
+<td>stale, 50 ms</td>
+<td>stale, 1,000 ms</td>
+</tr>
+<tr>
+<td>No total timeout</td>
+<td>fresh, 800 ms</td>
+<td>fresh, 1,300 ms</td>
+<td>stale, 1,550 ms</td>
+<td>stale, <strong>4,400 ms</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Two of the wrong orders look fine on the happy path and only misbehave during an incident, which is exactly when you can't afford it. That is why the order belongs in a test (see <a href="#testing-resilience">Testing resilience</a>), not in someone's memory.</p>
+<div class="rule">
+<p><strong>Fallback › total timeout › bulkhead › retry › breaker › attempt timeout › the call.</strong> Read it as: "decide what the user sees; bound the whole thing; cap how many of us wait; try a few times; stop if it's clearly down; don't let one try hang."</p>
+</div>
+<h3 id="the-same-pipeline-in-five-ecosystems">The same pipeline in five ecosystems</h3>
+<p>The same five layers (plus a bulkhead) in each language. All five were written against the current library APIs; the C#, Python and TypeScript versions were run against a fake dependency that fails twice, hangs, and returns 404, and behave as in the table above (fresh after retries; stale after exactly 3 s; a 404 is passed through, not retried and not hidden by the fallback).</p>
+<div class="code-tabs" data-labels="C# (Polly v8),Java (Resilience4j),Python (tenacity + asyncio),Go (gobreaker v2),TypeScript (cockatiel)">
+<pre><code class="language-csharp">// dotnet add package Polly.Core   (first strategy added = outermost)
+static bool IsTransient(HttpResponseMessage r) =&gt; (int)r.StatusCode is 408 or 429 or &gt;= 500;
+
+static PredicateBuilder&lt;HttpResponseMessage&gt; Transient() =&gt; new PredicateBuilder&lt;HttpResponseMessage&gt;()
+    .Handle&lt;HttpRequestException&gt;()
+    .Handle&lt;TimeoutRejectedException&gt;()        // an attempt timed out
+    .HandleResult(IsTransient);
+
+ResiliencePipeline&lt;HttpResponseMessage&gt; pipeline = new ResiliencePipelineBuilder&lt;HttpResponseMessage&gt;()
+    .AddFallback(new FallbackStrategyOptions&lt;HttpResponseMessage&gt;             // 1. fallback
+    {
+        ShouldHandle = Transient().Handle&lt;BrokenCircuitException&gt;(),
+        FallbackAction = _ =&gt; Outcome.FromResultAsValueTask(CachedResponse())
+    })
+    .AddTimeout(TimeSpan.FromSeconds(3))                                      // 2. total timeout
+    .AddRetry(new RetryStrategyOptions&lt;HttpResponseMessage&gt;                   // 3. retry
+    {
+        ShouldHandle = Transient(),
+        MaxRetryAttempts = 3,                                                 // 4 calls in total
+        BackoffType = DelayBackoffType.Exponential,
+        UseJitter = true,
+        Delay = TimeSpan.FromMilliseconds(200)
+    })
+    .AddCircuitBreaker(new CircuitBreakerStrategyOptions&lt;HttpResponseMessage&gt; // 4. breaker
+    {
+        ShouldHandle = Transient(),                                           // a 404 is not a failure
+        FailureRatio = 0.5,
+        MinimumThroughput = 20,
+        SamplingDuration = TimeSpan.FromSeconds(10),
+        BreakDuration = TimeSpan.FromSeconds(5)
+    })
+    .AddTimeout(TimeSpan.FromSeconds(1))                                      // 5. attempt timeout
+    .Build();
+// A bulkhead: .AddConcurrencyLimiter(20) from Polly.RateLimiting, right after the total timeout.
+
+HttpResponseMessage res = await pipeline.ExecuteAsync(
+    async ct =&gt; await http.GetAsync($&quot;api/prices/{id}&quot;, ct), cancellationToken);
+</code></pre>
+<pre><code class="language-java">// io.github.resilience4j: circuitbreaker, retry, bulkhead, timelimiter, all
+CircuitBreaker breaker = CircuitBreaker.of(&quot;prices&quot;, CircuitBreakerConfig.custom()
+    .failureRateThreshold(50)
+    .minimumNumberOfCalls(20)
+    .slidingWindowType(SlidingWindowType.TIME_BASED).slidingWindowSize(10)   // seconds
+    .waitDurationInOpenState(Duration.ofSeconds(5))
+    .permittedNumberOfCallsInHalfOpenState(3)
+    .recordException(Errors::isTransient)                                     // a 404 is not a failure
+    .build());
+Retry retry = Retry.of(&quot;prices&quot;, RetryConfig.custom()
+    .maxAttempts(4)                                                           // includes the first call
+    .intervalFunction(IntervalFunction.ofExponentialRandomBackoff(Duration.ofMillis(200), 2.0, 0.5))
+    .retryOnException(Errors::isTransient)                                    // false for CallNotPermittedException
+    .build());
+Bulkhead bulkhead = Bulkhead.of(&quot;prices&quot;, BulkheadConfig.custom()
+    .maxConcurrentCalls(20).maxWaitDuration(Duration.ZERO).build());          // reject, don't queue
+TimeLimiter total = TimeLimiter.of(Duration.ofSeconds(3));
+
+// Each with...() wraps the previous one: the LAST one added is the OUTERMOST.
+Supplier&lt;Price&gt; guarded = Decorators.ofSupplier(() -&gt; client.fetchPrice(id)) // HttpRequest.timeout(1 s) = attempt timeout
+    .withCircuitBreaker(breaker)
+    .withRetry(retry)
+    .withBulkhead(bulkhead)
+    .decorate();
+
+Price price;
+try {
+    price = total.executeFutureSupplier(() -&gt; CompletableFuture.supplyAsync(guarded, pool)); // total timeout
+} catch (Exception e) {
+    if (!Errors.isFallbackWorthy(e)) throw e;     // timeout, open breaker, full bulkhead, transient error
+    price = cache.lastKnown(id);                  // fallback (outermost)
+}
+</code></pre>
+<pre><code class="language-python">import asyncio, time, httpx
+from tenacity import AsyncRetrying, stop_after_attempt, wait_random_exponential, retry_if_exception
+
+class Rejected(Exception): ...
+
+class Breaker:
+    &quot;&quot;&quot;Opens after n consecutive failures; lets a probe through after cool_down.&quot;&quot;&quot;
+    def __init__(self, n=5, cool_down=5.0):
+        self.n, self.cool_down, self.fails, self.opened_at = n, cool_down, 0, None
+    def check(self):
+        if self.opened_at and time.monotonic() - self.opened_at &lt; self.cool_down:
+            raise Rejected(&quot;breaker open&quot;)
+    def record(self, ok):
+        self.fails = 0 if ok else self.fails + 1
+        self.opened_at = time.monotonic() if self.fails &gt;= self.n else None
+
+def transient(e):
+    if isinstance(e, (httpx.TransportError, TimeoutError)):
+        return True
+    return isinstance(e, httpx.HTTPStatusError) and e.response.status_code in (408, 429, 500, 502, 503, 504)
+
+breaker, bulkhead = Breaker(), asyncio.Semaphore(20)
+
+async def one_attempt(client, url):
+    breaker.check()                                   # open: fail fast, not retried
+    try:
+        async with asyncio.timeout(1.0):              # attempt timeout (innermost)
+            r = await client.get(url)
+            r.raise_for_status()
+    except Exception as e:
+        breaker.record(ok=not transient(e))           # a 404 is not the dependency's fault
+        raise
+    breaker.record(ok=True)
+    return r.json()
+
+async def get_price(client, url, cached):
+    try:
+        if bulkhead.locked():
+            raise Rejected(&quot;bulkhead full&quot;)           # reject, don't queue
+        async with bulkhead, asyncio.timeout(3.0):    # total timeout covers every retry
+            async for attempt in AsyncRetrying(
+                    stop=stop_after_attempt(4),
+                    wait=wait_random_exponential(multiplier=0.2, max=2),
+                    retry=retry_if_exception(transient), reraise=True):
+                with attempt:
+                    return await one_attempt(client, url)
+    except Exception as e:                            # fallback (outermost)
+        if isinstance(e, Rejected) or transient(e):
+            return cached
+        raise                                         # a 404 or 400 is a real answer
+</code></pre>
+<pre><code class="language-go">// go get github.com/sony/gobreaker/v2   (transient and fullJitter: see the retry section)
+type StatusError struct{ Code int } // what fetch returns for a non-2xx response (Error() omitted)
+
+func isTransient(err error) bool {
+    var se *StatusError
+    if errors.As(err, &amp;se) {
+        return transient[se.Code]
+    }
+    var ne net.Error
+    return errors.As(err, &amp;ne) || errors.Is(err, context.DeadlineExceeded)
+}
+
+type PriceClient struct {
+    fetch   func(ctx context.Context, id string) (*Price, error)
+    cache   *PriceCache
+    slots   chan struct{} // bulkhead: make(chan struct{}, 20)
+    breaker *gobreaker.CircuitBreaker[*Price]
+}
+
+func newBreaker() *gobreaker.CircuitBreaker[*Price] {
+    return gobreaker.NewCircuitBreaker[*Price](gobreaker.Settings{
+        Name:        &quot;prices&quot;,
+        MaxRequests: 3,                // probes allowed while half-open
+        Interval:    10 * time.Second, // closed state: reset the counts every 10 s
+        Timeout:     5 * time.Second,  // open -&gt; half-open
+        ReadyToTrip: func(c gobreaker.Counts) bool {
+            return c.Requests &gt;= 20 &amp;&amp; float64(c.TotalFailures)/float64(c.Requests) &gt;= 0.5
+        },
+        IsSuccessful: func(err error) bool { return err == nil || !isTransient(err) }, // 404 != failure
+    })
+}
+
+func (c *PriceClient) Get(ctx context.Context, id string) (*Price, error) {
+    select { // bulkhead: reject at once when full
+    case c.slots &lt;- struct{}{}:
+        defer func() { &lt;-c.slots }()
+    default:
+        return c.cache.Last(id), nil
+    }
+    ctx, cancel := context.WithTimeout(ctx, 3*time.Second) // total timeout
+    defer cancel()
+
+    var err error
+    for attempt := 0; attempt &lt; 4; attempt++ {
+        if attempt &gt; 0 &amp;&amp; !sleep(ctx, fullJitter(attempt)) {
+            break
+        }
+        var p *Price
+        p, err = c.breaker.Execute(func() (*Price, error) {
+            actx, cancel := context.WithTimeout(ctx, time.Second) // attempt timeout
+            defer cancel()
+            return c.fetch(actx, id)
+        })
+        if err == nil {
+            return p, nil
+        }
+        if !isTransient(err) || ctx.Err() != nil {
+            break // open breaker (ErrOpenState), a 4xx, or out of total time
+        }
+    }
+    if isTransient(err) || errors.Is(err, gobreaker.ErrOpenState) || errors.Is(err, gobreaker.ErrTooManyRequests) {
+        return c.cache.Last(id), nil // fallback
+    }
+    return nil, err
+}
+
+func sleep(ctx context.Context, d time.Duration) bool {
+    t := time.NewTimer(d)
+    defer t.Stop()
+    select {
+    case &lt;-ctx.Done():
+        return false
+    case &lt;-t.C:
+        return true
+    }
+}
+</code></pre>
+<pre><code class="language-typescript">import { bulkhead, circuitBreaker, ExponentialBackoff, handleWhen, isBrokenCircuitError,
+  isBulkheadRejectedError, isTaskCancelledError, retry, SamplingBreaker, timeout,
+  TimeoutStrategy, wrap } from &quot;cockatiel&quot;;
+
+class HttpStatusError extends Error {
+  constructor(public status: number) { super(`HTTP ${status}`); }
+}
+
+const isTransient = (e: Error) =&gt;
+  e instanceof HttpStatusError ? [408, 429, 500, 502, 503, 504].includes(e.status)
+  : !isBrokenCircuitError(e) &amp;&amp; !isBulkheadRejectedError(e);
+
+// wrap(a, b, c): a is the OUTERMOST.
+const pipeline = wrap(
+  bulkhead(20, 0),                                    // 20 in flight, no queue
+  timeout(3_000, TimeoutStrategy.Aggressive),         // total timeout
+  retry(handleWhen(isTransient), {
+    maxAttempts: 3,                                   // 3 retries = 4 calls
+    backoff: new ExponentialBackoff({ initialDelay: 200, maxDelay: 2_000 }), // decorrelated jitter
+  }),
+  circuitBreaker(handleWhen(isTransient), {
+    halfOpenAfter: 5_000,
+    breaker: new SamplingBreaker({ threshold: 0.5, duration: 10_000, minimumRps: 2 }),
+  }),
+  timeout(1_000, TimeoutStrategy.Aggressive),         // attempt timeout
+);
+
+export async function getPrice(id: string, cached: Price): Promise&lt;Price&gt; {
+  try {
+    return await pipeline.execute(async ({ signal }) =&gt; {
+      const res = await fetch(`https://prices.internal/api/${id}`, { signal });
+      if (!res.ok) throw new HttpStatusError(res.status);
+      return (await res.json()) as Price;
+    });
+  } catch (e) {                                       // fallback (outermost)
+    const err = e as Error;
+    if (isTransient(err) || isBrokenCircuitError(err) || isBulkheadRejectedError(err) || isTaskCancelledError(err)) return cached;
+    throw err;
+  }
+}
+</code></pre>
+</div>
+<p>Ecosystem notes:</p>
+<ul>
+<li><strong>.NET</strong>: Polly v8 is the engine; <code>Microsoft.Extensions.Http.Resilience</code> wraps it in ready-made HTTP pipelines with DI and telemetry (next section). Pipelines are thread-safe: build once, reuse.</li>
+<li><strong>Java</strong>: with Spring Boot, Resilience4j's <code>@CircuitBreaker(name = "prices", fallbackMethod = "cached")</code> and <code>@Retry(name = "prices")</code> are configured in <code>application.yml</code>, and the default aspect order is already right: Retry › CircuitBreaker › RateLimiter › TimeLimiter › Bulkhead › method. Spring Framework 7 adds built-in <code>@Retryable</code> and <code>@ConcurrencyLimit</code> for simple cases.</li>
+<li><strong>Python</strong>: tenacity for retries; a breaker and a bulkhead are small enough to own, as above. <code>asyncio.timeout</code> (3.11+) is the total timeout.</li>
+<li><strong>Go</strong>: no framework: <code>context</code> deadlines, channels as semaphores, <code>x/time/rate</code>, <code>sony/gobreaker</code>. gRPC clients get retries, hedging and deadlines from the service config.</li>
+<li><strong>TypeScript</strong>: cockatiel mirrors Polly's model. Pass the <code>AbortSignal</code> all the way down, or the timeouts can't cancel anything.</li>
+</ul>
+<h3 id="the-standard-pipelines-in-net">The standard pipelines in .NET</h3>
+<p>For <code>HttpClient</code> you rarely build the pipeline yourself. <code>AddStandardResilienceHandler()</code> from <code>Microsoft.Extensions.Http.Resilience</code> adds five strategies, outermost first:</p>
+<table>
+<thead>
+<tr>
+<th>Order</th>
+<th>Strategy</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Rate limiter</td>
+<td>Concurrency limiter: 1,000 permits, queue 0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Total request timeout</td>
+<td>30 s</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Retry</td>
+<td>3 retries, exponential with jitter, 2 s base delay; honours <code>Retry-After</code>; handles 408, 429, 5xx, <code>HttpRequestException</code> and attempt timeouts</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Circuit breaker</td>
+<td>Opens at a 10% failure ratio over a 30 s sampling window, minimum throughput 100; breaks for 5 s</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Attempt timeout</td>
+<td>10 s</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-csharp">builder.Services.AddHttpClient&lt;PricesClient&gt;(c =&gt; c.BaseAddress = new(&quot;https://prices.internal&quot;))
+    .AddStandardResilienceHandler(o =&gt;
+    {
+        o.AttemptTimeout.Timeout = TimeSpan.FromSeconds(1);
+        o.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(3);
+        o.Retry.MaxRetryAttempts = 3;
+        o.Retry.Delay = TimeSpan.FromMilliseconds(200);
+        o.Retry.DisableForUnsafeHttpMethods();             // no retries for POST, PATCH, PUT, DELETE, CONNECT
+        o.CircuitBreaker.SamplingDuration = TimeSpan.FromSeconds(10); // must be &gt;= 2 x attempt timeout
+        o.CircuitBreaker.MinimumThroughput = 20;
+    });
+
+// Hedging instead of retries, for latency-sensitive idempotent reads:
+builder.Services.AddHttpClient&lt;SearchClient&gt;().AddStandardHedgingHandler();
+</code></pre>
+<p>The options are validated at startup: the total timeout must exceed the attempt timeout, and the breaker's sampling duration must be at least twice the attempt timeout. The <strong>hedging</strong> handler has a different shape: total timeout (30 s) › hedging (up to 10 hedges, 2 s delay) › then, <em>per endpoint</em>, rate limiter › breaker › attempt timeout (10 s), so one bad replica's breaker opens without blocking hedges to the others. Two traps: don't stack your own <code>AddResilienceHandler</code> on top of the standard one (two retry layers), and if you set defaults for every client with <code>ConfigureHttpClientDefaults</code>, use <code>RemoveAllResilienceHandlers()</code> on the client that needs something different. <code>SelectPipelineByAuthority()</code> gives each host its own breaker, so <code>a.example.com</code> failing doesn't open the breaker for <code>b.example.com</code>.</p>
+<h2 id="when-to-use-each-strategy-and-when-not-to">When to use each strategy, and when not to</h2>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Use when</th>
+<th>Don't, or be careful, when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Timeout</td>
+<td><strong>Always</strong>, on every remote call: connect, attempt and total</td>
+<td>Never skip it. Be careful setting it below the p99.9, or long-running work will fail every time</td>
+</tr>
+<tr>
+<td>Retry</td>
+<td>Transient errors (connect failures, 503, 429 with <code>Retry-After</code>) on <strong>idempotent</strong> operations</td>
+<td>Writes without idempotency keys; 4xx; when an inner layer already retries; when you're out of budget or deadline</td>
+</tr>
+<tr>
+<td>Circuit breaker</td>
+<td>A dependency that fails hard and in bulk (down, overloaded), with enough traffic to measure</td>
+<td>Low-traffic calls (the window never fills); random partial failure; one breaker shared across hosts that fail independently</td>
+</tr>
+<tr>
+<td>Bulkhead</td>
+<td>Several dependencies share one pool of threads, connections or memory</td>
+<td>A single-dependency service where the limit just adds a second queue</td>
+</tr>
+<tr>
+<td>Rate limit (client)</td>
+<td>Partner quotas and APIs that charge per call</td>
+<td>As a substitute for the server protecting itself</td>
+</tr>
+<tr>
+<td>Load shedding</td>
+<td>Servers that can be overloaded; queues with a timeout upstream</td>
+<td>Batch work, where queuing is the point</td>
+</tr>
+<tr>
+<td>Fallback</td>
+<td>Reads with a reasonable degraded answer (cache, default, a smaller feature)</td>
+<td>Writes, money, security decisions; fallbacks that call another fragile service</td>
+</tr>
+<tr>
+<td>Hedging</td>
+<td>Idempotent, latency-critical reads with several replicas</td>
+<td>Writes; a single replica; an overloaded backend (it adds load)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="when-not-to-retry">When NOT to retry</h3>
+<ul>
+<li><strong>The error is not transient</strong>: 400, 401, 403, 404, 409, 422. The next attempt gets the same answer.</li>
+<li><strong>The operation is not idempotent</strong> and has no idempotency key: POST /payments, "send email", "increment counter".</li>
+<li><strong>Someone else already retries</strong>: an SDK, a service mesh, a gRPC service config, a queue's redelivery. One owner per hop.</li>
+<li><strong>The caller has gone</strong>: the deadline is spent or the request was cancelled. Retrying works for no one.</li>
+<li><strong>The dependency told you to stop</strong>: an open breaker, a 429 with a <code>Retry-After</code> beyond your deadline, or a 503 during a declared overload.</li>
+<li><strong>Inside a loop that already runs again</strong>: a consumer that will redeliver the message, or a scheduled job that runs every minute anyway.</li>
+<li><strong>Under a database transaction or a lock</strong>: holding them for 2 s of backoff turns one slow call into a blocked table. Retry the <em>whole</em> unit of work outside the transaction instead.</li>
+</ul>
+<div class="compare">
+<div class="good">
+<h4 id="good">Good</h4>
+<pre><code class="language-csharp">.AddStandardResilienceHandler(o =&gt;
+{
+    o.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(3);
+    o.AttemptTimeout.Timeout = TimeSpan.FromSeconds(1);
+    o.Retry.DisableForUnsafeHttpMethods();
+});
+// POST /payments sends an Idempotency-Key and
+// is retried only by the outbox worker.
+</code></pre>
+<p>One retry owner, bounded in time, reads only; writes are made safe first and retried in one controlled place.</p>
+</div>
+<div class="bad">
+<h4 id="bad">Bad</h4>
+<pre><code class="language-csharp">for (var i = 0; i &lt; 5; i++)
+{
+    try { return await http.PostAsync(&quot;payments&quot;, body); }
+    catch { await Task.Delay(1000); }
+}
+// Inside a client that already has
+// AddStandardResilienceHandler.
+</code></pre>
+<p>Retries a payment with no key, on any error (including 400), with a fixed 1 s delay (synchronized herd), inside another retry layer: up to 20 calls per click, and possible double charges.</p>
+</div>
+</div>
+<p>Resilience inside one call is half the story; across services you also need asynchronous messaging, outboxes, sagas and back-pressure, which <a href="distributed-architecture.html">Distributed architecture</a> covers. Caching is often the best fallback of all; <a href="caching.html">Caching</a> covers stale-while-revalidate and serving stale on error.</p>
+<h2 id="testing-resilience">Testing resilience</h2>
+<p>Resilience code runs rarely and only when things are already going wrong, so it rots unless tests run it. Four levels, cheapest first:</p>
+<ol>
+<li><strong>Unit-test the policy with a fake clock.</strong> Polly v8 strategies read time from <code>TimeProvider</code>; inject <code>FakeTimeProvider</code> (from <code>Microsoft.Extensions.TimeProvider.Testing</code>) and advance it, so a test of "breaker opens, then half-opens after 5 s" runs in milliseconds. In Go, inject the clock or keep delays as fields; in Python, patch tenacity's <code>sleep</code>; in TypeScript, use fake timers.</li>
+<li><strong>Unit-test the order with a scripted fake dependency.</strong> A stub that answers "503, 503, 200" or "hang" and records each attempt (exactly what the pipeline explorer above does). Assert the number of attempts, the elapsed time against the total budget, and that a 404 is not retried. This one test catches every wrong order in the table.</li>
+<li><strong>Inject faults in a running system.</strong> Polly's chaos strategies (<code>AddChaosLatency</code>, <code>AddChaosFault</code>, <code>AddChaosOutcome</code>, <code>AddChaosBehavior</code>), enabled by configuration in a test environment; or a proxy such as Toxiproxy between the service and a real dependency; or service-mesh fault injection. Watch the timeouts fire and the breaker open for real.</li>
+<li><strong>Game days.</strong> Turn a dependency off in staging (or, carefully, in production) and check that the user-visible behaviour is the one you designed: the fallback shows, alerts fire, and recovery happens without a deploy.</li>
+</ol>
+<p><strong>Observe it in production.</strong> Every strategy should emit telemetry: retries per call, breaker state changes, rejections by the bulkhead and rate limiter, timeouts, and <strong>how often the fallback fires</strong>. Polly and Microsoft.Extensions.Resilience emit these as metrics and logs out of the box (<code>resilience.polly.strategy.events</code> and friends); Resilience4j has Micrometer modules. Alert on "breaker open" and on fallback rate, and put retry counts next to error rates on the dashboard: a rising retry rate is the earliest sign of a dependency in trouble. <a href="observability.html">Observability</a> covers metrics, traces and alerts in depth.</p>
+<h2 id="pitfalls-and-war-stories">Pitfalls and war stories</h2>
+<div class="pitfall">
+<p><strong>Pitfall: retrying a POST</strong>
+A checkout service retried every failed <code>POST /charges</code> on timeout. The payment provider had processed the first request; only the response was lost. Customers were charged twice, about 40 times a day, all during a network blip. <strong>Fix:</strong> an <code>Idempotency-Key</code> on every write, a server that stores and replays results, and <code>DisableForUnsafeHttpMethods()</code> until both are in place.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: a breaker that counts 4xx</strong>
+A new mobile release sent a malformed field, and its 400 responses were counted as failures. The breaker opened and rejected every call to the profile service, including the valid ones from older app versions and the web site. One client's bug became everyone's outage. <strong>Fix:</strong> count only transient failures (5xx, 408, 429, timeouts, connection errors) as breaker failures.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: a timeout just below the p99</strong>
+The team set a 200 ms timeout because "the p95 is 150 ms" and added 3 retries. Every slow-but-fine request now made 4 calls; the extra load pushed the p99 higher, which caused more timeouts. <strong>Fix:</strong> set the attempt timeout from the p99.9 plus headroom, cap retries with a budget, and consider hedging for the tail instead.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: the fallback that had never run</strong>
+The recommendations fallback read from a Redis cache, whose key format had changed six months earlier. The first time recommendations went down, the fallback threw a deserialization exception and took the home page with it. <strong>Fix:</strong> test fallbacks (chaos strategies in staging), and emit a metric each time they run so you know they work.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: one breaker for many hosts</strong>
+A client called 12 shards through one named <code>HttpClient</code> with one circuit breaker. One shard failed, its failures crossed the 10% ratio, and the breaker cut off all 12. <strong>Fix:</strong> one breaker per independent failure domain: <code>SelectPipelineByAuthority()</code>, a breaker per host in Go and Java, or the hedging handler's per-endpoint breakers.</p>
+</div>
+<h2 id="best-practice-checklist">Best-practice checklist</h2>
+<div class="flow" markdown="0">
+<div class="flow-step"><strong>Timeouts everywhere</strong><p>Attempt and total, on every call. Derive them from measured latency and the caller's budget, never the library default.</p></div>
+<div class="flow-step"><strong>Propagate deadlines</strong><p>Pass the remaining budget downstream (<code>ctx</code>, <code>CancellationToken</code>, <code>grpc-timeout</code>); stop when it is spent.</p></div>
+<div class="flow-step"><strong>Retry rarely, with jitter</strong><p>Transient errors, idempotent operations, one layer per hop, exponential backoff with jitter, a retry budget.</p></div>
+<div class="flow-step"><strong>Make writes safe</strong><p>Idempotency keys stored atomically with the result; replay, don't redo.</p></div>
+<div class="flow-step"><strong>Break per failure domain</strong><p>Breakers on failure ratio with a minimum throughput, counting only transient failures, one per host.</p></div>
+<div class="flow-step"><strong>Bound concurrency</strong><p>Bulkheads per dependency; shed load early on the server, using deadlines and priorities.</p></div>
+<div class="flow-step"><strong>Decide the fallback</strong><p>A product decision, cheap and local, tested, and visible on a dashboard.</p></div>
+<div class="flow-step"><strong>Get the order right</strong><p>Fallback › total timeout › bulkhead › retry › breaker › attempt timeout, pinned by a test.</p></div>
+</div>
+
+<ul>
+<li>[ ] Every outbound call has an attempt timeout and a total timeout, and passes the incoming deadline down.</li>
+<li>[ ] Exactly one layer retries each hop; SDK, mesh and gRPC retries are accounted for.</li>
+<li>[ ] Non-idempotent operations are not retried, or carry an idempotency key the server enforces.</li>
+<li>[ ] Breakers ignore 4xx and are scoped per host; each dependency has a concurrency limit.</li>
+<li>[ ] Dashboards show retries, breaker state, rejections and fallback rate; "breaker open" alerts someone.</li>
+<li>[ ] A test pins the pipeline order and the behaviour for "503, 503, 200", "hang" and "404".</li>
+</ul>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>Your attempt timeout is 1 s, you allow 3 retries with backoff 200, 400, 800 ms, and the caller gives you 3 s. The dependency hangs. When does the caller get an answer, and how many attempts were made?</summary>
+<p>At <strong>3 s</strong>, from the total timeout, after <strong>3</strong> attempts (1 s + 0.2 s + 1 s + 0.4 s = 2.6 s, and the third attempt is cut off at 3 s). The fourth attempt never starts. Without a total timeout, it would be 4 × 1 s + 1.4 s of backoff = 4.4 s, and the caller would already have given up.</p>
+</details>
+<details class="quiz">
+<summary>Three layers (gateway, service, data client) each retry 3 times (4 attempts). The database is down. How many calls does it receive per user request?</summary>
+<p><strong>4 × 4 × 4 = 64.</strong> Retries multiply across layers. Retry at one layer only (usually the one closest to the failing dependency), and use retry budgets so that, under a broad outage, retries add at most about 10% to the load.</p>
+</details>
+<details class="quiz">
+<summary>A circuit breaker sits <em>outside</em> the retry. The dependency is down. What changes compared with the recommended order?</summary>
+<p>The breaker sees only the result of the whole retry loop, so 4 failed attempts count as <strong>1</strong> failure. It takes about 4 times as many failed user calls before it opens, and each of them makes 4 attempts against a dependency that is down. Inside the retry, the breaker counts each attempt and, once open, short-circuits the remaining retries.</p>
+</details>
+<details class="quiz">
+<summary>The client times out on <code>POST /orders</code>. Is it safe to retry? What has to be true?</summary>
+<p>Only if the request carries an <strong>idempotency key</strong> and the server enforces it: it stores the key with the result in the same transaction, replays the stored result for a repeated key, returns 409 while the first request is still in progress, and rejects a reused key with a different body. A timeout means "unknown", not "failed": the first request may have succeeded.</p>
+</details>
+<details class="quiz">
+<summary>The service is overloaded and requests wait 4 s in a queue, but every caller times out after 2 s. Why is throughput of useful work falling, and what are two fixes?</summary>
+<p>The server is spending most of its capacity on requests whose callers have already left: it does the work, and nobody receives the answer. Fixes: <strong>bound the queue</strong> (reject early with 503 and <code>Retry-After</code>), and <strong>drop requests whose deadline has passed</strong> before doing the work (or serve LIFO under overload). In the shedding simulator, dropping expired work doubles the useful throughput.</p>
+</details>
+<details class="quiz">
+<summary>When does hedging make latency worse instead of better?</summary>
+<p>When the backend is slow <strong>because it's overloaded</strong>: hedges add load, which makes everything slower, the median included. Also when both copies go to the same replica, when the hedge delay is lower than typical latency (every call is doubled), or when the losers aren't cancelled. Hedge at about the p95, cap the hedge rate, and only for idempotent reads.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Timeouts</strong>Attempt (innermost) + total (outside retries). From p99.9 + headroom; never the default.</div>
+<div><strong>Deadlines</strong>Pass the remaining budget down; stop work when it's spent. gRPC: <code>grpc-timeout</code>.</div>
+<div><strong>Retry</strong>Transient + idempotent only. Exponential + full jitter, 3 retries max, honour <code>Retry-After</code>.</div>
+<div><strong>Amplification</strong>Retries multiply per layer. One owner per hop; retry budget ≈ 10%.</div>
+<div><strong>Idempotency</strong><code>Idempotency-Key</code>, stored with the result atomically; replay, 409 in flight, 422 on mismatch.</div>
+<div><strong>Breaker</strong>Closed › open › half-open. Failure ratio + minimum throughput; count only transient failures; per host.</div>
+<div><strong>Bulkhead</strong>A concurrency limit per dependency; reject when full rather than queue.</div>
+<div><strong>Rate limit</strong>Token bucket (bursts), sliding window (fairness), leaky bucket (smooth output). 429 + <code>Retry-After</code>.</div>
+<div><strong>Shedding</strong>Bounded queues, drop expired work, LIFO or priorities under overload.</div>
+<div><strong>Fallback</strong>Cheap, local, tested, measured. Never silent on writes or money.</div>
+<div><strong>Hedging</strong>Send a second copy after ~p95 to another replica; idempotent reads; cancel the loser.</div>
+<div><strong>Order</strong>Fallback › total timeout › bulkhead › retry › breaker › attempt timeout › call.</div>
+<div><strong>Libraries</strong>Polly v8 / M.E.Http.Resilience, Resilience4j, tenacity, gobreaker + x/time/rate, cockatiel.</div>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/dotnet/core/resilience/http-resilience">Build resilient HTTP apps (Microsoft.Extensions.Http.Resilience)</a> and <a href="https://learn.microsoft.com/dotnet/core/resilience/">Introduction to resilient app development</a> (Microsoft Learn)</li>
+<li><a href="https://www.pollydocs.org/">Polly documentation</a>, including <a href="https://www.pollydocs.org/strategies/">strategies</a> and <a href="https://www.pollydocs.org/chaos/">chaos engineering</a></li>
+<li><a href="https://resilience4j.readme.io/docs">Resilience4j documentation</a></li>
+<li><a href="https://tenacity.readthedocs.io/">Tenacity documentation</a></li>
+<li><a href="https://pkg.go.dev/github.com/sony/gobreaker/v2"><code>sony/gobreaker</code></a> and <a href="https://pkg.go.dev/golang.org/x/time/rate"><code>golang.org/x/time/rate</code></a></li>
+<li><a href="https://github.com/connor4312/cockatiel">cockatiel</a></li>
+<li>gRPC: <a href="https://grpc.io/docs/guides/retry/">Retry</a>, <a href="https://grpc.io/docs/guides/deadlines/">Deadlines</a> and <a href="https://grpc.io/docs/guides/service-config/">Service config</a></li>
+<li><a href="https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/">Timeouts, retries, and backoff with jitter</a> (Amazon Builders' Library) and <a href="https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/">Exponential backoff and jitter</a> (AWS Architecture Blog)</li>
+<li>Google SRE book: <a href="https://sre.google/sre-book/handling-overload/">Handling Overload</a> and <a href="https://sre.google/sre-book/addressing-cascading-failures/">Addressing Cascading Failures</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc9110#field.retry-after">RFC 9110, HTTP Semantics: Retry-After</a></li>
+<li><a href="https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/">The Idempotency-Key HTTP header field</a> (IETF draft)</li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="performance-patterns.html"><small>&larr; PREVIOUS</small>Performance Patterns &amp; Anti-Patterns</a><a class="next" href="observability.html"><small>NEXT &rarr;</small>Observability: Logs, Metrics &amp; Traces</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-one-slow-dependency-takes-everything-down">The problem: one slow dependency takes everything down</a></li>
+<li><a href="#the-mental-model-four-kinds-of-trouble-one-toolbox">The mental model: four kinds of trouble, one toolbox</a></li>
+<li><a href="#timeouts-the-strategy-everything-else-depends-on">Timeouts: the strategy everything else depends on</a><ul>
+<li><a href="#kinds-of-timeouts">Kinds of timeouts</a></li>
+<li><a href="#the-defaults-are-not-safe">The defaults are not safe</a></li>
+<li><a href="#choosing-the-value">Choosing the value</a></li>
+<li><a href="#deadline-propagation-stop-working-for-someone-who-has-left">Deadline propagation: stop working for someone who has left</a></li>
+</ul>
+</li>
+<li><a href="#retries-only-the-right-failures-only-with-jitter">Retries: only the right failures, only with jitter</a><ul>
+<li><a href="#should-i-retry-this">Should I retry this?</a></li>
+<li><a href="#backoff-and-jitter">Backoff and jitter</a></li>
+<li><a href="#retry-amplification-why-only-one-layer-may-retry">Retry amplification: why only one layer may retry</a></li>
+<li><a href="#honour-retry-after">Honour Retry-After</a></li>
+<li><a href="#idempotency-make-the-retried-request-safe">Idempotency: make the retried request safe</a></li>
+</ul>
+</li>
+<li><a href="#circuit-breakers-stop-calling-what-is-clearly-down">Circuit breakers: stop calling what is clearly down</a><ul>
+<li><a href="#tuning-a-breaker">Tuning a breaker</a></li>
+</ul>
+</li>
+<li><a href="#bulkheads-limit-what-one-dependency-can-take-from-you">Bulkheads: limit what one dependency can take from you</a></li>
+<li><a href="#rate-limiting-protect-a-dependency-or-a-quota">Rate limiting: protect a dependency, or a quota</a></li>
+<li><a href="#load-shedding-say-no-early-to-the-right-requests">Load shedding: say no early, to the right requests</a></li>
+<li><a href="#fallbacks-decide-what-the-user-sees-instead">Fallbacks: decide what the user sees instead</a></li>
+<li><a href="#hedging-buy-a-shorter-tail-with-a-little-extra-load">Hedging: buy a shorter tail with a little extra load</a></li>
+<li><a href="#putting-it-together-the-order-of-strategies">Putting it together: the order of strategies</a><ul>
+<li><a href="#the-same-pipeline-in-five-ecosystems">The same pipeline in five ecosystems</a></li>
+<li><a href="#the-standard-pipelines-in-net">The standard pipelines in .NET</a></li>
+</ul>
+</li>
+<li><a href="#when-to-use-each-strategy-and-when-not-to">When to use each strategy, and when not to</a><ul>
+<li><a href="#when-not-to-retry">When NOT to retry</a></li>
+</ul>
+</li>
+<li><a href="#testing-resilience">Testing resilience</a></li>
+<li><a href="#pitfalls-and-war-stories">Pitfalls and war stories</a></li>
+<li><a href="#best-practice-checklist">Best-practice checklist</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

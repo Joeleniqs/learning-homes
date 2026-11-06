@@ -1,0 +1,147 @@
+/* Shared architecture-diagram vocabulary (ax- prefix). Colours come only from site variables. */
+.viz [class^="ax-"], .viz [class*=" ax-"] { overflow-wrap: normal; }
+
+/* wide visualizers: stage gets the full width, code + vars sit underneath side by side */
+.viz.ax-wide .viz-body.with-code { grid-template-columns: minmax(0, 1fr); }
+.viz.ax-wide .viz-side { border-left: 0; border-top: 1px solid var(--line); flex-direction: row; }
+.viz.ax-wide .viz-code { flex: 2.2 1 0; min-width: 0; }
+.viz.ax-wide .viz-vars { flex: 1 1 0; border-top: 0; border-left: 1px solid var(--line); align-content: start; }
+@media (max-width: 900px) { .viz.ax-wide .viz-side { flex-direction: column; } .viz.ax-wide .viz-vars { border-left: 0; border-top: 1px solid var(--line); } }
+
+/* ---- svg diagrams ---- */
+svg.ax-g { max-width: 100%; height: auto; overflow: visible; font: 600 12px "Cascadia Code", Consolas, monospace; }
+svg.ax-g text { fill: var(--text); }
+svg.ax-g .ax-n .ax-nshape { fill: var(--v-node); stroke: var(--muted); stroke-width: 1.5; transition: fill .2s, stroke .2s; }
+svg.ax-g .ax-n .ax-nshape.iface { stroke-dasharray: 5 3; }
+svg.ax-g .ax-n .ax-nline { fill: none; stroke: var(--muted); stroke-width: 1.2; }
+svg.ax-g .ax-n text { text-anchor: middle; }
+svg.ax-g .ax-t1 { font-weight: 700; font-size: 12px; }
+svg.ax-g .ax-n .ax-t2 { font-weight: 500; font-size: 10.5px; fill: var(--muted); }
+svg.ax-g .ax-n .ax-t0 { font: 700 10px system-ui, sans-serif; letter-spacing: .8px; fill: var(--accent); text-transform: uppercase; }
+svg.ax-g .ax-n.active .ax-nshape { fill: var(--v-active-soft); stroke: var(--v-active); stroke-width: 2.6; }
+svg.ax-g .ax-n.visit .ax-nshape { fill: var(--v-visit-soft); stroke: var(--v-visit); stroke-width: 2.2; }
+svg.ax-g .ax-n.done .ax-nshape { fill: var(--v-done-soft); stroke: var(--v-done); stroke-width: 2.2; }
+svg.ax-g .ax-n.bad .ax-nshape { fill: var(--v-bad-soft); stroke: var(--v-bad); stroke-width: 2.4; }
+svg.ax-g .ax-n.path .ax-nshape { fill: var(--v-path-soft); stroke: var(--v-path); stroke-width: 2.2; }
+svg.ax-g .ax-n.accent .ax-nshape { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+svg.ax-g .ax-n.dim { opacity: .38; }
+svg.ax-g .ax-n.ghost .ax-nshape { stroke-dasharray: 5 4; fill: var(--surface); }
+svg.ax-g .ax-badge circle { fill: var(--muted); }
+svg.ax-g .ax-badge text { font: 700 10px system-ui, sans-serif; fill: var(--surface); text-anchor: middle; }
+svg.ax-g .ax-badge.bad circle { fill: var(--v-bad); } svg.ax-g .ax-badge.done circle { fill: var(--v-done); }
+svg.ax-g .ax-badge.active circle { fill: var(--v-active); } svg.ax-g .ax-badge.visit circle { fill: var(--v-visit); }
+svg.ax-g .ax-badge.path circle { fill: var(--v-path); }
+svg.ax-g .ax-band { fill: var(--bg); stroke: var(--line); stroke-width: 1.4; }
+svg.ax-g .ax-band.r0 { fill: color-mix(in srgb, var(--accent-soft) 85%, var(--surface)); stroke: var(--accent); }
+svg.ax-g .ax-band.r1 { fill: color-mix(in srgb, var(--accent-soft) 45%, var(--surface)); }
+svg.ax-g .ax-band.r2 { fill: color-mix(in srgb, var(--accent-soft) 18%, var(--surface)); }
+svg.ax-g .ax-band.r3 { fill: var(--surface); stroke-dasharray: 6 4; }
+svg.ax-g .ax-band.visit { fill: color-mix(in srgb, var(--v-visit-soft) 60%, var(--surface)); stroke: var(--v-visit); }
+svg.ax-g .ax-band.done { fill: color-mix(in srgb, var(--v-done-soft) 60%, var(--surface)); stroke: var(--v-done); }
+svg.ax-g .ax-band.path { fill: color-mix(in srgb, var(--v-path-soft) 60%, var(--surface)); stroke: var(--v-path); }
+svg.ax-g .ax-band.bad { fill: color-mix(in srgb, var(--v-bad-soft) 60%, var(--surface)); stroke: var(--v-bad); }
+svg.ax-g .ax-band.active { fill: color-mix(in srgb, var(--v-active-soft) 70%, var(--surface)); stroke: var(--v-active); }
+svg.ax-g .ax-band.plain { fill: var(--surface); }
+svg.ax-g .ax-band.none { fill: none; stroke-dasharray: 6 4; }
+svg.ax-g .ax-bl { font: 700 10.5px system-ui, sans-serif; letter-spacing: .9px; fill: var(--muted); text-transform: uppercase; }
+svg.ax-g .ax-bl.r0 { fill: var(--accent); }
+svg.ax-g .ax-e { fill: none; stroke: var(--v-dim); stroke-width: 1.8; transition: stroke .2s; }
+svg.ax-g .ax-e.dash { stroke-dasharray: 6 4; }
+svg.ax-g .ax-e.muted { stroke: var(--muted); }
+svg.ax-g .ax-e.active { stroke: var(--v-active); stroke-width: 2.6; }
+svg.ax-g .ax-e.visit { stroke: var(--v-visit); stroke-width: 2.2; }
+svg.ax-g .ax-e.done { stroke: var(--v-done); stroke-width: 2.2; }
+svg.ax-g .ax-e.bad { stroke: var(--v-bad); stroke-width: 2.5; }
+svg.ax-g .ax-e.path { stroke: var(--v-path); stroke-width: 2.5; }
+svg.ax-g .ax-e.accent { stroke: var(--accent); stroke-width: 2.2; }
+svg.ax-g .ax-ah { fill: var(--v-dim); }
+svg.ax-g .ax-ah.muted { fill: var(--muted); }
+svg.ax-g .ax-ah.active { fill: var(--v-active); } svg.ax-g .ax-ah.visit { fill: var(--v-visit); }
+svg.ax-g .ax-ah.done { fill: var(--v-done); } svg.ax-g .ax-ah.bad { fill: var(--v-bad); }
+svg.ax-g .ax-ah.path { fill: var(--v-path); } svg.ax-g .ax-ah.accent { fill: var(--accent); }
+svg.ax-g .ax-el, svg.ax-g .ax-ml { font-size: 10.5px; font-weight: 700; fill: var(--muted); paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+svg.ax-g .ax-el.active, svg.ax-g .ax-ml.active { fill: var(--text); }
+svg.ax-g .ax-el.bad, svg.ax-g .ax-ml.bad { fill: var(--v-bad); }
+svg.ax-g .ax-el.done, svg.ax-g .ax-ml.done { fill: var(--v-done); }
+svg.ax-g .ax-el.visit, svg.ax-g .ax-ml.visit { fill: var(--v-visit); }
+svg.ax-g .ax-el.path, svg.ax-g .ax-ml.path { fill: var(--v-path); }
+svg.ax-g .ax-life { stroke: var(--line); stroke-width: 1.6; stroke-dasharray: 4 4; }
+svg.ax-g .ax-life.bad { stroke: var(--v-bad); }
+svg.ax-g .ax-self rect { fill: var(--v-node); stroke: var(--muted); stroke-width: 1.2; }
+svg.ax-g .ax-self text { font-size: 10.5px; }
+svg.ax-g .ax-self.active rect { fill: var(--v-active-soft); stroke: var(--v-active); }
+svg.ax-g .ax-self.done rect { fill: var(--v-done-soft); stroke: var(--v-done); }
+svg.ax-g .ax-self.bad rect { fill: var(--v-bad-soft); stroke: var(--v-bad); }
+svg.ax-g .ax-self.visit rect { fill: var(--v-visit-soft); stroke: var(--v-visit); }
+svg.ax-g .ax-self.path rect { fill: var(--v-path-soft); stroke: var(--v-path); }
+svg.ax-g .ax-x { stroke: var(--v-bad); stroke-width: 3; fill: none; }
+
+/* ---- cards and tables (divs, so .prose table rules never apply) ---- */
+.ax-col { display: flex; flex-direction: column; gap: 10px; align-items: stretch; }
+.ax-kv { min-width: 170px; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; background: var(--surface); font: 12px "Cascadia Code", Consolas, monospace; }
+.ax-kv-h { padding: 5px 10px; background: var(--bg); color: var(--muted); font: 700 10.5px system-ui, sans-serif; letter-spacing: .8px; text-transform: uppercase; border-bottom: 1px solid var(--line); }
+.ax-kv-r { display: flex; justify-content: space-between; gap: 14px; padding: 3px 10px; border-top: 1px solid var(--line); }
+.ax-kv-r:first-of-type { border-top: 0; }
+.ax-kv-r.empty { color: var(--muted); font-style: italic; }
+.ax-kv-r.active { background: var(--v-active-soft); } .ax-kv-r.done { background: var(--v-done-soft); }
+.ax-kv-r.bad { background: var(--v-bad-soft); } .ax-kv-r.visit { background: var(--v-visit-soft); }
+.ax-kv-r.path { background: var(--v-path-soft); } .ax-kv-r.dim { opacity: .45; }
+.ax-kv.active { border-color: var(--v-active); } .ax-kv.bad { border-color: var(--v-bad); } .ax-kv.done { border-color: var(--v-done); }
+.ax-stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.ax-stat { display: flex; flex-direction: column; align-items: center; min-width: 92px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); }
+.ax-stat b { font: 700 17px "Cascadia Code", Consolas, monospace; }
+.ax-stat span { font-size: 10.5px; color: var(--muted); text-align: center; }
+.ax-stat.bad { border-color: var(--v-bad); background: var(--v-bad-soft); } .ax-stat.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.ax-stat.active { border-color: var(--v-active); background: var(--v-active-soft); } .ax-stat.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.ax-stat.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.ax-tblw { display: flex; flex-direction: column; gap: 4px; max-width: 100%; }
+.ax-tbl-t { font: 700 10.5px system-ui, sans-serif; letter-spacing: .9px; color: var(--muted); text-transform: uppercase; }
+.ax-tbl { display: grid; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; background: var(--surface); font: 12px "Cascadia Code", Consolas, monospace; }
+.ax-tr { display: contents; }
+.ax-tr > span { padding: 3px 10px; border-top: 1px solid var(--line); white-space: nowrap; transition: background .2s; }
+.ax-tr.ax-th > span { border-top: 0; background: var(--bg); color: var(--muted); font: 700 10.5px system-ui, sans-serif; letter-spacing: .7px; text-transform: uppercase; }
+.ax-tr.ax-empty > span { color: var(--muted); font-style: italic; }
+.ax-tr.active > span { background: var(--v-active-soft); } .ax-tr.done > span { background: var(--v-done-soft); }
+.ax-tr.bad > span { background: var(--v-bad-soft); } .ax-tr.visit > span { background: var(--v-visit-soft); }
+.ax-tr.path > span { background: var(--v-path-soft); } .ax-tr.dim > span { opacity: .45; }
+.ax-tr.active > span:first-child { box-shadow: inset 3px 0 0 var(--v-active); }
+.ax-tr.bad > span:first-child { box-shadow: inset 3px 0 0 var(--v-bad); }
+.ax-tbl .wrap { white-space: normal; }
+.ax-chip { display: inline-block; padding: 2px 8px; margin: 2px; border: 1.5px solid var(--line); border-radius: 6px; background: var(--v-node); font: 600 11.5px "Cascadia Code", Consolas, monospace; white-space: nowrap; }
+.ax-chip.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.ax-chip.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.ax-chip.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.ax-chip.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.ax-chip.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.ax-chip.dim { opacity: .45; border-style: dashed; }
+.ax-chip.accent { border-color: var(--accent); background: var(--accent-soft); }
+.ax-msg { width: 100%; max-width: 820px; padding: 8px 12px; border: 1.5px solid var(--line); border-radius: 9px; background: var(--surface); font-size: 12.5px; line-height: 1.5; }
+.ax-msg.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.ax-msg.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.ax-msg.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.ax-msg.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.ax-msg code { font-size: 11.5px; }
+
+/* ---- stage layout helpers ---- */
+.ax-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; justify-content: center; width: 100%; }
+.ax-stack { display: flex; flex-direction: column; gap: 10px; align-items: center; width: 100%; }
+.ax-panel { flex: 1 1 300px; min-width: 0; border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; background: var(--bg); }
+.ax-panel-h { font: 700 11px system-ui, sans-serif; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; display: flex; justify-content: space-between; gap: 8px; }
+.ax-panel.active { border-color: var(--v-active); } .ax-panel.done { border-color: var(--v-done); } .ax-panel.bad { border-color: var(--v-bad); }
+.ax-folders { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 6px; }
+.ax-folder { border: 1px solid var(--line); border-radius: 8px; padding: 4px 6px; background: var(--surface); }
+.ax-folder.hit { border-color: var(--v-active); }
+.ax-folder-h { font: 700 11px "Cascadia Code", Consolas, monospace; color: var(--muted); margin: 0 0 2px 2px; }
+.ax-folder-h::before { content: "▸ "; }
+
+.viz-legend .lg-accent::before { border-color: var(--accent); background: var(--accent-soft); }
+.ax-verdict { flex: 1 1 260px; align-self: center; padding: 10px 14px; border: 1.5px solid var(--line); border-left-width: 6px; border-radius: 8px; background: var(--surface); font-size: 13.5px; line-height: 1.45; }
+.ax-verdict.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.ax-verdict.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.ax-verdict.warn { border-color: var(--v-active); background: var(--v-active-soft); }
+
+/* ---- topic-specific ---- */
+.aa-recipe { flex: 1 1 340px; max-width: 460px; }
+.aa-recipe .ax-kv-r { flex-direction: column; gap: 0; padding: 4px 10px; }
+.aa-recipe .ax-kv-r span:first-child { font-weight: 700; }
+.aa-recipe .ax-kv-r span:last-child { font: 12px system-ui, sans-serif; color: var(--muted); white-space: normal; }

@@ -1,0 +1,1502 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Middleware Patterns &amp; Ordering | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/middleware-patterns.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/middleware-patterns.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track" open><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html" aria-current="page">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Middleware Patterns &amp; Ordering</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">REQUEST PIPELINES &AMP; MIDDLEWARE</p><h1>Middleware Patterns &amp; Ordering</h1><p class="lede">Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things.</p><div class="meta"><span class="level level-intermediate">Intermediate → Advanced</span><span>~55 min study</span><span>Builds on: <a href="request-pipeline.html">The Request Delegate Pipeline</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="middleware-patterns" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-the-same-eleven-lines-in-the-wrong-order">The problem: the same eleven lines, in the wrong order</h2>
+<p><a href="request-pipeline.html">The Request Pipeline</a> showed that a pipeline is a list of layers folded into one delegate, so registration order decides who wraps whom. This page is about the consequence. Every line below is correct. The program compiles, starts and passes a smoke test that calls <code>GET /api/orders</code> with a token. In production it fails in four separate ways.</p>
+<div class="code-tabs" data-labels="Looks fine: four bugs,Canonical order">
+<pre><code class="language-csharp">var app = builder.Build();
+
+app.UseStaticFiles();            // ❶ before HTTPS redirection
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseCors(&quot;spa&quot;);              // ❷ after authorization
+app.UseExceptionHandler();       // ❸ not first
+app.UseRateLimiter();
+app.UseHsts();
+app.UseHttpsRedirection();
+app.MapControllers();
+app.Run();
+
+// ❶ http://shop.example/css/site.css is served over plain HTTP, no redirect.
+// ❷ The SPA's preflight OPTIONS has no Authorization header (browsers never
+//    send credentials on a preflight), so it gets 401 and the browser reports
+//    a &quot;CORS error&quot; for every API call.
+// ❸ An exception in auth, CORS or routing escapes to Kestrel: a bare 500,
+//    no ProblemDetails, no correlation id in the logs.
+// ❹ HSTS is added after the static-file and redirect responses are decided,
+//    so the very responses that should pin HTTPS don't carry the header.
+</code></pre>
+<pre><code class="language-csharp">var app = builder.Build();
+
+app.UseExceptionHandler();       // 1. outermost: catches everything inside
+app.UseHsts();                   // 2. every HTTPS response gets the header
+app.UseHttpsRedirection();       // 3. nothing is served over plain HTTP
+app.UseStaticFiles();            // 4. cheap public files exit early
+app.UseRouting();                // 5. the endpoint (and its metadata) is chosen
+app.UseCors(&quot;spa&quot;);              // 6. answers preflights before auth sees them
+app.UseAuthentication();         // 7. credentials → ctx.User
+app.UseAuthorization();          // 8. needs User (7) and [Authorize] (5)
+app.UseRateLimiter();            // 9. needs the endpoint policy and the user
+app.UseMiddleware&lt;AuditMiddleware&gt;(); // 10. custom, endpoint-aware
+app.MapControllers();            // 11. the endpoint runs at the end
+app.Run();
+</code></pre>
+</div>
+<p>None of these bugs is visible to the compiler, and most are invisible to a test that only sends a happy-path request. They show up as a browser console full of CORS errors, a pen-test finding, or an incident where the logs have no trace of a 500. The cure is to understand <strong>why</strong> each middleware sits where it does. Once the reasons are clear, the order stops being something you memorise and becomes something you can derive.</p>
+<div class="rule">
+<p><strong>The ordering rule.</strong> A middleware can only <strong>catch, time or decorate</strong> what runs <em>inside</em> it, and can only <strong>use</strong> what was decided <em>before</em> it. So put the layers that must cover everything (errors, transport security) outermost, put cheap exits (static files) before expensive work, put <strong>Routing</strong> before anything that reads endpoint metadata, put <strong>CORS</strong> before anything that might reject a preflight, and put <strong>AuthN → AuthZ → policies</strong> in the order in which each needs the previous one's result.</p>
+</div>
+<h2 id="the-canonical-order-and-why-each-layer-is-where-it-is">The canonical order, and why each layer is where it is</h2>
+<p>Every position in the canonical order follows from one of three kinds of dependency:</p>
+<ol>
+<li><strong>Wrap</strong>: "I must see everything that happens inside me". The exception handler must catch errors from every other layer, so it goes first.</li>
+<li><strong>Needs</strong>: "I need a value someone else computes". Authorization needs <code>ctx.User</code> (from authentication) and the endpoint's <code>[Authorize]</code> metadata (from routing), so it comes after both.</li>
+<li><strong>Exit early</strong>: "I can answer without the rest". Static files and CORS preflights are answered without touching routing, auth or your endpoint. Putting them early saves work, and for preflights it is the only way to avoid a 401.</li>
+</ol>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 540" width="760" role="img" aria-label="The canonical ASP.NET Core middleware order from exception handler to endpoints, with the reason for each position">
+<defs><marker id="middleware-patterns-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="60" y="18" class="small muted">registered first = outermost</text>
+<text x="330" y="18" class="small muted">why it sits here</text>
+<rect class="box bad" x="40" y="28" width="250" height="34" rx="6"/><text x="56" y="50" class="mono muted">1</text><text x="78" y="50" class="mono">UseExceptionHandler</text>
+<text x="330" y="43" class="small">Wrap: catches what every inner layer throws and</text><text x="330" y="58" class="small">turns it into a ProblemDetails 500.</text>
+<rect class="box" x="40" y="72" width="250" height="34" rx="6"/><text x="56" y="94" class="mono muted">2</text><text x="78" y="94" class="mono">UseHsts</text>
+<text x="330" y="87" class="small">Wrap: stamps Strict-Transport-Security on every HTTPS</text><text x="330" y="102" class="small">response, including static files and redirects.</text>
+<rect class="box" x="40" y="116" width="250" height="34" rx="6"/><text x="56" y="138" class="mono muted">3</text><text x="78" y="138" class="mono">UseHttpsRedirection</text>
+<text x="330" y="131" class="small">Exit early: http:// gets 307 before anything</text><text x="330" y="146" class="small">serves content over plain HTTP.</text>
+<rect class="box" x="40" y="160" width="250" height="34" rx="6"/><text x="56" y="182" class="mono muted">4</text><text x="78" y="182" class="mono">UseStaticFiles</text>
+<text x="330" y="175" class="small">Exit early: public files return before routing and</text><text x="330" y="190" class="small">auth do any work (and before a fallback policy).</text>
+<rect class="box accent" x="40" y="214" width="250" height="34" rx="6"/><text x="56" y="236" class="mono muted">5</text><text x="78" y="236" class="mono">UseRouting</text>
+<text x="330" y="229" class="small">Selects the endpoint. From here on, GetEndpoint()</text><text x="330" y="244" class="small">returns it, with [Authorize], CORS and limiter metadata.</text>
+<rect class="box" x="40" y="258" width="250" height="34" rx="6"/><text x="56" y="280" class="mono muted">6</text><text x="78" y="280" class="mono">UseCors</text>
+<text x="330" y="273" class="small">Needs the endpoint's CORS policy (layer 5). Exit early: answers</text><text x="330" y="288" class="small">preflights with 204, before auth can 401 them.</text>
+<rect class="box" x="40" y="302" width="250" height="34" rx="6"/><text x="56" y="324" class="mono muted">7</text><text x="78" y="324" class="mono">UseAuthentication</text>
+<text x="330" y="317" class="small">Turns a cookie or bearer token into ctx.User.</text><text x="330" y="332" class="small">Never rejects by itself: it only identifies.</text>
+<rect class="box" x="40" y="346" width="250" height="34" rx="6"/><text x="56" y="368" class="mono muted">8</text><text x="78" y="368" class="mono">UseAuthorization</text>
+<text x="330" y="361" class="small">Needs ctx.User (layer 7) and [Authorize] (layer 5). Answers</text><text x="330" y="376" class="small">401 (who are you?) or 403 (not allowed).</text>
+<rect class="box" x="40" y="390" width="250" height="34" rx="6"/><text x="56" y="412" class="mono muted">9</text><text x="78" y="412" class="mono">UseRateLimiter</text>
+<text x="330" y="405" class="small">Needs the endpoint policy (layer 5) and the user (layer 7) to</text><text x="330" y="420" class="small">partition per user. Only allowed requests use quota.</text>
+<rect class="box" x="40" y="434" width="250" height="34" rx="6"/><text x="56" y="456" class="mono muted">10</text><text x="78" y="456" class="mono">custom (audit, tenant…)</text>
+<text x="330" y="449" class="small">Endpoint-aware custom middleware: sees the endpoint</text><text x="330" y="464" class="small">and the user, and only runs for permitted requests.</text>
+<rect class="box done" x="40" y="478" width="250" height="34" rx="6"/><text x="56" y="500" class="mono muted">11</text><text x="78" y="500" class="mono">endpoints (Map…)</text>
+<text x="330" y="493" class="small">Runs the selected endpoint. It throws if the endpoint</text><text x="330" y="508" class="small">has auth or CORS metadata that no middleware handled.</text>
+<path class="edge accent" d="M20 30 L20 510" marker-end="url(#middleware-patterns-ar)"/>
+<path class="edge dash" d="M300 30 L310 30 L310 196 L300 196"/><text x="304" y="530" class="small muted">1–4 endpoint-agnostic · 6–10 endpoint-aware (after 5)</text>
+<path class="edge dash" d="M300 258 L310 258 L310 468 L300 468"/>
+</svg>
+<figcaption>The canonical order. Layers 1–4 don't care which endpoint will run; layers 6–10 read the endpoint that layer 5 selected, so they must come after it. The arrow is the request's direction; the response passes back up through the same layers.</figcaption>
+</figure>
+
+<p>The same information as a table, with the failure you get when each rule is broken. The visualizer below simulates every row.</p>
+<table>
+<thead>
+<tr>
+<th>Position</th>
+<th>Must come…</th>
+<th>Because…</th>
+<th>If you get it wrong</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>UseExceptionHandler</code></td>
+<td>first</td>
+<td>A layer only catches exceptions thrown <em>inside</em> it.</td>
+<td>Errors from earlier layers escape: a bare 500 with an empty body and no ProblemDetails.</td>
+</tr>
+<tr>
+<td><code>UseHsts</code></td>
+<td>early, before anything that can answer</td>
+<td>It sets the header on the way in, so only responses produced inside it get it.</td>
+<td>Static files and redirects lack <code>Strict-Transport-Security</code>.</td>
+</tr>
+<tr>
+<td><code>UseHttpsRedirection</code></td>
+<td>before static files and endpoints</td>
+<td>Nothing should be served over plain HTTP.</td>
+<td><code>http://…/css/site.css</code> is served in clear text instead of a 307.</td>
+</tr>
+<tr>
+<td><code>UseStaticFiles</code></td>
+<td>before routing and auth</td>
+<td>Public assets are the most frequent requests and need no endpoint or user.</td>
+<td>With a fallback authorization policy, CSS and JS need a login; otherwise routing and auth run for nothing.</td>
+</tr>
+<tr>
+<td><code>UseRouting</code></td>
+<td>before CORS, auth, rate limiting, custom</td>
+<td>It chooses the endpoint; <code>GetEndpoint()</code> is <code>null</code> before it.</td>
+<td>Everything that reads metadata sees nothing: policies are not applied, or the endpoint middleware throws.</td>
+</tr>
+<tr>
+<td><code>UseCors</code></td>
+<td>after routing, before authentication/authorization</td>
+<td>Preflights carry no credentials; CORS must answer them before anyone demands a token.</td>
+<td>Every cross-origin call fails with a "CORS error" because the preflight got 401.</td>
+</tr>
+<tr>
+<td><code>UseAuthentication</code></td>
+<td>before authorization</td>
+<td>It sets <code>ctx.User</code>.</td>
+<td>Authorization always sees an anonymous user: every protected call is 401.</td>
+</tr>
+<tr>
+<td><code>UseAuthorization</code></td>
+<td>after routing and authentication</td>
+<td>It needs both the user and the endpoint's requirements.</td>
+<td>Before routing: the endpoint middleware throws <em>"contains authorization metadata, but a middleware was not found"</em>.</td>
+</tr>
+<tr>
+<td><code>UseRateLimiter</code></td>
+<td>after routing (and after auth for per-user limits)</td>
+<td>Endpoint policies are metadata; per-user partitions need <code>ctx.User</code>.</td>
+<td>Before routing: nothing is limited. Before auth: all users share the anonymous bucket.</td>
+</tr>
+<tr>
+<td>custom</td>
+<td>after the layers whose results it needs</td>
+<td>Audit, tenant resolution, feature flags usually need the endpoint and the user.</td>
+<td>It reads <code>null</code>s, or runs work for requests that will be rejected anyway.</td>
+</tr>
+<tr>
+<td>endpoints</td>
+<td>last</td>
+<td>It is the terminal handler.</td>
+<td>Anything after it never runs for a matched request.</td>
+</tr>
+</tbody>
+</table>
+<div class="viz" data-viz="middleware-patterns-order"></div>
+
+<p>How to use the visualizer:</p>
+<ul>
+<li>Pick a <strong>preset</strong> to load a known misordering, or edit the <strong>order</strong> text directly (names such as <code>Exception, Hsts, Https, Static, Routing, Cors, AuthN, AuthZ, RateLimit, Correlation, Endpoints</code>). The code panel rewrites itself to match.</li>
+<li>Pick a <strong>request</strong>. Each preset breaks some requests and not others, which is exactly why these bugs survive testing. "CORS after auth" only breaks the <strong>SPA preflight</strong>. "Exception handler not first" only shows when the <strong>limiter store is down</strong> (an exception thrown by a layer outside the handler). "Limiter before routing" only shows on the <strong>101st request</strong>.</li>
+<li>The lint panel lists every rule the order breaks, even rules the current request doesn't trigger.</li>
+</ul>
+<div class="insight">
+<p><strong>Insight</strong>
+Misordered middleware rarely breaks the happy path. It breaks the request you didn't test: the preflight, the plain-HTTP asset, the 101st call, the error thrown by infrastructure rather than by your code. A good integration test suite sends one of each (see <a href="#testing-middleware">Testing middleware</a>).</p>
+</div>
+<h3 id="what-the-framework-does-for-you-and-when-it-doesnt">What the framework does for you (and when it doesn't)</h3>
+<p>Minimal hosting (<code>WebApplication</code>, .NET 6+) adds some layers implicitly, which hides the order until you need to change it:</p>
+<ul>
+<li>If you don't call <code>UseRouting</code>, <code>WebApplication</code> adds it at the <strong>start</strong> of your pipeline, and adds the endpoint middleware at the <strong>end</strong>. So <code>app.MapGet(...)</code> works without either call. As soon as you need something <em>before</em> routing (static files, HTTPS redirection) and something <em>after</em> it (CORS, auth), call <code>UseRouting()</code> explicitly so the boundary is where you want it.</li>
+<li>When authentication or authorization services are registered, <code>WebApplication</code> also adds <code>UseAuthentication</code>/<code>UseAuthorization</code> automatically if you didn't. Calling them explicitly makes the order visible and lets you put CORS before them.</li>
+<li>The developer exception page is added automatically in the Development environment. That is why "errors look fine locally" while production returns bare 500s if <code>UseExceptionHandler</code> is missing or late.</li>
+</ul>
+<div class="compare">
+<div>
+<h4 id="endpoint-agnostic-before-userouting">Endpoint-agnostic (before <code>UseRouting</code>)</h4>
+<p>Exception handler, HSTS, HTTPS redirection, static files, response compression, forwarded headers, request logging, correlation id. They treat every request the same, so they don't need to know the endpoint. They are cheap and must cover 404s and static files too.</p>
+</div>
+<div>
+<h4 id="endpoint-aware-between-userouting-and-endpoints">Endpoint-aware (between <code>UseRouting</code> and endpoints)</h4>
+<p>CORS, authentication, authorization, rate limiting, output caching, request timeouts, antiforgery, your audit or tenant middleware. They read <strong>metadata</strong> the endpoint declared (<code>[Authorize]</code>, <code>RequireCors</code>, <code>RequireRateLimiting</code>, <code>CacheOutput</code>) and so must run after routing has chosen the endpoint.</p>
+</div>
+<div>
+<h4 id="special-cases">Special cases</h4>
+<p><code>UseForwardedHeaders</code> goes <strong>before</strong> HSTS, HTTPS redirection and auth, because they read <code>Request.Scheme</code> and the client IP that it rewrites. <code>UseResponseCompression</code> goes before anything that writes a body it should compress. <code>UseCors</code> must come before <code>UseResponseCaching</code>/<code>UseOutputCache</code>, so cached responses don't skip CORS headers.</p>
+</div>
+</div>
+<h2 id="writing-good-middleware">Writing good middleware</h2>
+<p>The built-in layers are well behaved. Your own middleware is where most production bugs hide. The sections below cover the patterns you will write most often: turning exceptions into ProblemDetails, adding correlation ids and request logs, timing, reading the request body, and short-circuiting. Each comes with the specific trap that catches people.</p>
+<h3 id="exceptions-to-problemdetails">Exceptions to ProblemDetails</h3>
+<p>Clients should never get a stack trace, and they should never get an empty 500 either. <a href="https://www.rfc-editor.org/rfc/rfc9457">RFC 9457</a> <em>Problem Details</em> gives errors a standard JSON shape (<code>type</code>, <code>title</code>, <code>status</code>, <code>detail</code>, <code>instance</code>, plus extensions such as <code>traceId</code>) with the media type <code>application/problem+json</code>. ASP.NET Core has three pieces that work together:</p>
+<ul>
+<li><code>AddProblemDetails()</code> registers <code>IProblemDetailsService</code>, which writes that JSON (and adds <code>traceId</code>). It also makes empty error responses from the framework, such as a bare 404 or 405, get a ProblemDetails body when you add <code>UseStatusCodePages()</code>.</li>
+<li><code>UseExceptionHandler()</code> is the outermost try/catch. On an exception it logs it, clears the response, sets 500, asks each <code>IExceptionHandler</code> in turn, and if none handles it, writes a default ProblemDetails.</li>
+<li><code>IExceptionHandler</code> (.NET 8+) is where you map your exception types to status codes. Return <code>true</code> if you handled it, <code>false</code> to let the next handler try.</li>
+</ul>
+<div class="code-tabs" data-labels="Bad: try/catch in every endpoint,Good: one handler">
+<pre><code class="language-csharp">app.MapGet(&quot;/orders/{id:int}&quot;, async (int id, OrderService svc) =&gt;
+{
+    try { return Results.Ok(await svc.GetAsync(id)); }
+    catch (OrderNotFoundException) { return Results.NotFound(); }      // no body
+    catch (Exception ex) { return Results.Problem(ex.ToString()); }  // leaks the stack trace
+});
+// Exceptions thrown by model binding, auth, CORS or the JSON serializer
+// never reach this catch: they happen outside the lambda.
+</code></pre>
+<pre><code class="language-csharp">builder.Services.AddProblemDetails(o =&gt; o.CustomizeProblemDetails = c =&gt;
+    c.ProblemDetails.Extensions[&quot;instance&quot;] = $&quot;{c.HttpContext.Request.Method} {c.HttpContext.Request.Path}&quot;);
+builder.Services.AddExceptionHandler&lt;DomainExceptionHandler&gt;();   // tried in registration order
+
+app.UseExceptionHandler();          // first: wraps everything, including routing and auth
+app.UseStatusCodePages();           // empty 404/405 bodies become ProblemDetails too
+
+sealed class DomainExceptionHandler(IProblemDetailsService problems) : IExceptionHandler
+{
+    public async ValueTask&lt;bool&gt; TryHandleAsync(HttpContext ctx, Exception ex, CancellationToken ct)
+    {
+        var status = ex switch
+        {
+            OrderNotFoundException =&gt; StatusCodes.Status404NotFound,
+            ValidationException    =&gt; StatusCodes.Status400BadRequest,
+            ConcurrencyException   =&gt; StatusCodes.Status409Conflict,
+            _ =&gt; 0,
+        };
+        if (status == 0) return false;               // not ours: the default 500 ProblemDetails
+        ctx.Response.StatusCode = status;
+        return await problems.TryWriteAsync(new() { HttpContext = ctx, Exception = ex });
+    }
+}
+</code></pre>
+</div>
+<p>The visualizer follows one exception from the endpoint outwards. It shows what the client receives, what gets logged, and the two cases no handler can fix.</p>
+<div class="viz" data-viz="middleware-patterns-exception"></div>
+
+<p>Three things the visualizer makes visible:</p>
+<ol>
+<li><strong>Mapping is a lookup, not a catch-all.</strong> <code>DomainErrors</code> returns <code>false</code> for the <code>NullReferenceException</code>, so the exception handler writes its default 500 ProblemDetails, without the exception message. That is correct: a bug is a 500, and its details belong in your logs, not in the response.</li>
+<li><strong>Inner layers see the exception first.</strong> <code>RequestLogging</code> sits inside the handler. Its <code>finally</code> block runs while the exception unwinds, before the handler has set the status code, so it logs <code>200</code>: the default value, not the status the client will get. Log the final status from a layer that wraps the exception handler, or let the hosting layer's request log do it.</li>
+<li><strong>After the response has started, nothing can be fixed.</strong> Switch <em>when</em> to "after streaming started". The endpoint has already sent <code>200 OK</code> and part of the body, so the handler can only log <em>"The response has already started, the error handler will not be executed"</em> and rethrow. The server aborts the connection, and the client sees a truncated body. A cancelled request (the client went away) is not an error at all: it is logged at Debug level and no handler runs.</li>
+</ol>
+<h3 id="the-response-has-started-the-one-way-door">The response has started: the one-way door</h3>
+<p>HTTP sends the status line and headers <strong>before</strong> the body. ASP.NET Core buffers headers until the first byte of the body is written (or flushed). From then on <code>Response.HasStarted</code> is <code>true</code>, and any attempt to change the status code or headers throws <em>"StatusCode cannot be set because the response has already started"</em> or <em>"Headers are read-only, response has already started"</em>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 190" width="760" role="img" aria-label="Timeline of a response: headers can be changed until the first body write, then they are sent and become read-only">
+<defs><marker id="middleware-patterns-ht" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<path class="edge accent" d="M20 110 L740 110" marker-end="url(#middleware-patterns-ht)"/>
+<rect class="box done" x="30" y="40" width="300" height="50" rx="8"/>
+<text x="180" y="62" text-anchor="middle" class="title">headers are mutable</text>
+<text x="180" y="80" text-anchor="middle" class="small mono">StatusCode = 404; Headers[...] = ...</text>
+<rect class="box bad" x="400" y="40" width="330" height="50" rx="8"/>
+<text x="565" y="62" text-anchor="middle" class="title">headers sent: read-only</text>
+<text x="565" y="80" text-anchor="middle" class="small mono">HasStarted == true · changes throw</text>
+<path class="edge bad" d="M365 30 L365 130"/>
+<text x="365" y="150" text-anchor="middle" class="small mono">first WriteAsync / FlushAsync</text>
+<text x="365" y="166" text-anchor="middle" class="small muted">OnStarting callbacks run here, just before the headers go out</text>
+<text x="30" y="132" class="small muted">request arrives</text>
+<text x="730" y="132" text-anchor="end" class="small muted">response complete (OnCompleted)</text>
+</svg>
+<figcaption>Everything that wants to set the status or a header must do it before the first body write, or register an <code>OnStarting</code> callback. Errors after this point can only abort the connection.</figcaption>
+</figure>
+
+<p>The rules that follow:</p>
+<ul>
+<li><strong>Before changing the response, check <code>HasStarted</code>.</strong> Exception and status-code middleware must handle the "too late" case by logging and rethrowing, never by writing a second response.</li>
+<li><strong>To add a header "on the way out", use <code>OnStarting</code>.</strong> Code after <code>await next(ctx)</code> usually runs after the body was written. <code>ctx.Response.OnStarting(() =&gt; { … })</code> runs just before the headers are sent, whoever triggers the send.</li>
+<li><strong>Stream only when you have to.</strong> A streaming endpoint (<code>IAsyncEnumerable</code>, server-sent events, large file exports) commits to <code>200</code> with the first chunk. Do the validation and the risky work before the first write. If a failure later is likely, produce the result first and then stream it, or put the error in the stream format itself (an error event in SSE, a trailer in gRPC).</li>
+</ul>
+<h3 id="correlation-ids-and-request-logging-with-scopes">Correlation ids and request logging with scopes</h3>
+<p>When a request fans out across services, a <strong>correlation id</strong> lets you find every log line that belongs to it. The middleware has three jobs: accept an id from the caller (or create one), attach it to <strong>every</strong> log line written while the request runs, and send it back in a response header.</p>
+<p>The tempting implementation stores the id in a static field or a singleton property. That is a race condition: requests overlap, so the field holds whichever request wrote it last. The visualizer runs three overlapping requests through both implementations.</p>
+<div class="viz" data-viz="middleware-patterns-correlation"></div>
+
+<p><code>ILogger.BeginScope</code> stores the scope in an <code>AsyncLocal&lt;T&gt;</code>. An <code>AsyncLocal</code> value is part of the <strong>execution context</strong>, which is captured at every <code>await</code> and restored when the continuation runs. So each request's continuations see that request's scope, no matter how the awaits interleave or which thread-pool thread runs them. A static field has one value for the whole process.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// ASP.NET Core: scope flows through AsyncLocal; validate what you accept.
+public sealed class CorrelationIdMiddleware(RequestDelegate next, ILogger&lt;CorrelationIdMiddleware&gt; log)
+{
+    private const string Header = &quot;X-Correlation-ID&quot;;
+
+    public async Task InvokeAsync(HttpContext ctx)
+    {
+        string incoming = ctx.Request.Headers[Header].ToString();
+        string id = IsSafe(incoming) ? incoming
+                  : Activity.Current?.TraceId.ToString() ?? ctx.TraceIdentifier;
+
+        ctx.Response.OnStarting(() =&gt; { ctx.Response.Headers[Header] = id; return Task.CompletedTask; });
+
+        using (log.BeginScope(new Dictionary&lt;string, object&gt; { [&quot;CorrelationId&quot;] = id }))
+        {
+            await next(ctx);          // every log line inside carries CorrelationId
+        }
+    }
+
+    // Untrusted input goes into your logs: bound the length and the alphabet (log injection).
+    private static bool IsSafe(string s) =&gt;
+        s.Length is &gt; 0 and &lt;= 64 &amp;&amp; s.All(c =&gt; char.IsAsciiLetterOrDigit(c) || c is '-' or '_');
+}
+</code></pre>
+<pre><code class="language-java">// Spring MVC: a servlet Filter + SLF4J MDC (a ThreadLocal). Fine for thread-per-request;
+// for WebFlux or virtual-thread handoffs, use Micrometer context propagation instead.
+@Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
+public class CorrelationIdFilter extends OncePerRequestFilter {
+    private static final String HEADER = &quot;X-Correlation-ID&quot;;
+    private static final Pattern SAFE = Pattern.compile(&quot;[A-Za-z0-9_-]{1,64}&quot;);
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
+            throws ServletException, IOException {
+        String in = req.getHeader(HEADER);
+        String id = in != null &amp;&amp; SAFE.matcher(in).matches() ? in : UUID.randomUUID().toString();
+        res.setHeader(HEADER, id);            // before the chain: headers can't change after commit
+        MDC.put(&quot;correlationId&quot;, id);
+        try {
+            chain.doFilter(req, res);
+        } finally {
+            MDC.remove(&quot;correlationId&quot;);      // the thread goes back to the pool
+        }
+    }
+}
+</code></pre>
+<pre><code class="language-python"># Starlette / FastAPI: a contextvar is the Python AsyncLocal. Pure ASGI middleware.
+import contextvars, logging, re, uuid
+
+correlation_id = contextvars.ContextVar(&quot;correlation_id&quot;, default=&quot;-&quot;)
+SAFE = re.compile(r&quot;^[A-Za-z0-9_-]{1,64}$&quot;)
+
+class CorrelationFilter(logging.Filter):
+    def filter(self, record):
+        record.correlation_id = correlation_id.get()   # use %(correlation_id)s in the format
+        return True
+
+class CorrelationIdMiddleware:
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope[&quot;type&quot;] != &quot;http&quot;:
+            return await self.app(scope, receive, send)
+        incoming = dict(scope[&quot;headers&quot;]).get(b&quot;x-correlation-id&quot;, b&quot;&quot;).decode(&quot;latin-1&quot;)
+        cid = incoming if SAFE.match(incoming) else uuid.uuid4().hex
+        token = correlation_id.set(cid)
+
+        async def send_with_header(message):
+            if message[&quot;type&quot;] == &quot;http.response.start&quot;:
+                message.setdefault(&quot;headers&quot;, []).append((b&quot;x-correlation-id&quot;, cid.encode()))
+            await send(message)
+
+        try:
+            await self.app(scope, receive, send_with_header)
+        finally:
+            correlation_id.reset(token)
+</code></pre>
+<pre><code class="language-go">// net/http + slog: put a request-scoped logger in the context and pass ctx everywhere.
+type ctxKey struct{}
+
+var safe = regexp.MustCompile(`^[A-Za-z0-9_-]{1,64}$`)
+
+func CorrelationID(base *slog.Logger) func(http.Handler) http.Handler {
+    return func(next http.Handler) http.Handler {
+        return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+            id := r.Header.Get(&quot;X-Correlation-ID&quot;)
+            if !safe.MatchString(id) {
+                id = rand.Text() // Go 1.24+; or a UUID library
+            }
+            w.Header().Set(&quot;X-Correlation-ID&quot;, id) // before next writes anything
+            logger := base.With(&quot;correlation_id&quot;, id)
+            next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), ctxKey{}, logger)))
+        })
+    }
+}
+
+func Logger(ctx context.Context) *slog.Logger {
+    if l, ok := ctx.Value(ctxKey{}).(*slog.Logger); ok {
+        return l
+    }
+    return slog.Default()
+}
+</code></pre>
+<pre><code class="language-typescript">// Express: AsyncLocalStorage is Node's AsyncLocal; it follows promises and callbacks.
+import { AsyncLocalStorage } from &quot;node:async_hooks&quot;;
+import { randomUUID } from &quot;node:crypto&quot;;
+import type { Request, Response, NextFunction } from &quot;express&quot;;
+
+export const requestContext = new AsyncLocalStorage&lt;{ correlationId: string }&gt;();
+const SAFE = /^[A-Za-z0-9_-]{1,64}$/;
+
+export function correlationId(req: Request, res: Response, next: NextFunction) {
+  const incoming = req.get(&quot;x-correlation-id&quot;) ?? &quot;&quot;;
+  const correlationId = SAFE.test(incoming) ? incoming : randomUUID();
+  res.setHeader(&quot;x-correlation-id&quot;, correlationId);
+  requestContext.run({ correlationId }, () =&gt; next());
+}
+
+// In the logger (pino, winston...): read requestContext.getStore()?.correlationId
+</code></pre>
+</div>
+<p>How the ecosystems differ, and why:</p>
+<ul>
+<li><strong>C# and Python</strong> have language-level async context (<code>AsyncLocal</code>, <code>contextvars</code>) that flows across <code>await</code> automatically, so a scope set in middleware reaches every log call made by that request.</li>
+<li><strong>Java's MDC</strong> is a <code>ThreadLocal</code>. That matches the classic servlet model, where one thread handles one request. It breaks when work hops threads (<code>CompletableFuture</code>, reactive pipelines), which is why WebFlux uses the Reactor <code>Context</code> and Micrometer's context propagation.</li>
+<li><strong>Go</strong> has no hidden context at all, by design. The request's <code>context.Context</code> is passed explicitly, so the logger (or the id) travels inside it.</li>
+<li><strong>Node</strong> gets the same flow from <code>AsyncLocalStorage</code>. Express 4 and 5 both work with it as long as you call <code>next()</code> inside <code>run()</code>.</li>
+</ul>
+<p>Some practical notes:</p>
+<ul>
+<li><strong>Prefer the trace id you already have.</strong> ASP.NET Core starts an <code>Activity</code> for every request, honouring an incoming W3C <code>traceparent</code> header, and the default host includes <code>TraceId</code> and <code>SpanId</code> in log scopes. With OpenTelemetry, that id <em>is</em> your correlation id across services. A custom <code>X-Correlation-ID</code> is still useful for callers that don't speak <code>traceparent</code>.</li>
+<li><strong>Validate before you trust.</strong> The id goes into every log line. An unbounded or multi-line value is a log-injection and log-volume attack. Accept a bounded alphabet, or replace it.</li>
+<li><strong>Place it outside the exception handler</strong> if you want the handler's own error log to carry the id. It is one of the few layers that may go before <code>UseExceptionHandler</code>, because it is tiny and only wraps. Request logging (<code>UseHttpLogging</code>, Serilog's <code>UseSerilogRequestLogging</code>) goes early for the same reason: it should see 404s and static files too, and it should log the <strong>final</strong> status.</li>
+</ul>
+<h3 id="timing">Timing</h3>
+<p>A timing middleware measures how long the inner layers take. Two details make it correct: put the measurement in <code>finally</code>, so failed requests are timed too, and add any timing header in <code>OnStarting</code>, because by the time <code>await next</code> returns the headers have usually been sent.</p>
+<pre><code class="language-csharp">public sealed class ServerTimingMiddleware(RequestDelegate next, ILogger&lt;ServerTimingMiddleware&gt; log)
+{
+    public async Task InvokeAsync(HttpContext ctx)
+    {
+        long start = Stopwatch.GetTimestamp();          // no Stopwatch allocation per request
+        ctx.Response.OnStarting(() =&gt;
+        {
+            var ms = Stopwatch.GetElapsedTime(start).TotalMilliseconds;   // time to first byte
+            ctx.Response.Headers[&quot;Server-Timing&quot;] = $&quot;app;dur={ms:0.0}&quot;;
+            return Task.CompletedTask;
+        });
+        try
+        {
+            await next(ctx);
+        }
+        finally
+        {
+            log.LogInformation(&quot;{Method} {Path} {Status} in {Ms:0.0} ms&quot;,
+                ctx.Request.Method, ctx.Request.Path, ctx.Response.StatusCode,
+                Stopwatch.GetElapsedTime(start).TotalMilliseconds);       // full duration
+        }
+    }
+}
+</code></pre>
+<p>The two numbers differ on purpose. <code>Server-Timing</code> is <strong>time to first byte</strong>: it has to be computed before the body is sent. The log line is the <strong>full duration</strong>, including writing the body. For dashboards, prefer the built-in <code>http.server.request.duration</code> metric (.NET 8+) over hand-written timers: it is a histogram, tagged by route template and status code.</p>
+<h3 id="reading-the-request-body-without-stealing-it">Reading the request body without stealing it</h3>
+<p>Sooner or later someone wants middleware that reads the request body: to audit it, to verify a webhook signature (an HMAC over the raw bytes), or to log it. The trap is that <code>Request.Body</code> is a <strong>forward-only stream</strong> read straight off the connection. Read it in middleware and the endpoint gets nothing, so model binding fails with a 400 that has nothing to do with the client.</p>
+<div class="viz" data-viz="middleware-patterns-body"></div>
+
+<p>Try each mode. Only "EnableBuffering + rewind" works, and it has two costs that the visualizer shows:</p>
+<ul>
+<li><strong><code>EnableBuffering()</code></strong> wraps the body in a <code>FileBufferingReadStream</code> that keeps a copy of every byte read. Up to 30 KB stays in memory; beyond that it <strong>spills to a temp file</strong>. Buffering every request body doubles the I/O for uploads. Do it only on the routes that need it, behind a size limit.</li>
+<li><strong>Rewind</strong> with <code>Body.Position = 0</code> before calling <code>next</code>. Without <code>EnableBuffering</code>, seeking throws <code>NotSupportedException</code>.</li>
+<li><strong><code>leaveOpen: true</code></strong> on the <code>StreamReader</code>, or disposing the reader disposes the body, and the endpoint gets <code>ObjectDisposedException</code>.</li>
+<li><strong>Size limits still apply.</strong> Kestrel rejects bodies above <code>MaxRequestBodySize</code> (about 28.6 MB by default) with 413, whether or not you buffer.</li>
+</ul>
+<p>Often the better answer is not to read the body in middleware at all:</p>
+<ul>
+<li>To <strong>log</strong> bodies, <code>UseHttpLogging</code> with <code>HttpLoggingFields.RequestBody</code> records the bytes as the endpoint reads them, up to <code>RequestBodyLogLimit</code> (32 KB by default), without buffering the whole body. Be careful: bodies contain personal data and secrets.</li>
+<li>To <strong>validate</strong> or <strong>audit</strong> a typed payload, use an endpoint or action filter, which gets the already-bound <code>Order</code> object for free (see <a href="#middleware-filters-and-interceptors">the next section</a>).</li>
+<li>To <strong>verify a signature</strong>, read the raw body in the endpoint (or a filter on webhook endpoints only), verify, then deserialize.</li>
+</ul>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Only for /webhooks, with a size limit, and rewound for the endpoint.
+app.UseWhen(ctx =&gt; ctx.Request.Path.StartsWithSegments(&quot;/webhooks&quot;), branch =&gt; branch.Use(async (ctx, next) =&gt;
+{
+    if (ctx.Request.ContentLength &gt; 64 * 1024) { ctx.Response.StatusCode = 413; return; }
+    ctx.Request.EnableBuffering(bufferThreshold: 64 * 1024);      // stays in memory up to 64 KB
+    using var ms = new MemoryStream();
+    await ctx.Request.Body.CopyToAsync(ms, ctx.RequestAborted);
+    ctx.Request.Body.Position = 0;                                // rewind for model binding
+
+    if (!Signature.IsValid(ms.ToArray(), ctx.Request.Headers[&quot;X-Signature&quot;]))
+    {
+        ctx.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        return;                                                   // short-circuit
+    }
+    await next(ctx);
+}));
+</code></pre>
+<pre><code class="language-java">// Spring: ContentCachingRequestWrapper caches bytes AS THE CHAIN READS THEM.
+// The content is only available after chain.doFilter returns, so it suits logging,
+// not pre-checks. For a pre-check (signature), read the bytes yourself and wrap the
+// request in an HttpServletRequestWrapper that replays them.
+public class BodyAuditFilter extends OncePerRequestFilter {
+    @Override
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
+            throws ServletException, IOException {
+        var wrapped = new ContentCachingRequestWrapper(req, 64 * 1024);   // cache limit
+        chain.doFilter(wrapped, res);
+        byte[] body = wrapped.getContentAsByteArray();                   // what the controller read
+        audit.record(req.getRequestURI(), body);
+    }
+}
+</code></pre>
+<pre><code class="language-python"># ASGI: the body arrives as http.request messages from receive(). Read them all,
+# then hand the app a receive() that replays them.
+class SignatureMiddleware:
+    def __init__(self, app, max_bytes=64 * 1024):
+        self.app, self.max_bytes = app, max_bytes
+
+    async def __call__(self, scope, receive, send):
+        if scope[&quot;type&quot;] != &quot;http&quot; or not scope[&quot;path&quot;].startswith(&quot;/webhooks&quot;):
+            return await self.app(scope, receive, send)
+        chunks, size, more = [], 0, True
+        while more:
+            message = await receive()
+            if message[&quot;type&quot;] == &quot;http.disconnect&quot;:
+                return
+            chunks.append(message.get(&quot;body&quot;, b&quot;&quot;))
+            size += len(chunks[-1])
+            more = message.get(&quot;more_body&quot;, False)
+            if size &gt; self.max_bytes:
+                return await send_status(send, 413)
+        body = b&quot;&quot;.join(chunks)
+        if not signature_is_valid(body, dict(scope[&quot;headers&quot;]).get(b&quot;x-signature&quot;, b&quot;&quot;)):
+            return await send_status(send, 401)
+
+        replayed = False
+        async def replay():
+            nonlocal replayed
+            if not replayed:
+                replayed = True
+                return {&quot;type&quot;: &quot;http.request&quot;, &quot;body&quot;: body, &quot;more_body&quot;: False}
+            return await receive()            # later calls: wait for disconnect
+
+        await self.app(scope, replay, send)
+
+async def send_status(send, status):
+    await send({&quot;type&quot;: &quot;http.response.start&quot;, &quot;status&quot;: status, &quot;headers&quot;: []})
+    await send({&quot;type&quot;: &quot;http.response.body&quot;, &quot;body&quot;: b&quot;&quot;})
+</code></pre>
+<pre><code class="language-go">// net/http: read (bounded), then put a fresh reader back on r.Body.
+func VerifySignature(next http.Handler) http.Handler {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        body, err := io.ReadAll(http.MaxBytesReader(w, r.Body, 64&lt;&lt;10))
+        if err != nil {
+            http.Error(w, &quot;body too large&quot;, http.StatusRequestEntityTooLarge)
+            return
+        }
+        if !signatureValid(body, r.Header.Get(&quot;X-Signature&quot;)) {
+            http.Error(w, &quot;bad signature&quot;, http.StatusUnauthorized)
+            return
+        }
+        r.Body = io.NopCloser(bytes.NewReader(body)) // the handler reads it again
+        next.ServeHTTP(w, r)
+    })
+}
+</code></pre>
+<pre><code class="language-typescript">// Express: the JSON parser consumes the stream. Its verify hook sees the raw bytes first.
+import express from &quot;express&quot;;
+
+app.use(
+  &quot;/webhooks&quot;,
+  express.json({
+    limit: &quot;64kb&quot;,
+    verify: (req, _res, buf) =&gt; {
+      if (!signatureValid(buf, req.headers[&quot;x-signature&quot;])) {
+        throw Object.assign(new Error(&quot;bad signature&quot;), { status: 401 });
+      }
+    },
+  }),
+);
+// Later middleware and handlers use req.body (parsed). The stream itself is gone.
+</code></pre>
+</div>
+<h3 id="short-circuit-patterns">Short-circuit patterns</h3>
+<p>Short-circuiting means answering without calling <code>next</code>. It is the whole point of auth, CORS preflights, static files, rate limiting and health checks. Done well, a short-circuit is fast, explicit and visible in the logs.</p>
+<div class="compare">
+<div>
+<h4 id="return-without-next">Return without <code>next</code></h4>
+<p>Set a status (ideally a ProblemDetails body) and <code>return</code>. Log <em>why</em> at Debug or Information level, or the 401 will look like a mystery. Outer layers still run their after-code, so logging, timing and CORS headers still apply.</p>
+</div>
+<div>
+<h4 id="branch-map-mapwhen">Branch: <code>Map</code> / <code>MapWhen</code></h4>
+<p>A sub-pipeline for a path or a predicate that never rejoins the main one. Use it for a separate app (an admin UI, a legacy handler) with its own middleware. Covered in <a href="request-pipeline.html#use-run-map-mapwhen-and-usewhen">The Request Pipeline</a>.</p>
+</div>
+<div class="good">
+<h4 id="shortcircuit-and-mapshortcircuit-net-8"><code>.ShortCircuit()</code> and <code>MapShortCircuit</code> (.NET 8+)</h4>
+<p><code>app.MapGet("/healthz", ...).ShortCircuit()</code> makes routing run the endpoint <strong>immediately</strong> when it matches, skipping every middleware between <code>UseRouting</code> and the endpoints (CORS, auth, rate limiting, yours). <code>app.MapShortCircuit(404, "robots.txt", "favicon.ico")</code> answers those prefixes with a status straight from routing. Use it for cheap, public, high-volume probes. Never use it on an endpoint that needs auth or CORS, because those layers are skipped.</p>
+</div>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: short-circuiting with an empty body and no log</strong>
+<code>ctx.Response.StatusCode = 403; return;</code> is correct but unhelpful. The client gets no reason and your logs show nothing. Write a ProblemDetails (<code>await Results.Problem(statusCode: 403, title: "IP not allowed").ExecuteAsync(ctx)</code>) and log the reason. And never short-circuit by throwing an exception: exceptions are slow, they go to the exception handler as a 500, and they pollute error dashboards.</p>
+</div>
+<h2 id="middleware-filters-and-interceptors">Middleware, filters and interceptors</h2>
+<p>Middleware sees every request as <strong>HTTP</strong>: a path, headers and a body stream. It runs before routing has bound any arguments, and it can't see your action, its parameters or its result. Frameworks therefore add a second, inner pipeline that runs <strong>inside</strong> the endpoint, after the endpoint has been selected and its arguments bound. In ASP.NET Core MVC these are <strong>filters</strong>; in minimal APIs, <strong>endpoint filters</strong>; in Spring, <strong>HandlerInterceptors</strong> and <code>@ControllerAdvice</code>; in NestJS, <strong>guards, interceptors and pipes</strong>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 290" width="760" role="img" aria-label="The MVC filter pipeline runs inside the endpoint middleware, which runs inside the middleware pipeline">
+<rect class="box" x="10" y="10" width="740" height="270" rx="14"/>
+<text x="26" y="32" class="title">middleware pipeline: every request · HttpContext only</text>
+<text x="26" y="50" class="small muted">ExceptionHandler → Routing → CORS → AuthN → AuthZ → RateLimiter → …</text>
+<rect class="box accent" x="30" y="62" width="700" height="206" rx="12"/>
+<text x="46" y="84" class="title">endpoint middleware → the selected endpoint</text>
+<text x="46" y="102" class="small muted">MVC filter pipeline (controllers) · runs only for matched controller actions</text>
+<rect class="box visit" x="46" y="114" width="100" height="56" rx="8"/><text x="96" y="137" text-anchor="middle" class="small">authorization</text><text x="96" y="153" text-anchor="middle" class="small">filters</text>
+<rect class="box visit" x="156" y="114" width="100" height="56" rx="8"/><text x="206" y="137" text-anchor="middle" class="small">resource</text><text x="206" y="153" text-anchor="middle" class="small">filters</text>
+<rect class="box" x="266" y="114" width="100" height="56" rx="8"/><text x="316" y="137" text-anchor="middle" class="small">model binding</text><text x="316" y="153" text-anchor="middle" class="small">+ validation</text>
+<rect class="box visit" x="376" y="114" width="100" height="56" rx="8"/><text x="426" y="137" text-anchor="middle" class="small">action</text><text x="426" y="153" text-anchor="middle" class="small">filters</text>
+<rect class="box done" x="486" y="114" width="100" height="56" rx="8"/><text x="536" y="137" text-anchor="middle" class="small">action</text><text x="536" y="153" text-anchor="middle" class="small mono">Create(o)</text>
+<rect class="box visit" x="596" y="114" width="118" height="56" rx="8"/><text x="655" y="137" text-anchor="middle" class="small">result filters</text><text x="655" y="153" text-anchor="middle" class="small">+ result</text>
+<rect class="box bad" x="376" y="186" width="210" height="34" rx="8"/><text x="481" y="208" text-anchor="middle" class="small">exception filters (MVC stages only)</text>
+<text x="46" y="246" class="small">sees: bound arguments, ModelState, ActionDescriptor, IActionResult</text>
+<text x="46" y="262" class="small muted">minimal APIs: endpoint filters wrap the handler after binding, in the same position as action filters</text>
+</svg>
+<figcaption>Filters are a pipeline inside one endpoint. They know which action is running and can see its typed arguments and its result. Middleware wraps all of that and sees only HTTP.</figcaption>
+</figure>
+
+<p>The visualizer runs the same five requests against an MVC controller and against a minimal API endpoint, and shows which stage handles each one.</p>
+<div class="viz" data-viz="middleware-patterns-filters"></div>
+
+<p>What to take from it:</p>
+<ul>
+<li><strong>A request that never matches an endpoint never reaches a filter.</strong> A 404 for <code>/api/nope</code> and a 401 for an anonymous caller are decided by middleware. If your exception or logging logic lives only in filters, it misses all of these.</li>
+<li><strong>Validation happens inside the endpoint.</strong> With <code>[ApiController]</code>, the <code>ModelStateInvalidFilter</code> turns an invalid body into a 400 ValidationProblem before your action runs. Minimal APIs have no ModelState, so an endpoint filter (<code>ValidateOrder</code>) does the same job.</li>
+<li><strong>Exception filters only see MVC's exceptions.</strong> An MVC exception filter catches what the action, action filters and binding throw, and can turn a domain exception into a 409 with controller-specific knowledge. Minimal APIs have no exception filters: the exception goes out to <code>UseExceptionHandler</code>. Exceptions from middleware are never seen by any filter.</li>
+</ul>
+<div class="code-tabs" data-labels="ASP.NET Core endpoint filter,Spring HandlerInterceptor,FastAPI dependency,chi per-route middleware,NestJS interceptor">
+<pre><code class="language-csharp">// Minimal API endpoint filter: runs after binding, sees typed arguments.
+var orders = app.MapGroup(&quot;/api/orders&quot;)
+    .RequireAuthorization()
+    .AddEndpointFilter&lt;AuditFilter&gt;();              // every endpoint in the group
+
+orders.MapPost(&quot;/&quot;, (Order o, OrderSvc svc) =&gt; Results.Created($&quot;/api/orders/{o.Id}&quot;, svc.Place(o)))
+      .AddEndpointFilter(async (ctx, next) =&gt;       // just this endpoint
+      {
+          var o = ctx.GetArgument&lt;Order&gt;(0);
+          if (o.Qty &lt;= 0)
+              return Results.ValidationProblem(new Dictionary&lt;string, string[]&gt;
+                  { [&quot;Qty&quot;] = [&quot;Quantity must be positive.&quot;] });
+          return await next(ctx);                   // the handler (or the next filter)
+      });
+
+sealed class AuditFilter(IAuditLog audit) : IEndpointFilter
+{
+    public async ValueTask&lt;object?&gt; InvokeAsync(EndpointFilterInvocationContext ctx, EndpointFilterDelegate next)
+    {
+        var result = await next(ctx);               // the handler's return value, before it is written
+        audit.Record(ctx.HttpContext.GetEndpoint()?.DisplayName, ctx.Arguments, result);
+        return result;
+    }
+}
+</code></pre>
+<pre><code class="language-java">// Spring MVC: Filter (servlet level, every request) vs HandlerInterceptor (after the
+// handler is chosen: sees the HandlerMethod and its annotations, not bound arguments).
+public class AuditInterceptor implements HandlerInterceptor {
+    @Override
+    public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) {
+        if (handler instanceof HandlerMethod hm &amp;&amp; hm.hasMethodAnnotation(Audited.class)) {
+            req.setAttribute(&quot;auditStart&quot;, System.nanoTime());
+        }
+        return true;                                  // false = short-circuit
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest req, HttpServletResponse res, Object handler, Exception ex) {
+        if (req.getAttribute(&quot;auditStart&quot;) instanceof Long start) {
+            audit.record(req.getRequestURI(), res.getStatus(), System.nanoTime() - start);
+        }
+    }
+}
+// Bound arguments and results: @ControllerAdvice, @Valid, or Spring AOP around the controller.
+</code></pre>
+<pre><code class="language-python"># FastAPI: per-route behaviour is a dependency, resolved after routing and with typed values.
+from fastapi import Depends, FastAPI, HTTPException
+
+app = FastAPI()
+
+def require_positive_qty(order: Order) -&gt; Order:
+    if order.qty &lt;= 0:
+        raise HTTPException(status_code=422, detail=&quot;Quantity must be positive.&quot;)
+    return order
+
+@app.post(&quot;/api/orders&quot;, status_code=201, dependencies=[Depends(audit_dependency)])
+def create(order: Order = Depends(require_positive_qty)):
+    return svc.place(order)
+</code></pre>
+<pre><code class="language-go">// chi: middleware can be attached to a route or group, which gives &quot;endpoint filters&quot;
+// without a separate concept. It still sees only the http.Request, not a typed value.
+r := chi.NewRouter()
+r.Use(middleware.RequestID, middleware.Recoverer) // global
+r.Route(&quot;/api/orders&quot;, func(r chi.Router) {
+    r.Use(RequireAuth)                              // the group
+    r.With(Audit(&quot;orders.create&quot;)).Post(&quot;/&quot;, createOrder) // one route
+})
+</code></pre>
+<pre><code class="language-typescript">// NestJS: middleware → guards → interceptors (before) → pipes → handler
+//         → interceptors (after) → exception filters
+@Injectable()
+export class AuditInterceptor implements NestInterceptor {
+  intercept(ctx: ExecutionContext, next: CallHandler): Observable&lt;unknown&gt; {
+    const handler = ctx.getHandler().name;           // knows which method runs
+    const started = Date.now();
+    return next.handle().pipe(
+      tap((result) =&gt; audit.record(handler, result, Date.now() - started)),
+    );
+  }
+}
+
+@Controller(&quot;api/orders&quot;)
+@UseGuards(AuthGuard(&quot;jwt&quot;))
+@UseInterceptors(AuditInterceptor)
+export class OrdersController {
+  @Post()
+  create(@Body(new ValidationPipe()) order: OrderDto) {
+    return this.svc.place(order);
+  }
+}
+</code></pre>
+</div>
+<h3 id="which-one-to-use">Which one to use</h3>
+<table>
+<thead>
+<tr>
+<th>You need to…</th>
+<th>Use</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Handle every request, including 404s, static files and preflights</td>
+<td><strong>Middleware</strong></td>
+<td>Filters only run for matched endpoints.</td>
+</tr>
+<tr>
+<td>Turn exceptions into ProblemDetails for the whole app</td>
+<td><strong>Middleware</strong> (<code>UseExceptionHandler</code> + <code>IExceptionHandler</code>)</td>
+<td>Exceptions can come from middleware, routing and serialization, not just actions.</td>
+</tr>
+<tr>
+<td>Decide based on the endpoint's attributes or metadata</td>
+<td><strong>Middleware after <code>UseRouting</code></strong>, reading <code>GetEndpoint()?.Metadata</code></td>
+<td>Works for MVC and minimal APIs alike.</td>
+</tr>
+<tr>
+<td>Validate or transform <strong>bound arguments</strong></td>
+<td><strong>Endpoint filter</strong> / <strong>action filter</strong> / FastAPI dependency / Nest pipe</td>
+<td>Only these see typed values, after binding.</td>
+</tr>
+<tr>
+<td>Change or inspect the <strong>result object</strong> before it is serialized</td>
+<td><strong>Result filter</strong>, endpoint filter, Nest interceptor</td>
+<td>Middleware sees only bytes, after the result was written.</td>
+</tr>
+<tr>
+<td>Map domain exceptions differently per controller</td>
+<td><strong>MVC exception filter</strong> or <code>@ControllerAdvice</code></td>
+<td>Close to the code that knows the domain. Keep a global handler as the safety net.</td>
+</tr>
+<tr>
+<td>Cache a response before binding happens</td>
+<td><strong>Resource filter</strong> or output caching</td>
+<td>Runs before model binding, so a cache hit skips it.</td>
+</tr>
+<tr>
+<td>Retry, log or authenticate <strong>outgoing</strong> calls</td>
+<td><strong><code>DelegatingHandler</code></strong> / client interceptors</td>
+<td>Same pattern, client side. See <a href="outbound-pipelines.html">Outbound Pipelines</a>.</td>
+</tr>
+</tbody>
+</table>
+<div class="insight">
+<p><strong>Insight</strong>
+Push each concern to the <strong>outermost</strong> layer that has the information it needs. Exception handling and logging need nothing but HTTP, so they go in middleware, which covers everything. Argument validation needs typed arguments, so it goes in a filter. A concern placed too far in misses requests; placed too far out, it lacks the data to decide.</p>
+</div>
+<h2 id="rate-limiting">Rate limiting</h2>
+<p>A rate limiter answers "too many" before the work happens, which protects your service from abusive clients and protects your quotas from runaway scripts. In ASP.NET Core (.NET 7+) it is middleware with endpoint-level policies. That is why it goes <strong>after <code>UseRouting</code></strong> (so it sees the endpoint's policy) and <strong>after authentication</strong> (so it can give each user their own budget).</p>
+<p>The algorithm decides how bursts are treated. The visualizer sends the same arrivals through all three built-in window algorithms. The default traffic is a burst that straddles the window boundary at 6 s.</p>
+<div class="viz" data-viz="middleware-patterns-ratelimit"></div>
+
+<div class="compare">
+<div class="warn">
+<h4 id="fixed-window">Fixed window</h4>
+<p>A counter that resets at each boundary. It is the cheapest option and easy to explain, but a client can send <code>limit</code> requests at the end of one window and <code>limit</code> more at the start of the next: up to <strong>2 × limit</strong> in a short span. Fine for coarse quotas ("1000 per hour").</p>
+</div>
+<div class="good">
+<h4 id="sliding-window">Sliding window</h4>
+<p>The window is split into segments. Permits used in a segment come back only when that segment slides out of the window, so there is no fresh allowance at a boundary. More segments make it smoother, at the cost of a little more state per partition.</p>
+</div>
+<div class="good">
+<h4 id="token-bucket">Token bucket</h4>
+<p>Allows a burst up to the bucket size, then a steady rate of <code>TokensPerPeriod</code> per <code>ReplenishmentPeriod</code>. It matches how clients really behave (bursty page loads, then idle). Its "per window" count can exceed the limit; what it bounds is the burst size and the long-run rate. The concurrency limiter (not shown) bounds requests <strong>in flight</strong> instead of per time.</p>
+</div>
+</div>
+<p>A realistic setup partitions by user, falls back to the client IP for anonymous callers, and returns <code>429</code> with <code>Retry-After</code>:</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">builder.Services.AddRateLimiter(o =&gt;
+{
+    o.RejectionStatusCode = StatusCodes.Status429TooManyRequests;     // the default is 503
+    o.OnRejected = (ctx, _) =&gt;
+    {
+        if (ctx.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retry))
+            ctx.HttpContext.Response.Headers.RetryAfter = ((int)retry.TotalSeconds).ToString();
+        return ValueTask.CompletedTask;
+    };
+    o.AddPolicy(&quot;per-user&quot;, ctx =&gt; RateLimitPartition.GetTokenBucketLimiter(
+        partitionKey: ctx.User.Identity?.Name                       // needs UseAuthentication first
+                      ?? ctx.Connection.RemoteIpAddress?.ToString()  // needs UseForwardedHeaders behind a proxy
+                      ?? &quot;anonymous&quot;,
+        factory: _ =&gt; new TokenBucketRateLimiterOptions
+        {
+            TokenLimit = 20,
+            TokensPerPeriod = 10,
+            ReplenishmentPeriod = TimeSpan.FromSeconds(1),
+            QueueLimit = 0,                                          // reject, don't queue
+        }));
+});
+
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseRateLimiter();                       // after routing (policies) and authentication (user)
+app.MapGet(&quot;/api/orders&quot;, GetOrders).RequireRateLimiting(&quot;per-user&quot;);
+</code></pre>
+<pre><code class="language-java">// Spring: no built-in limiter. Bucket4j (token bucket) in a filter, keyed per user.
+@Component
+public class RateLimitFilter extends OncePerRequestFilter {
+    private final Map&lt;String, Bucket&gt; buckets = new ConcurrentHashMap&lt;&gt;();   // bound it in production
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
+            throws ServletException, IOException {
+        String key = req.getUserPrincipal() != null ? req.getUserPrincipal().getName() : req.getRemoteAddr();
+        Bucket bucket = buckets.computeIfAbsent(key, k -&gt; Bucket.builder()
+                .addLimit(limit -&gt; limit.capacity(20).refillGreedy(10, Duration.ofSeconds(1)))
+                .build());
+        ConsumptionProbe probe = bucket.tryConsumeAndReturnRemaining(1);
+        if (probe.isConsumed()) {
+            chain.doFilter(req, res);
+        } else {
+            res.setStatus(429);
+            res.setHeader(&quot;Retry-After&quot;, String.valueOf(
+                    TimeUnit.NANOSECONDS.toSeconds(probe.getNanosToWaitForRefill()) + 1));
+        }
+    }
+}
+// Register it after the Spring Security chain so the principal is known.
+</code></pre>
+<pre><code class="language-python"># FastAPI with slowapi (limits library): per-user key, 429 + Retry-After.
+from fastapi import FastAPI, Request
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
+
+def user_or_ip(request: Request) -&gt; str:
+    user = getattr(request.state, &quot;user&quot;, None)            # set by your auth middleware
+    return user.id if user else request.client.host
+
+limiter = Limiter(key_func=user_or_ip, default_limits=[&quot;600/minute&quot;], headers_enabled=True)
+app = FastAPI()
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+app.add_middleware(SlowAPIMiddleware)
+
+@app.get(&quot;/api/orders&quot;)
+@limiter.limit(&quot;20/second&quot;)
+async def get_orders(request: Request):
+    ...
+</code></pre>
+<pre><code class="language-go">// golang.org/x/time/rate is a token bucket. One limiter per key.
+type keyedLimiter struct {
+    mu       sync.Mutex
+    limiters map[string]*rate.Limiter // evict idle keys in production
+}
+
+func (k *keyedLimiter) get(key string) *rate.Limiter {
+    k.mu.Lock()
+    defer k.mu.Unlock()
+    l, ok := k.limiters[key]
+    if !ok {
+        l = rate.NewLimiter(rate.Limit(10), 20) // 10 tokens/s, burst 20
+        k.limiters[key] = l
+    }
+    return l
+}
+
+func RateLimit(k *keyedLimiter, keyOf func(*http.Request) string) func(http.Handler) http.Handler {
+    return func(next http.Handler) http.Handler {
+        return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+            if !k.get(keyOf(r)).Allow() {
+                w.Header().Set(&quot;Retry-After&quot;, &quot;1&quot;)
+                http.Error(w, &quot;too many requests&quot;, http.StatusTooManyRequests)
+                return
+            }
+            next.ServeHTTP(w, r)
+        })
+    }
+}
+</code></pre>
+<pre><code class="language-typescript">// Express with express-rate-limit: fixed window by default; key per user after auth.
+import { rateLimit } from &quot;express-rate-limit&quot;;
+
+const perUser = rateLimit({
+  windowMs: 60_000,
+  limit: 600,
+  standardHeaders: &quot;draft-8&quot;,                 // RateLimit headers + Retry-After on 429
+  keyGenerator: (req) =&gt; req.user?.id ?? req.ip!, // req.ip needs app.set(&quot;trust proxy&quot;, ...)
+});
+
+app.use(authenticate);                        // first, so req.user exists
+app.use(&quot;/api&quot;, perUser);
+</code></pre>
+</div>
+<p>Production notes:</p>
+<ul>
+<li><strong>429 vs 503.</strong> <code>429 Too Many Requests</code> tells the client <em>it</em> should slow down, and <code>Retry-After</code> tells it when to try again. <code>503 Service Unavailable</code> says the <em>server</em> is overloaded. ASP.NET Core rejects with 503 by default, so set <code>RejectionStatusCode = 429</code> for per-client limits.</li>
+<li><strong>Behind a proxy, the client IP is the proxy's.</strong> Without <code>UseForwardedHeaders</code> (with <code>KnownProxies</code> or <code>KnownNetworks</code> configured), every anonymous user shares one partition. The same is true for Express's <code>trust proxy</code> and Go's <code>RealIP</code>.</li>
+<li><strong>The built-in limiters are in-memory, per instance.</strong> Ten instances with a limit of 100 allow 1000. For a global limit, use a distributed limiter (Redis) or limit at the gateway, and treat the in-process limiter as a per-instance safety valve.</li>
+<li>The algorithms in depth, and API-key and per-tenant quotas, are in <a href="api-security.html">API Security</a>.</li>
+</ul>
+<h2 id="response-caching-output-caching-and-compression">Response caching, output caching and compression</h2>
+<p>These three middleware all work on the <strong>response body</strong> and all have ordering rules.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Response caching</th>
+<th>Output caching (.NET 7+)</th>
+<th>Response compression</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>What it does</strong></td>
+<td>Server-side cache that follows HTTP caching headers (<code>Cache-Control</code>, <code>Vary</code>)</td>
+<td>Server-side cache that <strong>you</strong> configure with policies, tags and expiry</td>
+<td>gzip/Brotli the body when the client sends <code>Accept-Encoding</code></td>
+</tr>
+<tr>
+<td><strong>Who decides</strong></td>
+<td>The client and your headers. A client sending <code>Cache-Control: no-cache</code> bypasses it.</td>
+<td>The server. Clients can't bypass it. Supports eviction by tag and protects against cache stampedes.</td>
+<td>The server, per MIME type</td>
+</tr>
+<tr>
+<td><strong>Typical use</strong></td>
+<td>Rarely the right choice for APIs. Set <code>Cache-Control</code> headers for browsers and CDNs instead.</td>
+<td>Expensive, anonymous GETs: catalogs, reference data</td>
+<td>Large text responses, when the reverse proxy doesn't compress</td>
+</tr>
+<tr>
+<td><strong>Ordering</strong></td>
+<td>After <code>UseCors</code></td>
+<td>After <code>UseCors</code>, and after <code>UseRouting</code> for endpoint policies</td>
+<td>Early, before any middleware that writes bodies (static files, endpoints)</td>
+</tr>
+<tr>
+<td><strong>Gotcha</strong></td>
+<td>Ignores requests with <code>Authorization</code> or responses with <code>Set-Cookie</code> by design</td>
+<td>Only caches anonymous <code>GET</code>/<code>HEAD</code> 200 responses by default, which is safe. Personalised responses need an explicit <code>VaryBy...</code></td>
+<td><code>EnableForHttps</code> is <strong>false</strong> by default: compressing secrets next to attacker-controlled input over TLS leaks them via response size (CRIME/BREACH)</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-csharp">builder.Services.AddResponseCompression(o =&gt; o.EnableForHttps = false);   // the default, on purpose
+builder.Services.AddOutputCache(o =&gt; o.AddPolicy(&quot;catalog&quot;, p =&gt; p.Expire(TimeSpan.FromMinutes(5)).Tag(&quot;catalog&quot;)));
+
+app.UseResponseCompression();      // early: wraps everything that writes a body
+app.UseStaticFiles();
+app.UseRouting();
+app.UseCors(&quot;spa&quot;);                // before the cache, or cached responses skip CORS
+app.UseOutputCache();              // after routing, so endpoint policies are visible
+app.MapGet(&quot;/api/catalog&quot;, GetCatalog).CacheOutput(&quot;catalog&quot;);
+app.MapPost(&quot;/api/catalog&quot;, async (Item i, IOutputCacheStore cache, CancellationToken ct) =&gt;
+{
+    await SaveAsync(i);
+    await cache.EvictByTagAsync(&quot;catalog&quot;, ct);   // invalidate on write
+    return Results.NoContent();
+});
+</code></pre>
+<p>Caching strategy itself (what to cache, keys, invalidation, stampedes) is the subject of <a href="caching.html">Caching</a>.</p>
+<h2 id="testing-middleware">Testing middleware</h2>
+<p>Middleware bugs are ordering bugs and edge-case bugs, so test both ways: <strong>unit-test</strong> each middleware in isolation, and <strong>integration-test</strong> the real pipeline with the requests that misordering breaks.</p>
+<div class="code-tabs" data-labels="C# unit (DefaultHttpContext),C# pipeline (WebApplicationFactory),Java (MockMvc),Python (TestClient),Go (httptest),TypeScript (supertest)">
+<pre><code class="language-csharp">// Unit: no server. `next` is a lambda you control; the context is a DefaultHttpContext.
+public sealed class ApiKeyMiddleware(RequestDelegate next, IApiKeyStore keys)
+{
+    public Task InvokeAsync(HttpContext ctx) =&gt;
+        keys.IsValid(ctx.Request.Headers[&quot;X-Api-Key&quot;])
+            ? next(ctx)
+            : Results.Problem(statusCode: 401, title: &quot;Missing or invalid API key&quot;).ExecuteAsync(ctx);
+}
+
+[Fact]
+public async Task Missing_key_short_circuits_with_401_and_never_calls_next()
+{
+    var ctx = new DefaultHttpContext { RequestServices = new ServiceCollection().AddLogging().BuildServiceProvider() };
+    ctx.Response.Body = new MemoryStream();
+    var nextCalled = false;
+    var mw = new ApiKeyMiddleware(_ =&gt; { nextCalled = true; return Task.CompletedTask; }, new FakeKeys(&quot;k1&quot;));
+
+    await mw.InvokeAsync(ctx);
+
+    Assert.False(nextCalled);
+    Assert.Equal(401, ctx.Response.StatusCode);
+    Assert.Equal(&quot;application/problem+json&quot;, ctx.Response.ContentType);
+}
+
+[Fact]
+public async Task Valid_key_calls_next()
+{
+    var ctx = new DefaultHttpContext();
+    ctx.Request.Headers[&quot;X-Api-Key&quot;] = &quot;k1&quot;;
+    var nextCalled = false;
+    var mw = new ApiKeyMiddleware(_ =&gt; { nextCalled = true; return Task.CompletedTask; }, new FakeKeys(&quot;k1&quot;));
+
+    await mw.InvokeAsync(ctx);
+
+    Assert.True(nextCalled);
+}
+// Note: OnStarting callbacks never fire on a DefaultHttpContext. Test response headers
+// added in OnStarting through the pipeline (next tab) instead.
+</code></pre>
+<pre><code class="language-csharp">// Integration: the real Program.cs pipeline in memory. Test the requests that ordering breaks.
+public class PipelineTests(WebApplicationFactory&lt;Program&gt; factory) : IClassFixture&lt;WebApplicationFactory&lt;Program&gt;&gt;
+{
+    [Fact]
+    public async Task Preflight_is_answered_by_cors_not_rejected_by_auth()
+    {
+        var client = factory.CreateClient();
+        var req = new HttpRequestMessage(HttpMethod.Options, &quot;/api/orders&quot;);
+        req.Headers.Add(&quot;Origin&quot;, &quot;https://spa.example&quot;);
+        req.Headers.Add(&quot;Access-Control-Request-Method&quot;, &quot;GET&quot;);
+
+        var res = await client.SendAsync(req);
+
+        Assert.Equal(HttpStatusCode.NoContent, res.StatusCode);
+        Assert.Equal(&quot;https://spa.example&quot;, res.Headers.GetValues(&quot;Access-Control-Allow-Origin&quot;).Single());
+    }
+
+    [Fact]
+    public async Task Errors_become_problem_details_with_a_correlation_id()
+    {
+        var client = factory.WithWebHostBuilder(b =&gt; b.ConfigureTestServices(s =&gt;
+            s.AddSingleton&lt;IOrderRepository, ThrowingRepository&gt;())).CreateClient();
+
+        var res = await client.GetAsync(&quot;/api/orders/1&quot;);
+
+        Assert.Equal(HttpStatusCode.InternalServerError, res.StatusCode);
+        Assert.Equal(&quot;application/problem+json&quot;, res.Content.Headers.ContentType?.MediaType);
+        Assert.True(res.Headers.Contains(&quot;X-Correlation-ID&quot;));
+    }
+}
+</code></pre>
+<pre><code class="language-java">// MockMvc runs the servlet filters (including Spring Security) with @AutoConfigureMockMvc.
+@SpringBootTest
+@AutoConfigureMockMvc
+class PipelineTests {
+    @Autowired MockMvc mvc;
+
+    @Test
+    void preflightIsNotRejectedByAuth() throws Exception {
+        mvc.perform(options(&quot;/api/orders&quot;)
+                .header(&quot;Origin&quot;, &quot;https://spa.example&quot;)
+                .header(&quot;Access-Control-Request-Method&quot;, &quot;GET&quot;))
+           .andExpect(status().isOk())                         // Spring answers preflights with 200
+           .andExpect(header().string(&quot;Access-Control-Allow-Origin&quot;, &quot;https://spa.example&quot;));
+    }
+
+    @Test
+    void correlationIdIsEchoed() throws Exception {
+        mvc.perform(get(&quot;/api/orders&quot;).header(&quot;X-Correlation-ID&quot;, &quot;web-42&quot;).with(jwt()))
+           .andExpect(header().string(&quot;X-Correlation-ID&quot;, &quot;web-42&quot;));
+    }
+}
+</code></pre>
+<pre><code class="language-python"># Starlette's TestClient drives the full ASGI app, middleware included, in-process.
+from starlette.applications import Starlette
+from starlette.responses import PlainTextResponse
+from starlette.routing import Route
+from starlette.testclient import TestClient
+
+def build_app():
+    app = Starlette(routes=[Route(&quot;/ping&quot;, lambda r: PlainTextResponse(&quot;ok&quot;))])
+    app.add_middleware(CorrelationIdMiddleware)
+    return app
+
+def test_reuses_a_safe_id():
+    res = TestClient(build_app()).get(&quot;/ping&quot;, headers={&quot;x-correlation-id&quot;: &quot;web-42&quot;})
+    assert res.headers[&quot;x-correlation-id&quot;] == &quot;web-42&quot;
+
+def test_replaces_an_unsafe_id():
+    res = TestClient(build_app()).get(&quot;/ping&quot;, headers={&quot;x-correlation-id&quot;: &quot;a b\tc&quot;})
+    assert res.headers[&quot;x-correlation-id&quot;] != &quot;a b\tc&quot;
+    assert len(res.headers[&quot;x-correlation-id&quot;]) == 32
+</code></pre>
+<pre><code class="language-go">// httptest: a ResponseRecorder and a fake next handler. No network.
+func TestCorrelationID_ReusesSafeID(t *testing.T) {
+    var seen *slog.Logger
+    next := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        seen = Logger(r.Context())
+        w.WriteHeader(http.StatusOK)
+    })
+    h := CorrelationID(slog.Default())(next)
+
+    req := httptest.NewRequest(http.MethodGet, &quot;/api/orders&quot;, nil)
+    req.Header.Set(&quot;X-Correlation-ID&quot;, &quot;web-42&quot;)
+    rec := httptest.NewRecorder()
+    h.ServeHTTP(rec, req)
+
+    if got := rec.Header().Get(&quot;X-Correlation-ID&quot;); got != &quot;web-42&quot; {
+        t.Fatalf(&quot;header = %q, want web-42&quot;, got)
+    }
+    if seen == nil {
+        t.Fatal(&quot;next did not get a request-scoped logger&quot;)
+    }
+}
+</code></pre>
+<pre><code class="language-typescript">// supertest drives the Express app in-process.
+import request from &quot;supertest&quot;;
+import { app } from &quot;../src/app&quot;;
+
+test(&quot;preflight is answered before auth&quot;, async () =&gt; {
+  const res = await request(app)
+    .options(&quot;/api/orders&quot;)
+    .set(&quot;Origin&quot;, &quot;https://spa.example&quot;)
+    .set(&quot;Access-Control-Request-Method&quot;, &quot;GET&quot;);
+  expect(res.status).toBe(204);
+  expect(res.headers[&quot;access-control-allow-origin&quot;]).toBe(&quot;https://spa.example&quot;);
+});
+
+test(&quot;errors are problem+json&quot;, async () =&gt; {
+  const res = await request(app).get(&quot;/api/boom&quot;).set(&quot;Authorization&quot;, &quot;Bearer test&quot;);
+  expect(res.status).toBe(500);
+  expect(res.headers[&quot;content-type&quot;]).toMatch(/application\/problem\+json/);
+});
+</code></pre>
+</div>
+<p>The integration tests worth having for every service, because they catch every misordering in the visualizer above:</p>
+<ul>
+<li>A <strong>preflight</strong> <code>OPTIONS</code> with <code>Origin</code> and <code>Access-Control-Request-Method</code> gets 204/200 with <code>Access-Control-Allow-Origin</code>, and <strong>no</strong> 401.</li>
+<li>A request <strong>without credentials</strong> to a protected endpoint gets 401 with a ProblemDetails body, and a request with them gets 200.</li>
+<li>An endpoint that <strong>throws</strong> returns <code>application/problem+json</code> with a <code>traceId</code>, and no stack trace.</li>
+<li>A <strong>static file</strong> is served without credentials, and not over plain HTTP in environments with HTTPS.</li>
+<li>The <strong>(limit + 1)th</strong> request in a window gets 429 with <code>Retry-After</code>.</li>
+<li>A request with a correlation id gets it <strong>echoed</strong>, and an unsafe id is replaced.</li>
+</ul>
+<h2 id="the-same-ordering-in-other-stacks">The same ordering in other stacks</h2>
+<p>The rules come from HTTP and from the onion, not from ASP.NET Core, so every framework has the same order. What differs is <strong>how you express it</strong>, and two frameworks invert the direction of registration.</p>
+<div class="code-tabs" data-labels="Express,Spring Boot,Django,Go (chi),Starlette / FastAPI">
+<pre><code class="language-typescript">// Express: registration order = outermost first. The error handler is the exception:
+// it has FOUR parameters and goes LAST, because Express forwards errors forward.
+import express from &quot;express&quot;;
+import helmet from &quot;helmet&quot;;
+import cors from &quot;cors&quot;;
+
+const app = express();
+app.set(&quot;trust proxy&quot;, 1);                         // like UseForwardedHeaders
+app.use(correlationId);                            // covers everything, including errors
+app.use(helmet());                                 // security headers incl. HSTS
+app.use(httpsRedirect);                            // often done by the proxy instead
+app.use(express.static(&quot;public&quot;));                 // cheap exit
+app.use(cors({ origin: &quot;https://spa.example&quot; }));  // answers preflights with 204
+app.use(authenticate);                             // sets req.user, never rejects
+app.use(&quot;/api&quot;, perUser);                          // rate limit after auth
+app.use(&quot;/api&quot;, apiRouter);                        // routes (authorization per route)
+app.use((req, res) =&gt; res.status(404).type(&quot;application/problem+json&quot;)
+  .json({ title: &quot;Not Found&quot;, status: 404 }));
+app.use((err, req, res, next) =&gt; {                 // 4 args = error middleware, last
+  if (res.headersSent) return next(err);           // too late: let Express abort
+  res.status(err.status ?? 500).type(&quot;application/problem+json&quot;)
+    .json({ title: err.status ? err.message : &quot;Internal Server Error&quot;, status: err.status ?? 500 });
+});
+// Express 5 forwards rejected promises from async handlers to the error middleware;
+// Express 4 needs try/catch + next(err) (or a wrapper) in async handlers.
+</code></pre>
+<pre><code class="language-java">// Spring Boot: servlet filters ordered by @Order / FilterRegistrationBean.setOrder
+// (lower = outer). Spring Security is ONE filter that contains its own ordered chain.
+@Bean
+SecurityFilterChain api(HttpSecurity http) throws Exception {
+    return http
+        .cors(Customizer.withDefaults())          // CorsFilter placed BEFORE authentication
+        .csrf(csrf -&gt; csrf.disable())             // stateless API with bearer tokens
+        .headers(h -&gt; h.httpStrictTransportSecurity(Customizer.withDefaults()))
+        .authorizeHttpRequests(a -&gt; a
+            .requestMatchers(&quot;/css/**&quot;, &quot;/js/**&quot;, &quot;/healthz&quot;).permitAll()
+            .anyRequest().authenticated())
+        .oauth2ResourceServer(o -&gt; o.jwt(Customizer.withDefaults()))
+        .build();
+}
+// @RestControllerAdvice maps exceptions from controllers to ProblemDetail, but NOT
+// exceptions thrown inside servlet filters: those need a filter-level handler, or the
+// AuthenticationEntryPoint / AccessDeniedHandler of Spring Security.
+</code></pre>
+<pre><code class="language-python"># Django: MIDDLEWARE is listed outermost first (top runs first on the request,
+# last on the response), like ASP.NET Core.
+MIDDLEWARE = [
+    &quot;django.middleware.security.SecurityMiddleware&quot;,       # HSTS, SSL redirect
+    &quot;whitenoise.middleware.WhiteNoiseMiddleware&quot;,          # static files, right after security
+    &quot;corsheaders.middleware.CorsMiddleware&quot;,               # as high as possible
+    &quot;myapp.middleware.CorrelationIdMiddleware&quot;,
+    &quot;django.contrib.sessions.middleware.SessionMiddleware&quot;,
+    &quot;django.middleware.common.CommonMiddleware&quot;,
+    &quot;django.middleware.csrf.CsrfViewMiddleware&quot;,
+    &quot;django.contrib.auth.middleware.AuthenticationMiddleware&quot;,  # needs sessions
+    &quot;django.contrib.messages.middleware.MessageMiddleware&quot;,
+    &quot;django.middleware.clickjacking.XFrameOptionsMiddleware&quot;,
+]
+SECURE_HSTS_SECONDS = 31536000
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = (&quot;HTTP_X_FORWARDED_PROTO&quot;, &quot;https&quot;)  # behind a proxy
+# Django converts view exceptions into 500 responses itself; a middleware's
+# process_exception hook can turn them into problem+json.
+</code></pre>
+<pre><code class="language-go">// chi: r.Use order = outermost first. All Use calls must come before any route.
+r := chi.NewRouter()
+r.Use(middleware.RequestID)   // correlation id
+r.Use(middleware.RealIP)      // like UseForwardedHeaders: only behind a trusted proxy
+r.Use(middleware.Logger)      // outside Recoverer, so it logs the 500 that Recoverer writes
+r.Use(middleware.Recoverer)   // panic → 500, the exception handler
+r.Use(cors.Handler(cors.Options{AllowedOrigins: []string{&quot;https://spa.example&quot;}})) // go-chi/cors
+r.Use(Authenticate)           // sets the user in the context, never rejects
+r.Use(httprate.LimitByIP(100, time.Minute))
+r.Handle(&quot;/css/*&quot;, http.StripPrefix(&quot;/css/&quot;, http.FileServer(http.Dir(&quot;public/css&quot;))))
+r.Route(&quot;/api/orders&quot;, func(r chi.Router) {
+    r.Use(RequireUser)        // authorization for this group
+    r.Get(&quot;/&quot;, listOrders)
+})
+</code></pre>
+<pre><code class="language-python"># Starlette / FastAPI: add_middleware INSERTS AT THE FRONT, so the LAST one added is
+# the OUTERMOST. Write the list bottom-up, or pass middleware=[...] in outer-first order.
+from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
+from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
+from starlette.middleware.authentication import AuthenticationMiddleware
+
+app = FastAPI(middleware=[                         # this list is outermost first
+    Middleware(CorrelationIdMiddleware),
+    Middleware(HTTPSRedirectMiddleware),
+    Middleware(CORSMiddleware, allow_origins=[&quot;https://spa.example&quot;],
+               allow_methods=[&quot;*&quot;], allow_headers=[&quot;*&quot;]),
+    Middleware(AuthenticationMiddleware, backend=JWTBackend()),
+])
+# Equivalent with add_middleware: call it in REVERSE (Authentication first, Correlation last).
+# Starlette always wraps your stack in ServerErrorMiddleware (outermost, 500s) and
+# ExceptionMiddleware (innermost, HTTPException → response, @app.exception_handler).
+</code></pre>
+</div>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>ASP.NET Core</th>
+<th>Express</th>
+<th>Spring</th>
+<th>Django</th>
+<th>chi</th>
+<th>Starlette</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Order written as</td>
+<td>outer first</td>
+<td>outer first (error handler last)</td>
+<td><code>@Order</code>, lower = outer</td>
+<td>outer first</td>
+<td>outer first</td>
+<td><code>add_middleware</code>: <strong>inner first</strong></td>
+</tr>
+<tr>
+<td>Catch-all errors</td>
+<td><code>UseExceptionHandler</code> first</td>
+<td>4-arg middleware <strong>last</strong></td>
+<td><code>@RestControllerAdvice</code> (not filters)</td>
+<td>built in + <code>process_exception</code></td>
+<td><code>Recoverer</code></td>
+<td><code>ServerErrorMiddleware</code> (built in)</td>
+</tr>
+<tr>
+<td>CORS before auth</td>
+<td><code>UseCors</code> before <code>UseAuthentication</code></td>
+<td><code>cors()</code> before auth</td>
+<td><code>http.cors()</code></td>
+<td><code>CorsMiddleware</code> high</td>
+<td><code>cors.Handler</code> before auth</td>
+<td><code>CORSMiddleware</code> outside auth</td>
+</tr>
+<tr>
+<td>Per-request context</td>
+<td><code>ILogger.BeginScope</code> (AsyncLocal)</td>
+<td><code>AsyncLocalStorage</code></td>
+<td>MDC (ThreadLocal)</td>
+<td><code>contextvars</code></td>
+<td><code>context.Context</code></td>
+<td><code>contextvars</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="when-to-use-middleware-and-when-not">When to use middleware, and when not</h2>
+<p>Middleware is the right place for concerns that apply to <strong>HTTP traffic as a whole</strong>. The more a concern depends on a specific endpoint, its arguments or your domain, the further inwards it belongs.</p>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · EVERY REQUEST?</small><strong>Middleware</strong><p>Applies to almost every request, including 404s and static files: errors, logging, correlation, security headers, HTTPS, compression.</p></div>
+<div class="flow-step"><small>2 · ENDPOINT METADATA?</small><strong>Middleware after UseRouting</strong><p>Depends on attributes or policies: read <code>GetEndpoint()</code>. Auth, CORS, rate limits, output caching.</p></div>
+<div class="flow-step"><small>3 · TYPED ARGUMENTS?</small><strong>Endpoint or action filter</strong><p>Needs bound arguments or the result object (a Nest pipe or interceptor, a FastAPI dependency).</p></div>
+<div class="flow-step"><small>4 · BUSINESS RULE?</small><strong>Application code</strong><p>Neither middleware nor filter: put it where it can be read and tested.</p></div>
+</div>
+<p>When <strong>not</strong> to write custom middleware:</p>
+<ul>
+<li><strong>A built-in one exists.</strong> Exception handling, HSTS, CORS, auth, rate limiting, output caching, request timeouts, HTTP logging, health checks and forwarded headers are all built in. They encode years of edge cases, such as the preflight rule.</li>
+<li><strong>It only applies to a few endpoints.</strong> A path check inside global middleware (<code>if (path.StartsWith("/api/admin"))</code>) is endpoint metadata in disguise. Use a route group with a filter, or an attribute that middleware reads.</li>
+<li><strong>It needs the body as an object.</strong> Model binding already did the work. Use a filter.</li>
+<li><strong>It is retry logic.</strong> Retrying the inbound pipeline re-runs the endpoint on a response that may have started. Retry outgoing calls instead.</li>
+<li><strong>The gateway does it.</strong> TLS, compression, global rate limits and CORS are often better handled once at the edge (API gateway, reverse proxy, CDN). Keep the in-process version as defence in depth, not as a second, conflicting policy.</li>
+</ul>
+<p>The costs to remember: every middleware runs for every request, so a 1 ms layer adds 1 ms to your health checks; the order is an implicit contract that no compiler checks; and debugging "who answered 401?" means walking the onion. Middleware that logs when it short-circuits pays for itself.</p>
+<h2 id="pitfalls">Pitfalls</h2>
+<div class="pitfall">
+<p><strong>Pitfall: CORS after authentication</strong>
+Browsers never send credentials on a preflight <code>OPTIONS</code>. If authentication or authorization runs first, the preflight gets 401, and the browser reports a "CORS error" that hides the real cause. Fix: <code>UseCors</code> after <code>UseRouting</code> and before <code>UseAuthentication</code>. In Spring, enable <code>http.cors()</code> so the <code>CorsFilter</code> runs inside Spring Security before authentication.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: the exception handler is not first, or not configured</strong>
+Anything registered before it can throw past it: a bare 500 with no body, no ProblemDetails and, often, no useful log. <code>UseExceptionHandler()</code> without arguments also needs <code>AddProblemDetails()</code> (or an <code>ExceptionHandlingPath</code>), or the app throws at startup. Fix: register it first, with <code>AddProblemDetails()</code> and your <code>IExceptionHandler</code>s.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: request logging inside the exception handler logs the wrong status</strong>
+The logging layer's <code>finally</code> runs while the exception is still unwinding, before the handler sets 500, so it logs <code>200</code>. Fix: put request logging outside the exception handler, or rely on the hosting layer's request log and metrics, which see the final status.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: "StatusCode cannot be set because the response has already started"</strong>
+Some layer tries to change the status or headers after the body began. Common causes: an exception during streaming, a middleware that sets headers after <code>await next</code>, or calling <code>next</code> twice. Fix: check <code>Response.HasStarted</code>, use <code>OnStarting</code> for late headers, and validate before streaming.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: correlation id in a static field or a middleware field</strong>
+Conventional middleware is a singleton, and static fields are shared by every request. Under concurrency, log lines carry another request's id, and nobody notices until an incident. Fix: <code>ILogger.BeginScope</code> (AsyncLocal), <code>HttpContext.Items</code>, or <code>Activity.Current</code>.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: middleware eats the request body</strong>
+Reading <code>Request.Body</code> without <code>EnableBuffering</code> and a rewind leaves the endpoint an empty stream, which shows up as a 400 for a valid client request. Disposing a <code>StreamReader</code> without <code>leaveOpen: true</code> disposes the body. And buffering <em>every</em> request doubles upload I/O. Fix: buffer only the routes that need it, with a size limit, or use a filter.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: <code>.ShortCircuit()</code> on an endpoint that needs auth or CORS</strong>
+<code>ShortCircuit()</code> runs the endpoint straight from routing, skipping everything registered between <code>UseRouting</code> and the endpoints. That includes authentication, authorization and CORS, so a short-circuited endpoint with <code>RequireAuthorization()</code> is <strong>public</strong>. Fix: use it only for anonymous, cheap endpoints such as health probes and <code>robots.txt</code>.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: rate limiting by IP behind a proxy, or per instance</strong>
+Without forwarded-header handling, every client has the load balancer's IP and shares one bucket: one noisy client throttles everyone. And an in-memory limiter on N instances allows N times the limit. Fix: <code>UseForwardedHeaders</code> with known proxies, per-user partitions after authentication, and a distributed limiter or gateway for global limits.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: registration direction in Starlette, and error-handler position in Express</strong>
+<code>app.add_middleware</code> in Starlette and FastAPI inserts at the front, so the last call is the outermost layer. Code copied from an Express or ASP.NET Core mental model ends up inverted. In Express, an error handler with three parameters is ordinary middleware and never receives errors, and one registered <em>before</em> the routes never sees their errors.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: compressing HTTPS responses that mix secrets with user input</strong>
+Turning on <code>EnableForHttps</code> (or gzip for everything at the proxy) on pages that contain a CSRF token or a session secret next to reflected attacker input enables BREACH-style attacks, which recover the secret from response sizes. Fix: leave HTTPS compression off for such responses, or mask secrets per response.</p>
+</div>
+<h2 id="checklist">Checklist</h2>
+<ul>
+<li><code>UseExceptionHandler</code> (with <code>AddProblemDetails</code> and <code>IExceptionHandler</code>s) is the first layer; stack traces never reach clients.</li>
+<li><code>UseForwardedHeaders</code> runs before anything that reads the scheme or the client IP, and only trusts known proxies.</li>
+<li>HSTS and HTTPS redirection come before anything that serves content; static files come before routing and auth.</li>
+<li><code>UseRouting</code> is called explicitly when you have endpoint-agnostic layers before it and endpoint-aware layers after it.</li>
+<li><code>UseCors</code> comes after routing and before authentication, authorization and any response or output cache.</li>
+<li><code>UseAuthentication</code> → <code>UseAuthorization</code> → <code>UseRateLimiter</code> → endpoint-aware custom middleware → endpoints.</li>
+<li>Request logging and correlation ids cover everything, validate incoming ids, and use scopes rather than fields.</li>
+<li>Middleware that adds headers late uses <code>OnStarting</code>; anything that changes the response checks <code>HasStarted</code>.</li>
+<li>Body-reading middleware is limited to the routes that need it, bounded, buffered and rewound with <code>leaveOpen: true</code>.</li>
+<li>Short-circuits return a ProblemDetails body and log why; <code>.ShortCircuit()</code> is only on anonymous endpoints.</li>
+<li>Concerns that need typed arguments or results live in filters, not middleware.</li>
+<li>Rate limits reject with 429 and <code>Retry-After</code>, partition per user, and account for multiple instances.</li>
+<li>Integration tests cover a preflight, an anonymous call, a throwing endpoint, a static file and the (limit + 1)th request.</li>
+</ul>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>Your SPA's API calls all fail with "CORS error" in the browser, but <code>curl</code> with a token works. What is the most likely cause?</summary>
+<p>The preflight. <code>curl</code> doesn't send one, but the browser sends <code>OPTIONS</code> with <code>Origin</code> and <code>Access-Control-Request-Method</code> and <strong>no</strong> credentials. If authentication or authorization runs before CORS, the preflight gets 401 with no <code>Access-Control-Allow-Origin</code> header, so the browser blocks the real request and reports it as a CORS error. Move <code>UseCors</code> before <code>UseAuthentication</code>.</p>
+</details>
+<details class="quiz">
+<summary>A custom middleware registered before <code>UseExceptionHandler</code> throws. What does the client get?</summary>
+<p>A bare 500 with an empty body. The exception handler only catches exceptions thrown by layers <em>inside</em> it, so this one escapes to the server, which can only set 500 if the response hasn't started. No ProblemDetails, and none of your <code>IExceptionHandler</code> logic runs.</p>
+</details>
+<details class="quiz">
+<summary>An endpoint streams a CSV export and throws halfway. Why does the client receive <code>200 OK</code> and a truncated file instead of a ProblemDetails 500?</summary>
+<p>The status line and headers were sent with the first chunk, so <code>Response.HasStarted</code> is <code>true</code>. The exception handler logs <em>"The response has already started, the error handler will not be executed"</em> and rethrows, and the server aborts the connection. Validate and do the risky work before the first write, or signal the error inside the stream format.</p>
+</details>
+<details class="quiz">
+<summary>Where should a per-user rate limiter go, and what happens if it is placed before <code>UseAuthentication</code>?</summary>
+<p>After <code>UseRouting</code> (to see the endpoint's <code>RequireRateLimiting</code> policy) and after <code>UseAuthentication</code> (to know the user). Before authentication, <code>ctx.User</code> is anonymous for everyone, so every caller falls into the same anonymous (or IP) partition, and one busy client exhausts the budget for all of them.</p>
+</details>
+<details class="quiz">
+<summary>You need to reject orders with <code>Qty &lt;= 0</code>. Middleware or endpoint filter? Why?</summary>
+<p>An endpoint filter (or an action filter, or validation attributes). Middleware runs before model binding and sees only a body stream: it would have to read, buffer, parse and rewind the body itself. A filter runs after binding and gets the typed <code>Order</code> from <code>GetArgument&lt;Order&gt;(0)</code>, and it only runs for the endpoints it is attached to.</p>
+</details>
+<details class="quiz">
+<summary>A fixed-window limiter allows 4 requests per 6 seconds. Can a client get 8 requests accepted within one second? How do the other algorithms prevent that?</summary>
+<p>Yes: 4 at t = 5.6 s (end of the first window) and 4 at t = 6.1 s (start of the next). A sliding window keeps counting the permits used in the last few segments, so the boundary gives no fresh allowance. A token bucket caps any burst at its bucket size and refills at a steady rate.</p>
+</details>
+<details class="quiz">
+<summary>In FastAPI you call <code>add_middleware(CorrelationId)</code> and then <code>add_middleware(Auth)</code>. Which runs first on a request, and does the auth middleware's 401 carry the correlation id?</summary>
+<p><code>Auth</code> runs first, because <code>add_middleware</code> inserts at the front: the last one added is the outermost. Its 401 short-circuits before <code>CorrelationId</code> runs, so the 401 has no correlation id header and its log lines have no id. Add <code>CorrelationId</code> last, or pass <code>middleware=[...]</code> in outermost-first order.</p>
+</details>
+<details class="quiz">
+<summary>Why does reading <code>Request.Body</code> in middleware make a valid <code>POST</code> fail with 400, and what three things fix it?</summary>
+<p>The body is a forward-only stream: once the middleware has read it, the endpoint's JSON binding reads zero bytes and reports that it failed to read the parameter. Fix: call <code>EnableBuffering()</code> before reading, read with <code>leaveOpen: true</code> so the reader doesn't dispose the body, and set <code>Body.Position = 0</code> before calling <code>next</code>.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Canonical order</strong>ExceptionHandler → HSTS → HTTPS redirect → static files → Routing → CORS → AuthN → AuthZ → RateLimiter → custom → endpoints.</div>
+<div><strong>Three reasons</strong>Wrap (must see everything inside), needs (uses an earlier result), exit early (cheap answer first).</div>
+<div><strong>Routing boundary</strong>Before <code>UseRouting</code>: endpoint-agnostic. After: reads <code>GetEndpoint()</code> metadata.</div>
+<div><strong>CORS</strong>After routing, before auth: preflights carry no credentials. Before response or output caching.</div>
+<div><strong>Errors</strong><code>AddProblemDetails</code> + <code>IExceptionHandler</code> + <code>UseExceptionHandler()</code> first. Return <code>false</code> to pass.</div>
+<div><strong>HasStarted</strong>After the first body write, the status and headers are fixed. Late headers: <code>OnStarting</code>.</div>
+<div><strong>Correlation</strong><code>BeginScope</code> (AsyncLocal) / MDC / <code>contextvars</code> / <code>context.Context</code> / <code>AsyncLocalStorage</code>. Validate the id.</div>
+<div><strong>Body</strong><code>EnableBuffering</code> → read with <code>leaveOpen</code> → <code>Position = 0</code>. Over 30 KB it spills to disk.</div>
+<div><strong>Short-circuit</strong>Return without <code>next</code>, with ProblemDetails and a log line. <code>.ShortCircuit()</code> skips auth too.</div>
+<div><strong>Filters</strong>Inside the endpoint, after binding: typed arguments and results. Middleware: everything, as HTTP.</div>
+<div><strong>Rate limits</strong>After routing and auth; 429 + <code>Retry-After</code>; fixed allows 2× at boundaries; bucket bounds bursts.</div>
+<div><strong>Tests</strong><code>DefaultHttpContext</code> unit tests; <code>WebApplicationFactory</code> for preflight, 401, throw, static, 429.</div>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/aspnet/core/fundamentals/middleware/#middleware-order">ASP.NET Core Middleware: middleware order</a> and <a href="https://learn.microsoft.com/aspnet/core/fundamentals/middleware/write">Write custom ASP.NET Core middleware</a> (Microsoft Learn)</li>
+<li><a href="https://learn.microsoft.com/aspnet/core/fundamentals/error-handling">Handle errors in ASP.NET Core</a> and <a href="https://learn.microsoft.com/aspnet/core/fundamentals/error-handling-api">Handle errors in ASP.NET Core APIs</a> (Microsoft Learn)</li>
+<li><a href="https://learn.microsoft.com/aspnet/core/security/cors">Enable Cross-Origin Requests (CORS)</a> and <a href="https://learn.microsoft.com/aspnet/core/performance/rate-limit">Rate limiting middleware</a> (Microsoft Learn)</li>
+<li><a href="https://learn.microsoft.com/aspnet/core/mvc/controllers/filters">Filters in ASP.NET Core</a> and <a href="https://learn.microsoft.com/aspnet/core/fundamentals/minimal-apis/min-api-filters">Filters in Minimal API apps</a> (Microsoft Learn)</li>
+<li><a href="https://learn.microsoft.com/aspnet/core/performance/caching/output">Output caching middleware</a>, <a href="https://learn.microsoft.com/aspnet/core/performance/response-compression">Response compression</a> and <a href="https://learn.microsoft.com/aspnet/core/fundamentals/use-http-context#request-body">Read the request body</a> (Microsoft Learn)</li>
+<li><a href="https://learn.microsoft.com/aspnet/core/test/integration-tests">Integration tests in ASP.NET Core</a> and <a href="https://learn.microsoft.com/aspnet/core/test/middleware">Test ASP.NET Core middleware</a> (Microsoft Learn)</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc9457">RFC 9457: Problem Details for HTTP APIs</a></li>
+<li><a href="https://expressjs.com/en/guide/error-handling.html">Express error handling</a>, <a href="https://docs.spring.io/spring-security/reference/servlet/architecture.html">Spring Security architecture</a>, <a href="https://docs.djangoproject.com/en/stable/ref/middleware/#middleware-ordering">Django middleware ordering</a>, <a href="https://www.starlette.io/middleware/">Starlette middleware</a> and <a href="https://go-chi.io/#/pages/middleware">chi middleware</a></li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="request-pipeline.html"><small>&larr; PREVIOUS</small>The Request Delegate Pipeline</a><a class="next" href="outbound-pipelines.html"><small>NEXT &rarr;</small>Outbound Pipelines &amp; Interceptors</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-the-same-eleven-lines-in-the-wrong-order">The problem: the same eleven lines, in the wrong order</a></li>
+<li><a href="#the-canonical-order-and-why-each-layer-is-where-it-is">The canonical order, and why each layer is where it is</a><ul>
+<li><a href="#what-the-framework-does-for-you-and-when-it-doesnt">What the framework does for you (and when it doesn't)</a></li>
+</ul>
+</li>
+<li><a href="#writing-good-middleware">Writing good middleware</a><ul>
+<li><a href="#exceptions-to-problemdetails">Exceptions to ProblemDetails</a></li>
+<li><a href="#the-response-has-started-the-one-way-door">The response has started: the one-way door</a></li>
+<li><a href="#correlation-ids-and-request-logging-with-scopes">Correlation ids and request logging with scopes</a></li>
+<li><a href="#timing">Timing</a></li>
+<li><a href="#reading-the-request-body-without-stealing-it">Reading the request body without stealing it</a></li>
+<li><a href="#short-circuit-patterns">Short-circuit patterns</a></li>
+</ul>
+</li>
+<li><a href="#middleware-filters-and-interceptors">Middleware, filters and interceptors</a><ul>
+<li><a href="#which-one-to-use">Which one to use</a></li>
+</ul>
+</li>
+<li><a href="#rate-limiting">Rate limiting</a></li>
+<li><a href="#response-caching-output-caching-and-compression">Response caching, output caching and compression</a></li>
+<li><a href="#testing-middleware">Testing middleware</a></li>
+<li><a href="#the-same-ordering-in-other-stacks">The same ordering in other stacks</a></li>
+<li><a href="#when-to-use-middleware-and-when-not">When to use middleware, and when not</a></li>
+<li><a href="#pitfalls">Pitfalls</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

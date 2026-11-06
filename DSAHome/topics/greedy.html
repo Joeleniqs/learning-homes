@@ -1,0 +1,1337 @@
+<!doctype html>
+<html lang="en" data-home="dsa-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Greedy Algorithms | DSA Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#4f46e5;--accent-soft:#eef0ff;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#a5b4fc;--accent-soft:#252a5c;}}:root[data-theme=dark]{--accent:#a5b4fc;--accent-soft:#252a5c;}</style>
+  <link rel="stylesheet" href="../assets/topics/greedy.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/greedy.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="DSA Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">DS</span>DSA Home</a>
+    <p class="sidebar-caption">Data structures &amp; algorithms, seen.<br>Every idea animated, every pattern drilled.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations</summary><ul class="topic-list"><li data-search="The Problem-Solving Playbook Foundations A visual decision map from input size, shape and question type to the right technique, plus a repeatable interview/contest workflow. pattern recognition constraints approach interview" data-slug="problem-solving-playbook"><a href="../topics/problem-solving-playbook.html">The Problem-Solving Playbook</a></li><li data-search="Complexity Analysis Foundations Big-O growth you can see, amortized cost, recursion trees and the Master theorem, and what 10^8 operations per second really buys you. big o amortized master theorem time space" data-slug="complexity-analysis"><a href="../topics/complexity-analysis.html">Complexity Analysis</a></li><li data-search="Recursion &amp; the Call Stack Foundations Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from. call stack recursion tree divide and conquer" data-slug="recursion"><a href="../topics/recursion.html">Recursion &amp; the Call Stack</a></li></ul></details><details class="nav-track"><summary>Arrays &amp; Strings</summary><ul class="topic-list"><li data-search="Two Pointers Arrays &amp; Strings Opposite-end, same-direction and fast/slow pointers: why moving one pointer is safe, with partitioning and k-sum. pair sum partition dutch flag 3sum" data-slug="two-pointers"><a href="../topics/two-pointers.html">Two Pointers</a></li><li data-search="Sliding Window Arrays &amp; Strings Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows. substring subarray window at most k" data-slug="sliding-window"><a href="../topics/sliding-window.html">Sliding Window</a></li><li data-search="Prefix Sums &amp; Difference Arrays Arrays &amp; Strings 1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR. subarray sum equals k range sum 2d prefix difference array" data-slug="prefix-sums"><a href="../topics/prefix-sums.html">Prefix Sums &amp; Difference Arrays</a></li><li data-search="Binary Search Arrays &amp; Strings One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection. lower bound upper bound search on answer rotated monotonic predicate" data-slug="binary-search"><a href="../topics/binary-search.html">Binary Search</a></li><li data-search="Sorting Algorithms Arrays &amp; Strings Animated bubble, insertion, merge, quick, heap, counting and radix sorts; stability, quickselect and custom comparators. merge sort quick sort quickselect counting sort inversions" data-slug="sorting"><a href="../topics/sorting.html">Sorting Algorithms</a></li><li data-search="Hashing Patterns Arrays &amp; Strings How hash tables work inside, then frequency maps, grouping by canonical keys, complement lookups and rolling hashes. hash map hash set anagram two sum collision" data-slug="hashing"><a href="../topics/hashing.html">Hashing Patterns</a></li><li data-search="Monotonic Stack &amp; Queue Arrays &amp; Strings Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight. next greater largest rectangle deque trapping rain water" data-slug="monotonic-stack-queue"><a href="../topics/monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a></li><li data-search="Intervals &amp; Sweep Line Arrays &amp; Strings Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline. merge intervals meeting rooms events skyline" data-slug="intervals-sweep-line"><a href="../topics/intervals-sweep-line.html">Intervals &amp; Sweep Line</a></li><li data-search="String Algorithms Arrays &amp; Strings KMP failure function, Z-algorithm, Rabin–Karp, Manacher&#x27;s palindromes and string hashing, each animated character by character. kmp z algorithm rabin karp manacher palindrome pattern matching" data-slug="string-algorithms"><a href="../topics/string-algorithms.html">String Algorithms</a></li></ul></details><details class="nav-track"><summary>Linked Lists, Stacks, Queues &amp; Heaps</summary><ul class="topic-list"><li data-search="Linked Lists Linked Lists, Stacks, Queues &amp; Heaps Pointer rewiring you can watch: reversal, dummy heads, fast/slow cycle detection, merging, and LRU cache design. reverse floyd cycle merge lru" data-slug="linked-lists"><a href="../topics/linked-lists.html">Linked Lists</a></li><li data-search="Stacks &amp; Queues Linked Lists, Stacks, Queues &amp; Heaps Balanced brackets, expression evaluation, min-stack, queues from stacks, deques and BFS queues. parentheses calculator deque min stack" data-slug="stacks-queues"><a href="../topics/stacks-queues.html">Stacks &amp; Queues</a></li><li data-search="Heaps &amp; Priority Queues Linked Lists, Stacks, Queues &amp; Heaps Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling. heap top k median k way merge priority queue" data-slug="heaps-priority-queues"><a href="../topics/heaps-priority-queues.html">Heaps &amp; Priority Queues</a></li></ul></details><details class="nav-track"><summary>Trees</summary><ul class="topic-list"><li data-search="Tree Traversals Trees Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees. dfs bfs inorder level order morris" data-slug="tree-traversals"><a href="../topics/tree-traversals.html">Tree Traversals</a></li><li data-search="Binary Search Trees Trees Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters. bst validate successor avl red black" data-slug="binary-search-trees"><a href="../topics/binary-search-trees.html">Binary Search Trees</a></li><li data-search="Tree Problem Patterns Trees Return-value recursion (diameter, max path sum), top-down state, LCA, serialization, and binary lifting. lca diameter path sum binary lifting serialize" data-slug="tree-patterns"><a href="../topics/tree-patterns.html">Tree Problem Patterns</a></li><li data-search="Tries Trees Prefix trees animated insert by insert: autocomplete, word search on boards, and bitwise tries for max XOR. prefix tree autocomplete word search xor trie" data-slug="tries"><a href="../topics/tries.html">Tries</a></li><li data-search="Segment Trees, Fenwick Trees &amp; Sparse Tables Trees Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables. segment tree lazy propagation fenwick bit rmq" data-slug="segment-fenwick-trees"><a href="../topics/segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a></li></ul></details><details class="nav-track"><summary>Graphs</summary><ul class="topic-list"><li data-search="Graph Fundamentals: BFS &amp; DFS Graphs Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS. bfs dfs grid islands connected components cycle" data-slug="graph-fundamentals"><a href="../topics/graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></li><li data-search="Topological Sort &amp; DAGs Graphs Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs. kahn course schedule dag dependency order" data-slug="topological-sort"><a href="../topics/topological-sort.html">Topological Sort &amp; DAGs</a></li><li data-search="Union-Find (Disjoint Set Union) Graphs Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries. dsu disjoint set path compression connectivity" data-slug="union-find"><a href="../topics/union-find.html">Union-Find (Disjoint Set Union)</a></li><li data-search="Shortest Paths Graphs BFS, 0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall and A* animated, and a chart to pick the right one every time. dijkstra bellman ford floyd warshall a star 0-1 bfs" data-slug="shortest-paths"><a href="../topics/shortest-paths.html">Shortest Paths</a></li><li data-search="Minimum Spanning Trees Graphs Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems. kruskal prim mst cut property" data-slug="minimum-spanning-trees"><a href="../topics/minimum-spanning-trees.html">Minimum Spanning Trees</a></li><li data-search="Advanced Graph Algorithms Graphs Strongly connected components, bridges and articulation points, bipartite checks, Euler paths, and max-flow / matching. tarjan kosaraju scc bridges euler max flow bipartite matching" data-slug="advanced-graphs"><a href="../topics/advanced-graphs.html">Advanced Graph Algorithms</a></li></ul></details><details class="nav-track" open><summary>Backtracking &amp; Greedy</summary><ul class="topic-list"><li data-search="Backtracking Backtracking &amp; Greedy The choose/explore/un-choose template animated on a decision tree: subsets, permutations, combinations, N-Queens, Sudoku and pruning. subsets permutations n queens sudoku pruning" data-slug="backtracking"><a href="../topics/backtracking.html">Backtracking</a></li><li data-search="Greedy Algorithms Backtracking &amp; Greedy When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding. exchange argument interval scheduling jump game huffman" data-slug="greedy"><a href="../topics/greedy.html" aria-current="page">Greedy Algorithms</a></li></ul></details><details class="nav-track"><summary>Dynamic Programming</summary><ul class="topic-list"><li data-search="The DP Framework Dynamic Programming Recursion → memoization → tabulation → space optimisation, visualised on one problem; how to design state and transitions. memoization tabulation state transition overlapping subproblems" data-slug="dp-framework"><a href="../topics/dp-framework.html">The DP Framework</a></li><li data-search="1D &amp; Grid DP Dynamic Programming Climbing stairs, house robber, decode ways, unique paths, min path sum, maximal square and dungeon game with animated tables. house robber unique paths grid dp maximal square" data-slug="dp-linear-grid"><a href="../topics/dp-linear-grid.html">1D &amp; Grid DP</a></li><li data-search="Knapsack Family Dynamic Programming 0/1 vs unbounded vs bounded knapsack, why loop direction matters, coin change, subset sum and target sum. knapsack coin change subset sum partition" data-slug="dp-knapsack"><a href="../topics/dp-knapsack.html">Knapsack Family</a></li><li data-search="Sequence &amp; String DP Dynamic Programming LIS with patience sorting, LCS, edit distance, palindromic subsequences, regex/wildcard matching and distinct subsequences. lis lcs edit distance regex matching palindrome" data-slug="dp-sequences-strings"><a href="../topics/dp-sequences-strings.html">Sequence &amp; String DP</a></li><li data-search="Interval &amp; Tree DP Dynamic Programming Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting). interval dp burst balloons matrix chain tree dp rerooting" data-slug="dp-intervals-trees"><a href="../topics/dp-intervals-trees.html">Interval &amp; Tree DP</a></li><li data-search="Bitmask &amp; Digit DP Dynamic Programming Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints. bitmask tsp digit dp subset dp" data-slug="dp-bitmask-digit"><a href="../topics/dp-bitmask-digit.html">Bitmask &amp; Digit DP</a></li><li data-search="State Machines &amp; DP Optimisations Dynamic Programming Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth. stock state machine convex hull trick knuth optimisation" data-slug="dp-advanced"><a href="../topics/dp-advanced.html">State Machines &amp; DP Optimisations</a></li></ul></details><details class="nav-track"><summary>Bits &amp; Math</summary><ul class="topic-list"><li data-search="Bit Manipulation Bits &amp; Math Bits drawn as switches: masks, XOR tricks, counting bits, subset enumeration and Gray codes. xor mask single number popcount subsets" data-slug="bit-manipulation"><a href="../topics/bit-manipulation.html">Bit Manipulation</a></li><li data-search="Math, Number Theory &amp; Combinatorics Bits &amp; Math GCD, sieves, fast power, modular inverses, nCr mod p, inclusion–exclusion, and the geometry primitives you need. gcd sieve modular fast exponentiation combinatorics geometry" data-slug="math-number-theory"><a href="../topics/math-number-theory.html">Math, Number Theory &amp; Combinatorics</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../CodeExcellenceHome/index.html">Code Excellence Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>DSA Home / Greedy Algorithms</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">BACKTRACKING &AMP; GREEDY</p><h1>Greedy Algorithms</h1><p class="lede">When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding.</p><div class="meta"><span class="level level-intermediate">Intermediate → Expert</span><span>~55 min study</span><span>Builds on: <a href="sorting.html">Sorting Algorithms</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="greedy" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="what-greedy-is-and-why-it-is-dangerous">What greedy is, and why it is dangerous</h2>
+<p>A greedy algorithm builds the answer one decision at a time, and at each step it takes the option that looks best <strong>right now</strong>: the earliest-ending meeting, the largest coin, the cheapest edge. Then it never reconsiders. No backtracking, no table of subproblems. It does one pass, usually after a sort or with a heap, so the cost is typically O(n log n).</p>
+<div class="rule">
+<p><strong>Greedy is correct only when the locally best choice is <em>safe</em>: some optimal solution contains it. Prove that safety with an exchange argument or a "stays ahead" argument, or break it with a counterexample, before you trust it.</strong></p>
+</div>
+<p>The picture below shows the difference from the two other ways of exploring choices. <a href="backtracking.html">Backtracking</a> walks the whole decision tree. <a href="dp-framework.html">Dynamic programming</a> visits each <em>distinct state</em> once and compares all choices. Greedy follows <strong>one</strong> root-to-leaf path and ignores everything else, which makes it the fastest of the three and the only one that can be confidently wrong.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 270" width="880" role="img" aria-label="Greedy follows one path through the decision tree; backtracking explores the whole tree; DP merges equal states">
+<defs><marker id="greedy-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="20" y="22" class="title">The same decision tree, three ways to use it</text>
+<rect class="box active" x="170" y="44" width="80" height="30" rx="8"/><text x="210" y="64" text-anchor="middle" class="mono">start</text>
+<line class="edge path" x1="210" y1="74" x2="90" y2="120"/><line class="edge dash" x1="210" y1="74" x2="210" y2="120"/><line class="edge dash" x1="210" y1="74" x2="330" y2="120"/>
+<text x="130" y="96" text-anchor="end" class="small mono">best now</text>
+<rect class="box path" x="50" y="120" width="80" height="30" rx="8"/><text x="90" y="140" text-anchor="middle" class="mono">a</text>
+<rect class="box" x="170" y="120" width="80" height="30" rx="8"/><text x="210" y="140" text-anchor="middle" class="mono muted">b</text>
+<rect class="box" x="290" y="120" width="80" height="30" rx="8"/><text x="330" y="140" text-anchor="middle" class="mono muted">c</text>
+<line class="edge path" x1="90" y1="150" x2="50" y2="196"/><line class="edge dash" x1="90" y1="150" x2="130" y2="196"/>
+<line class="edge dash" x1="210" y1="150" x2="190" y2="196"/><line class="edge dash" x1="210" y1="150" x2="250" y2="196"/><line class="edge dash" x1="330" y1="150" x2="330" y2="196"/>
+<rect class="box path" x="20" y="196" width="60" height="30" rx="8"/><text x="50" y="216" text-anchor="middle" class="mono">a1</text>
+<rect class="box" x="100" y="196" width="60" height="30" rx="8"/><text x="130" y="216" text-anchor="middle" class="mono muted">a2</text>
+<rect class="box" x="166" y="196" width="48" height="30" rx="8"/><text x="190" y="216" text-anchor="middle" class="mono muted">b1</text>
+<rect class="box" x="226" y="196" width="48" height="30" rx="8"/><text x="250" y="216" text-anchor="middle" class="mono muted">b2</text>
+<rect class="box" x="300" y="196" width="60" height="30" rx="8"/><text x="330" y="216" text-anchor="middle" class="mono muted">c1</text>
+<text x="20" y="252" class="small">Greedy: one path (highlighted). The dashed rest is never looked at.</text>
+<rect class="box visit" x="470" y="50" width="380" height="58" rx="10"/>
+<text x="486" y="72" class="mono">Backtracking: every path</text><text x="486" y="94" class="small">exponential; needed when you must list all answers</text>
+<rect class="box done" x="470" y="120" width="380" height="58" rx="10"/>
+<text x="486" y="142" class="mono">DP: every distinct state once</text><text x="486" y="164" class="small">polynomial when states repeat; compares all choices</text>
+<rect class="box path" x="470" y="190" width="380" height="58" rx="10"/>
+<text x="486" y="212" class="mono">Greedy: one path, no comparison</text><text x="486" y="234" class="small">fastest, and correct only when the choice is provably safe</text>
+</svg>
+<figcaption>A greedy algorithm is a DP in which you can prove, ahead of time, which choice the DP would pick at every state. If you cannot prove it, you have a heuristic, not an algorithm.</figcaption>
+</figure>
+
+<p>Every greedy algorithm on this page has the same three ingredients, and it is worth naming them before writing any code:</p>
+<ol>
+<li><strong>An order.</strong> Usually a sort key (end time, ratio, difference, deadline) or a priority queue that always hands you the current best.</li>
+<li><strong>A choice rule.</strong> Take it, skip it, or replace the worst thing you took earlier.</li>
+<li><strong>A safety argument.</strong> Why some optimal solution agrees with that choice. Without this, you are guessing.</li>
+</ol>
+<p>Most of the skill is in the third item, so the page starts there.</p>
+<h2 id="proving-a-greedy-choice-is-safe">Proving a greedy choice is safe</h2>
+<p>There are two standard proofs. Both are short once you see the picture, and doing them on paper (even informally) is the fastest way to find out whether your rule is wrong.</p>
+<h3 id="the-exchange-argument">The exchange argument</h3>
+<p>Take <strong>any</strong> optimal solution O. Find the first place where it disagrees with the greedy solution G. Show that you can <strong>swap</strong> O's choice for G's choice without making O worse. Now O agrees with G for one more step and is still optimal. Repeat until O <em>is</em> G. So G is optimal.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 300" width="880" role="img" aria-label="Exchange argument: swapping an adjacent inversion in an optimal order never makes it worse, so repeated swaps turn it into the greedy order">
+<text x="20" y="22" class="title">Exchange argument on "shortest job first": swap one adjacent inversion</text>
+<text x="20" y="62" class="mono">O</text>
+<rect class="box" x="60" y="42" width="120" height="34" rx="6"/><text x="120" y="64" text-anchor="middle" class="small">jobs before: T</text>
+<rect class="box bad" x="180" y="42" width="240" height="34" rx="6"/><text x="300" y="64" text-anchor="middle" class="mono">x = 6 (long)</text>
+<rect class="box active" x="420" y="42" width="100" height="34" rx="6"/><text x="470" y="64" text-anchor="middle" class="mono">y = 2</text>
+<rect class="box" x="520" y="42" width="120" height="34" rx="6"/><text x="580" y="64" text-anchor="middle" class="small">jobs after</text>
+<text x="420" y="94" text-anchor="middle" class="small mono">x ends T+6</text><text x="520" y="94" text-anchor="middle" class="small mono">y ends T+8</text>
+<line class="edge accent" x1="340" y1="104" x2="340" y2="136" marker-end="url(#greedy-ar)"/><text x="352" y="126" class="small">swap x and y</text>
+<text x="20" y="166" class="mono">O′</text>
+<rect class="box" x="60" y="146" width="120" height="34" rx="6"/><text x="120" y="168" text-anchor="middle" class="small">jobs before: T</text>
+<rect class="box active" x="180" y="146" width="100" height="34" rx="6"/><text x="230" y="168" text-anchor="middle" class="mono">y = 2</text>
+<rect class="box done" x="280" y="146" width="240" height="34" rx="6"/><text x="400" y="168" text-anchor="middle" class="mono">x = 6</text>
+<rect class="box" x="520" y="146" width="120" height="34" rx="6"/><text x="580" y="168" text-anchor="middle" class="small">jobs after</text>
+<text x="280" y="198" text-anchor="middle" class="small mono">y ends T+2</text><text x="520" y="198" text-anchor="middle" class="small mono">x ends T+8</text>
+<rect class="box done" x="670" y="42" width="190" height="138" rx="10"/>
+<text x="686" y="66" class="small">What changed?</text>
+<text x="686" y="88" class="small">• jobs before: nothing</text>
+<text x="686" y="108" class="small">• jobs after: nothing (T+8)</text>
+<text x="686" y="128" class="small">• the pair: (T+6)+(T+8)</text>
+<text x="686" y="148" class="small">   became (T+2)+(T+8)</text>
+<text x="686" y="168" class="small mono">saved x − y = 4</text>
+<text x="20" y="236" class="small">O was "optimal", yet O′ is strictly better: contradiction, so an optimal order has no adjacent inversion.</text>
+<text x="20" y="256" class="small">An order with no adjacent inversion is sorted. Sorted ascending is exactly what greedy outputs.</text>
+<text x="20" y="282" class="small muted">The recipe: (1) assume an optimal O ≠ G, (2) find where they first differ, (3) swap toward G, (4) show the cost does not rise.</text>
+</svg>
+<figcaption>The whole proof lives in the swapped pair. Everything outside it is unchanged, which is why exchange arguments are usually three lines long.</figcaption>
+</figure>
+
+<p>Run it. The problem: n jobs on one machine, minimise the <strong>sum of completion times</strong> (equivalently, the average waiting time). The visualizer starts from an arbitrary order and swaps adjacent inversions one at a time. Watch the total: it never goes up. The labels on top (×k) show how many completion times include each job, which is why the shortest jobs belong at the front where they are counted the most.</p>
+<div class="viz gr-wide" data-viz="greedy-exchange"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def min_total_completion(times):
+    total = finish = 0
+    for t in sorted(times):        # shortest job first
+        finish += t                # this job's completion time
+        total += finish
+    return total
+</code></pre>
+<pre><code class="language-csharp">public static long MinTotalCompletion(int[] times)
+{
+    var sorted = (int[])times.Clone();
+    Array.Sort(sorted);                   // shortest job first
+    long total = 0, finish = 0;
+    foreach (int t in sorted)
+    {
+        finish += t;                      // this job's completion time
+        total += finish;
+    }
+    return total;
+}
+</code></pre>
+</div>
+<p>The same argument proves many sort keys you will meet below: Two City Scheduling (sort by cost difference), Boats to Save People (pair the heaviest with the lightest), and the deadline order in Course Schedule III. The question to ask is always: <strong>if two neighbours are in the "wrong" order, does swapping them help or at least not hurt?</strong></p>
+<h3 id="greedy-stays-ahead">Greedy stays ahead</h3>
+<p>The second proof compares <strong>progress</strong> instead of swapping. Show by induction that after k steps, the greedy partial solution is at least as good as the first k steps of <strong>any</strong> solution, by some measure. If greedy is never behind, it cannot finish behind.</p>
+<p>The classic case is <strong>interval scheduling</strong>: pick the most non-overlapping intervals. The greedy rule is "take the interval that <strong>ends earliest</strong> among those that start after the last one taken". The measure is the end time of the k-th chosen interval.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 250" width="880" role="img" aria-label="Greedy stays ahead: the k-th greedy interval ends no later than the k-th interval of any other solution">
+<text x="20" y="22" class="title">Earliest end first: greedy's k-th interval always ends no later than anyone's k-th</text>
+<line class="edge" x1="80" y1="200" x2="860" y2="200"/>
+<text x="80" y="218" text-anchor="middle" class="small mono">0</text><text x="275" y="218" text-anchor="middle" class="small mono">4</text><text x="470" y="218" text-anchor="middle" class="small mono">8</text><text x="665" y="218" text-anchor="middle" class="small mono">12</text><text x="860" y="218" text-anchor="middle" class="small mono">16</text>
+<text x="20" y="70" class="mono">G</text>
+<rect class="box path" x="129" y="52" width="146" height="28" rx="6"/><text x="202" y="71" text-anchor="middle" class="small mono">g1 [1,4)</text>
+<rect class="box path" x="324" y="52" width="97" height="28" rx="6"/><text x="372" y="71" text-anchor="middle" class="small mono">g2 [5,7)</text>
+<rect class="box path" x="470" y="52" width="146" height="28" rx="6"/><text x="543" y="71" text-anchor="middle" class="small mono">g3 [8,11)</text>
+<rect class="box path" x="665" y="52" width="146" height="28" rx="6"/><text x="738" y="71" text-anchor="middle" class="small mono">g4 [12,15)</text>
+<text x="20" y="140" class="mono">O</text>
+<rect class="box visit" x="178" y="122" width="146" height="28" rx="6"/><text x="251" y="141" text-anchor="middle" class="small mono">o1 [2,5)</text>
+<rect class="box visit" x="372" y="122" width="146" height="28" rx="6"/><text x="445" y="141" text-anchor="middle" class="small mono">o2 [6,9)</text>
+<rect class="box visit" x="518" y="122" width="146" height="28" rx="6"/><text x="591" y="141" text-anchor="middle" class="small mono">o3 [9,12)</text>
+<rect class="box visit" x="714" y="122" width="146" height="28" rx="6"/><text x="787" y="141" text-anchor="middle" class="small mono">o4 [13,16)</text>
+<line class="edge accent" x1="275" y1="84" x2="275" y2="118"/><line class="edge accent" x1="421" y1="84" x2="421" y2="118"/><line class="edge accent" x1="616" y1="84" x2="616" y2="118"/><line class="edge accent" x1="811" y1="84" x2="811" y2="118"/>
+<text x="282" y="104" class="small">≤</text><text x="428" y="104" class="small">≤</text><text x="623" y="104" class="small">≤</text><text x="818" y="104" class="small">≤</text>
+<text x="80" y="178" class="small">Induction: o(k+1) starts after o(k) ends ≥ g(k) ends, so o(k+1) was also available to greedy, and greedy picked something ending no later.</text>
+<text x="80" y="242" class="small muted">So if O had a 5th interval, greedy could have taken it too. Greedy's count is never smaller.</text>
+</svg>
+<figcaption>"Stays ahead" proofs need a measure of progress (here: the end time of the k-th pick) and one inductive step. The algorithm itself is a sort plus a scan.</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-python">def max_non_overlapping(intervals):
+    count, end = 0, float(&quot;-inf&quot;)
+    for s, e in sorted(intervals, key=lambda iv: iv[1]):   # earliest end first
+        if s &gt;= end:            # starts after the last chosen one ends
+            count += 1
+            end = e
+    return count
+</code></pre>
+<pre><code class="language-csharp">public static int MaxNonOverlapping(int[][] intervals)
+{
+    var byEnd = intervals.OrderBy(iv =&gt; iv[1]).ToArray();   // earliest end first
+    int count = 0;
+    long end = long.MinValue;
+    foreach (var iv in byEnd)
+    {
+        if (iv[0] &gt;= end)       // starts after the last chosen one ends
+        {
+            count++;
+            end = iv[1];
+        }
+    }
+    return count;
+}
+</code></pre>
+</div>
+<p>Interval greedy has its own page, with merging, sweeps and meeting rooms: <a href="intervals-sweep-line.html">Intervals and sweep line</a>. Note that sorting by <strong>start</strong> or by <strong>length</strong> does not work here. A long interval that starts first can block three short ones, and a short interval can overlap two long disjoint ones. Both are quick counterexamples, which is the next tool.</p>
+<h3 id="when-greedy-fails-find-the-counterexample">When greedy fails: find the counterexample</h3>
+<p>A greedy rule that sounds right is the most common wrong answer in interviews. The fastest defence is to try <strong>small adversarial inputs</strong>, and the best source of those is a brute force or DP that you compare against.</p>
+<p>Coin change with coins {1, 3, 4} and amount 6 is the standard example. Greedy takes 4, then 1, then 1: three coins. The optimum is 3 + 3: two coins. The visualizer runs both: greedy's steps, then the DP table <code>best[x] = 1 + min(best[x − c])</code> filled left to right. With the canonical coins {1, 5, 10, 25} the two always agree; try {1, 7, 10} with amount 14.</p>
+<div class="viz gr-wide" data-viz="greedy-fails" data-opts='{"mode":"coin change"}'></div>
+
+<p>Why did it fail? Taking the 4 is not <em>safe</em>: no optimal solution for 6 contains a 4. The exchange argument breaks too: you cannot swap the 3 + 3 for a 4 without adding a coin. Coin systems where greedy works are called <em>canonical</em>. Real currencies are designed to be canonical, but a problem statement's coins are not, so use the DP from <a href="dp-framework.html">Dynamic programming</a>.</p>
+<p>The knapsack shows the same split, and it is the cleanest illustration of <em>why</em> a greedy proof works in one problem and fails in its sibling:</p>
+<div class="viz gr-wide" data-viz="greedy-fails" data-opts='{"mode":"0/1 vs fractional knapsack"}'></div>
+
+<div class="compare">
+<div class="good">
+<h4 id="fractional-knapsack-greedy-is-optimal">Fractional knapsack: greedy is optimal</h4>
+<p>You may take any <strong>fraction</strong> of an item. Sort by value per unit weight and pour. Exchange argument: if an optimal bag holds some weight of a worse-ratio item while a better-ratio item is not fully used, swap an equal weight of the two. Value goes up or stays the same. O(n log n).</p>
+</div>
+<div class="bad">
+<h4 id="01-knapsack-greedy-fails">0/1 knapsack: greedy fails</h4>
+<p>Items are <strong>all or nothing</strong>. The best-ratio item may leave a gap that nothing fits into, and the exchange no longer works because you cannot swap "an equal weight". Use the O(n · W) DP from <a href="dp-knapsack.html">Knapsack DP</a>.</p>
+</div>
+</div>
+<div class="code-tabs">
+<pre><code class="language-python">def fractional_knapsack(items, capacity):      # items: [(weight, value)]
+    total = 0.0
+    for w, v in sorted(items, key=lambda it: it[1] / it[0], reverse=True):
+        if capacity == 0:
+            break
+        take = min(w, capacity)                # all of it, or what still fits
+        total += v * take / w
+        capacity -= take
+    return total
+</code></pre>
+<pre><code class="language-csharp">public static double FractionalKnapsack(int[][] items, int capacity)   // items: [weight, value]
+{
+    double total = 0;
+    foreach (var it in items.OrderByDescending(it =&gt; (double)it[1] / it[0]))
+    {
+        if (capacity == 0) break;
+        int take = Math.Min(it[0], capacity);  // all of it, or what still fits
+        total += (double)it[1] * take / it[0];
+        capacity -= take;
+    }
+    return total;
+}
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Test a greedy before you trust it.</strong> Write the obvious brute force (all subsets, all orders, or the DP), generate a few hundred random inputs with n ≤ 8, and compare. It takes five minutes, and it catches almost every wrong greedy rule. Every visualizer on this page was checked this way.</p>
+</div>
+<h3 id="is-it-greedy-a-decision-guide">Is it greedy? A decision guide</h3>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 330" width="880" role="img" aria-label="Decision tree for whether to use greedy: name a rule, try to break it, try to prove it">
+<defs><marker id="greedy-ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="20" y="22" class="title">Is it greedy?</text>
+<rect class="box active" x="20" y="42" width="270" height="62" rx="10"/>
+<text x="34" y="66" class="small">1. Can you state a local rule?</text><text x="34" y="86" class="small muted">sort key, take max/min, earliest end, …</text>
+<line class="edge accent" x1="290" y1="73" x2="340" y2="73" marker-end="url(#greedy-ar2)"/><text x="298" y="64" class="small">yes</text>
+<line class="edge accent" x1="155" y1="104" x2="155" y2="246" marker-end="url(#greedy-ar2)"/><text x="163" y="180" class="small">no</text>
+<rect class="box visit" x="342" y="42" width="250" height="62" rx="10"/>
+<text x="356" y="66" class="small">2. Try to break it</text><text x="356" y="86" class="small muted">tiny cases, brute force, random tests</text>
+<line class="edge accent" x1="592" y1="73" x2="642" y2="73" marker-end="url(#greedy-ar2)"/><text x="598" y="64" class="small">holds</text>
+<line class="edge accent" x1="467" y1="104" x2="467" y2="246" marker-end="url(#greedy-ar2)"/><text x="475" y="180" class="small">counterexample</text>
+<rect class="box visit" x="644" y="42" width="220" height="62" rx="10"/>
+<text x="658" y="66" class="small">3. Can you prove it?</text><text x="658" y="86" class="small muted">exchange, or stays ahead</text>
+<line class="edge accent" x1="754" y1="104" x2="754" y2="146" marker-end="url(#greedy-ar2)"/><text x="762" y="130" class="small">yes</text>
+<rect class="box path" x="644" y="148" width="220" height="80" rx="10"/>
+<text x="658" y="172" class="mono">Greedy</text><text x="658" y="194" class="small">sort + scan, or heap</text><text x="658" y="214" class="small">O(n log n) usually</text>
+<rect class="box bad" x="20" y="248" width="270" height="70" rx="10"/>
+<text x="34" y="272" class="mono">Search / DP</text><text x="34" y="294" class="small">backtracking, DP over states</text>
+<rect class="box bad" x="342" y="248" width="250" height="70" rx="10"/>
+<text x="356" y="272" class="mono">DP</text><text x="356" y="294" class="small">coin change, 0/1 knapsack, …</text>
+<rect class="box done" x="644" y="248" width="220" height="70" rx="10"/>
+<text x="658" y="268" class="small">Unsure? Write the DP. If its</text><text x="658" y="286" class="small">argmin is always the same</text><text x="658" y="304" class="small">choice, that is your greedy.</text>
+<line class="edge dash" x1="754" y1="228" x2="754" y2="246"/>
+</svg>
+<figcaption>Step 2 is cheap and catches most wrong ideas. Step 3 is what turns "it passed the samples" into "it is correct".</figcaption>
+</figure>
+
+<p>Signals that greedy is likely: the problem asks for a <strong>max count</strong> or <strong>min cost</strong> with no interaction between far-apart choices; a natural sort order makes the decision for each item local; the answer only gets worse if you delay a "free" good choice. Signals against: a choice now changes <strong>what is possible later</strong> in a way you cannot summarise (coin change, 0/1 knapsack, edit distance); or the problem asks for the number of ways.</p>
+<h2 id="reach-and-frontiers-jump-game-i-and-ii">Reach and frontiers: Jump Game I and II</h2>
+<p><code>nums[i]</code> is the longest jump allowed from index i. <strong>Jump Game I</strong> asks whether the last index is reachable. The trap is to simulate jumps (which jump do you take?) and end up in a backtracking search. The greedy view throws the individual jumps away and tracks one number: the <strong>frontier</strong> <code>reach</code>, the farthest index reachable so far. Every index up to <code>reach</code> is reachable, because you can always jump <em>shorter</em>. So the reachable set is always a prefix, and one number describes it.</p>
+<div class="viz gr-wide" data-viz="greedy-jump" data-opts='{"mode":"jump game I: farthest reach"}'></div>
+
+<p><strong>Jump Game II</strong> asks for the <strong>minimum</strong> number of jumps (the last index is guaranteed reachable). That is a shortest path in a graph where i has an edge to every index in <code>i+1 … i+nums[i]</code>, so think <a href="graph-fundamentals.html">BFS</a>. BFS levels here are <strong>contiguous ranges</strong>: level 0 is <code>[0, 0]</code>, level 1 is everything reachable from level 0, and so on. So you do not need a queue: scan the current level, remember the farthest landing <code>far</code>, and when the scan reaches the end of the level, that is one jump and the next level ends at <code>far</code>.</p>
+<div class="viz gr-wide" data-viz="greedy-jump" data-opts='{"mode":"jump game II: BFS levels"}'></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def can_jump(nums):
+    reach = 0                          # every index &lt;= reach is reachable
+    for i, step in enumerate(nums):
+        if i &gt; reach:
+            return False               # a gap: nothing reaches i
+        reach = max(reach, i + step)
+    return True
+
+
+def jump(nums):
+    jumps = end = far = 0              # end: last index of the current BFS level
+    for i in range(len(nums) - 1):     # never jump *from* the last index
+        far = max(far, i + nums[i])
+        if i == end:                   # level fully scanned: one more jump
+            jumps += 1
+            end = far
+    return jumps
+</code></pre>
+<pre><code class="language-csharp">public static bool CanJump(int[] nums)
+{
+    int reach = 0;                         // every index &lt;= reach is reachable
+    for (int i = 0; i &lt; nums.Length; i++)
+    {
+        if (i &gt; reach) return false;       // a gap: nothing reaches i
+        reach = Math.Max(reach, i + nums[i]);
+    }
+    return true;
+}
+
+public static int Jump(int[] nums)
+{
+    int jumps = 0, end = 0, far = 0;       // end: last index of the current BFS level
+    for (int i = 0; i &lt; nums.Length - 1; i++)
+    {
+        far = Math.Max(far, i + nums[i]);
+        if (i == end)                      // level fully scanned: one more jump
+        {
+            jumps++;
+            end = far;
+        }
+    }
+    return jumps;
+}
+</code></pre>
+</div>
+<p>Both are O(n) time and O(1) space. Why is it safe to jump to the level's end "later"? We never commit to a specific landing index. <code>jumps</code> counts levels, and the BFS level of an index is its true shortest distance. The greedy part is the observation that levels are intervals, so one pointer replaces the queue. The loop stops at <code>n − 2</code> because reaching index n − 1 must not count a jump <em>out</em> of it.</p>
+<div class="pitfall">
+<p><strong>Pitfall: looping to <code>len(nums)</code> in Jump Game II</strong>
+If the loop includes the last index and it happens to equal <code>end</code>, you count one extra jump. <code>[0]</code> should give 0 and <code>[2, 1]</code> should give 1; both come out one too high with the longer loop.</p>
+</div>
+<h2 id="prefix-balance-gas-station">Prefix balance: Gas Station</h2>
+<p>n stations on a circle. Station i gives <code>gas[i]</code>, and driving to i + 1 costs <code>cost[i]</code>. Return the start station from which you can drive all the way round, or −1 (the answer is unique if it exists). Brute force tries every start: O(n²).</p>
+<p>Two observations make it O(n). The visual is the running sum of <code>gas[i] − cost[i]</code>:</p>
+<ol>
+<li><strong>Feasibility is global.</strong> If the total of <code>gas − cost</code> is negative, no start works: the car burns more than it gets on any full lap. If it is ≥ 0, some start works.</li>
+<li><strong>Failure eliminates a whole block.</strong> If you start at s and the tank first goes negative after station i, then <strong>no</strong> station between s and i can be a start either. Each of those was reached from s with a tank ≥ 0, so starting there means arriving at i with <em>less</em> fuel than this failing run. Jump the start straight to i + 1.</li>
+</ol>
+<div class="viz gr-wide" data-viz="greedy-gas"></div>
+
+<p>The picture also gives a one-line characterisation: the answer is the station right after the <strong>minimum of the prefix sum</strong>. From there, the running sum only goes up relative to that low point, all the way round the circle. The two-pointer reset and "argmin of the prefix sum + 1" are the same algorithm written two ways.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def can_complete_circuit(gas, cost):
+    total = tank = start = 0
+    for i in range(len(gas)):
+        diff = gas[i] - cost[i]
+        total += diff                  # whole-loop balance
+        tank += diff                   # fuel since the current start
+        if tank &lt; 0:                   # start..i all fail
+            start, tank = i + 1, 0
+    return start if total &gt;= 0 else -1
+</code></pre>
+<pre><code class="language-csharp">public static int CanCompleteCircuit(int[] gas, int[] cost)
+{
+    int total = 0, tank = 0, start = 0;
+    for (int i = 0; i &lt; gas.Length; i++)
+    {
+        int diff = gas[i] - cost[i];
+        total += diff;                     // whole-loop balance
+        tank += diff;                      // fuel since the current start
+        if (tank &lt; 0)                      // start..i all fail
+        {
+            start = i + 1;
+            tank = 0;
+        }
+    }
+    return total &gt;= 0 ? start : -1;
+}
+</code></pre>
+</div>
+<p>Why is <code>start</code> correct at the end even though we never checked the wrap-around part? From <code>start</code> to n − 1 the tank stays ≥ 0 (we never reset after it). The part from 0 to start − 1 has a combined balance of <code>total − (balance from start to the end)</code>, and since <code>total ≥ 0</code>, the fuel collected from start to the end covers that deficit. That is the prefix-minimum argument in words.</p>
+<h2 id="two-passes-candy">Two passes: Candy</h2>
+<p>Children stand in a line with ratings. Each child gets at least one candy, and a child with a higher rating than a <strong>neighbour</strong> must get more than that neighbour. Minimise the total.</p>
+<p>The difficulty is that each child has two constraints pointing in opposite directions, and a single left-to-right pass cannot see a long decreasing run coming. The greedy fix is to <strong>split the constraints</strong>: one pass satisfies only the left-neighbour rule with the smallest possible numbers, a second pass satisfies only the right-neighbour rule, and each child takes the max of the two.</p>
+<div class="viz gr-wide" data-viz="greedy-candy"></div>
+
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 200" width="880" role="img" aria-label="A mountain of ratings: the left pass counts up the rising slope, the right pass counts up the falling slope, the peak takes the larger">
+<text x="20" y="22" class="title">A mountain: each slope counts up from its foot; the peak takes the longer slope's count</text>
+<line class="edge" x1="60" y1="160" x2="820" y2="160"/>
+<rect class="box visit" x="80" y="130" width="60" height="30" rx="4"/><rect class="box visit" x="160" y="110" width="60" height="50" rx="4"/><rect class="box path" x="240" y="70" width="60" height="90" rx="4"/>
+<rect class="box done" x="320" y="90" width="60" height="70" rx="4"/><rect class="box done" x="400" y="110" width="60" height="50" rx="4"/><rect class="box done" x="480" y="125" width="60" height="35" rx="4"/><rect class="box done" x="560" y="140" width="60" height="20" rx="4"/>
+<text x="110" y="182" text-anchor="middle" class="small mono">1</text><text x="190" y="182" text-anchor="middle" class="small mono">2</text><text x="270" y="182" text-anchor="middle" class="small mono">max(3, 5) = 5</text><text x="350" y="182" text-anchor="middle" class="small mono">4</text><text x="430" y="182" text-anchor="middle" class="small mono">3</text><text x="510" y="182" text-anchor="middle" class="small mono">2</text><text x="590" y="182" text-anchor="middle" class="small mono">1</text>
+<text x="110" y="52" class="small">left pass →: 1, 2, 3</text><text x="380" y="62" class="small">← right pass: 5, 4, 3, 2, 1</text>
+<text x="650" y="100" class="small">The rising side alone</text><text x="650" y="118" class="small">would give the peak 3,</text><text x="650" y="136" class="small">too few for its right</text><text x="650" y="154" class="small">neighbour, which has 4.</text>
+</svg>
+<figcaption>Total = sum over slopes of 1 + 2 + … + length, with each peak counted once at the larger value. That is also the idea behind the O(1)-space single-pass version.</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-python">def candy(ratings):
+    n = len(ratings)
+    left = [1] * n
+    for i in range(1, n):                      # left-neighbour rule only
+        if ratings[i] &gt; ratings[i - 1]:
+            left[i] = left[i - 1] + 1
+    right = [1] * n
+    for i in range(n - 2, -1, -1):             # right-neighbour rule only
+        if ratings[i] &gt; ratings[i + 1]:
+            right[i] = right[i + 1] + 1
+    return sum(max(l, r) for l, r in zip(left, right))
+</code></pre>
+<pre><code class="language-csharp">public static int Candy(int[] ratings)
+{
+    int n = ratings.Length;
+    var left = Enumerable.Repeat(1, n).ToArray();
+    for (int i = 1; i &lt; n; i++)                // left-neighbour rule only
+        if (ratings[i] &gt; ratings[i - 1]) left[i] = left[i - 1] + 1;
+    var right = Enumerable.Repeat(1, n).ToArray();
+    for (int i = n - 2; i &gt;= 0; i--)           // right-neighbour rule only
+        if (ratings[i] &gt; ratings[i + 1]) right[i] = right[i + 1] + 1;
+    int total = 0;
+    for (int i = 0; i &lt; n; i++) total += Math.Max(left[i], right[i]);
+    return total;
+}
+</code></pre>
+</div>
+<p>Why is this minimal? <code>left[i]</code> is the <strong>least</strong> value any valid assignment can give child i, because the rising run that ends at i forces it. The same holds for <code>right[i]</code>. So every valid assignment gives at least <code>max(left[i], right[i])</code>, and this assignment achieves exactly that and is valid. The two-pass trick, <em>solve each direction's constraint separately, then combine</em>, also appears in Product of Array Except Self and Trapping Rain Water.</p>
+<h2 id="counting-greedy-task-scheduler-and-reorganize-string">Counting greedy: Task Scheduler and Reorganize String</h2>
+<h3 id="task-scheduler">Task Scheduler</h3>
+<p>CPU tasks are letters; identical tasks need at least n other slots (tasks or idle) between them. Find the shortest schedule. You could simulate with a <a href="heaps-priority-queues.html">max-heap</a>: each round of n + 1 slots, run the n + 1 most frequent remaining tasks. But there is a closed form, and the picture explains it.</p>
+<p>Let <code>maxc</code> be the highest frequency. Its copies need <code>maxc − 1</code> full gaps, so draw <code>maxc</code> <strong>rows</strong> ("frames") of width n + 1, each starting with that task. Every other task fits in column order without breaking the gap, because its copies land in different rows. Empty cells in the full rows are idle slots, and the last row holds only the tasks that tie for <code>maxc</code>.</p>
+<div class="viz gr-wide" data-viz="greedy-tasks"></div>
+
+<p>Try <code>n = 1</code> in the visualizer: the other tasks no longer fit in the frames, the rows simply grow wider, and nothing is ever idle. That is why the answer is a max:</p>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import Counter
+
+def least_interval(tasks, n):
+    freq = Counter(tasks).values()
+    maxc = max(freq)
+    cnt_max = sum(1 for f in freq if f == maxc)
+    return max(len(tasks), (maxc - 1) * (n + 1) + cnt_max)
+</code></pre>
+<pre><code class="language-csharp">public static int LeastInterval(char[] tasks, int n)
+{
+    var freq = new int[26];
+    foreach (char t in tasks) freq[t - 'A']++;
+    int maxc = freq.Max();
+    int cntMax = freq.Count(f =&gt; f == maxc);
+    return Math.Max(tasks.Length, (maxc - 1) * (n + 1) + cntMax);
+}
+</code></pre>
+</div>
+<p>O(n) time. The formula is a <strong>lower bound</strong> (the frames are forced by the most frequent task; and you cannot run fewer slots than tasks), and the column-filling picture shows it is <strong>achieved</strong>. When you can prove a lower bound and match it with a construction, you are done, and that pattern recurs in many greedy proofs.</p>
+<h3 id="reorganize-string">Reorganize String</h3>
+<p>Rearrange a string so that no two adjacent characters are equal, or return "". This is Task Scheduler with n = 1, but you must output the arrangement. Same insight: the most frequent character is the only threat. It fits if and only if <code>maxc ≤ ceil(len / 2)</code>. Construct it by filling the <strong>even</strong> indices first, most frequent character first, then the odd indices.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 190" width="880" role="img" aria-label="Fill even slots then odd slots, most frequent character first">
+<text x="20" y="22" class="title">"aaabbc": counts a×3, b×2, c×1. Fill slots 0, 2, 4, then 1, 3, 5, most frequent first</text>
+<rect class="box path" x="120" y="60" width="70" height="44" rx="8"/><text x="155" y="88" text-anchor="middle" class="mono">a</text>
+<rect class="box done" x="200" y="60" width="70" height="44" rx="8"/><text x="235" y="88" text-anchor="middle" class="mono">b</text>
+<rect class="box path" x="280" y="60" width="70" height="44" rx="8"/><text x="315" y="88" text-anchor="middle" class="mono">a</text>
+<rect class="box done" x="360" y="60" width="70" height="44" rx="8"/><text x="395" y="88" text-anchor="middle" class="mono">b</text>
+<rect class="box path" x="440" y="60" width="70" height="44" rx="8"/><text x="475" y="88" text-anchor="middle" class="mono">a</text>
+<rect class="box visit" x="520" y="60" width="70" height="44" rx="8"/><text x="555" y="88" text-anchor="middle" class="mono">c</text>
+<text x="155" y="124" text-anchor="middle" class="small mono">0</text><text x="235" y="124" text-anchor="middle" class="small mono">1</text><text x="315" y="124" text-anchor="middle" class="small mono">2</text><text x="395" y="124" text-anchor="middle" class="small mono">3</text><text x="475" y="124" text-anchor="middle" class="small mono">4</text><text x="555" y="124" text-anchor="middle" class="small mono">5</text>
+<text x="155" y="48" text-anchor="middle" class="small">1st</text><text x="315" y="48" text-anchor="middle" class="small">2nd</text><text x="475" y="48" text-anchor="middle" class="small">3rd</text><text x="235" y="48" text-anchor="middle" class="small">4th</text><text x="395" y="48" text-anchor="middle" class="small">5th</text><text x="555" y="48" text-anchor="middle" class="small">6th</text>
+<text x="630" y="72" class="small">Even slots: ceil(6/2) = 3.</text><text x="630" y="92" class="small">a×3 fits, so the answer exists.</text><text x="630" y="112" class="small">"aaab" would need 3 ≤ 2: no.</text>
+<text x="120" y="160" class="small">Each character fills a run of consecutive slots in the order 0, 2, 4, …, 1, 3, 5, …, so two copies are always ≥ 2 apart,</text>
+<text x="120" y="178" class="small">unless one character holds slot 0 and also wraps into slot 1. Only the first could, and only if its count exceeded ceil(n/2).</text>
+</svg>
+<figcaption>Placing the most frequent character first is what makes the wrap-around safe: it is the only one large enough to need both halves, and the bound rules that out.</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-python">from collections import Counter
+
+def reorganize_string(s):
+    cnt = Counter(s)
+    n = len(s)
+    if max(cnt.values()) &gt; (n + 1) // 2:
+        return &quot;&quot;
+    res = [&quot;&quot;] * n
+    i = 0
+    for ch, c in sorted(cnt.items(), key=lambda kv: -kv[1]):   # most frequent first
+        for _ in range(c):
+            res[i] = ch
+            i += 2
+            if i &gt;= n:
+                i = 1                  # evens are full: switch to odds
+    return &quot;&quot;.join(res)
+</code></pre>
+<pre><code class="language-csharp">public static string ReorganizeString(string s)
+{
+    var cnt = new Dictionary&lt;char, int&gt;();
+    foreach (char ch in s) cnt[ch] = cnt.GetValueOrDefault(ch) + 1;
+    int n = s.Length;
+    if (cnt.Values.Max() &gt; (n + 1) / 2) return &quot;&quot;;
+    var res = new char[n];
+    int i = 0;
+    foreach (var (ch, c) in cnt.OrderByDescending(kv =&gt; kv.Value).Select(kv =&gt; (kv.Key, kv.Value)))
+    {
+        for (int k = 0; k &lt; c; k++)
+        {
+            res[i] = ch;
+            i += 2;
+            if (i &gt;= n) i = 1;             // evens are full: switch to odds
+        }
+    }
+    return new string(res);
+}
+</code></pre>
+</div>
+<p>The heap alternative (always place the most frequent character that differs from the previous one) also works and generalises to "at least k apart" (Rearrange String k Distance Apart), but the slot-filling version is O(n) and has nothing to get wrong.</p>
+<h2 id="cut-as-early-as-possible-partition-labels-and-arrows">Cut as early as possible: Partition Labels and arrows</h2>
+<p><strong>Partition Labels:</strong> split a string into as many parts as possible so that each letter appears in at most one part, and return the part sizes. The greedy rule: a part that contains letter c must extend at least to <code>last[c]</code>, the last occurrence of c. Scan left to right, stretch <code>end</code> to cover every letter seen, and <strong>cut the moment <code>i == end</code></strong>. Cutting there is safe because no cut can be earlier (some letter would be split), and cutting as early as allowed leaves the most room for the remaining parts: greedy stays ahead on the position of each cut.</p>
+<div class="viz gr-wide" data-viz="greedy-partition"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def partition_labels(s):
+    last = {c: i for i, c in enumerate(s)}
+    sizes, start, end = [], 0, 0
+    for i, c in enumerate(s):
+        end = max(end, last[c])        # this part must reach last[c]
+        if i == end:                   # nothing inside reaches further
+            sizes.append(end - start + 1)
+            start = i + 1
+    return sizes
+</code></pre>
+<pre><code class="language-csharp">public static IList&lt;int&gt; PartitionLabels(string s)
+{
+    var last = new int[26];
+    for (int i = 0; i &lt; s.Length; i++) last[s[i] - 'a'] = i;
+    var sizes = new List&lt;int&gt;();
+    int start = 0, end = 0;
+    for (int i = 0; i &lt; s.Length; i++)
+    {
+        end = Math.Max(end, last[s[i] - 'a']);   // this part must reach last[c]
+        if (i == end)                            // nothing inside reaches further
+        {
+            sizes.Add(end - start + 1);
+            start = i + 1;
+        }
+    }
+    return sizes;
+}
+</code></pre>
+</div>
+<p>This is interval merging in disguise: each letter is the interval <code>[first[c], last[c]]</code>, and the parts are the merged groups of overlapping intervals.</p>
+<p><strong>Minimum Number of Arrows to Burst Balloons</strong> is the mirror image. Balloons are intervals; one vertical arrow bursts every balloon it touches. Sort by <strong>end</strong> and shoot each arrow at the end of the first balloon not yet burst: that point is the furthest right you can shoot while still hitting it, so it hits as many later balloons as possible (an exchange argument against any arrow placed further left). This is the same earliest-end greedy as interval scheduling, counting the groups instead of the chosen intervals. The full family (merge, insert, meeting rooms, sweep lines) lives in <a href="intervals-sweep-line.html">Intervals and sweep line</a>.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def find_min_arrow_shots(points):
+    arrows, end = 0, float(&quot;-inf&quot;)
+    for s, e in sorted(points, key=lambda p: p[1]):
+        if s &gt; end:                    # not burst by the last arrow
+            arrows += 1
+            end = e                    # shoot at this balloon's right edge
+    return arrows
+</code></pre>
+<pre><code class="language-csharp">public static int FindMinArrowShots(int[][] points)
+{
+    int arrows = 0;
+    long end = long.MinValue;
+    foreach (var p in points.OrderBy(p =&gt; p[1]))
+    {
+        if (p[0] &gt; end)                // not burst by the last arrow
+        {
+            arrows++;
+            end = p[1];                // shoot at this balloon's right edge
+        }
+    }
+    return arrows;
+}
+</code></pre>
+</div>
+<p>Note <code>s &gt; end</code> here but <code>s &gt;= end</code> in interval scheduling: touching balloons share a point, so one arrow bursts both. The comparison is the problem's definition of "overlap", so read it carefully every time.</p>
+<h2 id="sort-by-the-right-key">Sort by the right key</h2>
+<p>Many greedy problems are "sort, then make one obvious decision per item". The work is in choosing the <strong>key</strong>, and the exchange argument is how you find it: take two items in the wrong order and ask what swapping them does.</p>
+<h3 id="assign-cookies-and-boats-to-save-people">Assign Cookies and Boats to Save People</h3>
+<p><strong>Assign Cookies:</strong> child i is content with a cookie of size ≥ <code>g[i]</code>; each child gets at most one cookie. Maximise content children. Sort both; give each child, least greedy first, the <strong>smallest cookie that satisfies them</strong>. Using a bigger cookie than necessary can only take a cookie away from a greedier child later.</p>
+<p><strong>Boats to Save People:</strong> each boat carries at most two people and at most <code>limit</code> weight. Minimise boats. Sort; the <strong>heaviest</strong> person must go in some boat, and the best partner for them is the <strong>lightest</strong> person (if the lightest does not fit, nobody does). Two pointers from both ends; this is the <a href="two-pointers.html">two pointers</a> pattern with a greedy pairing proof.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def find_content_children(g, s):
+    g, s = sorted(g), sorted(s)
+    child = 0
+    for cookie in s:                   # smallest cookies first
+        if child &lt; len(g) and cookie &gt;= g[child]:
+            child += 1                 # smallest cookie that satisfies this child
+    return child
+
+
+def num_rescue_boats(people, limit):
+    people = sorted(people)
+    i, j, boats = 0, len(people) - 1, 0
+    while i &lt;= j:
+        if people[i] + people[j] &lt;= limit:
+            i += 1                     # lightest rides with the heaviest
+        j -= 1                         # heaviest always leaves
+        boats += 1
+    return boats
+</code></pre>
+<pre><code class="language-csharp">public static int FindContentChildren(int[] g, int[] s)
+{
+    var gs = g.OrderBy(x =&gt; x).ToArray();
+    int child = 0;
+    foreach (int cookie in s.OrderBy(x =&gt; x))  // smallest cookies first
+        if (child &lt; gs.Length &amp;&amp; cookie &gt;= gs[child])
+            child++;                           // smallest cookie that satisfies this child
+    return child;
+}
+
+public static int NumRescueBoats(int[] people, int limit)
+{
+    var p = people.OrderBy(x =&gt; x).ToArray();
+    int i = 0, j = p.Length - 1, boats = 0;
+    while (i &lt;= j)
+    {
+        if (p[i] + p[j] &lt;= limit) i++;         // lightest rides with the heaviest
+        j--;                                   // heaviest always leaves
+        boats++;
+    }
+    return boats;
+}
+</code></pre>
+</div>
+<h3 id="two-city-scheduling">Two City Scheduling</h3>
+<p>2n people fly to city A or city B; person i costs <code>aCost</code> or <code>bCost</code>, and exactly n must go to each city. Minimise the total. Sending everyone to B first costs <code>Σ bCost</code>; then moving person i to A changes the total by <code>aCost − bCost</code>. So pick the n people with the <strong>smallest</strong> difference <code>aCost − bCost</code> for A. The key is not either cost but their <strong>difference</strong>: how much you save by choosing A.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 250" width="880" role="img" aria-label="Two city scheduling: sort by aCost minus bCost; the first half go to A">
+<text x="20" y="22" class="title">Sort by aCost − bCost: the n most negative (A is much cheaper) go to A</text>
+<line class="edge" x1="80" y1="130" x2="840" y2="130"/>
+<text x="70" y="134" text-anchor="end" class="small mono">0</text>
+<rect class="box path" x="120" y="130" width="90" height="42" rx="4"/><text x="165" y="232" text-anchor="middle" class="small mono">(30, 200)</text><text x="165" y="157" text-anchor="middle" class="mono">−170</text>
+<rect class="box path" x="260" y="130" width="90" height="6" rx="3"/><text x="305" y="232" text-anchor="middle" class="small mono">(10, 20)</text><text x="305" y="156" text-anchor="middle" class="mono">−10</text>
+<rect class="box visit" x="440" y="124" width="90" height="6" rx="3"/><text x="485" y="232" text-anchor="middle" class="small mono">(30, 20)</text><text x="485" y="116" text-anchor="middle" class="mono">+10</text>
+<rect class="box visit" x="580" y="45" width="90" height="85" rx="4"/><text x="625" y="232" text-anchor="middle" class="small mono">(400, 50)</text><text x="625" y="92" text-anchor="middle" class="mono">+350</text>
+<line class="edge dash" x1="395" y1="40" x2="395" y2="220"/>
+<text x="235" y="58" text-anchor="middle" class="small">fly to A: 30 + 10</text><text x="560" y="200" text-anchor="middle" class="small">fly to B: 20 + 50</text>
+<text x="700" y="60" class="small">total = 40 + 70</text><text x="700" y="80" class="mono">= 110</text>
+<text x="700" y="120" class="small muted">pairs are</text><text x="700" y="138" class="small muted">(aCost, bCost)</text>
+</svg>
+<figcaption>Exchange argument: if someone with a larger difference flies to A while someone with a smaller difference flies to B, swapping their cities changes the total by (smaller − larger) ≤ 0.</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-python">def two_city_sched_cost(costs):
+    costs = sorted(costs, key=lambda c: c[0] - c[1])   # most &quot;A is cheaper&quot; first
+    n = len(costs) // 2
+    return sum(c[0] for c in costs[:n]) + sum(c[1] for c in costs[n:])
+</code></pre>
+<pre><code class="language-csharp">public static int TwoCitySchedCost(int[][] costs)
+{
+    var sorted = costs.OrderBy(c =&gt; c[0] - c[1]).ToArray();   // most &quot;A is cheaper&quot; first
+    int n = sorted.Length / 2, total = 0;
+    for (int i = 0; i &lt; sorted.Length; i++)
+        total += i &lt; n ? sorted[i][0] : sorted[i][1];
+    return total;
+}
+</code></pre>
+</div>
+<h2 id="greedy-plus-a-heap-the-best-option-among-those-available">Greedy plus a heap: the best option among those available</h2>
+<p>In the problems so far the sort alone decided everything. A harder family has <strong>two orders</strong>: one decides <em>when an option becomes available</em> (capital, deadline, distance), and another decides <em>which available option is best</em> (profit, duration, fuel). Sort by the first; keep the available options in a <a href="heaps-priority-queues.html">heap</a> ordered by the second.</p>
+<h3 id="ipo-unlock-by-capital-choose-by-profit">IPO: unlock by capital, choose by profit</h3>
+<p>You have capital w and may finish at most k projects. Project i needs <code>capital[i]</code> to start and adds <code>profits[i]</code> when done. Maximise the final capital. At any moment the right move is to take the <strong>most profitable affordable</strong> project: it gives the most capital now, and more capital can only unlock more projects later. Capital never decreases, so the set of affordable projects only grows: a pointer over the projects sorted by capital adds them to a max-heap of profits as they unlock.</p>
+<div class="viz gr-wide" data-viz="greedy-ipo"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">import heapq
+
+def find_maximized_capital(k, w, profits, capital):
+    projects = sorted(zip(capital, profits))       # unlock order
+    heap, i = [], 0                                # max-heap of unlocked profits
+    for _ in range(k):
+        while i &lt; len(projects) and projects[i][0] &lt;= w:
+            heapq.heappush(heap, -projects[i][1])
+            i += 1
+        if not heap:
+            break                                  # nothing affordable, ever
+        w -= heapq.heappop(heap)                   # best unlocked profit
+    return w
+</code></pre>
+<pre><code class="language-csharp">public static int FindMaximizedCapital(int k, int w, int[] profits, int[] capital)
+{
+    var projects = capital.Zip(profits, (c, p) =&gt; (c, p)).OrderBy(x =&gt; x.c).ToArray();
+    var heap = new PriorityQueue&lt;int, int&gt;();      // max-heap via negated priority
+    int i = 0;
+    for (int round = 0; round &lt; k; round++)
+    {
+        while (i &lt; projects.Length &amp;&amp; projects[i].c &lt;= w)
+        {
+            heap.Enqueue(projects[i].p, -projects[i].p);
+            i++;
+        }
+        if (heap.Count == 0) break;                // nothing affordable, ever
+        w += heap.Dequeue();                       // best unlocked profit
+    }
+    return w;
+}
+</code></pre>
+</div>
+<p>O((n + k) log n). The same "sweep one order, heap the other" shape solves Maximum Performance of a Team, Single-Threaded CPU and Minimum Cost to Hire K Workers (worked problem 3 below).</p>
+<h3 id="course-schedule-iii-take-it-and-regret-the-longest">Course Schedule III: take it, and regret the longest</h3>
+<p>Courses have a duration and a last day; you take one at a time starting on day 1. Maximise the number of courses. Two facts:</p>
+<ol>
+<li>For a <strong>fixed set</strong> of courses, doing them in order of deadline is best (exchange argument: swapping two adjacent courses into deadline order never makes either finish too late). So process courses sorted by deadline.</li>
+<li>When the current course does not fit, you must drop one course. The count is the same whichever one you drop, so drop the <strong>longest</strong>: the one that frees the most time. That might be the course just added.</li>
+</ol>
+<p>The invariant is "greedy stays ahead": after each course, we hold the <strong>largest possible number</strong> of courses among the deadlines seen so far, and among all sets of that size, the one with the <strong>least total time</strong>.</p>
+<div class="viz gr-wide" data-viz="greedy-courses"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">import heapq
+
+def schedule_course(courses):
+    heap, time = [], 0                             # max-heap of kept durations
+    for d, last in sorted(courses, key=lambda c: c[1]):
+        time += d
+        heapq.heappush(heap, -d)                   # take it tentatively
+        if time &gt; last:                            # too late: drop the longest
+            time += heapq.heappop(heap)            # adds -longest
+    return len(heap)
+</code></pre>
+<pre><code class="language-csharp">public static int ScheduleCourse(int[][] courses)
+{
+    var heap = new PriorityQueue&lt;int, int&gt;();      // max-heap of kept durations
+    int time = 0;
+    foreach (var c in courses.OrderBy(c =&gt; c[1]))
+    {
+        time += c[0];
+        heap.Enqueue(c[0], -c[0]);                 // take it tentatively
+        if (time &gt; c[1]) time -= heap.Dequeue();   // too late: drop the longest
+    }
+    return heap.Count;
+}
+</code></pre>
+</div>
+<p>This "take it, and undo the worst choice when a constraint breaks" pattern is worth memorising. It is how greedy handles problems where a choice looks good now but may need to be <strong>revised</strong>: the heap remembers the choices so the worst one can be retracted in O(log n). Minimum Number of Refueling Stops (worked problem 2) uses the reverse: <em>postpone</em> the choice and make it retroactively, from a heap of the options you passed.</p>
+<h2 id="huffman-coding-merge-the-two-lightest">Huffman coding: merge the two lightest</h2>
+<p>Give each symbol a binary code so that no code is a prefix of another (so a bit stream decodes unambiguously), minimising the total bits <code>Σ weight × code length</code>. Codes are root-to-leaf paths in a binary tree, so the code length is the leaf's <strong>depth</strong>. Heavy symbols should be shallow and light ones deep.</p>
+<p>Huffman's greedy: repeatedly <strong>merge the two lightest trees</strong> into one whose weight is their sum. The exchange argument: in some optimal tree, the two lightest symbols are siblings at the deepest level (if a heavier symbol were deeper, swapping it with a lighter one would not increase the cost). Merging them reduces the problem to n − 1 symbols, where the merged node stands for both. Every merge adds its weight to the total, because every leaf below it gets one bit longer.</p>
+<div class="viz gr-wide" data-viz="greedy-huffman"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">import heapq
+
+def huffman_codes(freq):                           # {symbol: weight}
+    heap = [(w, i, sym) for i, (sym, w) in enumerate(freq.items())]
+    heapq.heapify(heap)                            # i breaks ties
+    nxt = len(heap)
+    while len(heap) &gt; 1:
+        w1, _, a = heapq.heappop(heap)             # the two lightest trees
+        w2, _, b = heapq.heappop(heap)
+        heapq.heappush(heap, (w1 + w2, nxt, (a, b)))
+        nxt += 1
+    codes = {}
+
+    def walk(t, code):
+        if isinstance(t, str):
+            codes[t] = code or &quot;0&quot;                 # a lone symbol still needs 1 bit
+            return
+        walk(t[0], code + &quot;0&quot;)
+        walk(t[1], code + &quot;1&quot;)
+
+    walk(heap[0][2], &quot;&quot;)
+    return codes
+</code></pre>
+<pre><code class="language-csharp">public sealed record HNode(int Weight, char Symbol, HNode? Left, HNode? Right);
+
+public static Dictionary&lt;char, string&gt; HuffmanCodes(Dictionary&lt;char, int&gt; freq)
+{
+    var heap = new PriorityQueue&lt;HNode, (int, int)&gt;();    // (weight, id) breaks ties
+    int id = 0;
+    foreach (var (sym, w) in freq) heap.Enqueue(new HNode(w, sym, null, null), (w, id++));
+    while (heap.Count &gt; 1)
+    {
+        var a = heap.Dequeue();                           // the two lightest trees
+        var b = heap.Dequeue();
+        var m = new HNode(a.Weight + b.Weight, '\0', a, b);
+        heap.Enqueue(m, (m.Weight, id++));
+    }
+    var codes = new Dictionary&lt;char, string&gt;();
+    void Walk(HNode t, string code)
+    {
+        if (t.Left is null) { codes[t.Symbol] = code.Length &gt; 0 ? code : &quot;0&quot;; return; }
+        Walk(t.Left, code + &quot;0&quot;);
+        Walk(t.Right!, code + &quot;1&quot;);
+    }
+    Walk(heap.Dequeue(), &quot;&quot;);
+    return codes;
+}
+</code></pre>
+</div>
+<p>O(n log n) with a heap. The same "always combine the two smallest" greedy solves <strong>Minimum Cost to Connect Sticks</strong> (cost of joining = sum of lengths; the total cost is exactly Huffman's total), and optimal merge order for sorted files. When the merge cost is not additive like this, or only <strong>adjacent</strong> piles may be merged (Minimum Cost to Merge Stones), greedy fails and you need interval DP.</p>
+<h2 id="recognize-it-and-avoid-the-classic-bugs">Recognize it, and avoid the classic bugs</h2>
+<div class="recognize">
+<p><strong>Recognize greedy when</strong></p>
+<ul>
+<li>The problem asks for a <strong>maximum count</strong> or <strong>minimum cost</strong>, not for the number of ways or a list of all answers.</li>
+<li>There is a natural <strong>order</strong> (end time, deadline, ratio, difference, position), and once items are in that order each decision looks local.</li>
+<li>A "take the best available now" step does not reduce what is possible later. It may even increase it (capital in IPO, reach in Jump Game).</li>
+<li>The constraints are large (n up to 10⁵ or more), so O(n log n) is expected and a DP over pairs of states would be too slow.</li>
+<li>You can phrase a lower bound and a construction that meets it (Task Scheduler, Reorganize String).</li>
+</ul>
+</div>
+<table>
+<thead>
+<tr>
+<th>Shape</th>
+<th>Order</th>
+<th>Data structure</th>
+<th>Typical time</th>
+<th>Examples on this page</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sort + scan</td>
+<td>one sort key</td>
+<td>none</td>
+<td>O(n log n)</td>
+<td>interval scheduling, arrows, cookies, two-city</td>
+</tr>
+<tr>
+<td>Frontier</td>
+<td>left to right</td>
+<td>one or two integers</td>
+<td>O(n)</td>
+<td>Jump Game I/II, taps, Patching Array</td>
+</tr>
+<tr>
+<td>Prefix balance</td>
+<td>left to right</td>
+<td>running sum</td>
+<td>O(n)</td>
+<td>Gas Station</td>
+</tr>
+<tr>
+<td>Two passes</td>
+<td>left, then right</td>
+<td>two arrays</td>
+<td>O(n)</td>
+<td>Candy</td>
+</tr>
+<tr>
+<td>Counting</td>
+<td>by frequency</td>
+<td>counts</td>
+<td>O(n)</td>
+<td>Task Scheduler, Reorganize String</td>
+</tr>
+<tr>
+<td>Sweep + heap</td>
+<td>availability order</td>
+<td>heap by quality</td>
+<td>O(n log n)</td>
+<td>IPO, Course Schedule III, refueling, hire K workers</td>
+</tr>
+<tr>
+<td>Repeated merge</td>
+<td>lightest first</td>
+<td>min-heap</td>
+<td>O(n log n)</td>
+<td>Huffman, connect sticks</td>
+</tr>
+<tr>
+<td>Monotonic stack</td>
+<td>left to right</td>
+<td>stack + last index</td>
+<td>O(n)</td>
+<td>Remove Duplicate Letters, Remove K Digits</td>
+</tr>
+</tbody>
+</table>
+<div class="pitfall">
+<p><strong>Pitfall: trusting a rule because it passes the examples</strong>
+"Take the largest coin" passes <code>{1, 5, 10, 25}</code> every time and fails on <code>{1, 3, 4}</code>. "Pick the shortest interval" passes most hand-made examples. Before coding, spend two minutes trying to break the rule on tiny inputs, or compare against a brute force on random inputs. If you cannot state why the choice is safe, assume it is not.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: the wrong sort key</strong>
+Interval scheduling sorted by start, Two City sorted by <code>aCost</code>, hiring workers sorted by wage alone: each is a plausible key that fails. Find the key with the exchange argument: write down what changes when two neighbours swap, and sort so that no swap improves the answer.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: <code>&gt;</code> versus <code>&gt;=</code> at the boundary</strong>
+Interval scheduling treats <code>[1, 3]</code> and <code>[3, 5]</code> as compatible (<code>s &gt;= end</code>). Balloons that touch at 3 are burst by one arrow, so a new arrow is needed only when <code>s &gt; end</code>. Gas Station resets when the tank goes <strong>below</strong> zero, not at zero. Write the boundary case down as a test before you write the comparison.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: overflow in the doubling greedies</strong>
+In Patching Array <code>miss</code> doubles on every patch; with n near 2³¹ − 1, <code>miss</code> passes <code>int.MaxValue</code> and wraps negative, and the loop never ends. Use <code>long</code> in C# (Python ints are unbounded). The same applies to sums of products in Minimum Cost to Hire K Workers.</p>
+</div>
+<h2 id="worked-problems">Worked problems</h2>
+<h3 id="1-remove-duplicate-letters-medium">1 · Remove Duplicate Letters <span class="diff medium">Medium</span></h3>
+<p>Remove duplicate letters so that every letter appears once and the result is the <strong>smallest</strong> in lexicographic order among all such results. Example: <code>"cbacdcbc"</code> → <code>"acdb"</code>.</p>
+<p><strong>Insight:</strong> build the answer left to right in a stack. When the new letter c is smaller than the top of the stack, and the top letter <strong>appears again later</strong>, pop it: putting c earlier makes the string smaller, and the popped letter can still be placed later. If the top does not appear again, it must stay. This is the greedy "make the earliest position as small as possible", implemented with a <a href="monotonic-stack-queue.html">monotonic stack</a>. Letters already in the stack are skipped, since their position is already the best one available.</p>
+<details class="solution">
+<summary>Solution: monotonic stack with last occurrences, O(n)</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def remove_duplicate_letters(s):
+    last = {c: i for i, c in enumerate(s)}
+    stack, in_stack = [], set()
+    for i, c in enumerate(s):
+        if c in in_stack:
+            continue
+        while stack and c &lt; stack[-1] and last[stack[-1]] &gt; i:
+            in_stack.remove(stack.pop())       # it comes back later: place it then
+        stack.append(c)
+        in_stack.add(c)
+    return &quot;&quot;.join(stack)
+</code></pre>
+<pre><code class="language-csharp">public static string RemoveDuplicateLetters(string s)
+{
+    var last = new int[26];
+    for (int i = 0; i &lt; s.Length; i++) last[s[i] - 'a'] = i;
+    var inStack = new bool[26];
+    var stack = new System.Text.StringBuilder();
+    for (int i = 0; i &lt; s.Length; i++)
+    {
+        char c = s[i];
+        if (inStack[c - 'a']) continue;
+        while (stack.Length &gt; 0 &amp;&amp; c &lt; stack[^1] &amp;&amp; last[stack[^1] - 'a'] &gt; i)
+        {
+            inStack[stack[^1] - 'a'] = false;  // it comes back later: place it then
+            stack.Length--;
+        }
+        stack.Append(c);
+        inStack[c - 'a'] = true;
+    }
+    return stack.ToString();
+}
+</code></pre>
+</div>
+<p>Each letter is pushed and popped at most once: O(n) time and O(alphabet) space. Remove K Digits is the same stack with a budget of k pops instead of the "appears later" condition.</p>
+</details>
+<h3 id="2-minimum-number-of-refueling-stops-hard">2 · Minimum Number of Refueling Stops <span class="diff hard">Hard</span></h3>
+<p>A car starts with <code>startFuel</code> litres (one litre per mile) and must reach <code>target</code>. Stations at increasing positions offer some fuel each. Return the minimum number of stops, or −1.</p>
+<p><strong>Insight:</strong> do not decide at a station whether to stop. Drive as far as the fuel allows and remember every station passed in a max-heap. When you run dry, <strong>retroactively</strong> stop at the best station you passed: the one with the most fuel. Any solution with s stops reaches at most as far as taking the s largest passed stations, so greedy stays ahead on "distance reachable with s stops". It is Jump Game II with a heap: each stop extends the frontier as much as possible.</p>
+<details class="solution">
+<summary>Solution: max-heap of passed stations, O(n log n)</summary>
+<div class="code-tabs">
+<pre><code class="language-python">import heapq
+
+def min_refuel_stops(target, start_fuel, stations):
+    heap, reach, stops, i = [], start_fuel, 0, 0   # reach: farthest position so far
+    while reach &lt; target:
+        while i &lt; len(stations) and stations[i][0] &lt;= reach:
+            heapq.heappush(heap, -stations[i][1])  # passed it: may stop there later
+            i += 1
+        if not heap:
+            return -1                              # stranded
+        reach -= heapq.heappop(heap)               # best station passed
+        stops += 1
+    return stops
+</code></pre>
+<pre><code class="language-csharp">public static int MinRefuelStops(int target, int startFuel, int[][] stations)
+{
+    var heap = new PriorityQueue&lt;int, int&gt;();      // max-heap of passed fuel
+    long reach = startFuel;                        // farthest position so far
+    int stops = 0, i = 0;
+    while (reach &lt; target)
+    {
+        while (i &lt; stations.Length &amp;&amp; stations[i][0] &lt;= reach)
+        {
+            heap.Enqueue(stations[i][1], -stations[i][1]);   // may stop there later
+            i++;
+        }
+        if (heap.Count == 0) return -1;            // stranded
+        reach += heap.Dequeue();                   // best station passed
+        stops++;
+    }
+    return stops;
+}
+</code></pre>
+</div>
+<p>O(n log n) time, O(n) space. There is also an O(n²) DP (<code>dp[s]</code> = farthest reach with s stops), which is a good way to <em>check</em> the greedy: the greedy reproduces the DP's values.</p>
+</details>
+<h3 id="3-minimum-cost-to-hire-k-workers-hard">3 · Minimum Cost to Hire K Workers <span class="diff hard">Hard</span></h3>
+<p>Worker i has a <code>quality</code> and a minimum <code>wage</code>. Hire exactly k workers; pay must be proportional to quality within the group, and nobody may get less than their minimum. Minimise the total pay.</p>
+<p><strong>Insight:</strong> within a group, one worker is the <strong>captain</strong>: the one with the highest ratio <code>wage / quality</code>. Everyone is paid <code>captain_ratio × quality</code>, so the cost is <code>ratio × (sum of qualities)</code>. Sort workers by ratio. When worker j is the captain, the others must have a ratio ≤ theirs (earlier in the order), and to minimise the cost we want the k − 1 <strong>smallest qualities</strong> among them. A max-heap of qualities keeps the k smallest seen so far, removing the largest when it grows too big. Two orders again: ratio decides who is eligible, quality decides who is best.</p>
+<details class="solution">
+<summary>Solution: sort by ratio, max-heap of qualities, O(n log n)</summary>
+<div class="code-tabs">
+<pre><code class="language-python">import heapq
+
+def mincost_to_hire_workers(quality, wage, k):
+    workers = sorted((w / q, q) for q, w in zip(quality, wage))
+    heap, qsum, best = [], 0, float(&quot;inf&quot;)         # max-heap of qualities
+    for ratio, q in workers:                       # this worker is the captain
+        heapq.heappush(heap, -q)
+        qsum += q
+        if len(heap) &gt; k:
+            qsum += heapq.heappop(heap)            # drop the largest quality
+        if len(heap) == k:
+            best = min(best, ratio * qsum)
+    return best
+</code></pre>
+<pre><code class="language-csharp">public static double MincostToHireWorkers(int[] quality, int[] wage, int k)
+{
+    var workers = quality.Select((q, i) =&gt; (ratio: (double)wage[i] / q, q))
+                         .OrderBy(w =&gt; w.ratio).ToArray();
+    var heap = new PriorityQueue&lt;int, int&gt;();      // max-heap of qualities
+    long qsum = 0;
+    double best = double.MaxValue;
+    foreach (var (ratio, q) in workers)            // this worker is the captain
+    {
+        heap.Enqueue(q, -q);
+        qsum += q;
+        if (heap.Count &gt; k) qsum -= heap.Dequeue();   // drop the largest quality
+        if (heap.Count == k) best = Math.Min(best, ratio * qsum);
+    }
+    return best;
+}
+</code></pre>
+</div>
+<p>Sometimes the popped quality is the current worker's own. Then the step computes <code>ratio × qsum</code> for a group whose highest ratio is lower. Paying that group at this higher rate is still legal, just too expensive, so the value is never below the true optimum and cannot win wrongly. O(n log n).</p>
+</details>
+<h3 id="4-patching-array-hard">4 · Patching Array <span class="diff hard">Hard</span></h3>
+<p>Given a sorted array <code>nums</code> and n, add the fewest numbers ("patches") so that every integer in <code>[1, n]</code> is a sum of some subset of the array.</p>
+<p><strong>Insight:</strong> keep <code>miss</code>, the smallest total you <strong>cannot</strong> build yet; everything in <code>[1, miss − 1]</code> is buildable. If the next number <code>x ≤ miss</code>, adding it extends the range to <code>[1, miss + x − 1]</code>. If <code>x &gt; miss</code>, nothing can ever build <code>miss</code>, so you must patch some value ≤ miss. Patching <strong>miss itself</strong> doubles the range, and any smaller patch reaches less: greedy stays ahead on <code>miss</code>.</p>
+<div class="viz gr-wide" data-viz="greedy-patch"></div>
+
+<details class="solution">
+<summary>Solution: track the first unbuildable total, O(len(nums) + log n)</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def min_patches(nums, n):
+    miss, i, patches = 1, 0, 0                     # [1, miss) is buildable
+    while miss &lt;= n:
+        if i &lt; len(nums) and nums[i] &lt;= miss:
+            miss += nums[i]                        # extend with a given number
+            i += 1
+        else:
+            miss += miss                           # patch with miss: doubles reach
+            patches += 1
+    return patches
+</code></pre>
+<pre><code class="language-csharp">public static int MinPatches(int[] nums, int n)
+{
+    long miss = 1;                                 // long: miss doubles past int range
+    int i = 0, patches = 0;
+    while (miss &lt;= n)
+    {
+        if (i &lt; nums.Length &amp;&amp; nums[i] &lt;= miss)
+            miss += nums[i++];                     // extend with a given number
+        else
+        {
+            miss += miss;                          // patch with miss: doubles reach
+            patches++;
+        }
+    }
+    return patches;
+}
+</code></pre>
+</div>
+<p>Each patch at least doubles <code>miss</code>, so there are at most about log₂ n patches. The same "smallest unbuildable sum" idea answers the classic "smallest positive integer that is not a subset sum of this sorted array" in one pass.</p>
+</details>
+<h3 id="5-minimum-number-of-taps-to-open-to-water-a-garden-hard">5 · Minimum Number of Taps to Open to Water a Garden <span class="diff hard">Hard</span></h3>
+<p>A garden spans <code>[0, n]</code>; tap i waters <code>[i − ranges[i], i + ranges[i]]</code>. Return the fewest taps that cover the whole garden, or −1.</p>
+<p><strong>Insight:</strong> this is Jump Game II after one transformation. For each left end, record the farthest right end any tap reaches from there: <code>reach[left] = max(right)</code>. Now "from position i you can extend coverage to <code>reach[i]</code>" is exactly a jump array, and the BFS-level greedy counts taps. Failure is a level whose farthest reach does not move past its own end. Video Stitching is the same problem with clips instead of taps.</p>
+<details class="solution">
+<summary>Solution: interval cover as Jump Game II, O(n)</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def min_taps(n, ranges):
+    reach = [0] * (n + 1)
+    for i, r in enumerate(ranges):
+        left = max(0, i - r)
+        reach[left] = max(reach[left], i + r)      # best right end from this left end
+    taps = end = far = 0
+    for i in range(n):
+        far = max(far, reach[i])
+        if i == end:                               # current coverage used up
+            if far &lt;= i:
+                return -1                          # a gap nobody covers
+            taps += 1
+            end = far
+    return taps
+</code></pre>
+<pre><code class="language-csharp">public static int MinTaps(int n, int[] ranges)
+{
+    var reach = new int[n + 1];
+    for (int i = 0; i &lt;= n; i++)
+    {
+        int left = Math.Max(0, i - ranges[i]);
+        reach[left] = Math.Max(reach[left], i + ranges[i]);   // best right end from here
+    }
+    int taps = 0, end = 0, far = 0;
+    for (int i = 0; i &lt; n; i++)
+    {
+        far = Math.Max(far, reach[i]);
+        if (i == end)                              // current coverage used up
+        {
+            if (far &lt;= i) return -1;               // a gap nobody covers
+            taps++;
+            end = far;
+        }
+    }
+    return taps;
+}
+</code></pre>
+</div>
+<p>O(n) time and space. Recognising that an interval-cover problem is a jump game is the whole trick; the sort-by-start greedy also works in O(n log n).</p>
+</details>
+<h2 id="problem-ladder">Problem ladder</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Level</th>
+<th>The key idea</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://leetcode.com/problems/assign-cookies/">Assign Cookies</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Sort both; smallest cookie that satisfies the least greedy child.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://leetcode.com/problems/lemonade-change/">Lemonade Change</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Give change with a 10 before two 5s: keep the flexible coin.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/">Best Time to Buy and Sell Stock II</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Collect every positive day-to-day difference.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://leetcode.com/problems/jump-game/">Jump Game</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>One frontier <code>reach</code>; fail when <code>i &gt; reach</code>.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://leetcode.com/problems/jump-game-ii/">Jump Game II</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>BFS levels are ranges: <code>end</code> and <code>far</code> replace the queue.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://leetcode.com/problems/gas-station/">Gas Station</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Total ≥ 0 decides; a negative tank moves the start past i.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://leetcode.com/problems/boats-to-save-people/">Boats to Save People</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Heaviest with lightest, two pointers.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://leetcode.com/problems/two-city-scheduling/">Two City Scheduling</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Sort by <code>aCost − bCost</code>; first half to A.</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://leetcode.com/problems/partition-labels/">Partition Labels</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Stretch <code>end</code> to <code>last[c]</code>; cut at <code>i == end</code>.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://leetcode.com/problems/non-overlapping-intervals/">Non-overlapping Intervals</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Keep the most by earliest end; remove the rest.</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/">Minimum Number of Arrows to Burst Balloons</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Sort by end; shoot at the end; <code>s &gt; end</code> needs a new arrow.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://leetcode.com/problems/task-scheduler/">Task Scheduler</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td><code>max(len, (maxc − 1)(n + 1) + cnt_max)</code>.</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://leetcode.com/problems/reorganize-string/">Reorganize String</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Feasible iff <code>maxc ≤ ceil(n/2)</code>; fill even slots first.</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="https://leetcode.com/problems/remove-k-digits/">Remove K Digits</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Monotonic stack: pop a larger digit while budget remains.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="https://leetcode.com/problems/remove-duplicate-letters/">Remove Duplicate Letters</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Pop a larger top only if it appears again later.</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="https://leetcode.com/problems/minimum-cost-to-connect-sticks/">Minimum Cost to Connect Sticks</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Huffman: always join the two shortest.</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="https://leetcode.com/problems/candy/">Candy</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Left pass, right pass, take the max.</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="https://leetcode.com/problems/ipo/">IPO</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Unlock by capital (sort), choose by profit (heap).</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="https://leetcode.com/problems/course-schedule-iii/">Course Schedule III</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Deadline order; when late, drop the longest course.</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="https://leetcode.com/problems/minimum-number-of-refueling-stops/">Minimum Number of Refueling Stops</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Drive, remember passed stations, refuel retroactively from the heap.</td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/">Minimum Number of Taps to Open to Water a Garden</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Convert to a jump array, then Jump Game II.</td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="https://leetcode.com/problems/minimum-cost-to-hire-k-workers/">Minimum Cost to Hire K Workers</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Captain = max ratio; k smallest qualities in a max-heap.</td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="https://leetcode.com/problems/patching-array/">Patching Array</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Track the first unbuildable sum; patch with it to double.</td>
+</tr>
+<tr>
+<td>24</td>
+<td><a href="https://leetcode.com/problems/minimum-cost-to-merge-stones/">Minimum Cost to Merge Stones</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Looks like Huffman, but only adjacent piles merge: greedy fails, use interval DP.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>Interval scheduling: why sort by end time and not by start time or by length?</summary>
+<p>The earliest-ending interval leaves the most room for everything after it, and "stays ahead" proves it: the k-th greedy pick ends no later than anyone's k-th pick. Sorting by start fails on one long interval that starts first and covers several short ones. Sorting by length fails on a short interval that overlaps two long, mutually disjoint ones.</p>
+</details>
+<details class="quiz">
+<summary>Greedy coin change works for {1, 5, 10, 25} but not for {1, 3, 4}. How would you check a new coin system?</summary>
+<p>Compare greedy with the coin-change DP for every amount up to the sum of the two largest coins; if a coin system is non-canonical, a counterexample exists below that bound. For {1, 3, 4} the DP finds 6 = 3 + 3 against greedy's 4 + 1 + 1. In an interview, just use the DP: it is O(amount × coins) and always right.</p>
+</details>
+<details class="quiz">
+<summary>Gas Station: the tank goes negative at station i when starting from s. Why can you skip every start between s and i?</summary>
+<p>Every station k in <code>s+1 … i</code> was reached from s with a tank ≥ 0. Starting at k instead means arriving at the same places with that non-negative amount <strong>less</strong>, so the tank still goes negative by i. All of them fail, and the next candidate is i + 1.</p>
+</details>
+<details class="quiz">
+<summary>Course Schedule III: when the new course makes you late, why drop the longest course rather than the new one?</summary>
+<p>You must drop exactly one course either way, so the count is the same. Dropping the longest leaves the <strong>smallest</strong> total time, which can only help future courses fit. If the new course is the longest, then dropping it is the same rule. The heap makes "find the longest" O(log n).</p>
+</details>
+<details class="quiz">
+<summary>Jump Game II is a shortest path. Why does it not need a BFS queue?</summary>
+<p>From index i you can land anywhere in <code>i+1 … i+nums[i]</code>, so every BFS level is a <strong>contiguous range</strong>. A range is described by its two ends, so <code>end</code> (where the current level stops) and <code>far</code> (where the next level will stop) replace the queue. O(n) time, O(1) space.</p>
+</details>
+<details class="quiz">
+<summary>Huffman: why does the total number of bits equal the sum of all merged weights?</summary>
+<p>Each merge puts its two subtrees one level deeper, so every symbol under the merged node gains one bit. That adds exactly the merged weight to <code>Σ weight × depth</code>. Summing over all merges counts each symbol once per ancestor, which is its depth.</p>
+</details>
+<details class="quiz">
+<summary>Minimum Cost to Hire K Workers: why sort by <code>wage / quality</code>?</summary>
+<p>The group's pay rate is set by its highest ratio (otherwise that worker gets less than their minimum). Sorting by ratio means that when you reach worker j, every earlier worker can join a group with j as captain at j's rate. Then only the sum of qualities matters, so you keep the k smallest qualities in a heap.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Core rule</strong>the local choice must be safe: some optimal solution contains it</div>
+<div><strong>Exchange</strong>swap a "wrong-order" pair in an optimal solution; show cost does not rise</div>
+<div><strong>Stays ahead</strong>greedy's k-th step is never worse than anyone's k-th step</div>
+<div><strong>Break it first</strong>tiny inputs + brute force / DP on random tests</div>
+<div><strong>Fails</strong>coin change (non-canonical), 0/1 knapsack, merge adjacent stones → DP</div>
+<div><strong>Intervals</strong>sort by end; `s &gt;= end` (meetings) vs `s &gt; end` (arrows)</div>
+<div><strong>Jump games</strong>frontier `reach`; levels `end`/`far`; O(n)</div>
+<div><strong>Gas station</strong>total ≥ 0; reset start to i + 1 when tank &lt; 0</div>
+<div><strong>Candy</strong>left pass, right pass, max of the two</div>
+<div><strong>Tasks</strong>`max(len, (maxc − 1)(n + 1) + cnt_max)`</div>
+<div><strong>Sweep + heap</strong>sort by availability, heap by quality (IPO, courses, refuel, hire K)</div>
+<div><strong>Regret</strong>take it, and pop the worst when a constraint breaks</div>
+<div><strong>Huffman</strong>merge the two lightest; cost = Σ merged weights</div>
+<div><strong>Doubling</strong>Patching Array: `miss += x` or patch `miss`; use 64-bit</div>
+</div><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="backtracking.html"><small>&larr; PREVIOUS</small>Backtracking</a><a class="next" href="dp-framework.html"><small>NEXT &rarr;</small>The DP Framework</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#what-greedy-is-and-why-it-is-dangerous">What greedy is, and why it is dangerous</a></li>
+<li><a href="#proving-a-greedy-choice-is-safe">Proving a greedy choice is safe</a><ul>
+<li><a href="#the-exchange-argument">The exchange argument</a></li>
+<li><a href="#greedy-stays-ahead">Greedy stays ahead</a></li>
+<li><a href="#when-greedy-fails-find-the-counterexample">When greedy fails: find the counterexample</a></li>
+<li><a href="#is-it-greedy-a-decision-guide">Is it greedy? A decision guide</a></li>
+</ul>
+</li>
+<li><a href="#reach-and-frontiers-jump-game-i-and-ii">Reach and frontiers: Jump Game I and II</a></li>
+<li><a href="#prefix-balance-gas-station">Prefix balance: Gas Station</a></li>
+<li><a href="#two-passes-candy">Two passes: Candy</a></li>
+<li><a href="#counting-greedy-task-scheduler-and-reorganize-string">Counting greedy: Task Scheduler and Reorganize String</a><ul>
+<li><a href="#task-scheduler">Task Scheduler</a></li>
+<li><a href="#reorganize-string">Reorganize String</a></li>
+</ul>
+</li>
+<li><a href="#cut-as-early-as-possible-partition-labels-and-arrows">Cut as early as possible: Partition Labels and arrows</a></li>
+<li><a href="#sort-by-the-right-key">Sort by the right key</a><ul>
+<li><a href="#assign-cookies-and-boats-to-save-people">Assign Cookies and Boats to Save People</a></li>
+<li><a href="#two-city-scheduling">Two City Scheduling</a></li>
+</ul>
+</li>
+<li><a href="#greedy-plus-a-heap-the-best-option-among-those-available">Greedy plus a heap: the best option among those available</a><ul>
+<li><a href="#ipo-unlock-by-capital-choose-by-profit">IPO: unlock by capital, choose by profit</a></li>
+<li><a href="#course-schedule-iii-take-it-and-regret-the-longest">Course Schedule III: take it, and regret the longest</a></li>
+</ul>
+</li>
+<li><a href="#huffman-coding-merge-the-two-lightest">Huffman coding: merge the two lightest</a></li>
+<li><a href="#recognize-it-and-avoid-the-classic-bugs">Recognize it, and avoid the classic bugs</a></li>
+<li><a href="#worked-problems">Worked problems</a><ul>
+<li><a href="#1-remove-duplicate-letters-medium">1 · Remove Duplicate Letters Medium</a></li>
+<li><a href="#2-minimum-number-of-refueling-stops-hard">2 · Minimum Number of Refueling Stops Hard</a></li>
+<li><a href="#3-minimum-cost-to-hire-k-workers-hard">3 · Minimum Cost to Hire K Workers Hard</a></li>
+<li><a href="#4-patching-array-hard">4 · Patching Array Hard</a></li>
+<li><a href="#5-minimum-number-of-taps-to-open-to-water-a-garden-hard">5 · Minimum Number of Taps to Open to Water a Garden Hard</a></li>
+</ul>
+</li>
+<li><a href="#problem-ladder">Problem ladder</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

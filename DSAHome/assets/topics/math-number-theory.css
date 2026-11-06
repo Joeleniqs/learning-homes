@@ -1,0 +1,83 @@
+/* Math, Number Theory & Combinatorics: topic-only styles. Colours come from shared CSS variables only. */
+
+/* Wide visualizers: stage on top, code + variables side by side underneath */
+.viz.mn-wide .viz-body.with-code { grid-template-columns: minmax(0, 1fr); }
+.viz.mn-wide .viz-side { border-left: 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(200px, 1fr); }
+.viz.mn-wide .viz-vars { border-top: 0; border-left: 1px solid var(--line); align-content: start; }
+@media (max-width: 720px) {
+  .viz.mn-wide .viz-side { grid-template-columns: minmax(0, 1fr); }
+  .viz.mn-wide .viz-vars { border-left: 0; border-top: 1px solid var(--line); }
+}
+
+.mn-col { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; }
+.mn-row { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: center; gap: 22px; width: 100%; }
+.mn-cap { font: 700 11px "Cascadia Code", Consolas, monospace; letter-spacing: .02em; color: var(--muted); }
+.mn-box { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+
+/* Number grid (sieves, rejection grid): one cell per number */
+.mn-grid { display: grid; grid-template-columns: repeat(var(--cols, 10), 38px); gap: 4px; }
+.mn-grid.small { grid-template-columns: repeat(var(--cols, 10), 31px); gap: 3px; }
+.mn-c { height: 34px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1.5px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--text); font: 600 13px "Cascadia Code", Consolas, monospace; line-height: 1.05; position: relative; transition: background .2s, border-color .2s, opacity .2s; }
+.mn-grid.small .mn-c { height: 30px; font-size: 11.5px; }
+.mn-c small { font-size: 9.5px; font-weight: 600; color: var(--muted); }
+.mn-c.active { background: var(--v-active-soft); border-color: var(--v-active); border-width: 2.5px; }
+.mn-c.visit { background: var(--v-visit-soft); border-color: var(--v-visit); }
+.mn-c.done { background: var(--v-done-soft); border-color: var(--v-done); }
+.mn-c.bad { background: var(--v-bad-soft); border-color: var(--v-bad); }
+.mn-c.path { background: var(--v-path-soft); border-color: var(--v-path); }
+.mn-c.on { background: var(--accent-soft); border-color: var(--accent); }
+.mn-c.x { color: var(--muted); opacity: .45; }
+.mn-c.x::after { content: ""; position: absolute; left: 6px; right: 6px; top: 50%; border-top: 1.5px solid var(--muted); transform: rotate(-24deg); }
+.mn-c.zero { opacity: .3; }
+.mn-faded { opacity: .35; }
+.viz-legend .lg-dep::before { border-color: var(--v-visit); border-style: dashed; background: transparent; }
+.mn-c.ghost { border-style: dashed; background: transparent; color: var(--muted); opacity: .5; }
+
+/* chips: sets, lists, factors, streams */
+.mn-chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; max-width: 840px; }
+.mn-chip { font: 600 12.5px "Cascadia Code", Consolas, monospace; padding: 3px 9px; border-radius: 6px; border: 1.5px solid var(--line); background: var(--surface); color: var(--text); white-space: nowrap; }
+.mn-chip.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.mn-chip.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.mn-chip.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.mn-chip.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.mn-chip.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.mn-chip.on { border-color: var(--accent); background: var(--accent-soft); }
+.mn-chip.dim { opacity: .4; border-style: dashed; }
+
+.mn-eq { font: 600 13px "Cascadia Code", Consolas, monospace; padding: 6px 12px; border: 1.5px solid var(--accent); border-radius: 8px; background: var(--accent-soft); color: var(--text); text-align: center; max-width: 840px; }
+.mn-eq.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.mn-eq.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+
+/* Histogram: one bar per outcome, a dashed line at the fair height */
+.mn-hist { display: flex; align-items: flex-end; gap: 6px; height: 130px; padding: 0 6px; border-bottom: 1.5px solid var(--line); position: relative; }
+.mn-hist .bar { width: 34px; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; background: var(--accent-soft); border: 1.5px solid var(--accent); border-bottom: 0; border-radius: 4px 4px 0 0; box-sizing: border-box; }
+.mn-hist .bar.bad { background: var(--v-bad-soft); border-color: var(--v-bad); }
+.mn-hist .bar.done { background: var(--v-done-soft); border-color: var(--v-done); }
+.mn-hist .bar span { font: 600 9.5px "Cascadia Code", Consolas, monospace; color: var(--text); transform: translateY(-14px); white-space: nowrap; }
+.mn-hist .fair { position: absolute; left: 0; right: 0; border-top: 1.5px dashed var(--muted); }
+.mn-hlbl { display: flex; gap: 6px; padding: 0 6px; }
+.mn-hlbl span { width: 34px; text-align: center; font: 600 10px "Cascadia Code", Consolas, monospace; color: var(--muted); white-space: nowrap; }
+
+/* Pascal's triangle: centred rows of small cells */
+.mn-tri { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.mn-tri .r { display: flex; gap: 4px; }
+.mn-tri .mn-c { width: 40px; height: 30px; font-size: 12px; }
+
+/* SVG drawn by the visualizers */
+svg.dg.mn-svg { overflow: visible; }
+svg.dg .mn-grid-line { stroke: var(--line); stroke-width: 1; }
+svg.dg .mn-tile { stroke-width: 1.5; }
+svg.dg .mn-lbl { font-weight: 700; paint-order: stroke; stroke: var(--surface); stroke-width: 4px; }
+svg.dg .mn-pt { fill: var(--surface); stroke: var(--muted); stroke-width: 1.8; }
+svg.dg .mn-pt.active { fill: var(--v-active-soft); stroke: var(--v-active); stroke-width: 2.5; }
+svg.dg .mn-pt.done { fill: var(--v-done-soft); stroke: var(--v-done); stroke-width: 2.2; }
+svg.dg .mn-pt.bad { fill: var(--v-bad-soft); stroke: var(--v-bad); stroke-width: 2.2; }
+svg.dg .mn-pt.visit { fill: var(--v-visit-soft); stroke: var(--v-visit); stroke-width: 2.2; }
+svg.dg .edge.done { stroke: var(--v-done); stroke-width: 2.6; }
+svg.dg .edge.bad { stroke: var(--v-bad); stroke-width: 2.2; }
+svg.dg .edge.visit { stroke: var(--v-visit); stroke-width: 2.2; }
+svg.dg .edge.path { stroke: var(--v-path); stroke-width: 2.6; }
+svg.dg .edge.faint { stroke: var(--line); stroke-width: 1.2; }
+svg.dg .mn-fill-path { fill: var(--v-path-soft); stroke: none; }
+
+.viz-legend .lg-accent::before { border-color: var(--accent); background: var(--accent-soft); }

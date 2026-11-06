@@ -1,0 +1,1459 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Outbound Pipelines &amp; Interceptors | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/outbound-pipelines.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/outbound-pipelines.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track" open><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html" aria-current="page">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Outbound Pipelines &amp; Interceptors</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">REQUEST PIPELINES &AMP; MIDDLEWARE</p><h1>Outbound Pipelines &amp; Interceptors</h1><p class="lede">HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side.</p><div class="meta"><span class="level level-advanced">Advanced</span><span>~45 min study</span><span>Builds on: <a href="request-pipeline.html">The Request Delegate Pipeline</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="outbound-pipelines" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-every-call-site-doing-the-clients-job">The problem: every call site doing the client's job</h2>
+<p>Your service calls three others: <code>orders</code>, <code>payments</code> and <code>inventory</code>. Every one of those calls needs the same handful of things: a bearer token that is fresh, a correlation id so logs line up across services, a <code>traceparent</code> header so the distributed trace stays in one piece, a timeout, a retry for the occasional 503, and a log line that does <strong>not</strong> print the token. Here is how that usually starts:</p>
+<div class="code-tabs" data-labels="Before: every call site does it,After: one pipeline, configured once">
+<pre><code class="language-csharp">public class CheckoutService(ITokenService tokens, ILogger&lt;CheckoutService&gt; log)
+{
+    public async Task&lt;Order?&gt; GetOrderAsync(int id)
+    {
+        using var http = new HttpClient();                       // new pool, new sockets, every call
+        http.BaseAddress = new Uri(&quot;https://orders.internal&quot;);
+        var token = await tokens.GetAsync();                     // 50 call sites, 50 copies
+        http.DefaultRequestHeaders.Authorization = new(&quot;Bearer&quot;, token);
+        http.DefaultRequestHeaders.Add(&quot;x-correlation-id&quot;, Activity.Current?.Id);
+        log.LogInformation(&quot;GET /orders/{Id} {Headers}&quot;, id,
+            http.DefaultRequestHeaders);                         // token in the logs
+        for (var attempt = 1; ; attempt++)                       // hand-rolled retry, no jitter
+        {
+            try
+            {
+                var res = await http.GetAsync($&quot;/orders/{id}&quot;);  // default timeout: 100 s
+                if ((int)res.StatusCode &gt;= 500 &amp;&amp; attempt &lt; 3) { await Task.Delay(200); continue; }
+                return await res.Content.ReadFromJsonAsync&lt;Order&gt;();
+            }
+            catch (HttpRequestException) when (attempt &lt; 3) { await Task.Delay(200); }
+        }
+    }
+    // ...and the same 20 lines again in GetPaymentAsync, ReserveStockAsync, ...
+}
+</code></pre>
+<pre><code class="language-csharp">// Program.cs: the pipeline is configured once, per downstream service
+builder.Services.AddTransient&lt;AuthHandler&gt;();
+builder.Services.AddTransient&lt;CorrelationHandler&gt;();
+builder.Services.AddHttpClient&lt;OrdersClient&gt;(c =&gt;
+    {
+        c.BaseAddress = new Uri(&quot;https://orders.internal&quot;);
+    })
+    .AddHttpMessageHandler&lt;CorrelationHandler&gt;()   // outermost of yours
+    .AddHttpMessageHandler&lt;AuthHandler&gt;()          // token on every request, refreshed once
+    .AddStandardResilienceHandler();               // timeouts + retry with jitter + breaker
+
+// The call site is now only about the business call
+public class OrdersClient(HttpClient http)
+{
+    public Task&lt;Order?&gt; GetAsync(int id, CancellationToken ct) =&gt;
+        http.GetFromJsonAsync&lt;Order&gt;($&quot;/orders/{id}&quot;, ct);
+}
+</code></pre>
+</div>
+<p>The "before" version has six separate problems, and none of them is visible in a code review of a single call site: a new connection pool per call (<a href="#httpclient-lifetimes-socket-exhaustion-vs-stale-dns">socket exhaustion</a>), token handling duplicated fifty times, a secret in the logs, no deadline smaller than 100 seconds, a retry storm waiting to happen, and no consistent tracing. The "after" version moves each concern into a <strong>handler</strong> that wraps the network call. Every request made with that client goes through the same chain, so the concern is written, tested and fixed in exactly one place.</p>
+<p>If you have read <a href="request-pipeline.html">The Request Delegate Pipeline</a> and <a href="middleware-patterns.html">Middleware Patterns</a>, you already know this shape. It is the same onion, turned around to face the other way.</p>
+<div class="rule">
+<p><strong>An outbound pipeline is middleware for the requests you send.</strong> Each handler gets the outgoing request, may change it, calls the next handler, and gets the response on the way back. Put a cross-cutting concern of outbound calls (auth, tracing, logging, retries, timeouts) in a handler once, and keep call sites about the business call.</p>
+</div>
+<h2 id="the-mental-model-the-same-onion-facing-outward">The mental model: the same onion, facing outward</h2>
+<p>On the server, the request <strong>arrives</strong> from the network, travels inward through middleware, and your endpoint sits in the middle. On the client, your code sits <strong>outside</strong>, the request travels inward through handlers, and the network sits in the middle. The innermost layer on the client is the one component that does real I/O: <code>SocketsHttpHandler</code> in .NET, <code>CallServerInterceptor</code> in OkHttp, <code>http.Transport</code> in Go, the transport in httpx, the dispatcher in Node's <code>fetch</code>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 330" width="760" role="img" aria-label="Server middleware onion compared with client handler onion">
+<defs><marker id="outbound-pipelines-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="outbound-pipelines-ard" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker></defs>
+<text x="190" y="22" text-anchor="middle" class="title">Server: request comes IN</text>
+<text x="570" y="22" text-anchor="middle" class="title">Client: request goes OUT</text>
+<rect class="box" x="20" y="40" width="340" height="250" rx="16"/><text x="34" y="60" class="small">ExceptionHandler</text>
+<rect class="box" x="40" y="70" width="300" height="200" rx="14"/><text x="54" y="90" class="small">Authentication</text>
+<rect class="box" x="60" y="100" width="260" height="150" rx="12"/><text x="74" y="120" class="small">Routing</text>
+<rect class="box accent" x="80" y="130" width="220" height="100" rx="10"/><text x="190" y="170" text-anchor="middle" class="title">Your endpoint</text><text x="190" y="190" text-anchor="middle" class="small muted">business logic in the middle</text>
+<path class="edge accent" d="M8 150 L80 150" marker-end="url(#outbound-pipelines-ar)"/><text x="6" y="142" class="small mono">network</text>
+<path class="edge done" d="M80 212 L8 212" marker-end="url(#outbound-pipelines-ard)"/>
+<rect class="box" x="400" y="40" width="340" height="250" rx="16"/><text x="414" y="60" class="small">Logging (whole call)</text>
+<rect class="box" x="420" y="70" width="300" height="200" rx="14"/><text x="434" y="90" class="small">Retry + timeouts</text>
+<rect class="box" x="440" y="100" width="260" height="150" rx="12"/><text x="454" y="120" class="small">Auth: adds the token</text>
+<rect class="box path" x="460" y="130" width="220" height="100" rx="10"/><text x="570" y="170" text-anchor="middle" class="title">SocketsHttpHandler</text><text x="570" y="190" text-anchor="middle" class="small muted">the only layer that does I/O</text>
+<path class="edge accent" d="M570 4 L570 40" marker-end="url(#outbound-pipelines-ar)"/><text x="580" y="34" class="small mono">your code: GetAsync()</text>
+<path class="edge accent" d="M680 160 L752 160" marker-end="url(#outbound-pipelines-ar)"/><text x="700" y="152" class="small mono">server</text>
+<path class="edge done" d="M752 205 L680 205" marker-end="url(#outbound-pipelines-ard)"/>
+<text x="190" y="314" text-anchor="middle" class="small">Outer layers see the request first and the response last.</text>
+<text x="570" y="314" text-anchor="middle" class="small">Same rule. Your code is outside; the network is the core.</text>
+</svg>
+<figcaption>Both pipelines are Chain of Responsibility plus Decorator: each layer holds a reference to the next and adds behaviour around it. The only difference is which end the network is on.</figcaption>
+</figure>
+
+<p>Three consequences fall straight out of this picture, and the rest of the page keeps coming back to them:</p>
+<ol>
+<li><strong>Order is behaviour.</strong> A logging handler outside the retry handler logs one line per logical call, timed end to end. Inside the retry handler it logs one line per attempt. Both are useful; they are different. A timeout outside the retry is a total budget; inside it, it is a per-attempt limit.</li>
+<li><strong>Anything above the core is plain in-process code.</strong> A handler that adds a header costs nanoseconds. Only the primary handler waits on the network. So it is cheap to have five or six handlers.</li>
+<li><strong>A handler can call <code>next</code> zero, one or many times.</strong> Zero times is a short-circuit (a cache, a circuit breaker that is open, a test fake). Many times is a retry or a hedge. That is exactly why retries live in a handler and not at the call site.</li>
+</ol>
+<p>Step through a real chain below. The simulation keeps a clock, a stack of deadlines and the headers on the wire. Change the order (for example <code>Timeout,Retry,Log,Auth,Trace</code>) or the server's behaviour and watch what changes: how many lines the logger writes, whether the timeout limits each attempt or the whole call, whether the token refresh happens once, and how many client spans the trace gets.</p>
+<div class="viz" data-viz="outbound-pipelines-chain"></div>
+
+<div class="insight">
+<p><strong>Insight</strong>
+Every handler only knows "the next one". It doesn't know whether the next one is another handler, a retry loop or the real socket. That ignorance is the design: you can add, remove or reorder layers, or swap the primary handler for a fake in tests, without touching any other layer.</p>
+</div>
+<h2 id="build-one-from-scratch">Build one from scratch</h2>
+<h3 id="delegatinghandler-a-decorator-with-an-innerhandler"><code>DelegatingHandler</code>: a decorator with an <code>InnerHandler</code></h3>
+<p>In .NET everything that can send an <code>HttpRequestMessage</code> is an <code>HttpMessageHandler</code>. <code>HttpClient</code> itself is only a friendly wrapper that holds one handler and calls its <code>SendAsync</code>. A <code>DelegatingHandler</code> is a handler that <strong>has</strong> another handler, its <code>InnerHandler</code>, and by default forwards to it. You override <code>SendAsync</code>, do your work before and after <code>base.SendAsync(...)</code>, and you have a layer.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 170" width="760" role="img" aria-label="HttpClient holds the outermost handler, each DelegatingHandler holds its InnerHandler, the last one is the primary handler">
+<defs><marker id="outbound-pipelines-ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box accent" x="10" y="50" width="120" height="60" rx="8"/><text x="70" y="76" text-anchor="middle" class="title">HttpClient</text><text x="70" y="96" text-anchor="middle" class="small mono">_handler</text>
+<rect class="box" x="170" y="50" width="130" height="60" rx="8"/><text x="235" y="76" text-anchor="middle" class="title">Logging</text><text x="235" y="96" text-anchor="middle" class="small mono">InnerHandler</text>
+<rect class="box" x="340" y="50" width="130" height="60" rx="8"/><text x="405" y="76" text-anchor="middle" class="title">Retry</text><text x="405" y="96" text-anchor="middle" class="small mono">InnerHandler</text>
+<rect class="box" x="510" y="50" width="100" height="60" rx="8"/><text x="560" y="76" text-anchor="middle" class="title">Auth</text><text x="560" y="96" text-anchor="middle" class="small mono">InnerHandler</text>
+<rect class="box path" x="640" y="50" width="110" height="60" rx="8"/><text x="695" y="76" text-anchor="middle" class="title">Sockets</text><text x="695" y="96" text-anchor="middle" class="small">primary handler</text>
+<path class="edge accent" d="M130 80 L168 80" marker-end="url(#outbound-pipelines-ar2)"/>
+<path class="edge accent" d="M300 80 L338 80" marker-end="url(#outbound-pipelines-ar2)"/>
+<path class="edge accent" d="M470 80 L508 80" marker-end="url(#outbound-pipelines-ar2)"/>
+<path class="edge accent" d="M610 80 L638 80" marker-end="url(#outbound-pipelines-ar2)"/>
+<text x="380" y="30" text-anchor="middle" class="small">a singly linked list of decorators, built once, used for every request</text>
+<text x="235" y="140" text-anchor="middle" class="small muted">DelegatingHandler</text><text x="405" y="140" text-anchor="middle" class="small muted">DelegatingHandler</text><text x="560" y="140" text-anchor="middle" class="small muted">DelegatingHandler</text><text x="695" y="140" text-anchor="middle" class="small muted">HttpMessageHandler</text>
+</svg>
+<figcaption>The chain is a linked list. Calling <code>base.SendAsync</code> means "call my <code>InnerHandler</code>". The primary handler has no inner handler; it opens the socket.</figcaption>
+</figure>
+
+<p>Here is a complete, working pipeline with no DI at all, so you can see every moving part. It is exactly what <code>IHttpClientFactory</code> builds for you later.</p>
+<pre><code class="language-csharp">public sealed class CorrelationHandler : DelegatingHandler
+{
+    protected override Task&lt;HttpResponseMessage&gt; SendAsync(HttpRequestMessage request, CancellationToken ct)
+    {
+        // before: the request is going down
+        if (!request.Headers.Contains(&quot;x-correlation-id&quot;))
+            request.Headers.Add(&quot;x-correlation-id&quot;, Activity.Current?.TraceId.ToString() ?? Guid.NewGuid().ToString(&quot;N&quot;));
+        return base.SendAsync(request, ct);           // nothing to do on the way back: return the task
+    }
+}
+
+public sealed class TimingHandler(ILogger log) : DelegatingHandler
+{
+    protected override async Task&lt;HttpResponseMessage&gt; SendAsync(HttpRequestMessage request, CancellationToken ct)
+    {
+        var start = Stopwatch.GetTimestamp();
+        try
+        {
+            var response = await base.SendAsync(request, ct);    // everything below happens in here
+            log.LogInformation(&quot;{Method} {Path} -&gt; {Status} in {Ms:0} ms&quot;, request.Method,
+                request.RequestUri?.AbsolutePath, (int)response.StatusCode, Stopwatch.GetElapsedTime(start).TotalMilliseconds);
+            return response;
+        }
+        catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
+        {
+            log.LogWarning(ex, &quot;{Method} {Path} failed after {Ms:0} ms&quot;, request.Method,
+                request.RequestUri?.AbsolutePath, Stopwatch.GetElapsedTime(start).TotalMilliseconds);
+            throw;                                        // observe, don't swallow
+        }
+    }
+}
+
+// Wire it by hand: outermost first. This is all IHttpClientFactory does for you.
+var primary = new SocketsHttpHandler { PooledConnectionLifetime = TimeSpan.FromMinutes(5) };
+var pipeline = new TimingHandler(logger) { InnerHandler = new CorrelationHandler { InnerHandler = primary } };
+var client = new HttpClient(pipeline) { BaseAddress = new Uri(&quot;https://orders.internal&quot;), Timeout = TimeSpan.FromSeconds(10) };
+</code></pre>
+<p>Five rules make the difference between a handler that works in a demo and one that survives production:</p>
+<ul>
+<li><strong>Be stateless or thread-safe.</strong> One handler instance serves every concurrent request on that client. Never keep per-request state in a field.</li>
+<li><strong>Don't swallow exceptions or cancellation.</strong> Observe them, add context, rethrow. Return a fabricated response only when that is the explicit job of the layer (a fallback or a cache).</li>
+<li><strong>Pass the <code>CancellationToken</code> through.</strong> Every <code>await</code> inside a handler should observe the token you were given, or the caller's timeout cannot stop you.</li>
+<li><strong>Dispose responses you throw away.</strong> A retry handler that drops a 503 must call <code>response.Dispose()</code> before trying again; otherwise the connection is not returned to the pool until the GC finds it.</li>
+<li><strong>Don't mutate shared things.</strong> Set headers on the <code>request</code>, never on <code>HttpClient.DefaultRequestHeaders</code> from inside a handler: those are shared by every concurrent call.</li>
+</ul>
+<div class="tip">
+<p><strong>Tip</strong>
+Need a per-call switch, like "skip auth for this one request" or "this call is idempotent, retry it"? Don't add a header that leaks onto the wire. Use <code>HttpRequestMessage.Options</code>: <code>request.Options.Set(new HttpRequestOptionsKey&lt;bool&gt;("Idempotent"), true)</code> at the call site, <code>request.Options.TryGetValue(...)</code> inside the handler. Other stacks have the same idea: OkHttp <code>Request.tag()</code>, Go <code>context.WithValue</code>, httpx <code>request.extensions</code>.</p>
+</div>
+<h3 id="testing-a-handler-put-a-fake-at-the-core">Testing a handler: put a fake at the core</h3>
+<p>Because the core is just another <code>HttpMessageHandler</code>, you test a handler by giving it a fake inner handler that records the request and returns a canned response. No network, no mocking library, and it runs in microseconds.</p>
+<pre><code class="language-csharp">sealed class StubHandler(Func&lt;HttpRequestMessage, HttpResponseMessage&gt; respond) : HttpMessageHandler
+{
+    public List&lt;HttpRequestMessage&gt; Seen { get; } = [];
+    protected override Task&lt;HttpResponseMessage&gt; SendAsync(HttpRequestMessage r, CancellationToken ct)
+    {
+        Seen.Add(r);
+        return Task.FromResult(respond(r));
+    }
+}
+
+[Fact]
+public async Task Adds_correlation_id_once()
+{
+    var stub = new StubHandler(_ =&gt; new HttpResponseMessage(HttpStatusCode.OK));
+    var client = new HttpClient(new CorrelationHandler { InnerHandler = stub }) { BaseAddress = new(&quot;https://x&quot;) };
+
+    await client.GetAsync(&quot;/a&quot;);
+
+    Assert.Single(stub.Seen[0].Headers.GetValues(&quot;x-correlation-id&quot;));
+}
+</code></pre>
+<h2 id="httpclient-lifetimes-socket-exhaustion-vs-stale-dns">HttpClient lifetimes: socket exhaustion vs stale DNS</h2>
+<p>Before handlers can be useful, the thing at the core has to be used correctly. Every client library keeps a <strong>connection pool</strong> inside its primary handler or transport. A pooled connection has already paid for DNS, the TCP handshake and the TLS handshake (often 50–150 ms across regions), and the next request on it pays nothing. Two opposite mistakes break this, and the fix for one tends to cause the other.</p>
+<div class="compare">
+<div class="bad">
+<h4 id="a-new-client-per-call-socket-exhaustion">A new client per call: socket exhaustion</h4>
+<p><code>using var http = new HttpClient()</code> creates a new pool, opens a new connection, and closes it at the end of the <code>using</code>. The side that closes a TCP connection first keeps the port in <strong>TIME_WAIT</strong> (60 s on Linux, up to 240 s on Windows) so stray packets can't confuse a new connection. At a few hundred calls a second you run out of ephemeral ports (about 16k on Windows, 28k on Linux) and new calls fail with <code>SocketException: Only one usage of each socket address...</code>. Each call also pays a full TLS handshake.</p>
+</div>
+<div class="bad">
+<h4 id="one-client-forever-stale-dns">One client forever: stale DNS</h4>
+<p>A <code>static readonly HttpClient</code> fixes that: few connections, all reused. But a connection is bound to the IP address it resolved when it was <strong>opened</strong>. If the downstream moves (blue/green swap, failover, a Kubernetes service behind a changing load balancer IP), long-lived connections keep talking to the old address until something closes them. Failover appears to "not work" for this one service.</p>
+</div>
+<div class="good">
+<h4 id="long-lived-pool-bounded-connection-age">Long-lived pool, bounded connection age</h4>
+<p>Keep one pool, but retire each connection after a few minutes, so DNS is re-resolved on a rolling basis. In .NET: <code>SocketsHttpHandler.PooledConnectionLifetime</code>, or <code>IHttpClientFactory</code>, which rotates whole handlers every <code>HandlerLifetime</code> (2 minutes by default). Both give you reuse <strong>and</strong> freshness.</p>
+</div>
+</div>
+<p>The simulation below runs a 10 ms-tick model of a client pool for ten minutes: requests arrive at a steady rate, take about 40 ms each, connections are opened, reused, idled out and closed, closed sockets sit in TIME_WAIT, and at the DNS mark the service moves to a new IP. The top chart is sockets in use (open plus TIME_WAIT) against the port limit; the bottom chart is the share of requests in each 10 s that succeeded, hit the <strong>old</strong> IP, or failed to get a socket. Try each strategy, then try raising the rate.</p>
+<div class="viz" data-viz="outbound-pipelines-sockets"></div>
+
+<h3 id="ihttpclientfactory-what-it-actually-does"><code>IHttpClientFactory</code>: what it actually does</h3>
+<p><code>AddHttpClient</code> registers a factory that <strong>pools <code>HttpMessageHandler</code> chains, not <code>HttpClient</code> objects</strong>. Each time you ask for a client you get a cheap new <code>HttpClient</code> wrapping a pooled handler chain. Every <code>HandlerLifetime</code> the factory builds a fresh chain for new clients; the old chain stays alive until the clients that use it are gone, and then it is disposed, closing its connections.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 210" width="760" role="img" aria-label="IHttpClientFactory rotates handler chains every two minutes while old chains drain">
+<defs><marker id="outbound-pipelines-ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<path class="edge" d="M40 180 L740 180" marker-end="url(#outbound-pipelines-ar3)"/><text x="742" y="196" text-anchor="end" class="small">time</text>
+<text x="40" y="198" class="small mono">0:00</text><text x="260" y="198" class="small mono">2:00</text><text x="480" y="198" class="small mono">4:00</text>
+<rect class="box done" x="40" y="40" width="220" height="34" rx="6"/><text x="150" y="62" text-anchor="middle" class="small">chain #1 serves new clients</text>
+<rect class="box" x="260" y="40" width="120" height="34" rx="6"/><text x="320" y="62" text-anchor="middle" class="small muted">draining, then disposed</text>
+<rect class="box done" x="260" y="86" width="220" height="34" rx="6"/><text x="370" y="108" text-anchor="middle" class="small">chain #2 (fresh connections, fresh DNS)</text>
+<rect class="box" x="480" y="86" width="120" height="34" rx="6"/><text x="540" y="108" text-anchor="middle" class="small muted">draining</text>
+<rect class="box done" x="480" y="132" width="220" height="34" rx="6"/><text x="590" y="154" text-anchor="middle" class="small">chain #3</text>
+<text x="40" y="24" class="small">Each chain = your DelegatingHandlers + one primary handler with its own connection pool.</text>
+</svg>
+<figcaption>Rotation bounds how long a connection can live. Expired chains are only disposed once no live <code>HttpClient</code> still references them.</figcaption>
+</figure>
+
+<p>There are three ways to ask the factory for a client, and they produce exactly the same pipeline:</p>
+<div class="code-tabs" data-labels="Typed client (recommended),Named client,Plain IHttpClientFactory">
+<pre><code class="language-csharp">builder.Services.AddHttpClient&lt;OrdersClient&gt;(c =&gt; c.BaseAddress = new(&quot;https://orders.internal&quot;))
+    .AddHttpMessageHandler&lt;AuthHandler&gt;()
+    .AddStandardResilienceHandler();
+
+// Registered as TRANSIENT. Inject it where you need it; don't store it in a singleton.
+public sealed class OrdersClient(HttpClient http)
+{
+    public Task&lt;Order?&gt; GetAsync(int id, CancellationToken ct) =&gt; http.GetFromJsonAsync&lt;Order&gt;($&quot;/orders/{id}&quot;, ct);
+}
+</code></pre>
+<pre><code class="language-csharp">builder.Services.AddHttpClient(&quot;orders&quot;, c =&gt; c.BaseAddress = new(&quot;https://orders.internal&quot;))
+    .AddHttpMessageHandler&lt;AuthHandler&gt;();
+
+public sealed class CheckoutService(IHttpClientFactory factory)
+{
+    public async Task&lt;Order?&gt; GetAsync(int id, CancellationToken ct)
+    {
+        var http = factory.CreateClient(&quot;orders&quot;);          // cheap: a new wrapper over a pooled chain
+        return await http.GetFromJsonAsync&lt;Order&gt;($&quot;/orders/{id}&quot;, ct);
+    }
+}
+</code></pre>
+<pre><code class="language-csharp">builder.Services.AddHttpClient();                            // default (unnamed) client, no handlers
+
+public sealed class Probe(IHttpClientFactory factory)
+{
+    public Task&lt;HttpResponseMessage&gt; PingAsync(Uri uri, CancellationToken ct) =&gt;
+        factory.CreateClient().GetAsync(uri, ct);
+}
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: the captive typed client</strong>
+A typed client injected into a <strong>singleton</strong> is captured forever, so its handler chain never rotates and you are back to stale DNS (and any scoped service a handler depends on is captured too). This is the same captive-dependency bug as in <a href="di-lifetimes.html">DI Lifetimes</a>. If a singleton needs HTTP, inject <code>IHttpClientFactory</code> and call <code>CreateClient</code> per operation, or use a single <code>HttpClient</code> over a <code>SocketsHttpHandler</code> with <code>PooledConnectionLifetime</code> set.</p>
+</div>
+<p>Handlers also have a DI subtlety: each handler chain is created in <strong>its own DI scope</strong>, which lives as long as the chain (minutes), not as long as your HTTP request. A handler that injects a scoped service such as a <code>DbContext</code> or "the current user" gets a different instance from the one your controller sees. To use request data, read it explicitly (for example through <code>IHttpContextAccessor</code>, or by putting it on <code>request.Options</code> at the call site) rather than injecting scoped services into handlers.</p>
+<h3 id="the-same-pool-in-other-ecosystems">The same pool, in other ecosystems</h3>
+<table>
+<thead>
+<tr>
+<th>Stack</th>
+<th>The pooled thing to share</th>
+<th>Defaults worth knowing</th>
+<th>The classic mistake</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.NET</td>
+<td><code>SocketsHttpHandler</code> (inside <code>HttpClient</code>)</td>
+<td><code>HttpClient.Timeout</code> = 100 s; <code>PooledConnectionLifetime</code> = infinite; factory <code>HandlerLifetime</code> = 2 min</td>
+<td><code>new HttpClient()</code> per call; typed client captured in a singleton</td>
+</tr>
+<tr>
+<td>Java OkHttp</td>
+<td>one <code>OkHttpClient</code>; derive variants with <code>newBuilder()</code> so they <strong>share</strong> the pool</td>
+<td><code>ConnectionPool</code>: 5 idle connections, 5 min keep-alive; 10 s connect/read/write timeouts</td>
+<td>A new <code>OkHttpClient</code> per request: each one has its own pool and threads</td>
+</tr>
+<tr>
+<td>Java <code>java.net.http.HttpClient</code></td>
+<td>one <code>HttpClient</code></td>
+<td>no request timeout unless you set <code>.timeout(...)</code></td>
+<td>Per-request clients</td>
+</tr>
+<tr>
+<td>Spring</td>
+<td>one <code>RestClient</code> / <code>WebClient</code> built from a shared builder</td>
+<td>timeouts come from the underlying request factory / connector</td>
+<td>Building a new <code>RestTemplate</code> per call</td>
+</tr>
+<tr>
+<td>Python <code>requests</code></td>
+<td>one <code>Session</code> (urllib3 pool, <code>pool_maxsize</code> 10 per host)</td>
+<td><strong>no timeout at all</strong> unless you pass <code>timeout=</code></td>
+<td>Module-level <code>requests.get(...)</code>: a new pool every call</td>
+</tr>
+<tr>
+<td>Python <code>httpx</code></td>
+<td>one <code>Client</code> / <code>AsyncClient</code></td>
+<td>5 s timeouts; <code>max_connections</code> 100, keep-alive 20, <code>keepalive_expiry</code> 5 s</td>
+<td><code>with httpx.Client():</code> inside the request handler</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>one <code>http.Client</code> and one <code>*http.Transport</code></td>
+<td><code>Client.Timeout</code> = 0 (<strong>none</strong>); <code>MaxIdleConnsPerHost</code> = 2; <code>IdleConnTimeout</code> 90 s</td>
+<td>Forgetting <code>resp.Body.Close()</code> (and draining it), which leaks the connection</td>
+</tr>
+<tr>
+<td>Node <code>fetch</code> (undici)</td>
+<td>the global dispatcher, or one <code>undici.Agent</code></td>
+<td>keep-alive on; no overall timeout: pass <code>signal: AbortSignal.timeout(ms)</code></td>
+<td>Unconsumed response bodies hold connections</td>
+</tr>
+</tbody>
+</table>
+<div class="insight">
+<p><strong>Insight</strong>
+Go's <code>MaxIdleConnsPerHost = 2</code> is the quiet killer for service-to-service traffic: with 50 concurrent requests to one host, 48 connections are closed every time a burst ends and reopened on the next burst, which looks like socket exhaustion in slow motion. Set <code>MaxIdleConnsPerHost</code> (and <code>MaxConnsPerHost</code> if you want a cap) on a transport you own. The simulator's last strategy shows the churn.</p>
+</div>
+<h2 id="cross-cutting-concerns-that-belong-in-the-pipeline">Cross-cutting concerns that belong in the pipeline</h2>
+<p>These are the concerns that are the same for every call to a given downstream service, so the call site should never see them. Each one has a natural place in the chain.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 300" width="760" role="img" aria-label="Recommended order of outbound handlers from outermost to innermost">
+<defs><marker id="outbound-pipelines-ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="20" y="22" class="title">A typical chain, outermost first, and why each layer sits where it does</text>
+<rect class="box accent" x="20" y="36" width="220" height="32" rx="6"/><text x="30" y="57" class="mono small">Logging / metrics (logical)</text><text x="256" y="57" class="small">One line and one duration per call, including all retries: what the caller felt.</text>
+<rect class="box" x="40" y="74" width="200" height="32" rx="6"/><text x="50" y="95" class="mono small">Total timeout</text><text x="256" y="95" class="small">The whole budget, retries and backoff included. Outside retry, or retries can run forever.</text>
+<rect class="box" x="60" y="112" width="180" height="32" rx="6"/><text x="70" y="133" class="mono small">Retry (+ circuit breaker)</text><text x="256" y="133" class="small">Repeats everything below it. See <tspan class="mono">resilience</tspan> for the full ordering.</text>
+<rect class="box" x="80" y="150" width="160" height="32" rx="6"/><text x="90" y="171" class="mono small">Attempt timeout</text><text x="256" y="171" class="small">Inside retry: a slow attempt is abandoned and the next try starts fresh.</text>
+<rect class="box visit" x="100" y="188" width="140" height="32" rx="6"/><text x="110" y="209" class="mono small">Auth (token)</text><text x="256" y="209" class="small">Inside retry, so every attempt gets the current token; refresh-on-401 lives here.</text>
+<rect class="box visit" x="120" y="226" width="120" height="32" rx="6"/><text x="130" y="247" class="mono small">Trace (per try)</text><text x="256" y="247" class="small">Inside retry: one client span per attempt, so retries show up in the trace.</text>
+<rect class="box path" x="140" y="264" width="100" height="32" rx="6"/><text x="150" y="285" class="mono small">primary</text><text x="256" y="285" class="small">Pool, DNS, TLS, HTTP/2, decompression. The only layer doing I/O.</text>
+</svg>
+<figcaption>Not a law, but a strong default. The rule behind it: a layer should sit outside everything it needs to see repeated, and inside everything whose result it needs.</figcaption>
+</figure>
+
+<h3 id="auth-token-injection-and-refresh">Auth: token injection and refresh</h3>
+<p>Injecting a token is one line; <strong>refreshing</strong> it correctly under concurrency is where most hand-written handlers go wrong. Picture 20 concurrent requests that all get <code>401</code> the moment the token expires. If each one calls the identity provider, you get 20 refresh calls (a <strong>stampede</strong>, the same shape as a cache stampede in <a href="caching.html">Caching</a>). Worse, if the IdP <strong>rotates refresh tokens</strong> (each refresh token is single-use, as the OAuth 2.0 Security Best Current Practice recommends for public clients), the second caller presents a refresh token that was just used. The IdP treats that as theft and revokes the whole token family: the user is logged out.</p>
+<p>The fix is the same as for a cache miss: <strong>single-flight</strong>. Only one refresh runs at a time; everyone who finds the token expired waits for that one result. Better still, refresh <strong>proactively</strong>, a little before expiry (the skew), so requests rarely see a <code>401</code> at all.</p>
+<div class="viz" data-viz="outbound-pipelines-token"></div>
+
+<p>The "seen" token is the subtle part. A caller that got a <code>401</code> passes the token it used to the refresh method. Inside the lock, if the current token is no longer the one it saw, somebody else already refreshed, and it simply uses the new one. Without that check, the callers queued behind the lock would each refresh again, one after another.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">public sealed class TokenCache(IIdentityClient idp, TimeProvider time)   // register as SINGLETON
+{
+    private static readonly TimeSpan Skew = TimeSpan.FromMinutes(1);
+    private readonly SemaphoreSlim _gate = new(1, 1);
+    private volatile AccessToken? _current;
+
+    public async ValueTask&lt;AccessToken&gt; GetAsync(CancellationToken ct)
+    {
+        var t = _current;
+        if (t is not null &amp;&amp; t.ExpiresAt - Skew &gt; time.GetUtcNow()) return t;   // fast path, no lock
+        return await RefreshAsync(t, ct);                                       // proactive refresh
+    }
+
+    public async Task&lt;AccessToken&gt; RefreshAsync(AccessToken? seen, CancellationToken ct)
+    {
+        await _gate.WaitAsync(ct);                                              // single flight
+        try
+        {
+            if (!ReferenceEquals(_current, seen)) return _current!;             // someone beat us to it
+            return _current = await idp.RefreshAsync(ct);
+        }
+        finally { _gate.Release(); }
+    }
+}
+
+public sealed class AuthHandler(TokenCache tokens) : DelegatingHandler            // register as TRANSIENT
+{
+    protected override async Task&lt;HttpResponseMessage&gt; SendAsync(HttpRequestMessage req, CancellationToken ct)
+    {
+        var token = await tokens.GetAsync(ct);
+        req.Headers.Authorization = new(&quot;Bearer&quot;, token.Value);
+        var res = await base.SendAsync(req, ct);
+        if (res.StatusCode != HttpStatusCode.Unauthorized) return res;
+
+        res.Dispose();                                      // give the connection back
+        token = await tokens.RefreshAsync(token, ct);       // N callers, one IdP call
+        req.Headers.Authorization = new(&quot;Bearer&quot;, token.Value);
+        return await base.SendAsync(req, ct);               // retry exactly once
+    }
+}
+</code></pre>
+<pre><code class="language-java">// OkHttp: an interceptor adds the token; an Authenticator handles 401 (OkHttp calls it for you).
+final class TokenCache {
+    private Token current;
+    synchronized Token current() {
+        if (current == null || current.expiresAt().minusSeconds(60).isBefore(Instant.now()))
+            current = idp.refresh(current);                       // proactive, under the same lock
+        return current;
+    }
+    synchronized Token refreshIfStill(String failedHeader) {      // single flight via the monitor
+        if (current != null &amp;&amp; !(&quot;Bearer &quot; + current.value()).equals(failedHeader)) return current;
+        current = idp.refresh(current);
+        return current;
+    }
+}
+
+final class TokenAuthenticator implements Authenticator {
+    private final TokenCache tokens;
+    TokenAuthenticator(TokenCache tokens) { this.tokens = tokens; }
+
+    @Override public Request authenticate(Route route, Response response) {
+        if (response.priorResponse() != null) return null;        // already retried once: give up
+        String failed = response.request().header(&quot;Authorization&quot;);
+        Token fresh = tokens.refreshIfStill(failed);
+        return response.request().newBuilder().header(&quot;Authorization&quot;, &quot;Bearer &quot; + fresh.value()).build();
+    }
+}
+
+OkHttpClient client = new OkHttpClient.Builder()
+    .addInterceptor(chain -&gt; chain.proceed(chain.request().newBuilder()
+        .header(&quot;Authorization&quot;, &quot;Bearer &quot; + tokens.current().value()).build()))
+    .authenticator(new TokenAuthenticator(tokens))
+    .build();
+// Spring: RestClient.builder().requestInterceptor(new OAuth2ClientHttpRequestInterceptor(manager))
+</code></pre>
+<pre><code class="language-python">import threading, time, httpx
+
+class TokenCache:
+    def __init__(self, fetch, skew=60.0):
+        self._fetch, self._skew = fetch, skew      # fetch() -&gt; Token(value, expires_at)
+        self._lock = threading.Lock()
+        self._tok = None
+
+    def current(self):
+        tok = self._tok
+        if tok is not None and tok.expires_at - self._skew &gt; time.time():
+            return tok                              # fast path, no lock
+        return self.refresh(seen=tok)
+
+    def refresh(self, seen):
+        with self._lock:                            # single flight
+            if self._tok is not seen:               # someone else refreshed while we waited
+                return self._tok
+            self._tok = self._fetch()
+            return self._tok
+
+class BearerAuth(httpx.Auth):                       # httpx's built-in hook for exactly this
+    def __init__(self, tokens: TokenCache):
+        self.tokens = tokens
+
+    def auth_flow(self, request):
+        tok = self.tokens.current()
+        request.headers[&quot;Authorization&quot;] = f&quot;Bearer {tok.value}&quot;
+        response = yield request                    # send, and get the response back
+        if response.status_code == 401:
+            tok = self.tokens.refresh(seen=tok)
+            request.headers[&quot;Authorization&quot;] = f&quot;Bearer {tok.value}&quot;
+            yield request                           # retry exactly once
+
+client = httpx.Client(base_url=&quot;https://orders.internal&quot;, auth=BearerAuth(tokens))
+</code></pre>
+<pre><code class="language-go">// golang.org/x/oauth2 already does single-flight refresh: ReuseTokenSource holds a mutex
+// and refreshes shortly before expiry. Wrap any transport with it.
+src := (&amp;clientcredentials.Config{
+    ClientID:     id,
+    ClientSecret: secret,
+    TokenURL:     &quot;https://login.example.com/oauth2/token&quot;,
+    Scopes:       []string{&quot;orders.read&quot;},
+}).TokenSource(ctx)
+
+client := &amp;http.Client{
+    Timeout: 10 * time.Second,
+    Transport: &amp;oauth2.Transport{
+        Source: oauth2.ReuseTokenSource(nil, src), // cached, refreshed once, goroutine-safe
+        Base:   otelhttp.NewTransport(http.DefaultTransport),
+    },
+}
+</code></pre>
+<pre><code class="language-typescript">type Token = { value: string; expiresAt: number };
+let current: Token | undefined;
+let inflight: Promise&lt;Token&gt; | undefined;          // the single flight
+
+function refresh(seen?: Token): Promise&lt;Token&gt; {
+  if (current !== seen &amp;&amp; current) return Promise.resolve(current);   // already refreshed
+  inflight ??= fetchToken()
+    .then((t) =&gt; (current = t))
+    .finally(() =&gt; { inflight = undefined; });
+  return inflight;
+}
+
+async function getToken(): Promise&lt;Token&gt; {
+  if (current &amp;&amp; current.expiresAt - 60_000 &gt; Date.now()) return current;
+  return refresh(current);
+}
+
+export const withAuth = (next: typeof fetch): typeof fetch =&gt; async (input, init) =&gt; {
+  let tok = await getToken();
+  const send = (t: Token) =&gt; {
+    const headers = new Headers(init?.headers);
+    headers.set(&quot;Authorization&quot;, `Bearer ${t.value}`);
+    return next(input, { ...init, headers });
+  };
+  const res = await send(tok);
+  if (res.status !== 401) return res;
+  await res.body?.cancel();                         // release the connection
+  tok = await refresh(tok);
+  return send(tok);                                 // retry exactly once
+};
+</code></pre>
+</div>
+<p>In real projects, prefer the library that already does this: <code>Azure.Identity</code> / MSAL (token caches with proactive refresh), <code>Duende.AccessTokenManagement</code> for ASP.NET Core, Spring Security's OAuth2 client interceptors, <code>golang.org/x/oauth2</code>, <code>authlib</code>'s httpx integration. Write your own only when you understand why the "seen" check is there.</p>
+<div class="pitfall">
+<p><strong>Pitfall: retrying a 401 forever</strong>
+A refresh that returns a token the server still rejects (wrong audience, wrong scope, revoked client) leads to an infinite 401 → refresh → 401 loop. Retry <strong>exactly once</strong>, and treat a second 401 as a real error. OkHttp's <code>priorResponse()</code> check and the "retry once" line above are both doing this.</p>
+</div>
+<h3 id="trace-and-correlation-propagation">Trace and correlation propagation</h3>
+<p>A distributed trace only exists if every hop <strong>forwards</strong> the context it received. The W3C Trace Context standard puts it in one header:</p>
+<pre><code class="language-text">traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01
+             ver  trace-id (same for the whole request)  parent span-id   flags (01 = sampled)
+</code></pre>
+<p>The server side extracts it (that is <a href="request-pipeline.html">request pipeline</a> middleware), and the <strong>client side has to inject it</strong> on every outbound call. That is a handler's job. If one hop forgets, the trace splits in two: the downstream service starts a brand-new trace, and nobody can join the halves when debugging an incident. Pick the broken hop below and watch the waterfall fall apart.</p>
+<div class="viz" data-viz="outbound-pipelines-trace"></div>
+
+<p>The good news is that you rarely write this handler yourself:</p>
+<table>
+<thead>
+<tr>
+<th>Stack</th>
+<th>Who injects <code>traceparent</code> on outbound calls</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.NET</td>
+<td>Built in: <code>HttpClient</code>'s diagnostics handler creates the client <code>Activity</code> and injects the header. Add <code>AddHttpClientInstrumentation()</code> (OpenTelemetry) to export the spans.</td>
+</tr>
+<tr>
+<td>Java</td>
+<td>OpenTelemetry Java agent (zero code), or the OkHttp / Spring instrumentation libraries; Spring Boot 3 with Micrometer Tracing instruments <code>RestClient</code> / <code>WebClient</code> built from the auto-configured builders.</td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>HTTPXClientInstrumentor().instrument()</code>, <code>RequestsInstrumentor().instrument()</code>, or <code>opentelemetry-instrument</code> for zero-code.</td>
+</tr>
+<tr>
+<td>Go</td>
+<td><strong>You</strong>: wrap the transport with <code>otelhttp.NewTransport(base)</code> and pass <code>req.Context()</code> down, or the context is lost.</td>
+</tr>
+<tr>
+<td>Node / TS</td>
+<td>OpenTelemetry <code>UndiciInstrumentation</code> (for <code>fetch</code>) and <code>HttpInstrumentation</code>; register them before your code loads.</td>
+</tr>
+</tbody>
+</table>
+<p>Two neighbouring concerns travel the same way:</p>
+<ul>
+<li><strong>Baggage</strong> (<code>baggage:</code> header): key-value pairs such as <code>tenant=contoso</code> that every hop can read. Useful, but it is sent to <strong>every</strong> downstream, including third parties: never put secrets or personal data in it, and strip it at your trust boundary.</li>
+<li><strong>Custom correlation headers</strong> (<code>X-Correlation-Id</code>, <code>X-Request-Id</code>, <code>X-Tenant</code>): for these, ASP.NET Core has header propagation, which copies selected incoming headers onto outgoing calls:</li>
+</ul>
+<pre><code class="language-csharp">builder.Services.AddHeaderPropagation(o =&gt; o.Headers.Add(&quot;X-Correlation-Id&quot;));
+builder.Services.AddHttpClient&lt;OrdersClient&gt;().AddHeaderPropagation();   // a DelegatingHandler
+app.UseHeaderPropagation();                                              // middleware that captures them
+</code></pre>
+<div class="tip">
+<p><strong>Tip: in Go, the context is the propagation</strong>
+<code>otelhttp.NewTransport</code> reads the current span from <code>req.Context()</code>. Build outbound requests with <code>http.NewRequestWithContext(ctx, ...)</code>, using the <code>ctx</code> of the <strong>incoming</strong> request, never <code>context.Background()</code>. The same <code>ctx</code> also carries cancellation and the deadline, which is why it matters even more for <a href="resilience.html">Resilience</a>.</p>
+</div>
+<p>See <a href="observability.html">Observability</a> for spans, sampling and exporters.</p>
+<h3 id="logging-and-redaction">Logging and redaction</h3>
+<p>An outbound log line should say <strong>what</strong> was called, <strong>how it ended</strong> and <strong>how long it took</strong>. It should not contain the bearer token, the cookie, the API key in the query string or the customer's card number in the body. That's an easy rule to state and easy to break: the first time someone debugs with <code>LogInformation("{Request}", request)</code>, the <code>Authorization</code> header goes to your log store, where far more people can read it than can read your secrets vault.</p>
+<div class="compare">
+<div class="bad">
+<h4 id="logs-everything">Logs everything</h4>
+<pre><code class="language-text">GET https://pay.example.com/v1/charges?api_key=sk_live_51H...
+Authorization: Bearer eyJhbGciOi...
+{&quot;card&quot;:&quot;4111111111111111&quot;,&quot;cvc&quot;:&quot;123&quot;}
+-&gt; 200 in 182 ms
+</code></pre>
+</div>
+<div class="good">
+<h4 id="logs-the-shape">Logs the shape</h4>
+<pre><code class="language-text">GET pay.example.com /v1/charges?api_key=[REDACTED]
+-&gt; 200 in 182 ms (attempt 1 of 1)
+headers: Authorization=[REDACTED] (allow-list only)
+body: not logged
+</code></pre>
+</div>
+</div>
+<p>Rules that hold in every language:</p>
+<ol>
+<li><strong>Allow-list headers</strong>, don't block-list them. New sensitive headers will appear; an allow-list stays safe by default.</li>
+<li><strong>Redact query strings</strong> (or log only the path template, such as <code>/orders/{id}</code>). Tokens and signatures end up in URLs more often than you would hope.</li>
+<li><strong>Don't log bodies</strong> by default. If you must, sample them, cap their size, run them through a redactor, and never for auth endpoints.</li>
+<li>Log <strong>duration per attempt and per logical call</strong>. That is exactly the "logging both outside and inside retry" trick from the <a href="#the-mental-model-the-same-onion-facing-outward">chain demo</a>.</li>
+<li><strong>Read streamed bodies only once.</strong> A logging handler that buffers the response "to log it" breaks streaming and doubles memory.</li>
+</ol>
+<p>Library support: .NET 8+ has <code>Microsoft.Extensions.Http.Diagnostics</code> with <code>AddExtendedHttpClientLogging()</code> plus the redaction framework (<code>Microsoft.Extensions.Compliance.Redaction</code>), and <code>RemoveAllLoggers()</code> / <code>AddLogger&lt;T&gt;()</code> to replace the default logging handlers. OkHttp's <code>HttpLoggingInterceptor</code> has <code>redactHeader("Authorization")</code> and levels (<code>BASIC</code> does not log bodies). Logbook (Zalando) does the same for Spring. In Python and Go you usually write a small hook or transport yourself; keep the allow-list in one place.</p>
+<h3 id="retries-and-timeouts-one-layer-one-owner">Retries and timeouts: one layer, one owner</h3>
+<p>Retries and timeouts belong in the outbound pipeline, and they are deep enough to deserve a page of their own: <a href="resilience.html">Resilience</a>. Three rules matter here, because they are about <strong>where</strong> they go:</p>
+<ul>
+<li><strong>Exactly one retry layer per hop.</strong> If the SDK retries 3 times, your handler retries 3 times and Polly retries 3 times, one slow dependency gets 27 calls. Find out which layers already retry: the Azure SDKs, the AWS SDKs, <code>urllib3.Retry</code>, gRPC service config, OkHttp's <code>retryOnConnectionFailure</code> and service meshes all can.</li>
+<li><strong>Set every timeout explicitly.</strong> Defaults range from 100 s (.NET) to <strong>forever</strong> (Go <code>http.Client</code>, Python <code>requests</code>, Node <code>fetch</code>). An infinite timeout turns one slow dependency into a thread or socket leak in every caller.</li>
+<li><strong>Total timeout outside retry, attempt timeout inside.</strong> Otherwise a "3 retries with a 10 s timeout" policy can take 30 s plus backoff, which is longer than your own caller is willing to wait.</li>
+</ul>
+<pre><code class="language-csharp">builder.Services.AddHttpClient&lt;OrdersClient&gt;()
+    .AddStandardResilienceHandler();   // rate limiter → total timeout → retry → breaker → attempt timeout
+</code></pre>
+<h3 id="compression">Compression</h3>
+<p>The primary handler can negotiate compression and decompress responses transparently. Do it there, not in a handler of your own.</p>
+<table>
+<thead>
+<tr>
+<th>Stack</th>
+<th>Response decompression</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.NET</td>
+<td><code>SocketsHttpHandler.AutomaticDecompression = DecompressionMethods.All</code> (off by default; set it through <code>ConfigurePrimaryHttpMessageHandler</code>)</td>
+<td>Adds <code>Accept-Encoding</code> and decompresses gzip, deflate and Brotli</td>
+</tr>
+<tr>
+<td>OkHttp</td>
+<td>Automatic gzip (its internal bridge interceptor)</td>
+<td>If you set <code>Accept-Encoding</code> yourself, OkHttp leaves decompression to you</td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>requests</code> and <code>httpx</code> decode gzip/deflate automatically (Brotli and zstd if the optional packages are installed)</td>
+<td></td>
+</tr>
+<tr>
+<td>Go</td>
+<td><code>http.Transport</code> asks for gzip and decodes it transparently</td>
+<td>If <strong>you</strong> set <code>Accept-Encoding</code>, you get raw gzip bytes back</td>
+</tr>
+<tr>
+<td>Node</td>
+<td><code>fetch</code> (undici) decompresses automatically</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-csharp">builder.Services.AddHttpClient&lt;OrdersClient&gt;()
+    .ConfigurePrimaryHttpMessageHandler(() =&gt; new SocketsHttpHandler
+    {
+        AutomaticDecompression = DecompressionMethods.All,
+        PooledConnectionLifetime = TimeSpan.FromMinutes(5),   // bounds connection age even inside a long-lived chain
+        ConnectTimeout = TimeSpan.FromSeconds(5),
+    });
+</code></pre>
+<p>Compressing <strong>request</strong> bodies is rarer and needs the server's agreement (<code>Content-Encoding: gzip</code> on a POST). It's worth it for large JSON uploads to services that support it. Don't compress small payloads (below about 1 KB the CPU cost is larger than the saving), and never compress secrets alongside attacker-controlled text in the same compressed stream over TLS (that is how the CRIME/BREACH attacks work).</p>
+<h2 id="the-same-pipeline-in-five-languages">The same pipeline in five languages</h2>
+<p>Every ecosystem has its own name for it, but the shape is always "a function that receives the request and a <code>next</code>, and can act before and after calling it". Here is the same <strong>correlation-and-timing</strong> layer, plus how to register it, in each language.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">public sealed class TimingHandler(ILogger&lt;TimingHandler&gt; log) : DelegatingHandler
+{
+    protected override async Task&lt;HttpResponseMessage&gt; SendAsync(HttpRequestMessage req, CancellationToken ct)
+    {
+        req.Headers.TryAddWithoutValidation(&quot;X-Correlation-Id&quot;, Correlation.CurrentOrNew());
+        var start = Stopwatch.GetTimestamp();
+        try
+        {
+            var res = await base.SendAsync(req, ct);
+            log.LogInformation(&quot;{Method} {Host} -&gt; {Status} in {Ms} ms&quot;, req.Method, req.RequestUri!.Host,
+                (int)res.StatusCode, Stopwatch.GetElapsedTime(start).TotalMilliseconds);
+            return res;
+        }
+        catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
+        {
+            log.LogWarning(ex, &quot;{Method} {Host} failed after {Ms} ms&quot;, req.Method, req.RequestUri!.Host,
+                Stopwatch.GetElapsedTime(start).TotalMilliseconds);
+            throw;
+        }
+    }
+}
+
+builder.Services.AddTransient&lt;TimingHandler&gt;();
+builder.Services.AddHttpClient&lt;OrdersClient&gt;(c =&gt; c.BaseAddress = new(&quot;https://orders.internal&quot;))
+    .AddHttpMessageHandler&lt;TimingHandler&gt;()     // first added = outermost
+    .AddHttpMessageHandler&lt;AuthHandler&gt;();
+</code></pre>
+<pre><code class="language-java">// OkHttp: application interceptor
+final class TimingInterceptor implements Interceptor {
+    private static final Logger log = LoggerFactory.getLogger(TimingInterceptor.class);
+
+    @Override public Response intercept(Chain chain) throws IOException {
+        Request req = chain.request().newBuilder()               // requests are immutable: rebuild
+            .header(&quot;X-Correlation-Id&quot;, Correlation.currentOrNew())
+            .build();
+        long start = System.nanoTime();
+        try {
+            Response res = chain.proceed(req);                   // call next
+            log.info(&quot;{} {} -&gt; {} in {} ms&quot;, req.method(), req.url().host(), res.code(),
+                (System.nanoTime() - start) / 1_000_000);
+            return res;
+        } catch (IOException e) {
+            log.warn(&quot;{} {} failed after {} ms&quot;, req.method(), req.url().host(),
+                (System.nanoTime() - start) / 1_000_000, e);
+            throw e;
+        }
+    }
+}
+
+OkHttpClient client = new OkHttpClient.Builder()
+    .addInterceptor(new TimingInterceptor())                     // first added = outermost
+    .addInterceptor(new AuthInterceptor(tokens))
+    .callTimeout(Duration.ofSeconds(10))
+    .build();
+
+// Spring RestClient: same idea, different signature
+ClientHttpRequestInterceptor timing = (request, body, execution) -&gt; {
+    request.getHeaders().set(&quot;X-Correlation-Id&quot;, Correlation.currentOrNew());
+    long start = System.nanoTime();
+    ClientHttpResponse res = execution.execute(request, body);   // call next
+    log.info(&quot;{} {} -&gt; {} in {} ms&quot;, request.getMethod(), request.getURI().getHost(),
+        res.getStatusCode().value(), (System.nanoTime() - start) / 1_000_000);
+    return res;
+};
+RestClient orders = RestClient.builder().baseUrl(&quot;https://orders.internal&quot;).requestInterceptor(timing).build();
+</code></pre>
+<pre><code class="language-python">import time, logging, httpx
+
+log = logging.getLogger(&quot;outbound&quot;)
+
+class TimingTransport(httpx.BaseTransport):
+    &quot;&quot;&quot;A real onion layer: wraps another transport, like a DelegatingHandler.&quot;&quot;&quot;
+    def __init__(self, inner: httpx.BaseTransport):
+        self.inner = inner
+
+    def handle_request(self, request: httpx.Request) -&gt; httpx.Response:
+        request.headers.setdefault(&quot;X-Correlation-Id&quot;, correlation_id.get())
+        start = time.perf_counter()
+        try:
+            response = self.inner.handle_request(request)          # call next
+        except httpx.TransportError:
+            log.warning(&quot;%s %s failed after %.0f ms&quot;, request.method, request.url.host,
+                        (time.perf_counter() - start) * 1000)
+            raise
+        log.info(&quot;%s %s -&gt; %d in %.0f ms&quot;, request.method, request.url.host,
+                 response.status_code, (time.perf_counter() - start) * 1000)
+        return response
+
+    def close(self) -&gt; None:
+        self.inner.close()
+
+client = httpx.Client(
+    base_url=&quot;https://orders.internal&quot;,
+    transport=TimingTransport(httpx.HTTPTransport()),   # the primary handler at the core
+    auth=BearerAuth(tokens),
+    timeout=httpx.Timeout(10.0, connect=3.0),
+)
+</code></pre>
+<pre><code class="language-go">type Middleware func(http.RoundTripper) http.RoundTripper
+
+type roundTripperFunc func(*http.Request) (*http.Response, error)
+
+func (f roundTripperFunc) RoundTrip(r *http.Request) (*http.Response, error) { return f(r) }
+
+func Timing(log *slog.Logger) Middleware {
+    return func(next http.RoundTripper) http.RoundTripper {
+        return roundTripperFunc(func(req *http.Request) (*http.Response, error) {
+            req = req.Clone(req.Context()) // RoundTrip must not modify the caller's request
+            req.Header.Set(&quot;X-Correlation-Id&quot;, CorrelationID(req.Context()))
+            start := time.Now()
+            res, err := next.RoundTrip(req) // call next
+            if err != nil {
+                log.Warn(&quot;outbound failed&quot;, &quot;host&quot;, req.URL.Host, &quot;ms&quot;, time.Since(start).Milliseconds(), &quot;err&quot;, err)
+                return nil, err
+            }
+            log.Info(&quot;outbound&quot;, &quot;method&quot;, req.Method, &quot;host&quot;, req.URL.Host,
+                &quot;status&quot;, res.StatusCode, &quot;ms&quot;, time.Since(start).Milliseconds())
+            return res, nil
+        })
+    }
+}
+
+// Chain wraps in reverse so the FIRST middleware listed is the OUTERMOST.
+func Chain(base http.RoundTripper, mws ...Middleware) http.RoundTripper {
+    for i := len(mws) - 1; i &gt;= 0; i-- {
+        base = mws[i](base)
+    }
+    return base
+}
+
+client := &amp;http.Client{
+    Timeout:   10 * time.Second,
+    Transport: Chain(otelhttp.NewTransport(transport), Timing(log), Auth(tokens)),
+}
+</code></pre>
+<pre><code class="language-typescript">type Fetch = typeof fetch;
+type Middleware = (next: Fetch) =&gt; Fetch;
+
+const urlOf = (input: RequestInfo | URL) =&gt; new URL(input instanceof Request ? input.url : String(input));
+
+export const timing: Middleware = (next) =&gt; async (input, init) =&gt; {
+  const headers = new Headers(init?.headers);
+  headers.set(&quot;X-Correlation-Id&quot;, correlationId());
+  const start = performance.now();
+  try {
+    const res = await next(input, { ...init, headers });           // call next
+    console.info(`${init?.method ?? &quot;GET&quot;} ${urlOf(input).host} -&gt; ${res.status} in ${Math.round(performance.now() - start)} ms`);
+    return res;
+  } catch (err) {
+    console.warn(`${urlOf(input).host} failed after ${Math.round(performance.now() - start)} ms`, err);
+    throw err;
+  }
+};
+
+export const withTimeout = (ms: number): Middleware =&gt; (next) =&gt; (input, init) =&gt;
+  next(input, { ...init, signal: init?.signal ? AbortSignal.any([init.signal, AbortSignal.timeout(ms)]) : AbortSignal.timeout(ms) });
+
+// reduceRight: the FIRST middleware listed is the OUTERMOST
+export const compose = (...mws: Middleware[]): Fetch =&gt; mws.reduceRight&lt;Fetch&gt;((next, mw) =&gt; mw(next), fetch);
+
+export const send = compose(timing, withAuth, withTimeout(5_000));
+const res = await send(&quot;https://orders.internal/orders/42&quot;);
+</code></pre>
+</div>
+<h3 id="who-runs-first-registration-order-is-not-the-same-everywhere">Who runs first? Registration order is not the same everywhere</h3>
+<p>This is the most common source of "my auth header is missing in the logs" bugs. In most libraries <strong>the first one registered is the outermost</strong>, but not in all of them, and some of them (axios, httpx hooks) aren't an onion at all. Type your own list of layers, pick a library, and watch the order they actually run in.</p>
+<div class="viz" data-viz="outbound-pipelines-order"></div>
+
+<table>
+<thead>
+<tr>
+<th>Library</th>
+<th>Registration</th>
+<th>Who runs first on the request</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.NET <code>AddHttpMessageHandler</code></td>
+<td>builder calls</td>
+<td><strong>first added</strong> (outermost)</td>
+</tr>
+<tr>
+<td>OkHttp <code>addInterceptor</code></td>
+<td>builder calls</td>
+<td><strong>first added</strong></td>
+</tr>
+<tr>
+<td>Spring <code>RestClient.requestInterceptor</code>, <code>WebClient.filter</code></td>
+<td>builder calls</td>
+<td><strong>first added</strong></td>
+</tr>
+<tr>
+<td>MediatR <code>AddOpenBehavior</code></td>
+<td>registration calls</td>
+<td><strong>first added</strong></td>
+</tr>
+<tr>
+<td>Go <code>grpc.WithChainUnaryInterceptor(a, b)</code></td>
+<td>argument list</td>
+<td><strong>first argument</strong></td>
+</tr>
+<tr>
+<td>TypeScript <code>reduceRight</code> compose</td>
+<td>array</td>
+<td><strong>first in array</strong></td>
+</tr>
+<tr>
+<td>Go "wrap in a forward <code>for</code> loop"</td>
+<td><code>rt = mw(rt)</code></td>
+<td><strong>last</strong> one wrapped (outermost)</td>
+</tr>
+<tr>
+<td>grpc-java <code>ClientInterceptors.intercept(ch, a, b)</code></td>
+<td>argument list</td>
+<td><strong>last argument</strong> (documented)</td>
+</tr>
+<tr>
+<td>axios <code>interceptors.request.use</code></td>
+<td>calls</td>
+<td><strong>last registered</strong> for requests, first registered for responses</td>
+</tr>
+<tr>
+<td>httpx <code>event_hooks</code></td>
+<td>lists</td>
+<td>list order, but hooks are flat callbacks, not a wrapping chain</td>
+</tr>
+</tbody>
+</table>
+<div class="rule">
+<p><strong>Rule</strong>
+Never rely on remembering the order. Write a test that builds the real pipeline with a stub at the core, has each layer append its name to a shared list, and asserts the list (the StubHandler test above extends naturally to this). The test documents the order and fails if someone reorders the registration.</p>
+</div>
+<h3 id="okhttp-application-interceptors-vs-network-interceptors">OkHttp: application interceptors vs network interceptors</h3>
+<p>OkHttp has <strong>two</strong> places to add interceptors, on either side of its own built-in layers (retry and redirects, the bridge that adds <code>Host</code>/<code>Accept-Encoding</code>/cookies, the HTTP cache, and the connection setup). Which one you pick changes what your interceptor sees and how often it runs.</p>
+<div class="viz" data-viz="outbound-pipelines-okhttp"></div>
+
+<div class="compare">
+<div class="good">
+<h4 id="addinterceptor-application"><code>addInterceptor</code> (application)</h4>
+<ul>
+<li>Runs <strong>once per call</strong>, even if OkHttp follows redirects or retries a dead route.</li>
+<li>Sees the request as your code built it and the <strong>final</strong> response (decompressed, after redirects).</li>
+<li>Runs even for <strong>cache hits</strong> (no network at all).</li>
+<li>May short-circuit (return a response without calling <code>proceed</code>) or call <code>proceed</code> more than once.</li>
+<li><strong>Use for:</strong> auth, logging the logical call, correlation IDs, metrics per call.</li>
+</ul>
+</div>
+<div class="warn">
+<h4 id="addnetworkinterceptor-network"><code>addNetworkInterceptor</code> (network)</h4>
+<ul>
+<li>Runs <strong>once per network request</strong>: twice for a redirect, never for a cache hit.</li>
+<li>Sees the real wire request, including <code>Host</code>, <code>Accept-Encoding: gzip</code> and conditional cache headers, and the raw (still gzip) response.</li>
+<li>Has access to <code>chain.connection()</code> (the route, IP and TLS handshake in use).</li>
+<li>Must call <code>proceed</code> exactly once.</li>
+<li><strong>Use for:</strong> wire-level debugging, per-hop metrics, inspecting what was actually sent.</li>
+</ul>
+</div>
+</div>
+<h3 id="python-hooks-transports-and-auth">Python: hooks, transports and <code>Auth</code></h3>
+<p>Python's two big clients give you three different tools, and only one of them is an onion:</p>
+<ul>
+<li><strong><code>event_hooks={"request": [...], "response": [...]}</code></strong> (httpx) and <code>hooks={"response": ...}</code> (requests) are <strong>flat callbacks</strong>. A request hook can't see the response, can't time the call (except by stashing a start time on the request's <code>extensions</code>), and can't retry. They're perfect for "log the URL" and "call <code>raise_for_status()</code> on every response".</li>
+<li><strong>A custom transport</strong> (<code>httpx.BaseTransport</code> / <code>AsyncBaseTransport</code>) wraps the real transport, so it is a true decorator: timing, retries, circuit breaking and test fakes all belong here. <code>httpx.MockTransport(handler)</code> is the built-in stub for tests.</li>
+<li><strong><code>httpx.Auth.auth_flow</code></strong> is a generator built for auth: <code>yield request</code> sends it, the response comes back, and you may <code>yield</code> again (once) after refreshing. That is the cleanest refresh-on-401 in any language.</li>
+</ul>
+<p>With <code>requests</code>, the transport-level extension point is the <code>HTTPAdapter</code>, mounted per URL prefix; urllib3's <code>Retry</code> plugs in there:</p>
+<pre><code class="language-python">from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
+
+session = requests.Session()
+session.mount(&quot;https://orders.internal/&quot;, HTTPAdapter(
+    pool_maxsize=50,
+    max_retries=Retry(total=3, backoff_factor=0.5, status_forcelist=[502, 503, 504],
+                      allowed_methods=[&quot;GET&quot;, &quot;PUT&quot;, &quot;DELETE&quot;], respect_retry_after_header=True),
+))
+resp = session.get(&quot;https://orders.internal/orders/42&quot;, timeout=(3, 10))   # (connect, read): always pass it
+</code></pre>
+<h3 id="go-the-roundtripper-contract">Go: the <code>RoundTripper</code> contract</h3>
+<p>The <code>http.RoundTripper</code> documentation is short and strict, and every rule matters for a middleware:</p>
+<ol>
+<li><strong>Don't modify the request.</strong> Clone it (<code>req.Clone(ctx)</code>) before setting headers; the caller may reuse it, and other goroutines may be reading it.</li>
+<li><strong>Don't interpret the response.</strong> A <code>RoundTripper</code> returns an error only for transport failures; a <code>500</code> is a successful round trip. (Your middleware may still decide to retry on 503, as long as it closes the first body.)</li>
+<li><strong>Always close the body.</strong> If you discard a response (for example before a retry), drain and close it (<code>io.Copy(io.Discard, res.Body); res.Body.Close()</code>), or the connection is not returned to the pool.</li>
+<li><strong>Be safe for concurrent use.</strong> One <code>Transport</code> is shared by every goroutine.</li>
+<li><strong>Retrying needs a replayable body:</strong> set <code>req.GetBody</code> (done automatically for <code>bytes.Reader</code>, <code>bytes.Buffer</code> and <code>strings.Reader</code> bodies) and call it for each new attempt.</li>
+</ol>
+<h3 id="typescript-fetch-wrappers-vs-axios-interceptors">TypeScript: <code>fetch</code> wrappers vs axios interceptors</h3>
+<p><code>fetch</code> has no interceptor API, which turns out to be an advantage: a <code>(next) =&gt; fetch</code> wrapper is a real onion, fully typed and trivially testable (pass a fake <code>next</code>). axios has interceptors, but request and response interceptors are <strong>two separate lists</strong>, not one wrapping chain, so "time this call" needs a side channel:</p>
+<pre><code class="language-typescript">const api = axios.create({ baseURL: &quot;https://orders.internal&quot;, timeout: 10_000 });
+const started = new WeakMap&lt;object, number&gt;();
+
+api.interceptors.request.use((config) =&gt; {          // runs LAST-registered FIRST
+  config.headers.set(&quot;X-Correlation-Id&quot;, correlationId());
+  started.set(config, performance.now());
+  return config;
+});
+api.interceptors.response.use(
+  (res) =&gt; { console.info(`${res.status} in ${Math.round(performance.now() - (started.get(res.config) ?? 0))} ms`); return res; },
+  (err) =&gt; Promise.reject(err),                      // runs FIRST-registered first
+);
+</code></pre>
+<p>On Node, undici also offers dispatcher interceptors (<code>new Agent().compose(interceptors.retry(), interceptors.redirect())</code>), which sit below <code>fetch</code>, the same way network interceptors sit below OkHttp's application layer.</p>
+<h2 id="grpc-interceptors-the-same-onion-over-http2">gRPC interceptors: the same onion over HTTP/2</h2>
+<p>gRPC clients have interceptors with exactly the same shape, and the same concerns go there: metadata (gRPC's headers), auth, deadlines, logging and tracing. Two gRPC-specific points:</p>
+<ul>
+<li><strong>Deadlines are part of the protocol.</strong> A client deadline travels as the <code>grpc-timeout</code> header, so the server knows how long it has. An interceptor that sets a default deadline when the caller didn't is one of the most valuable five lines you can write; without one, a gRPC call can wait forever.</li>
+<li><strong>Retries and hedging can be configured in the service config</strong> (<code>retryPolicy</code>, <code>hedgingPolicy</code>) instead of in an interceptor. Use one or the other, not both.</li>
+</ul>
+<div class="code-tabs">
+<pre><code class="language-csharp">public sealed class DefaultsInterceptor : Interceptor
+{
+    public override AsyncUnaryCall&lt;TRes&gt; AsyncUnaryCall&lt;TReq, TRes&gt;(TReq request,
+        ClientInterceptorContext&lt;TReq, TRes&gt; context, AsyncUnaryCallContinuation&lt;TReq, TRes&gt; continuation)
+    {
+        var headers = context.Options.Headers ?? new Metadata();
+        headers.Add(&quot;x-correlation-id&quot;, Correlation.CurrentOrNew());
+        var options = context.Options.WithHeaders(headers);
+        if (options.Deadline is null) options = options.WithDeadline(DateTime.UtcNow.AddSeconds(5));
+        return continuation(request, new ClientInterceptorContext&lt;TReq, TRes&gt;(context.Method, context.Host, options));
+    }
+}
+
+builder.Services.AddSingleton&lt;DefaultsInterceptor&gt;();
+builder.Services.AddGrpcClient&lt;Orders.OrdersClient&gt;(o =&gt; o.Address = new(&quot;https://orders.internal&quot;))
+    .AddInterceptor&lt;DefaultsInterceptor&gt;();
+// For async token acquisition prefer call credentials (AddCallCredentials) over an interceptor.
+</code></pre>
+<pre><code class="language-java">final class DefaultsInterceptor implements ClientInterceptor {
+    static final Metadata.Key&lt;String&gt; CORRELATION =
+        Metadata.Key.of(&quot;x-correlation-id&quot;, Metadata.ASCII_STRING_MARSHALLER);
+
+    @Override
+    public &lt;Q, R&gt; ClientCall&lt;Q, R&gt; interceptCall(MethodDescriptor&lt;Q, R&gt; method, CallOptions options, Channel next) {
+        CallOptions opts = options.getDeadline() == null ? options.withDeadlineAfter(5, TimeUnit.SECONDS) : options;
+        return new ForwardingClientCall.SimpleForwardingClientCall&lt;&gt;(next.newCall(method, opts)) {
+            @Override public void start(Listener&lt;R&gt; listener, Metadata headers) {
+                headers.put(CORRELATION, Correlation.currentOrNew());
+                super.start(listener, headers);
+            }
+        };
+    }
+}
+
+ManagedChannel channel = ManagedChannelBuilder.forTarget(&quot;orders.internal:443&quot;)
+    .intercept(new DefaultsInterceptor())   // with several: the LAST added runs first
+    .build();
+</code></pre>
+<pre><code class="language-python">import collections, grpc
+
+class _Details(collections.namedtuple(&quot;_Details&quot;,
+        (&quot;method&quot;, &quot;timeout&quot;, &quot;metadata&quot;, &quot;credentials&quot;, &quot;wait_for_ready&quot;, &quot;compression&quot;)),
+        grpc.ClientCallDetails):
+    pass
+
+class DefaultsInterceptor(grpc.UnaryUnaryClientInterceptor):
+    def intercept_unary_unary(self, continuation, details, request):
+        metadata = list(details.metadata or [])
+        metadata.append((&quot;x-correlation-id&quot;, correlation_id.get()))
+        new = _Details(details.method, details.timeout or 5.0, metadata,
+                       details.credentials, details.wait_for_ready, details.compression)
+        return continuation(new, request)
+
+channel = grpc.intercept_channel(
+    grpc.secure_channel(&quot;orders.internal:443&quot;, grpc.ssl_channel_credentials()),
+    DefaultsInterceptor(),
+)
+</code></pre>
+<pre><code class="language-go">func Defaults(ctx context.Context, method string, req, reply any, cc *grpc.ClientConn,
+    invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
+    ctx = metadata.AppendToOutgoingContext(ctx, &quot;x-correlation-id&quot;, CorrelationID(ctx))
+    if _, ok := ctx.Deadline(); !ok {
+        var cancel context.CancelFunc
+        ctx, cancel = context.WithTimeout(ctx, 5*time.Second)
+        defer cancel()
+    }
+    start := time.Now()
+    err := invoker(ctx, method, req, reply, cc, opts...) // call next
+    slog.Info(&quot;grpc&quot;, &quot;method&quot;, method, &quot;code&quot;, status.Code(err), &quot;ms&quot;, time.Since(start).Milliseconds())
+    return err
+}
+
+conn, err := grpc.NewClient(&quot;dns:///orders.internal:443&quot;,
+    grpc.WithTransportCredentials(credentials.NewTLS(&amp;tls.Config{})),
+    grpc.WithStatsHandler(otelgrpc.NewClientHandler()),   // tracing: a stats handler, not an interceptor
+    grpc.WithChainUnaryInterceptor(Defaults, Logging),    // first argument = outermost
+)
+</code></pre>
+<pre><code class="language-typescript">import { createClient, type Interceptor } from &quot;@connectrpc/connect&quot;;
+import { createGrpcTransport } from &quot;@connectrpc/connect-node&quot;;
+
+const defaults: Interceptor = (next) =&gt; async (req) =&gt; {
+  req.header.set(&quot;x-correlation-id&quot;, correlationId());
+  return next(req);                                    // call next
+};
+
+const transport = createGrpcTransport({
+  baseUrl: &quot;https://orders.internal&quot;,
+  interceptors: [defaults],
+  defaultTimeoutMs: 5_000,                            // becomes grpc-timeout on the wire
+});
+const orders = createClient(OrdersService, transport);
+</code></pre>
+</div>
+<h2 id="in-process-pipelines-mediatr-style-behaviors">In-process pipelines: MediatR-style behaviors</h2>
+<p>The onion doesn't need a network. When an application sends <strong>commands and queries through a mediator</strong> (<code>await mediator.Send(new PlaceOrder(...))</code>), the mediator can wrap every handler in a pipeline of <strong>behaviors</strong>: logging, authorization, validation, transactions, caching, metrics. It is the same pattern as middleware, one level further in: cross-cutting concerns around <strong>use cases</strong> instead of around HTTP requests.</p>
+<p>The order matters here just as much, and the failures are more expensive: validate <strong>inside</strong> a transaction and every invalid request opens (and rolls back) a database transaction; authorize <strong>after</strong> validation and an unauthenticated caller learns which fields your command has. Reorder the behaviors and send different commands:</p>
+<div class="viz" data-viz="outbound-pipelines-mediator"></div>
+
+<div class="code-tabs">
+<pre><code class="language-csharp">public sealed class ValidationBehavior&lt;TReq, TRes&gt;(IEnumerable&lt;IValidator&lt;TReq&gt;&gt; validators)
+    : IPipelineBehavior&lt;TReq, TRes&gt; where TReq : notnull
+{
+    public async Task&lt;TRes&gt; Handle(TReq request, RequestHandlerDelegate&lt;TRes&gt; next, CancellationToken ct)
+    {
+        var results = await Task.WhenAll(validators.Select(v =&gt; v.ValidateAsync(request, ct)));
+        var failures = results.SelectMany(r =&gt; r.Errors).ToList();
+        if (failures.Count &gt; 0) throw new ValidationException(failures);   // short-circuit: no handler, no transaction
+        return await next();                                                // call the next behavior (or the handler)
+    }
+}
+
+builder.Services.AddMediatR(cfg =&gt;
+{
+    cfg.RegisterServicesFromAssemblyContaining&lt;PlaceOrder&gt;();
+    cfg.AddOpenBehavior(typeof(LoggingBehavior&lt;,&gt;));        // first added = outermost
+    cfg.AddOpenBehavior(typeof(AuthorizationBehavior&lt;,&gt;));
+    cfg.AddOpenBehavior(typeof(ValidationBehavior&lt;,&gt;));
+    cfg.AddOpenBehavior(typeof(TransactionBehavior&lt;,&gt;));    // innermost: wraps only the handler
+});
+</code></pre>
+<pre><code class="language-java">// PipelinR: a small mediator for Java with middlewares.
+final class Validating implements Command.Middleware {
+    private final Validator validator;
+    Validating(Validator validator) { this.validator = validator; }
+
+    @Override public &lt;R, C extends Command&lt;R&gt;&gt; R invoke(C command, Next&lt;R&gt; next) {
+        Set&lt;ConstraintViolation&lt;C&gt;&gt; violations = validator.validate(command);
+        if (!violations.isEmpty()) throw new ConstraintViolationException(violations);
+        return next.invoke();                                 // call the next middleware (or the handler)
+    }
+}
+
+Pipeline pipeline = new Pipelinr()
+    .with(() -&gt; Stream.of(new PlaceOrderHandler(repo)))
+    .with(() -&gt; Stream.of(new Logging(), new Authorizing(), new Validating(validator), new Transactional(tx)));
+
+OrderId id = new PlaceOrder(customerId, lines).execute(pipeline);
+// In Spring, @Transactional/@PreAuthorize/@Validated on a service are the same idea via AOP proxies.
+</code></pre>
+<pre><code class="language-python">from typing import Awaitable, Callable, TypeVar
+
+C, R = TypeVar(&quot;C&quot;), TypeVar(&quot;R&quot;)
+Handler = Callable[[C], Awaitable[R]]
+Behavior = Callable[[C, Handler], Awaitable[R]]
+
+def build(handler: Handler, *behaviors: Behavior) -&gt; Handler:
+    &quot;&quot;&quot;First behavior listed = outermost, like the C# registration.&quot;&quot;&quot;
+    for behavior in reversed(behaviors):
+        handler = (lambda b, nxt: lambda cmd: b(cmd, nxt))(behavior, handler)
+    return handler
+
+async def validation(cmd, next_):
+    if getattr(cmd, &quot;quantity&quot;, 1) &lt;= 0:
+        raise ValueError(&quot;quantity must be positive&quot;)       # short-circuit
+    return await next_(cmd)
+
+async def transaction(cmd, next_):
+    async with db.transaction():
+        return await next_(cmd)
+
+place_order = build(place_order_handler, logging_behavior, authorization, validation, transaction)
+order_id = await place_order(PlaceOrder(customer_id=7, quantity=2))
+</code></pre>
+<pre><code class="language-go">type Handler[C, R any] func(ctx context.Context, cmd C) (R, error)
+type Behavior[C, R any] func(next Handler[C, R]) Handler[C, R]
+
+// Build wraps in reverse so the first behavior listed is the outermost.
+func Build[C, R any](h Handler[C, R], bs ...Behavior[C, R]) Handler[C, R] {
+    for i := len(bs) - 1; i &gt;= 0; i-- {
+        h = bs[i](h)
+    }
+    return h
+}
+
+func Validation[C interface{ Validate() error }, R any](next Handler[C, R]) Handler[C, R] {
+    return func(ctx context.Context, cmd C) (R, error) {
+        if err := cmd.Validate(); err != nil {
+            var zero R
+            return zero, err // short-circuit
+        }
+        return next(ctx, cmd)
+    }
+}
+
+placeOrder := Build(PlaceOrderHandler(repo), Logging[PlaceOrder, OrderID], Authorization[PlaceOrder, OrderID],
+    Validation[PlaceOrder, OrderID], Transaction[PlaceOrder, OrderID](db))
+id, err := placeOrder(ctx, PlaceOrder{CustomerID: 7, Quantity: 2})
+</code></pre>
+<pre><code class="language-typescript">type Handler&lt;C, R&gt; = (cmd: C) =&gt; Promise&lt;R&gt;;
+type Behavior&lt;C, R&gt; = (next: Handler&lt;C, R&gt;) =&gt; Handler&lt;C, R&gt;;
+
+const build = &lt;C, R&gt;(handler: Handler&lt;C, R&gt;, ...behaviors: Behavior&lt;C, R&gt;[]): Handler&lt;C, R&gt; =&gt;
+  behaviors.reduceRight((next, b) =&gt; b(next), handler);   // first listed = outermost
+
+const validation: Behavior&lt;PlaceOrder, OrderId&gt; = (next) =&gt; async (cmd) =&gt; {
+  if (cmd.quantity &lt;= 0) throw new ValidationError(&quot;quantity must be positive&quot;);   // short-circuit
+  return next(cmd);
+};
+
+const transaction: Behavior&lt;PlaceOrder, OrderId&gt; = (next) =&gt; (cmd) =&gt; db.transaction(() =&gt; next(cmd));
+
+const placeOrder = build(placeOrderHandler, logging, authorization, validation, transaction);
+const id = await placeOrder({ customerId: 7, quantity: 2 });
+</code></pre>
+</div>
+<div class="callout">
+<p><strong>Licensing note (2025)</strong>
+MediatR moved to a dual commercial / reciprocal licence from <strong>v13</strong> (July 2025); v12.x and earlier remain under their original open-source licence. If you can't take that on, alternatives with the same pipeline idea are the source-generated <strong>Mediator</strong> library (<code>martinothamar/Mediator</code>), <strong>Wolverine</strong> (middleware around message handlers), or no library at all: a handful of decorators registered in DI (see <a href="structural-patterns.html">Structural Patterns</a>, Decorator) give you the same onion with less magic.</p>
+</div>
+<div class="compare">
+<div class="good">
+<h4 id="a-mediator-pipeline-earns-its-keep-when">A mediator pipeline earns its keep when</h4>
+<ul>
+<li>You have <strong>many</strong> use cases (dozens of commands) that all need the same 3–5 concerns.</li>
+<li>You want transactions, auditing and authorization to be <strong>impossible to forget</strong> on a new command.</li>
+<li>Handlers are invoked from several entry points (HTTP, a queue consumer, a scheduled job) and the concerns must apply to all of them, which HTTP middleware can't do.</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="its-ceremony-when">It's ceremony when</h4>
+<ul>
+<li>There are five endpoints and each calls one service method. The indirection costs more to read than it saves.</li>
+<li>It's used for <strong>queries that just read a row</strong>: "Go to definition" on <code>Send(new GetOrder(id))</code> lands on an interface, not on code.</li>
+<li>The behaviors duplicate what HTTP middleware already does (auth, logging) for HTTP-only apps.</li>
+<li>Handlers call <code>mediator.Send</code> on <strong>each other</strong>: now the pipeline runs twice and transactions nest unexpectedly.</li>
+</ul>
+</div>
+</div>
+<h2 id="when-to-use-a-pipeline-layer-and-when-not-to">When to use a pipeline layer, and when not to</h2>
+<p>Not every outbound concern deserves a handler. A handler is code that runs on <strong>every</strong> call through that client, invisibly. That's the point, and also the risk.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 330" width="760" role="img" aria-label="Decision tree: should this concern be an outbound handler">
+<defs><marker id="outbound-pipelines-ar5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box accent" x="230" y="12" width="300" height="38" rx="8"/><text x="380" y="36" text-anchor="middle" class="small">Is it the same for every call to this downstream?</text>
+<path class="edge" d="M300 50 L160 92" marker-end="url(#outbound-pipelines-ar5)"/><text x="200" y="70" class="small muted">no</text>
+<path class="edge" d="M460 50 L560 92" marker-end="url(#outbound-pipelines-ar5)"/><text x="530" y="70" class="small muted">yes</text>
+<rect class="box bad" x="30" y="94" width="260" height="54" rx="8"/><text x="160" y="116" text-anchor="middle" class="small">Keep it at the call site</text><text x="160" y="136" text-anchor="middle" class="small muted">business rules, per-call headers, mapping</text>
+<rect class="box accent" x="420" y="94" width="300" height="38" rx="8"/><text x="570" y="118" text-anchor="middle" class="small">Does the library already do it?</text>
+<path class="edge" d="M490 132 L380 172" marker-end="url(#outbound-pipelines-ar5)"/><text x="410" y="152" class="small muted">yes</text>
+<path class="edge" d="M640 132 L640 172" marker-end="url(#outbound-pipelines-ar5)"/><text x="650" y="152" class="small muted">no</text>
+<rect class="box done" x="230" y="174" width="260" height="54" rx="8"/><text x="360" y="196" text-anchor="middle" class="small">Configure it, don't rewrite it</text><text x="360" y="216" text-anchor="middle" class="small muted">tracing, decompression, token caches, resilience</text>
+<rect class="box accent" x="520" y="174" width="220" height="54" rx="8"/><text x="630" y="196" text-anchor="middle" class="small">Does it need to see</text><text x="630" y="214" text-anchor="middle" class="small">the response, or retry?</text>
+<path class="edge" d="M570 228 L470 266" marker-end="url(#outbound-pipelines-ar5)"/><text x="490" y="248" class="small muted">no</text>
+<path class="edge" d="M680 228 L680 266" marker-end="url(#outbound-pipelines-ar5)"/><text x="690" y="248" class="small muted">yes</text>
+<rect class="box visit" x="300" y="268" width="250" height="54" rx="8"/><text x="425" y="290" text-anchor="middle" class="small">A hook or a simple handler</text><text x="425" y="310" text-anchor="middle" class="small muted">add a header, log the URL</text>
+<rect class="box done" x="570" y="268" width="180" height="54" rx="8"/><text x="660" y="290" text-anchor="middle" class="small">A wrapping handler</text><text x="660" y="310" text-anchor="middle" class="small muted">placed deliberately in the order</text>
+</svg>
+<figcaption>Most teams need very few custom handlers: tracing, resilience and decompression come from the platform; auth and correlation are the usual hand-written ones.</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Handler?</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bearer token / API key</td>
+<td><strong>Yes</strong></td>
+<td>Same for every call; refresh needs a shared cache and single-flight</td>
+</tr>
+<tr>
+<td>Correlation / tenant header</td>
+<td><strong>Yes</strong> (or header propagation)</td>
+<td>Same for every call; forgetting it once breaks debugging</td>
+</tr>
+<tr>
+<td>Tracing</td>
+<td><strong>Use the instrumentation</strong></td>
+<td>It also creates spans and follows the semantic conventions</td>
+</tr>
+<tr>
+<td>Retry, timeout, circuit breaker</td>
+<td><strong>Yes, via a resilience library</strong></td>
+<td>Order and jitter are easy to get wrong; see <a href="resilience.html">Resilience</a></td>
+</tr>
+<tr>
+<td>Logging with redaction</td>
+<td><strong>Yes</strong>, one place</td>
+<td>A single allow-list is the only way redaction stays correct</td>
+</tr>
+<tr>
+<td>Caching responses</td>
+<td><strong>Rarely</strong></td>
+<td>HTTP caching semantics (<code>Vary</code>, revalidation) are subtle; cache domain objects in the caller instead (see <a href="caching.html">Caching</a>)</td>
+</tr>
+<tr>
+<td>Mapping errors to exceptions</td>
+<td><strong>No</strong></td>
+<td>That's the typed client's job: <code>OrdersClient</code> turns <code>404</code> into <code>null</code> and <code>409</code> into <code>OrderConflict</code></td>
+</tr>
+<tr>
+<td>Business rules ("skip if VIP")</td>
+<td><strong>Never</strong></td>
+<td>Invisible behavior in plumbing is how bugs hide for months</td>
+</tr>
+<tr>
+<td>Request signing (HMAC, AWS SigV4)</td>
+<td><strong>Yes, innermost</strong></td>
+<td>It must sign the final bytes and headers, after everything else changed them</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pitfalls-and-war-stories">Pitfalls and war stories</h2>
+<div class="pitfall">
+<p><strong>Pitfall: a handler that buffers the body</strong>
+A logging handler did <code>await response.Content.ReadAsStringAsync()</code> "to log errors". It worked fine until the service started streaming 2 GB exports: every export was buffered in memory, and the pods were OOM-killed. <strong>Fix:</strong> never read bodies in a general-purpose handler; if you need error details, read at most a few KB, and only for non-success status codes with a known small content type.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: sending the same request twice from the outside</strong>
+<code>HttpClient.SendAsync(request)</code> throws <code>InvalidOperationException</code> if you pass the same <code>HttpRequestMessage</code> again, and a request with a <strong>streamed</strong> body can't be replayed at all. Retrying <em>inside</em> a handler (re-sending <code>request</code> to <code>base.SendAsync</code>) is fine for buffered content; that is how the resilience handlers work. <strong>Fix:</strong> retry inside the pipeline, not around <code>HttpClient</code>, and buffer bodies you intend to retry (or don't retry non-idempotent streamed uploads).</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: Go response bodies never closed</strong>
+A Go service gradually slowed and then hit "too many open files". A retry middleware returned on <code>503</code> without closing the first response's body, so every retried call leaked a connection. <strong>Fix:</strong> <code>io.Copy(io.Discard, res.Body); res.Body.Close()</code> before every retry and every discarded response, and a lint rule (<code>bodyclose</code>) in CI.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: a scoped service inside a handler</strong>
+An <code>AuthHandler</code> injected <code>ICurrentUser</code> (scoped) to forward the user's identity. Because handler chains live in their own long-lived scope, requests for user B were sent with user A's identity for up to two minutes. <strong>Fix:</strong> never inject per-request services into handlers; pass the identity on <code>request.Options</code>, or use header propagation, which captures headers per request correctly.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: the token in the trace</strong>
+An enrichment handler added all request headers as span attributes "for debugging". The tracing backend had a 30-day retention and broad read access, so every bearer token was readable there. <strong>Fix:</strong> an allow-list, as for logs; tracing data is log data.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: two retry layers</strong>
+The Azure SDK client retried 3 times with backoff, and the team wrapped it in a Polly retry with 3 more attempts. During a storage incident each user request made 16 calls and took over a minute, which kept the incident going for longer. <strong>Fix:</strong> one retry owner per hop; turn the outer one off or configure the SDK with <code>MaxRetries = 0</code>.</p>
+</div>
+<h2 id="best-practice-checklist">Best-practice checklist</h2>
+<div class="flow" markdown="0">
+<div class="flow-step"><strong>Share the pool</strong><p>One long-lived client (or <code>IHttpClientFactory</code>) per downstream. Never a new client per call.</p></div>
+<div class="flow-step"><strong>Bound connection age</strong><p><code>PooledConnectionLifetime</code> or factory rotation, so DNS changes are picked up within minutes.</p></div>
+<div class="flow-step"><strong>Set every timeout</strong><p>Connect, attempt and total. Never rely on 100 s, or on "none".</p></div>
+<div class="flow-step"><strong>One retry owner</strong><p>Exactly one layer retries per hop, idempotent calls only, with jitter.</p></div>
+<div class="flow-step"><strong>Auth with single-flight</strong><p>Proactive refresh with a skew, one refresh at a time, retry a 401 exactly once.</p></div>
+<div class="flow-step"><strong>Propagate context</strong><p><code>traceparent</code> on every hop; pass the incoming <code>ctx</code>/token down; no secrets in baggage.</p></div>
+<div class="flow-step"><strong>Redact by allow-list</strong><p>Headers and query strings allow-listed; bodies off by default; same for spans.</p></div>
+<div class="flow-step"><strong>Test the order</strong><p>A unit test with a stub at the core asserts the layer order and the headers on the wire.</p></div>
+</div>
+
+<ul>
+<li>[ ] Every outbound client has a name, a base address and explicit timeouts.</li>
+<li>[ ] Typed clients are not captured by singletons; handlers don't inject scoped services.</li>
+<li>[ ] Response bodies are always disposed / closed, including on error and retry paths.</li>
+<li>[ ] Only one layer retries; SDK retries are accounted for.</li>
+<li>[ ] Logs and spans contain no tokens, cookies, keys or personal data.</li>
+<li>[ ] Outbound calls appear as child spans of the incoming request in your tracing tool.</li>
+<li>[ ] The handler order is written down in a test, not only in someone's head.</li>
+</ul>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>You register <code>.AddHttpMessageHandler&lt;LoggingHandler&gt;()</code> and then <code>.AddStandardResilienceHandler()</code>. A call fails twice and then succeeds. How many log lines does LoggingHandler write?</summary>
+<p><strong>One.</strong> It was added first, so it is outermost, outside the retry. It sees one logical call, with a duration that includes both failures and the backoff. Register it after the resilience handler and you get three lines, one per attempt. Both are useful; the factory's built-in logging gives you both.</p>
+</details>
+<details class="quiz">
+<summary>Why doesn't a <code>static readonly HttpClient</code> exhaust sockets, and what does it break instead?</summary>
+<p>It keeps one pool, so connections are reused and few ever enter TIME_WAIT. But connections never close on their own, so they keep using the IP address resolved when they were opened. After a DNS change (failover, blue/green) the client keeps talking to the old address. Fix it with <code>PooledConnectionLifetime</code> or <code>IHttpClientFactory</code>.</p>
+</details>
+<details class="quiz">
+<summary>Twenty requests get a 401 at the same moment. With single-flight refresh, how many calls reach the identity provider, and why does the "seen token" check matter?</summary>
+<p><strong>One.</strong> The first caller takes the lock and refreshes; the others wait. When each waiting caller gets the lock, it compares the current token with the one it saw fail. They differ, so it uses the new token without refreshing. Without the check, each of the 19 would refresh in turn, and with rotating refresh tokens the second one would reuse a spent refresh token and revoke the whole family.</p>
+</details>
+<details class="quiz">
+<summary>OkHttp: you want to log the exact <code>Accept-Encoding</code> header sent on the wire and the IP address you connected to. Application or network interceptor?</summary>
+<p><strong>Network.</strong> Application interceptors run before OkHttp's bridge (which adds <code>Accept-Encoding: gzip</code>) and before a connection exists. A network interceptor sees the final wire request and has <code>chain.connection()</code>. It also runs once per redirect hop and not at all for cache hits.</p>
+</details>
+<details class="quiz">
+<summary>In Go, you build a middleware chain with <code>for _, mw := range mws { rt = mw(rt) }</code>. Which middleware runs first?</summary>
+<p>The <strong>last</strong> one in the slice. Each iteration wraps the previous result, so the final wrap is the outermost. Iterate backwards if you want "first listed = outermost", as <code>Chain</code> above does.</p>
+</details>
+<details class="quiz">
+<summary>A MediatR pipeline is registered as Logging, Transaction, Validation, Authorization. What goes wrong for an invalid command from an unauthorized user?</summary>
+<p>A transaction is opened before anything rejects the request, and the validation errors are returned to a user who isn't allowed to call the command at all (an information leak). Authorization should come before validation, and both should come before the transaction, so rejected requests cost nothing.</p>
+</details>
+<details class="quiz">
+<summary>Your Go service calls another service, but the traces show two separate traces instead of one. Name two likely causes.</summary>
+<ol>
+<li>The transport isn't wrapped with <code>otelhttp.NewTransport</code>, so nothing injects <code>traceparent</code>.</li>
+<li>The outbound request was built with <code>context.Background()</code> (or <code>http.NewRequest</code> without a context) instead of the incoming request's <code>ctx</code>, so there is no current span to propagate. (A third: a proxy or gateway in between strips the header.)</li>
+</ol>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Shape</strong><code>(request, next) → response</code>. Act before <code>next</code>, after <code>next</code>, or instead of it (short-circuit).</div>
+<div><strong>.NET</strong><code>DelegatingHandler.SendAsync</code> + <code>AddHttpClient&lt;T&gt;().AddHttpMessageHandler&lt;H&gt;()</code>; first added = outermost.</div>
+<div><strong>Java</strong>OkHttp <code>Interceptor</code> (app vs network); Spring <code>ClientHttpRequestInterceptor</code>, <code>ExchangeFilterFunction</code>.</div>
+<div><strong>Python</strong>httpx <code>BaseTransport</code> (onion), <code>Auth.auth_flow</code> (refresh), <code>event_hooks</code> (flat); requests <code>HTTPAdapter</code>.</div>
+<div><strong>Go</strong><code>http.RoundTripper</code> wrappers; clone the request, close bodies, <code>otelhttp.NewTransport</code>.</div>
+<div><strong>TypeScript</strong><code>(next: fetch) =&gt; fetch</code> + <code>reduceRight</code>; axios request interceptors run last-registered-first.</div>
+<div><strong>Lifetimes</strong>Share the pool; bound connection age (2 min factory rotation or <code>PooledConnectionLifetime</code>).</div>
+<div><strong>Order</strong>Log (logical) → total timeout → retry → attempt timeout → auth → trace → primary.</div>
+<div><strong>Auth</strong>Proactive refresh + single-flight + "seen token" check; retry a 401 once.</div>
+<div><strong>Context</strong>W3C <code>traceparent</code> on every hop; gRPC deadlines travel as <code>grpc-timeout</code>.</div>
+<div><strong>Redaction</strong>Allow-list headers, strip query secrets, no bodies, same rules for spans.</div>
+<div><strong>Don't</strong>New client per call, two retry layers, scoped services in handlers, business rules in plumbing.</div>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/aspnet/core/fundamentals/http-requests">Make HTTP requests using IHttpClientFactory in ASP.NET Core</a> and <a href="https://learn.microsoft.com/dotnet/fundamentals/networking/http/httpclient-guidelines">IHttpClientFactory guidelines</a> (Microsoft Learn)</li>
+<li><a href="https://learn.microsoft.com/dotnet/core/resilience/http-resilience">HTTP client resilience (Microsoft.Extensions.Http.Resilience)</a> (Microsoft Learn)</li>
+<li><a href="https://square.github.io/okhttp/features/interceptors/">OkHttp: Interceptors</a></li>
+<li><a href="https://docs.spring.io/spring-framework/reference/integration/rest-clients.html">Spring Framework: REST Clients</a></li>
+<li><a href="https://www.python-httpx.org/advanced/transports/">HTTPX: Transports</a> and <a href="https://www.python-httpx.org/advanced/authentication/">Authentication</a></li>
+<li><a href="https://pkg.go.dev/net/http#RoundTripper">Go <code>net/http</code>: RoundTripper</a> and <a href="https://pkg.go.dev/golang.org/x/oauth2"><code>golang.org/x/oauth2</code></a></li>
+<li><a href="https://grpc.io/docs/guides/interceptors/">gRPC: Interceptors</a> and <a href="https://grpc.io/docs/guides/deadlines/">Deadlines</a></li>
+<li><a href="https://www.w3.org/TR/trace-context/">W3C Trace Context</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc9700">OAuth 2.0 Security Best Current Practice (RFC 9700)</a></li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="middleware-patterns.html"><small>&larr; PREVIOUS</small>Middleware Patterns &amp; Ordering</a><a class="next" href="api-design.html"><small>NEXT &rarr;</small>REST API Design</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-every-call-site-doing-the-clients-job">The problem: every call site doing the client's job</a></li>
+<li><a href="#the-mental-model-the-same-onion-facing-outward">The mental model: the same onion, facing outward</a></li>
+<li><a href="#build-one-from-scratch">Build one from scratch</a><ul>
+<li><a href="#delegatinghandler-a-decorator-with-an-innerhandler">DelegatingHandler: a decorator with an InnerHandler</a></li>
+<li><a href="#testing-a-handler-put-a-fake-at-the-core">Testing a handler: put a fake at the core</a></li>
+</ul>
+</li>
+<li><a href="#httpclient-lifetimes-socket-exhaustion-vs-stale-dns">HttpClient lifetimes: socket exhaustion vs stale DNS</a><ul>
+<li><a href="#ihttpclientfactory-what-it-actually-does">IHttpClientFactory: what it actually does</a></li>
+<li><a href="#the-same-pool-in-other-ecosystems">The same pool, in other ecosystems</a></li>
+</ul>
+</li>
+<li><a href="#cross-cutting-concerns-that-belong-in-the-pipeline">Cross-cutting concerns that belong in the pipeline</a><ul>
+<li><a href="#auth-token-injection-and-refresh">Auth: token injection and refresh</a></li>
+<li><a href="#trace-and-correlation-propagation">Trace and correlation propagation</a></li>
+<li><a href="#logging-and-redaction">Logging and redaction</a></li>
+<li><a href="#retries-and-timeouts-one-layer-one-owner">Retries and timeouts: one layer, one owner</a></li>
+<li><a href="#compression">Compression</a></li>
+</ul>
+</li>
+<li><a href="#the-same-pipeline-in-five-languages">The same pipeline in five languages</a><ul>
+<li><a href="#who-runs-first-registration-order-is-not-the-same-everywhere">Who runs first? Registration order is not the same everywhere</a></li>
+<li><a href="#okhttp-application-interceptors-vs-network-interceptors">OkHttp: application interceptors vs network interceptors</a></li>
+<li><a href="#python-hooks-transports-and-auth">Python: hooks, transports and Auth</a></li>
+<li><a href="#go-the-roundtripper-contract">Go: the RoundTripper contract</a></li>
+<li><a href="#typescript-fetch-wrappers-vs-axios-interceptors">TypeScript: fetch wrappers vs axios interceptors</a></li>
+</ul>
+</li>
+<li><a href="#grpc-interceptors-the-same-onion-over-http2">gRPC interceptors: the same onion over HTTP/2</a></li>
+<li><a href="#in-process-pipelines-mediatr-style-behaviors">In-process pipelines: MediatR-style behaviors</a></li>
+<li><a href="#when-to-use-a-pipeline-layer-and-when-not-to">When to use a pipeline layer, and when not to</a></li>
+<li><a href="#pitfalls-and-war-stories">Pitfalls and war stories</a></li>
+<li><a href="#best-practice-checklist">Best-practice checklist</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

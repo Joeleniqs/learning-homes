@@ -1,0 +1,1558 @@
+<!doctype html>
+<html lang="en" data-home="dsa-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Heaps &amp; Priority Queues | DSA Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#4f46e5;--accent-soft:#eef0ff;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#a5b4fc;--accent-soft:#252a5c;}}:root[data-theme=dark]{--accent:#a5b4fc;--accent-soft:#252a5c;}</style>
+  <link rel="stylesheet" href="../assets/topics/heaps-priority-queues.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/heaps-priority-queues.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="DSA Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">DS</span>DSA Home</a>
+    <p class="sidebar-caption">Data structures &amp; algorithms, seen.<br>Every idea animated, every pattern drilled.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations</summary><ul class="topic-list"><li data-search="The Problem-Solving Playbook Foundations A visual decision map from input size, shape and question type to the right technique, plus a repeatable interview/contest workflow. pattern recognition constraints approach interview" data-slug="problem-solving-playbook"><a href="../topics/problem-solving-playbook.html">The Problem-Solving Playbook</a></li><li data-search="Complexity Analysis Foundations Big-O growth you can see, amortized cost, recursion trees and the Master theorem, and what 10^8 operations per second really buys you. big o amortized master theorem time space" data-slug="complexity-analysis"><a href="../topics/complexity-analysis.html">Complexity Analysis</a></li><li data-search="Recursion &amp; the Call Stack Foundations Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from. call stack recursion tree divide and conquer" data-slug="recursion"><a href="../topics/recursion.html">Recursion &amp; the Call Stack</a></li></ul></details><details class="nav-track"><summary>Arrays &amp; Strings</summary><ul class="topic-list"><li data-search="Two Pointers Arrays &amp; Strings Opposite-end, same-direction and fast/slow pointers: why moving one pointer is safe, with partitioning and k-sum. pair sum partition dutch flag 3sum" data-slug="two-pointers"><a href="../topics/two-pointers.html">Two Pointers</a></li><li data-search="Sliding Window Arrays &amp; Strings Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows. substring subarray window at most k" data-slug="sliding-window"><a href="../topics/sliding-window.html">Sliding Window</a></li><li data-search="Prefix Sums &amp; Difference Arrays Arrays &amp; Strings 1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR. subarray sum equals k range sum 2d prefix difference array" data-slug="prefix-sums"><a href="../topics/prefix-sums.html">Prefix Sums &amp; Difference Arrays</a></li><li data-search="Binary Search Arrays &amp; Strings One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection. lower bound upper bound search on answer rotated monotonic predicate" data-slug="binary-search"><a href="../topics/binary-search.html">Binary Search</a></li><li data-search="Sorting Algorithms Arrays &amp; Strings Animated bubble, insertion, merge, quick, heap, counting and radix sorts; stability, quickselect and custom comparators. merge sort quick sort quickselect counting sort inversions" data-slug="sorting"><a href="../topics/sorting.html">Sorting Algorithms</a></li><li data-search="Hashing Patterns Arrays &amp; Strings How hash tables work inside, then frequency maps, grouping by canonical keys, complement lookups and rolling hashes. hash map hash set anagram two sum collision" data-slug="hashing"><a href="../topics/hashing.html">Hashing Patterns</a></li><li data-search="Monotonic Stack &amp; Queue Arrays &amp; Strings Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight. next greater largest rectangle deque trapping rain water" data-slug="monotonic-stack-queue"><a href="../topics/monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a></li><li data-search="Intervals &amp; Sweep Line Arrays &amp; Strings Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline. merge intervals meeting rooms events skyline" data-slug="intervals-sweep-line"><a href="../topics/intervals-sweep-line.html">Intervals &amp; Sweep Line</a></li><li data-search="String Algorithms Arrays &amp; Strings KMP failure function, Z-algorithm, Rabin–Karp, Manacher&#x27;s palindromes and string hashing, each animated character by character. kmp z algorithm rabin karp manacher palindrome pattern matching" data-slug="string-algorithms"><a href="../topics/string-algorithms.html">String Algorithms</a></li></ul></details><details class="nav-track" open><summary>Linked Lists, Stacks, Queues &amp; Heaps</summary><ul class="topic-list"><li data-search="Linked Lists Linked Lists, Stacks, Queues &amp; Heaps Pointer rewiring you can watch: reversal, dummy heads, fast/slow cycle detection, merging, and LRU cache design. reverse floyd cycle merge lru" data-slug="linked-lists"><a href="../topics/linked-lists.html">Linked Lists</a></li><li data-search="Stacks &amp; Queues Linked Lists, Stacks, Queues &amp; Heaps Balanced brackets, expression evaluation, min-stack, queues from stacks, deques and BFS queues. parentheses calculator deque min stack" data-slug="stacks-queues"><a href="../topics/stacks-queues.html">Stacks &amp; Queues</a></li><li data-search="Heaps &amp; Priority Queues Linked Lists, Stacks, Queues &amp; Heaps Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling. heap top k median k way merge priority queue" data-slug="heaps-priority-queues"><a href="../topics/heaps-priority-queues.html" aria-current="page">Heaps &amp; Priority Queues</a></li></ul></details><details class="nav-track"><summary>Trees</summary><ul class="topic-list"><li data-search="Tree Traversals Trees Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees. dfs bfs inorder level order morris" data-slug="tree-traversals"><a href="../topics/tree-traversals.html">Tree Traversals</a></li><li data-search="Binary Search Trees Trees Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters. bst validate successor avl red black" data-slug="binary-search-trees"><a href="../topics/binary-search-trees.html">Binary Search Trees</a></li><li data-search="Tree Problem Patterns Trees Return-value recursion (diameter, max path sum), top-down state, LCA, serialization, and binary lifting. lca diameter path sum binary lifting serialize" data-slug="tree-patterns"><a href="../topics/tree-patterns.html">Tree Problem Patterns</a></li><li data-search="Tries Trees Prefix trees animated insert by insert: autocomplete, word search on boards, and bitwise tries for max XOR. prefix tree autocomplete word search xor trie" data-slug="tries"><a href="../topics/tries.html">Tries</a></li><li data-search="Segment Trees, Fenwick Trees &amp; Sparse Tables Trees Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables. segment tree lazy propagation fenwick bit rmq" data-slug="segment-fenwick-trees"><a href="../topics/segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a></li></ul></details><details class="nav-track"><summary>Graphs</summary><ul class="topic-list"><li data-search="Graph Fundamentals: BFS &amp; DFS Graphs Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS. bfs dfs grid islands connected components cycle" data-slug="graph-fundamentals"><a href="../topics/graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></li><li data-search="Topological Sort &amp; DAGs Graphs Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs. kahn course schedule dag dependency order" data-slug="topological-sort"><a href="../topics/topological-sort.html">Topological Sort &amp; DAGs</a></li><li data-search="Union-Find (Disjoint Set Union) Graphs Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries. dsu disjoint set path compression connectivity" data-slug="union-find"><a href="../topics/union-find.html">Union-Find (Disjoint Set Union)</a></li><li data-search="Shortest Paths Graphs BFS, 0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall and A* animated, and a chart to pick the right one every time. dijkstra bellman ford floyd warshall a star 0-1 bfs" data-slug="shortest-paths"><a href="../topics/shortest-paths.html">Shortest Paths</a></li><li data-search="Minimum Spanning Trees Graphs Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems. kruskal prim mst cut property" data-slug="minimum-spanning-trees"><a href="../topics/minimum-spanning-trees.html">Minimum Spanning Trees</a></li><li data-search="Advanced Graph Algorithms Graphs Strongly connected components, bridges and articulation points, bipartite checks, Euler paths, and max-flow / matching. tarjan kosaraju scc bridges euler max flow bipartite matching" data-slug="advanced-graphs"><a href="../topics/advanced-graphs.html">Advanced Graph Algorithms</a></li></ul></details><details class="nav-track"><summary>Backtracking &amp; Greedy</summary><ul class="topic-list"><li data-search="Backtracking Backtracking &amp; Greedy The choose/explore/un-choose template animated on a decision tree: subsets, permutations, combinations, N-Queens, Sudoku and pruning. subsets permutations n queens sudoku pruning" data-slug="backtracking"><a href="../topics/backtracking.html">Backtracking</a></li><li data-search="Greedy Algorithms Backtracking &amp; Greedy When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding. exchange argument interval scheduling jump game huffman" data-slug="greedy"><a href="../topics/greedy.html">Greedy Algorithms</a></li></ul></details><details class="nav-track"><summary>Dynamic Programming</summary><ul class="topic-list"><li data-search="The DP Framework Dynamic Programming Recursion → memoization → tabulation → space optimisation, visualised on one problem; how to design state and transitions. memoization tabulation state transition overlapping subproblems" data-slug="dp-framework"><a href="../topics/dp-framework.html">The DP Framework</a></li><li data-search="1D &amp; Grid DP Dynamic Programming Climbing stairs, house robber, decode ways, unique paths, min path sum, maximal square and dungeon game with animated tables. house robber unique paths grid dp maximal square" data-slug="dp-linear-grid"><a href="../topics/dp-linear-grid.html">1D &amp; Grid DP</a></li><li data-search="Knapsack Family Dynamic Programming 0/1 vs unbounded vs bounded knapsack, why loop direction matters, coin change, subset sum and target sum. knapsack coin change subset sum partition" data-slug="dp-knapsack"><a href="../topics/dp-knapsack.html">Knapsack Family</a></li><li data-search="Sequence &amp; String DP Dynamic Programming LIS with patience sorting, LCS, edit distance, palindromic subsequences, regex/wildcard matching and distinct subsequences. lis lcs edit distance regex matching palindrome" data-slug="dp-sequences-strings"><a href="../topics/dp-sequences-strings.html">Sequence &amp; String DP</a></li><li data-search="Interval &amp; Tree DP Dynamic Programming Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting). interval dp burst balloons matrix chain tree dp rerooting" data-slug="dp-intervals-trees"><a href="../topics/dp-intervals-trees.html">Interval &amp; Tree DP</a></li><li data-search="Bitmask &amp; Digit DP Dynamic Programming Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints. bitmask tsp digit dp subset dp" data-slug="dp-bitmask-digit"><a href="../topics/dp-bitmask-digit.html">Bitmask &amp; Digit DP</a></li><li data-search="State Machines &amp; DP Optimisations Dynamic Programming Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth. stock state machine convex hull trick knuth optimisation" data-slug="dp-advanced"><a href="../topics/dp-advanced.html">State Machines &amp; DP Optimisations</a></li></ul></details><details class="nav-track"><summary>Bits &amp; Math</summary><ul class="topic-list"><li data-search="Bit Manipulation Bits &amp; Math Bits drawn as switches: masks, XOR tricks, counting bits, subset enumeration and Gray codes. xor mask single number popcount subsets" data-slug="bit-manipulation"><a href="../topics/bit-manipulation.html">Bit Manipulation</a></li><li data-search="Math, Number Theory &amp; Combinatorics Bits &amp; Math GCD, sieves, fast power, modular inverses, nCr mod p, inclusion–exclusion, and the geometry primitives you need. gcd sieve modular fast exponentiation combinatorics geometry" data-slug="math-number-theory"><a href="../topics/math-number-theory.html">Math, Number Theory &amp; Combinatorics</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../CodeExcellenceHome/index.html">Code Excellence Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>DSA Home / Heaps &amp; Priority Queues</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">LINKED LISTS, STACKS, QUEUES &AMP; HEAPS</p><h1>Heaps &amp; Priority Queues</h1><p class="lede">Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling.</p><div class="meta"><span class="level level-intermediate">Intermediate → Advanced</span><span>~55 min study</span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="heaps-priority-queues" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="what-a-heap-is-for">What a heap is for</h2>
+<p>A <strong>priority queue</strong> answers one question fast, again and again: <em>which item is the best right now?</em> "Best" means smallest, largest, earliest deadline, cheapest path, most frequent: whatever the priority is. Items keep arriving and leaving, and after every change the question is asked again.</p>
+<p>A <strong>binary heap</strong> is the standard way to build one. It does <strong>not</strong> keep everything sorted. It keeps only enough order to answer that one question:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Binary heap</th>
+<th>Sorted array</th>
+<th>Unsorted array</th>
+<th>Balanced BST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Peek at the best</td>
+<td><strong>O(1)</strong></td>
+<td>O(1)</td>
+<td>O(n)</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td>Insert</td>
+<td><strong>O(log n)</strong></td>
+<td>O(n) (shifting)</td>
+<td>O(1)</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td>Remove the best</td>
+<td><strong>O(log n)</strong></td>
+<td>O(1) or O(n)</td>
+<td>O(n)</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td>Build from n items</td>
+<td><strong>O(n)</strong></td>
+<td>O(n log n)</td>
+<td>O(1)</td>
+<td>O(n log n)</td>
+</tr>
+<tr>
+<td>Find / delete an arbitrary item</td>
+<td>O(n)</td>
+<td>O(log n) / O(n)</td>
+<td>O(n)</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>one array, no pointers</td>
+<td>one array</td>
+<td>one array</td>
+<td>a node per item</td>
+</tr>
+</tbody>
+</table>
+<div class="rule">
+<p><strong>The one rule (heap property).</strong> In a min-heap every parent is <strong>≤ both of its children</strong>; in a max-heap, <strong>≥</strong>. Nothing is promised about siblings or cousins. So the root is the minimum (or maximum), and nothing else in the array is "in order". When a problem keeps asking for <em>the current smallest / largest / next</em> while the set changes, reach for a heap.</p>
+</div>
+<p>The partial order is the trick. Fully sorting costs O(n log n) up front and O(n) per insertion; a heap only repairs <strong>one root-to-leaf path</strong> per change, and a path in a complete tree of n nodes has about log₂ n nodes. With a million items that is 20 steps.</p>
+<h2 id="the-array-is-the-tree">The array is the tree</h2>
+<p>A binary heap is a <strong>complete</strong> binary tree: every level is full except possibly the last, which fills from the left. A complete tree has no gaps, so it fits in an array level by level, and the parent / child links become arithmetic. There are no pointers at all.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 430" width="900" role="img" aria-label="A min-heap drawn as a tree and as the array that stores it; node 1 has parent 0 and children 3 and 4">
+<defs><marker id="heaps-priority-queues-m1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="20" y="26" class="title">tree view: a drawing</text>
+<line class="edge" x1="450" y1="50" x2="610" y2="115"/><line class="edge active" x1="450" y1="50" x2="290" y2="115"/>
+<line class="edge active" x1="290" y1="115" x2="210" y2="180"/><line class="edge active" x1="290" y1="115" x2="370" y2="180"/>
+<line class="edge" x1="610" y1="115" x2="530" y2="180"/><line class="edge" x1="610" y1="115" x2="690" y2="180"/>
+<line class="edge" x1="210" y1="180" x2="170" y2="245"/><line class="edge" x1="210" y1="180" x2="250" y2="245"/><line class="edge" x1="370" y1="180" x2="330" y2="245"/>
+<circle class="box done" cx="450" cy="50" r="19"/><text x="450" y="50" text-anchor="middle" dominant-baseline="central" class="mono">1</text><text x="476" y="38" class="small muted">0</text>
+<circle class="box active" cx="290" cy="115" r="19"/><text x="290" y="115" text-anchor="middle" dominant-baseline="central" class="mono">3</text><text x="316" y="103" class="small muted">1</text>
+<circle class="box" cx="610" cy="115" r="19"/><text x="610" y="115" text-anchor="middle" dominant-baseline="central" class="mono">2</text><text x="636" y="103" class="small muted">2</text>
+<circle class="box visit" cx="210" cy="180" r="19"/><text x="210" y="180" text-anchor="middle" dominant-baseline="central" class="mono">7</text><text x="236" y="168" class="small muted">3</text>
+<circle class="box visit" cx="370" cy="180" r="19"/><text x="370" y="180" text-anchor="middle" dominant-baseline="central" class="mono">4</text><text x="396" y="168" class="small muted">4</text>
+<circle class="box" cx="530" cy="180" r="19"/><text x="530" y="180" text-anchor="middle" dominant-baseline="central" class="mono">5</text><text x="556" y="168" class="small muted">5</text>
+<circle class="box" cx="690" cy="180" r="19"/><text x="690" y="180" text-anchor="middle" dominant-baseline="central" class="mono">9</text><text x="716" y="168" class="small muted">6</text>
+<circle class="box" cx="170" cy="245" r="19"/><text x="170" y="245" text-anchor="middle" dominant-baseline="central" class="mono">8</text><text x="196" y="233" class="small muted">7</text>
+<circle class="box" cx="250" cy="245" r="19"/><text x="250" y="245" text-anchor="middle" dominant-baseline="central" class="mono">10</text><text x="276" y="233" class="small muted">8</text>
+<circle class="box" cx="330" cy="245" r="19"/><text x="330" y="245" text-anchor="middle" dominant-baseline="central" class="mono">6</text><text x="356" y="233" class="small muted">9</text>
+<text x="760" y="70" class="small muted">small grey number</text><text x="760" y="86" class="small muted">= array index</text>
+<text x="20" y="284" class="title">array view: what memory holds</text>
+<path class="edge accent" d="M252,310 Q224,282 200,308" marker-end="url(#heaps-priority-queues-m1)"/>
+<rect class="box done" x="170" y="312" width="52" height="40" rx="5"/><text x="196" y="332" text-anchor="middle" dominant-baseline="central" class="mono">1</text>
+<rect class="box active" x="226" y="312" width="52" height="40" rx="5"/><text x="252" y="332" text-anchor="middle" dominant-baseline="central" class="mono">3</text>
+<rect class="box" x="282" y="312" width="52" height="40" rx="5"/><text x="308" y="332" text-anchor="middle" dominant-baseline="central" class="mono">2</text>
+<rect class="box visit" x="338" y="312" width="52" height="40" rx="5"/><text x="364" y="332" text-anchor="middle" dominant-baseline="central" class="mono">7</text>
+<rect class="box visit" x="394" y="312" width="52" height="40" rx="5"/><text x="420" y="332" text-anchor="middle" dominant-baseline="central" class="mono">4</text>
+<rect class="box" x="450" y="312" width="52" height="40" rx="5"/><text x="476" y="332" text-anchor="middle" dominant-baseline="central" class="mono">5</text>
+<rect class="box" x="506" y="312" width="52" height="40" rx="5"/><text x="532" y="332" text-anchor="middle" dominant-baseline="central" class="mono">9</text>
+<rect class="box" x="562" y="312" width="52" height="40" rx="5"/><text x="588" y="332" text-anchor="middle" dominant-baseline="central" class="mono">8</text>
+<rect class="box" x="618" y="312" width="52" height="40" rx="5"/><text x="644" y="332" text-anchor="middle" dominant-baseline="central" class="mono">10</text>
+<rect class="box" x="674" y="312" width="52" height="40" rx="5"/><text x="700" y="332" text-anchor="middle" dominant-baseline="central" class="mono">6</text>
+<text x="196" y="368" text-anchor="middle" class="small muted">0</text><text x="252" y="368" text-anchor="middle" class="small muted">1</text><text x="308" y="368" text-anchor="middle" class="small muted">2</text><text x="364" y="368" text-anchor="middle" class="small muted">3</text><text x="420" y="368" text-anchor="middle" class="small muted">4</text><text x="476" y="368" text-anchor="middle" class="small muted">5</text><text x="532" y="368" text-anchor="middle" class="small muted">6</text><text x="588" y="368" text-anchor="middle" class="small muted">7</text><text x="644" y="368" text-anchor="middle" class="small muted">8</text><text x="700" y="368" text-anchor="middle" class="small muted">9</text>
+<path class="edge accent" d="M252,376 Q306,414 360,378" marker-end="url(#heaps-priority-queues-m1)"/>
+<path class="edge accent" d="M252,376 Q336,432 416,378" marker-end="url(#heaps-priority-queues-m1)"/>
+<text x="745" y="318" class="small mono">i = 1</text>
+<text x="745" y="336" class="small mono">parent (i−1)//2 = 0</text>
+<text x="745" y="354" class="small mono">left   2i+1 = 3</text>
+<text x="745" y="372" class="small mono">right  2i+2 = 4</text>
+<text x="745" y="400" class="small muted">leaves: n//2 … n−1</text>
+</svg>
+<figcaption>The same min-heap twice. Node 1 (value 3) is highlighted with its parent (index 0) and its children (indices 3 and 4) in both views. Read the array level by level: [1] [3, 2] [7, 4, 5, 9] [8, 10, 6]. Every parent is ≤ its children, but the array is <i>not</i> sorted: 2 sits after 3, and 6 after 10.</figcaption>
+</figure>
+
+<div class="tip">
+<p><strong>Index formulas for a 0-based array:</strong> parent of <code>i</code> is <code>(i - 1) // 2</code>; children are <code>2*i + 1</code> and <code>2*i + 2</code>; a node is a leaf when <code>2*i + 1 &gt;= n</code>, so the leaves are exactly <code>n//2 … n-1</code> (half the array). Many textbooks use 1-based arrays, where the children are <code>2i</code> and <code>2i + 1</code> and the parent is <code>i // 2</code>. Do not mix the two.</p>
+</div>
+<p>Two consequences you will use constantly:</p>
+<ul>
+<li>The tree has height ⌊log₂ n⌋. Any operation that walks <strong>one path</strong> from the root to a leaf, or back up, is O(log n).</li>
+<li>Appending to the array adds the next leaf in level order, and removing the last element removes the last leaf. Both keep the tree complete for free. That is why push and pop always work through the <strong>last</strong> array slot.</li>
+</ul>
+<h2 id="push-and-pop-repair-one-path">Push and pop: repair one path</h2>
+<p>Both operations first keep the <strong>shape</strong> right (add or remove the last slot), then fix the <strong>order</strong> along a single path:</p>
+<ul>
+<li><strong>push(x), sift-up:</strong> append <code>x</code> as the new last leaf. Only the path from that leaf to the root can now be out of order. While <code>x</code> beats its parent, swap them. At most one swap per level.</li>
+<li><strong>pop(), sift-down:</strong> the answer is <code>h[0]</code>. Move the <strong>last</strong> element into the root (the array stays gap-free), then sift it down: compare it with its <strong>better child</strong> (the smaller one in a min-heap) and swap while that child beats it.</li>
+</ul>
+<p>Why the <em>better</em> child? After the swap the child becomes the parent of its old sibling. If you promoted the worse child, it would sit above a better sibling and break the rule right there. Promoting the better one keeps both sides valid.</p>
+<p>Type operations below. Switch between min-heap and max-heap; the code is identical apart from the comparison.</p>
+<div class="viz" data-viz="heaps-priority-queues-ops"></div>
+
+<p>Here is the whole data structure written out. You rarely write it in an interview (both languages ship one), but writing it once makes every heap bug obvious later. <code>heapq</code> uses exactly this array layout.</p>
+<div class="code-tabs">
+<pre><code class="language-python">class MinHeap:
+    def __init__(self, items=()):
+        self.h = list(items)
+        for i in range(len(self.h) // 2 - 1, -1, -1):   # heapify: O(n), see below
+            self._down(i)
+
+    def __len__(self):
+        return len(self.h)
+
+    def peek(self):
+        return self.h[0]
+
+    def push(self, x):
+        h = self.h
+        h.append(x)                                    # new last leaf
+        i = len(h) - 1
+        while i &gt; 0 and h[i] &lt; h[(i - 1) // 2]:        # sift up
+            p = (i - 1) // 2
+            h[i], h[p] = h[p], h[i]
+            i = p
+
+    def pop(self):
+        h = self.h
+        top, last = h[0], h.pop()                      # detach the last leaf
+        if h:
+            h[0] = last                                # it fills the hole at the root
+            self._down(0)
+        return top
+
+    def _down(self, i):
+        h, n = self.h, len(self.h)
+        while 2 * i + 1 &lt; n:
+            c = 2 * i + 1
+            if c + 1 &lt; n and h[c + 1] &lt; h[c]:          # pick the smaller child
+                c += 1
+            if h[i] &lt;= h[c]:
+                break
+            h[i], h[c] = h[c], h[i]
+            i = c
+</code></pre>
+<pre><code class="language-csharp">public class MinHeap
+{
+    private readonly List&lt;int&gt; h;
+
+    public MinHeap(IEnumerable&lt;int&gt;? items = null)
+    {
+        h = new List&lt;int&gt;(items ?? Enumerable.Empty&lt;int&gt;());
+        for (int i = h.Count / 2 - 1; i &gt;= 0; i--) Down(i);   // heapify: O(n)
+    }
+
+    public int Count =&gt; h.Count;
+    public int Peek() =&gt; h[0];
+
+    public void Push(int x)
+    {
+        h.Add(x);                                            // new last leaf
+        int i = h.Count - 1;
+        while (i &gt; 0 &amp;&amp; h[i] &lt; h[(i - 1) / 2])               // sift up
+        {
+            int p = (i - 1) / 2;
+            (h[i], h[p]) = (h[p], h[i]);
+            i = p;
+        }
+    }
+
+    public int Pop()
+    {
+        int top = h[0];
+        h[0] = h[^1];                                        // last leaf fills the root
+        h.RemoveAt(h.Count - 1);
+        if (h.Count &gt; 0) Down(0);
+        return top;
+    }
+
+    private void Down(int i)
+    {
+        int n = h.Count;
+        while (2 * i + 1 &lt; n)
+        {
+            int c = 2 * i + 1;
+            if (c + 1 &lt; n &amp;&amp; h[c + 1] &lt; h[c]) c++;           // pick the smaller child
+            if (h[i] &lt;= h[c]) break;
+            (h[i], h[c]) = (h[c], h[i]);
+            i = c;
+        }
+    }
+}
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Off-by-one in sift-down.</strong> The loop condition is "has a <strong>left</strong> child" (<code>2*i + 1 &lt; n</code>); the right child needs its own check (<code>c + 1 &lt; n</code>) before you compare it. Forgetting that reads past the end, and in Python <code>h[c + 1]</code> may silently read a stale value if you pop lazily. Also note the order in <code>pop</code>: take the last element out <strong>first</strong>, then put it at the root; if the heap had one element, there is nothing to put back.</p>
+</div>
+<h2 id="heapify-building-a-heap-in-on">Heapify: building a heap in O(n)</h2>
+<p>Given n items up front, you could push them one by one: O(n log n). <strong>Bottom-up heapify</strong> is faster. Every leaf is already a one-node heap. Walk the parents from the last one (<code>n//2 - 1</code>) back to the root, and sift each one down. When you reach node <code>i</code>, both of its subtrees are already heaps, so a single sift-down makes the subtree at <code>i</code> a heap too.</p>
+<div class="viz" data-viz="heaps-priority-queues-heapify"></div>
+
+<p>Why is that O(n) and not O(n log n)? A sift-down from node <code>i</code> costs at most the <strong>height</strong> of <code>i</code> (its distance to the bottom), not the height of the whole tree. And most nodes are near the bottom:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 262" width="900" role="img" aria-label="A 15-node heap: 8 leaves of height 0, 4 nodes of height 1, 2 of height 2, 1 root of height 3; total sift-down work at most 11">
+<line class="edge" x1="280" y1="40" x2="160" y2="95"/><line class="edge" x1="280" y1="40" x2="400" y2="95"/>
+<line class="edge" x1="160" y1="95" x2="100" y2="150"/><line class="edge" x1="160" y1="95" x2="220" y2="150"/><line class="edge" x1="400" y1="95" x2="340" y2="150"/><line class="edge" x1="400" y1="95" x2="460" y2="150"/>
+<line class="edge" x1="100" y1="150" x2="70" y2="205"/><line class="edge" x1="100" y1="150" x2="130" y2="205"/><line class="edge" x1="220" y1="150" x2="190" y2="205"/><line class="edge" x1="220" y1="150" x2="250" y2="205"/><line class="edge" x1="340" y1="150" x2="310" y2="205"/><line class="edge" x1="340" y1="150" x2="370" y2="205"/><line class="edge" x1="460" y1="150" x2="430" y2="205"/><line class="edge" x1="460" y1="150" x2="490" y2="205"/>
+<circle class="box active" cx="280" cy="40" r="13"/>
+<circle class="box visit" cx="160" cy="95" r="13"/><circle class="box visit" cx="400" cy="95" r="13"/>
+<circle class="box path" cx="100" cy="150" r="13"/><circle class="box path" cx="220" cy="150" r="13"/><circle class="box path" cx="340" cy="150" r="13"/><circle class="box path" cx="460" cy="150" r="13"/>
+<circle class="box done" cx="70" cy="205" r="13"/><circle class="box done" cx="130" cy="205" r="13"/><circle class="box done" cx="190" cy="205" r="13"/><circle class="box done" cx="250" cy="205" r="13"/><circle class="box done" cx="310" cy="205" r="13"/><circle class="box done" cx="370" cy="205" r="13"/><circle class="box done" cx="430" cy="205" r="13"/><circle class="box done" cx="490" cy="205" r="13"/>
+<text x="560" y="20" class="title">sift-down work in heapify</text>
+<text x="560" y="44" class="mono small">height 3 ·  1 node  · ≤ 3 swaps each →  3</text>
+<text x="560" y="99" class="mono small">height 2 ·  2 nodes · ≤ 2 swaps each →  4</text>
+<text x="560" y="154" class="mono small">height 1 ·  4 nodes · ≤ 1 swap each  →  4</text>
+<text x="560" y="209" class="mono small">height 0 ·  8 nodes · leaves, free   →  0</text>
+<text x="560" y="244" class="small"><tspan font-weight="700">total ≤ 11 swaps &lt; n = 15</tspan></text>
+<text x="70" y="244" class="small muted">pushing the 15 items one by one could cost up to Σ depth = 8·3 + 4·2 + 2·1 = 34</text>
+</svg>
+<figcaption>Half the nodes are leaves and cost nothing; a quarter can move one level; an eighth two levels. The sum n/4·1 + n/8·2 + n/16·3 + … is less than n. Sift-<i>up</i> from each push pays by depth instead, and the deep levels hold most of the nodes, so it is O(n log n) in the worst case.</figcaption>
+</figure>
+
+<p>Use it whenever all the items are known at the start: <code>heapq.heapify(list)</code> in Python, or the <code>PriorityQueue</code> constructor that takes a collection in C#. It turns "push n times" into one linear pass, and it is in place.</p>
+<h3 id="heapsort-pop-everything">Heapsort: pop everything</h3>
+<p>Popping a heap until it is empty yields the items in order, so a heap is also a sorting algorithm. The in-place version uses a <strong>max</strong>-heap: swap the root (the maximum) with the last slot of the heap, shrink the heap by one, sift down, repeat. The sorted tail grows from the right.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def heap_sort(a: list[int]) -&gt; list[int]:
+    def down(i, n):                          # max-heap sift-down within a[:n]
+        while 2 * i + 1 &lt; n:
+            c = 2 * i + 1
+            if c + 1 &lt; n and a[c + 1] &gt; a[c]:
+                c += 1
+            if a[i] &gt;= a[c]:
+                break
+            a[i], a[c] = a[c], a[i]
+            i = c
+
+    n = len(a)
+    for i in range(n // 2 - 1, -1, -1):      # build a max-heap: O(n)
+        down(i, n)
+    for end in range(n - 1, 0, -1):
+        a[0], a[end] = a[end], a[0]          # the max goes to its final slot
+        down(0, end)                         # the heap shrinks by one
+    return a
+</code></pre>
+<pre><code class="language-csharp">public static int[] HeapSort(int[] a)
+{
+    void Down(int i, int n)                  // max-heap sift-down within a[0..n)
+    {
+        while (2 * i + 1 &lt; n)
+        {
+            int c = 2 * i + 1;
+            if (c + 1 &lt; n &amp;&amp; a[c + 1] &gt; a[c]) c++;
+            if (a[i] &gt;= a[c]) break;
+            (a[i], a[c]) = (a[c], a[i]);
+            i = c;
+        }
+    }
+
+    int n = a.Length;
+    for (int i = n / 2 - 1; i &gt;= 0; i--) Down(i, n);
+    for (int end = n - 1; end &gt; 0; end--)
+    {
+        (a[0], a[end]) = (a[end], a[0]);
+        Down(0, end);
+    }
+    return a;
+}
+</code></pre>
+</div>
+<p>Heapsort is O(n log n) in the worst case and uses O(1) extra space, but it is <strong>not stable</strong> and its jumps around the array are cache-unfriendly, so library sorts prefer merge sort or quicksort variants. See <a href="sorting.html">Sorting Algorithms</a> for the comparison. In practice you will rarely sort with a heap; you will use one when you only need <strong>part</strong> of the order, which is the rest of this page.</p>
+<h2 id="heaps-in-python-and-c">Heaps in Python and C</h2>
+<p>Both standard libraries give you an array-backed binary heap. Their personalities differ, and most heap bugs in interviews come from these differences.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Python <code>heapq</code></th>
+<th>C# <code>PriorityQueue&lt;TElement, TPriority&gt;</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What it is</td>
+<td>functions acting on a plain <code>list</code></td>
+<td>a class (.NET 6+)</td>
+</tr>
+<tr>
+<td>Order</td>
+<td><strong>min-heap only</strong> (max via negation; 3.14 adds <code>heappush_max</code> and friends)</td>
+<td>min by priority; pass a reversed <code>IComparer&lt;TPriority&gt;</code> for max</td>
+</tr>
+<tr>
+<td>Priority</td>
+<td>the item itself; tuples compare left to right</td>
+<td>a separate <code>TPriority</code> value per element</td>
+</tr>
+<tr>
+<td>Peek</td>
+<td><code>h[0]</code></td>
+<td><code>Peek()</code>, <code>TryPeek(out e, out p)</code></td>
+</tr>
+<tr>
+<td>Push / pop</td>
+<td><code>heappush(h, x)</code>, <code>heappop(h)</code></td>
+<td><code>Enqueue(e, p)</code>, <code>Dequeue()</code>, <code>TryDequeue(out e, out p)</code></td>
+</tr>
+<tr>
+<td>Pop then push (size stays)</td>
+<td><code>heapreplace(h, x)</code></td>
+<td><code>DequeueEnqueue(e, p)</code> (.NET 7+)</td>
+</tr>
+<tr>
+<td>Push then pop</td>
+<td><code>heappushpop(h, x)</code></td>
+<td><code>EnqueueDequeue(e, p)</code></td>
+</tr>
+<tr>
+<td>Build in O(n)</td>
+<td><code>heapify(h)</code></td>
+<td><code>new PriorityQueue&lt;E, P&gt;(items)</code> or <code>EnqueueRange</code></td>
+</tr>
+<tr>
+<td>Iterate</td>
+<td>the list is in heap order, <strong>not sorted</strong></td>
+<td><code>UnorderedItems</code>, also <strong>not sorted</strong></td>
+</tr>
+<tr>
+<td>Decrease-key / update</td>
+<td>none</td>
+<td>none (<code>Remove(e, …)</code> in .NET 9+ is O(n))</td>
+</tr>
+<tr>
+<td>Ties</td>
+<td>broken by the next tuple field</td>
+<td><strong>unspecified</strong>; not stable</td>
+</tr>
+<tr>
+<td>Convenience</td>
+<td><code>nlargest(k, it)</code>, <code>nsmallest(k, it)</code>, <code>merge(*sorted)</code></td>
+<td><code>Count</code>, <code>Clear()</code>, <code>EnsureCapacity</code></td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs">
+<pre><code class="language-python">import heapq
+
+h = [5, 1, 8, 3]
+heapq.heapify(h)                     # O(n), in place: h[0] is the min
+heapq.heappush(h, 2)
+smallest = heapq.heappop(h)          # 1
+peek = h[0]                          # 2: look without popping
+x = heapq.heapreplace(h, 7)          # pop, then push: returns 2, size unchanged
+y = heapq.heappushpop(h, 0)          # push, then pop: returns 0 at once
+
+mx = []                              # max-heap: store negatives
+for v in [5, 1, 8]:
+    heapq.heappush(mx, -v)
+largest = -mx[0]                     # 8
+
+jobs = []                            # (priority, tie-breaker, payload)
+heapq.heappush(jobs, (2, 0, &quot;write&quot;))
+heapq.heappush(jobs, (1, 1, &quot;plan&quot;))
+heapq.heappush(jobs, (2, 2, &quot;test&quot;))
+pri, _, name = heapq.heappop(jobs)   # (1, 1, &quot;plan&quot;)
+
+top3 = heapq.nlargest(3, [4, 9, 1, 7, 3])    # [9, 7, 4]
+low2 = heapq.nsmallest(2, [4, 9, 1, 7, 3])   # [1, 3]
+</code></pre>
+<pre><code class="language-csharp">var pq = new PriorityQueue&lt;string, int&gt;();          // min-heap on the priority
+pq.Enqueue(&quot;write&quot;, 2);
+pq.Enqueue(&quot;plan&quot;, 1);
+pq.Enqueue(&quot;test&quot;, 2);
+string first = pq.Peek();                           // &quot;plan&quot;
+string next = pq.Dequeue();                         // &quot;plan&quot;
+bool ok = pq.TryDequeue(out string? job, out int pri);  // true; &quot;write&quot; or &quot;test&quot;, unspecified
+int left = pq.Count;                                // 1
+
+var maxPq = new PriorityQueue&lt;int, int&gt;(Comparer&lt;int&gt;.Create((a, b) =&gt; b.CompareTo(a)));
+foreach (int v in new[] { 5, 1, 8 }) maxPq.Enqueue(v, v);
+int largest = maxPq.Peek();                         // 8
+
+var heap = new PriorityQueue&lt;int, int&gt;(new[] { (5, 5), (1, 1), (8, 8) });  // O(n) build
+int popped = heap.DequeueEnqueue(7, 7);             // returns 1, then adds 7
+int least = heap.EnqueueDequeue(0, 0);              // 0 beats everything: returned at once
+
+foreach (var (elem, prio) in heap.UnorderedItems)   // raw array order, NOT sorted
+    Console.Write($&quot;{elem} &quot;);
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Tuples that tie compare their next field.</strong> <code>heappush(h, (dist, node))</code> works for ints, but when two distances tie Python compares the <strong>nodes</strong>. If they are <code>ListNode</code>s or dicts you get <code>TypeError: '&lt;' not supported</code>. Put a unique, comparable tie-breaker in the middle: <code>(dist, i, node)</code> with <code>i</code> an index or a running counter. C# never compares elements (only priorities), so it has no such crash, but its tie order is arbitrary: if the problem demands "smallest index first on ties", encode that in the priority, e.g. a tuple priority <code>(dist, index)</code>.</p>
+</div>
+<div class="pitfall">
+<p><strong>Negation for a max-heap.</strong> Push <code>-x</code> and negate again when you read: <code>-h[0]</code>, <code>-heappop(h)</code>. Forgetting one of the two negations is the classic bug. For tuples negate only the priority field: <code>(-count, letter)</code> pops the highest count, and ties then go to the <strong>smallest</strong> letter. Negating strings is impossible; if you need "largest string first", wrap it in a class with a reversed <code>__lt__</code>, or use another key.</p>
+</div>
+<div class="tip">
+<p><strong><code>heapreplace</code> vs <code>heappushpop</code>.</strong> <code>heapreplace(h, x)</code> pops first, so it returns the old minimum even if <code>x</code> is smaller. <code>heappushpop(h, x)</code> returns <code>x</code> immediately when <code>x</code> is smaller than the root, without touching the heap. For "keep the k largest", <code>if x &gt; h[0]: heapreplace(h, x)</code> is the clearest form. Both do one sift instead of two.</p>
+</div>
+<h2 id="top-k-a-heap-of-size-k">Top-k: a heap of size k</h2>
+<p>"The k largest", "the k-th largest", "the k most frequent", "the k closest". Sorting everything is O(n log n). A heap that never holds more than k items does it in <strong>O(n log k)</strong> time and <strong>O(k)</strong> memory, and it works on a stream you cannot store.</p>
+<p>The surprising part is the direction: for the k <strong>largest</strong> you keep a <strong>min</strong>-heap. Its root is the <em>weakest</em> of the current top k, the bar a newcomer has to beat. If a new number does not beat the bar, it can never be in the top k, and you drop it in O(1).</p>
+<div class="viz" data-viz="heaps-priority-queues-topk"></div>
+
+<table>
+<thead>
+<tr>
+<th>You want</th>
+<th>Keep</th>
+<th>Root means</th>
+<th>Replace the root when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>k largest / k-th largest</td>
+<td><strong>min</strong>-heap of size k</td>
+<td>the k-th largest so far</td>
+<td><code>x &gt; root</code></td>
+</tr>
+<tr>
+<td>k smallest / k-th smallest</td>
+<td><strong>max</strong>-heap of size k (Python: push <code>-x</code>)</td>
+<td>the k-th smallest so far</td>
+<td><code>x &lt; root</code></td>
+</tr>
+<tr>
+<td>k most frequent</td>
+<td>min-heap of <code>(count, value)</code></td>
+<td>the least frequent of the top k</td>
+<td><code>count &gt; root count</code></td>
+</tr>
+<tr>
+<td>k closest to a target</td>
+<td>max-heap of <code>(distance, …)</code></td>
+<td>the farthest of the k closest</td>
+<td><code>distance &lt; root distance</code></td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs">
+<pre><code class="language-python">def find_kth_largest(nums: list[int], k: int) -&gt; int:
+    heap = []                              # min-heap, never more than k items
+    for x in nums:
+        if len(heap) &lt; k:
+            heapq.heappush(heap, x)
+        elif x &gt; heap[0]:                  # beats the weakest of the top k
+            heapq.heapreplace(heap, x)
+    return heap[0]
+</code></pre>
+<pre><code class="language-csharp">public static int FindKthLargest(int[] nums, int k)
+{
+    var heap = new PriorityQueue&lt;int, int&gt;();          // min-heap, at most k items
+    foreach (int x in nums)
+    {
+        if (heap.Count &lt; k) heap.Enqueue(x, x);
+        else if (x &gt; heap.Peek()) heap.DequeueEnqueue(x, x);
+    }
+    return heap.Peek();
+}
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>When a heap is not the best tool.</strong> If all n numbers are in memory and you need only the k-th element once, <strong>quickselect</strong> is O(n) on average (and is what <code>nth_element</code> does in C++). If the values are small integers or counts bounded by n, <strong>bucket sort</strong> gives O(n) (see Top K Frequent below). The heap wins when data <strong>streams</strong> in, when k is much smaller than n, or when you need the answer again after every update.</p>
+</div>
+<h2 id="merging-k-sorted-sequences">Merging k sorted sequences</h2>
+<p>You have k sorted lists and want one sorted output. At every step the next output element is the smallest of the k <strong>current fronts</strong>, because each list's front is the smallest thing left in that list. Keep exactly those k fronts in a min-heap. Pop the smallest, output it, and push the next element from <strong>the same list</strong>. The heap never holds more than k entries, so each of the N output elements costs O(log k).</p>
+<div class="viz" data-viz="heaps-priority-queues-kmerge"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def merge_k_sorted(lists: list[list[int]]) -&gt; list[int]:
+    heap = [(lst[0], i, 0) for i, lst in enumerate(lists) if lst]
+    heapq.heapify(heap)                    # (value, which list, position)
+    out = []
+    while heap:
+        val, i, j = heapq.heappop(heap)
+        out.append(val)
+        if j + 1 &lt; len(lists[i]):          # that list's next element replaces it
+            heapq.heappush(heap, (lists[i][j + 1], i, j + 1))
+    return out
+</code></pre>
+<pre><code class="language-csharp">public static List&lt;int&gt; MergeKSorted(int[][] lists)
+{
+    var heap = new PriorityQueue&lt;(int List, int Pos), int&gt;();
+    for (int i = 0; i &lt; lists.Length; i++)
+        if (lists[i].Length &gt; 0) heap.Enqueue((i, 0), lists[i][0]);
+    var output = new List&lt;int&gt;();
+    while (heap.TryDequeue(out var at, out int val))
+    {
+        output.Add(val);
+        if (at.Pos + 1 &lt; lists[at.List].Length)
+            heap.Enqueue((at.List, at.Pos + 1), lists[at.List][at.Pos + 1]);
+    }
+    return output;
+}
+</code></pre>
+</div>
+<p>The same <strong>frontier</strong> idea solves problems that do not look like merging at all:</p>
+<ul>
+<li><strong>Kth Smallest Element in a Sorted Matrix:</strong> each row is a sorted list. Pop k times from a heap of row fronts.</li>
+<li><strong>Find K Pairs with Smallest Sums:</strong> the pairs <code>(i, j)</code> for a fixed <code>i</code> form a sorted list (as <code>j</code> grows). Seed the heap with <code>(nums1[i] + nums2[0], i, 0)</code> and advance <code>j</code>.</li>
+<li><strong>Ugly Number II / Super Ugly Number:</strong> every ugly number times 2, 3 or 5 is a sorted stream; merge them (and skip duplicates).</li>
+<li><strong>Smallest Range Covering Elements from K Lists:</strong> keep one front per list in a min-heap plus the current maximum of the fronts; the range is <code>[heap min, max]</code>; advance the list that owns the minimum.</li>
+</ul>
+<div class="tip">
+<p><strong>Python already has it.</strong> <code>heapq.merge(*sorted_iterables)</code> is a lazy k-way merge built on this exact idea. Use it in real code; write the loop yourself in interviews, because the follow-ups (linked lists, matrices, pairs) need the explicit <code>(value, list, position)</code> form.</p>
+</div>
+<h2 id="two-heaps-the-running-median">Two heaps: the running median</h2>
+<p>The median needs the <strong>middle</strong> of the data, and a heap only exposes an <strong>end</strong>. So split the data in two at the middle and give each half its own heap, oriented so that both tops face the middle:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 250" width="900" role="img" aria-label="Sorted numbers split into a smaller half in a max-heap and a larger half in a min-heap; the median is at the max-heap's top">
+<defs><marker id="heaps-priority-queues-m2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box visit" x="170" y="22" width="304" height="70" rx="10"/><text x="322" y="48" text-anchor="middle" class="title">lo: max-heap (5 items)</text><text x="322" y="72" text-anchor="middle" class="small">top = 8, the largest of the smaller half</text>
+<rect class="box done" x="494" y="22" width="244" height="70" rx="10"/><text x="616" y="48" text-anchor="middle" class="title">hi: min-heap (4 items)</text><text x="616" y="72" text-anchor="middle" class="small">top = 9, the smallest of the larger half</text>
+<path class="edge accent" d="M447,94 L447,142" marker-end="url(#heaps-priority-queues-m2)"/><path class="edge accent" d="M521,94 L521,142" marker-end="url(#heaps-priority-queues-m2)"/>
+<text x="20" y="170" class="small muted">all numbers, sorted</text><text x="20" y="186" class="small muted">(never stored this way)</text>
+<rect class="box visit" x="180" y="146" width="54" height="40" rx="5"/><text x="207" y="166" text-anchor="middle" dominant-baseline="central" class="mono">1</text>
+<rect class="box visit" x="240" y="146" width="54" height="40" rx="5"/><text x="267" y="166" text-anchor="middle" dominant-baseline="central" class="mono">3</text>
+<rect class="box visit" x="300" y="146" width="54" height="40" rx="5"/><text x="327" y="166" text-anchor="middle" dominant-baseline="central" class="mono">5</text>
+<rect class="box visit" x="360" y="146" width="54" height="40" rx="5"/><text x="387" y="166" text-anchor="middle" dominant-baseline="central" class="mono">7</text>
+<rect class="box active" x="420" y="146" width="54" height="40" rx="5"/><text x="447" y="166" text-anchor="middle" dominant-baseline="central" class="mono">8</text>
+<line class="edge dash" x1="484" y1="136" x2="484" y2="196"/>
+<rect class="box done" x="494" y="146" width="54" height="40" rx="5"/><text x="521" y="166" text-anchor="middle" dominant-baseline="central" class="mono">9</text>
+<rect class="box done" x="554" y="146" width="54" height="40" rx="5"/><text x="581" y="166" text-anchor="middle" dominant-baseline="central" class="mono">12</text>
+<rect class="box done" x="614" y="146" width="54" height="40" rx="5"/><text x="641" y="166" text-anchor="middle" dominant-baseline="central" class="mono">15</text>
+<rect class="box done" x="674" y="146" width="54" height="40" rx="5"/><text x="701" y="166" text-anchor="middle" dominant-baseline="central" class="mono">20</text>
+<text x="760" y="140" class="small title">keep true:</text>
+<text x="760" y="160" class="small mono">max(lo) ≤ min(hi)</text>
+<text x="760" y="178" class="small mono">|lo| − |hi| ∈ {0, 1}</text>
+<text x="450" y="226" text-anchor="middle" class="small">odd count: median = top of lo = 8 · even count: median = (top of lo + top of hi) / 2</text>
+</svg>
+<figcaption>Only the two numbers next to the dashed line matter for the median, and they are exactly the two heap tops. Everything else is kept just so that the right number can move to the middle when new data arrives.</figcaption>
+</figure>
+
+<p>Adding a number: put it on the correct side (≤ top of <code>lo</code> goes to <code>lo</code>), then <strong>rebalance</strong> if one side became too big by moving that side's top across. Moving a top keeps the order rule: the largest of the small half is still ≤ everything in the large half. Each add is at most three heap operations, O(log n); reading the median is O(1).</p>
+<div class="viz" data-viz="heaps-priority-queues-median"></div>
+
+<p>The same split solves <strong>Sliding Window Median</strong> (add one number and remove one per step; removal needs the lazy deletion below) and <strong>IPO</strong>-like "two orders" problems. The full Find Median from Data Stream solution is worked problem 6.</p>
+<h2 id="greedy-scheduling-with-heaps">Greedy scheduling with heaps</h2>
+<p>Many greedy algorithms say "at every moment, pick the best available option". If options become available over time and the best one keeps changing, the "best available" is a heap. Three shapes cover most problems.</p>
+<h3 id="meeting-rooms-the-resource-that-frees-up-first">Meeting rooms: the resource that frees up first</h3>
+<p>How many rooms do the meetings need? Process meetings in <strong>start</strong> order and keep a min-heap of the <strong>end</strong> times of busy rooms. When a meeting starts, only one room is worth checking: the one that frees up first, the root. If even that room is still busy, every room is busy, so open a new one.</p>
+<div class="viz" data-viz="heaps-priority-queues-rooms"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def min_meeting_rooms(intervals: list[list[int]]) -&gt; int:
+    intervals.sort()                         # by start time
+    ends = []                                # min-heap: one end time per room
+    for s, e in intervals:
+        if ends and ends[0] &lt;= s:            # the earliest-free room is free by s
+            heapq.heapreplace(ends, e)
+        else:
+            heapq.heappush(ends, e)
+    return len(ends)
+</code></pre>
+<pre><code class="language-csharp">public static int MinMeetingRooms(int[][] intervals)
+{
+    var ends = new PriorityQueue&lt;int, int&gt;();          // one end time per room
+    foreach (var iv in intervals.OrderBy(iv =&gt; iv[0]))
+    {
+        if (ends.Count &gt; 0 &amp;&amp; ends.Peek() &lt;= iv[0]) ends.DequeueEnqueue(iv[1], iv[1]);
+        else ends.Enqueue(iv[1], iv[1]);
+    }
+    return ends.Count;
+}
+</code></pre>
+</div>
+<p>The heap never shrinks, and it ends with the number of rooms, which is the maximum number of meetings running at the same time. A sweep over sorted start and end times gives the same count without a heap (see <a href="intervals-sweep-line.html">Intervals &amp; Sweep Line</a>). The heap version wins as soon as you must know <strong>which</strong> room: Meeting Rooms III, Process Tasks Using Servers and Single-Threaded CPU all keep <strong>two heaps</strong>, one of idle resources (by index or weight) and one of busy resources (by the time they free up), and move resources between them as time advances.</p>
+<h3 id="task-scheduler-the-most-work-left-goes-first">Task scheduler: the most work left goes first</h3>
+<p>Tasks <code>A</code>–<code>Z</code>, each takes one tick, and two copies of the same task must be at least <code>n</code> ticks apart. Minimize the total time. Greedy rule: at every tick run the <strong>ready</strong> task with the <strong>most copies left</strong>. A task that has just run goes into a FIFO <strong>cooldown queue</strong> with the time it becomes ready again. The heap chooses, the queue remembers.</p>
+<div class="viz" data-viz="heaps-priority-queues-tasks"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def least_interval(tasks: list[str], n: int) -&gt; int:
+    heap = [(-c, t) for t, c in Counter(tasks).items()]
+    heapq.heapify(heap)                      # most copies left on top
+    cool = deque()                           # (ready_time, -copies_left, task)
+    time = 0
+    while heap or cool:
+        time += 1
+        if heap:
+            c, t = heapq.heappop(heap)
+            if c + 1:                        # copies left after this run
+                cool.append((time + n, c + 1, t))
+        if cool and cool[0][0] == time:      # cooldown over: ready again
+            _, c, t = cool.popleft()
+            heapq.heappush(heap, (c, t))
+    return time
+</code></pre>
+<pre><code class="language-csharp">public static int LeastInterval(char[] tasks, int n)
+{
+    var count = new int[26];
+    foreach (char t in tasks) count[t - 'A']++;
+    var heap = new PriorityQueue&lt;int, int&gt;();          // copies left; priority -copies: max-heap
+    foreach (int c in count) if (c &gt; 0) heap.Enqueue(c, -c);
+    var cool = new Queue&lt;(int Ready, int Left)&gt;();
+    int time = 0;
+    while (heap.Count &gt; 0 || cool.Count &gt; 0)
+    {
+        time++;
+        if (heap.TryDequeue(out int c, out _) &amp;&amp; c &gt; 1)
+            cool.Enqueue((time + n, c - 1));
+        if (cool.Count &gt; 0 &amp;&amp; cool.Peek().Ready == time)
+        {
+            var (_, left) = cool.Dequeue();
+            heap.Enqueue(left, -left);
+        }
+    }
+    return time;
+}
+</code></pre>
+</div>
+<p>The heap simulation produces a real schedule. If you only need the length, there is a closed form, and the picture explains it:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 230" width="900" role="img" aria-label="Tasks A×4, B×3, C×2 with n = 2 laid out in frames of 3 slots: A B C, A B C, A B idle, A; total 10">
+<text x="90" y="44" text-anchor="end" class="small muted">frame 1</text><text x="90" y="86" text-anchor="end" class="small muted">frame 2</text><text x="90" y="128" text-anchor="end" class="small muted">frame 3</text><text x="90" y="170" text-anchor="end" class="small muted">last row</text>
+<rect class="box active" x="110" y="24" width="52" height="34" rx="5"/><text x="136" y="41" text-anchor="middle" dominant-baseline="central" class="mono">A</text>
+<rect class="box visit" x="168" y="24" width="52" height="34" rx="5"/><text x="194" y="41" text-anchor="middle" dominant-baseline="central" class="mono">B</text>
+<rect class="box done" x="226" y="24" width="52" height="34" rx="5"/><text x="252" y="41" text-anchor="middle" dominant-baseline="central" class="mono">C</text>
+<rect class="box active" x="110" y="66" width="52" height="34" rx="5"/><text x="136" y="83" text-anchor="middle" dominant-baseline="central" class="mono">A</text>
+<rect class="box visit" x="168" y="66" width="52" height="34" rx="5"/><text x="194" y="83" text-anchor="middle" dominant-baseline="central" class="mono">B</text>
+<rect class="box done" x="226" y="66" width="52" height="34" rx="5"/><text x="252" y="83" text-anchor="middle" dominant-baseline="central" class="mono">C</text>
+<rect class="box active" x="110" y="108" width="52" height="34" rx="5"/><text x="136" y="125" text-anchor="middle" dominant-baseline="central" class="mono">A</text>
+<rect class="box visit" x="168" y="108" width="52" height="34" rx="5"/><text x="194" y="125" text-anchor="middle" dominant-baseline="central" class="mono">B</text>
+<rect class="box" stroke-dasharray="4 3" x="226" y="108" width="52" height="34" rx="5"/><text x="252" y="125" text-anchor="middle" dominant-baseline="central" class="small muted">idle</text>
+<rect class="box active" x="110" y="150" width="52" height="34" rx="5"/><text x="136" y="167" text-anchor="middle" dominant-baseline="central" class="mono">A</text>
+<text x="194" y="210" text-anchor="middle" class="small muted">each frame = n + 1 = 3 slots</text>
+<text x="330" y="44" class="small">A has the most copies (4). Between consecutive A's there must be n = 2 other slots,</text>
+<text x="330" y="62" class="small">so the A's alone force (4 − 1) frames of n + 1 slots, plus a last row.</text>
+<text x="330" y="96" class="small">The last row holds every task that ties for the most copies (here only A).</text>
+<text x="330" y="130" class="small">Other tasks fill the gaps; leftover gaps become idle ticks.</text>
+<text x="330" y="166" class="mono small">answer = max(len(tasks), (maxCount − 1)·(n + 1) + ties)</text>
+<text x="330" y="186" class="mono small">       = max(9, 3·3 + 1) = 10</text>
+</svg>
+<figcaption>The frame picture for A×4, B×3, C×2 with n = 2. If there are so many other tasks that they overflow the frames, no slot is ever idle and the answer is just len(tasks): that is the max().</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-python">def least_interval_formula(tasks: list[str], n: int) -&gt; int:
+    counts = Counter(tasks).values()
+    top = max(counts)
+    ties = sum(1 for c in counts if c == top)
+    return max(len(tasks), (top - 1) * (n + 1) + ties)
+</code></pre>
+<pre><code class="language-csharp">public static int LeastIntervalFormula(char[] tasks, int n)
+{
+    var count = new int[26];
+    foreach (char t in tasks) count[t - 'A']++;
+    int top = count.Max();
+    int ties = count.Count(c =&gt; c == top);
+    return Math.Max(tasks.Length, (top - 1) * (n + 1) + ties);
+}
+</code></pre>
+</div>
+<h3 id="ipo-unlock-by-one-key-choose-by-another">IPO: unlock by one key, choose by another</h3>
+<p>You start with capital <code>w</code> and may finish at most <code>k</code> projects. Project <code>i</code> needs <code>capital[i]</code> to start and adds <code>profits[i]</code> when done. Two different orders are involved, and each gets its own structure:</p>
+<ul>
+<li><strong>Unlocking</strong> depends on capital, and capital only grows. Sort projects by capital and sweep a pointer forward; a project, once affordable, stays affordable.</li>
+<li><strong>Choosing</strong> depends on profit: among unlocked projects, take the most profitable. That is a max-heap of profits.</li>
+</ul>
+<div class="viz" data-viz="heaps-priority-queues-ipo"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def find_maximized_capital(k: int, w: int, profits: list[int], capital: list[int]) -&gt; int:
+    projects = sorted(zip(capital, profits))
+    avail, i = [], 0                         # max-heap of unlocked profits (negated)
+    for _ in range(k):
+        while i &lt; len(projects) and projects[i][0] &lt;= w:
+            heapq.heappush(avail, -projects[i][1])
+            i += 1
+        if not avail:
+            break                            # nothing affordable, ever
+        w -= heapq.heappop(avail)            # minus a negative: add the profit
+    return w
+</code></pre>
+<pre><code class="language-csharp">public static int FindMaximizedCapital(int k, int w, int[] profits, int[] capital)
+{
+    int n = profits.Length, next = 0;
+    int[] order = Enumerable.Range(0, n).OrderBy(i =&gt; capital[i]).ToArray();
+    var avail = new PriorityQueue&lt;int, int&gt;();          // profit; priority -profit: max-heap
+    for (int round = 0; round &lt; k; round++)
+    {
+        while (next &lt; n &amp;&amp; capital[order[next]] &lt;= w)
+        {
+            int p = profits[order[next++]];
+            avail.Enqueue(p, -p);
+        }
+        if (!avail.TryDequeue(out int best, out _)) break;
+        w += best;
+    }
+    return w;
+}
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Why greedy is safe here.</strong> Taking the most profitable affordable project gives the largest capital after this round. Larger capital unlocks a superset of projects, so no other choice can lead to a better future. Most heap-greedy proofs have this shape: the heap's choice leaves you in a state at least as good as any alternative, so an exchange argument finishes it (see <a href="greedy.html">Greedy Algorithms</a>). Recognise the pattern "<strong>sorted pointer</strong> for availability + <strong>heap</strong> for selection" in Course Schedule III, Maximum Performance of a Team, Minimum Cost to Hire K Workers and Single-Threaded CPU.</p>
+</div>
+<h2 id="lazy-deletion-removing-what-you-cannot-find">Lazy deletion: removing what you cannot find</h2>
+<p>A heap can remove its top in O(log n), but removing an arbitrary element means <strong>finding</strong> it first, which is O(n): the array is not searchable. Neither <code>heapq</code> nor <code>PriorityQueue</code> has a decrease-key or a fast delete. The standard workaround is to <strong>not delete at all</strong>:</p>
+<ol>
+<li>When an item becomes invalid (it left a window, its priority changed, it was cancelled), just <strong>remember</strong> that it is invalid: an index check, a "removed" counter, or a newer value in a <code>dist</code> array.</li>
+<li>When you look at the top, first <strong>pop invalid tops</strong> until the top is valid. Buried invalid entries do no harm: they are never returned, because they are discarded the moment they reach the top.</li>
+</ol>
+<div class="viz" data-viz="heaps-priority-queues-lazy"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def max_sliding_window_heap(nums: list[int], k: int) -&gt; list[int]:
+    heap, out = [], []
+    for i, x in enumerate(nums):
+        heapq.heappush(heap, (-x, i))        # max-heap by value, remember the index
+        while heap[0][1] &lt;= i - k:           # stale top: it left the window
+            heapq.heappop(heap)
+        if i &gt;= k - 1:
+            out.append(-heap[0][0])
+    return out
+</code></pre>
+<pre><code class="language-csharp">public static int[] MaxSlidingWindowHeap(int[] nums, int k)
+{
+    var heap = new PriorityQueue&lt;int, int&gt;();          // element: index; priority: -value
+    var output = new List&lt;int&gt;();
+    for (int i = 0; i &lt; nums.Length; i++)
+    {
+        heap.Enqueue(i, -nums[i]);
+        while (heap.Peek() &lt;= i - k) heap.Dequeue();   // stale top: it left the window
+        if (i &gt;= k - 1) output.Add(nums[heap.Peek()]);
+    }
+    return output.ToArray();
+}
+</code></pre>
+</div>
+<p>The cost: the heap can hold up to n entries instead of k, so operations are O(log n) instead of O(log k). Each entry is pushed once and popped once, so the total stays O(n log n). The ways to know an entry is stale:</p>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Entry</th>
+<th>Stale when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sliding window max / median</td>
+<td><code>(value, index)</code> or a value</td>
+<td>index ≤ i − k, or a <code>removed[value]</code> counter is positive</td>
+</tr>
+<tr>
+<td>Dijkstra / Prim</td>
+<td><code>(dist, node)</code></td>
+<td><code>dist &gt; best[node]</code>: a shorter path was found later</td>
+</tr>
+<tr>
+<td>Updatable priorities (stock prices, leaderboards)</td>
+<td><code>(priority, id, version)</code></td>
+<td><code>version != current_version[id]</code></td>
+</tr>
+<tr>
+<td>Cancelled tasks / timers</td>
+<td><code>(time, id)</code></td>
+<td><code>id in cancelled</code></td>
+</tr>
+</tbody>
+</table>
+<div class="pitfall">
+<p><strong>Sizes lie under lazy deletion.</strong> <code>len(heap)</code> counts stale entries too. If the algorithm depends on sizes (two heaps that must stay balanced), keep your own counters of <strong>valid</strong> items per heap and balance on those. Worked problem 7 does exactly that.</p>
+</div>
+<h2 id="dijkstra-preview-the-heap-as-a-frontier">Dijkstra preview: the heap as a frontier</h2>
+<p>Shortest paths with non-negative weights are the most famous heap algorithm. The heap holds <code>(tentative distance, node)</code>. The top is the closest node not yet settled, and its distance is final, because any other route to it would pass through a node that is at least as far and then add non-negative weights. When a shorter path to <code>v</code> is found, push a <strong>new</strong> entry. The old one becomes stale and is skipped when popped: lazy deletion standing in for decrease-key.</p>
+<div class="viz" data-viz="heaps-priority-queues-dijkstra"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def dijkstra(n: int, edges: list[tuple[int, int, int]], src: int) -&gt; list[float]:
+    adj = [[] for _ in range(n)]
+    for u, v, w in edges:                    # undirected, w &gt;= 0
+        adj[u].append((v, w))
+        adj[v].append((u, w))
+    dist = [math.inf] * n
+    dist[src] = 0
+    heap = [(0, src)]
+    while heap:
+        d, u = heapq.heappop(heap)
+        if d &gt; dist[u]:
+            continue                         # stale entry: u improved later
+        for v, w in adj[u]:
+            if d + w &lt; dist[v]:
+                dist[v] = d + w
+                heapq.heappush(heap, (d + w, v))
+    return dist
+</code></pre>
+<pre><code class="language-csharp">public static int[] Dijkstra(int n, int[][] edges, int src)
+{
+    var adj = new List&lt;(int To, int W)&gt;[n];
+    for (int i = 0; i &lt; n; i++) adj[i] = new();
+    foreach (var e in edges) { adj[e[0]].Add((e[1], e[2])); adj[e[1]].Add((e[0], e[2])); }
+    var dist = new int[n];
+    Array.Fill(dist, int.MaxValue);                    // int.MaxValue = unreachable
+    dist[src] = 0;
+    var heap = new PriorityQueue&lt;int, int&gt;();
+    heap.Enqueue(src, 0);
+    while (heap.TryDequeue(out int u, out int d))
+    {
+        if (d &gt; dist[u]) continue;                     // stale entry
+        foreach (var (v, w) in adj[u])
+            if (d + w &lt; dist[v]) { dist[v] = d + w; heap.Enqueue(v, d + w); }
+    }
+    return dist;
+}
+</code></pre>
+</div>
+<p>This is a preview. <a href="shortest-paths.html">Shortest Paths</a> covers Dijkstra properly (path reconstruction, grids, "cheapest flights with at most k stops", why negative edges break it, and Bellman-Ford). Prim's minimum spanning tree uses the same heap loop with edge weight instead of total distance (<a href="minimum-spanning-trees.html">Minimum Spanning Trees</a>).</p>
+<h2 id="pitfalls-and-a-debugging-checklist">Pitfalls and a debugging checklist</h2>
+<div class="pitfall">
+<p><strong>The wrong direction.</strong> The k <strong>largest</strong> need a <strong>min</strong>-heap of size k; the k <strong>smallest</strong> need a <strong>max</strong>-heap. A max-heap of all n items "works" but costs O(n) memory and O(n + k log n) time, and it misses the point on a stream. Before you write the first line, say out loud what the root means: "the k-th largest so far", "the room that frees up first".</p>
+</div>
+<div class="pitfall">
+<p><strong>Treating the heap as sorted.</strong> <code>h[1]</code> is <strong>not</strong> the second smallest (it is one of the two children of the root), and iterating <code>h</code> or <code>UnorderedItems</code> gives heap order, not sorted order. To get the k best in order, pop k times or sort the heap's contents at the end.</p>
+</div>
+<div class="pitfall">
+<p><strong>Changing an item while it is inside the heap.</strong> If you mutate the priority of an object that is already in the heap (<code>node.dist = 3</code>), nobody sifts it, and the heap property is silently broken. The heap does not know. Push a new entry and skip the old one later (lazy deletion), or rebuild with <code>heapify</code>. The same goes for <code>h.append(x)</code> or <code>h.sort()</code> on a list you are using with <code>heapq</code>: either keep using only <code>heapq</code> functions on it, or call <code>heapify</code> again.</p>
+</div>
+<div class="pitfall">
+<p><strong>Empty heaps.</strong> <code>h[0]</code> and <code>heappop(h)</code> raise <code>IndexError</code> on an empty list; <code>Peek()</code> and <code>Dequeue()</code> throw <code>InvalidOperationException</code>. Guard with <code>if h:</code> or use <code>TryPeek</code> / <code>TryDequeue</code>. After lazy pops, the heap can become empty <strong>inside</strong> your loop, so guard there too.</p>
+</div>
+<div class="callout">
+<p><strong>Debugging checklist</strong></p>
+<ol>
+<li>What does the <strong>root</strong> mean, in one sentence? Is the heap a min-heap or a max-heap, and does every push and every read agree on the sign?</li>
+<li>What exactly is in one <strong>entry</strong>? If it is a tuple, which field breaks ties, and can that field always be compared?</li>
+<li>What is the <strong>size bound</strong>? "At most k", "one per list", "one per busy room", or "everything, with stale entries"? Check that pushes and pops keep it.</li>
+<li>Can an entry become <strong>invalid</strong> while it sits in the heap? Then you need a staleness test at every top read.</li>
+<li>Run the edge cases: k = 1, k = n, all values equal, an empty list among the inputs, negative numbers (with negation), and ties.</li>
+</ol>
+</div>
+<h2 id="templates-at-a-glance">Templates at a glance</h2>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Heap holds</th>
+<th>Root means</th>
+<th>Size</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Top-k largest</td>
+<td>min-heap of values</td>
+<td>the k-th largest so far</td>
+<td>k</td>
+<td>O(n log k)</td>
+</tr>
+<tr>
+<td>Top-k smallest / closest</td>
+<td>max-heap (negated)</td>
+<td>the k-th smallest / farthest kept</td>
+<td>k</td>
+<td>O(n log k)</td>
+</tr>
+<tr>
+<td>k-way merge / frontier</td>
+<td><code>(value, list, position)</code></td>
+<td>the smallest unread front</td>
+<td>k</td>
+<td>O(N log k)</td>
+</tr>
+<tr>
+<td>Running median</td>
+<td>max-heap <code>lo</code> + min-heap <code>hi</code></td>
+<td>the two middle values</td>
+<td>n</td>
+<td>O(log n) per add</td>
+</tr>
+<tr>
+<td>Rooms / servers</td>
+<td>min-heap of end times</td>
+<td>the resource that frees up first</td>
+<td>busy count</td>
+<td>O(n log n)</td>
+</tr>
+<tr>
+<td>Most work first</td>
+<td>max-heap of counts + cooldown queue</td>
+<td>the most urgent ready task</td>
+<td>distinct tasks</td>
+<td>O(T log 26)</td>
+</tr>
+<tr>
+<td>Unlock + choose</td>
+<td>sorted pointer + max-heap</td>
+<td>the best affordable option</td>
+<td>unlocked</td>
+<td>O(n log n)</td>
+</tr>
+<tr>
+<td>Lazy deletion</td>
+<td>entries + a staleness test</td>
+<td>the best <strong>valid</strong> entry (after pruning)</td>
+<td>all pushed</td>
+<td>O(n log n)</td>
+</tr>
+<tr>
+<td>Dijkstra / Prim</td>
+<td><code>(dist, node)</code></td>
+<td>the closest unsettled node</td>
+<td>O(E)</td>
+<td>O((V + E) log E)</td>
+</tr>
+</tbody>
+</table>
+<div class="recognize">
+<p><strong>Recognize it when</strong></p>
+<ul>
+<li>"k-th largest / smallest", "top k", "k closest", "k most frequent", especially on a <strong>stream</strong>. Size-k heap with the opposite orientation.</li>
+<li>Several <strong>sorted</strong> sources and you need the global order, or the k-th element across them: one front per source in a heap.</li>
+<li>"Median" (or any percentile) of data that keeps changing. Two heaps.</li>
+<li>A simulation where at each moment you take <strong>the best available</strong> option and options appear or expire over time: rooms, servers, CPU tasks, courses, projects. Heap, often plus a sort by arrival time.</li>
+<li>"Minimum cost / time to reach", with non-negative weights: Dijkstra. Grid flood fills where you always extend the <strong>lowest</strong> wall (Trapping Rain Water II, Swim in Rising Water) are the same idea.</li>
+<li>You keep needing min or max of a set that also needs <strong>removals</strong>: a heap with lazy deletion (or a balanced BST / <code>SortedList</code> if you need both ends and arbitrary deletes).</li>
+<li>The best item is only ever needed at <strong>one</strong> end and the data is static: just sort. A heap pays off when the set <strong>changes between queries</strong>.</li>
+</ul>
+</div>
+<h2 id="worked-problems">Worked problems</h2>
+<h3 id="1-kth-largest-element-in-a-stream-easy">1. Kth Largest Element in a Stream <span class="diff easy">Easy</span></h3>
+<p>Design a class that is given <code>k</code> and some initial numbers, then receives numbers one at a time and must return the k-th largest so far after each one. <strong>Insight:</strong> this is the top-k visualizer turned into a class. The heap keeps the k largest; its root is the answer, and <code>add</code> is one comparison plus at most one O(log k) sift.</p>
+<details class="solution">
+<summary>Solution: O(n log k) to build, O(log k) per add, O(k) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">class KthLargest:
+    def __init__(self, k: int, nums: list[int]):
+        self.k = k
+        self.heap = nums[:]
+        heapq.heapify(self.heap)                  # O(n)
+        while len(self.heap) &gt; k:
+            heapq.heappop(self.heap)              # keep only the k largest
+
+    def add(self, val: int) -&gt; int:
+        if len(self.heap) &lt; self.k:
+            heapq.heappush(self.heap, val)
+        elif val &gt; self.heap[0]:
+            heapq.heapreplace(self.heap, val)     # val joins, the old k-th leaves
+        return self.heap[0]
+</code></pre>
+<pre><code class="language-csharp">public class KthLargest
+{
+    private readonly int k;
+    private readonly PriorityQueue&lt;int, int&gt; heap = new();   // min-heap of the k largest
+
+    public KthLargest(int k, int[] nums)
+    {
+        this.k = k;
+        foreach (int x in nums) Add(x);
+    }
+
+    public int Add(int val)
+    {
+        if (heap.Count &lt; k) heap.Enqueue(val, val);
+        else if (val &gt; heap.Peek()) heap.DequeueEnqueue(val, val);
+        return heap.Peek();
+    }
+}
+</code></pre>
+</div>
+</details>
+<h3 id="2-top-k-frequent-elements-medium">2. Top K Frequent Elements <span class="diff medium">Medium</span></h3>
+<p>Return the <code>k</code> most frequent values (any order). <strong>Insight:</strong> count with a hash map, then it is top-k on the counts: a min-heap of <code>(count, value)</code> of size k. Because counts are integers between 1 and n, there is also an O(n) answer: <strong>bucket</strong> the values by count and read the buckets from the highest count down.</p>
+<details class="solution">
+<summary>Solution: O(n log k) with a heap, O(n) with buckets</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def top_k_frequent(nums: list[int], k: int) -&gt; list[int]:
+    count = Counter(nums)
+    heap = []                                     # min-heap of (freq, value), size &lt;= k
+    for v, f in count.items():
+        heapq.heappush(heap, (f, v))
+        if len(heap) &gt; k:
+            heapq.heappop(heap)                   # drop the least frequent
+    return [v for f, v in heap]
+
+
+def top_k_frequent_bucket(nums: list[int], k: int) -&gt; list[int]:
+    count = Counter(nums)
+    buckets = [[] for _ in range(len(nums) + 1)]  # buckets[f] = values seen f times
+    for v, f in count.items():
+        buckets[f].append(v)
+    out = []
+    for f in range(len(nums), 0, -1):
+        for v in buckets[f]:
+            out.append(v)
+            if len(out) == k:
+                return out
+    return out
+</code></pre>
+<pre><code class="language-csharp">public static int[] TopKFrequent(int[] nums, int k)
+{
+    var count = new Dictionary&lt;int, int&gt;();
+    foreach (int x in nums) count[x] = count.GetValueOrDefault(x) + 1;
+    var heap = new PriorityQueue&lt;int, int&gt;();          // value; priority = frequency
+    foreach (var (v, f) in count)
+    {
+        heap.Enqueue(v, f);
+        if (heap.Count &gt; k) heap.Dequeue();            // drop the least frequent
+    }
+    return heap.UnorderedItems.Select(p =&gt; p.Element).ToArray();
+}
+
+public static int[] TopKFrequentBucket(int[] nums, int k)
+{
+    var count = new Dictionary&lt;int, int&gt;();
+    foreach (int x in nums) count[x] = count.GetValueOrDefault(x) + 1;
+    var buckets = new List&lt;int&gt;[nums.Length + 1];
+    foreach (var (v, f) in count) (buckets[f] ??= new List&lt;int&gt;()).Add(v);
+    var output = new List&lt;int&gt;();
+    for (int f = nums.Length; f &gt; 0 &amp;&amp; output.Count &lt; k; f--)
+        if (buckets[f] != null)
+            foreach (int v in buckets[f])
+                if (output.Count &lt; k) output.Add(v);
+    return output.ToArray();
+}
+</code></pre>
+</div>
+</details>
+<div class="tip">
+<p><strong>Top K Frequent Words</strong> adds a twist: ties must be broken <strong>alphabetically</strong>, and the output must be sorted. With a size-k min-heap the "worst" entry must be on top, so the worst is the lower count, and on equal counts the alphabetically <strong>larger</strong> word. That needs a reversed string order, which <code>heapq</code> cannot express by negation. The easy route: <code>heapq.nsmallest(k, count, key=lambda w: (-count[w], w))</code>, or sort by that key.</p>
+</div>
+<h3 id="3-k-closest-points-to-origin-medium">3. K Closest Points to Origin <span class="diff medium">Medium</span></h3>
+<p>Return the <code>k</code> points closest to <code>(0, 0)</code>. <strong>Insight:</strong> "k smallest distances" means a <strong>max</strong>-heap of size k: the root is the farthest of the points kept so far, and a new point replaces it only when it is closer. Compare squared distances; there is no need for <code>sqrt</code>. The index <code>i</code> in the tuple is the tie-breaker, so two points at the same distance never compare their lists.</p>
+<details class="solution">
+<summary>Solution: O(n log k) time, O(k) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def k_closest(points: list[list[int]], k: int) -&gt; list[list[int]]:
+    heap = []                                     # max-heap by distance: (-d, i)
+    for i, (x, y) in enumerate(points):
+        d = x * x + y * y
+        if len(heap) &lt; k:
+            heapq.heappush(heap, (-d, i))
+        elif d &lt; -heap[0][0]:                     # closer than the farthest kept
+            heapq.heapreplace(heap, (-d, i))
+    return [points[i] for _, i in heap]
+</code></pre>
+<pre><code class="language-csharp">public static int[][] KClosest(int[][] points, int k)
+{
+    var heap = new PriorityQueue&lt;int[], int&gt;(Comparer&lt;int&gt;.Create((a, b) =&gt; b.CompareTo(a)));  // max-heap
+    foreach (var p in points)
+    {
+        int d = p[0] * p[0] + p[1] * p[1];
+        if (heap.Count &lt; k) heap.Enqueue(p, d);
+        else if (heap.TryPeek(out _, out int far) &amp;&amp; d &lt; far) heap.DequeueEnqueue(p, d);
+    }
+    return heap.UnorderedItems.Select(e =&gt; e.Element).ToArray();
+}
+</code></pre>
+</div>
+</details>
+<h3 id="4-reorganize-string-medium">4. Reorganize String <span class="diff medium">Medium</span></h3>
+<p>Rearrange the letters so that no two adjacent letters are equal, or return <code>""</code> if that is impossible. <strong>Insight:</strong> the task scheduler with <code>n = 1</code>. Always place the letter with the most copies left, <strong>except</strong> the one you just placed, which sits out one turn (<code>held</code>) and goes back into the heap after the next letter. If the heap runs dry while a letter is still held, no valid arrangement exists; that happens exactly when some letter appears more than <code>(len + 1) // 2</code> times.</p>
+<details class="solution">
+<summary>Solution: O(n log 26) = O(n) time, O(26) extra space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def reorganize_string(s: str) -&gt; str:
+    heap = [(-c, ch) for ch, c in Counter(s).items()]
+    heapq.heapify(heap)
+    out, held = [], None                          # held: the letter that must sit out one turn
+    while heap:
+        c, ch = heapq.heappop(heap)
+        out.append(ch)
+        if held:
+            heapq.heappush(heap, held)            # last turn's letter is allowed again
+        held = (c + 1, ch) if c + 1 &lt; 0 else None
+    return &quot;&quot; if held else &quot;&quot;.join(out)
+</code></pre>
+<pre><code class="language-csharp">public static string ReorganizeString(string s)
+{
+    var count = new int[26];
+    foreach (char ch in s) count[ch - 'a']++;
+    var heap = new PriorityQueue&lt;int, int&gt;();          // letter; priority -copies left
+    for (int c = 0; c &lt; 26; c++) if (count[c] &gt; 0) heap.Enqueue(c, -count[c]);
+    var sb = new System.Text.StringBuilder();
+    int held = -1;                                     // the letter sitting out one turn
+    while (heap.TryDequeue(out int c, out _))
+    {
+        sb.Append((char)('a' + c));
+        count[c]--;
+        if (held &gt;= 0) heap.Enqueue(held, -count[held]);
+        held = count[c] &gt; 0 ? c : -1;
+    }
+    return held &gt;= 0 ? &quot;&quot; : sb.ToString();
+}
+</code></pre>
+</div>
+</details>
+<h3 id="5-merge-k-sorted-lists-hard">5. Merge k Sorted Lists <span class="diff hard">Hard</span></h3>
+<p>Merge <code>k</code> sorted linked lists into one. <strong>Insight:</strong> the k-way merge visualizer with nodes instead of indices: the heap holds the current head of each list, and popping a node means "link it to the tail and push its <code>next</code>". In Python the tuple is <code>(val, i, node)</code>: <code>i</code> is the list index, unique among the heap's entries (each list has at most one node in the heap), so ties never reach the <code>ListNode</code>. The pointer handling is the dummy-head technique from <a href="linked-lists.html">Linked Lists</a>.</p>
+<details class="solution">
+<summary>Solution: O(N log k) time, O(k) extra space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def merge_k_lists(lists: list[ListNode | None]) -&gt; ListNode | None:
+    heap = [(node.val, i, node) for i, node in enumerate(lists) if node]
+    heapq.heapify(heap)
+    dummy = tail = ListNode()
+    while heap:
+        _, i, node = heapq.heappop(heap)
+        tail.next = node                          # reuse the node, no copying
+        tail = node
+        if node.next:
+            heapq.heappush(heap, (node.next.val, i, node.next))
+    return dummy.next
+</code></pre>
+<pre><code class="language-csharp">public static ListNode? MergeKLists(ListNode?[] lists)
+{
+    var heap = new PriorityQueue&lt;ListNode, int&gt;();     // node; priority = its value
+    foreach (var node in lists) if (node != null) heap.Enqueue(node, node.val);
+    var dummy = new ListNode();
+    var tail = dummy;
+    while (heap.TryDequeue(out var node, out _))
+    {
+        tail.next = node;
+        tail = node;
+        if (node.next != null) heap.Enqueue(node.next, node.next.val);
+    }
+    return dummy.next;
+}
+</code></pre>
+</div>
+</details>
+<div class="insight">
+<p><strong>The heap-free alternative.</strong> Merge the lists in pairs, like the merge step of merge sort: k lists → k/2 → k/4 … Each round touches all N nodes, and there are log₂ k rounds: also O(N log k), with O(1) extra space if the merging is iterative. Merging list after list into one growing result is O(N·k), the slow answer interviewers are waiting for you to improve.</p>
+</div>
+<h3 id="6-find-median-from-data-stream-hard">6. Find Median from Data Stream <span class="diff hard">Hard</span></h3>
+<p>Support <code>addNum(num)</code> and <code>findMedian()</code>. <strong>Insight:</strong> the two-heaps visualizer. This version is branch-free: every number goes into <code>lo</code>, then <code>lo</code>'s largest moves to <code>hi</code> (so the order rule holds automatically), then <code>hi</code> gives one back if it became bigger. Three heap operations, the same O(log n), and no comparison to get wrong.</p>
+<details class="solution">
+<summary>Solution: O(log n) add, O(1) median, O(n) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">class MedianFinder:
+    def __init__(self):
+        self.lo = []                              # max-heap (negated): the smaller half
+        self.hi = []                              # min-heap: the larger half
+
+    def addNum(self, num: int) -&gt; None:
+        heapq.heappush(self.lo, -num)
+        heapq.heappush(self.hi, -heapq.heappop(self.lo))   # lo's largest moves up
+        if len(self.hi) &gt; len(self.lo):
+            heapq.heappush(self.lo, -heapq.heappop(self.hi))
+
+    def findMedian(self) -&gt; float:
+        if len(self.lo) &gt; len(self.hi):
+            return float(-self.lo[0])
+        return (-self.lo[0] + self.hi[0]) / 2
+</code></pre>
+<pre><code class="language-csharp">public class MedianFinder
+{
+    private readonly PriorityQueue&lt;int, int&gt; lo = new(Comparer&lt;int&gt;.Create((a, b) =&gt; b.CompareTo(a)));  // max-heap
+    private readonly PriorityQueue&lt;int, int&gt; hi = new();                                                // min-heap
+
+    public void AddNum(int num)
+    {
+        lo.Enqueue(num, num);
+        int moved = lo.Dequeue();                      // lo's largest moves up
+        hi.Enqueue(moved, moved);
+        if (hi.Count &gt; lo.Count)
+        {
+            int back = hi.Dequeue();
+            lo.Enqueue(back, back);
+        }
+    }
+
+    public double FindMedian() =&gt;
+        lo.Count &gt; hi.Count ? lo.Peek() : ((double)lo.Peek() + hi.Peek()) / 2;
+}
+</code></pre>
+</div>
+</details>
+<div class="tip">
+<p><strong>The follow-ups.</strong> "All numbers are in 0..100": keep 101 counters and walk them to the middle, O(100) per query. "99% are in 0..100": counters for the range plus two small heaps (or just counts) for the outliers below and above. Note the <code>(double)</code> in C#: <code>lo.Peek() + hi.Peek()</code> can overflow <code>int</code> before the division.</p>
+</div>
+<h3 id="7-sliding-window-median-hard">7. Sliding Window Median <span class="diff hard">Hard</span></h3>
+<p>Return the median of every window of size <code>k</code>. <strong>Insight:</strong> the two heaps of problem 6, plus lazy deletion for the number that leaves. The difficulty is that a heap's length now includes stale entries, so the heaps cannot be balanced by <code>len</code>. Instead, track the <strong>change</strong> in <code>valid(lo) − valid(hi)</code> during each step: the leaving number <code>y</code> counts against the side it lives on, the entering number <code>x</code> for the side it joins. That change is −2, 0 or +2, and one move of a top fixes ±2. Stale tops are popped at the end of the step, so both tops are always valid when the median is read.</p>
+<details class="solution">
+<summary>Solution: O(n log n) time, O(n) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def median_sliding_window(nums: list[int], k: int) -&gt; list[float]:
+    lo, hi = [], []                               # lo: max-heap (negated), hi: min-heap
+    gone = Counter()                              # value -&gt; stale copies still in a heap
+    for x in nums[:k]:
+        heapq.heappush(lo, -x)
+    for _ in range(k // 2):                       # the larger half moves to hi
+        heapq.heappush(hi, -heapq.heappop(lo))
+
+    def median() -&gt; float:
+        return float(-lo[0]) if k % 2 else (-lo[0] + hi[0]) / 2
+
+    out = [median()]
+    for i in range(k, len(nums)):
+        x, y = nums[i], nums[i - k]               # x enters, y leaves
+        gone[y] += 1
+        balance = -1 if y &lt;= -lo[0] else 1        # change in valid(lo) - valid(hi)
+        if x &lt;= -lo[0]:
+            heapq.heappush(lo, -x)
+            balance += 1
+        else:
+            heapq.heappush(hi, x)
+            balance -= 1
+        if balance &gt; 0:                           # lo has one valid item too many
+            heapq.heappush(hi, -heapq.heappop(lo))
+        elif balance &lt; 0:                         # hi has one valid item too many
+            heapq.heappush(lo, -heapq.heappop(hi))
+        while lo and gone[-lo[0]]:                # now drop stale tops
+            gone[-lo[0]] -= 1
+            heapq.heappop(lo)
+        while hi and gone[hi[0]]:
+            gone[hi[0]] -= 1
+            heapq.heappop(hi)
+        out.append(median())
+    return out
+</code></pre>
+<pre><code class="language-csharp">public static double[] MedianSlidingWindow(int[] nums, int k)
+{
+    var lo = new PriorityQueue&lt;int, int&gt;(Comparer&lt;int&gt;.Create((a, b) =&gt; b.CompareTo(a)));  // max-heap
+    var hi = new PriorityQueue&lt;int, int&gt;();                                                // min-heap
+    var gone = new Dictionary&lt;int, int&gt;();             // value -&gt; stale copies still in a heap
+    foreach (int x in nums.Take(k)) lo.Enqueue(x, x);
+    for (int t = 0; t &lt; k / 2; t++) { int m = lo.Dequeue(); hi.Enqueue(m, m); }
+
+    double Median() =&gt; k % 2 == 1 ? lo.Peek() : ((double)lo.Peek() + hi.Peek()) / 2;
+    void Prune(PriorityQueue&lt;int, int&gt; h)
+    {
+        while (h.Count &gt; 0 &amp;&amp; gone.GetValueOrDefault(h.Peek()) &gt; 0) { gone[h.Peek()]--; h.Dequeue(); }
+    }
+
+    var output = new List&lt;double&gt; { Median() };
+    for (int i = k; i &lt; nums.Length; i++)
+    {
+        int x = nums[i], y = nums[i - k];
+        gone[y] = gone.GetValueOrDefault(y) + 1;
+        int balance = y &lt;= lo.Peek() ? -1 : 1;
+        if (x &lt;= lo.Peek()) { lo.Enqueue(x, x); balance++; }
+        else { hi.Enqueue(x, x); balance--; }
+        if (balance &gt; 0) { int m = lo.Dequeue(); hi.Enqueue(m, m); }
+        else if (balance &lt; 0) { int m = hi.Dequeue(); lo.Enqueue(m, m); }
+        Prune(lo);
+        Prune(hi);
+        output.Add(Median());
+    }
+    return output.ToArray();
+}
+</code></pre>
+</div>
+</details>
+<div class="insight">
+<p><strong>Why the moved top is never stale.</strong> At the start of a step both tops are valid. If the balance is +2, the leaving <code>y</code> was on the <code>hi</code> side and <code>x</code> joined <code>lo</code>, so <code>lo</code>'s top is either its old valid top or <code>x</code>; both are valid. The −2 case is symmetric. Only the final pruning ever meets a stale top. In C#, a <code>SortedList</code>-like structure with duplicates (or two <code>SortedSet&lt;(value, index)&gt;</code>) avoids lazy deletion entirely, at the cost of more code.</p>
+</div>
+<h2 id="problem-ladder">Problem ladder</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Level</th>
+<th>The key idea</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://leetcode.com/problems/last-stone-weight/">Last Stone Weight</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Max-heap (negated); pop two, push the difference if it is not 0.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://leetcode.com/problems/kth-largest-element-in-a-stream/">Kth Largest Element in a Stream</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Size-k min-heap; the root is the answer (worked problem 1).</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://leetcode.com/problems/kth-largest-element-in-an-array/">Kth Largest Element in an Array</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Size-k min-heap, O(n log k); quickselect for O(n) on average.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://leetcode.com/problems/k-closest-points-to-origin/">K Closest Points to Origin</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Size-k max-heap on squared distance; the farthest kept is on top.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://leetcode.com/problems/top-k-frequent-elements/">Top K Frequent Elements</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Count, then top-k on the counts; or buckets by count for O(n).</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://leetcode.com/problems/sort-characters-by-frequency/">Sort Characters By Frequency</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Max-heap of <code>(-count, char)</code>; pop and append <code>char * count</code>.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/">Kth Smallest Element in a Sorted Matrix</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>k-way merge of the rows; the k-th pop is the answer.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://leetcode.com/problems/find-k-pairs-with-smallest-sums/">Find K Pairs with Smallest Sums</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Seed <code>(i, 0)</code> for each i; popping <code>(i, j)</code> pushes <code>(i, j + 1)</code>.</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://leetcode.com/problems/ugly-number-ii/">Ugly Number II</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Pop the smallest x, push 2x, 3x, 5x; a <code>seen</code> set stops duplicates.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://leetcode.com/problems/task-scheduler/">Task Scheduler</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Most copies first, cooldown queue; or the frames formula.</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://leetcode.com/problems/reorganize-string/">Reorganize String</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Most copies first; the letter just used sits out one turn (worked problem 4).</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://leetcode.com/problems/meeting-rooms-ii/">Meeting Rooms II</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Sort by start; min-heap of end times; reuse the room that frees first.</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://leetcode.com/problems/single-threaded-cpu/">Single-Threaded CPU</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Sort by arrival; unlock arrived tasks into a heap of <code>(duration, index)</code>; jump the clock when idle.</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="https://leetcode.com/problems/furthest-building-you-can-reach/">Furthest Building You Can Reach</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Ladders go on the biggest climbs: min-heap of laddered climbs; over the limit, pay the smallest with bricks.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="https://leetcode.com/problems/network-delay-time/">Network Delay Time</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Dijkstra from k; the answer is the largest distance, or −1.</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="https://leetcode.com/problems/merge-k-sorted-lists/">Merge k Sorted Lists</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Heap of list heads with an index tie-breaker; dummy head (worked problem 5).</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="https://leetcode.com/problems/find-median-from-data-stream/">Find Median from Data Stream</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Max-heap of the lower half, min-heap of the upper half (worked problem 6).</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="https://leetcode.com/problems/ipo/">IPO</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Sort by capital; unlock affordable projects into a max-heap of profits; take k times.</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="https://leetcode.com/problems/sliding-window-median/">Sliding Window Median</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Two heaps + lazy deletion, balanced by the change in valid sizes (worked problem 7).</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/">Smallest Range Covering Elements from K Lists</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>One front per list in a min-heap plus the current max; stop when a list runs out.</td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="https://leetcode.com/problems/meeting-rooms-iii/">Meeting Rooms III</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Two heaps: free rooms by number, busy rooms by <code>(end, room)</code>; delay when none is free.</td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="https://leetcode.com/problems/course-schedule-iii/">Course Schedule III</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Sort by deadline; take every course; over the deadline, drop the longest taken (max-heap).</td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="https://leetcode.com/problems/swim-in-rising-water/">Swim in Rising Water</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Dijkstra where a path costs its <strong>highest</strong> cell: always extend the lowest frontier cell.</td>
+</tr>
+<tr>
+<td>24</td>
+<td><a href="https://leetcode.com/problems/minimum-cost-to-hire-k-workers/">Minimum Cost to Hire K Workers</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Sort by wage/quality; the ratio sets the pay; a size-k max-heap keeps the smallest total quality.</td>
+</tr>
+<tr>
+<td>25</td>
+<td><a href="https://leetcode.com/problems/trapping-rain-water-ii/">Trapping Rain Water II</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Min-heap of the boundary; the lowest wall decides how much water its neighbour can hold.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>You want the k <strong>largest</strong> numbers of a stream. Why is the right heap a <strong>min</strong>-heap?</summary>
+<p>The heap is a club of the k largest so far, and the only member you ever need to inspect is the one who would be <strong>thrown out</strong> next: the smallest of the club. A min-heap puts exactly that number at the root. A newcomer is compared with it once: if it is bigger, it replaces the root (O(log k)); otherwise it is ignored (O(1)). With a max-heap the smallest member would be somewhere among the leaves, and you would have to keep all n numbers.</p>
+</details>
+<details class="quiz">
+<summary>Pushing n items one by one costs O(n log n). Why does <code>heapify</code> on the same n items cost only O(n)?</summary>
+<p><code>heapify</code> sifts <strong>down</strong>, starting from the last parent. The cost of a sift-down is the height of the node <strong>below</strong> it, and most nodes are near the bottom: n/2 leaves cost 0, n/4 nodes cost at most 1, n/8 cost at most 2, and so on. The sum n·(1/4 + 2/8 + 3/16 + …) is less than n. Pushing one by one sifts <strong>up</strong>, and the cost is the depth <strong>above</strong> the node, which is about log n for half of the nodes. Same tree, but the cheap direction is used for the many nodes at the bottom.</p>
+</details>
+<details class="quiz">
+<summary>In a min-heap's sift-down, why must the parent swap with the <strong>smaller</strong> of its two children?</summary>
+<p>After the swap, the promoted child becomes the parent of the other child. If you promote the smaller child, it is ≤ its sibling, so the heap property holds at that node. Promote the larger child instead and it now sits above a smaller sibling: the property is broken at a node you have already left, and nothing will ever fix it. Example: parent 9, children 2 and 5. Swapping 9 with 5 puts 5 above 2.</p>
+</details>
+<details class="quiz">
+<summary>Dijkstra with <code>heapq</code> pushes a node again every time its distance improves. Why is <code>if d &gt; dist[u]: continue</code> correct, and what happens without it?</summary>
+<p><code>heapq</code> has no decrease-key, so an improved distance is pushed as a <strong>new</strong> entry and the old one stays in the heap. The new one is smaller, so it is popped first and settles the node with the true distance. When the old entry surfaces later, its <code>d</code> is larger than <code>dist[u]</code>: it is <strong>stale</strong> and describes a path we already beat. Without the check, the node's edges are relaxed again with a worse distance: the answer stays correct (nothing improves), but the work can grow far past O(E log E) on dense graphs.</p>
+</details>
+<details class="quiz">
+<summary>Running median: the invariants are "every value in <code>lo</code> ≤ every value in <code>hi</code>" and "<code>len(lo)</code> is <code>len(hi)</code> or one more". Why do they make the median O(1)?</summary>
+<p>Together they say: <code>lo</code> is exactly the smaller half of the data, sorted or not, with the extra element when n is odd. The middle element(s) of the sorted data are then the <strong>largest</strong> of <code>lo</code> and the <strong>smallest</strong> of <code>hi</code>: precisely the two roots. Odd n: the median is <code>lo</code>'s root. Even n: it is the average of both roots. Nothing else in either heap ever matters, which is why they can stay unsorted.</p>
+</details>
+<details class="quiz">
+<summary>Heap <code>[3, 5, 8]</code>. What do <code>heapreplace(h, 1)</code> and <code>heappushpop(h, 1)</code> return, and what is left in the heap?</summary>
+<p><code>heapreplace</code> pops <strong>first</strong>: it returns 3 and leaves <code>[1, 5, 8]</code>, so the 1 is now inside even though it is smaller than everything. <code>heappushpop</code> pushes <strong>first</strong>: 1 is the smallest, so it comes straight back out. It returns 1 and the heap is unchanged, <code>[3, 5, 8]</code>. For "keep the k largest" you want the second behaviour, or guard <code>heapreplace</code> with <code>if x &gt; h[0]</code>, as the snippets on this page do.</p>
+</details>
+<details class="quiz">
+<summary>Your C# simulation enqueues tasks with equal priority and expects them back in arrival order. It works on small tests and fails on large ones. Why?</summary>
+<p><code>PriorityQueue&lt;TElement, TPriority&gt;</code> is <strong>not stable</strong>: among equal priorities the order is whatever the sifts happen to produce, and it changes as the heap grows. The same is true of <code>heapq</code> if you push <code>(priority, item)</code> and rely on <code>item</code> order. Make the tie-break explicit: use a priority of <code>(priority, sequenceNumber)</code> (a value tuple compares field by field) or pass a custom <code>IComparer</code>.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Use a heap when</strong>The set changes between queries and you only ever need its min (or max). Static data: just sort.</div>
+<div><strong>Array as a tree</strong>Children of <code>i</code>: <code>2i+1</code>, <code>2i+2</code>. Parent: <code>(i-1)//2</code>. Height ⌊log₂ n⌋.</div>
+<div><strong>Costs</strong>push / pop O(log n), peek O(1), <code>heapify</code> O(n), search or delete-by-value O(n).</div>
+<div><strong>Python</strong><code>heapq</code> is a min-heap on a list. Max-heap: push <code>-x</code>. Tie-break with <code>(key, seq, item)</code>.</div>
+<div><strong>C#</strong><code>PriorityQueue&lt;TElement, TPriority&gt;</code>: min by priority, not stable, no decrease-key. Max-heap: reversed <code>Comparer</code>.</div>
+<div><strong>Top-k</strong>k largest → min-heap of size k (k smallest → max-heap). The root is the k-th. O(n log k).</div>
+<div><strong>k-way merge</strong>One front per source; pop the smallest, push its successor. O(N log k).</div>
+<div><strong>Two heaps</strong><code>lo</code> max-heap, <code>hi</code> min-heap, <code>len(lo)</code> ∈ {<code>len(hi)</code>, <code>len(hi)+1</code>}. Median from the roots.</div>
+<div><strong>Resources</strong>Sort by start; min-heap of end times; pop the ones that ended, then take or add a resource.</div>
+<div><strong>Unlock + choose</strong>Sort by requirement; a pointer unlocks into a max-heap of value; take the best.</div>
+<div><strong>Lazy deletion</strong>Leave invalid entries in; test the top before using it. Sizes include stale entries.</div>
+<div><strong>Dijkstra</strong>Heap of <code>(dist, node)</code>; skip a pop with <code>d &gt; dist[u]</code>. Non-negative weights only.</div>
+</div><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="stacks-queues.html"><small>&larr; PREVIOUS</small>Stacks &amp; Queues</a><a class="next" href="tree-traversals.html"><small>NEXT &rarr;</small>Tree Traversals</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#what-a-heap-is-for">What a heap is for</a></li>
+<li><a href="#the-array-is-the-tree">The array is the tree</a></li>
+<li><a href="#push-and-pop-repair-one-path">Push and pop: repair one path</a></li>
+<li><a href="#heapify-building-a-heap-in-on">Heapify: building a heap in O(n)</a><ul>
+<li><a href="#heapsort-pop-everything">Heapsort: pop everything</a></li>
+</ul>
+</li>
+<li><a href="#heaps-in-python-and-c">Heaps in Python and C</a></li>
+<li><a href="#top-k-a-heap-of-size-k">Top-k: a heap of size k</a></li>
+<li><a href="#merging-k-sorted-sequences">Merging k sorted sequences</a></li>
+<li><a href="#two-heaps-the-running-median">Two heaps: the running median</a></li>
+<li><a href="#greedy-scheduling-with-heaps">Greedy scheduling with heaps</a><ul>
+<li><a href="#meeting-rooms-the-resource-that-frees-up-first">Meeting rooms: the resource that frees up first</a></li>
+<li><a href="#task-scheduler-the-most-work-left-goes-first">Task scheduler: the most work left goes first</a></li>
+<li><a href="#ipo-unlock-by-one-key-choose-by-another">IPO: unlock by one key, choose by another</a></li>
+</ul>
+</li>
+<li><a href="#lazy-deletion-removing-what-you-cannot-find">Lazy deletion: removing what you cannot find</a></li>
+<li><a href="#dijkstra-preview-the-heap-as-a-frontier">Dijkstra preview: the heap as a frontier</a></li>
+<li><a href="#pitfalls-and-a-debugging-checklist">Pitfalls and a debugging checklist</a></li>
+<li><a href="#templates-at-a-glance">Templates at a glance</a></li>
+<li><a href="#worked-problems">Worked problems</a><ul>
+<li><a href="#1-kth-largest-element-in-a-stream-easy">1. Kth Largest Element in a Stream Easy</a></li>
+<li><a href="#2-top-k-frequent-elements-medium">2. Top K Frequent Elements Medium</a></li>
+<li><a href="#3-k-closest-points-to-origin-medium">3. K Closest Points to Origin Medium</a></li>
+<li><a href="#4-reorganize-string-medium">4. Reorganize String Medium</a></li>
+<li><a href="#5-merge-k-sorted-lists-hard">5. Merge k Sorted Lists Hard</a></li>
+<li><a href="#6-find-median-from-data-stream-hard">6. Find Median from Data Stream Hard</a></li>
+<li><a href="#7-sliding-window-median-hard">7. Sliding Window Median Hard</a></li>
+</ul>
+</li>
+<li><a href="#problem-ladder">Problem ladder</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

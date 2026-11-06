@@ -1,0 +1,153 @@
+/* Topic styles for "Concurrency & Async" (prefix ca-). Colours come only from site variables. */
+.viz [class^="ca-"], .viz [class*=" ca-"] { overflow-wrap: normal; }
+.viz-legend .lg-warn::before { border-color: var(--v-active); background: var(--v-active-soft); border-style: dashed; }
+
+/* wide visualizers: the stage gets the full width, code + variables sit underneath side by side */
+.viz.ca-wide .viz-body.with-code { grid-template-columns: minmax(0, 1fr); }
+.viz.ca-wide .viz-side { border-left: 0; border-top: 1px solid var(--line); flex-direction: row; }
+.viz.ca-wide .viz-code { flex: 2.3 1 0; min-width: 0; }
+.viz.ca-wide .viz-vars { flex: 1 1 0; border-top: 0; border-left: 1px solid var(--line); align-content: start; }
+@media (max-width: 900px) { .viz.ca-wide .viz-side { flex-direction: column; } .viz.ca-wide .viz-vars { border-left: 0; border-top: 1px solid var(--line); } }
+
+.ca-mute { color: var(--muted); font-size: 11.5px; font-style: italic; }
+.ca-fit { width: 100%; overflow-x: auto; }
+
+/* ---- chips ---- */
+.ca-chip { display: inline-flex; align-items: center; margin: 2px 3px 2px 0; padding: 2px 8px; border: 1.6px solid var(--line); border-radius: 6px; background: var(--v-node); font: 600 11.5px "Cascadia Code", Consolas, monospace; white-space: nowrap; }
+.ca-chip.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.ca-chip.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.ca-chip.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.ca-chip.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.ca-chip.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.ca-chip.dim { border-style: dashed; color: var(--muted); background: transparent; }
+
+/* ---- boxes, cards ---- */
+.ca-box, .ca-worker, .ca-thread { border: 1.6px solid var(--line); border-radius: 10px; background: var(--surface); padding: 8px 10px; min-width: 0; transition: border-color .2s, background .2s; }
+.ca-box-h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+.ca-box-h b { font-size: 12.5px; }
+.ca-box-h small { font-size: 10.5px; color: var(--muted); text-align: right; }
+.ca-box-b { display: flex; flex-wrap: wrap; align-items: center; min-height: 26px; }
+.ca-box.path { border-color: var(--v-path); }
+.ca-worker.active, .ca-thread.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.ca-worker.path, .ca-thread.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.ca-worker.bad, .ca-thread.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.ca-worker.visit, .ca-thread.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.ca-worker.dim, .ca-thread.dim { border-style: dashed; }
+.ca-thread.dead { box-shadow: 0 0 0 3px var(--v-bad-soft); }
+.ca-row3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; width: 100%; }
+.ca-center { display: flex; justify-content: center; width: 100%; }
+
+.ca-kv { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; font-size: 12px; }
+.ca-kv span { color: var(--muted); }
+.ca-kv b { font: 700 12px "Cascadia Code", Consolas, monospace; min-width: 0; overflow-wrap: anywhere; }
+
+.ca-stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; width: 100%; }
+.ca-stat { display: flex; flex-direction: column; align-items: center; min-width: 92px; padding: 6px 12px; border: 1.6px solid var(--line); border-radius: 10px; background: var(--surface); }
+.ca-stat b { font-size: 17px; font-variant-numeric: tabular-nums; }
+.ca-stat span { font-size: 10.5px; color: var(--muted); text-align: center; }
+.ca-stat.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.ca-stat.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.ca-stat.path { border-color: var(--v-path); background: var(--v-path-soft); }
+
+.ca-verdict { align-self: center; padding: 6px 18px; border-radius: 999px; border: 2px solid var(--line); font: 800 13px system-ui, sans-serif; letter-spacing: .8px; }
+.ca-verdict.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.ca-verdict.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.ca-verdict.warn { border-color: var(--v-active); background: var(--v-active-soft); border-style: dashed; }
+
+/* ---- timelines (Gantt) ---- */
+.ca-tl { --cell: 22px; display: grid; grid-template-columns: max-content repeat(var(--cols), var(--cell)) max-content; gap: 2px; width: max-content; margin: 0 auto; font-size: 11px; }
+.ca-tl.compact { --cell: 12px; }
+.ca-tl-row { display: contents; }
+.ca-tl-row > span { height: 22px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font: 700 10.5px "Cascadia Code", Consolas, monospace; }
+.ca-tl-row > span.ca-tl-lbl { grid-column: 1; justify-content: flex-start; padding-right: 8px; gap: 6px; font: 700 11.5px system-ui, sans-serif; white-space: nowrap; }
+.ca-tl-lbl small { color: var(--muted); font: 600 10px "Cascadia Code", Consolas, monospace; }
+.ca-tl-row > span.ca-tl-end { justify-content: flex-start; padding-left: 8px; font: 700 10.5px system-ui, sans-serif; color: var(--muted); white-space: nowrap; grid-column: -2; }
+.ca-tl-end.done { color: var(--v-done); } .ca-tl-end.fail, .ca-tl-end.cancel { color: var(--v-bad); }
+.ca-tl-head > span, .ca-tl-foot > span { color: var(--muted); font-weight: 600; }
+.ca-tl-head > span.cur, .ca-tl-foot > span.cur { color: var(--text); background: var(--accent-soft); }
+.ca-tl-foot > span:first-child { font-weight: 700; }
+.ca-tl span.fut { border: 1px dashed var(--line); opacity: .5; }
+.ca-tl span.cur { outline: 2px solid var(--accent); outline-offset: -1px; }
+.ca-c-cpu { background: var(--v-active-soft); border: 1.5px solid var(--v-active); }
+.ca-c-io { background: var(--v-visit-soft); border: 1.5px solid var(--v-visit); }
+.ca-c-ready { background: var(--v-path-soft); border: 1.5px dashed var(--v-path); }
+.ca-c-wait { border: 1.5px dashed var(--muted); opacity: .45; }
+.ca-c-fin { background: var(--v-done-soft); opacity: .55; }
+.ca-c-sys { background: var(--v-bad-soft); border: 1.5px solid var(--v-bad); }
+.ca-c-slow { background: var(--v-path-soft); border: 1.5px solid var(--v-path); }
+.ca-c-bad { background: var(--v-bad-soft); border: 1.5px solid var(--v-bad); color: var(--v-bad); }
+.ca-c-cancel { background: transparent; border: 1.5px dashed var(--v-bad); color: var(--v-bad); }
+.ca-c-gone { opacity: 0; }
+/* the go-scheduler and fan-out use visit for queued, path for parked */
+.viz[data-viz="concurrency-async-gmp"] .ca-c-ready, .viz[data-viz="concurrency-async-fanout"] .ca-c-ready { background: var(--v-visit-soft); border: 1.5px dashed var(--v-visit); }
+.viz[data-viz="concurrency-async-gmp"] .ca-c-io { background: var(--v-path-soft); border-color: var(--v-path); }
+
+.ca-hbars { display: grid; grid-template-columns: max-content minmax(140px, 1fr) max-content max-content; gap: 5px 10px; align-items: center; width: min(760px, 100%); font-size: 12px; }
+.ca-hbar { display: contents; }
+.ca-hbar > span { font-weight: 600; white-space: nowrap; }
+.ca-hbar > i { height: 16px; border-radius: 4px; background: var(--v-visit-soft); border: 1.5px solid var(--v-visit); }
+.ca-hbar > b { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ca-hbar > small { color: var(--muted); white-space: nowrap; }
+.ca-hbar.best > i { background: var(--v-done-soft); border-color: var(--v-done); }
+.ca-hbar.me > span { color: var(--accent); }
+.ca-hbar.me > span::before { content: "▸ "; }
+
+/* ---- thread pool workers ---- */
+.ca-workers { display: grid; grid-template-columns: repeat(var(--w), minmax(150px, 1fr)); gap: 10px; width: 100%; }
+.ca-task { position: relative; overflow: hidden; display: flex; flex-direction: column; padding: 5px 8px; border: 1.6px solid var(--v-active); border-radius: 7px; background: var(--surface); }
+.ca-task b { font: 700 12.5px "Cascadia Code", Consolas, monospace; position: relative; }
+.ca-task small { font-size: 10.5px; color: var(--muted); position: relative; }
+.ca-task i { position: absolute; left: 0; bottom: 0; height: 3px; background: var(--v-active); }
+.ca-task.split { border-style: dashed; }
+.ca-deque { display: flex; flex-wrap: wrap; align-items: center; gap: 2px; margin-top: 6px; padding: 5px; border: 1px dashed var(--line); border-radius: 7px; min-height: 30px; }
+.ca-deque small { font-size: 9.5px; color: var(--muted); letter-spacing: .4px; width: 100%; }
+.ca-hist { display: flex; flex-wrap: wrap; gap: 1px; margin-top: 6px; }
+.ca-hist i { width: 7px; height: 12px; border-radius: 2px; background: var(--line); }
+.ca-hist i.active { background: var(--v-active); } .ca-hist i.path { background: var(--v-path); } .ca-hist i.bad { background: var(--v-bad); } .ca-hist i.visit { background: var(--v-visit); } .ca-hist i.dim { background: transparent; border: 1px dashed var(--muted); }
+
+/* ---- await: threads and stacks ---- */
+.ca-threads { display: grid; grid-template-columns: repeat(3, minmax(150px, 1fr)); gap: 10px; width: 100%; }
+.ca-stack { display: flex; flex-direction: column; gap: 3px; min-height: 26px; }
+.ca-stack div { padding: 3px 7px; border: 1px solid var(--line); border-radius: 5px; background: var(--v-node); font: 600 11px "Cascadia Code", Consolas, monospace; }
+
+/* ---- starvation: thread slots and queue ---- */
+.ca-pool { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; max-width: 760px; }
+.ca-pt { display: flex; flex-direction: column; align-items: center; min-width: 46px; padding: 3px 6px; border: 1.6px solid var(--line); border-radius: 7px; background: var(--surface); }
+.ca-pt small { font-size: 9.5px; color: var(--muted); }
+.ca-pt b { font: 700 11.5px "Cascadia Code", Consolas, monospace; min-height: 15px; }
+.ca-pt.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.ca-pt.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.ca-pt.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.ca-pt.dim { border-style: dashed; }
+.ca-q { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; max-width: 760px; min-height: 28px; }
+.ca-spark { display: grid; grid-template-columns: repeat(var(--n), 9px); gap: 2px; align-items: end; height: 64px; padding: 4px; border-bottom: 1.5px solid var(--line); }
+.ca-spark i { display: block; min-height: 1px; border-radius: 2px 2px 0 0; background: var(--v-visit); }
+.ca-spark i.bad { background: var(--v-bad); }
+
+/* ---- event loop ---- */
+.ca-elgrid { display: grid; grid-template-columns: repeat(4, minmax(150px, 1fr)); gap: 10px; width: 100%; }
+.ca-el .ca-box-b { flex-direction: column; align-items: stretch; }
+.ca-el .ca-chip { white-space: normal; }
+.ca-el.active { border-color: var(--v-active); } .ca-el.path { border-color: var(--v-path); } .ca-el.visit { border-color: var(--v-visit); } .ca-el.dim { border-style: dashed; }
+.ca-console { width: 100%; background: var(--code); }
+.ca-console .ca-box-b { flex-direction: column; align-items: stretch; }
+.ca-out { display: flex; gap: 10px; font: 600 12.5px "Cascadia Code", Consolas, monospace; padding: 1px 0; }
+.ca-out small { color: var(--muted); min-width: 16px; text-align: right; }
+@media (max-width: 1000px) { .ca-elgrid, .ca-threads { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---- race ---- */
+.ca-race { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; width: 100%; max-width: 640px; }
+.ca-mem { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 16px; border: 2px solid var(--accent); border-radius: 12px; background: var(--accent-soft); }
+.ca-mem b { font: 800 16px "Cascadia Code", Consolas, monospace; }
+.ca-mem small { font-size: 10.5px; color: var(--muted); }
+.ca-mem.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.ca-log { display: flex; flex-wrap: wrap; justify-content: center; max-width: 680px; }
+
+/* ---- channel ---- */
+.ca-pipe { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; flex-wrap: wrap; }
+.ca-col { display: flex; flex-direction: column; gap: 6px; }
+.ca-arrow { font-size: 22px; color: var(--muted); }
+.ca-slots { display: flex; gap: 3px; padding: 4px; border: 2px solid var(--text); border-radius: 8px; }
+.ca-slots.unb { flex-wrap: wrap; max-width: 340px; border-style: dashed; border-color: var(--muted); }
+.ca-slot { width: 38px; height: 34px; display: flex; align-items: center; justify-content: center; border: 1.5px dashed var(--line); border-radius: 5px; font: 700 11.5px "Cascadia Code", Consolas, monospace; }
+.ca-slot.full { border: 1.6px solid var(--v-visit); background: var(--v-visit-soft); }

@@ -1,0 +1,48 @@
+/* Sliding Window: compact cells, count maps, invariant panel, tallies and the deque. Variables only. */
+.sw { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; }
+.sw .v-cells { gap: 3px; }
+.sw .v-cell { min-width: 36px; height: 38px; padding: 0 5px; font-size: 14px; }
+.sw .v-cell.sw-ghost { visibility: hidden; }
+.sw .v-row { gap: 28px; align-items: center; }
+.sw-empty { font-size: 11.5px; color: var(--muted); padding: 6px; }
+.sw-map, .sw-chips { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; max-width: 520px; }
+.sw-kv { display: flex; flex-direction: column; align-items: stretch; min-width: 34px; border: 1.5px solid var(--line); border-radius: 7px; background: var(--v-node); overflow: hidden; text-align: center; font: 600 13px "Cascadia Code", Consolas, monospace; transition: background .2s, border-color .2s; }
+.sw-kv .sw-k { padding: 1px 6px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 11.5px; }
+.sw-kv .sw-v { padding: 3px 6px; }
+.sw-kv.active { background: var(--v-active-soft); border-color: var(--v-active); }
+.sw-kv.bad { background: var(--v-bad-soft); border-color: var(--v-bad); }
+.sw-kv.done { background: var(--v-done-soft); border-color: var(--v-done); }
+.sw-kv.visit { background: var(--v-visit-soft); border-color: var(--v-visit); }
+.sw-kv.dim { opacity: .4; }
+.sw-inv { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; justify-content: center; max-width: 540px; padding: 7px 14px; border: 1.5px solid var(--line); border-radius: 9px; font-size: 13px; color: var(--text); text-align: center; }
+.sw-inv.ok { border-color: var(--v-done); background: var(--v-done-soft); }
+.sw-inv.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.sw-inv b { font-weight: 700; }
+.sw-meter { display: flex; align-items: baseline; gap: 6px; padding: 6px 14px; border: 1.5px solid var(--v-bad); border-radius: 9px; background: var(--v-bad-soft); font: 700 20px "Cascadia Code", Consolas, monospace; }
+.sw-meter.ok { border-color: var(--v-done); background: var(--v-done-soft); }
+.sw-meter span { color: var(--muted); font-weight: 400; }
+.sw-tally { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.sw-tally > i { font: 700 20px "Cascadia Code", Consolas, monospace; color: var(--muted); font-style: normal; }
+.sw-t { display: flex; flex-direction: column; align-items: center; min-width: 92px; padding: 5px 12px; border: 1.5px solid var(--line); border-radius: 9px; background: var(--v-node); }
+.sw-t span { font-size: 11px; color: var(--muted); font-weight: 700; letter-spacing: .4px; }
+.sw-t b { font: 700 19px "Cascadia Code", Consolas, monospace; }
+.sw-t.ok { border-color: var(--v-done); background: var(--v-done-soft); }
+.sw-dq { align-items: center; min-height: 54px; }
+.sw-dq .v-item { display: flex; flex-direction: column; align-items: center; padding: 3px 9px; line-height: 1.15; }
+.sw-dq .sw-dq-v { font-size: 15px; }
+.sw-dq .sw-dq-i { font-size: 10px; color: var(--muted); font-weight: 400; }
+/* SVG figure helpers (colours come from dg classes and variables only). */
+.sw-fig .band { fill: var(--v-visit-soft); stroke: var(--v-visit); stroke-width: 1.5; }
+.sw-fig .band-done { fill: var(--v-done-soft); stroke: var(--v-done); stroke-width: 1.5; }
+.sw-fig .band-bad { fill: var(--v-bad-soft); stroke: var(--v-bad); stroke-width: 1.5; }
+.sw-fig .tri { fill: var(--v-bad-soft); stroke: none; }
+/* Work around .prose table/td rules overriding the viz grid inside topic pages. */
+.prose .viz table.v-grid { display: table; width: auto; border-collapse: separate; border-spacing: 3px; margin: 0; font-size: inherit; overflow: visible; }
+.prose .viz .v-grid th { padding: 2px 6px; border: 0; min-width: 0; background: none; text-align: center; vertical-align: middle; white-space: nowrap; }
+.prose .viz .v-grid td.v-gcell { min-width: 38px; padding: 0 5px; border-width: 1.5px; border-radius: 6px; vertical-align: middle; }
+/* Work around the global .path (learning-path strip) rule leaking into viz state class "path". */
+.viz .v-cell.path { display: grid; grid-auto-flow: row; grid-auto-columns: auto; gap: 0; padding: 0 5px; overflow: visible; counter-reset: none; }
+.viz .v-item.path { display: block; grid-auto-columns: auto; padding: 5px 10px; overflow: visible; }
+.viz .sw-dq .v-item.path { display: flex; padding: 3px 9px; }
+.viz td.v-gcell.path { display: table-cell; padding: 0 5px; overflow: visible; }
+.viz .v-ptr-under { white-space: nowrap; }

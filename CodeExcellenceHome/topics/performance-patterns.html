@@ -1,0 +1,2115 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Performance Patterns &amp; Anti-Patterns | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/performance-patterns.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/performance-patterns.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track" open><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html" aria-current="page">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Performance Patterns &amp; Anti-Patterns</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">PERFORMANCE</p><h1>Performance Patterns &amp; Anti-Patterns</h1><p class="lede">Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps.</p><div class="meta"><span class="level level-advanced">Advanced</span><span>~55 min study</span><span>Builds on: <a href="performance-cadence.html">The Performance Cadence</a>, <a href="concurrency-async.html">Concurrency &amp; Async</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="performance-patterns" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-the-endpoint-that-was-fast-on-tuesday">The problem: the endpoint that was fast on Tuesday</h2>
+<p>The reporting service had a <code>/orders/export</code> endpoint. It was fine in testing with 2,000 orders. In production a large customer had 1.8 million, and every Monday morning their finance team clicked Export. The endpoint loaded all the rows into a list, mapped each one to a DTO, looked up each customer's name with its own query, built a CSV by appending to a string, and finally sent the result. The pod's memory climbed past 3 GB, the GC spent more time collecting than the app spent working, other requests on the same pod timed out, and Kubernetes killed it for exceeding its memory limit. Then the client retried.</p>
+<p>Nothing in that endpoint was exotic. Every line was a pattern you have written: <strong>load everything</strong>, <strong>one query per item</strong>, <strong>string concatenation in a loop</strong>, <strong>no limit on concurrency</strong>. Each one is harmless at small sizes and catastrophic at large ones. The fix was not a faster CPU. It was five well-known patterns: stream the rows, batch the customer lookups, write to a buffered stream, bound the concurrency, and compress the response. The same endpoint then ran in 40 MB of memory, and the first byte arrived after 30 ms instead of 90 seconds.</p>
+<p><a href="performance-cadence.html">Performance Cadence</a> taught you <strong>how to find</strong> the problem: measure, profile, fix, verify. This page is the catalogue of <strong>what to do once you've found it</strong>: the recurring shapes of slow code and the pattern that fixes each one, across C#, Java, Python, Go and TypeScript, with the cost of each fix and when <em>not</em> to apply it.</p>
+<div class="rule">
+<p><strong>The rule.</strong> Optimise only what a measurement points at, and fix it with the <strong>biggest lever first</strong>: a better algorithm, then <strong>fewer round trips</strong> (batching), then <strong>less data held at once</strong> (streaming, laziness, back-pressure), then <strong>less work repeated</strong> (precomputation, caching, connection reuse), and only then <strong>fewer allocations and better memory layout</strong>. Every pattern on this page has a cost in complexity; pay it on the hot path, not everywhere.</p>
+</div>
+<div class="recognize">
+<p><strong>Recognize that you need these patterns when</strong></p>
+<ul>
+<li>Latency or memory grows <strong>faster than linearly</strong> with input size: twice the rows takes four times as long.</li>
+<li>A trace shows <strong>dozens or hundreds of identical short spans</strong> (one per item) under one request: chatty I/O.</li>
+<li>Memory rises with request size and falls back after the request: you are <strong>loading everything</strong> before processing it.</li>
+<li>The GC is busy (high allocation rate, frequent gen-0/young collections, long pauses) and a profile shows the allocations come from a few lines.</li>
+<li>CPU is high but the flame graph has no single hot function; the time is smeared across allocation, copying and serialization.</li>
+<li>Thread-pool threads are all blocked while CPU is idle: <strong>sync-over-async</strong> or missing async I/O.</li>
+<li>Cold starts are slow enough that autoscaling, serverless functions or rolling deploys hurt users.</li>
+<li>A queue between two stages keeps growing until the process runs out of memory: no <strong>back-pressure</strong>.</li>
+</ul>
+</div>
+<h2 id="measure-first-then-choose-a-pattern">Measure first, then choose a pattern</h2>
+<p>You already know the cadence: set a target, measure, profile, change one thing, verify. If not, read <a href="performance-cadence.html">Performance Cadence</a> first; it covers the tools (BenchmarkDotNet, JMH, pyperf, <code>go test -bench</code>, tinybench), flame graphs, Amdahl's law and latency numbers. The point to carry over is that <strong>a profile tells you which pattern you need</strong>. The table below maps what you see to where to look on this page.</p>
+<table>
+<thead>
+<tr>
+<th>What the measurement shows</th>
+<th>Likely cause</th>
+<th>Pattern (section below)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Time grows with n², or one function dominates and loops over a collection</td>
+<td>Quadratic algorithm, linear lookups in a loop</td>
+<td><a href="#algorithmic-wins-first">Algorithmic wins first</a></td>
+</tr>
+<tr>
+<td>Many short identical DB or HTTP spans under one request</td>
+<td>N+1 queries, chatty I/O</td>
+<td><a href="#fewer-round-trips-batching-and-buffering">Fewer round trips</a></td>
+</tr>
+<tr>
+<td>Memory proportional to the request or file size</td>
+<td>Loading everything</td>
+<td><a href="#streaming-instead-of-loading-everything">Streaming</a>, <a href="#lazy-vs-eager">lazy evaluation</a></td>
+</tr>
+<tr>
+<td>A queue or buffer that keeps growing</td>
+<td>Producer faster than consumer</td>
+<td><a href="#back-pressure-bound-every-queue">Back-pressure</a></td>
+</tr>
+<tr>
+<td>High allocation rate, GC time in the profile</td>
+<td>Temporary objects, strings, boxing, copies</td>
+<td><a href="#allocation-reduction">Allocation reduction</a></td>
+</tr>
+<tr>
+<td>CPU busy in loops over large arrays, many cache misses in <code>perf stat</code></td>
+<td>Pointer chasing, poor memory layout, unpredictable branches</td>
+<td><a href="#data-oriented-design-cache-lines-and-branches">Data-oriented design</a></td>
+</tr>
+<tr>
+<td>Thread pool exhausted while CPU is low</td>
+<td>Blocking calls on async threads</td>
+<td><a href="#async-io-and-the-sync-over-async-trap">Async I/O and sync-over-async</a></td>
+</tr>
+<tr>
+<td>TLS handshakes or new connections on every call</td>
+<td>Connections not reused</td>
+<td><a href="#reuse-connections-and-clients">Reuse connections</a></td>
+</tr>
+<tr>
+<td>Serialization near the top of the flame graph</td>
+<td>Reflection-based serializer, oversized payloads</td>
+<td><a href="#serialization-performance">Serialization</a></td>
+</tr>
+<tr>
+<td>Slow first request after deploy or scale-out</td>
+<td>Startup work, JIT, class loading, imports</td>
+<td><a href="#startup-performance">Startup performance</a></td>
+</tr>
+<tr>
+<td>Large responses on slow links</td>
+<td>Bytes on the wire</td>
+<td><a href="#response-compression">Response compression</a></td>
+</tr>
+<tr>
+<td>The same expensive result computed again and again</td>
+<td>Missing precomputation</td>
+<td><a href="#precompute-and-memoize">Precompute and memoize</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="premature-optimisation-versus-a-known-hot-path">Premature optimisation versus a known hot path</h3>
+<p>"Premature optimisation is the root of all evil" is half a sentence. Knuth went on: "yet we should not pass up our opportunities in that critical 3%." The skill is telling the two apart. Two measurements decide it: <strong>how much of the total time this code accounts for</strong>, and <strong>how often it runs</strong>. Then weigh the gain against what the change costs to read and maintain.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 330" width="900" role="img" aria-label="A two-by-two map: share of measured time against how often the code runs. Hot and frequent code is where to optimise; rarely run, small-share code should stay simple">
+<text x="450" y="22" text-anchor="middle" class="title">Where optimisation effort pays off</text>
+<rect class="box path" x="150" y="40" width="330" height="120" rx="10"/>
+<text x="315" y="66" text-anchor="middle" class="small">big share, runs rarely</text>
+<text x="315" y="90" text-anchor="middle" class="small muted">nightly job, report, startup</text>
+<text x="315" y="114" text-anchor="middle" class="small">optimise if someone waits on it</text>
+<text x="315" y="136" text-anchor="middle" class="small muted">(cold starts, SLA on a batch window)</text>
+<rect class="box done" x="500" y="40" width="330" height="120" rx="10"/>
+<text x="665" y="66" text-anchor="middle" class="small">big share, runs on every request</text>
+<text x="665" y="90" text-anchor="middle" class="small muted">serialization, a lookup in a loop</text>
+<text x="665" y="114" text-anchor="middle" class="small">the critical 3%: optimise it</text>
+<text x="665" y="136" text-anchor="middle" class="small muted">benchmark, then verify in production</text>
+<rect class="box bad" x="150" y="175" width="330" height="120" rx="10"/>
+<text x="315" y="201" text-anchor="middle" class="small">small share, runs rarely</text>
+<text x="315" y="225" text-anchor="middle" class="small muted">admin pages, config parsing</text>
+<text x="315" y="249" text-anchor="middle" class="small">premature: keep it simple</text>
+<text x="315" y="271" text-anchor="middle" class="small muted">clarity beats nanoseconds here</text>
+<rect class="box visit" x="500" y="175" width="330" height="120" rx="10"/>
+<text x="665" y="201" text-anchor="middle" class="small">small share, runs constantly</text>
+<text x="665" y="225" text-anchor="middle" class="small muted">small per call, but there are billions of calls</text>
+<text x="665" y="249" text-anchor="middle" class="small">only free wins: same clarity, less work</text>
+<text x="665" y="271" text-anchor="middle" class="small muted">HashSet over List.Contains, presize</text>
+<line class="edge" x1="130" y1="300" x2="130" y2="40"/>
+<text x="118" y="170" text-anchor="middle" class="small" transform="rotate(-90 118 170)">share of measured time</text>
+<line class="edge" x1="150" y1="315" x2="830" y2="315"/>
+<text x="490" y="312" text-anchor="middle" class="small muted">how often it runs →</text>
+</svg>
+<figcaption>Premature optimisation lives in the bottom left. The top right is engineering. The bottom right only gets changes that cost nothing in clarity.</figcaption>
+</figure>
+
+<p>The visualizer asks the same five questions you should ask before every optimisation. Try a 35% share with a 3× speedup, then 2% with a 10× speedup: Amdahl's law makes the second one nearly worthless however clever it is. Then try a fix with no readability cost at all. That one is never premature.</p>
+<div class="viz pp-wide" data-viz="performance-patterns-decide"></div>
+
+<div class="insight">
+<p><strong>"Free" improvements are not premature.</strong> If the faster version is just as clear (a <code>HashSet</code> instead of a <code>List</code> for lookups, presizing a collection whose size you know, hoisting an invariant out of a loop, reusing an <code>HttpClient</code>), write it that way the first time. Premature optimisation means paying <strong>clarity</strong> for speed you haven't shown you need. When the price is zero, there is nothing to weigh.</p>
+</div>
+<h2 id="algorithmic-wins-first">Algorithmic wins first</h2>
+<p>No amount of pooling, SIMD or clever memory layout rescues a quadratic algorithm at scale. A 10× micro-optimisation on an O(n²) loop is overtaken by the next doubling of the data. So before reaching for anything else on this page, check the complexity of what the hot code does. You don't need contest-level algorithms; most production wins come from a handful of substitutions:</p>
+<table>
+<thead>
+<tr>
+<th>Smell in the code</th>
+<th>Complexity</th>
+<th>Replacement</th>
+<th>Becomes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>list.Contains(x)</code> / <code>x in list</code> inside a loop</td>
+<td>O(n·m)</td>
+<td>Build a hash set once</td>
+<td>O(n + m)</td>
+</tr>
+<tr>
+<td>Find the matching item with a nested loop (join in memory)</td>
+<td>O(n·m)</td>
+<td>Dictionary keyed by the join key</td>
+<td>O(n + m)</td>
+</tr>
+<tr>
+<td>Sort the whole collection to take the top 10</td>
+<td>O(n log n)</td>
+<td>Heap / priority queue of size k</td>
+<td>O(n log k)</td>
+</tr>
+<tr>
+<td>Re-sort after every insert</td>
+<td>O(n² log n)</td>
+<td>Sorted structure (<code>SortedSet</code>, <code>TreeMap</code>, <code>bisect.insort</code>, heap)</td>
+<td>O(n log n)</td>
+</tr>
+<tr>
+<td><code>list.Remove(x)</code> / <code>list.pop(0)</code> in a loop</td>
+<td>O(n²)</td>
+<td>Mark and compact once, or use a deque</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>String <code>+=</code> in a loop</td>
+<td>O(n²) bytes copied</td>
+<td>Builder or join</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Recomputing an aggregate on every request</td>
+<td>O(n) per request</td>
+<td>Maintain it incrementally, or precompute</td>
+<td>O(1) per request</td>
+</tr>
+<tr>
+<td>Recursive function with overlapping calls</td>
+<td>Exponential</td>
+<td>Memoize</td>
+<td>Polynomial</td>
+</tr>
+</tbody>
+</table>
+<div class="viz" data-viz="performance-patterns-bigo"></div>
+
+<p>Run it with the largest n of 1,000,000 and a SIMD speedup of 32. Vectorising the quadratic version is a real, hard-won 32×, and it still loses to the hash set by about four orders of magnitude. Then look at the n = 10 frame. At tiny sizes the nested loop is often <strong>the fastest</strong> (no hashing, no allocation, everything in L1 cache), which is why the .NET and Java collections themselves use linear scans for very small inputs.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Before: O(n·m). List&lt;T&gt;.Contains is a linear scan.
+List&lt;long&gt; blocked = LoadBlockedIds();
+var allowed = orders.Where(o =&gt; !blocked.Contains(o.CustomerId)).ToList();
+
+// After: O(n + m). One pass to build the set, O(1) average per lookup.
+var blockedSet = LoadBlockedIds().ToHashSet();
+var allowed2 = orders.Where(o =&gt; !blockedSet.Contains(o.CustomerId)).ToList();
+
+// In-memory join: index one side by key instead of nesting loops.
+var customers = customerList.ToDictionary(c =&gt; c.Id);
+foreach (var o in orders)
+    if (customers.TryGetValue(o.CustomerId, out var c)) o.CustomerName = c.Name;
+
+// Top-k without sorting everything: .NET 6+ PriorityQueue keeps k items.
+var top = new PriorityQueue&lt;Order, decimal&gt;();
+foreach (var o in orders)
+{
+    top.Enqueue(o, o.Total);
+    if (top.Count &gt; 10) top.Dequeue();       // drop the smallest
+}
+</code></pre>
+<pre><code class="language-java">// Before: O(n·m). ArrayList.contains is a linear scan.
+List&lt;Long&gt; blocked = loadBlockedIds();
+var allowed = orders.stream().filter(o -&gt; !blocked.contains(o.customerId())).toList();
+
+// After: O(n + m).
+Set&lt;Long&gt; blockedSet = new HashSet&lt;&gt;(loadBlockedIds());
+var allowed2 = orders.stream().filter(o -&gt; !blockedSet.contains(o.customerId())).toList();
+
+// In-memory join through a map.
+Map&lt;Long, Customer&gt; byId = customerList.stream()
+        .collect(Collectors.toMap(Customer::id, Function.identity()));
+for (var o : orders) {
+    var c = byId.get(o.customerId());
+    if (c != null) o.setCustomerName(c.name());
+}
+
+// Top-k with a min-heap of size k.
+var top = new PriorityQueue&lt;Order&gt;(Comparator.comparing(Order::total));
+for (var o : orders) {
+    top.offer(o);
+    if (top.size() &gt; 10) top.poll();
+}
+</code></pre>
+<pre><code class="language-python">import heapq
+
+# Before: O(n*m). &quot;in&quot; on a list scans it.
+blocked = load_blocked_ids()                     # list
+allowed = [o for o in orders if o.customer_id not in blocked]
+
+# After: O(n + m). &quot;in&quot; on a set is a hash lookup.
+blocked_set = set(load_blocked_ids())
+allowed = [o for o in orders if o.customer_id not in blocked_set]
+
+# In-memory join through a dict.
+by_id = {c.id: c for c in customers}
+for o in orders:
+    c = by_id.get(o.customer_id)
+    if c is not None:
+        o.customer_name = c.name
+
+# Top-k: heapq.nlargest is O(n log k) and does not sort everything.
+top = heapq.nlargest(10, orders, key=lambda o: o.total)
+</code></pre>
+<pre><code class="language-go">// Before: O(n·m). slices.Contains is a linear scan.
+blocked := loadBlockedIDs()
+var allowed []Order
+for _, o := range orders {
+    if !slices.Contains(blocked, o.CustomerID) {
+        allowed = append(allowed, o)
+    }
+}
+
+// After: O(n + m). A map with empty-struct values is Go's set.
+blockedSet := make(map[int64]struct{}, len(blocked))
+for _, id := range blocked {
+    blockedSet[id] = struct{}{}
+}
+allowed = allowed[:0]
+for _, o := range orders {
+    if _, found := blockedSet[o.CustomerID]; !found {
+        allowed = append(allowed, o)
+    }
+}
+
+// In-memory join: index customers by id.
+byID := make(map[int64]Customer, len(customers))
+for _, c := range customers {
+    byID[c.ID] = c
+}
+</code></pre>
+<pre><code class="language-typescript">// Before: O(n·m). Array.includes is a linear scan.
+const blocked: number[] = loadBlockedIds();
+const allowed = orders.filter((o) =&gt; !blocked.includes(o.customerId));
+
+// After: O(n + m).
+const blockedSet = new Set(loadBlockedIds());
+const allowed2 = orders.filter((o) =&gt; !blockedSet.has(o.customerId));
+
+// In-memory join through a Map.
+const byId = new Map(customers.map((c) =&gt; [c.id, c] as const));
+for (const o of orders) {
+  const c = byId.get(o.customerId);
+  if (c) o.customerName = c.name;
+}
+
+// Top-k: no built-in heap; for small k a bounded insertion keeps it O(n·k).
+// For large k use a heap library or sort once.
+</code></pre>
+</div>
+<div class="tip">
+<p><strong>Look for hidden loops.</strong> The quadratic code is rarely two visible <code>for</code> statements. It hides in <code>Contains</code>, <code>IndexOf</code>, <code>Remove</code>, <code>includes</code>, <code>in</code> on a list, <code>Array.find</code> inside <code>map</code>, an ORM lazy-loading a navigation property inside a loop, or a regular expression compiled inside a function that is called per item. When you read a hot loop, ask of every call in its body: <em>what does this cost, and does it depend on n?</em></p>
+</div>
+<h2 id="allocation-reduction">Allocation reduction</h2>
+<p>In managed runtimes, allocating is cheap (a pointer bump) but <strong>not free</strong>: every allocated byte must be zeroed, it pushes the next GC closer, and objects that live a little too long get promoted and cost much more to collect. <a href="memory-and-gc.html">Memory &amp; Garbage Collection</a> explains the generational GC, the large object heap, escape analysis, pooling and spans in depth. This section is the practical checklist for a hot path: <strong>find the allocations the profiler shows, then remove them with one of five moves</strong>.</p>
+<div class="flow" markdown="0"><div class="flow-step"><small>1 · Measure</small><strong>Allocated bytes per operation</strong><p>BenchmarkDotNet [MemoryDiagnoser], JMH -prof gc, tracemalloc, go test -benchmem, --inspect heap sampling.</p></div><div class="flow-step"><small>2 · Avoid</small><strong>Don't create it</strong><p>Hoist out of the loop, presize, use a value type, use a view instead of a copy.</p></div><div class="flow-step"><small>3 · Reuse</small><strong>Pool it</strong><p>ArrayPool, ObjectPool, sync.Pool, a reused buffer per worker.</p></div><div class="flow-step"><small>4 · Shrink</small><strong>Make it smaller</strong><p>Primitive arrays instead of boxed collections, structs instead of classes, fewer fields.</p></div><div class="flow-step"><small>5 · Verify</small><strong>Re-measure</strong><p>Bytes/op down, GC count down, and the latency or CPU win actually shows up end to end.</p></div></div>
+
+<h3 id="building-strings">Building strings</h3>
+<p>Strings are immutable in C#, Java, Python, Go and JavaScript. So <code>s += piece</code> cannot change <code>s</code>; it allocates a <strong>new</strong> string and copies both parts into it. Do that in a loop and every iteration copies everything built so far: n appends copy about n²/2 characters. A builder keeps one growable buffer instead; when it fills up, it doubles, so the total copying stays linear.</p>
+<div class="viz" data-viz="performance-patterns-concat"></div>
+
+<p>Step through <code>s += piece</code> with 5,000 pieces, then switch to the presized builder. The quadratic curve is not a constant factor worse; it is a different shape. Note what the last frame says about <strong>single expressions</strong>: <code>a + b + c</code> is compiled into one concat call in C# and Java, and that is fine. The problem is only the <strong>loop</strong>.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Bad in a loop: O(n²) copying, n intermediate strings.
+string csv = &quot;&quot;;
+foreach (var o in orders) csv += $&quot;{o.Id},{o.Total}\n&quot;;
+
+// Good: one growable buffer. Presize when you can estimate the length.
+var sb = new StringBuilder(capacity: orders.Count * 24);
+foreach (var o in orders) sb.Append(o.Id).Append(',').Append(o.Total).Append('\n');
+string csv2 = sb.ToString();
+
+// Better for output: don't build the string at all; write to the stream.
+await using var writer = new StreamWriter(response.Body, bufferSize: 64 * 1024);
+foreach (var o in orders) { await writer.WriteAsync(o.Id.ToString()); /* ... */ }
+
+// Joining existing strings: string.Join measures first, then allocates once.
+string line = string.Join(',', fields);
+</code></pre>
+<pre><code class="language-java">// Bad in a loop: each += creates a new String (javac's StringConcatFactory
+// makes a single a + b + c fast, but cannot fix the loop).
+String csv = &quot;&quot;;
+for (var o : orders) csv += o.id() + &quot;,&quot; + o.total() + &quot;\n&quot;;
+
+// Good: StringBuilder, presized when you can estimate.
+var sb = new StringBuilder(orders.size() * 24);
+for (var o : orders) sb.append(o.id()).append(',').append(o.total()).append('\n');
+String csv2 = sb.toString();
+
+// Joining: String.join or Collectors.joining.
+String line = String.join(&quot;,&quot;, fields);
+String all = orders.stream().map(Order::toCsv).collect(Collectors.joining(&quot;\n&quot;));
+</code></pre>
+<pre><code class="language-python"># Bad in a loop: CPython sometimes resizes in place when nothing else
+# references the string, but that is an implementation detail. Don't rely on it.
+csv = &quot;&quot;
+for o in orders:
+    csv += f&quot;{o.id},{o.total}\n&quot;
+
+# Good: collect the pieces, join once (measures the total, allocates once).
+csv = &quot;&quot;.join(f&quot;{o.id},{o.total}\n&quot; for o in orders)
+
+# Good when building incrementally across functions: io.StringIO.
+import io
+buf = io.StringIO()
+for o in orders:
+    buf.write(f&quot;{o.id},{o.total}\n&quot;)
+csv = buf.getvalue()
+</code></pre>
+<pre><code class="language-go">// Bad in a loop: each += allocates a new string and copies.
+csv := &quot;&quot;
+for _, o := range orders {
+    csv += fmt.Sprintf(&quot;%d,%.2f\n&quot;, o.ID, o.Total)
+}
+
+// Good: strings.Builder with Grow to presize. strconv.Append* avoids fmt.
+var b strings.Builder
+b.Grow(len(orders) * 24)
+for _, o := range orders {
+    b.WriteString(strconv.FormatInt(o.ID, 10))
+    b.WriteByte(',')
+    b.WriteString(strconv.FormatFloat(o.Total, 'f', 2, 64))
+    b.WriteByte('\n')
+}
+csv = b.String() // no copy: Builder hands over its buffer
+
+// Joining: strings.Join.
+line := strings.Join(fields, &quot;,&quot;)
+</code></pre>
+<pre><code class="language-typescript">// V8 represents s += piece as a &quot;rope&quot; (a tree of pieces) and flattens it
+// later, so this loop is not quadratic in Node. It still creates garbage,
+// and indexing into the rope forces a flatten.
+let csv = &quot;&quot;;
+for (const o of orders) csv += `${o.id},${o.total}\n`;
+
+// Clear and predictable: collect, then join once.
+const csv2 = orders.map((o) =&gt; `${o.id},${o.total}\n`).join(&quot;&quot;);
+
+// For responses, write to the stream instead of building the whole string.
+for (const o of orders) {
+  if (!res.write(`${o.id},${o.total}\n`)) await once(res, &quot;drain&quot;); // back-pressure
+}
+res.end();
+</code></pre>
+</div>
+<h3 id="pooling-buffers-and-objects">Pooling buffers and objects</h3>
+<p>A pool keeps objects that would otherwise become garbage and hands them out again. It pays off for <strong>large or expensive</strong> objects that are needed <strong>briefly and often</strong>: I/O buffers, <code>StringBuilder</code>s, serializer state, compression contexts. It does not pay off for small, cheap objects: young-generation allocation of a 40-byte object is faster than any pool's bookkeeping. The memory-and-gc page has <a href="memory-and-gc.html#pooling-reuse-instead-of-allocate">a visualizer of a pool's rent and return cycle</a>; here is how each language spells it.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">using System.Buffers;
+using Microsoft.Extensions.ObjectPool;
+
+// ArrayPool: rent at least n bytes; the array may be LARGER than requested.
+byte[] buffer = ArrayPool&lt;byte&gt;.Shared.Rent(64 * 1024);
+try
+{
+    int read = await stream.ReadAsync(buffer.AsMemory(0, 64 * 1024));
+    Process(buffer.AsSpan(0, read));            // use only what you filled
+}
+finally
+{
+    ArrayPool&lt;byte&gt;.Shared.Return(buffer, clearArray: containsSecrets);
+}
+
+// ObjectPool for reusable objects (Microsoft.Extensions.ObjectPool package).
+ObjectPool&lt;StringBuilder&gt; sbPool = new DefaultObjectPoolProvider().CreateStringBuilderPool();
+var sb = sbPool.Get();
+try { sb.Append(&quot;...&quot;); return sb.ToString(); }
+finally { sbPool.Return(sb); }                  // the policy clears it on return
+</code></pre>
+<pre><code class="language-java">// Java's GC handles short-lived objects very well; pool only expensive things.
+// Netty's PooledByteBufAllocator is the standard for network buffers:
+ByteBuf buf = PooledByteBufAllocator.DEFAULT.buffer(64 * 1024);
+try {
+    buf.writeBytes(in, 64 * 1024);              // fill from an InputStream
+    process(buf);
+} finally {
+    buf.release();                              // reference-counted: release exactly once
+}
+
+// A per-thread reusable buffer for a CPU-bound hot loop (platform threads only:
+// with virtual threads, ThreadLocal caches multiply per virtual thread).
+private static final ThreadLocal&lt;byte[]&gt; SCRATCH = ThreadLocal.withInitial(() -&gt; new byte[64 * 1024]);
+byte[] scratch = SCRATCH.get();
+</code></pre>
+<pre><code class="language-python"># Python objects are reference counted and freed immediately; pooling small
+# objects rarely helps. Reusing a large buffer for I/O does:
+buf = bytearray(64 * 1024)
+view = memoryview(buf)
+with open(path, &quot;rb&quot;) as f:
+    while (n := f.readinto(buf)) &gt; 0:          # fills the existing buffer, no new bytes object
+        process(view[:n])                      # zero-copy slice
+
+# Connection and session objects are the pools that matter most in Python:
+# reuse one requests.Session / httpx.Client / DB engine (see &quot;Reuse connections&quot;).
+</code></pre>
+<pre><code class="language-go">// sync.Pool: a per-P cache of reusable objects. It is emptied over GC cycles,
+// so it never leaks, but never assume an item survives.
+var bufPool = sync.Pool{
+    New: func() any { return new(bytes.Buffer) },
+}
+
+func render(w io.Writer, v any) error {
+    buf := bufPool.Get().(*bytes.Buffer)
+    buf.Reset()                        // always reset: it holds the previous user's data
+    defer bufPool.Put(buf)
+    if err := json.NewEncoder(buf).Encode(v); err != nil {
+        return err
+    }
+    _, err := w.Write(buf.Bytes())
+    return err
+}
+// Don't Put very large buffers back: one huge request would pin that memory.
+</code></pre>
+<pre><code class="language-typescript">// Node keeps an internal pool for small Buffers: Buffer.allocUnsafe(n) for
+// n &lt; 4 KB slices from it (contents are NOT zeroed: overwrite before reading).
+const header = Buffer.allocUnsafe(16);
+header.writeUInt32BE(length, 0);
+
+// For your own hot paths, reuse one buffer per worker instead of allocating per message.
+const scratch = Buffer.alloc(64 * 1024);
+function encode(msg: Message): Buffer {
+  const n = writeMessage(scratch, msg);        // fills scratch, returns bytes written
+  return scratch.subarray(0, n);               // a view; copy it if it must outlive the next call
+}
+</code></pre>
+</div>
+<div class="warn">
+<p><strong>Pools trade GC work for correctness risk.</strong> A returned object can still be referenced by the code that returned it (use-after-return), a rented array can contain the previous user's data (information leak), and an object returned twice is handed to two users at once. Pool only what a profile shows, keep the rent/return in one <code>try/finally</code> or <code>defer</code>, and clear buffers that held secrets.</p>
+</div>
+<h3 id="views-instead-of-copies-span-memory-slices">Views instead of copies: Span, Memory, slices</h3>
+<p>Parsing, splitting and trimming usually produce <strong>copies</strong>: <code>Substring</code>, <code>Split</code>, <code>bytes[a:b]</code>, <code>Arrays.copyOfRange</code>. A <strong>view</strong> describes a window into existing memory instead: no allocation, no copying. The memory-and-gc page shows <a href="memory-and-gc.html#views-instead-of-copies-span-memory-and-slices">how spans and slices share their backing memory</a>. The rules of thumb:</p>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>View type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C#</td>
+<td><code>Span&lt;T&gt;</code>, <code>ReadOnlySpan&lt;T&gt;</code>, <code>Memory&lt;T&gt;</code></td>
+<td>Span is stack-only (no fields, no <code>await</code> across it); use <code>Memory&lt;T&gt;</code> across awaits. <code>stackalloc</code> gives a span on the stack for small temporary buffers.</td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>ByteBuffer.slice()</code>, <code>CharBuffer.wrap</code>, <code>CharSequence</code></td>
+<td><code>String.substring</code> <strong>copies</strong> (since Java 7u6). The FFM API's <code>MemorySegment.asSlice</code> (Java 22+) is the modern off-heap view.</td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>memoryview</code></td>
+<td>Slicing <code>bytes</code> copies; slicing a <code>memoryview</code> doesn't. Works with <code>bytes</code>, <code>bytearray</code>, <code>array</code>, NumPy.</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>slices (<code>b[i:j]</code>)</td>
+<td>Slicing never copies. Gotcha: a small slice keeps the whole backing array alive; <code>bytes.Clone</code> or <code>slices.Clone</code> when keeping a small piece of a big buffer.</td>
+</tr>
+<tr>
+<td>TypeScript</td>
+<td><code>Buffer.subarray</code>, <code>TypedArray.subarray</code></td>
+<td>Zero-copy views. <code>Buffer.slice</code> is deprecated because it looked like <code>Array.slice</code> (a copy) but wasn't.</td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Parse &quot;key=value;key=value&quot; without allocating substrings.
+static int SumValues(ReadOnlySpan&lt;char&gt; input)
+{
+    int sum = 0;
+    foreach (Range part in input.Split(';'))            // .NET 9: MemoryExtensions.Split(span, char)
+    {
+        ReadOnlySpan&lt;char&gt; pair = input[part];
+        int eq = pair.IndexOf('=');
+        if (eq &gt;= 0 &amp;&amp; int.TryParse(pair[(eq + 1)..], out int v)) sum += v;   // parses a span: no string
+    }
+    return sum;
+}
+
+// stackalloc: a small temporary buffer on the stack, no GC involvement.
+Span&lt;byte&gt; hash = stackalloc byte[32];
+SHA256.HashData(payload, hash);
+string hex = Convert.ToHexString(hash);
+</code></pre>
+<pre><code class="language-java">// Work on a window of a buffer without copying it.
+ByteBuffer packet = ByteBuffer.wrap(data);
+ByteBuffer header = packet.slice(0, 16);                // Java 13+: view, no copy
+ByteBuffer body = packet.slice(16, data.length - 16);
+
+// Parse a number from part of a CharSequence without substring (Java 9+).
+int v = Integer.parseInt(line, start, end, 10);
+</code></pre>
+<pre><code class="language-python">data = sock.recv(65536)                 # bytes
+view = memoryview(data)
+header, body = view[:16], view[16:]     # zero-copy slices
+kind = int.from_bytes(header[:2], &quot;big&quot;)
+process(body)                           # anything that accepts the buffer protocol
+
+# bytes(view[...]) makes a copy: do it only when you must keep the data.
+</code></pre>
+<pre><code class="language-go">// Slicing shares the backing array: no allocation.
+header, body := packet[:16], packet[16:]
+kind := binary.BigEndian.Uint16(header[:2])
+
+// But keeping a tiny slice of a huge buffer pins the whole buffer.
+id := bytes.Clone(body[:8]) // copy just what you keep
+_ = kind
+_ = id
+</code></pre>
+<pre><code class="language-typescript">const header = packet.subarray(0, 16);   // view, shares memory
+const body = packet.subarray(16);
+const kind = header.readUInt16BE(0);
+
+// Copy only what must outlive the packet buffer.
+const id = Buffer.from(body.subarray(0, 8));
+</code></pre>
+</div>
+<h3 id="boxing-value-types-and-struct-versus-class">Boxing, value types and struct versus class</h3>
+<p><strong>Boxing</strong> wraps a value (an <code>int</code>, a <code>double</code>, a struct) in a heap object so it can be treated as a reference. It happens silently when a value type meets <code>object</code>, an interface or a generic collection of references. Each box is an allocation, and a collection of boxes is a collection of pointers to scattered objects, which is slow to scan (see <a href="#data-oriented-design-cache-lines-and-branches">data-oriented design</a>).</p>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Where boxing hides</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C#</td>
+<td>Passing a struct as <code>object</code> or an interface; <code>ArrayList</code>, non-generic APIs; <code>string.Format("{0}", 42)</code> (a <code>params object[]</code> argument); LINQ over structs through <code>IEnumerable&lt;T&gt;</code></td>
+<td>Generics (<code>List&lt;int&gt;</code> stores ints inline), generic constraints (<code>where T : IComparable&lt;T&gt;</code>), interpolated string handlers (.NET 6+)</td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>List&lt;Integer&gt;</code>, <code>Map&lt;Long, Double&gt;</code>, <code>Stream&lt;Integer&gt;</code>; every autoboxed value above the small-integer cache (-128..127)</td>
+<td>Primitive arrays, <code>IntStream</code>/<code>LongStream</code>, primitive collections (fastutil, Eclipse Collections); value classes are coming with Project Valhalla</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>Everything is an object: a <code>list</code> of a million floats is a million float objects</td>
+<td><code>array.array('d')</code>, NumPy arrays, <code>struct</code>; vectorise the loop</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>Converting a value to <code>any</code> / an interface (<code>fmt.Println(x)</code>, <code>[]any</code>) may allocate if the value escapes</td>
+<td>Concrete types and generics; check with <code>go build -gcflags=-m</code></td>
+</tr>
+<tr>
+<td>TypeScript</td>
+<td>Numbers outside the small-integer range are heap numbers; arrays of mixed types</td>
+<td>Typed arrays (<code>Float64Array</code>, <code>Int32Array</code>) for numeric data; keep arrays monomorphic</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Struct or class?</strong> In C# (and Go, where every type can be a value), a small value type avoids an allocation and is stored <strong>inline</strong> in arrays and other objects. Make it a struct when it is small (up to about 16–24 bytes), immutable and has value semantics (a point, a money amount, an ID). Keep it a class when it is large (structs are copied on every assignment and pass-by-value), mutable, shared, or used polymorphically. Pass large structs with <code>in</code> / <code>ref readonly</code> to avoid copies.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Boxing: every int becomes an object.
+ArrayList legacy = new();               // non-generic: stores object
+for (int i = 0; i &lt; n; i++) legacy.Add(i);          // n boxes
+
+List&lt;int&gt; ints = new(n);                // generic: ints stored inline, no boxes
+for (int i = 0; i &lt; n; i++) ints.Add(i);
+
+// A struct through an interface is boxed; through a generic constraint it is not.
+static int CompareBoxed(IComparable a, object b) =&gt; a.CompareTo(b);           // boxes both
+static int Compare&lt;T&gt;(T a, T b) where T : IComparable&lt;T&gt; =&gt; a.CompareTo(b);   // no boxing
+
+readonly record struct Money(decimal Amount, string Currency);  // small, immutable: a good struct
+</code></pre>
+<pre><code class="language-java">// Autoboxing: each Long above 127 is a separate heap object.
+Map&lt;Long, Long&gt; counts = new HashMap&lt;&gt;();
+for (long id : ids) counts.merge(id, 1L, Long::sum);  // boxes the key and the value every time
+
+// Primitive alternatives.
+long total = Arrays.stream(prices).sum();              // LongStream: no boxing
+// fastutil: Long2LongOpenHashMap counts = new Long2LongOpenHashMap();
+//           counts.addTo(id, 1);                      // primitives all the way
+
+// Beware the equality trap: == on boxed values compares references.
+Integer a = 1000, b = 1000;
+boolean same = a.equals(b);                            // true; a == b is false
+</code></pre>
+<pre><code class="language-python">import array
+from statistics import fmean
+
+prices = [float(i) for i in range(1_000_000)]          # a million float objects (~24 bytes each + 8-byte pointers)
+packed = array.array(&quot;d&quot;, prices)                      # one contiguous 8 MB block
+
+# With NumPy the loop moves into C and SIMD:
+# import numpy as np
+# arr = np.asarray(packed); total = arr.sum()
+total = fmean(packed)
+</code></pre>
+<pre><code class="language-go">// Converting to an interface may allocate when the value escapes.
+var sink []any
+for i := 0; i &lt; n; i++ {
+    sink = append(sink, i) // each int boxed into an interface value
+}
+
+// Generics keep concrete types: no boxing.
+func Sum[T int | int64 | float64](xs []T) T {
+    var s T
+    for _, x := range xs {
+        s += x
+    }
+    return s
+}
+// go build -gcflags=-m shows &quot;escapes to heap&quot; for each allocation site.
+</code></pre>
+<pre><code class="language-typescript">// A plain array of numbers may hold heap numbers and change &quot;elements kind&quot;.
+const prices: number[] = [];
+for (let i = 0; i &lt; n; i++) prices.push(i * 1.5);
+
+// A Float64Array is one contiguous block of doubles, fixed size, no boxing.
+const packed = new Float64Array(n);
+for (let i = 0; i &lt; n; i++) packed[i] = i * 1.5;
+let total = 0;
+for (let i = 0; i &lt; packed.length; i++) total += packed[i];
+</code></pre>
+</div>
+<h3 id="linq-streams-and-iterators-in-hot-paths">LINQ, streams and iterators in hot paths</h3>
+<p>LINQ, Java streams, Python generator pipelines and JavaScript <code>map/filter/reduce</code> chains are wonderful for clarity. In a hot path they add overhead: a delegate or lambda call per element per stage, an enumerator object per stage, closures capturing variables (each one an allocation), and often a boxed enumerator when the source is a struct. For a request that touches 50 items, this is irrelevant. For an inner loop over millions of items called thousands of times per second, it can be 2–10×.</p>
+<table>
+<thead>
+<tr>
+<th>Use the expressive form</th>
+<th>Use a plain loop</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Most business code, any loop over tens or hundreds of items</td>
+<td>Inner loops of parsers, serializers, numeric code, game loops</td>
+</tr>
+<tr>
+<td>When the profile doesn't show it</td>
+<td>When the profile shows enumerators, lambdas or closures</td>
+</tr>
+<tr>
+<td>When the runtime optimises it (.NET 9's LINQ has fast paths for arrays and lists; <code>Sum</code>, <code>Min</code>, <code>Max</code> are vectorised)</td>
+<td>When you need early exit, index tracking or in-place mutation anyway</td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Clear, and fine almost everywhere:
+decimal total = lines.Where(l =&gt; l.Quantity &gt; 0).Sum(l =&gt; l.Quantity * l.Price);
+
+// Hot path: one pass, no delegates, no enumerator allocations.
+decimal total2 = 0;
+foreach (var l in CollectionsMarshal.AsSpan(lines))   // iterate the backing array: no enumerator, no version checks
+    if (l.Quantity &gt; 0) total2 += l.Quantity * l.Price;
+
+// A closure that captures a local allocates on every call of the method:
+int threshold = GetThreshold();
+var big = orders.Where(o =&gt; o.Total &gt; threshold);     // captures 'threshold'
+// static lambdas (C# 9) can't capture, which makes accidental allocations a compile error.
+</code></pre>
+<pre><code class="language-java">// Clear:
+double total = lines.stream().filter(l -&gt; l.quantity() &gt; 0)
+                    .mapToDouble(l -&gt; l.quantity() * l.price()).sum();  // mapToDouble avoids boxing
+
+// Hot path: a plain loop over an array or ArrayList.
+double total2 = 0;
+for (int i = 0, n = lines.size(); i &lt; n; i++) {
+    var l = lines.get(i);
+    if (l.quantity() &gt; 0) total2 += l.quantity() * l.price();
+}
+// parallel() is not a performance switch: it uses the common ForkJoinPool and
+// only pays off for large, CPU-bound, independent work.
+</code></pre>
+<pre><code class="language-python"># Generator pipelines are clear but every stage is a Python-level call per item.
+total = sum(l.quantity * l.price for l in lines if l.quantity &gt; 0)
+
+# In CPython the biggest wins come from moving the loop into C:
+# built-ins (sum, max, sorted with key), comprehensions over explicit loops,
+# operator.attrgetter instead of lambdas, or NumPy/pandas for numeric columns.
+from operator import attrgetter
+by_total = sorted(orders, key=attrgetter(&quot;total&quot;))
+</code></pre>
+<pre><code class="language-go">// Go has no built-in lazy pipeline; plain loops are the idiom and are fast.
+var total float64
+for i := range lines {
+    l := &amp;lines[i] // index to avoid copying large structs
+    if l.Quantity &gt; 0 {
+        total += float64(l.Quantity) * l.Price
+    }
+}
+// Go 1.23 iterators (iter.Seq) compose lazily; the compiler inlines simple ones.
+</code></pre>
+<pre><code class="language-typescript">// Clear:
+const total = lines.filter((l) =&gt; l.quantity &gt; 0).reduce((s, l) =&gt; s + l.quantity * l.price, 0);
+
+// Hot path: filter() allocates a whole intermediate array. A loop does one pass.
+let total2 = 0;
+for (const l of lines) if (l.quantity &gt; 0) total2 += l.quantity * l.price;
+</code></pre>
+</div>
+<h2 id="data-oriented-design-cache-lines-and-branches">Data-oriented design: cache lines and branches</h2>
+<p>The CPU does not read memory one value at a time. It reads <strong>64-byte cache lines</strong>, and a read from main memory costs about 100 ns, the time for a few hundred instructions (the <a href="performance-cadence.html#latency-numbers-every-programmer-should-know">latency table</a> has the full ladder). Caches and the hardware prefetcher hide that cost when access is <strong>sequential and dense</strong>: the prefetcher sees you walking forward and fetches the next lines before you ask. They can't hide it when access <strong>jumps around</strong> (following pointers to objects scattered across the heap) or when most of each fetched line is data you don't need.</p>
+<p>Data-oriented design means arranging data for the way the hot loop reads it. The classic example is <strong>array of structs (AoS)</strong> versus <strong>struct of arrays (SoA)</strong>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 300" width="900" role="img" aria-label="Array of structs places all fields of one particle together, so summing mass touches every line; struct of arrays places all masses together, so summing mass touches only the mass array">
+<text x="450" y="22" text-anchor="middle" class="title">Summing Mass over particles: what each 64-byte line holds</text>
+<text x="40" y="56" class="small">Array of structs (AoS): one line = one particle's 8 fields</text>
+<rect class="box" x="40" y="66" width="52" height="30" rx="3"/><text x="66" y="86" text-anchor="middle" class="small mono">X0</text>
+<rect class="box" x="94" y="66" width="52" height="30" rx="3"/><text x="120" y="86" text-anchor="middle" class="small mono">Y0</text>
+<rect class="box" x="148" y="66" width="52" height="30" rx="3"/><text x="174" y="86" text-anchor="middle" class="small mono">Z0</text>
+<rect class="box" x="202" y="66" width="52" height="30" rx="3"/><text x="228" y="86" text-anchor="middle" class="small mono">Vx0</text>
+<rect class="box" x="256" y="66" width="52" height="30" rx="3"/><text x="282" y="86" text-anchor="middle" class="small mono">Vy0</text>
+<rect class="box" x="310" y="66" width="52" height="30" rx="3"/><text x="336" y="86" text-anchor="middle" class="small mono">Vz0</text>
+<rect class="box done" x="364" y="66" width="52" height="30" rx="3"/><text x="390" y="86" text-anchor="middle" class="small mono">M0</text>
+<rect class="box" x="418" y="66" width="52" height="30" rx="3"/><text x="444" y="86" text-anchor="middle" class="small mono">Q0</text>
+<rect class="box" x="40" y="100" width="52" height="30" rx="3"/><text x="66" y="120" text-anchor="middle" class="small mono">X1</text>
+<rect class="box" x="94" y="100" width="52" height="30" rx="3"/><text x="120" y="120" text-anchor="middle" class="small mono">Y1</text>
+<rect class="box" x="148" y="100" width="52" height="30" rx="3"/><text x="174" y="120" text-anchor="middle" class="small mono">Z1</text>
+<rect class="box" x="202" y="100" width="52" height="30" rx="3"/><text x="228" y="120" text-anchor="middle" class="small mono">Vx1</text>
+<rect class="box" x="256" y="100" width="52" height="30" rx="3"/><text x="282" y="120" text-anchor="middle" class="small mono">Vy1</text>
+<rect class="box" x="310" y="100" width="52" height="30" rx="3"/><text x="336" y="120" text-anchor="middle" class="small mono">Vz1</text>
+<rect class="box done" x="364" y="100" width="52" height="30" rx="3"/><text x="390" y="120" text-anchor="middle" class="small mono">M1</text>
+<rect class="box" x="418" y="100" width="52" height="30" rx="3"/><text x="444" y="120" text-anchor="middle" class="small mono">Q1</text>
+<text x="490" y="86" class="small">line 0: 8 bytes useful of 64</text>
+<text x="490" y="120" class="small">line 1: 8 bytes useful of 64</text>
+<text x="490" y="146" class="small muted">… one line fetched per particle</text>
+<text x="40" y="186" class="small">Struct of arrays (SoA): one line = 8 masses</text>
+<rect class="box done" x="40" y="196" width="52" height="30" rx="3"/><text x="66" y="216" text-anchor="middle" class="small mono">M0</text>
+<rect class="box done" x="94" y="196" width="52" height="30" rx="3"/><text x="120" y="216" text-anchor="middle" class="small mono">M1</text>
+<rect class="box done" x="148" y="196" width="52" height="30" rx="3"/><text x="174" y="216" text-anchor="middle" class="small mono">M2</text>
+<rect class="box done" x="202" y="196" width="52" height="30" rx="3"/><text x="228" y="216" text-anchor="middle" class="small mono">M3</text>
+<rect class="box done" x="256" y="196" width="52" height="30" rx="3"/><text x="282" y="216" text-anchor="middle" class="small mono">M4</text>
+<rect class="box done" x="310" y="196" width="52" height="30" rx="3"/><text x="336" y="216" text-anchor="middle" class="small mono">M5</text>
+<rect class="box done" x="364" y="196" width="52" height="30" rx="3"/><text x="390" y="216" text-anchor="middle" class="small mono">M6</text>
+<rect class="box done" x="418" y="196" width="52" height="30" rx="3"/><text x="444" y="216" text-anchor="middle" class="small mono">M7</text>
+<text x="490" y="216" class="small">mass line 0: 64 bytes useful of 64</text>
+<text x="40" y="256" class="small muted">X[], Y[], Z[], Vx[] … live in their own arrays and are never fetched by this loop.</text>
+<text x="40" y="280" class="small">Result: SoA moves one eighth of the memory and the loop vectorises (SIMD adds 4–8 masses per instruction).</text>
+</svg>
+<figcaption>The same data, two layouts. The right layout depends on the access pattern: SoA for "one field of everything", AoS for "every field of one thing".</figcaption>
+</figure>
+
+<div class="viz" data-viz="performance-patterns-layout"></div>
+
+<p>Try the three layouts with 8 fields, then with 2 fields. With 2 fields AoS is almost as good as SoA, because each line still holds 4 useful masses. With <strong>object references</strong> (what you get by default from a <code>List&lt;Particle&gt;</code> of classes in C# or Java, a Python list of objects, or a JavaScript array of objects), each element is a pointer read plus a jump to wherever the allocator put the object. Over millions of elements those cache misses dominate everything else.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// AoS with a struct: elements stored inline, contiguous. Good when you use most fields together.
+struct Particle { public double X, Y, Z, Vx, Vy, Vz, Mass, Charge; }
+Particle[] ps = new Particle[n];
+
+// AoS with a class: an array of references to scattered objects. The slowest for scans.
+class ParticleObj { public double X, Y, Z, Vx, Vy, Vz, Mass, Charge; }
+
+// SoA: one array per field. The summing loop is dense and vectorisable.
+sealed class Particles(int n)
+{
+    public readonly double[] X = new double[n], Y = new double[n], Z = new double[n];
+    public readonly double[] Mass = new double[n];
+}
+double total = particles.Mass.AsSpan().Sum();      // .NET 8+: TensorPrimitives.Sum is SIMD;
+                                                   // or System.Linq Sum over an array
+</code></pre>
+<pre><code class="language-java">// Java objects are always references: an array of Particle is an array of pointers.
+record Particle(double x, double y, double z, double mass) {}
+Particle[] ps = new Particle[n];                     // n separate heap objects
+
+// SoA with primitive arrays: dense, cache-friendly, auto-vectorised by C2 for simple loops.
+final class Particles {
+    final double[] x, y, z, mass;
+    Particles(int n) { x = new double[n]; y = new double[n]; z = new double[n]; mass = new double[n]; }
+    double totalMass() {
+        double s = 0;
+        for (double m : mass) s += m;
+        return s;
+    }
+}
+// Project Valhalla's value classes aim to let arrays of small records be stored inline.
+</code></pre>
+<pre><code class="language-python"># A list of objects: each particle is a dict-backed object, each float its own object.
+class Particle:
+    __slots__ = (&quot;x&quot;, &quot;y&quot;, &quot;z&quot;, &quot;mass&quot;)          # __slots__ saves memory per object, still scattered
+
+# SoA with NumPy: each field is one contiguous typed array, and the loop runs in C with SIMD.
+import numpy as np
+n = 1_000_000
+x = np.zeros(n); y = np.zeros(n); z = np.zeros(n)
+mass = np.random.default_rng(7).random(n)
+total = mass.sum()
+
+# Structured arrays give AoS in NumPy when you need rows:
+# ps = np.zeros(n, dtype=[(&quot;x&quot;, &quot;f8&quot;), (&quot;y&quot;, &quot;f8&quot;), (&quot;z&quot;, &quot;f8&quot;), (&quot;mass&quot;, &quot;f8&quot;)])
+</code></pre>
+<pre><code class="language-go">// Slices of structs are contiguous (AoS) and fast to scan.
+type Particle struct{ X, Y, Z, Vx, Vy, Vz, Mass, Charge float64 }
+ps := make([]Particle, n)
+
+// A slice of pointers is scattered: avoid []*Particle in hot loops.
+// SoA when the loop reads one field:
+type Particles struct{ X, Y, Z, Mass []float64 }
+
+func (p *Particles) TotalMass() float64 {
+    var s float64
+    for _, m := range p.Mass {
+        s += m
+    }
+    return s
+}
+</code></pre>
+<pre><code class="language-typescript">// An array of objects: each element is a pointer to a heap object.
+const ps = Array.from({ length: n }, () =&gt; ({ x: 0, y: 0, z: 0, mass: Math.random() }));
+
+// SoA with typed arrays: contiguous doubles, no per-element objects.
+class Particles {
+  readonly x: Float64Array; readonly y: Float64Array; readonly mass: Float64Array;
+  constructor(n: number) { this.x = new Float64Array(n); this.y = new Float64Array(n); this.mass = new Float64Array(n); }
+  totalMass(): number { let s = 0; for (let i = 0; i &lt; this.mass.length; i++) s += this.mass[i]; return s; }
+}
+</code></pre>
+</div>
+<h3 id="branch-prediction">Branch prediction</h3>
+<p>A modern CPU works on many instructions at once in a deep pipeline. When it reaches a conditional jump it can't wait to learn which way it goes, so it <strong>predicts</strong> and runs ahead speculatively. A correct guess is free. A wrong guess throws away the speculative work: about 15–20 cycles each time. The predictor learns from history, so branches that go the same way most of the time, or follow a simple pattern, are nearly free. Branches that depend on random data are expensive.</p>
+<div class="viz" data-viz="performance-patterns-branch"></div>
+
+<p>Run it with random bytes, then sorted bytes, then branchless code. Sorted data mispredicts only around the single point where values cross the threshold. Random data mispredicts about half the time. The branchless version computes both outcomes and selects one with arithmetic (often a <code>cmov</code> instruction), so it costs the same whatever the data looks like.</p>
+<div class="compare">
+<div class="good">
+<p><strong>When branch behaviour matters</strong></p>
+<ul>
+<li>Tight loops over large arrays with a data-dependent <code>if</code> (filters, histograms, parsers, interpreters).</li>
+<li>The profiler or <code>perf stat</code> shows a high <code>branch-misses</code> rate in the hot function.</li>
+<li>You can sort or partition the data once and reuse it, or the compiler can turn the condition into a select.</li>
+</ul>
+</div>
+<div class="bad">
+<p><strong>When it doesn't</strong></p>
+<ul>
+<li>Anything dominated by I/O, allocation or cache misses: a mispredict costs about 5 ns, a cache miss 100 ns, a network call milliseconds.</li>
+<li>Branches that almost always go one way (error checks, null checks): they predict well already.</li>
+<li>Code where branchless tricks hurt readability without a measured gain. Compilers often emit <code>cmov</code> for simple conditionals on their own.</li>
+</ul>
+</div>
+</div>
+<div class="tip">
+<p><strong>False sharing is the multi-core cousin.</strong> Two threads updating different variables that happen to share one 64-byte line make the cores fight over that line, and a "lock-free" counter per thread can run slower than one shared counter. Pad hot per-thread data to separate lines (<code>[StructLayout]</code> with explicit size in C#, <code>@Contended</code> in the JDK, padding fields in Go), or better, keep per-thread state local and combine at the end. See <a href="concurrency-async.html">Concurrency &amp; Async</a> for the threading side.</p>
+</div>
+<h2 id="fewer-round-trips-batching-and-buffering">Fewer round trips: batching and buffering</h2>
+<p>Every call to a database, a cache, another service, a message broker or the disk pays a <strong>fixed cost</strong> before doing any useful work: network latency, a syscall, parsing, authentication, a query plan lookup, a lock. When the useful work per call is small, the fixed cost dominates. Batching pays the fixed cost once for many items.</p>
+<div class="viz pp-wide" data-viz="performance-patterns-batching"></div>
+
+<p>The defaults are a typical in-region call: 2 ms round trip, 0.5 ms of server overhead per call, 0.05 ms of real work per item. For 200 items, one call per item takes 510 ms, and 98% of that is per-call cost (the round trip plus server overhead), not work. Try a 40 ms round trip (cross-region) and the sequential version takes over eight seconds. Then compare batching with parallelism: both cut wall time, but <strong>only batching also cuts the load</strong> on the other side. Parallel single-item calls hit the server with the same 200 requests, just faster, and that is how one slow page turns into a self-inflicted denial of service.</p>
+<h3 id="the-n1-query-problem">The N+1 query problem</h3>
+<p>The most common chatty-I/O bug is the <strong>N+1 query</strong>: one query for a list, then one more query per item for related data. ORMs make it easy because lazy-loaded navigation properties look like ordinary field access. The fix is to fetch the related data <strong>in the same query</strong> (a join) or in <strong>one extra query for all items</strong> (<code>WHERE id IN (...)</code>). <a href="data-access.html#loading-related-data-lazy-eager-explicit-and-projection">Data Access</a> covers ORMs, loading strategies and query plans in depth.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// N+1: one query for orders, then one query per order for its customer (lazy loading).
+var orders = await db.Orders.Where(o =&gt; o.Date &gt;= since).ToListAsync();
+foreach (var o in orders) Console.WriteLine(o.Customer.Name);   // a query per order if lazy-loading proxies are on
+
+// One query with a join:
+var orders2 = await db.Orders.Where(o =&gt; o.Date &gt;= since)
+    .Include(o =&gt; o.Customer).ToListAsync();
+
+// Better: project only what you need (one query, fewer columns, no tracking).
+var rows = await db.Orders.Where(o =&gt; o.Date &gt;= since)
+    .Select(o =&gt; new { o.Id, o.Total, CustomerName = o.Customer.Name })
+    .ToListAsync();
+// Several collections? AsSplitQuery() runs one query per collection instead of a cartesian join.
+</code></pre>
+<pre><code class="language-java">// N+1: lazy @ManyToOne / @OneToMany fetched per order when accessed.
+List&lt;Order&gt; orders = repo.findByDateAfter(since);
+orders.forEach(o -&gt; log.info(o.getCustomer().getName()));      // a SELECT per order
+
+// One query with a fetch join:
+@Query(&quot;select o from Order o join fetch o.customer where o.date &gt;= :since&quot;)
+List&lt;Order&gt; findWithCustomer(@Param(&quot;since&quot;) LocalDate since);
+
+// Or an entity graph on the repository method:
+@EntityGraph(attributePaths = &quot;customer&quot;)
+List&lt;Order&gt; findByDateAfter(LocalDate since);
+
+// Or batch fetching: Hibernate loads lazy associations 50 at a time with IN (...).
+// spring.jpa.properties.hibernate.default_batch_fetch_size=50
+</code></pre>
+<pre><code class="language-python">from sqlalchemy import select
+from sqlalchemy.orm import joinedload, selectinload
+
+# N+1: lazy=&quot;select&quot; relationships load per object on access.
+orders = session.scalars(select(Order).where(Order.date &gt;= since)).all()
+for o in orders:
+    print(o.customer.name)                                   # a SELECT per order
+
+# One query with a JOIN (good for many-to-one):
+stmt = select(Order).where(Order.date &gt;= since).options(joinedload(Order.customer))
+
+# Two queries total, the second with IN (...) (good for one-to-many collections):
+stmt = select(Order).where(Order.date &gt;= since).options(selectinload(Order.lines))
+orders = session.scalars(stmt).all()
+</code></pre>
+<pre><code class="language-go">// N+1: a query per order.
+for i := range orders {
+    row := db.QueryRowContext(ctx, `SELECT name FROM customers WHERE id = $1`, orders[i].CustomerID)
+    _ = row.Scan(&amp;orders[i].CustomerName)
+}
+
+// One query for all customers, then join in memory (pgx accepts a slice for ANY($1)).
+ids := make([]int64, 0, len(orders))
+for _, o := range orders {
+    ids = append(ids, o.CustomerID)
+}
+rows, err := pool.Query(ctx, `SELECT id, name FROM customers WHERE id = ANY($1)`, ids)
+if err != nil {
+    return err
+}
+names := make(map[int64]string, len(ids))
+for rows.Next() {
+    var id int64
+    var name string
+    if err := rows.Scan(&amp;id, &amp;name); err != nil {
+        return err
+    }
+    names[id] = name
+}
+for i := range orders {
+    orders[i].CustomerName = names[orders[i].CustomerID]
+}
+</code></pre>
+<pre><code class="language-typescript">import DataLoader from &quot;dataloader&quot;;
+
+// N+1 in GraphQL resolvers: each order's customer resolver runs its own query.
+// DataLoader collects all keys requested in one tick and calls the batch function once.
+const customerLoader = new DataLoader&lt;number, Customer&gt;(async (ids) =&gt; {
+  const rows = await db.customer.findMany({ where: { id: { in: [...ids] } } });
+  const byId = new Map(rows.map((c) =&gt; [c.id, c] as const));
+  return ids.map((id) =&gt; byId.get(id) ?? new Error(`customer ${id} not found`)); // same order as ids
+});
+
+const resolvers = {
+  Order: { customer: (o: Order) =&gt; customerLoader.load(o.customerId) },
+};
+// Create loaders per request: the cache inside DataLoader must not leak data between users.
+</code></pre>
+</div>
+<h3 id="micro-batching-batch-by-size-or-by-time">Micro-batching: batch by size or by time</h3>
+<p>Batching inside one request is easy: you have all the items. Batching <strong>across</strong> requests (log shipping, metrics export, writes to Kafka, inserts from many concurrent users) needs a buffer that flushes on <strong>whichever comes first</strong>: enough items, or a maximum wait. The maximum wait bounds the added latency; the size bounds memory and payload size.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 230" width="900" role="img" aria-label="Items from many callers enter a buffer that flushes when it holds 100 items or when 20 milliseconds have passed, whichever happens first">
+<defs><marker id="performance-patterns-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="450" y="22" text-anchor="middle" class="title">Micro-batching: flush on size OR time</text>
+<rect class="box" x="30" y="50" width="130" height="34" rx="8"/><text x="95" y="72" text-anchor="middle" class="small">request A</text>
+<rect class="box" x="30" y="96" width="130" height="34" rx="8"/><text x="95" y="118" text-anchor="middle" class="small">request B</text>
+<rect class="box" x="30" y="142" width="130" height="34" rx="8"/><text x="95" y="164" text-anchor="middle" class="small">request C</text>
+<line class="edge accent" x1="160" y1="67" x2="270" y2="105" marker-end="url(#performance-patterns-ar)"/>
+<line class="edge accent" x1="160" y1="113" x2="270" y2="113" marker-end="url(#performance-patterns-ar)"/>
+<line class="edge accent" x1="160" y1="159" x2="270" y2="121" marker-end="url(#performance-patterns-ar)"/>
+<rect class="box active" x="275" y="70" width="230" height="90" rx="10"/>
+<text x="390" y="98" text-anchor="middle" class="small">bounded buffer</text>
+<text x="390" y="120" text-anchor="middle" class="small mono">flush if count ≥ 100</text>
+<text x="390" y="142" text-anchor="middle" class="small mono">or oldest item ≥ 20 ms</text>
+<line class="edge accent" x1="505" y1="115" x2="610" y2="115" marker-end="url(#performance-patterns-ar)"/>
+<rect class="box done" x="615" y="85" width="250" height="60" rx="10"/>
+<text x="740" y="110" text-anchor="middle" class="small">one INSERT / one HTTP call</text>
+<text x="740" y="130" text-anchor="middle" class="small muted">with up to 100 items</text>
+<text x="390" y="196" text-anchor="middle" class="small muted">added latency ≤ 20 ms · calls cut up to 100× · when full: block or shed (back-pressure)</text>
+</svg>
+<figcaption>The pattern behind log and metric exporters (OpenTelemetry's batch processor), Kafka producers (batch.size and linger.ms), and TCP's Nagle algorithm.</figcaption>
+</figure>
+
+<p>Batching shows up at every layer. The same trade-off (a little latency for much higher throughput) applies each time:</p>
+<table>
+<thead>
+<tr>
+<th>Where</th>
+<th>Unbatched</th>
+<th>Batched</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Database writes</td>
+<td>One <code>INSERT</code> and commit per row</td>
+<td>Multi-row <code>INSERT</code>, <code>SqlBulkCopy</code>, JDBC <code>addBatch</code>, <code>COPY</code>, <code>executemany</code>, one transaction for the batch</td>
+</tr>
+<tr>
+<td>Database reads</td>
+<td>Query per item (N+1)</td>
+<td>Join, <code>IN (...)</code>, <code>ANY($1)</code>, <code>selectinload</code>, DataLoader</td>
+</tr>
+<tr>
+<td>Cache</td>
+<td><code>GET</code> per key</td>
+<td><code>MGET</code>, Redis pipelining</td>
+</tr>
+<tr>
+<td>HTTP APIs</td>
+<td>Call per item</td>
+<td>Bulk endpoint (<code>POST /prices:batchGet</code>), GraphQL with DataLoader</td>
+</tr>
+<tr>
+<td>Messaging</td>
+<td>Send and await each message</td>
+<td>Producer batching (Kafka <code>linger.ms</code>), <code>SendMessageBatch</code> (SQS), Service Bus batches</td>
+</tr>
+<tr>
+<td>Files and sockets</td>
+<td><code>write()</code> per small piece</td>
+<td><code>BufferedStream</code>, <code>BufferedOutputStream</code>, <code>bufio.Writer</code>, Python's default buffered I/O</td>
+</tr>
+<tr>
+<td>Telemetry</td>
+<td>Export per span</td>
+<td>Batch span processor (see <a href="observability.html">Observability</a>)</td>
+</tr>
+</tbody>
+</table>
+<div class="warn">
+<p><strong>Batches have failure modes of their own.</strong> One bad item can fail a whole batch (decide: reject the batch, or return per-item results). Very large batches hit payload limits, lock many rows, and make a retry expensive. Pick a batch size by measuring: throughput usually flattens out between 100 and 1,000 items, long before the limits.</p>
+</div>
+<h2 id="back-pressure-bound-every-queue">Back-pressure: bound every queue</h2>
+<p>Whenever one stage hands work to another (a request handler to a background worker, a reader to a parser, a consumer loop to a database writer), there is a queue between them, even if it's only implicit (a list, a channel, the thread pool's queue, unawaited tasks). If the producer is faster than the consumer, <strong>an unbounded queue grows until memory runs out</strong>, and every item in it waits longer and longer. Back-pressure means <strong>the queue has a limit, and something sensible happens when it is full</strong>. <a href="concurrency-async.html#producer-consumer-and-backpressure">Concurrency &amp; Async</a> animates the producer/consumer mechanics; here are the policies and the code.</p>
+<table>
+<thead>
+<tr>
+<th>When the queue is full</th>
+<th>Effect</th>
+<th>Use it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Block / await</strong> the producer</td>
+<td>Producer slows to the consumer's pace; latency moves upstream</td>
+<td>Pipelines inside one process, file and stream processing</td>
+</tr>
+<tr>
+<td><strong>Reject</strong> new work (429 / 503)</td>
+<td>Caller learns immediately, can retry later or elsewhere</td>
+<td>Request admission at the edge; see load shedding in <a href="resilience.html">Resilience</a></td>
+</tr>
+<tr>
+<td><strong>Drop oldest</strong></td>
+<td>Freshest data wins</td>
+<td>Telemetry, live prices, sensor readings</td>
+</tr>
+<tr>
+<td><strong>Drop newest</strong></td>
+<td>Existing work completes</td>
+<td>Best-effort side work (non-critical notifications)</td>
+</tr>
+<tr>
+<td><strong>Unbounded</strong></td>
+<td>Nothing, until out-of-memory</td>
+<td>Almost never; only when the producer is provably bounded</td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs">
+<pre><code class="language-csharp">using System.Threading.Channels;
+
+// Bounded channel: WriteAsync waits when 1,000 items are queued.
+var channel = Channel.CreateBounded&lt;Job&gt;(new BoundedChannelOptions(1_000)
+{
+    FullMode = BoundedChannelFullMode.Wait,   // or DropOldest / DropNewest / DropWrite
+    SingleReader = true,
+});
+
+// Producer: slows down automatically when the consumer falls behind.
+await channel.Writer.WriteAsync(job, ct);
+
+// Consumer (e.g. a BackgroundService):
+await foreach (var j in channel.Reader.ReadAllAsync(ct))
+    await HandleAsync(j, ct);
+
+// Bounded concurrency for a fan-out: never more than 8 calls in flight.
+await Parallel.ForEachAsync(items, new ParallelOptions { MaxDegreeOfParallelism = 8, CancellationToken = ct },
+    async (item, token) =&gt; await ProcessAsync(item, token));
+</code></pre>
+<pre><code class="language-java">// Bounded queue: put() blocks when full; offer() returns false so you can reject.
+BlockingQueue&lt;Job&gt; queue = new ArrayBlockingQueue&lt;&gt;(1_000);
+queue.put(job);                                   // back-pressure by blocking
+
+// A thread pool with a bounded queue and an explicit policy when saturated.
+var pool = new ThreadPoolExecutor(8, 8, 0, TimeUnit.SECONDS,
+        new ArrayBlockingQueue&lt;&gt;(1_000),
+        new ThreadPoolExecutor.CallerRunsPolicy()); // the submitter runs the task: natural slowdown
+// Executors.newFixedThreadPool uses an UNBOUNDED queue: a classic OOM in production.
+
+// Bounding concurrency with virtual threads: a semaphore.
+var permits = new Semaphore(8);
+</code></pre>
+<pre><code class="language-python">import asyncio
+
+queue: &quot;asyncio.Queue[Job]&quot; = asyncio.Queue(maxsize=1_000)   # maxsize=0 means unbounded
+
+async def producer(jobs):
+    for job in jobs:
+        await queue.put(job)            # waits while the queue is full
+
+async def consumer():
+    while True:
+        job = await queue.get()
+        try:
+            await handle(job)
+        finally:
+            queue.task_done()
+
+# Bounded concurrency for a fan-out:
+sem = asyncio.Semaphore(8)
+async def limited(item):
+    async with sem:
+        return await process(item)
+</code></pre>
+<pre><code class="language-go">// A buffered channel is a bounded queue: sends block when it is full.
+jobs := make(chan Job, 1000)
+
+go func() {
+    defer close(jobs)
+    for _, j := range input {
+        select {
+        case jobs &lt;- j: // blocks when full: back-pressure
+        case &lt;-ctx.Done():
+            return
+        }
+    }
+}()
+
+// Drop instead of blocking (best-effort work):
+select {
+case jobs &lt;- j:
+default:
+    droppedJobs.Add(1) // queue full: count it and move on
+}
+
+// Bounded concurrency: errgroup with a limit.
+g, ctx := errgroup.WithContext(ctx)
+g.SetLimit(8)
+</code></pre>
+<pre><code class="language-typescript">import { pipeline } from &quot;node:stream/promises&quot;;
+import { createReadStream, createWriteStream } from &quot;node:fs&quot;;
+import { createGzip } from &quot;node:zlib&quot;;
+import { once } from &quot;node:events&quot;;
+
+// Streams carry back-pressure: pipeline() pauses the reader when the writer's
+// buffer (highWaterMark) is full, and propagates errors and cleanup.
+await pipeline(createReadStream(&quot;big.log&quot;), createGzip(), createWriteStream(&quot;big.log.gz&quot;));
+
+// Writing by hand: respect write()'s return value.
+for (const line of lines) {
+  if (!out.write(line)) await once(out, &quot;drain&quot;);
+}
+
+// Bounded concurrency for promises: p-limit (or a small semaphore).
+// const limit = pLimit(8); await Promise.all(items.map((i) =&gt; limit(() =&gt; process(i))));
+</code></pre>
+</div>
+<h2 id="streaming-instead-of-loading-everything">Streaming instead of loading everything</h2>
+<p>"Read it all, then process it, then send it" is the simplest code, and its memory use grows with the data. A 2 GB export loaded into a list needs at least 2 GB of heap (often three times that once objects and the serialized response are counted), and the client waits for the very last row before seeing the first byte. Streaming handles one item or one chunk at a time: <strong>memory stays flat, and the first byte goes out almost immediately</strong>.</p>
+<div class="viz" data-viz="performance-patterns-streaming"></div>
+
+<p>Push the row count up and watch the "load all" line climb while the streaming line stays flat. Then look at time-to-first-byte: for an export, the user sees progress (and the browser's download starts) seconds earlier. Streaming end to end needs <strong>every</strong> stage to stream: the database cursor, your code, the serializer and the response. One <code>ToList()</code> in the middle quietly turns it back into "load all".</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Database -&gt; HTTP response without buffering: EF Core streams rows as the client reads.
+app.MapGet(&quot;/export/orders&quot;, (AppDb db, CancellationToken ct) =&gt;
+    db.Orders.AsNoTracking()                       // no change tracking for read-only rows
+      .OrderBy(o =&gt; o.Id)
+      .Select(o =&gt; new OrderDto(o.Id, o.Total, o.Date))
+      .AsAsyncEnumerable());                       // System.Text.Json writes the array as it goes
+
+// Files: copy stream to stream with an 80 KB buffer, never File.ReadAllBytes for big files.
+await using var src = File.OpenRead(path);
+await src.CopyToAsync(response.Body, ct);
+</code></pre>
+<pre><code class="language-java">// Spring MVC: write the body incrementally from a database stream.
+@GetMapping(&quot;/export/orders&quot;)
+ResponseEntity&lt;StreamingResponseBody&gt; export() {
+    StreamingResponseBody body = out -&gt; {
+        try (var w = new BufferedWriter(new OutputStreamWriter(out, UTF_8));
+             Stream&lt;Order&gt; rows = jdbc.queryForStream(&quot;select id, total, date from orders order by id&quot;,
+                     (rs, i) -&gt; new Order(rs.getLong(1), rs.getBigDecimal(2), rs.getDate(3)))) {
+            rows.forEach(o -&gt; { try { w.write(o.toCsv()); w.newLine(); } catch (IOException e) { throw new UncheckedIOException(e); } });
+        }
+    };
+    return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).body(body);
+}
+// Set the JDBC fetch size (e.g. 500) so the driver does not pull the whole result set into memory.
+</code></pre>
+<pre><code class="language-python">from fastapi.responses import StreamingResponse
+
+@app.get(&quot;/export/orders&quot;)
+async def export(session: AsyncSession = Depends(get_session)):
+    async def rows():
+        yield &quot;id,total,date\n&quot;
+        result = await session.stream_scalars(select(Order).order_by(Order.id))   # server-side cursor
+        async for o in result:
+            yield f&quot;{o.id},{o.total},{o.date}\n&quot;
+    return StreamingResponse(rows(), media_type=&quot;text/csv&quot;)
+
+# Files: iterate lines, never f.read() on something that might be large.
+with open(&quot;big.log&quot;, encoding=&quot;utf-8&quot;) as f:
+    errors = sum(1 for line in f if &quot; ERROR &quot; in line)
+</code></pre>
+<pre><code class="language-go">func exportOrders(w http.ResponseWriter, r *http.Request) {
+    rows, err := db.QueryContext(r.Context(), `SELECT id, total, date FROM orders ORDER BY id`)
+    if err != nil {
+        http.Error(w, &quot;query failed&quot;, http.StatusInternalServerError)
+        return
+    }
+    defer rows.Close()
+
+    w.Header().Set(&quot;Content-Type&quot;, &quot;application/x-ndjson&quot;)
+    enc := json.NewEncoder(w)            // writes each value straight to the response
+    rc := http.NewResponseController(w)
+    for n := 0; rows.Next(); n++ {
+        var o Order
+        if err := rows.Scan(&amp;o.ID, &amp;o.Total, &amp;o.Date); err != nil {
+            return
+        }
+        _ = enc.Encode(o)
+        if n%500 == 0 {
+            _ = rc.Flush()                  // push bytes to the client periodically
+        }
+    }
+}
+</code></pre>
+<pre><code class="language-typescript">import { Readable } from &quot;node:stream&quot;;
+import { pipeline } from &quot;node:stream/promises&quot;;
+
+app.get(&quot;/export/orders&quot;, async (req, res) =&gt; {
+  res.type(&quot;text/csv&quot;);
+  async function* rows() {
+    yield &quot;id,total,date\n&quot;;
+    for await (const o of db.streamOrders()) yield `${o.id},${o.total},${o.date}\n`; // cursor-based
+  }
+  await pipeline(Readable.from(rows()), res);   // honours back-pressure from a slow client
+});
+</code></pre>
+</div>
+<div class="compare">
+<div class="good">
+<p><strong>Stream when</strong></p>
+<ul>
+<li>The data is large or unbounded (exports, logs, file uploads and downloads, ETL).</li>
+<li>Each item can be processed independently and in order.</li>
+<li>Time to first byte matters, or the client can render progressively (NDJSON, server-sent events, gRPC server streaming).</li>
+</ul>
+</div>
+<div class="bad">
+<p><strong>Load all when</strong></p>
+<ul>
+<li>The data is small and bounded (a page of 50 results): streaming adds complexity for nothing.</li>
+<li>You need the whole set first: sorting in memory, totals in a header, or a transaction you might roll back.</li>
+<li>An error halfway through must produce a clean error response. Once a streamed <code>200</code> has started, the status code can't change, so design a trailer or an error record.</li>
+</ul>
+</div>
+</div>
+<h2 id="lazy-vs-eager">Lazy vs eager</h2>
+<p><strong>Eager</strong> means doing the work up front, whether or not anyone needs it. <strong>Lazy</strong> means doing it on first use. Lazy initialisation speeds up startup and skips work that's never needed. Eager loading makes the first request fast and fails at deploy time rather than at 3 a.m. Neither is "the fast one": it depends on how likely the value is to be used, and on who pays the delay.</p>
+<div class="viz" data-viz="performance-patterns-lazy"></div>
+
+<p>The third mode is the trap: a <strong>lazy sequence enumerated several times</strong> re-runs the whole pipeline each time. <code>IEnumerable</code> in C#, a Java <code>Supplier&lt;Stream&gt;</code>, a Python generator function called again, or an <code>Iterable</code> in TypeScript recomputes everything on each pass. A Python generator or Java <code>Stream</code> used twice is worse: the second pass is silently empty, or throws <code>IllegalStateException</code>. Materialise once (<code>ToList()</code>, <code>toList()</code>, <code>list()</code>) when you will read the result more than once.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Thread-safe lazy initialisation: the factory runs once, on first .Value.
+private static readonly Lazy&lt;PricingRules&gt; Rules =
+    new(() =&gt; PricingRules.Load(&quot;rules.json&quot;), LazyThreadSafetyMode.ExecutionAndPublication);
+public decimal Price(Order o) =&gt; Rules.Value.Apply(o);
+
+// Multiple enumeration: Where() runs twice, and so does the expensive predicate.
+IEnumerable&lt;Order&gt; big = orders.Where(o =&gt; IsSuspicious(o));
+if (big.Any()) Report(big.Count());            // two passes
+var bigList = orders.Where(IsSuspicious).ToList();   // one pass, then reuse
+</code></pre>
+<pre><code class="language-java">// Holder idiom: the JVM initialises Holder on first access, thread-safely, with no locks after.
+final class Rules {
+    private static final class Holder { static final PricingRules INSTANCE = PricingRules.load(&quot;rules.json&quot;); }
+    static PricingRules get() { return Holder.INSTANCE; }
+}
+
+// Guava memoizing supplier for instance-level laziness:
+private final Supplier&lt;Report&gt; report = Suppliers.memoize(this::buildReport);
+
+// Streams are single-use: collect once if you need the data twice.
+List&lt;Order&gt; suspicious = orders.stream().filter(this::isSuspicious).toList();
+</code></pre>
+<pre><code class="language-python">from functools import cached_property
+
+class Catalogue:
+    @cached_property
+    def index(self) -&gt; dict[str, Product]:      # computed on first access, then stored on the instance
+        return {p.sku: p for p in load_products()}
+
+# Generators are single-use: the second pass is silently empty.
+suspicious = (o for o in orders if is_suspicious(o))
+print(any(suspicious), sum(1 for _ in suspicious))   # the count misses what any() consumed
+suspicious = [o for o in orders if is_suspicious(o)] # materialise when reused
+</code></pre>
+<pre><code class="language-go">// Go 1.21+: sync.OnceValue runs the function once, safely, and caches the result (and panic).
+var rules = sync.OnceValue(func() *PricingRules {
+    return mustLoadRules(&quot;rules.json&quot;)
+})
+
+func Price(o Order) Money { return rules().Apply(o) }
+
+// Eager alternative: initialise in main() and pass it in, so a bad file fails at startup.
+</code></pre>
+<pre><code class="language-typescript">// A lazy, memoised getter. Store the promise, not the result, so concurrent callers share one load.
+let rulesPromise: Promise&lt;PricingRules&gt; | undefined;
+export function rules(): Promise&lt;PricingRules&gt; {
+  return (rulesPromise ??= loadRules(&quot;rules.json&quot;));
+}
+
+// Generators are single-use like Python's; Array.from() when you need it twice.
+const suspicious = Array.from(filter(orders, isSuspicious));
+</code></pre>
+</div>
+<div class="tip">
+<p><strong>Lazy for optional, eager for critical.</strong> Load what every request needs (configuration, connection pools, compiled templates) at startup, and probe it in a readiness check (see <a href="observability.html#health-checks-liveness-readiness-and-startup">Observability</a>). Defer what only some requests use (a PDF engine, a large ML model used by one endpoint). If a lazy load fails, don't cache the failure forever: <code>Lazy&lt;T&gt;</code> with <code>ExecutionAndPublication</code> caches the exception, <code>PublicationOnly</code> retries.</p>
+</div>
+<h2 id="async-io-and-the-sync-over-async-trap">Async I/O and the sync-over-async trap</h2>
+<p>While a request waits on the network or the disk, the CPU has nothing to do. <strong>Blocking I/O</strong> parks an OS thread for the whole wait (about 1 MB of stack and a scheduler slot). <strong>Async I/O</strong> hands the wait to the operating system and frees the thread to serve other requests. On a service that spends 95% of each request waiting on downstream calls, that is the difference between needing 400 threads and needing 8.</p>
+<p>The trap is <strong>mixing them</strong>. Calling <code>.Result</code> or <code>.Wait()</code> on a task (C#), <code>.join()</code> / <code>.get()</code> on a future from an event-loop thread (Java reactive stacks), a blocking <code>requests.get()</code> inside an <code>async def</code> (Python), or a synchronous <code>fs.readFileSync</code> in a Node request handler blocks the thread that async code was counting on. Under load that causes thread-pool starvation (watch it happen in the <a href="concurrency-async.html#thread-pool-starvation">starvation visualizer</a>) or a frozen event loop.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// BAD: sync-over-async. Blocks a pool thread; under load the pool starves and latency explodes.
+public Order Get(int id) =&gt; _client.GetFromJsonAsync&lt;Order&gt;($&quot;/orders/{id}&quot;).Result;
+
+// GOOD: async all the way up to the framework.
+public async Task&lt;Order?&gt; GetAsync(int id, CancellationToken ct) =&gt;
+    await _client.GetFromJsonAsync&lt;Order&gt;($&quot;/orders/{id}&quot;, ct);
+</code></pre>
+<pre><code class="language-java">// Spring MVC on virtual threads (Java 21+, spring.threads.virtual.enabled=true):
+// blocking calls become cheap, so plain blocking code is fine.
+Order get(long id) { return restClient.get().uri(&quot;/orders/{id}&quot;, id).retrieve().body(Order.class); }
+
+// BAD on WebFlux / Netty: block() on an event-loop thread stalls every request on that loop.
+Order bad = webClient.get().uri(&quot;/orders/{id}&quot;, id).retrieve().bodyToMono(Order.class).block();
+// GOOD on WebFlux: return the Mono and let the framework subscribe.
+Mono&lt;Order&gt; good(long id) { return webClient.get().uri(&quot;/orders/{id}&quot;, id).retrieve().bodyToMono(Order.class); }
+</code></pre>
+<pre><code class="language-python"># BAD: a blocking call inside async def freezes the event loop for every request.
+@app.get(&quot;/orders/{id}&quot;)
+async def get_order(id: int):
+    return requests.get(f&quot;{BASE}/orders/{id}&quot;).json()
+
+# GOOD: an async client...
+@app.get(&quot;/orders/{id}&quot;)
+async def get_order(id: int):
+    r = await http.get(f&quot;/orders/{id}&quot;)         # shared httpx.AsyncClient
+    return r.json()
+
+# ...or push unavoidable blocking work to a thread: await asyncio.to_thread(blocking_fn, arg)
+# (FastAPI also runs plain &quot;def&quot; endpoints in a thread pool for you.)
+</code></pre>
+<pre><code class="language-go">// Go has no sync/async split: goroutines block cheaply and the runtime parks them on netpoll.
+// The equivalent mistakes are unbounded goroutines and missing timeouts.
+ctx, cancel := context.WithTimeout(r.Context(), 2*time.Second)
+defer cancel()
+req, _ := http.NewRequestWithContext(ctx, http.MethodGet, base+&quot;/orders/&quot;+id, nil)
+resp, err := client.Do(req)
+</code></pre>
+<pre><code class="language-typescript">// BAD: synchronous I/O in a request handler blocks the single event-loop thread.
+app.get(&quot;/report&quot;, (req, res) =&gt; res.send(fs.readFileSync(&quot;report.html&quot;, &quot;utf8&quot;)));
+
+// GOOD: async I/O; CPU-heavy work goes to a worker thread (node:worker_threads).
+app.get(&quot;/report&quot;, async (req, res) =&gt; res.send(await fs.promises.readFile(&quot;report.html&quot;, &quot;utf8&quot;)));
+</code></pre>
+</div>
+<h2 id="reuse-connections-and-clients">Reuse connections and clients</h2>
+<p>Opening a connection is expensive: DNS, the TCP handshake, the TLS handshake (one or two more round trips plus public-key cryptography), and for databases, authentication and session setup. On a 20 ms round trip that is 40–80 ms <strong>before your request is even sent</strong>. Connection pooling and HTTP keep-alive pay this once and reuse the connection for thousands of requests.</p>
+<p>The rule is the same everywhere: <strong>create one long-lived client (or pool) and share it</strong>. Creating an HTTP client per request leaks sockets in <code>TIME_WAIT</code> and can exhaust ephemeral ports. Keeping one forever can pin stale DNS. <a href="outbound-pipelines.html#httpclient-lifetimes-socket-exhaustion-vs-stale-dns">Outbound pipelines</a> covers that trade-off in detail, along with retries and timeouts.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// IHttpClientFactory pools handlers and rotates them (default 2 min) to pick up DNS changes.
+builder.Services.AddHttpClient&lt;PricingClient&gt;(c =&gt; c.BaseAddress = new Uri(&quot;https://pricing&quot;));
+
+// Without the factory: one static HttpClient with a pooled-connection lifetime.
+static readonly HttpClient Http = new(new SocketsHttpHandler
+{
+    PooledConnectionLifetime = TimeSpan.FromMinutes(2),
+    MaxConnectionsPerServer = 100,
+});
+// Databases: ADO.NET pools by connection string automatically. Open late, dispose early.
+</code></pre>
+<pre><code class="language-java">// java.net.http.HttpClient is thread-safe and pools connections: create one and share it.
+static final HttpClient HTTP = HttpClient.newBuilder()
+        .connectTimeout(Duration.ofSeconds(2))
+        .version(HttpClient.Version.HTTP_2)
+        .build();
+// Databases: HikariCP (Spring Boot's default). Size the pool small: often 10-20 connections,
+// because the database, not your app, is the bottleneck.
+</code></pre>
+<pre><code class="language-python">import httpx
+import requests
+
+# requests: a Session reuses connections; module-level requests.get() does not.
+session = requests.Session()
+
+# httpx: one AsyncClient for the app's lifetime (open in lifespan, close on shutdown).
+http = httpx.AsyncClient(base_url=&quot;https://pricing&quot;, timeout=2.0,
+                         limits=httpx.Limits(max_connections=100, max_keepalive_connections=20))
+# SQLAlchemy: create_engine() once; it owns the pool (pool_size, max_overflow, pool_pre_ping).
+</code></pre>
+<pre><code class="language-go">// One shared client. Never use the zero-timeout http.DefaultClient for outbound calls.
+var client = &amp;http.Client{
+    Timeout: 5 * time.Second,
+    Transport: &amp;http.Transport{MaxIdleConnsPerHost: 100, IdleConnTimeout: 90 * time.Second},
+}
+
+resp, err := client.Do(req)
+if err != nil {
+    return err
+}
+defer resp.Body.Close()
+_, _ = io.Copy(io.Discard, resp.Body) // drain the body, or the connection is not reused
+</code></pre>
+<pre><code class="language-typescript">// Node 18+ fetch (undici) keeps connections alive by default; tune with a shared Agent.
+import { Agent, setGlobalDispatcher } from &quot;undici&quot;;
+setGlobalDispatcher(new Agent({ connections: 100, keepAliveTimeout: 10_000 }));
+
+// Databases: one pg Pool per process, never a new Client per request.
+export const pool = new Pool({ max: 20, idleTimeoutMillis: 30_000 });
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Bigger pools aren't faster.</strong> A database with 8 cores can execute only about 8 queries at once. A pool of 200 connections per instance, times 20 instances, is 4,000 connections all contending for those cores and locks, and throughput drops. Start small (around 2 × cores of the database, divided across instances), watch pool wait time as a metric, and grow only if the database has idle capacity.</p>
+</div>
+<h2 id="serialization-performance">Serialization performance</h2>
+<p>On a typical JSON API, turning objects into bytes and back takes a surprising share of CPU: 20–40% of a request's processing is common once the database work is cached. There are three levers, in order of impact:</p>
+<ol>
+<li><strong>Send less.</strong> Project to a DTO with only the fields the client needs, paginate, and skip nulls. No serializer is faster than not serializing.</li>
+<li><strong>Use the fast path in your library.</strong> Avoid runtime reflection: reuse the configured serializer instance, and use code generated at build time where it exists.</li>
+<li><strong>Change the format</strong> only when the profile says JSON is the bottleneck, or for internal service-to-service traffic. Binary formats (Protobuf, MessagePack, Avro) are smaller and faster but harder to debug and need a schema. <a href="api-protocols.html#serialization-formats-json-protobuf-messagepack-avro">API Protocols</a> compares the formats.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Default / common</th>
+<th>Faster option</th>
+<th>What makes it faster</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C#</td>
+<td>System.Text.Json</td>
+<td>STJ <strong>source generation</strong> (<code>JsonSerializerContext</code>)</td>
+<td>Metadata and serializers generated at compile time; no reflection; works with Native AOT and trimming. Newtonsoft.Json is slower and allocates more</td>
+</tr>
+<tr>
+<td>Java</td>
+<td>Jackson <code>ObjectMapper</code></td>
+<td>Reuse one mapper; the <strong>Blackbird</strong> module (Java 11+; Afterburner for older)</td>
+<td>Mapper creation is expensive and caches per-type serializers; Blackbird replaces reflection with generated lambdas</td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>json</code> (stdlib)</td>
+<td><strong>orjson</strong>, <strong>msgspec</strong>; pydantic v2 <code>model_dump_json</code></td>
+<td>Implemented in Rust or C; orjson returns <code>bytes</code> and serializes dataclasses and datetimes natively</td>
+</tr>
+<tr>
+<td>Go</td>
+<td><code>encoding/json</code></td>
+<td><code>encoding/json/v2</code> (experimental, <code>GOEXPERIMENT=jsonv2</code>), <code>easyjson</code>, sonic</td>
+<td>v2 is a faster rewrite; code generators avoid reflection</td>
+</tr>
+<tr>
+<td>TypeScript</td>
+<td><code>JSON.stringify</code> / <code>JSON.parse</code> (native C++)</td>
+<td><strong>fast-json-stringify</strong> (Fastify's default with a response schema)</td>
+<td>Compiles a schema into a specialised stringify function; skips unknown fields</td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs">
+<pre><code class="language-csharp">using System.Text.Json.Serialization;
+
+// Source generation: the compiler writes the serializer for these types.
+[JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
+                             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
+[JsonSerializable(typeof(OrderDto))]
+[JsonSerializable(typeof(List&lt;OrderDto&gt;))]
+internal partial class AppJsonContext : JsonSerializerContext { }
+
+// Minimal APIs: register it once; endpoints then use the generated code.
+builder.Services.ConfigureHttpJsonOptions(o =&gt;
+    o.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonContext.Default));
+
+// Direct use; also cache JsonSerializerOptions instances, never &quot;new&quot; them per call.
+string json = JsonSerializer.Serialize(dto, AppJsonContext.Default.OrderDto);
+</code></pre>
+<pre><code class="language-java">// One ObjectMapper for the whole application (Spring Boot already provides one as a bean).
+static final ObjectMapper MAPPER = JsonMapper.builder()
+        .addModule(new BlackbirdModule())          // com.fasterxml.jackson.module:jackson-module-blackbird
+        .addModule(new JavaTimeModule())
+        .serializationInclusion(JsonInclude.Include.NON_NULL)
+        .build();
+
+// Reuse typed readers and writers in hot paths:
+static final ObjectReader ORDER_READER = MAPPER.readerFor(OrderDto.class);
+OrderDto dto = ORDER_READER.readValue(bytes);
+</code></pre>
+<pre><code class="language-python">import orjson
+import msgspec
+
+# orjson: drop-in for the common case; returns bytes and handles dataclasses and datetime.
+body: bytes = orjson.dumps(order_dict, option=orjson.OPT_SERIALIZE_NUMPY)
+data = orjson.loads(body)
+
+# msgspec: typed structs that decode and validate in one fast pass.
+class Order(msgspec.Struct):
+    id: int
+    total: float
+
+order = msgspec.json.decode(body, type=Order)
+
+# FastAPI: return ORJSONResponse, or a response_model so pydantic v2 (Rust core) serializes.
+</code></pre>
+<pre><code class="language-go">// encoding/json caches per-type reflection data; the cost is reflection per field.
+// Stream to the writer instead of Marshal + Write (one less buffer):
+w.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+_ = json.NewEncoder(w).Encode(orders)
+
+// Hot paths: generated marshallers (easyjson) or Protobuf for internal traffic:
+//   protoc --go_out=. orders.proto
+b, err := proto.Marshal(&amp;pb.Order{Id: 42, Total: 19.99})
+</code></pre>
+<pre><code class="language-typescript">import Fastify from &quot;fastify&quot;;
+
+// Fastify compiles the response schema into a specialised serializer (fast-json-stringify),
+// which also stops accidental leaks of fields that aren't in the schema.
+const app = Fastify();
+app.get(&quot;/orders/:id&quot;, {
+  schema: {
+    response: { 200: { type: &quot;object&quot;, properties: { id: { type: &quot;integer&quot; }, total: { type: &quot;number&quot; } } } },
+  },
+}, async (req) =&gt; getOrder(req.params));
+</code></pre>
+</div>
+<div class="warn">
+<p><strong>Benchmark with your payloads.</strong> Serializer benchmarks differ hugely by payload shape (many small objects, a few big strings, deep nesting, numbers vs text). Use the <a href="performance-cadence.html#one-micro-benchmark-five-languages">micro-benchmark harnesses</a> with a captured production payload before switching libraries, and check edge-case compatibility (dates, decimals, enums, nulls), which is where swaps break.</p>
+</div>
+<h2 id="startup-performance">Startup performance</h2>
+<p>Startup time used to matter only to developers. Now it decides how quickly autoscaling can add capacity, how long a rolling deploy takes, and whether serverless functions and CLI tools feel instant. A JIT runtime also starts <strong>slow on its first requests</strong>: it interprets or runs unoptimised code until the hot methods are compiled. Startup has two parts: <strong>time to ready</strong> (the process can serve) and <strong>time to peak</strong> (it serves at full speed).</p>
+<div class="viz pp-wide" data-viz="performance-patterns-startup"></div>
+
+<p>Pick a scenario, then compare the runtime modes. Ahead-of-time compilation (Native AOT, GraalVM native image) wins time-to-ready by a wide margin, but its peak throughput can trail a warmed-up JIT, which optimises with profile data from the live workload. For a long-running service behind a load balancer, warm-up is a one-time cost. For a CLI or a function that scales from zero, it's paid on every cold start.</p>
+<table>
+<thead>
+<tr>
+<th>Runtime</th>
+<th>Options (cheapest first)</th>
+<th>Trade-offs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.NET</td>
+<td>Trim startup work; <strong>ReadyToRun</strong> (precompiled code, still JIT for hot paths); tiered PGO (on by default); <strong>Native AOT</strong></td>
+<td>Native AOT: no runtime reflection emit, trimming warnings to fix, source-generated JSON and DI-friendly code required</td>
+</tr>
+<tr>
+<td>JVM</td>
+<td><strong>AppCDS</strong> (class-data sharing archive); the <strong>AOT cache</strong> (JDK 24+, JEP 483); Spring AOT processing; CRaC (checkpoint and restore); <strong>GraalVM native image</strong></td>
+<td>Native image: closed-world assumption, reflection needs configuration, longer builds, peak lower without PGO</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>Measure with <code>python -X importtime</code>; defer heavy imports into functions; precompile <code>.pyc</code> files in the image; trim dependencies</td>
+<td>No AOT for the interpreter itself; heavy packages (pandas, torch) dominate</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>Already a static native binary that starts in milliseconds; keep <code>init()</code> light; avoid big global initialisation</td>
+<td>Little to gain; watch <code>init()</code> work in dependencies</td>
+</tr>
+<tr>
+<td>Node / TS</td>
+<td>Bundle (esbuild) to cut module resolution; <code>module.enableCompileCache()</code> (Node 22+); lazy <code>import()</code>; V8 snapshots for CLIs</td>
+<td>Bundling changes stack traces (ship source maps)</td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs" data-labels="C#,Java,Python,Go,TypeScript">
+<pre><code class="language-xml">&lt;!-- .csproj: pick one. ReadyToRun keeps full .NET compatibility; Native AOT gives the
+     fastest start and smallest memory, but every dependency must be AOT-compatible. --&gt;
+&lt;PropertyGroup&gt;
+  &lt;PublishReadyToRun&gt;true&lt;/PublishReadyToRun&gt;
+  &lt;!-- &lt;PublishAot&gt;true&lt;/PublishAot&gt; --&gt;
+  &lt;InvariantGlobalization&gt;true&lt;/InvariantGlobalization&gt;
+&lt;/PropertyGroup&gt;
+&lt;!-- dotnet publish -c Release -r linux-x64 --&gt;
+</code></pre>
+<pre><code class="language-bash"># AppCDS: record the classes loaded during a training run, then start from the archive.
+java -XX:ArchiveClassesAtExit=app.jsa -jar app.jar        # training run, then exit
+java -XX:SharedArchiveFile=app.jsa -jar app.jar           # faster startup
+
+# JDK 24+ (JEP 483): AOT cache also stores loaded and linked classes.
+java -XX:AOTMode=record -XX:AOTConfiguration=app.aotconf -jar app.jar
+java -XX:AOTMode=create -XX:AOTConfiguration=app.aotconf -XX:AOTCache=app.aot -jar app.jar
+java -XX:AOTCache=app.aot -jar app.jar
+
+# Spring Boot + GraalVM native image (closed world, millisecond startup):
+./mvnw -Pnative native:compile
+</code></pre>
+<pre><code class="language-python"># Find slow imports: the output is a tree of cumulative microseconds per module.
+#   python -X importtime -c &quot;import app&quot; 2&gt; import.log
+
+# Defer a heavy import to the code path that needs it.
+def export_report(rows):
+    import pandas as pd                 # paid only by the endpoint that uses it
+    return pd.DataFrame(rows).to_csv()
+
+# Precompile bytecode in the container image so the first start doesn't do it:
+#   python -m compileall -q /app
+</code></pre>
+<pre><code class="language-go">// Go binaries are statically linked native code: startup is mostly your own init work.
+// Build a small, self-contained image:
+//   CGO_ENABLED=0 go build -trimpath -ldflags=&quot;-s -w&quot; -o app ./cmd/app
+// Keep package init() cheap; make expensive setup lazy or explicit in main():
+var templates = sync.OnceValue(func() *template.Template {
+    return template.Must(template.ParseFS(files, &quot;templates/*.html&quot;))
+})
+</code></pre>
+<pre><code class="language-typescript">// Node 22+: cache compiled bytecode for loaded modules across runs.
+import module from &quot;node:module&quot;;
+module.enableCompileCache?.();
+
+// Load heavy, rarely used modules on demand instead of at startup.
+export async function renderPdf(html: string) {
+  const { default: puppeteer } = await import(&quot;puppeteer&quot;);
+  // ...
+}
+// Bundle for production: esbuild src/main.ts --bundle --platform=node --outfile=dist/main.js
+</code></pre>
+</div>
+<h2 id="response-compression">Response compression</h2>
+<p>Compression trades <strong>CPU on both ends</strong> for <strong>fewer bytes on the wire</strong>. Text formats (JSON, HTML, CSS, JavaScript) typically shrink 70–90%, so on a slow or metered link compression is a large win. On a fast data-centre link with small payloads, compressing can cost more time than the transfer it saves.</p>
+<div class="viz pp-wide" data-viz="performance-patterns-compress"></div>
+
+<p>Try a 2 KB response on a 1 Gbps link (compression is pure overhead), then a 500 KB JSON response on a 10 Mbps mobile link (a big win). Already-compressed content (JPEG, PNG, MP4, ZIP, WOFF2) barely shrinks, so never compress it again. For static assets, <strong>precompress at build time</strong> at the highest level (Brotli 11) and serve the <code>.br</code> or <code>.gz</code> file directly: maximum ratio, zero request-time CPU.</p>
+<div class="code-tabs" data-labels="C#,Java,Python,Go,TypeScript">
+<pre><code class="language-csharp">builder.Services.AddResponseCompression(o =&gt;
+{
+    o.EnableForHttps = true;                      // off by default: see BREACH below
+    o.Providers.Add&lt;BrotliCompressionProvider&gt;();
+    o.Providers.Add&lt;GzipCompressionProvider&gt;();
+});
+builder.Services.Configure&lt;BrotliCompressionProviderOptions&gt;(o =&gt; o.Level = CompressionLevel.Fastest);
+app.UseResponseCompression();                     // early in the pipeline, before the endpoints
+// Behind a reverse proxy or CDN that compresses already? Let it, and skip this middleware.
+</code></pre>
+<pre><code class="language-yaml"># Spring Boot application.yml (embedded Tomcat, Jetty or Netty)
+server:
+  compression:
+    enabled: true
+    min-response-size: 2KB          # the default; below this it isn't worth it
+    mime-types: application/json,text/html,text/css,application/javascript
+</code></pre>
+<pre><code class="language-python">from fastapi import FastAPI
+from fastapi.middleware.gzip import GZipMiddleware
+
+app = FastAPI()
+app.add_middleware(GZipMiddleware, minimum_size=1024, compresslevel=5)
+# Brotli needs a third-party middleware, or let the reverse proxy (nginx, a CDN) do it.
+</code></pre>
+<pre><code class="language-go">// No compression middleware in the standard library. klauspost/compress's gzhttp is widely used:
+import &quot;github.com/klauspost/compress/gzhttp&quot;
+
+mux := http.NewServeMux()
+mux.HandleFunc(&quot;/orders&quot;, listOrders)
+handler := gzhttp.GzipHandler(mux)   // honours Accept-Encoding, skips tiny responses
+log.Fatal(http.ListenAndServe(&quot;:8080&quot;, handler))
+</code></pre>
+<pre><code class="language-typescript">import express from &quot;express&quot;;
+import compression from &quot;compression&quot;;
+
+const app = express();
+app.use(compression({ threshold: 1024 }));    // skip responses under 1 KB
+// Fastify: @fastify/compress. Static files: precompress (.br/.gz) at build time.
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>BREACH: compression can leak secrets.</strong> If a response is compressed over HTTPS and contains both a secret (a CSRF token, a session value) and text an attacker can influence (a reflected query parameter), the attacker can guess the secret byte by byte by watching the compressed size change. That's why ASP.NET Core leaves <code>EnableForHttps</code> off by default. Mitigations: don't compress responses that mix secrets with reflected input, mask tokens per request, or add random padding. <a href="security-fundamentals.html">Security Fundamentals</a> covers the wider picture.</p>
+</div>
+<h2 id="precompute-and-memoize">Precompute and memoize</h2>
+<p>The cheapest work is work done <strong>once</strong>, before or instead of on every request. Precomputation moves work to build time or startup: compiled regular expressions, lookup tables, serializers, prepared statements, rendered templates. <strong>Memoization</strong> caches a pure function's result by its arguments. Both are caching in the small. The big-cache questions (eviction, invalidation, stampedes, distributed caches) are covered in <a href="caching.html">Caching</a>.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Regex: source-generated at compile time (.NET 7+). No parsing or compiling at runtime.
+static partial class Patterns
+{
+    [GeneratedRegex(@&quot;^[A-Z]{3}-\d{6}$&quot;, RegexOptions.CultureInvariant)]
+    public static partial Regex OrderId();
+}
+bool ok = Patterns.OrderId().IsMatch(id);
+
+// Precomputed lookup structures: FrozenDictionary (.NET 8) is optimised for read-only lookups.
+static readonly FrozenDictionary&lt;string, decimal&gt; TaxRates = LoadRates().ToFrozenDictionary();
+
+// Memoize an expensive pure function, bounded by a known key set:
+static readonly ConcurrentDictionary&lt;(string, string), decimal&gt; FxCache = new();
+decimal Rate(string from, string to) =&gt; FxCache.GetOrAdd((from, to), k =&gt; ComputeRate(k.Item1, k.Item2));
+</code></pre>
+<pre><code class="language-java">// Compile once: Pattern.compile per call parses the regex every time (and String.matches does too).
+private static final Pattern ORDER_ID = Pattern.compile(&quot;^[A-Z]{3}-\\d{6}$&quot;);
+boolean ok = ORDER_ID.matcher(id).matches();
+
+// Immutable precomputed tables.
+private static final Map&lt;String, BigDecimal&gt; TAX_RATES = Map.copyOf(loadRates());
+
+// Memoize: computeIfAbsent on a ConcurrentHashMap (keep the function short and non-recursive).
+private final ConcurrentHashMap&lt;String, BigDecimal&gt; fx = new ConcurrentHashMap&lt;&gt;();
+BigDecimal rate(String pair) { return fx.computeIfAbsent(pair, this::computeRate); }
+// Bounded, expiring memo: Caffeine.newBuilder().maximumSize(10_000).build(this::computeRate)
+</code></pre>
+<pre><code class="language-python">import re
+from functools import lru_cache, cache
+
+ORDER_ID = re.compile(r&quot;^[A-Z]{3}-\d{6}$&quot;)    # compile once at import
+
+@lru_cache(maxsize=4096)                       # bounded memo; .cache_info() shows hits/misses
+def rate(src: str, dst: str) -&gt; float:
+    return compute_rate(src, dst)
+
+@cache                                          # unbounded: only for small, finite key sets
+def fib(n: int) -&gt; int:
+    return n if n &lt; 2 else fib(n - 1) + fib(n - 2)
+</code></pre>
+<pre><code class="language-go">// Package-level compile: MustCompile panics at startup if the pattern is wrong (fail fast).
+var orderID = regexp.MustCompile(`^[A-Z]{3}-\d{6}$`)
+
+// Precompute once, lazily and safely:
+var taxRates = sync.OnceValue(func() map[string]float64 { return loadRates() })
+
+// Memoize with a bound key set: sync.Map suits &quot;write once, read many&quot; keys.
+var fxCache sync.Map // map[string]float64
+
+func rate(pair string) float64 {
+    if v, ok := fxCache.Load(pair); ok {
+        return v.(float64)
+    }
+    v, _ := fxCache.LoadOrStore(pair, computeRate(pair))
+    return v.(float64)
+}
+</code></pre>
+<pre><code class="language-typescript">const ORDER_ID = /^[A-Z]{3}-\d{6}$/;           // a literal is compiled once per module load
+
+// Simple memo for a pure function with a small key space.
+function memoize&lt;A extends string | number, R&gt;(fn: (a: A) =&gt; R): (a: A) =&gt; R {
+  const cache = new Map&lt;A, R&gt;();
+  return (a) =&gt; {
+    if (!cache.has(a)) cache.set(a, fn(a));
+    return cache.get(a)!;
+  };
+}
+const rate = memoize((pair: string) =&gt; computeRate(pair));
+// Unbounded keys (user ids, URLs)? Use an LRU (e.g. lru-cache with max) instead.
+</code></pre>
+</div>
+<div class="warn">
+<p><strong>An unbounded memo is a memory leak with good intentions.</strong> Memoizing by user id, URL or free-text input grows forever. Bound it (<code>lru_cache(maxsize=...)</code>, Caffeine, <code>MemoryCache</code> with a size limit, <code>lru-cache</code>), memoize only <strong>pure</strong> functions (same input, same output, no side effects), and remember that a memo on an instance lives as long as the instance. Python's <code>lru_cache</code> on a method keeps <code>self</code> alive. <a href="memory-and-gc.html#managed-memory-leaks-references-you-forgot">Memory &amp; GC</a> shows how these leaks look in a heap dump.</p>
+</div>
+<h2 id="per-language-quick-wins">Per-language quick wins</h2>
+<p>Cheap, low-risk changes that often show up in profiles. They're habits worth having, <strong>not</strong> a licence to rewrite code nobody measured.</p>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Quick wins</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>C#</strong></td>
+<td>Reuse <code>HttpClient</code> via <code>IHttpClientFactory</code>; <code>AsNoTracking()</code> and projections for reads; STJ source generation; <code>[GeneratedRegex]</code>; <code>StringBuilder</code> or interpolated handlers in loops; <code>ArrayPool&lt;T&gt;.Shared</code>; <code>Span&lt;T&gt;</code> for parsing; <code>FrozenDictionary</code> for static lookups; avoid <code>.Result</code> and <code>.Wait()</code>; <code>ValueTask</code> only for hot paths that usually complete synchronously; <code>sealed</code> classes help devirtualisation; ReadyToRun for startup</td>
+</tr>
+<tr>
+<td><strong>Java</strong></td>
+<td>One <code>ObjectMapper</code> and one <code>HttpClient</code>; static final <code>Pattern</code>; <code>StringBuilder</code> in loops; primitive arrays or <code>IntStream</code> instead of boxed collections in hot code; size collections up front (<code>new ArrayList&lt;&gt;(n)</code>); bounded executors; HikariCP sized small; JDBC batching and fetch size; virtual threads for blocking I/O; AppCDS or the AOT cache for startup</td>
+</tr>
+<tr>
+<td><strong>Python</strong></td>
+<td><code>"".join</code> over <code>+=</code> in loops; list and dict comprehensions over manual appends; <code>set</code> or <code>dict</code> for membership tests; local-variable aliases in very hot loops; <code>functools.lru_cache</code>; NumPy for numeric arrays; orjson; one <code>httpx.AsyncClient</code> or <code>requests.Session</code>; <code>selectinload</code> against N+1; lazy imports for heavy modules; never block inside <code>async def</code></td>
+</tr>
+<tr>
+<td><strong>Go</strong></td>
+<td>Preallocate slices and maps (<code>make([]T, 0, n)</code>); <code>strings.Builder</code>; <code>sync.Pool</code> for short-lived buffers; avoid <code>[]*T</code> in hot scans; package-level <code>regexp.MustCompile</code>; one shared <code>http.Client</code> with timeouts, and drain response bodies; <code>bufio</code> for file and socket I/O; <code>errgroup.SetLimit</code> for bounded fan-out; check <code>-gcflags=-m</code> for escapes</td>
+</tr>
+<tr>
+<td><strong>TypeScript</strong></td>
+<td>Avoid sync I/O in handlers; <code>Promise.all</code> for independent awaits (bounded with p-limit); typed arrays for numeric data; keep object shapes stable (same properties, same order) so V8's inline caches stay fast; stream large bodies with <code>pipeline</code>; Fastify response schemas; <code>Map</code> over objects for dynamic keys; bundle and use the compile cache for CLIs</td>
+</tr>
+</tbody>
+</table>
+<h2 id="when-to-use-what-and-when-not-to">When to use what, and when not to</h2>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Use when</th>
+<th>Don't use when</th>
+<th>Cost you take on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Better algorithm or data structure</td>
+<td>A loop does work proportional to n² or worse, or repeats lookups</td>
+<td>n is small and fixed, and the code is clearer as is</td>
+<td>Usually none; often simpler code</td>
+</tr>
+<tr>
+<td>Allocation reduction (pooling, spans, builders)</td>
+<td>GC time or allocation rate is high in the profile, in a hot path</td>
+<td>Cold code, or allocations the profiler doesn't flag</td>
+<td>Lifetime bugs (use after return), harder-to-read code</td>
+</tr>
+<tr>
+<td>Data-oriented layout (SoA, value types)</td>
+<td>Tight numeric loops over large collections</td>
+<td>Business logic over small object graphs</td>
+<td>Less natural modelling; changes ripple through APIs</td>
+</tr>
+<tr>
+<td>Batching</td>
+<td>Many small calls to the same remote system</td>
+<td>Single-item, latency-critical paths with no peers to batch with</td>
+<td>Added latency (bounded by the time trigger), partial-failure handling</td>
+</tr>
+<tr>
+<td>Bounded queues / back-pressure</td>
+<td>Any producer/consumer handoff</td>
+<td>Never skip it; only the policy varies</td>
+<td>Producers wait or work is rejected (that's the point)</td>
+</tr>
+<tr>
+<td>Streaming</td>
+<td>Large or unbounded data; time to first byte matters</td>
+<td>Small, bounded results; you need the whole set first</td>
+<td>Error handling after the response has started</td>
+</tr>
+<tr>
+<td>Lazy initialisation</td>
+<td>Optional, expensive dependencies</td>
+<td>Anything every request needs (load eagerly and fail fast)</td>
+<td>First-use latency spike; deferred failures</td>
+</tr>
+<tr>
+<td>Async I/O</td>
+<td>I/O-bound services with many concurrent requests</td>
+<td>CPU-bound work (use parallelism), or simple scripts</td>
+<td>Async all the way up; no blocking in between</td>
+</tr>
+<tr>
+<td>Connection reuse / pooling</td>
+<td>Always for HTTP clients and databases</td>
+<td>Never skip it</td>
+<td>Pool sizing and DNS-refresh configuration</td>
+</tr>
+<tr>
+<td>Faster serializer / binary format</td>
+<td>Serialization shows up in the profile, or internal high-volume traffic</td>
+<td>Public APIs that need to stay debuggable, with no measured problem</td>
+<td>Compatibility testing; a schema to maintain</td>
+</tr>
+<tr>
+<td>Native AOT / native image</td>
+<td>Cold starts matter: serverless, CLIs, scale-from-zero</td>
+<td>Long-running services where warm-up is a one-time cost</td>
+<td>Reflection limits, longer builds, possibly lower peak</td>
+</tr>
+<tr>
+<td>Response compression</td>
+<td>Text payloads over slow or metered links; payloads above about 1 KB</td>
+<td>Already-compressed content; tiny responses; secrets next to reflected input</td>
+<td>CPU on both ends; BREACH risk</td>
+</tr>
+<tr>
+<td>Precompute / memoize</td>
+<td>Pure functions called repeatedly with a bounded set of inputs</td>
+<td>Unbounded keys; impure functions; values that change</td>
+<td>Memory; staleness if the "pure" assumption breaks</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pitfalls-and-war-stories">Pitfalls and war stories</h2>
+<div class="pitfall">
+<p><strong>The pooled buffer that leaked other customers' data.</strong> A service rented a buffer from <code>ArrayPool</code>, filled part of it and returned the <strong>whole</strong> array in a response instead of the slice it had written. The tail of the buffer still held the previous user's data. <strong>Fix:</strong> always track the length you wrote and send <code>buffer.AsSpan(0, written)</code>; pass <code>clearArray: true</code> when returning buffers that held secrets; never return a rented array to a caller you don't control.</p>
+</div>
+<div class="pitfall">
+<p><strong>The parallel loop that took down the database.</strong> A nightly job "optimised" 50,000 sequential lookups by running them all with <code>Task.WhenAll</code>. The connection pool hit its limit within a second, every other service sharing the database timed out, and the job itself was slower than before. <strong>Fix:</strong> batch the lookups (<code>WHERE id = ANY(...)</code> in chunks of 1,000) and, if parallelism is still needed, bound it to a handful of concurrent calls.</p>
+</div>
+<div class="pitfall">
+<p><strong>The cache key that grew forever.</strong> A <code>@cache</code>-decorated function took a request object as its argument. Every request was a new key, the memo held every request and its body, and the pods were OOM-killed every few hours. <strong>Fix:</strong> memoize on small, bounded, hashable keys (an id, a currency pair), use a size-bounded cache, and alert on process memory growth.</p>
+</div>
+<div class="pitfall">
+<p><strong>The micro-benchmark that lied.</strong> A developer replaced a LINQ query with a hand-written loop after a benchmark showed it was 5× faster. In production nothing changed: the method ran 30 times a minute and the request spent 400 ms waiting on a downstream call. <strong>Fix:</strong> profile the real workload first (the <a href="performance-cadence.html">cadence</a>), and let Amdahl's law choose the target. Saving 2 µs from a 400 ms request is noise.</p>
+</div>
+<div class="pitfall">
+<p><strong>The streamed export that returned "200 OK" and half a file.</strong> A streaming CSV endpoint hit a database timeout after 2 million rows. The status code had already been sent, so the client saw a successful, truncated download. <strong>Fix:</strong> write a final marker (a trailer row, or a count to check), use cursor timeouts suited to long exports, or for very large exports switch to an async job that writes to storage and returns a link.</p>
+</div>
+<h2 id="checklist">Checklist</h2>
+<ul>
+<li>[ ] There's a profile or metric showing <strong>this</strong> code is hot before any micro-optimisation (see <a href="performance-cadence.html">Performance Cadence</a>).</li>
+<li>[ ] Algorithm and data structure checked first: no nested scans, lookups use hashes, sorting happens once.</li>
+<li>[ ] No N+1 queries: related data is loaded with joins, <code>IN (...)</code> or a DataLoader; reads use projections.</li>
+<li>[ ] Every queue and every fan-out is bounded, with a deliberate policy when full.</li>
+<li>[ ] HTTP clients, serializers, regexes and database pools are created once and shared.</li>
+<li>[ ] No sync-over-async: no <code>.Result</code>, <code>.Wait()</code>, <code>block()</code>, or blocking calls inside <code>async def</code> or Node handlers.</li>
+<li>[ ] Large results are streamed end to end, or paginated.</li>
+<li>[ ] Hot-path allocations are measured; pooling is used only where the profile shows GC pressure, and rented buffers are always returned.</li>
+<li>[ ] Memos and caches are bounded and only wrap pure functions.</li>
+<li>[ ] Compression is on for text responses above about 1 KB, off for already-compressed content, and BREACH has been considered.</li>
+<li>[ ] Startup cost is known; the right mode (JIT, ReadyToRun, AOT, native image) was chosen for the deployment model.</li>
+<li>[ ] Every optimisation has a benchmark or load test that guards it against regression.</li>
+</ul>
+<h2 id="quiz">Quiz</h2>
+<details class="quiz">
+<p><summary>A profile shows 30% of CPU in a hot loop, and you make that loop 10× faster. Roughly how much faster is the request?</summary></p>
+<p>About 1.37× (not 10×). By Amdahl's law the new time is 0.70 + 0.30 / 10 = 0.73 of the old time. The unchanged 70% now dominates, which is why the next profile matters more than the last fix.</p>
+</details>
+<details class="quiz">
+<p><summary>Why can summing one field over a million objects be several times faster with struct-of-arrays than with an array of object references?</summary></p>
+<p>The CPU loads memory in 64-byte cache lines. With SoA, every byte of every line loaded is a value you sum, and the prefetcher streams it sequentially (and SIMD can add several values per instruction). With object references, each element is a pointer to an object somewhere on the heap: a likely cache miss of about 100 ns per element, and most of each loaded line is fields you don't need.</p>
+</details>
+<details class="quiz">
+<p><summary>Running 200 single-item calls in parallel and sending one batched call of 200 items both finish quickly. Why prefer the batch?</summary></p>
+<p>Parallelism cuts your wall time but still sends 200 requests: the downstream service pays 200 times the per-call overhead, and your burst can exhaust its connection pool or rate limit. Batching cuts both wall time and the load on the other side. Use parallelism, bounded, only when no batch API exists.</p>
+</details>
+<details class="quiz">
+<p><summary>A producer writes to an unbounded in-memory queue faster than the consumer can drain it. What happens, and what are the fixes?</summary></p>
+<p>The queue grows without limit: latency for each item keeps rising (it waits behind everything before it) until the process runs out of memory. Bound the queue and pick a policy when it's full: block or await the producer (back-pressure), reject new work (429/503), or drop oldest or newest for best-effort data.</p>
+</details>
+<details class="quiz">
+<p><summary>What is wrong with calling .Result on an HttpClient task inside an ASP.NET Core request handler?</summary></p>
+<p>It's sync-over-async: the request thread blocks until the I/O completes, so the thread can't serve other requests. Under load many threads are blocked at once, the thread pool injects new threads only slowly, and queued work (including the continuations that would complete those tasks) waits, which is thread-pool starvation. Use <code>await</code> all the way up.</p>
+</details>
+<details class="quiz">
+<p><summary>When does response compression make a request slower?</summary></p>
+<p>When the payload is small or already compressed, and the link is fast. Compressing and decompressing cost CPU time on both ends; on a 1 Gbps data-centre link a 2 KB JSON response takes microseconds to send, so compression adds more time than it saves. It pays off for larger text payloads on slower links.</p>
+</details>
+<details class="quiz">
+<p><summary>A CLI tool written in Java takes 1.5 s to print its help text. Which options help, and why does the JIT not?</summary></p>
+<p>The JIT optimises code that runs many times; a short-lived CLI exits before warm-up pays off, so the time goes to class loading and interpretation. AppCDS or the JDK 24+ AOT cache cut class-loading time; GraalVM native image compiles ahead of time for millisecond startup. (Rewriting it in Go would also start fast, but that's rarely the cheapest option.)</p>
+</details>
+<details class="quiz">
+<p><summary>A teammate adds @lru_cache (or a ConcurrentDictionary memo) to a function that takes a user id and returns that user's current cart total. What could go wrong?</summary></p>
+<p>The function isn't pure: the cart changes, so the memo returns stale totals. If unbounded, it also grows with every user id. Memoize only pure functions of bounded inputs; for changing data use a real cache with a TTL and invalidation (see <a href="caching.html">Caching</a>).</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Order of attack</strong>Measure, then: fewer round trips → better algorithm → less I/O waiting → fewer allocations → layout and branches.</div>
+<div><strong>Algorithm first</strong>Hash lookups instead of nested scans; sort once; a 100× algorithmic win beats any micro-tuning.</div>
+<div><strong>Round trips</strong>Kill N+1 with joins, IN (...) or DataLoader; batch on size OR time; bulk APIs over loops.</div>
+<div><strong>Back-pressure</strong>Bound every queue and fan-out; choose block, reject or drop on purpose.</div>
+<div><strong>Streaming</strong>Flat memory and fast first byte; every stage must stream; plan for mid-stream errors.</div>
+<div><strong>Lazy vs eager</strong>Eager for what every request needs (fail fast); lazy for optional, heavy things; materialise sequences you reuse.</div>
+<div><strong>Async I/O</strong>Async all the way; never .Result, .Wait(), block() or sync I/O on a loop thread.</div>
+<div><strong>Reuse</strong>One HttpClient / ObjectMapper / Session / pool per app; small database pools.</div>
+<div><strong>Allocations</strong>Builders, pools, spans and slices in measured hot paths; return what you rent.</div>
+<div><strong>Layout</strong>Contiguous arrays of values; SoA for one-field scans; avoid pointer chasing.</div>
+<div><strong>Serialization</strong>Send less; reuse the serializer; source generation; binary formats internally.</div>
+<div><strong>Startup &amp; payloads</strong>AOT for cold starts; compress text above about 1 KB; precompress static files; memoize pure functions with bounded keys.</div>
+</div>
+<h2 id="related-topics-and-further-reading">Related topics and further reading</h2>
+<p><strong>In this home:</strong> <a href="performance-cadence.html">Performance Cadence</a> (measure, profile, verify) · <a href="memory-and-gc.html">Memory &amp; GC</a> · <a href="concurrency-async.html">Concurrency &amp; Async</a> · <a href="caching.html">Caching</a> · <a href="data-access.html#batching-bulk-operations-compiled-queries-and-async-io">Data Access</a> · <a href="outbound-pipelines.html">Outbound pipelines</a> · <a href="api-protocols.html">API Protocols</a> · <a href="distributed-architecture.html">Distributed Architecture</a> · <a href="resilience.html">Resilience</a> · <a href="observability.html">Observability</a> · <a href="testing-strategy.html">Testing Strategy</a> (performance tests in CI) · <a href="security-fundamentals.html">Security Fundamentals</a></p>
+<p><strong>Official documentation</strong></p>
+<ul>
+<li>.NET: <a href="https://learn.microsoft.com/aspnet/core/fundamentals/best-practices">Performance best practices for ASP.NET Core</a> · <a href="https://learn.microsoft.com/dotnet/standard/serialization/system-text-json/source-generation">System.Text.Json source generation</a> · <a href="https://learn.microsoft.com/dotnet/core/deploying/native-aot/">Native AOT deployment</a> · <a href="https://learn.microsoft.com/aspnet/core/performance/response-compression">Response compression</a> · <a href="https://learn.microsoft.com/ef/core/performance/efficient-querying">Efficient querying in EF Core</a></li>
+<li>Java: <a href="https://openjdk.org/jeps/483">JEP 483: Ahead-of-Time Class Loading &amp; Linking</a> · <a href="https://docs.oracle.com/en/java/javase/21/vm/class-data-sharing.html">Class Data Sharing</a> · <a href="https://docs.spring.io/spring-boot/reference/packaging/native-image/index.html">Spring Boot GraalVM native images</a> · <a href="https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#fetching">Hibernate ORM user guide: fetching</a></li>
+<li>Python: <a href="https://wiki.python.org/moin/PythonSpeed/PerformanceTips">Python speed tips (wiki)</a> · <a href="https://docs.python.org/3/using/cmdline.html#cmdoption-X"><code>-X importtime</code></a> · <a href="https://docs.python.org/3/library/functools.html">functools</a> · <a href="https://docs.sqlalchemy.org/en/20/orm/queryguide/relationships.html">SQLAlchemy relationship loading</a></li>
+<li>Go: <a href="https://go.dev/doc/diagnostics">Diagnostics</a> · <a href="https://go.dev/doc/gc-guide">A guide to the Go garbage collector</a> · <a href="https://pkg.go.dev/sync">sync package</a></li>
+<li>Node.js: <a href="https://nodejs.org/en/learn/asynchronous-work/dont-block-the-event-loop">Don't block the event loop</a> · <a href="https://nodejs.org/en/learn/modules/backpressuring-in-streams">Backpressuring in streams</a> · <a href="https://nodejs.org/api/module.html#module-compile-cache">Module compile cache</a></li>
+<li>Web: <a href="https://developer.mozilla.org/docs/Web/HTTP/Compression">HTTP compression (MDN)</a></li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="concurrency-async.html"><small>&larr; PREVIOUS</small>Concurrency &amp; Async</a><a class="next" href="resilience.html"><small>NEXT &rarr;</small>Resilience Patterns</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-the-endpoint-that-was-fast-on-tuesday">The problem: the endpoint that was fast on Tuesday</a></li>
+<li><a href="#measure-first-then-choose-a-pattern">Measure first, then choose a pattern</a><ul>
+<li><a href="#premature-optimisation-versus-a-known-hot-path">Premature optimisation versus a known hot path</a></li>
+</ul>
+</li>
+<li><a href="#algorithmic-wins-first">Algorithmic wins first</a></li>
+<li><a href="#allocation-reduction">Allocation reduction</a><ul>
+<li><a href="#building-strings">Building strings</a></li>
+<li><a href="#pooling-buffers-and-objects">Pooling buffers and objects</a></li>
+<li><a href="#views-instead-of-copies-span-memory-slices">Views instead of copies: Span, Memory, slices</a></li>
+<li><a href="#boxing-value-types-and-struct-versus-class">Boxing, value types and struct versus class</a></li>
+<li><a href="#linq-streams-and-iterators-in-hot-paths">LINQ, streams and iterators in hot paths</a></li>
+</ul>
+</li>
+<li><a href="#data-oriented-design-cache-lines-and-branches">Data-oriented design: cache lines and branches</a><ul>
+<li><a href="#branch-prediction">Branch prediction</a></li>
+</ul>
+</li>
+<li><a href="#fewer-round-trips-batching-and-buffering">Fewer round trips: batching and buffering</a><ul>
+<li><a href="#the-n1-query-problem">The N+1 query problem</a></li>
+<li><a href="#micro-batching-batch-by-size-or-by-time">Micro-batching: batch by size or by time</a></li>
+</ul>
+</li>
+<li><a href="#back-pressure-bound-every-queue">Back-pressure: bound every queue</a></li>
+<li><a href="#streaming-instead-of-loading-everything">Streaming instead of loading everything</a></li>
+<li><a href="#lazy-vs-eager">Lazy vs eager</a></li>
+<li><a href="#async-io-and-the-sync-over-async-trap">Async I/O and the sync-over-async trap</a></li>
+<li><a href="#reuse-connections-and-clients">Reuse connections and clients</a></li>
+<li><a href="#serialization-performance">Serialization performance</a></li>
+<li><a href="#startup-performance">Startup performance</a></li>
+<li><a href="#response-compression">Response compression</a></li>
+<li><a href="#precompute-and-memoize">Precompute and memoize</a></li>
+<li><a href="#per-language-quick-wins">Per-language quick wins</a></li>
+<li><a href="#when-to-use-what-and-when-not-to">When to use what, and when not to</a></li>
+<li><a href="#pitfalls-and-war-stories">Pitfalls and war stories</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#quiz">Quiz</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#related-topics-and-further-reading">Related topics and further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1964 @@
+<!doctype html>
+<html lang="en" data-home="dsa-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Monotonic Stack &amp; Queue | DSA Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#4f46e5;--accent-soft:#eef0ff;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#a5b4fc;--accent-soft:#252a5c;}}:root[data-theme=dark]{--accent:#a5b4fc;--accent-soft:#252a5c;}</style>
+  <link rel="stylesheet" href="../assets/topics/monotonic-stack-queue.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/monotonic-stack-queue.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="DSA Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">DS</span>DSA Home</a>
+    <p class="sidebar-caption">Data structures &amp; algorithms, seen.<br>Every idea animated, every pattern drilled.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations</summary><ul class="topic-list"><li data-search="The Problem-Solving Playbook Foundations A visual decision map from input size, shape and question type to the right technique, plus a repeatable interview/contest workflow. pattern recognition constraints approach interview" data-slug="problem-solving-playbook"><a href="../topics/problem-solving-playbook.html">The Problem-Solving Playbook</a></li><li data-search="Complexity Analysis Foundations Big-O growth you can see, amortized cost, recursion trees and the Master theorem, and what 10^8 operations per second really buys you. big o amortized master theorem time space" data-slug="complexity-analysis"><a href="../topics/complexity-analysis.html">Complexity Analysis</a></li><li data-search="Recursion &amp; the Call Stack Foundations Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from. call stack recursion tree divide and conquer" data-slug="recursion"><a href="../topics/recursion.html">Recursion &amp; the Call Stack</a></li></ul></details><details class="nav-track" open><summary>Arrays &amp; Strings</summary><ul class="topic-list"><li data-search="Two Pointers Arrays &amp; Strings Opposite-end, same-direction and fast/slow pointers: why moving one pointer is safe, with partitioning and k-sum. pair sum partition dutch flag 3sum" data-slug="two-pointers"><a href="../topics/two-pointers.html">Two Pointers</a></li><li data-search="Sliding Window Arrays &amp; Strings Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows. substring subarray window at most k" data-slug="sliding-window"><a href="../topics/sliding-window.html">Sliding Window</a></li><li data-search="Prefix Sums &amp; Difference Arrays Arrays &amp; Strings 1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR. subarray sum equals k range sum 2d prefix difference array" data-slug="prefix-sums"><a href="../topics/prefix-sums.html">Prefix Sums &amp; Difference Arrays</a></li><li data-search="Binary Search Arrays &amp; Strings One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection. lower bound upper bound search on answer rotated monotonic predicate" data-slug="binary-search"><a href="../topics/binary-search.html">Binary Search</a></li><li data-search="Sorting Algorithms Arrays &amp; Strings Animated bubble, insertion, merge, quick, heap, counting and radix sorts; stability, quickselect and custom comparators. merge sort quick sort quickselect counting sort inversions" data-slug="sorting"><a href="../topics/sorting.html">Sorting Algorithms</a></li><li data-search="Hashing Patterns Arrays &amp; Strings How hash tables work inside, then frequency maps, grouping by canonical keys, complement lookups and rolling hashes. hash map hash set anagram two sum collision" data-slug="hashing"><a href="../topics/hashing.html">Hashing Patterns</a></li><li data-search="Monotonic Stack &amp; Queue Arrays &amp; Strings Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight. next greater largest rectangle deque trapping rain water" data-slug="monotonic-stack-queue"><a href="../topics/monotonic-stack-queue.html" aria-current="page">Monotonic Stack &amp; Queue</a></li><li data-search="Intervals &amp; Sweep Line Arrays &amp; Strings Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline. merge intervals meeting rooms events skyline" data-slug="intervals-sweep-line"><a href="../topics/intervals-sweep-line.html">Intervals &amp; Sweep Line</a></li><li data-search="String Algorithms Arrays &amp; Strings KMP failure function, Z-algorithm, Rabin–Karp, Manacher&#x27;s palindromes and string hashing, each animated character by character. kmp z algorithm rabin karp manacher palindrome pattern matching" data-slug="string-algorithms"><a href="../topics/string-algorithms.html">String Algorithms</a></li></ul></details><details class="nav-track"><summary>Linked Lists, Stacks, Queues &amp; Heaps</summary><ul class="topic-list"><li data-search="Linked Lists Linked Lists, Stacks, Queues &amp; Heaps Pointer rewiring you can watch: reversal, dummy heads, fast/slow cycle detection, merging, and LRU cache design. reverse floyd cycle merge lru" data-slug="linked-lists"><a href="../topics/linked-lists.html">Linked Lists</a></li><li data-search="Stacks &amp; Queues Linked Lists, Stacks, Queues &amp; Heaps Balanced brackets, expression evaluation, min-stack, queues from stacks, deques and BFS queues. parentheses calculator deque min stack" data-slug="stacks-queues"><a href="../topics/stacks-queues.html">Stacks &amp; Queues</a></li><li data-search="Heaps &amp; Priority Queues Linked Lists, Stacks, Queues &amp; Heaps Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling. heap top k median k way merge priority queue" data-slug="heaps-priority-queues"><a href="../topics/heaps-priority-queues.html">Heaps &amp; Priority Queues</a></li></ul></details><details class="nav-track"><summary>Trees</summary><ul class="topic-list"><li data-search="Tree Traversals Trees Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees. dfs bfs inorder level order morris" data-slug="tree-traversals"><a href="../topics/tree-traversals.html">Tree Traversals</a></li><li data-search="Binary Search Trees Trees Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters. bst validate successor avl red black" data-slug="binary-search-trees"><a href="../topics/binary-search-trees.html">Binary Search Trees</a></li><li data-search="Tree Problem Patterns Trees Return-value recursion (diameter, max path sum), top-down state, LCA, serialization, and binary lifting. lca diameter path sum binary lifting serialize" data-slug="tree-patterns"><a href="../topics/tree-patterns.html">Tree Problem Patterns</a></li><li data-search="Tries Trees Prefix trees animated insert by insert: autocomplete, word search on boards, and bitwise tries for max XOR. prefix tree autocomplete word search xor trie" data-slug="tries"><a href="../topics/tries.html">Tries</a></li><li data-search="Segment Trees, Fenwick Trees &amp; Sparse Tables Trees Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables. segment tree lazy propagation fenwick bit rmq" data-slug="segment-fenwick-trees"><a href="../topics/segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a></li></ul></details><details class="nav-track"><summary>Graphs</summary><ul class="topic-list"><li data-search="Graph Fundamentals: BFS &amp; DFS Graphs Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS. bfs dfs grid islands connected components cycle" data-slug="graph-fundamentals"><a href="../topics/graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></li><li data-search="Topological Sort &amp; DAGs Graphs Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs. kahn course schedule dag dependency order" data-slug="topological-sort"><a href="../topics/topological-sort.html">Topological Sort &amp; DAGs</a></li><li data-search="Union-Find (Disjoint Set Union) Graphs Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries. dsu disjoint set path compression connectivity" data-slug="union-find"><a href="../topics/union-find.html">Union-Find (Disjoint Set Union)</a></li><li data-search="Shortest Paths Graphs BFS, 0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall and A* animated, and a chart to pick the right one every time. dijkstra bellman ford floyd warshall a star 0-1 bfs" data-slug="shortest-paths"><a href="../topics/shortest-paths.html">Shortest Paths</a></li><li data-search="Minimum Spanning Trees Graphs Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems. kruskal prim mst cut property" data-slug="minimum-spanning-trees"><a href="../topics/minimum-spanning-trees.html">Minimum Spanning Trees</a></li><li data-search="Advanced Graph Algorithms Graphs Strongly connected components, bridges and articulation points, bipartite checks, Euler paths, and max-flow / matching. tarjan kosaraju scc bridges euler max flow bipartite matching" data-slug="advanced-graphs"><a href="../topics/advanced-graphs.html">Advanced Graph Algorithms</a></li></ul></details><details class="nav-track"><summary>Backtracking &amp; Greedy</summary><ul class="topic-list"><li data-search="Backtracking Backtracking &amp; Greedy The choose/explore/un-choose template animated on a decision tree: subsets, permutations, combinations, N-Queens, Sudoku and pruning. subsets permutations n queens sudoku pruning" data-slug="backtracking"><a href="../topics/backtracking.html">Backtracking</a></li><li data-search="Greedy Algorithms Backtracking &amp; Greedy When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding. exchange argument interval scheduling jump game huffman" data-slug="greedy"><a href="../topics/greedy.html">Greedy Algorithms</a></li></ul></details><details class="nav-track"><summary>Dynamic Programming</summary><ul class="topic-list"><li data-search="The DP Framework Dynamic Programming Recursion → memoization → tabulation → space optimisation, visualised on one problem; how to design state and transitions. memoization tabulation state transition overlapping subproblems" data-slug="dp-framework"><a href="../topics/dp-framework.html">The DP Framework</a></li><li data-search="1D &amp; Grid DP Dynamic Programming Climbing stairs, house robber, decode ways, unique paths, min path sum, maximal square and dungeon game with animated tables. house robber unique paths grid dp maximal square" data-slug="dp-linear-grid"><a href="../topics/dp-linear-grid.html">1D &amp; Grid DP</a></li><li data-search="Knapsack Family Dynamic Programming 0/1 vs unbounded vs bounded knapsack, why loop direction matters, coin change, subset sum and target sum. knapsack coin change subset sum partition" data-slug="dp-knapsack"><a href="../topics/dp-knapsack.html">Knapsack Family</a></li><li data-search="Sequence &amp; String DP Dynamic Programming LIS with patience sorting, LCS, edit distance, palindromic subsequences, regex/wildcard matching and distinct subsequences. lis lcs edit distance regex matching palindrome" data-slug="dp-sequences-strings"><a href="../topics/dp-sequences-strings.html">Sequence &amp; String DP</a></li><li data-search="Interval &amp; Tree DP Dynamic Programming Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting). interval dp burst balloons matrix chain tree dp rerooting" data-slug="dp-intervals-trees"><a href="../topics/dp-intervals-trees.html">Interval &amp; Tree DP</a></li><li data-search="Bitmask &amp; Digit DP Dynamic Programming Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints. bitmask tsp digit dp subset dp" data-slug="dp-bitmask-digit"><a href="../topics/dp-bitmask-digit.html">Bitmask &amp; Digit DP</a></li><li data-search="State Machines &amp; DP Optimisations Dynamic Programming Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth. stock state machine convex hull trick knuth optimisation" data-slug="dp-advanced"><a href="../topics/dp-advanced.html">State Machines &amp; DP Optimisations</a></li></ul></details><details class="nav-track"><summary>Bits &amp; Math</summary><ul class="topic-list"><li data-search="Bit Manipulation Bits &amp; Math Bits drawn as switches: masks, XOR tricks, counting bits, subset enumeration and Gray codes. xor mask single number popcount subsets" data-slug="bit-manipulation"><a href="../topics/bit-manipulation.html">Bit Manipulation</a></li><li data-search="Math, Number Theory &amp; Combinatorics Bits &amp; Math GCD, sieves, fast power, modular inverses, nCr mod p, inclusion–exclusion, and the geometry primitives you need. gcd sieve modular fast exponentiation combinatorics geometry" data-slug="math-number-theory"><a href="../topics/math-number-theory.html">Math, Number Theory &amp; Combinatorics</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../CodeExcellenceHome/index.html">Code Excellence Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>DSA Home / Monotonic Stack &amp; Queue</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">ARRAYS &AMP; STRINGS</p><h1>Monotonic Stack &amp; Queue</h1><p class="lede">Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight.</p><div class="meta"><span class="level level-intermediate">Intermediate → Expert</span><span>~55 min study</span><span>Builds on: <a href="stacks-queues.html">Stacks &amp; Queues</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="monotonic-stack-queue" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="what-it-is-and-when-you-need-it">What it is and when you need it</h2>
+<p>Many array questions ask the same thing about every index: <strong>"what is the first element after (or before) me that is bigger (or smaller) than me?"</strong> The next warmer day, the next taller person, the first cheaper price, the bar that stops a rectangle from growing. The brute force scans outward from every index, which is O(n²) on a sorted input. A <strong>monotonic stack</strong> answers the question for every index in one O(n) pass.</p>
+<div class="rule">
+<p><strong>The invariant.</strong> The stack holds exactly the indices that are <strong>still waiting</strong> for their answer. A new element pops every waiting index it beats, and that pop <strong>is</strong> the answer for the popped index. Because beaten indices leave immediately, the values left on the stack are always sorted (monotonic). The index left on top after the pops is the new element's answer in the other direction.</p>
+</div>
+<p>Two facts make this work. <strong>Order:</strong> nothing left on the stack beats anything above it; otherwise it would already have been popped. <strong>Cost:</strong> each index is pushed once and popped at most once, so the inner <code>while</code> loop runs at most n times in total over the whole scan, not n times per element. A <strong>monotonic queue</strong> (a deque) adds a second exit at the front, for windows that move: the <a href="sliding-window.html#sliding-window-maximum-the-monotonic-deque">Sliding Window</a> page introduces it for window maximum, and this page goes deeper.</p>
+<p>You should be comfortable with <a href="stacks-queues.html">Stacks &amp; Queues</a> first. The whole technique is a <code>while</code> loop around <code>pop()</code>.</p>
+<div class="compare">
+<div class="bad">
+<h4 id="brute-force-on2">Brute force: O(n²)</h4>
+<p>For each <code>i</code>, scan <code>j = i+1, i+2, …</code> until <code>a[j] &gt; a[i]</code>. On a decreasing array every scan runs to the end. It is simple, and it is the reference to test against.</p>
+</div>
+<div class="warn">
+<h4 id="sort-or-tree-on-log-n">Sort or tree: O(n log n)</h4>
+<p>"Next greater" is about <strong>position</strong>, not just value, so sorting destroys the information you need. A balanced tree or a segment tree can answer it, but that is a large hammer for a stack-sized nail.</p>
+</div>
+<div class="good">
+<h4 id="monotonic-stack-on">Monotonic stack: O(n)</h4>
+<p>One left-to-right pass. Each pop answers one index. It also gives <strong>both</strong> neighbours (previous and next) in the same pass, which is what histogram and contribution problems need.</p>
+</div>
+</div>
+<h2 id="intuition-a-line-of-people-waiting-for-someone-taller">Intuition: a line of people waiting for someone taller</h2>
+<p>Picture the array as people of different heights standing in a line, all looking right. Each person wants to know: <em>who is the first taller person to my right?</em> Walk along the line. Everyone you have passed who has not found their answer is still waiting. When a new person arrives, every waiting person shorter than the newcomer has just found their answer: it is the newcomer. They stop waiting (pop). Taller people keep waiting, and so does the newcomer (push).</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 310" width="900" role="img" aria-label="Bars 4 2 1 3 6 2 5 with arrows to their next greater element, and a snapshot where 3 arrives and pops 1 and 2 from a decreasing stack">
+<defs><marker id="monotonic-stack-queue-m-done" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker></defs>
+<text x="250" y="22" text-anchor="middle" class="title">Every arrow: “my next greater element is…”</text>
+<rect class="box path" x="78" y="150" width="40" height="112" rx="3"/>
+<text x="98" y="254" text-anchor="middle" class="mono">4</text>
+<text x="98" y="279" text-anchor="middle" class="small muted mono">0</text>
+<text x="98" y="299" text-anchor="middle" class="small mono fill-done">6</text>
+<rect class="box path" x="132" y="206" width="40" height="56" rx="3"/>
+<text x="152" y="254" text-anchor="middle" class="mono">2</text>
+<text x="152" y="279" text-anchor="middle" class="small muted mono">1</text>
+<text x="152" y="299" text-anchor="middle" class="small mono fill-done">3</text>
+<rect class="box path" x="186" y="234" width="40" height="28" rx="3"/>
+<text x="206" y="254" text-anchor="middle" class="mono">1</text>
+<text x="206" y="279" text-anchor="middle" class="small muted mono">2</text>
+<text x="206" y="299" text-anchor="middle" class="small mono fill-done">3</text>
+<rect class="box path" x="240" y="178" width="40" height="84" rx="3"/>
+<text x="260" y="254" text-anchor="middle" class="mono">3</text>
+<text x="260" y="279" text-anchor="middle" class="small muted mono">3</text>
+<text x="260" y="299" text-anchor="middle" class="small mono fill-done">6</text>
+<rect class="box path" x="294" y="94" width="40" height="168" rx="3"/>
+<text x="314" y="254" text-anchor="middle" class="mono">6</text>
+<text x="314" y="279" text-anchor="middle" class="small muted mono">4</text>
+<text x="314" y="299" text-anchor="middle" class="small mono muted">none</text>
+<rect class="box path" x="348" y="206" width="40" height="56" rx="3"/>
+<text x="368" y="254" text-anchor="middle" class="mono">2</text>
+<text x="368" y="279" text-anchor="middle" class="small muted mono">5</text>
+<text x="368" y="299" text-anchor="middle" class="small mono fill-done">5</text>
+<rect class="box path" x="402" y="122" width="40" height="140" rx="3"/>
+<text x="422" y="254" text-anchor="middle" class="mono">5</text>
+<text x="422" y="279" text-anchor="middle" class="small muted mono">6</text>
+<text x="422" y="299" text-anchor="middle" class="small mono muted">none</text>
+<text x="68" y="279" text-anchor="end" class="small muted">i</text>
+<text x="68" y="299" text-anchor="end" class="small muted">next &gt;</text>
+<line class="edge" x1="72" y1="262" x2="448" y2="262"/>
+<path class="edge done" d="M102 147 C102 52, 310 52, 310 89" marker-end="url(#monotonic-stack-queue-m-done)"/>
+<path class="edge done" d="M156 203 C156 150, 256 150, 256 173" marker-end="url(#monotonic-stack-queue-m-done)"/>
+<path class="edge done" d="M210 231 C210 157, 256 157, 256 173" marker-end="url(#monotonic-stack-queue-m-done)"/>
+<path class="edge done" d="M264 175 C264 73, 310 73, 310 89" marker-end="url(#monotonic-stack-queue-m-done)"/>
+<path class="edge done" d="M372 203 C372 101, 418 101, 418 117" marker-end="url(#monotonic-stack-queue-m-done)"/>
+<line class="edge dash" x1="470" y1="40" x2="470" y2="300"/>
+<text x="680" y="22" text-anchor="middle" class="title">The moment a[3] = 3 arrives</text>
+<text x="680" y="42" text-anchor="middle" class="small muted">stack before: [4, 2, 1], values decreasing bottom → top</text>
+<rect class="box visit" x="520" y="150" width="40" height="112" rx="3"/>
+<text x="540" y="254" text-anchor="middle" class="mono">4</text>
+<rect class="box done" x="574" y="206" width="40" height="56" rx="3"/>
+<text x="594" y="254" text-anchor="middle" class="mono">2</text>
+<rect class="box done" x="628" y="234" width="40" height="28" rx="3"/>
+<text x="648" y="254" text-anchor="middle" class="mono">1</text>
+<rect class="box active" x="732" y="178" width="40" height="84" rx="3"/>
+<text x="752" y="254" text-anchor="middle" class="mono">3</text>
+<line class="edge active dash" x1="508" y1="178" x2="782" y2="178"/>
+<text x="786" y="182" text-anchor="start" class="small fill-active">level 3</text>
+<text x="540" y="140" text-anchor="middle" class="small fill-visit">still waiting</text>
+<text x="621" y="194" text-anchor="middle" class="small fill-done">both pop: answer = 3</text>
+<line class="edge" x1="508" y1="262" x2="782" y2="262"/>
+<text x="594" y="279" text-anchor="middle" class="small muted">stack (bottom → top)</text>
+<text x="752" y="279" text-anchor="middle" class="small fill-active">x = 3</text>
+<text x="680" y="299" text-anchor="middle" class="small mono">after: pop 1, pop 2, push 3 → stack = [4, 3]</text>
+</svg>
+<figcaption>Left: the answer for every index. Right: why one pass finds them all. When <b>3</b> arrives, every value below level 3 that is still waiting has just met its next greater element, so it is popped and answered. Values above the level (the <b>4</b>) keep waiting. Popping keeps the stack decreasing, so the values that are about to be popped are always on top.</figcaption>
+</figure>
+
+<p>Why are the waiting values always <strong>decreasing</strong> from bottom to top? Suppose a waiting value were smaller than a value pushed after it. Then the later value would have beaten it on arrival and popped it. So the stack can never contain a "beaten" pair. Once you see the waiting room as a <strong>staircase going down</strong>, two more facts follow.</p>
+<div class="insight">
+<p><strong>What a pop tells you</strong>
+When index <code>t</code> is popped by the newcomer <code>i</code>, you learn <strong>two</strong> things at once. <code>i</code> is the first index to the right of <code>t</code> that beats it: that is <code>next[t]</code>. The index just below <code>t</code> in the stack is the nearest index to the left of <code>t</code> that <code>t</code> did not beat: that is <code>prev[t]</code>. So at the moment of a pop, the popped element knows both of its walls. Largest Rectangle in Histogram and the contribution technique are built entirely on this.</p>
+</div>
+<div class="tip">
+<p><strong>Store indices, not values</strong>
+Push the <strong>index</strong> <code>i</code>, and read the value as <code>a[i]</code>. Indices give you distances (<code>i − t</code> days until warmer), widths (<code>right − left − 1</code>), and they let you tell equal values apart. Values alone cannot do any of those.</p>
+</div>
+<h2 id="one-template-four-questions">One template, four questions</h2>
+<p>There are four "nearest" questions: next or previous, greater or smaller. Each also has a strict or non-strict version, which matters as soon as there are duplicates. They are all one loop. Only the comparison in the <code>while</code> changes, and <strong>one pass gives you a "next" answer at pop time and a "previous" answer at push time</strong>.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def next_and_prev_greater(a: list[int]) -&gt; tuple[list[int], list[int]]:
+    &quot;&quot;&quot;nxt[i] = first j &gt; i with a[j] &gt; a[i]  (else -1)
+       prv[i] = last  j &lt; i with a[j] &gt;= a[i] (else -1)&quot;&quot;&quot;
+    n = len(a)
+    nxt, prv = [-1] * n, [-1] * n
+    st: list[int] = []                    # indices; a[st] is non-increasing
+    for i, x in enumerate(a):
+        while st and a[st[-1]] &lt; x:       # x beats the waiting top
+            nxt[st.pop()] = i             # pop = answer
+        prv[i] = st[-1] if st else -1     # whoever survived is &gt;= x
+        st.append(i)                      # i starts waiting
+    return nxt, prv
+</code></pre>
+<pre><code class="language-csharp">public static (int[] Next, int[] Prev) NextAndPrevGreater(int[] a)
+{
+    int n = a.Length;
+    var nxt = new int[n]; var prv = new int[n];
+    Array.Fill(nxt, -1);
+    var st = new Stack&lt;int&gt;();             // indices; a[st] is non-increasing
+    for (int i = 0; i &lt; n; i++)
+    {
+        while (st.Count &gt; 0 &amp;&amp; a[st.Peek()] &lt; a[i])
+            nxt[st.Pop()] = i;             // pop = answer
+        prv[i] = st.Count &gt; 0 ? st.Peek() : -1;
+        st.Push(i);
+    }
+    return (nxt, prv);
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n) time (each index is pushed once and popped at most once), O(n) space for the stack in the worst case (a decreasing array never pops).</p>
+<p>Change the comparison and you get the other questions. The table is worth memorising as one rule: <strong>the stack is sorted the opposite way to the question</strong>. If you want something <em>greater</em>, the waiting room is <em>decreasing</em>, because anything greater than a waiting value would have popped it.</p>
+<table>
+<thead>
+<tr>
+<th>You want</th>
+<th>Pop while <code>a[top] … x</code></th>
+<th>Stack values (bottom → top)</th>
+<th>Popped <code>t</code> gets <code>next[t] = i</code> meaning</th>
+<th>Top after pops gives <code>prev[i]</code> meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>next greater</td>
+<td><code>&lt;</code></td>
+<td>non-increasing</td>
+<td>first <code>j &gt; t</code> with <code>a[j] &gt; a[t]</code></td>
+<td>last <code>j &lt; i</code> with <code>a[j] &gt;= a[i]</code></td>
+</tr>
+<tr>
+<td>next greater or equal</td>
+<td><code>&lt;=</code></td>
+<td>strictly decreasing</td>
+<td>first <code>j &gt; t</code> with <code>a[j] &gt;= a[t]</code></td>
+<td>last <code>j &lt; i</code> with <code>a[j] &gt; a[i]</code></td>
+</tr>
+<tr>
+<td>next smaller</td>
+<td><code>&gt;</code></td>
+<td>non-decreasing</td>
+<td>first <code>j &gt; t</code> with <code>a[j] &lt; a[t]</code></td>
+<td>last <code>j &lt; i</code> with <code>a[j] &lt;= a[i]</code></td>
+</tr>
+<tr>
+<td>next smaller or equal</td>
+<td><code>&gt;=</code></td>
+<td>strictly increasing</td>
+<td>first <code>j &gt; t</code> with <code>a[j] &lt;= a[t]</code></td>
+<td>last <code>j &lt; i</code> with <code>a[j] &lt; a[i]</code></td>
+</tr>
+</tbody>
+</table>
+<p>Read the last column carefully: the "previous" answer you get for free always has the <strong>opposite strictness</strong> to the "next" answer. Popping on ties makes "next" non-strict, and it leaves only strictly larger values below, so "previous" becomes strict. If you need both sides strict (or both non-strict), run a second pass from the right, or fix the ties as in the <a href="#the-contribution-technique-sum-of-subarray-minimums">contribution section</a>.</p>
+<p>Step through it. Change the family, the tie rule and the array, and watch the arcs. Solid arcs are "next" answers produced by pops. Dashed arcs are "previous" answers read from the top of the stack at push time.</p>
+<div class="viz" data-viz="monotonic-stack-queue-nge"></div>
+
+<h3 id="the-mirror-view-scan-from-the-right-keep-the-candidates">The mirror view: scan from the right, keep the candidates</h3>
+<p>You can also scan <strong>right to left</strong>. Now the stack holds the <strong>candidates</strong>: values to the right that could still be someone's next greater element. Before reading the answer for <code>a[i]</code>, pop every candidate that is <code>&lt;= a[i]</code>. They are hidden behind <code>a[i]</code> for everyone further left, because <code>a[i]</code> is closer and at least as tall. The top of the stack is then the answer.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def next_greater_from_right(a: list[int]) -&gt; list[int]:
+    n = len(a)
+    nxt = [-1] * n
+    st: list[int] = []                    # candidates to the right, decreasing
+    for i in range(n - 1, -1, -1):
+        while st and a[st[-1]] &lt;= a[i]:   # hidden behind a[i] forever
+            st.pop()
+        nxt[i] = st[-1] if st else -1
+        st.append(i)
+    return nxt
+</code></pre>
+<pre><code class="language-csharp">public static int[] NextGreaterFromRight(int[] a)
+{
+    int n = a.Length;
+    var nxt = new int[n];
+    var st = new Stack&lt;int&gt;();            // candidates to the right, decreasing
+    for (int i = n - 1; i &gt;= 0; i--)
+    {
+        while (st.Count &gt; 0 &amp;&amp; a[st.Peek()] &lt;= a[i]) st.Pop();
+        nxt[i] = st.Count &gt; 0 ? st.Peek() : -1;
+        st.Push(i);
+    }
+    return nxt;
+}
+</code></pre>
+</div>
+<p>Both directions are O(n) and give the same answers. The left-to-right "waiting room" version is better when the data arrives as a <strong>stream</strong>, because answers appear the moment they are known. The right-to-left "candidates" version reads more naturally when you need the answer for <code>i</code> <strong>at</strong> step <code>i</code>, as in 132 Pattern and Number of Visible People in a Queue (worked problems below).</p>
+<h2 id="circular-arrays-walk-around-twice">Circular arrays: walk around twice</h2>
+<p>In a circular array, the element after the last one is the first one, so the next greater element of <code>a[n−1]</code> may be <code>a[0]</code>. Do not copy the array. Iterate <code>i</code> from 0 to 2n − 1 and read <code>a[i % n]</code>. During the second lap, <strong>only pop, never push</strong>: those indices already had their turn to wait.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 296" width="900" role="img" aria-label="Circular next greater element: the array 3 8 4 1 2 followed by a faded copy, with arrows to each next greater value">
+<defs><marker id="monotonic-stack-queue-m-circ" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker></defs>
+<text x="270" y="22" text-anchor="middle" class="title">Walk the array twice; the second copy only answers</text>
+<rect class="box path" x="64" y="192" width="34" height="60" rx="3"/>
+<text x="81" y="245" text-anchor="middle" class="mono">3</text>
+<text x="81" y="268" text-anchor="middle" class="small muted mono">0</text>
+<text x="81" y="285" text-anchor="middle" class="small mono">0</text>
+<rect class="box path" x="110" y="92" width="34" height="160" rx="3"/>
+<text x="127" y="245" text-anchor="middle" class="mono">8</text>
+<text x="127" y="268" text-anchor="middle" class="small muted mono">1</text>
+<text x="127" y="285" text-anchor="middle" class="small mono">1</text>
+<rect class="box path" x="156" y="172" width="34" height="80" rx="3"/>
+<text x="173" y="245" text-anchor="middle" class="mono">4</text>
+<text x="173" y="268" text-anchor="middle" class="small muted mono">2</text>
+<text x="173" y="285" text-anchor="middle" class="small mono">2</text>
+<rect class="box path" x="202" y="232" width="34" height="20" rx="3"/>
+<text x="219" y="245" text-anchor="middle" class="mono">1</text>
+<text x="219" y="268" text-anchor="middle" class="small muted mono">3</text>
+<text x="219" y="285" text-anchor="middle" class="small mono">3</text>
+<rect class="box path" x="248" y="212" width="34" height="40" rx="3"/>
+<text x="265" y="245" text-anchor="middle" class="mono">2</text>
+<text x="265" y="268" text-anchor="middle" class="small muted mono">4</text>
+<text x="265" y="285" text-anchor="middle" class="small mono">4</text>
+<rect class="box path" x="294" y="192" width="34" height="60" rx="3" opacity=".45"/>
+<text x="311" y="245" text-anchor="middle" class="mono">3</text>
+<text x="311" y="268" text-anchor="middle" class="small muted mono">5</text>
+<text x="311" y="285" text-anchor="middle" class="small mono">0</text>
+<rect class="box path" x="340" y="92" width="34" height="160" rx="3" opacity=".45"/>
+<text x="357" y="245" text-anchor="middle" class="mono">8</text>
+<text x="357" y="268" text-anchor="middle" class="small muted mono">6</text>
+<text x="357" y="285" text-anchor="middle" class="small mono">1</text>
+<rect class="box path" x="386" y="172" width="34" height="80" rx="3" opacity=".45"/>
+<text x="403" y="245" text-anchor="middle" class="mono">4</text>
+<text x="403" y="268" text-anchor="middle" class="small muted mono">7</text>
+<text x="403" y="285" text-anchor="middle" class="small mono">2</text>
+<rect class="box path" x="432" y="232" width="34" height="20" rx="3" opacity=".45"/>
+<text x="449" y="245" text-anchor="middle" class="mono">1</text>
+<text x="449" y="268" text-anchor="middle" class="small muted mono">8</text>
+<text x="449" y="285" text-anchor="middle" class="small mono">3</text>
+<rect class="box path" x="478" y="212" width="34" height="40" rx="3" opacity=".45"/>
+<text x="495" y="245" text-anchor="middle" class="mono">2</text>
+<text x="495" y="268" text-anchor="middle" class="small muted mono">9</text>
+<text x="495" y="285" text-anchor="middle" class="small mono">4</text>
+<text x="56" y="268" text-anchor="end" class="small muted">i</text>
+<text x="56" y="285" text-anchor="end" class="small muted">i % n</text>
+<line class="edge" x1="58" y1="252" x2="518" y2="252"/>
+<line class="edge dash" x1="288" y1="50" x2="288" y2="292"/>
+<text x="296" y="44" text-anchor="start" class="small muted">copy: pop only, never push</text>
+<path class="edge done" d="M84 189 C84 74, 124 74, 124 87" marker-end="url(#monotonic-stack-queue-m-circ)"/>
+<path class="edge done dash" d="M176 169 C176 56, 354 56, 354 87" marker-end="url(#monotonic-stack-queue-m-circ)"/>
+<path class="edge done" d="M222 229 C222 194, 262 194, 262 207" marker-end="url(#monotonic-stack-queue-m-circ)"/>
+<path class="edge done dash" d="M268 209 C268 174, 308 174, 308 187" marker-end="url(#monotonic-stack-queue-m-circ)"/>
+<text x="560" y="110" text-anchor="start" class="mono">nums = [3, 8, 4, 1, 2], circular</text>
+<text x="560" y="128" text-anchor="start" class="mono fill-done">next greater: [8, -1, 8, 2, 3]</text>
+<text x="560" y="164" text-anchor="start" class="small">Solid arrows are found in the first lap.</text>
+<text x="560" y="182" text-anchor="start" class="small">Dashed arrows wrap around: 4 and 2 are still</text>
+<text x="560" y="200" text-anchor="start" class="small">waiting at the end of lap 1, and the copy</text>
+<text x="560" y="218" text-anchor="start" class="small">of the start finally answers them.</text>
+<text x="560" y="254" text-anchor="start" class="small">8 is the global maximum: nothing beats it in</text>
+<text x="560" y="272" text-anchor="start" class="small">either lap, so it stays on the stack: -1.</text>
+</svg>
+<figcaption>Circular arrays: iterate <code>i</code> from 0 to 2n − 1 and read <code>nums[i % n]</code>. Only push during the first lap. After lap one, whatever is still waiting gets a second chance against the start of the array. That is all "circular" changes.</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-python">def next_greater_circular(a: list[int]) -&gt; list[int]:
+    n = len(a)
+    res = [-1] * n
+    st: list[int] = []
+    for i in range(2 * n):
+        x = a[i % n]
+        while st and a[st[-1]] &lt; x:
+            res[st.pop()] = x             # this problem returns values
+        if i &lt; n:
+            st.append(i)
+    return res
+</code></pre>
+<pre><code class="language-csharp">public static int[] NextGreaterCircular(int[] a)
+{
+    int n = a.Length;
+    var res = new int[n];
+    Array.Fill(res, -1);
+    var st = new Stack&lt;int&gt;();
+    for (int i = 0; i &lt; 2 * n; i++)
+    {
+        int x = a[i % n];
+        while (st.Count &gt; 0 &amp;&amp; a[st.Peek()] &lt; x) res[st.Pop()] = x;
+        if (i &lt; n) st.Push(i);
+    }
+    return res;
+}
+</code></pre>
+</div>
+<p><strong>Why two laps are enough:</strong> after the first lap, every index still waiting needs a value to its right <em>or</em> wrapped around to the start. Lap two shows it every index from 0 to n − 1, which covers the whole wrap-around. Only the global maximum (and copies of it) survive both laps. Set the visualizer above to <strong>circular</strong> to watch the second lap at work: the faded bars are the copy.</p>
+<h2 id="daily-temperatures-and-stock-span">Daily temperatures and stock span</h2>
+<p>These two are the same pop seen from both sides.</p>
+<p><strong>Daily Temperatures</strong> asks, for each day, how many days until a warmer one. That is "next strictly greater", and the answer is a distance: when <code>t</code> is popped by <code>i</code>, <code>ans[t] = i − t</code>.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def daily_temperatures(temps: list[int]) -&gt; list[int]:
+    ans = [0] * len(temps)
+    st: list[int] = []
+    for i, t in enumerate(temps):
+        while st and temps[st[-1]] &lt; t:
+            j = st.pop()
+            ans[j] = i - j                # days waited
+        st.append(i)
+    return ans
+</code></pre>
+<pre><code class="language-csharp">public static int[] DailyTemperatures(int[] temps)
+{
+    var ans = new int[temps.Length];
+    var st = new Stack&lt;int&gt;();
+    for (int i = 0; i &lt; temps.Length; i++)
+    {
+        while (st.Count &gt; 0 &amp;&amp; temps[st.Peek()] &lt; temps[i])
+        {
+            int j = st.Pop();
+            ans[j] = i - j;
+        }
+        st.Push(i);
+    }
+    return ans;
+}
+</code></pre>
+</div>
+<p><strong>Online Stock Span</strong> looks <strong>backwards</strong>: for today's price, how many consecutive days (including today) had a price <code>&lt;=</code> today's? That is "distance to the previous strictly greater price", which is the top of the stack after popping. The twist is that the prices arrive one call at a time and you cannot keep indices into an array you never see. So each stack entry stores <code>(price, span)</code>. The span is the number of days that entry <strong>swallowed</strong> when it was pushed. Popping an entry absorbs its whole block of days in O(1).</p>
+<div class="viz" data-viz="monotonic-stack-queue-span"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">class StockSpanner:
+    def __init__(self) -&gt; None:
+        self.st: list[tuple[int, int]] = []   # (price, days it covers)
+
+    def next(self, price: int) -&gt; int:
+        span = 1
+        while self.st and self.st[-1][0] &lt;= price:
+            span += self.st.pop()[1]          # swallow the whole block
+        self.st.append((price, span))
+        return span
+</code></pre>
+<pre><code class="language-csharp">public sealed class StockSpanner
+{
+    private readonly Stack&lt;(int Price, int Span)&gt; _st = new();
+
+    public int Next(int price)
+    {
+        int span = 1;
+        while (_st.Count &gt; 0 &amp;&amp; _st.Peek().Price &lt;= price)
+            span += _st.Pop().Span;           // swallow the whole block
+        _st.Push((price, span));
+        return span;
+    }
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(1) amortised per call. Each price is pushed once and popped at most once over the whole stream. A single call can still pop many entries, for example a new all-time high, so the worst case for one call is O(n).</p>
+<div class="insight">
+<p><strong>Compression is the general idea</strong>
+The stock-span stack stores a <strong>summary</strong> of a dominated block of history: "these 4 days were all ≤ 85". Whenever a monotonic stack needs an aggregate of the region it pops (a count, a sum, a minimum), store that aggregate in the stack entry and merge it on pop. Car Fleet, the running-sum version of Sum of Subarray Minimums and Count Submatrices With All Ones all use this trick.</p>
+</div>
+<h2 id="largest-rectangle-in-a-histogram">Largest rectangle in a histogram</h2>
+<p>This is the problem that makes monotonic stacks famous. You are given bar heights, all of width 1. Find the largest axis-aligned rectangle that fits under the bars.</p>
+<p>The key observation: the best rectangle is limited by its <strong>shortest</strong> bar. So guess which bar is the shortest one. If bar <code>i</code> is the shortest bar of the rectangle, the rectangle should be as wide as possible at height <code>h[i]</code>. It extends left until the first bar that is shorter than <code>h[i]</code> and right until the first bar that is shorter than <code>h[i]</code>. Those two walls are the <strong>previous smaller</strong> and <strong>next smaller</strong> elements.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 310" width="900" role="img" aria-label="Histogram 2 1 5 6 2 3 with the rectangle of height 5 spanning bars 2 and 3 between walls at bars 1 and 4, and a table of each bar's best rectangle">
+<text x="230" y="22" text-anchor="middle" class="title">Bar 2 (height 5) grows sideways until a shorter bar</text>
+<rect class="box path" x="70" y="190" width="50" height="56" rx="3"/>
+<text x="95" y="238" text-anchor="middle" class="mono">2</text>
+<text x="95" y="263" text-anchor="middle" class="small muted mono">0</text>
+<rect class="box visit" x="130" y="218" width="50" height="28" rx="3"/>
+<text x="155" y="238" text-anchor="middle" class="mono">1</text>
+<text x="155" y="263" text-anchor="middle" class="small muted mono">1</text>
+<rect class="box active" x="190" y="106" width="50" height="140" rx="3"/>
+<text x="215" y="238" text-anchor="middle" class="mono">5</text>
+<text x="215" y="263" text-anchor="middle" class="small muted mono">2</text>
+<rect class="box path" x="250" y="78" width="50" height="168" rx="3"/>
+<text x="275" y="238" text-anchor="middle" class="mono">6</text>
+<text x="275" y="263" text-anchor="middle" class="small muted mono">3</text>
+<rect class="box visit" x="310" y="190" width="50" height="56" rx="3"/>
+<text x="335" y="238" text-anchor="middle" class="mono">2</text>
+<text x="335" y="263" text-anchor="middle" class="small muted mono">4</text>
+<rect class="box path" x="370" y="162" width="50" height="84" rx="3"/>
+<text x="395" y="238" text-anchor="middle" class="mono">3</text>
+<text x="395" y="263" text-anchor="middle" class="small muted mono">5</text>
+<line class="edge" x1="64" y1="246" x2="426" y2="246"/>
+<rect class="edge done dash" x="187" y="106" width="116" height="140" rx="2"/>
+<text x="179" y="124" text-anchor="end" class="small mono">height 5</text>
+<text x="179" y="140" text-anchor="end" class="small mono">× width 2 = 10</text>
+<text x="155" y="282" text-anchor="middle" class="small fill-visit">left wall</text>
+<text x="335" y="282" text-anchor="middle" class="small fill-visit">right wall</text>
+<text x="155" y="297" text-anchor="middle" class="small muted">(previous smaller)</text>
+<text x="335" y="297" text-anchor="middle" class="small muted">(next smaller)</text>
+<text x="680" y="22" text-anchor="middle" class="title">Every bar's best rectangle</text>
+<text x="500" y="56" text-anchor="start" class="small muted">bar</text>
+<text x="552" y="56" text-anchor="start" class="small muted">height</text>
+<text x="618" y="56" text-anchor="start" class="small muted">left wall</text>
+<text x="696" y="56" text-anchor="start" class="small muted">right wall</text>
+<text x="762" y="56" text-anchor="start" class="small muted">width</text>
+<text x="818" y="56" text-anchor="start" class="small muted">area</text>
+<line class="edge" x1="494" y1="64" x2="860" y2="64"/>
+<text x="500" y="86" text-anchor="start" class="mono small">0</text>
+<text x="552" y="86" text-anchor="start" class="mono small">2</text>
+<text x="618" y="86" text-anchor="start" class="mono small">-1</text>
+<text x="696" y="86" text-anchor="start" class="mono small">1</text>
+<text x="762" y="86" text-anchor="start" class="mono small">1</text>
+<text x="818" y="86" text-anchor="start" class="mono small">2</text>
+<text x="500" y="112" text-anchor="start" class="mono small">1</text>
+<text x="552" y="112" text-anchor="start" class="mono small">1</text>
+<text x="618" y="112" text-anchor="start" class="mono small">-1</text>
+<text x="696" y="112" text-anchor="start" class="mono small">6</text>
+<text x="762" y="112" text-anchor="start" class="mono small">6</text>
+<text x="818" y="112" text-anchor="start" class="mono small">6</text>
+<rect class="box done" x="492" y="123" width="372" height="22" rx="4"/>
+<text x="500" y="138" text-anchor="start" class="mono">2</text>
+<text x="552" y="138" text-anchor="start" class="mono">5</text>
+<text x="618" y="138" text-anchor="start" class="mono">1</text>
+<text x="696" y="138" text-anchor="start" class="mono">4</text>
+<text x="762" y="138" text-anchor="start" class="mono">2</text>
+<text x="818" y="138" text-anchor="start" class="mono">10</text>
+<text x="500" y="164" text-anchor="start" class="mono small">3</text>
+<text x="552" y="164" text-anchor="start" class="mono small">6</text>
+<text x="618" y="164" text-anchor="start" class="mono small">2</text>
+<text x="696" y="164" text-anchor="start" class="mono small">4</text>
+<text x="762" y="164" text-anchor="start" class="mono small">1</text>
+<text x="818" y="164" text-anchor="start" class="mono small">6</text>
+<text x="500" y="190" text-anchor="start" class="mono small">4</text>
+<text x="552" y="190" text-anchor="start" class="mono small">2</text>
+<text x="618" y="190" text-anchor="start" class="mono small">1</text>
+<text x="696" y="190" text-anchor="start" class="mono small">6</text>
+<text x="762" y="190" text-anchor="start" class="mono small">4</text>
+<text x="818" y="190" text-anchor="start" class="mono small">8</text>
+<text x="500" y="216" text-anchor="start" class="mono small">5</text>
+<text x="552" y="216" text-anchor="start" class="mono small">3</text>
+<text x="618" y="216" text-anchor="start" class="mono small">4</text>
+<text x="696" y="216" text-anchor="start" class="mono small">6</text>
+<text x="762" y="216" text-anchor="start" class="mono small">1</text>
+<text x="818" y="216" text-anchor="start" class="mono small">3</text>
+<text x="494" y="250" text-anchor="start" class="small muted">width = right wall − left wall − 1 (−1 and n are the edges)</text>
+</svg>
+<figcaption>The tallest rectangle that uses <i>all</i> of bar i's height runs from just after the <b>previous smaller</b> bar to just before the <b>next smaller</b> bar. The best overall rectangle is one of these n candidates. A monotonic stack finds both walls in one pass, and it finds them at the moment it pops bar i.</figcaption>
+</figure>
+
+<p>So the answer is <code>max(h[i] × (next_smaller[i] − prev_smaller[i] − 1))</code> over all i. You could compute both arrays with two passes, but one pass is enough, because of the insight above: <strong>at the moment bar <code>t</code> is popped, both of its walls are known.</strong></p>
+<ul>
+<li>It is popped by <code>i</code> because <code>h[i] &lt; h[t]</code>. So <code>i</code> is the right wall.</li>
+<li>After the pop, the new top of the stack is the nearest bar to the left that is shorter than <code>h[t]</code> (or equal, see below). That is the left wall. If the stack is empty, the left wall is −1, the left edge.</li>
+<li>Width = <code>i − new_top − 1</code>. Area = <code>h[t] × width</code>.</li>
+</ul>
+<p>Add a <strong>sentinel</strong> bar of height 0 at the end: it is shorter than every real bar, so it pops everything that is still on the stack and every bar gets measured. Each pop in the visualizer draws the rectangle it measures.</p>
+<div class="viz" data-viz="monotonic-stack-queue-histogram"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def largest_rectangle_area(heights: list[int]) -&gt; int:
+    st: list[int] = []                         # indices, heights increasing
+    best = 0
+    for i, h in enumerate(heights + [0]):      # sentinel 0 flushes the stack
+        while st and heights[st[-1]] &gt;= h:
+            top = st.pop()
+            left = st[-1] if st else -1        # first shorter bar to the left
+            width = i - left - 1               # i is the first shorter to the right
+            best = max(best, heights[top] * width)
+        st.append(i)
+    return best
+</code></pre>
+<pre><code class="language-csharp">public static int LargestRectangleArea(int[] heights)
+{
+    int n = heights.Length, best = 0;
+    var st = new Stack&lt;int&gt;();                  // indices, heights increasing
+    for (int i = 0; i &lt;= n; i++)
+    {
+        int h = i == n ? 0 : heights[i];        // sentinel 0 flushes the stack
+        while (st.Count &gt; 0 &amp;&amp; heights[st.Peek()] &gt;= h)
+        {
+            int top = st.Pop();
+            int left = st.Count &gt; 0 ? st.Peek() : -1;
+            best = Math.Max(best, heights[top] * (i - left - 1));
+        }
+        st.Push(i);
+    }
+    return best;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n) time, O(n) space.</p>
+<div class="insight">
+<p><strong>Ties: <code>&gt;=</code> or <code>&gt;</code>, and why both are correct</strong>
+With <code>&gt;=</code>, an equal bar pops the earlier equal bar. That earlier bar then measures a rectangle that stops too early on the right, so its area is an <strong>underestimate</strong>. That is harmless, because the <strong>last</strong> bar of the equal run is popped later by a strictly shorter bar, and its left wall reaches past all the equal bars. It measures the full width. With <code>&gt;</code>, the equal bars stack up, and the <strong>first</strong> of the run measures the full width when the run is flushed. Either way the maximum is found. Underestimates are fine when you take a maximum. They are <strong>not</strong> fine when you sum or count, which is why the contribution technique below needs a precise tie rule.</p>
+</div>
+<h3 id="maximal-rectangle-a-histogram-on-every-row">Maximal rectangle: a histogram on every row</h3>
+<p>Given a 0/1 grid, find the largest rectangle that contains only 1s. Turn each row into the floor of a histogram: <code>h[c]</code> is the number of consecutive 1s in column c ending at this row. Every all-1 rectangle has a bottom row, and on that row it is a rectangle under the histogram. So run Largest Rectangle once per row.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 270" width="900" role="img" aria-label="A 4 by 5 binary grid; for each row the column heights of consecutive ones; row 2 turned into histogram 3 1 3 2 2 whose best rectangle has area 6">
+<defs><marker id="monotonic-stack-queue-m-mr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-active"/></marker></defs>
+<text x="160" y="22" text-anchor="middle" class="title">The 0/1 grid</text>
+<text x="620" y="22" text-anchor="middle" class="title">Row 2 as the floor of a histogram</text>
+<rect class="box path" x="60" y="56" width="30" height="30" rx="4"/>
+<text x="75" y="77" text-anchor="middle" class="mono">1</text>
+<rect class="box" x="94" y="56" width="30" height="30" rx="4" opacity=".55"/>
+<text x="109" y="77" text-anchor="middle" class="mono">0</text>
+<rect class="box path" x="128" y="56" width="30" height="30" rx="4"/>
+<text x="143" y="77" text-anchor="middle" class="mono">1</text>
+<rect class="box" x="162" y="56" width="30" height="30" rx="4" opacity=".55"/>
+<text x="177" y="77" text-anchor="middle" class="mono">0</text>
+<rect class="box" x="196" y="56" width="30" height="30" rx="4" opacity=".55"/>
+<text x="211" y="77" text-anchor="middle" class="mono">0</text>
+<text x="50" y="77" text-anchor="end" class="small muted mono">r0</text>
+<text x="240" y="77" text-anchor="start" class="small mono">h = [1,0,1,0,0]</text>
+<rect class="box path" x="60" y="90" width="30" height="30" rx="4"/>
+<text x="75" y="111" text-anchor="middle" class="mono">1</text>
+<rect class="box" x="94" y="90" width="30" height="30" rx="4" opacity=".55"/>
+<text x="109" y="111" text-anchor="middle" class="mono">0</text>
+<rect class="box done" x="128" y="90" width="30" height="30" rx="4"/>
+<text x="143" y="111" text-anchor="middle" class="mono">1</text>
+<rect class="box done" x="162" y="90" width="30" height="30" rx="4"/>
+<text x="177" y="111" text-anchor="middle" class="mono">1</text>
+<rect class="box done" x="196" y="90" width="30" height="30" rx="4"/>
+<text x="211" y="111" text-anchor="middle" class="mono">1</text>
+<text x="50" y="111" text-anchor="end" class="small muted mono">r1</text>
+<text x="240" y="111" text-anchor="start" class="small mono">h = [2,0,2,1,1]</text>
+<rect class="box path" x="60" y="124" width="30" height="30" rx="4"/>
+<text x="75" y="145" text-anchor="middle" class="mono">1</text>
+<rect class="box path" x="94" y="124" width="30" height="30" rx="4"/>
+<text x="109" y="145" text-anchor="middle" class="mono">1</text>
+<rect class="box done" x="128" y="124" width="30" height="30" rx="4"/>
+<text x="143" y="145" text-anchor="middle" class="mono">1</text>
+<rect class="box done" x="162" y="124" width="30" height="30" rx="4"/>
+<text x="177" y="145" text-anchor="middle" class="mono">1</text>
+<rect class="box done" x="196" y="124" width="30" height="30" rx="4"/>
+<text x="211" y="145" text-anchor="middle" class="mono">1</text>
+<text x="50" y="145" text-anchor="end" class="small muted mono">r2</text>
+<text x="240" y="145" text-anchor="start" class="small mono fill-active">h = [3,1,3,2,2]</text>
+<rect class="box path" x="60" y="158" width="30" height="30" rx="4"/>
+<text x="75" y="179" text-anchor="middle" class="mono">1</text>
+<rect class="box" x="94" y="158" width="30" height="30" rx="4" opacity=".55"/>
+<text x="109" y="179" text-anchor="middle" class="mono">0</text>
+<rect class="box" x="128" y="158" width="30" height="30" rx="4" opacity=".55"/>
+<text x="143" y="179" text-anchor="middle" class="mono">0</text>
+<rect class="box path" x="162" y="158" width="30" height="30" rx="4"/>
+<text x="177" y="179" text-anchor="middle" class="mono">1</text>
+<rect class="box" x="196" y="158" width="30" height="30" rx="4" opacity=".55"/>
+<text x="211" y="179" text-anchor="middle" class="mono">0</text>
+<text x="50" y="179" text-anchor="end" class="small muted mono">r3</text>
+<text x="240" y="179" text-anchor="start" class="small mono">h = [4,0,0,3,0]</text>
+<rect class="edge active" x="56" y="120" width="174" height="38" rx="5"/>
+<rect class="box path" x="480" y="116" width="44" height="120" rx="3"/>
+<text x="502" y="228" text-anchor="middle" class="mono">3</text>
+<text x="502" y="253" text-anchor="middle" class="small muted mono">c0</text>
+<rect class="box path" x="534" y="196" width="44" height="40" rx="3"/>
+<text x="556" y="228" text-anchor="middle" class="mono">1</text>
+<text x="556" y="253" text-anchor="middle" class="small muted mono">c1</text>
+<rect class="box path" x="588" y="116" width="44" height="120" rx="3"/>
+<text x="610" y="228" text-anchor="middle" class="mono">3</text>
+<text x="610" y="253" text-anchor="middle" class="small muted mono">c2</text>
+<rect class="box path" x="642" y="156" width="44" height="80" rx="3"/>
+<text x="664" y="228" text-anchor="middle" class="mono">2</text>
+<text x="664" y="253" text-anchor="middle" class="small muted mono">c3</text>
+<rect class="box path" x="696" y="156" width="44" height="80" rx="3"/>
+<text x="718" y="228" text-anchor="middle" class="mono">2</text>
+<text x="718" y="253" text-anchor="middle" class="small muted mono">c4</text>
+<line class="edge" x1="474" y1="236" x2="746" y2="236"/>
+<rect class="edge done dash" x="585" y="156" width="158" height="80" rx="2"/>
+<text x="691" y="148" text-anchor="middle" class="small mono">2 × 3 = 6</text>
+<text x="756" y="128" text-anchor="start" class="mono fill-done">best = 6</text>
+<path class="edge active" d="M338 138 C 420 138, 420 176, 468 176" marker-end="url(#monotonic-stack-queue-m-mr)"/>
+<text x="145" y="216" text-anchor="middle" class="small muted">green = the best rectangle (rows 1–2, columns 2–4)</text>
+</svg>
+<figcaption><code>h[c]</code> counts the consecutive 1s ending at the current row in column c: add one on a 1, reset to 0 on a 0. Every all-1 rectangle sits on some bottom row, so the answer is the best histogram rectangle over all rows: O(R·C) in total.</figcaption>
+</figure>
+
+<div class="viz" data-viz="monotonic-stack-queue-maxrect"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def maximal_rectangle(matrix: list[list[str]]) -&gt; int:
+    if not matrix:
+        return 0
+    h = [0] * len(matrix[0])
+    best = 0
+    for row in matrix:
+        for c, cell in enumerate(row):
+            h[c] = h[c] + 1 if cell == &quot;1&quot; else 0   # extend or reset the column
+        best = max(best, largest_rectangle_area(h))
+    return best
+</code></pre>
+<pre><code class="language-csharp">public static int MaximalRectangle(char[][] matrix)
+{
+    if (matrix.Length == 0) return 0;
+    var h = new int[matrix[0].Length];
+    int best = 0;
+    foreach (var row in matrix)
+    {
+        for (int c = 0; c &lt; row.Length; c++)
+            h[c] = row[c] == '1' ? h[c] + 1 : 0;      // extend or reset the column
+        best = Math.Max(best, LargestRectangleArea(h));
+    }
+    return best;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(R·C) time, O(C) space. The related problem <strong>Maximal Square</strong> is easier with DP (<code>side = 1 + min(up, left, diag)</code>, see <a href="dp-linear-grid.html">DP on grids</a>); a square is not a rectangle you can stretch freely, so the histogram view gives nothing extra there.</p>
+<h2 id="trapping-rain-water-layers-versus-columns">Trapping rain water: layers versus columns</h2>
+<p>Water above index <code>i</code> rises to <code>min(highest wall on the left, highest wall on the right)</code>. The <a href="two-pointers.html">Two Pointers</a> page computes that level column by column in O(1) extra space. A monotonic stack computes the same water in <strong>horizontal layers</strong>: it is the histogram idea turned upside down. The stack holds a decreasing staircase of walls. When a taller bar <code>i</code> arrives, it pops a lower floor <code>bottom</code>. If there is still a wall <code>left</code> under it, the region between <code>left</code> and <code>i</code>, above <code>bottom</code>, holds water:</p>
+<ul>
+<li>width = <code>i − left − 1</code></li>
+<li>height = <code>min(h[left], h[i]) − h[bottom]</code></li>
+</ul>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 286" width="900" role="img" aria-label="The elevation map 0 1 0 2 1 0 1 3 2 1 2 1 with its 6 units of water split into horizontal layers on the left and vertical columns on the right">
+<text x="220" y="22" text-anchor="middle" class="title">Stack: horizontal layers, one per pop</text>
+<rect class="box visit" x="98" y="190" width="30" height="40" rx="1"/>
+<text x="113" y="214" text-anchor="middle" class="small mono">1×1</text>
+<rect class="box visit" x="188" y="190" width="30" height="40" rx="1"/>
+<text x="203" y="214" text-anchor="middle" class="small mono">1×1</text>
+<rect class="box visit" x="158" y="150" width="90" height="40" rx="1"/>
+<text x="203" y="174" text-anchor="middle" class="small mono">3×1</text>
+<rect class="box visit" x="308" y="150" width="30" height="40" rx="1"/>
+<text x="323" y="174" text-anchor="middle" class="small mono">1×1</text>
+<text x="53" y="246" text-anchor="middle" class="small muted mono">0</text>
+<rect class="box path" x="70" y="190" width="26" height="40" rx="2"/>
+<text x="83" y="246" text-anchor="middle" class="small muted mono">1</text>
+<text x="113" y="246" text-anchor="middle" class="small muted mono">0</text>
+<rect class="box path" x="130" y="150" width="26" height="80" rx="2"/>
+<text x="143" y="246" text-anchor="middle" class="small muted mono">2</text>
+<rect class="box path" x="160" y="190" width="26" height="40" rx="2"/>
+<text x="173" y="246" text-anchor="middle" class="small muted mono">1</text>
+<text x="203" y="246" text-anchor="middle" class="small muted mono">0</text>
+<rect class="box path" x="220" y="190" width="26" height="40" rx="2"/>
+<text x="233" y="246" text-anchor="middle" class="small muted mono">1</text>
+<rect class="box path" x="250" y="110" width="26" height="120" rx="2"/>
+<text x="263" y="246" text-anchor="middle" class="small muted mono">3</text>
+<rect class="box path" x="280" y="150" width="26" height="80" rx="2"/>
+<text x="293" y="246" text-anchor="middle" class="small muted mono">2</text>
+<rect class="box path" x="310" y="190" width="26" height="40" rx="2"/>
+<text x="323" y="246" text-anchor="middle" class="small muted mono">1</text>
+<rect class="box path" x="340" y="150" width="26" height="80" rx="2"/>
+<text x="353" y="246" text-anchor="middle" class="small muted mono">2</text>
+<rect class="box path" x="370" y="190" width="26" height="40" rx="2"/>
+<text x="383" y="246" text-anchor="middle" class="small muted mono">1</text>
+<line class="edge" x1="36" y1="230" x2="400" y2="230"/>
+<text x="220" y="270" text-anchor="middle" class="small mono fill-visit">4 layers, total = 6</text>
+<text x="670" y="22" text-anchor="middle" class="title">Two pointers: vertical columns, one per index</text>
+<rect class="box visit" x="550" y="190" width="26" height="40" rx="1"/>
+<text x="563" y="214" text-anchor="middle" class="small mono">1</text>
+<rect class="box visit" x="610" y="150" width="26" height="40" rx="1"/>
+<text x="623" y="174" text-anchor="middle" class="small mono">1</text>
+<rect class="box visit" x="640" y="150" width="26" height="80" rx="1"/>
+<text x="653" y="194" text-anchor="middle" class="small mono">2</text>
+<rect class="box visit" x="670" y="150" width="26" height="40" rx="1"/>
+<text x="683" y="174" text-anchor="middle" class="small mono">1</text>
+<rect class="box visit" x="760" y="150" width="26" height="40" rx="1"/>
+<text x="773" y="174" text-anchor="middle" class="small mono">1</text>
+<text x="503" y="246" text-anchor="middle" class="small muted mono">0</text>
+<rect class="box path" x="520" y="190" width="26" height="40" rx="2"/>
+<text x="533" y="246" text-anchor="middle" class="small muted mono">1</text>
+<text x="563" y="246" text-anchor="middle" class="small muted mono">0</text>
+<rect class="box path" x="580" y="150" width="26" height="80" rx="2"/>
+<text x="593" y="246" text-anchor="middle" class="small muted mono">2</text>
+<rect class="box path" x="610" y="190" width="26" height="40" rx="2"/>
+<text x="623" y="246" text-anchor="middle" class="small muted mono">1</text>
+<text x="653" y="246" text-anchor="middle" class="small muted mono">0</text>
+<rect class="box path" x="670" y="190" width="26" height="40" rx="2"/>
+<text x="683" y="246" text-anchor="middle" class="small muted mono">1</text>
+<rect class="box path" x="700" y="110" width="26" height="120" rx="2"/>
+<text x="713" y="246" text-anchor="middle" class="small muted mono">3</text>
+<rect class="box path" x="730" y="150" width="26" height="80" rx="2"/>
+<text x="743" y="246" text-anchor="middle" class="small muted mono">2</text>
+<rect class="box path" x="760" y="190" width="26" height="40" rx="2"/>
+<text x="773" y="246" text-anchor="middle" class="small muted mono">1</text>
+<rect class="box path" x="790" y="150" width="26" height="80" rx="2"/>
+<text x="803" y="246" text-anchor="middle" class="small muted mono">2</text>
+<rect class="box path" x="820" y="190" width="26" height="40" rx="2"/>
+<text x="833" y="246" text-anchor="middle" class="small muted mono">1</text>
+<line class="edge" x1="486" y1="230" x2="850" y2="230"/>
+<text x="670" y="270" text-anchor="middle" class="small mono fill-visit">water[i] = min(maxL, maxR) − h[i], total = 6</text>
+</svg>
+<figcaption>The same 6 units of water, sliced two ways. The <b>stack</b> fills a layer each time a wall to the right pops a lower floor: width × height between the new top and the current bar. <b>Two pointers</b> fill column by column using the smaller of the two running maxima. Both are O(n).</figcaption>
+</figure>
+
+<div class="viz" data-viz="monotonic-stack-queue-trap"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def trap(height: list[int]) -&gt; int:
+    st: list[int] = []                 # indices, heights decreasing
+    water = 0
+    for i, h in enumerate(height):
+        while st and height[st[-1]] &lt; h:
+            bottom = st.pop()
+            if not st:                 # no left wall: water spills off the edge
+                break
+            left = st[-1]
+            width = i - left - 1
+            depth = min(height[left], h) - height[bottom]
+            water += width * depth     # one horizontal layer
+        st.append(i)
+    return water
+</code></pre>
+<pre><code class="language-csharp">public static int Trap(int[] height)
+{
+    var st = new Stack&lt;int&gt;();         // indices, heights decreasing
+    int water = 0;
+    for (int i = 0; i &lt; height.Length; i++)
+    {
+        while (st.Count &gt; 0 &amp;&amp; height[st.Peek()] &lt; height[i])
+        {
+            int bottom = st.Pop();
+            if (st.Count == 0) break;  // no left wall: water spills off the edge
+            int left = st.Peek();
+            int width = i - left - 1;
+            int depth = Math.Min(height[left], height[i]) - height[bottom];
+            water += width * depth;    // one horizontal layer
+        }
+        st.Push(i);
+    }
+    return water;
+}
+</code></pre>
+</div>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Stack (layers)</th>
+<th>Two pointers (columns)</th>
+<th>Prefix max arrays</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Time</td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Extra space</td>
+<td>O(n)</td>
+<td><strong>O(1)</strong></td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Works on a stream (left to right, no look-ahead)</td>
+<td><strong>yes</strong>: water is final when the right wall arrives</td>
+<td>no: needs the right end</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Generalises to</td>
+<td>"water between walls" with widths, histogram family</td>
+<td>"two moving boundaries"</td>
+<td>anything needing both maxima per index</td>
+</tr>
+<tr>
+<td>Best for interviews</td>
+<td>when they ask for a stack</td>
+<td>default answer</td>
+<td>easiest to explain</td>
+</tr>
+</tbody>
+</table>
+<p>Equal heights are harmless here: a layer of depth 0 adds nothing. Trapping Rain Water <strong>II</strong> (a 2D height map) is a different algorithm: a min-heap flood fill from the border (see <a href="heaps-priority-queues.html">Heaps &amp; Priority Queues</a>).</p>
+<h2 id="the-contribution-technique-sum-of-subarray-minimums">The contribution technique: sum of subarray minimums</h2>
+<p><strong>Problem:</strong> return the sum of <code>min(sub)</code> over all n(n+1)/2 contiguous subarrays. Computing each minimum is hopeless at n = 3·10⁴. Turn the sum inside out: instead of asking each subarray for its minimum, ask each element <strong>how many subarrays it is the minimum of</strong>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 220" width="900" role="img" aria-label="The array 3 1 2 4; the value 1 at index 1 is the minimum of every subarray that starts at index 0 or 1 and ends at index 1, 2 or 3">
+<text x="180" y="22" text-anchor="middle" class="title">a[1] = 1 is the minimum of…</text>
+<rect class="box" x="70" y="60" width="46" height="40" rx="5"/>
+<text x="93" y="86" text-anchor="middle" class="mono">3</text>
+<text x="93" y="118" text-anchor="middle" class="small muted mono">0</text>
+<rect class="box active" x="122" y="60" width="46" height="40" rx="5"/>
+<text x="145" y="86" text-anchor="middle" class="mono">1</text>
+<text x="145" y="118" text-anchor="middle" class="small muted mono">1</text>
+<rect class="box" x="174" y="60" width="46" height="40" rx="5"/>
+<text x="197" y="86" text-anchor="middle" class="mono">2</text>
+<text x="197" y="118" text-anchor="middle" class="small muted mono">2</text>
+<rect class="box" x="226" y="60" width="46" height="40" rx="5"/>
+<text x="249" y="86" text-anchor="middle" class="mono">4</text>
+<text x="249" y="118" text-anchor="middle" class="small muted mono">3</text>
+<rect class="edge done dash" x="64" y="54" width="214" height="52" rx="8"/>
+<text x="171" y="142" text-anchor="middle" class="small fill-done">no smaller value on either side: kingdom = [0..3]</text>
+<text x="171" y="162" text-anchor="middle" class="small mono">L = 2 starts (0, 1)  ×  R = 3 ends (1, 2, 3)</text>
+<text x="680" y="22" text-anchor="middle" class="title">…every subarray with start ≤ 1 ≤ end</text>
+<text x="570" y="60" text-anchor="middle" class="small muted">end 1</text>
+<text x="678" y="60" text-anchor="middle" class="small muted">end 2</text>
+<text x="786" y="60" text-anchor="middle" class="small muted">end 3</text>
+<text x="510" y="95" text-anchor="end" class="small muted">start 0</text>
+<rect class="box done" x="520" y="70" width="100" height="40" rx="5"/>
+<text x="570" y="95" text-anchor="middle" class="small mono">[3,1]</text>
+<rect class="box done" x="628" y="70" width="100" height="40" rx="5"/>
+<text x="678" y="95" text-anchor="middle" class="small mono">[3,1,2]</text>
+<rect class="box done" x="736" y="70" width="100" height="40" rx="5"/>
+<text x="786" y="95" text-anchor="middle" class="small mono">[3,1,2,4]</text>
+<text x="510" y="141" text-anchor="end" class="small muted">start 1</text>
+<rect class="box done" x="520" y="116" width="100" height="40" rx="5"/>
+<text x="570" y="141" text-anchor="middle" class="small mono">[1]</text>
+<rect class="box done" x="628" y="116" width="100" height="40" rx="5"/>
+<text x="678" y="141" text-anchor="middle" class="small mono">[1,2]</text>
+<rect class="box done" x="736" y="116" width="100" height="40" rx="5"/>
+<text x="786" y="141" text-anchor="middle" class="small mono">[1,2,4]</text>
+<text x="678" y="188" text-anchor="middle" class="small">2 × 3 = 6 subarrays, each with min 1</text>
+<text x="678" y="208" text-anchor="middle" class="mono fill-done">contribution = 1 × 2 × 3 = 6</text>
+</svg>
+<figcaption>Contribution technique. Instead of asking "what is the min of this subarray?" n² times, ask "in how many subarrays is a[j] the min?" n times. The answer is (choices of start) × (choices of end) = <code>(j − left[j]) × (right[j] − j)</code>, where the walls are the nearest smaller values: the output of a monotonic stack.</figcaption>
+</figure>
+
+<p>For index <code>j</code>, let <code>left[j]</code> be the nearest index to the left with a smaller value, and <code>right[j]</code> the nearest to the right. Then <code>a[j]</code> is the minimum of exactly the subarrays that start in <code>left[j]+1 … j</code> and end in <code>j … right[j]−1</code>. That is <code>L × R</code> subarrays, with <code>L = j − left[j]</code> and <code>R = right[j] − j</code>:</p>
+<div class="rule">
+<p><strong>Contribution.</strong> <code>answer = Σ a[j] × (j − left[j]) × (right[j] − j)</code>. Both walls come from one monotonic stack pass. This works for any "sum over all subarrays of (min or max)", and with prefix sums for "sum of min × sum".</p>
+</div>
+<h3 id="the-tie-rule-decides-who-owns-a-subarray">The tie rule decides who owns a subarray</h3>
+<p>With duplicates, a subarray can have <strong>two</strong> positions holding its minimum, and it must be counted exactly once. "Smaller" has to be strict on one side and non-strict on the other:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 200" width="900" role="img" aria-label="Three tie rules on the array 2 5 2: both strict counts the whole array twice, both non-strict counts it zero times, mixed counts it once">
+<text x="140" y="24" text-anchor="middle" class="title mono">both sides strict  &lt;</text>
+<rect class="box" x="70" y="44" width="40" height="36" rx="5"/>
+<text x="90" y="67" text-anchor="middle" class="mono">2</text>
+<rect class="box" x="116" y="44" width="40" height="36" rx="5"/>
+<text x="136" y="67" text-anchor="middle" class="mono">5</text>
+<rect class="box" x="162" y="44" width="40" height="36" rx="5"/>
+<text x="182" y="67" text-anchor="middle" class="mono">2</text>
+<rect class="box visit" x="70" y="100" width="132" height="22" rx="11"/>
+<text x="62" y="115" text-anchor="end" class="small mono fill-visit">a[0]</text>
+<text x="210" y="115" text-anchor="start" class="small mono muted">[0..2]</text>
+<rect class="box path" x="70" y="134" width="132" height="22" rx="11"/>
+<text x="62" y="149" text-anchor="end" class="small mono fill-path">a[2]</text>
+<text x="210" y="149" text-anchor="start" class="small mono muted">[0..2]</text>
+<text x="140" y="186" text-anchor="middle" class="small fill-bad">[2, 5, 2] → counted twice</text>
+<text x="440" y="24" text-anchor="middle" class="title mono">both sides  &lt;=</text>
+<rect class="box" x="370" y="44" width="40" height="36" rx="5"/>
+<text x="390" y="67" text-anchor="middle" class="mono">2</text>
+<rect class="box" x="416" y="44" width="40" height="36" rx="5"/>
+<text x="436" y="67" text-anchor="middle" class="mono">5</text>
+<rect class="box" x="462" y="44" width="40" height="36" rx="5"/>
+<text x="482" y="67" text-anchor="middle" class="mono">2</text>
+<rect class="box visit" x="370" y="100" width="86" height="22" rx="11"/>
+<text x="362" y="115" text-anchor="end" class="small mono fill-visit">a[0]</text>
+<text x="464" y="115" text-anchor="start" class="small mono muted">[0..1]</text>
+<rect class="box path" x="416" y="134" width="86" height="22" rx="11"/>
+<text x="362" y="149" text-anchor="end" class="small mono fill-path">a[2]</text>
+<text x="510" y="149" text-anchor="start" class="small mono muted">[1..2]</text>
+<text x="440" y="186" text-anchor="middle" class="small fill-bad">[2, 5, 2] → counted zero times</text>
+<text x="740" y="24" text-anchor="middle" class="title mono">left  &lt;,  right  &lt;=</text>
+<rect class="box" x="670" y="44" width="40" height="36" rx="5"/>
+<text x="690" y="67" text-anchor="middle" class="mono">2</text>
+<rect class="box" x="716" y="44" width="40" height="36" rx="5"/>
+<text x="736" y="67" text-anchor="middle" class="mono">5</text>
+<rect class="box" x="762" y="44" width="40" height="36" rx="5"/>
+<text x="782" y="67" text-anchor="middle" class="mono">2</text>
+<rect class="box visit" x="670" y="100" width="86" height="22" rx="11"/>
+<text x="662" y="115" text-anchor="end" class="small mono fill-visit">a[0]</text>
+<text x="764" y="115" text-anchor="start" class="small mono muted">[0..1]</text>
+<rect class="box path" x="670" y="134" width="132" height="22" rx="11"/>
+<text x="662" y="149" text-anchor="end" class="small mono fill-path">a[2]</text>
+<text x="810" y="149" text-anchor="start" class="small mono muted">[0..2]</text>
+<text x="740" y="186" text-anchor="middle" class="small fill-done">[2, 5, 2] → counted once</text>
+</svg>
+<figcaption>The whole array [2, 5, 2] has two minima. Each bar shows the kingdom (start..end range) of one copy of 2. With the same rule on both sides, the copies either both claim the whole array or both refuse it. Make <b>exactly one side strict</b>. With "left &lt;, right &lt;=" the <b>rightmost</b> copy of the minimum owns the subarray.</figcaption>
+</figure>
+
+<p>Try the bad rules in the visualizer. With duplicates in the input, the final frame shows exactly which subarray was counted twice or not at all.</p>
+<div class="viz" data-viz="monotonic-stack-queue-contrib"></div>
+
+<p>The one-pass stack gives exactly this mixed rule for free. Pop while <code>a[top] &gt;= x</code>: the popped <code>top</code> gets <code>right[top] = i</code> (next smaller <strong>or equal</strong>), and every surviving top is strictly smaller, so <code>left[i]</code> is the previous <strong>strictly</strong> smaller index. You can even compute the contribution at pop time, when both walls of the popped element are known, just as in the histogram:</p>
+<div class="code-tabs">
+<pre><code class="language-python">def sum_subarray_mins(arr: list[int]) -&gt; int:
+    MOD = 10**9 + 7
+    total = 0
+    st: list[int] = []                         # indices, values strictly increasing
+    for i, x in enumerate(arr + [0]):          # sentinel 0 &lt;= every value flushes all
+        while st and arr[st[-1]] &gt;= x:         # right wall: next smaller or equal
+            j = st.pop()
+            left = st[-1] if st else -1        # left wall: previous strictly smaller
+            total += arr[j] * (j - left) * (i - j)
+        st.append(i)
+    return total % MOD
+</code></pre>
+<pre><code class="language-csharp">public static int SumSubarrayMins(int[] arr)
+{
+    const long Mod = 1_000_000_007;
+    int n = arr.Length;
+    long total = 0;
+    var st = new Stack&lt;int&gt;();                  // indices, values strictly increasing
+    for (int i = 0; i &lt;= n; i++)
+    {
+        int x = i == n ? 0 : arr[i];            // sentinel flushes everything
+        while (st.Count &gt; 0 &amp;&amp; arr[st.Peek()] &gt;= x)
+        {
+            int j = st.Pop();
+            int left = st.Count &gt; 0 ? st.Peek() : -1;
+            total = (total + (long)arr[j] * (j - left) % Mod * (i - j)) % Mod;
+        }
+        st.Push(i);
+    }
+    return (int)total;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n) time and space. The sentinel 0 works because the problem guarantees <code>arr[i] ≥ 1</code>. For arbitrary values use <code>float('-inf')</code> (Python) or <code>int.MinValue</code> (C#) and compare carefully. In C#, <code>(long)arr[j] * (j - left)</code> is at most 3·10⁴ · 3·10⁴ ≈ 9·10⁸, and multiplying the reduced value by <code>(i − j)</code> stays below 3·10¹³, which fits in a <code>long</code>.</p>
+<p><strong>Variants on the same skeleton:</strong></p>
+<ul>
+<li><strong>Sum of Subarray Ranges</strong> = Σ max − Σ min. Run the contribution twice, once with the comparisons flipped for max (worked problem 3).</li>
+<li><strong>Maximum Subarray Min-Product</strong>: for each <code>j</code> as the minimum, the best subarray is its whole kingdom. The value is <code>a[j] × sum(kingdom)</code>, with the sum from <a href="prefix-sums.html">prefix sums</a> (worked problem 5).</li>
+<li><strong>Sum of Total Strength of Wizards</strong>: <code>Σ min × sum</code> over all subarrays. Each element's contribution needs the sum of all subarray sums inside its kingdom: a prefix sum of prefix sums (worked problem 8).</li>
+</ul>
+<h2 id="greedy-stacks-build-the-smallest-sequence">Greedy stacks: build the smallest sequence</h2>
+<p>A different family uses the same stack for a <strong>greedy</strong> choice. You build an output left to right, and a later, better character can <strong>undo</strong> earlier choices, as long as the undo is still allowed.</p>
+<h3 id="remove-k-digits">Remove K digits</h3>
+<p>Remove <code>k</code> digits from <code>num</code> to make the smallest possible number. <strong>Greedy rule:</strong> if a digit is followed by a smaller digit, deleting it makes the number smaller at the first position that changes, and nothing else you could delete does better. So scan left to right, and while you still have deletions, pop any kept digit that is bigger than the arriving one.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 240" width="900" role="img" aria-label="The digits of 1432219 drawn as bars; 4, 3 and the second 2 are removed because each is followed by a smaller digit; 1219 remains">
+<text x="250" y="22" text-anchor="middle" class="title mono">num = 1432219, k = 3</text>
+<rect class="box done" x="60" y="192" width="40" height="18" rx="3"/>
+<text x="80" y="204" text-anchor="middle" class="mono">1</text>
+<text x="80" y="227" text-anchor="middle" class="small muted mono">0</text>
+<rect class="box bad" x="116" y="138" width="40" height="72" rx="3"/>
+<text x="136" y="204" text-anchor="middle" class="mono">4</text>
+<text x="136" y="227" text-anchor="middle" class="small muted mono">1</text>
+<rect class="box bad" x="172" y="156" width="40" height="54" rx="3"/>
+<text x="192" y="204" text-anchor="middle" class="mono">3</text>
+<text x="192" y="227" text-anchor="middle" class="small muted mono">2</text>
+<rect class="box done" x="228" y="174" width="40" height="36" rx="3"/>
+<text x="248" y="204" text-anchor="middle" class="mono">2</text>
+<text x="248" y="227" text-anchor="middle" class="small muted mono">3</text>
+<rect class="box bad" x="284" y="174" width="40" height="36" rx="3"/>
+<text x="304" y="204" text-anchor="middle" class="mono">2</text>
+<text x="304" y="227" text-anchor="middle" class="small muted mono">4</text>
+<rect class="box done" x="340" y="192" width="40" height="18" rx="3"/>
+<text x="360" y="204" text-anchor="middle" class="mono">1</text>
+<text x="360" y="227" text-anchor="middle" class="small muted mono">5</text>
+<rect class="box done" x="396" y="48" width="40" height="162" rx="3"/>
+<text x="416" y="204" text-anchor="middle" class="mono">9</text>
+<text x="416" y="227" text-anchor="middle" class="small muted mono">6</text>
+<line class="edge" x1="54" y1="210" x2="442" y2="210"/>
+<text x="136" y="130" text-anchor="middle" class="small fill-bad">removed</text>
+<text x="192" y="148" text-anchor="middle" class="small fill-bad">removed</text>
+<text x="304" y="166" text-anchor="middle" class="small fill-bad">removed</text>
+<text x="500" y="60" text-anchor="start" class="small">Read left to right. A digit is removed when</text>
+<text x="500" y="80" text-anchor="start" class="small">a smaller digit arrives right after it:</text>
+<text x="500" y="100" text-anchor="start" class="small">4 is followed by 3, 3 by 2, and 2 by 1.</text>
+<text x="500" y="140" text-anchor="start" class="small">Removing a digit before a smaller one makes</text>
+<text x="500" y="160" text-anchor="start" class="small">the number smaller at the first position</text>
+<text x="500" y="180" text-anchor="start" class="small">that changes, so it beats any other deletion.</text>
+<text x="500" y="220" text-anchor="start" class="mono fill-done">kept: 1219</text>
+</svg>
+<figcaption>Greedy with a stack: each pop removes a "peak", a digit followed by a smaller one. The kept digits always form a non-decreasing stack, which is exactly a monotonic stack that is allowed at most k pops.</figcaption>
+</figure>
+
+<div class="viz" data-viz="monotonic-stack-queue-removek"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def remove_k_digits(num: str, k: int) -&gt; str:
+    st: list[str] = []
+    for d in num:
+        while k and st and st[-1] &gt; d:     # a bigger digit before a smaller one: delete it
+            st.pop()
+            k -= 1
+        st.append(d)
+    if k:
+        st = st[:-k]                       # still owe deletions: the tail is non-decreasing
+    return &quot;&quot;.join(st).lstrip(&quot;0&quot;) or &quot;0&quot;
+</code></pre>
+<pre><code class="language-csharp">public static string RemoveKdigits(string num, int k)
+{
+    var st = new StringBuilder();          // used as a stack of chars
+    foreach (char d in num)
+    {
+        while (k &gt; 0 &amp;&amp; st.Length &gt; 0 &amp;&amp; st[^1] &gt; d)
+        {
+            st.Length--;                   // pop
+            k--;
+        }
+        st.Append(d);
+    }
+    st.Length -= Math.Min(k, st.Length);   // still owe deletions: drop from the end
+    int z = 0;
+    while (z &lt; st.Length - 1 &amp;&amp; st[z] == '0') z++;
+    var s = st.ToString(z, st.Length - z);
+    return s.Length == 0 ? &quot;0&quot; : s;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n) time and space. Three edge cases catch most people: leftover <code>k</code> (the digits are already non-decreasing, so remove from the <strong>end</strong>), leading zeros (<code>"10200", k=1</code> → <code>"200"</code>), and removing everything (<code>"10", k=2</code> → <code>"0"</code>).</p>
+<h3 id="smallest-subsequence-of-distinct-characters">Smallest subsequence of distinct characters</h3>
+<p>Return the lexicographically smallest subsequence of <code>s</code> that contains every distinct letter <strong>exactly once</strong> (LeetCode 316 and 1081). Same greedy, two extra rules:</p>
+<ol>
+<li><strong>Skip</strong> a letter that is already on the stack. It was placed at a position at least as good as this one.</li>
+<li><strong>Pop</strong> a bigger letter only if it <strong>appears again later</strong>. Otherwise popping it would lose that letter for good. Precompute <code>last[c]</code>, the last index of each letter.</li>
+</ol>
+<div class="viz" data-viz="monotonic-stack-queue-distinct"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def smallest_subsequence(s: str) -&gt; str:
+    last = {c: i for i, c in enumerate(s)}
+    st: list[str] = []
+    on_stack: set[str] = set()
+    for i, c in enumerate(s):
+        if c in on_stack:
+            continue                                   # rule 1: already placed
+        while st and st[-1] &gt; c and last[st[-1]] &gt; i:  # rule 2: it comes back later
+            on_stack.remove(st.pop())
+        st.append(c)
+        on_stack.add(c)
+    return &quot;&quot;.join(st)
+</code></pre>
+<pre><code class="language-csharp">public static string SmallestSubsequence(string s)
+{
+    var last = new int[26];
+    for (int i = 0; i &lt; s.Length; i++) last[s[i] - 'a'] = i;
+    var st = new StringBuilder();
+    var onStack = new bool[26];
+    for (int i = 0; i &lt; s.Length; i++)
+    {
+        char c = s[i];
+        if (onStack[c - 'a']) continue;                // rule 1: already placed
+        while (st.Length &gt; 0 &amp;&amp; st[^1] &gt; c &amp;&amp; last[st[^1] - 'a'] &gt; i)
+        {
+            onStack[st[^1] - 'a'] = false;             // rule 2: it comes back later
+            st.Length--;
+        }
+        st.Append(c);
+        onStack[c - 'a'] = true;
+    }
+    return st.ToString();
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n) time, O(σ) space for an alphabet of size σ. The same "pop if you can still afford to" rule solves <strong>Find the Most Competitive Subsequence</strong> (pop while <code>len(st) − 1 + (n − i) &gt;= k</code>) and is the building block of <strong>Create Maximum Number</strong>.</p>
+<h2 id="monotonic-queues-a-stack-with-a-second-exit">Monotonic queues: a stack with a second exit</h2>
+<p>A monotonic stack answers "nearest" questions over <strong>everything seen so far</strong>. Many problems restrict the candidates to a <strong>window</strong>: the last <code>k</code> indices, or indices whose x-coordinate is within <code>k</code>. Candidates then have two ways to become useless:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 290" width="900" role="img" aria-label="A monotonic deque of values 9 7 4 3: the front leaves because it expired, the back values 4 and 3 leave because the new value 5 dominates them">
+<defs><marker id="monotonic-stack-queue-m-dq-front" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-visit"/></marker></defs>
+<defs><marker id="monotonic-stack-queue-m-dq-back" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker></defs>
+<text x="450" y="22" text-anchor="middle" class="title">A monotonic deque has two exits, for two different reasons</text>
+<rect class="box visit" x="270" y="92" width="66" height="46" rx="6"/>
+<text x="303" y="114" text-anchor="middle" class="mono">9</text>
+<text x="303" y="130" text-anchor="middle" class="small muted mono">i=2</text>
+<rect class="box path" x="344" y="92" width="66" height="46" rx="6"/>
+<text x="377" y="114" text-anchor="middle" class="mono">7</text>
+<text x="377" y="130" text-anchor="middle" class="small muted mono">i=4</text>
+<rect class="box bad" x="418" y="92" width="66" height="46" rx="6"/>
+<text x="451" y="114" text-anchor="middle" class="mono">4</text>
+<text x="451" y="130" text-anchor="middle" class="small muted mono">i=5</text>
+<rect class="box bad" x="492" y="92" width="66" height="46" rx="6"/>
+<text x="525" y="114" text-anchor="middle" class="mono">3</text>
+<text x="525" y="130" text-anchor="middle" class="small muted mono">i=6</text>
+<text x="414" y="78" text-anchor="middle" class="small muted">values decreasing front → back (indices increasing)</text>
+<rect class="box active" x="636" y="92" width="66" height="46" rx="6"/>
+<text x="669" y="114" text-anchor="middle" class="mono">5</text>
+<text x="669" y="130" text-anchor="middle" class="small muted mono">i=7</text>
+<text x="669" y="158" text-anchor="middle" class="small fill-active">new</text>
+<path class="edge active" d="M628 115 H568" marker-end="url(#monotonic-stack-queue-m-dq-back)"/>
+<path class="edge bad" d="M448 142 C 448 192, 606 202, 686 202" marker-end="url(#monotonic-stack-queue-m-dq-back)"/>
+<text x="694" y="198" text-anchor="start" class="small fill-bad">back: 4 and 3 are dominated</text>
+<text x="694" y="214" text-anchor="start" class="small muted">(older and not bigger than 5),</text>
+<text x="694" y="230" text-anchor="start" class="small muted">so they can never be a max again</text>
+<path class="edge visit" d="M266 115 H200" marker-end="url(#monotonic-stack-queue-m-dq-front)"/>
+<text x="194" y="110" text-anchor="end" class="small fill-visit">front: i=2 expired</text>
+<text x="194" y="126" text-anchor="end" class="small muted">(left the window, i ≤ r − k)</text>
+<text x="194" y="142" text-anchor="end" class="small muted">or, in other problems, answered</text>
+<text x="450" y="270" text-anchor="middle" class="small mono">After the update: deque = [7 (i=4), 5 (i=7)], and the front 7 is the window maximum.</text>
+</svg>
+<figcaption>A stack only needs one exit. A queue over a <b>moving window</b> needs two: the back removes candidates that are <b>dominated</b> by the newcomer (the stack rule), and the front removes candidates that are <b>no longer allowed</b> (expired) or that have just produced their answer.</figcaption>
+</figure>
+
+<ol>
+<li><strong>Dominated</strong> (back): a newer element is at least as good <strong>and</strong> lives longer. This is exactly the stack rule.</li>
+<li><strong>Expired</strong> (front): the oldest candidate has fallen outside the window. Since the deque is in index order, the oldest is always at the front.</li>
+</ol>
+<p>The <a href="sliding-window.html#sliding-window-maximum-the-monotonic-deque">Sliding Window</a> page has the visualizer for the basic <strong>sliding window maximum</strong>: a deque of indices with decreasing values. The front is the window maximum. Pop the back while <code>a[back] &lt;= a[r]</code>, and pop the front when it is <code>&lt;= r − k</code>. Two deques (one decreasing, one increasing) give the window max <strong>and</strong> min at once, which solves <em>Longest Continuous Subarray With Absolute Diff ≤ Limit</em>. The two harder uses below show where the deque really earns its place.</p>
+<h3 id="shortest-subarray-with-sum-at-least-k-negative-numbers-allowed">Shortest subarray with sum at least K (negative numbers allowed)</h3>
+<p>With only non-negative numbers this is a plain sliding window. Negative numbers break the window, because adding an element can make the sum smaller. Use <a href="prefix-sums.html">prefix sums</a> instead: <code>sum(i..j−1) = P[j] − P[i]</code>, and we want the smallest <code>j − i</code> with <code>P[j] − P[i] ≥ K</code>. Keep a deque of candidate <strong>starts</strong> <code>i</code> with <strong>increasing</strong> <code>P[i]</code>:</p>
+<ul>
+<li><strong>Front pop (answered):</strong> while <code>P[j] − P[front] ≥ K</code>, record <code>j − front</code> and pop the front. Any later end <code>j' &gt; j</code> would give that start a <strong>longer</strong> subarray, so it can never do better. It is done.</li>
+<li><strong>Back pop (dominated):</strong> while <code>P[back] ≥ P[j]</code>, pop the back. Start <code>j</code> is <strong>later</strong> (so shorter subarrays) and has a <strong>smaller or equal</strong> prefix (so bigger sums) than <code>back</code>. <code>back</code> can never be the better start again.</li>
+</ul>
+<p>The visualizer plots the prefix sums. The deque is the set of points that are still candidate starts, and the dashed threshold line is <code>P[j] − K</code>: every candidate on or below it is answered.</p>
+<div class="viz" data-viz="monotonic-stack-queue-shortest"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def shortest_subarray(nums: list[int], k: int) -&gt; int:
+    P = [0]
+    for x in nums:
+        P.append(P[-1] + x)
+    best = len(nums) + 1
+    dq: deque[int] = deque()                 # candidate starts, P increasing
+    for j in range(len(P)):
+        while dq and P[j] - P[dq[0]] &gt;= k:   # answered: later ends only get longer
+            best = min(best, j - dq.popleft())
+        while dq and P[dq[-1]] &gt;= P[j]:      # dominated: j is later and lower
+            dq.pop()
+        dq.append(j)
+    return best if best &lt;= len(nums) else -1
+</code></pre>
+<pre><code class="language-csharp">public static int ShortestSubarray(int[] nums, int k)
+{
+    int n = nums.Length;
+    var P = new long[n + 1];
+    for (int i = 0; i &lt; n; i++) P[i + 1] = P[i] + nums[i];
+    int best = n + 1;
+    var dq = new LinkedList&lt;int&gt;();          // candidate starts, P increasing
+    for (int j = 0; j &lt;= n; j++)
+    {
+        while (dq.Count &gt; 0 &amp;&amp; P[j] - P[dq.First!.Value] &gt;= k)
+        {
+            best = Math.Min(best, j - dq.First.Value);  // answered
+            dq.RemoveFirst();
+        }
+        while (dq.Count &gt; 0 &amp;&amp; P[dq.Last!.Value] &gt;= P[j])
+            dq.RemoveLast();                  // dominated
+        dq.AddLast(j);
+    }
+    return best &lt;= n ? best : -1;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n) time and space. Note the <strong>front pop has a different meaning</strong> from the sliding-window maximum: there it means "expired", here it means "answered, and nothing later can beat this answer". Both are the same structural move: the oldest candidate is finished. (A circular buffer of ints, or an <code>int[]</code> with head and tail indices, is faster in C# than <code>LinkedList&lt;int&gt;</code>; the linked list keeps the code short.)</p>
+<h3 id="constrained-subsequence-sum-a-deque-inside-a-dp">Constrained subsequence sum: a deque inside a DP</h3>
+<p>Pick a non-empty subsequence with maximum sum such that consecutive picked indices are at most <code>k</code> apart. The DP is natural:</p>
+<p><code>dp[i] = nums[i] + max(0, dp[i−k], …, dp[i−1])</code></p>
+<p>That is O(nk), because every <code>i</code> scans the last <code>k</code> values. But the inner <code>max</code> is a <strong>sliding window maximum over dp</strong>. Keep a decreasing deque of indices into <code>dp</code>, and the transition is O(1) amortised. The visualizer runs both versions and compares them.</p>
+<div class="viz" data-viz="monotonic-stack-queue-constrained"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def constrained_subset_sum(nums: list[int], k: int) -&gt; int:
+    dp = [0] * len(nums)
+    dq: deque[int] = deque()                 # indices into dp, dp values decreasing
+    for i, x in enumerate(nums):
+        if dq and dq[0] &lt; i - k:             # expired: too far back to jump from
+            dq.popleft()
+        dp[i] = x + max(0, dp[dq[0]] if dq else 0)
+        while dq and dp[dq[-1]] &lt;= dp[i]:    # dominated: older and not better
+            dq.pop()
+        dq.append(i)
+    return max(dp)
+</code></pre>
+<pre><code class="language-csharp">public static int ConstrainedSubsetSum(int[] nums, int k)
+{
+    int n = nums.Length;
+    var dp = new int[n];
+    var dq = new LinkedList&lt;int&gt;();          // indices into dp, dp values decreasing
+    int best = int.MinValue;
+    for (int i = 0; i &lt; n; i++)
+    {
+        if (dq.Count &gt; 0 &amp;&amp; dq.First!.Value &lt; i - k) dq.RemoveFirst();
+        dp[i] = nums[i] + Math.Max(0, dq.Count &gt; 0 ? dp[dq.First!.Value] : 0);
+        while (dq.Count &gt; 0 &amp;&amp; dp[dq.Last!.Value] &lt;= dp[i]) dq.RemoveLast();
+        dq.AddLast(i);
+        best = Math.Max(best, dp[i]);
+    }
+    return best;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n) time, O(n) space for <code>dp</code> (O(k) for the deque). One <code>if</code> is enough for the expiry because the window moves by exactly one index per step, so at most one index leaves. This is the general recipe for <strong>DP whose transition is a max or min over a sliding range of previous states</strong>: Jump Game VI is the same problem with a forced path, and <em>Max Value of Equation</em> (worked problem 7) is the same idea with x-coordinates as the window. See <a href="dp-framework.html">DP framework</a> for how to set up the recurrence in the first place.</p>
+<h2 id="which-tool-a-decision-guide">Which tool? A decision guide</h2>
+<table>
+<thead>
+<tr>
+<th>The question sounds like…</th>
+<th>Tool</th>
+<th>Pop condition</th>
+<th>Read the answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>next / previous greater or smaller, days until, distance to</td>
+<td>monotonic stack</td>
+<td><code>a[top] &lt; x</code> (greater) or <code>a[top] &gt; x</code> (smaller)</td>
+<td>at pop (next) and at push (previous)</td>
+</tr>
+<tr>
+<td>circular "next"</td>
+<td>stack over 2n</td>
+<td>same, push only when <code>i &lt; n</code></td>
+<td>at pop</td>
+</tr>
+<tr>
+<td>span, "how many consecutive before me were ≤"</td>
+<td>stack of <code>(value, count)</code></td>
+<td><code>top.value &lt;= x</code></td>
+<td>count after merging</td>
+</tr>
+<tr>
+<td>largest rectangle, width bounded by the shortest bar</td>
+<td>increasing stack + sentinel 0</td>
+<td><code>h[top] &gt;= x</code></td>
+<td>area at pop: <code>h[top] × (i − newTop − 1)</code></td>
+</tr>
+<tr>
+<td>water trapped between walls</td>
+<td>decreasing stack</td>
+<td><code>h[top] &lt; x</code></td>
+<td>a layer at each pop that still has a left wall</td>
+</tr>
+<tr>
+<td>sum or count over all subarrays of min or max</td>
+<td>contribution, walls from a stack</td>
+<td>one strict side, one non-strict side</td>
+<td><code>a[j] × L × R</code></td>
+</tr>
+<tr>
+<td>smallest or largest sequence after deleting</td>
+<td>greedy stack</td>
+<td><code>top &gt; x</code> and a deletion is still allowed</td>
+<td>the final stack</td>
+</tr>
+<tr>
+<td>max or min over the last k, or within distance k</td>
+<td>monotonic deque</td>
+<td>back: dominated; front: expired</td>
+<td>the front</td>
+</tr>
+<tr>
+<td>shortest subarray with sum ≥ K and negatives</td>
+<td>deque of prefix-sum starts</td>
+<td>front: answered; back: <code>P[back] &gt;= P[j]</code></td>
+<td>at front pop</td>
+</tr>
+<tr>
+<td><code>dp[i] = f(i) + max(dp[j])</code> over a sliding range of <code>j</code></td>
+<td>deque inside the DP</td>
+<td>back: <code>dp[back] &lt;= dp[i]</code>; front: expired</td>
+<td><code>dp[front]</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="templates-at-a-glance">Templates at a glance</h2>
+<table>
+<thead>
+<tr>
+<th>Template</th>
+<th>Stack order</th>
+<th>Time · space</th>
+<th>Typical bug</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Next greater (pop at <code>&lt;</code>)</td>
+<td>non-increasing</td>
+<td>O(n) · O(n)</td>
+<td>storing values, so you cannot compute distances</td>
+</tr>
+<tr>
+<td>Previous smaller at push</td>
+<td>non-decreasing</td>
+<td>O(n) · O(n)</td>
+<td>reading <code>prev</code> before the pops instead of after</td>
+</tr>
+<tr>
+<td>Circular</td>
+<td>as above, over 2n</td>
+<td>O(n) · O(n)</td>
+<td>pushing in lap two (answers point at copies)</td>
+</tr>
+<tr>
+<td>Span with blocks</td>
+<td><code>(value, count)</code></td>
+<td>O(1) amortised per call</td>
+<td>adding 1 instead of the popped block's count</td>
+</tr>
+<tr>
+<td>Histogram</td>
+<td>increasing, sentinel 0</td>
+<td>O(n) · O(n)</td>
+<td>forgetting the sentinel, so the tallest bars are never measured</td>
+</tr>
+<tr>
+<td>Rain water</td>
+<td>decreasing</td>
+<td>O(n) · O(n)</td>
+<td>not breaking when there is no left wall</td>
+</tr>
+<tr>
+<td>Contribution</td>
+<td>strictly increasing</td>
+<td>O(n) · O(n)</td>
+<td>the same tie rule on both sides</td>
+</tr>
+<tr>
+<td>Greedy delete</td>
+<td>non-decreasing</td>
+<td>O(n) · O(n)</td>
+<td>leftover <code>k</code>, leading zeros</td>
+</tr>
+<tr>
+<td>Window max deque</td>
+<td>decreasing</td>
+<td>O(n) · O(k)</td>
+<td>values instead of indices, so expiry is ambiguous</td>
+</tr>
+<tr>
+<td>Prefix-sum deque</td>
+<td>increasing <code>P</code></td>
+<td>O(n) · O(n)</td>
+<td><code>int</code> overflow on prefix sums; expiring instead of answering</td>
+</tr>
+</tbody>
+</table>
+<div class="recognize">
+<p><strong>Recognize it when</strong></p>
+<ul>
+<li>Each element needs the <strong>nearest</strong> element to its left or right that is bigger or smaller: next warmer day, next taller person, first cheaper item, the bar that stops a rectangle.</li>
+<li>The brute force has an inner loop that <strong>scans outward from <code>i</code> until a comparison fails</strong>.</li>
+<li>The answer is a <strong>width bounded by a minimum</strong> (histograms, rectangles in grids, "min × length", "min × sum").</li>
+<li>You need the <strong>sum, count or max over all subarrays</strong> of a min or max: think contribution, where each element owns a range.</li>
+<li>You build a <strong>lexicographically smallest</strong> sequence by deleting or choosing characters, and a later smaller character should undo earlier bigger ones.</li>
+<li>A <strong>window</strong> (last k items, x within k) asks for a max or min, or a DP takes the max over a sliding range of earlier states.</li>
+<li>The values can be negative, so a sliding window breaks, but you still need the <strong>shortest or longest</strong> range: prefix sums plus a monotonic deque.</li>
+</ul>
+</div>
+<h3 id="pitfalls">Pitfalls</h3>
+<div class="pitfall">
+<p><strong>Pitfall: the same tie rule on both sides</strong>
+In Sum of Subarray Minimums on <code>[2, 5, 2]</code>, using "strictly smaller" on both sides lets both 2s claim the whole array: the sum comes out 2 too big. Using "smaller or equal" on both sides lets neither claim it: 2 too small. Fix: exactly one side strict. The single-pass stack gives you this automatically: pop on <code>&gt;=</code>, read <code>left</code> from the surviving top.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: forgetting the sentinel (or the final flush)</strong>
+In Largest Rectangle on <code>[2, 4, 6]</code>, nothing is ever popped during the scan, because the heights only increase. Without a final pass the answer comes out 0 instead of 8. Append a 0 (or loop <code>i</code> to <code>n</code> and treat <code>h[n] = 0</code>) so every bar is popped and measured.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: pushing during the second lap of a circular array</strong>
+Pushing in lap two adds a second waiting copy of each index, and when the copy is popped it writes <code>res[i % n]</code> again. On <code>[1, 3, 2]</code> with indices as answers, index 0 is answered by index 1 in lap one, then its lap-two copy is popped at <code>i = 4</code> and overwrites the answer with 4, which is not even a valid index. (With values as answers the rewrite happens to be identical, so the bug hides until you switch to indices or distances.) Only push when <code>i &lt; n</code>.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: Remove K Digits leftovers</strong>
+On <code>"12345", k = 2</code> no digit is ever followed by a smaller one, so the loop deletes nothing and returns <code>"12345"</code>. The remaining <code>k</code> deletions must come off the <strong>end</strong> (the largest digits of a non-decreasing tail), giving <code>"123"</code>. Then strip leading zeros, and return <code>"0"</code> for an empty result.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: deque front means different things</strong>
+In window maximum, the front leaves when it <strong>expires</strong>. Check <code>dq[0] &lt;= r − k</code> <strong>before</strong> reading the answer. In Shortest Subarray ≥ K, the front leaves when it is <strong>answered</strong>: check <code>P[j] − P[dq[0]] &gt;= k</code> in a <code>while</code> loop and record the length before popping. Mixing them up gives either stale maxima or missed shortest lengths.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: overflow</strong>
+Histogram areas fit in an <code>int</code> (10⁵ bars × 10⁴ height = 10⁹). Prefix sums with 10⁵ values of size 10⁵ do not. Contribution products like <code>a[j] × L × R</code> can reach about 10¹⁹ for 10⁵ elements of size 10⁹, so reduce with a modulo after each multiplication. Python hides this. C# does not: use <code>long</code> and <code>% Mod</code> after each multiplication.</p>
+</div>
+<h2 id="worked-problems">Worked problems</h2>
+<h3 id="1-next-greater-element-i">1. Next Greater Element I</h3>
+<p><code>nums1</code> is a subset of <code>nums2</code> (all values distinct). For each value in <code>nums1</code>, return the first greater value to its right <strong>in <code>nums2</code></strong>. <strong>Insight:</strong> answer the question once for every value of <code>nums2</code> with the template, store the answers in a hashmap keyed by value, then look each query up. Values are distinct, so storing values (not indices) is safe here.</p>
+<details class="solution">
+<summary>Solution: O(n + m) time, O(n) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def next_greater_element(nums1: list[int], nums2: list[int]) -&gt; list[int]:
+    nxt: dict[int, int] = {}
+    st: list[int] = []                    # values still waiting, decreasing
+    for x in nums2:
+        while st and st[-1] &lt; x:
+            nxt[st.pop()] = x
+        st.append(x)
+    return [nxt.get(x, -1) for x in nums1]
+</code></pre>
+<pre><code class="language-csharp">public static int[] NextGreaterElement(int[] nums1, int[] nums2)
+{
+    var nxt = new Dictionary&lt;int, int&gt;();
+    var st = new Stack&lt;int&gt;();            // values still waiting, decreasing
+    foreach (int x in nums2)
+    {
+        while (st.Count &gt; 0 &amp;&amp; st.Peek() &lt; x) nxt[st.Pop()] = x;
+        st.Push(x);
+    }
+    var res = new int[nums1.Length];
+    for (int i = 0; i &lt; nums1.Length; i++)
+        res[i] = nxt.TryGetValue(nums1[i], out int v) ? v : -1;
+    return res;
+}
+</code></pre>
+</div>
+</details>
+<h3 id="2-132-pattern">2. 132 Pattern</h3>
+<p>Is there <code>i &lt; j &lt; k</code> with <code>a[i] &lt; a[k] &lt; a[j]</code>? <strong>Insight:</strong> scan from the <strong>right</strong> with a decreasing stack. When <code>a[j]</code> pops smaller values, each popped value is a valid "2" (it sits to the right of a bigger "3"). Keep the <strong>largest</strong> popped value as <code>third</code>: the bigger the "2", the easier it is to find a "1" below it. Any later (further left) value below <code>third</code> is the "1".</p>
+<details class="solution">
+<summary>Solution: O(n) time, O(n) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def find_132_pattern(nums: list[int]) -&gt; bool:
+    st: list[int] = []                    # candidates for &quot;3&quot;, decreasing
+    third = float(&quot;-inf&quot;)                 # best &quot;2&quot; seen: popped by a bigger &quot;3&quot;
+    for x in reversed(nums):
+        if x &lt; third:
+            return True                   # x is the &quot;1&quot;
+        while st and st[-1] &lt; x:
+            third = st.pop()              # popped values only grow
+        st.append(x)
+    return False
+</code></pre>
+<pre><code class="language-csharp">public static bool Find132Pattern(int[] nums)
+{
+    var st = new Stack&lt;int&gt;();            // candidates for &quot;3&quot;, decreasing
+    long third = long.MinValue;           // best &quot;2&quot; seen so far
+    for (int i = nums.Length - 1; i &gt;= 0; i--)
+    {
+        if (nums[i] &lt; third) return true; // nums[i] is the &quot;1&quot;
+        while (st.Count &gt; 0 &amp;&amp; st.Peek() &lt; nums[i]) third = st.Pop();
+        st.Push(nums[i]);
+    }
+    return false;
+}
+</code></pre>
+</div>
+<p>Why is one number enough? Every value still on the stack is <code>&gt;= third</code>: the values that survived the pop are bigger than the value that popped, and any value pushed later that was smaller than <code>third</code> would already have returned <code>True</code>. So a new pop can only <strong>raise</strong> <code>third</code>, and the largest "2" is always the best one to keep.</p>
+</details>
+<h3 id="3-sum-of-subarray-ranges">3. Sum of Subarray Ranges</h3>
+<p>Return <code>Σ (max − min)</code> over all subarrays. <strong>Insight:</strong> split the sum: <code>Σ max − Σ min</code>. Each half is a contribution sum. Sum of maxima of <code>a</code> is minus the sum of minima of <code>−a</code>, so one helper does both. Flushing with <code>i == n</code> instead of a sentinel value works for any values, including negatives.</p>
+<details class="solution">
+<summary>Solution: O(n) time, O(n) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def sum_of_mins(a: list[int]) -&gt; int:
+    n, total = len(a), 0
+    st: list[int] = []
+    for i in range(n + 1):
+        while st and (i == n or a[st[-1]] &gt;= a[i]):
+            j = st.pop()
+            left = st[-1] if st else -1
+            total += a[j] * (j - left) * (i - j)
+        st.append(i)
+    return total
+
+def sub_array_ranges(nums: list[int]) -&gt; int:
+    sum_max = -sum_of_mins([-x for x in nums])
+    return sum_max - sum_of_mins(nums)
+</code></pre>
+<pre><code class="language-csharp">static long SumOfMins(long[] a)
+{
+    int n = a.Length;
+    long total = 0;
+    var st = new Stack&lt;int&gt;();
+    for (int i = 0; i &lt;= n; i++)
+    {
+        while (st.Count &gt; 0 &amp;&amp; (i == n || a[st.Peek()] &gt;= a[i]))
+        {
+            int j = st.Pop();
+            int left = st.Count &gt; 0 ? st.Peek() : -1;
+            total += a[j] * (j - left) * (i - j);
+        }
+        st.Push(i);
+    }
+    return total;
+}
+
+public static long SubArrayRanges(int[] nums)
+{
+    var a = Array.ConvertAll(nums, x =&gt; (long)x);
+    var neg = Array.ConvertAll(nums, x =&gt; -(long)x);
+    return -SumOfMins(neg) - SumOfMins(a);
+}
+</code></pre>
+</div>
+</details>
+<h3 id="4-maximum-width-ramp">4. Maximum Width Ramp</h3>
+<p>Find the largest <code>j − i</code> with <code>i &lt; j</code> and <code>a[i] &lt;= a[j]</code>. <strong>Insight:</strong> a start <code>i</code> is only worth considering if it is smaller than every start to its left (otherwise an earlier start is both further left and smaller or equal). Those <strong>prefix minima</strong> form a decreasing stack. Then scan <code>j</code> from the <strong>right</strong>: the first <code>j</code> that works for the top start is the furthest one it will ever get, so record the width and pop it.</p>
+<details class="solution">
+<summary>Solution: O(n) time, O(n) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def max_width_ramp(nums: list[int]) -&gt; int:
+    st: list[int] = []
+    for i, x in enumerate(nums):
+        if not st or nums[st[-1]] &gt; x:
+            st.append(i)                  # a new prefix minimum: candidate start
+    best = 0
+    for j in range(len(nums) - 1, -1, -1):
+        while st and nums[st[-1]] &lt;= nums[j]:
+            best = max(best, j - st.pop())  # furthest end this start will get
+    return best
+</code></pre>
+<pre><code class="language-csharp">public static int MaxWidthRamp(int[] nums)
+{
+    var st = new Stack&lt;int&gt;();
+    for (int i = 0; i &lt; nums.Length; i++)
+        if (st.Count == 0 || nums[st.Peek()] &gt; nums[i]) st.Push(i);
+    int best = 0;
+    for (int j = nums.Length - 1; j &gt;= 0 &amp;&amp; st.Count &gt; 0; j--)
+        while (st.Count &gt; 0 &amp;&amp; nums[st.Peek()] &lt;= nums[j])
+            best = Math.Max(best, j - st.Pop());
+    return best;
+}
+</code></pre>
+</div>
+<p>This is the one common problem where the stack is <strong>built in one pass and consumed in another</strong>. A decreasing stack built from the left also works with binary search per <code>j</code> (O(n log n)), but the reverse scan is linear.</p>
+</details>
+<h3 id="5-maximum-subarray-min-product">5. Maximum Subarray Min-Product</h3>
+<p>The min-product of a subarray is <code>min × sum</code>. Return the maximum over all subarrays, modulo 10⁹ + 7 (maximise <strong>before</strong> the modulo). All values are positive. <strong>Insight:</strong> fix the element that is the minimum. Since everything is positive, a longer subarray has a bigger sum, so take its whole kingdom: from the previous smaller to the next smaller. Prefix sums give the kingdom's sum in O(1).</p>
+<details class="solution">
+<summary>Solution: O(n) time, O(n) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def max_sum_min_product(nums: list[int]) -&gt; int:
+    n = len(nums)
+    P = [0] * (n + 1)
+    for i, x in enumerate(nums):
+        P[i + 1] = P[i] + x
+    best = 0
+    st: list[int] = []
+    for i in range(n + 1):
+        while st and (i == n or nums[st[-1]] &gt;= nums[i]):
+            j = st.pop()
+            left = st[-1] if st else -1
+            best = max(best, nums[j] * (P[i] - P[left + 1]))   # kingdom left+1 .. i-1
+        st.append(i)
+    return best % (10**9 + 7)
+</code></pre>
+<pre><code class="language-csharp">public static int MaxSumMinProduct(int[] nums)
+{
+    int n = nums.Length;
+    var P = new long[n + 1];
+    for (int i = 0; i &lt; n; i++) P[i + 1] = P[i] + nums[i];
+    long best = 0;
+    var st = new Stack&lt;int&gt;();
+    for (int i = 0; i &lt;= n; i++)
+    {
+        while (st.Count &gt; 0 &amp;&amp; (i == n || nums[st.Peek()] &gt;= nums[i]))
+        {
+            int j = st.Pop();
+            int left = st.Count &gt; 0 ? st.Peek() : -1;
+            best = Math.Max(best, nums[j] * (P[i] - P[left + 1]));
+        }
+        st.Push(i);
+    }
+    return (int)(best % 1_000_000_007);
+}
+</code></pre>
+</div>
+<p>The <code>&gt;=</code> tie rule underestimates some kingdoms, exactly as in the histogram, and for the same reason it does not matter: the last copy of an equal run measures the full kingdom.</p>
+</details>
+<h3 id="6-number-of-visible-people-in-a-queue">6. Number of Visible People in a Queue</h3>
+<p>Heights are distinct. Person <code>i</code> can see person <code>j &gt; i</code> if everyone between them is shorter than <strong>both</strong>. Count, for each person, how many people they can see. <strong>Insight:</strong> scan from the right with a decreasing stack of the people still visible from the left. Everyone shorter than <code>i</code> that <code>i</code> pops is someone <code>i</code> sees, and after <code>i</code> arrives they are hidden from everyone further left. If someone is left on the stack, it is the first person taller than <code>i</code>, and <code>i</code> sees them too.</p>
+<details class="solution">
+<summary>Solution: O(n) time, O(n) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def can_see_persons_count(heights: list[int]) -&gt; list[int]:
+    ans = [0] * len(heights)
+    st: list[int] = []                    # heights visible from the left, decreasing
+    for i in range(len(heights) - 1, -1, -1):
+        while st and st[-1] &lt; heights[i]:
+            st.pop()
+            ans[i] += 1                   # i sees them, then hides them
+        if st:
+            ans[i] += 1                   # the first taller person
+        st.append(heights[i])
+    return ans
+</code></pre>
+<pre><code class="language-csharp">public static int[] CanSeePersonsCount(int[] heights)
+{
+    var ans = new int[heights.Length];
+    var st = new Stack&lt;int&gt;();            // heights visible from the left, decreasing
+    for (int i = heights.Length - 1; i &gt;= 0; i--)
+    {
+        while (st.Count &gt; 0 &amp;&amp; st.Peek() &lt; heights[i]) { st.Pop(); ans[i]++; }
+        if (st.Count &gt; 0) ans[i]++;
+        st.Push(heights[i]);
+    }
+    return ans;
+}
+</code></pre>
+</div>
+</details>
+<h3 id="7-max-value-of-equation">7. Max Value of Equation</h3>
+<p>Points are sorted by <code>x</code>. Maximise <code>yi + yj + |xi − xj|</code> over pairs <code>i &lt; j</code> with <code>xj − xi &lt;= k</code>. <strong>Insight:</strong> since <code>xj &gt;= xi</code>, the value is <code>(yj + xj) + (yi − xi)</code>. For each <code>j</code>, the first part is fixed, so you need the <strong>maximum of <code>yi − xi</code> over earlier points within distance k</strong>. That is a sliding window maximum, where the window is defined by x-coordinates. Expire from the front by distance, then drop dominated points from the back.</p>
+<details class="solution">
+<summary>Solution: O(n) time, O(n) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def find_max_value_of_equation(points: list[list[int]], k: int) -&gt; int:
+    dq: deque[int] = deque()              # indices, y − x decreasing
+    best = float(&quot;-inf&quot;)
+    for j, (xj, yj) in enumerate(points):
+        while dq and xj - points[dq[0]][0] &gt; k:
+            dq.popleft()                  # expired: too far to the left
+        if dq:
+            xi, yi = points[dq[0]]
+            best = max(best, yj + xj + yi - xi)
+        while dq and points[dq[-1]][1] - points[dq[-1]][0] &lt;= yj - xj:
+            dq.pop()                      # dominated: older and not better
+        dq.append(j)
+    return best
+</code></pre>
+<pre><code class="language-csharp">public static int FindMaxValueOfEquation(int[][] points, int k)
+{
+    var dq = new LinkedList&lt;int&gt;();       // indices, y − x decreasing
+    int best = int.MinValue;
+    for (int j = 0; j &lt; points.Length; j++)
+    {
+        int xj = points[j][0], yj = points[j][1];
+        while (dq.Count &gt; 0 &amp;&amp; xj - points[dq.First!.Value][0] &gt; k) dq.RemoveFirst();
+        if (dq.Count &gt; 0)
+        {
+            var p = points[dq.First!.Value];
+            best = Math.Max(best, yj + xj + p[1] - p[0]);
+        }
+        while (dq.Count &gt; 0 &amp;&amp; points[dq.Last!.Value][1] - points[dq.Last.Value][0] &lt;= yj - xj)
+            dq.RemoveLast();
+        dq.AddLast(j);
+    }
+    return best;
+}
+</code></pre>
+</div>
+<p>Read the answer <strong>before</strong> pushing <code>j</code>: the pair needs <code>i &lt; j</code>, so <code>j</code> may not pair with itself.</p>
+</details>
+<h3 id="8-sum-of-total-strength-of-wizards">8. Sum of Total Strength of Wizards</h3>
+<p>The total strength of a group of consecutive wizards is <code>min × sum</code>. Return the sum over <strong>all</strong> subarrays, modulo 10⁹ + 7. <strong>Insight:</strong> contribution again. Wizard <code>j</code> is the minimum of every subarray <code>[s..e]</code> with <code>left &lt; s &lt;= j &lt;= e &lt; right</code> (left: previous strictly smaller, right: next smaller or equal). We need the <strong>sum of the sums</strong> of those subarrays. With prefix sums <code>P</code> (<code>sum(s..e) = P[e+1] − P[s]</code>) and a prefix sum of prefix sums <code>PP[k] = P[0] + … + P[k−1]</code>:</p>
+<p><code>Σ sums = (j − left) × (PP[right+1] − PP[j+1]) − (right − j) × (PP[j+1] − PP[left+1])</code></p>
+<p>The first term adds every possible <code>P[e+1]</code>, once per start; the second subtracts every possible <code>P[s]</code>, once per end.</p>
+<details class="solution">
+<summary>Solution: O(n) time, O(n) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def total_strength(strength: list[int]) -&gt; int:
+    MOD = 10**9 + 7
+    n = len(strength)
+    P = [0] * (n + 1)
+    for i, x in enumerate(strength):
+        P[i + 1] = P[i] + x
+    PP = [0] * (n + 2)
+    for k in range(n + 1):
+        PP[k + 1] = PP[k] + P[k]
+    total = 0
+    st: list[int] = []
+    for i in range(n + 1):
+        while st and (i == n or strength[st[-1]] &gt;= strength[i]):
+            j = st.pop()
+            left, right = (st[-1] if st else -1), i
+            plus = (j - left) * (PP[right + 1] - PP[j + 1])
+            minus = (right - j) * (PP[j + 1] - PP[left + 1])
+            total += strength[j] * (plus - minus)
+        st.append(i)
+    return total % MOD
+</code></pre>
+<pre><code class="language-csharp">public static int TotalStrength(int[] strength)
+{
+    const long M = 1_000_000_007;
+    int n = strength.Length;
+    var P = new long[n + 1];
+    for (int i = 0; i &lt; n; i++) P[i + 1] = (P[i] + strength[i]) % M;
+    var PP = new long[n + 2];
+    for (int k = 0; k &lt;= n; k++) PP[k + 1] = (PP[k] + P[k]) % M;
+    long total = 0;
+    var st = new Stack&lt;int&gt;();
+    for (int i = 0; i &lt;= n; i++)
+    {
+        while (st.Count &gt; 0 &amp;&amp; (i == n || strength[st.Peek()] &gt;= strength[i]))
+        {
+            int j = st.Pop();
+            int left = st.Count &gt; 0 ? st.Peek() : -1, right = i;
+            long plus = (j - left) * ((PP[right + 1] - PP[j + 1] + M) % M) % M;
+            long minus = (right - j) * ((PP[j + 1] - PP[left + 1] + M) % M) % M;
+            total = (total + strength[j] * ((plus - minus + M) % M)) % M;
+        }
+        st.Push(i);
+    }
+    return (int)total;
+}
+</code></pre>
+</div>
+<p>In C#, reduce every prefix value modulo M and add <code>M</code> before each <code>%</code> on a difference, so nothing goes negative or overflows. Python's big integers let you take the modulo once at the end.</p>
+</details>
+<h2 id="problem-ladder">Problem ladder</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Level</th>
+<th>The key idea</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://leetcode.com/problems/next-greater-element-i/">Next Greater Element I</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Template on <code>nums2</code>, answers in a hashmap, then look up <code>nums1</code>.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://leetcode.com/problems/final-prices-with-a-special-discount-in-a-shop/">Final Prices With a Special Discount in a Shop</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Next smaller <strong>or equal</strong>: pop while <code>price[top] &gt;= x</code>, subtract at the pop.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://leetcode.com/problems/daily-temperatures/">Daily Temperatures</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Next strictly greater; the answer is the distance <code>i − top</code>.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://leetcode.com/problems/next-greater-element-ii/">Next Greater Element II</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Circular: iterate 2n, read <code>a[i % n]</code>, push only when <code>i &lt; n</code>.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://leetcode.com/problems/online-stock-span/">Online Stock Span</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Stack of <code>(price, span)</code>; popping absorbs a whole block.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://leetcode.com/problems/remove-k-digits/">Remove K Digits</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Greedy increasing stack; leftover k from the end; strip zeros.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://leetcode.com/problems/remove-duplicate-letters/">Remove Duplicate Letters</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Skip letters already used; pop a bigger letter only if it appears later.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://leetcode.com/problems/132-pattern/">132 Pattern</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Scan from the right; popped values are "2" candidates; keep the largest.</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://leetcode.com/problems/car-fleet/">Car Fleet</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Sort by position (closest to the target first); a car whose arrival time is ≤ the fleet ahead merges into it.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://leetcode.com/problems/sum-of-subarray-minimums/">Sum of Subarray Minimums</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Contribution <code>a[j] · L · R</code> with one strict and one non-strict wall.</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://leetcode.com/problems/sum-of-subarray-ranges/">Sum of Subarray Ranges</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Σ max − Σ min, two contribution passes.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/">Longest Continuous Subarray With Absolute Diff ≤ Limit</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Sliding window with two deques for the window max and min.</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://leetcode.com/problems/maximum-width-ramp/">Maximum Width Ramp</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Stack of prefix minima, consumed by a scan from the right.</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="https://leetcode.com/problems/maximum-subarray-min-product/">Maximum Subarray Min-Product</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Each element as the minimum takes its whole kingdom; prefix sums for the sum.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="https://leetcode.com/problems/jump-game-vi/">Jump Game VI</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td><code>dp[i] = a[i] + max(dp[i−k..i−1])</code> with a window-max deque.</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="https://leetcode.com/problems/find-the-most-competitive-subsequence/">Find the Most Competitive Subsequence</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Greedy stack; pop only while enough elements remain to reach length k.</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="https://leetcode.com/problems/largest-rectangle-in-histogram/">Largest Rectangle in Histogram</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Increasing stack, sentinel 0; area at each pop with both walls known.</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="https://leetcode.com/problems/trapping-rain-water/">Trapping Rain Water</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Decreasing stack; each pop with a left wall adds one horizontal layer.</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="https://leetcode.com/problems/maximal-rectangle/">Maximal Rectangle</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>One histogram per row; run Largest Rectangle on each.</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="https://leetcode.com/problems/sliding-window-maximum/">Sliding Window Maximum</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Decreasing deque; back: dominated, front: expired.</td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="https://leetcode.com/problems/number-of-visible-people-in-a-queue/">Number of Visible People in a Queue</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>From the right; count pops, plus one if someone taller remains.</td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="https://leetcode.com/problems/constrained-subsequence-sum/">Constrained Subsequence Sum</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td><code>dp[i] = x + max(0, window max of dp)</code> with a deque.</td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="https://leetcode.com/problems/max-value-of-equation/">Max Value of Equation</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Rewrite as <code>(yj + xj) + (yi − xi)</code>; window max of <code>y − x</code> by x-distance.</td>
+</tr>
+<tr>
+<td>24</td>
+<td><a href="https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/">Shortest Subarray with Sum at Least K</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Prefix sums; increasing deque of starts; front pops are answers.</td>
+</tr>
+<tr>
+<td>25</td>
+<td><a href="https://leetcode.com/problems/sum-of-total-strength-of-wizards/">Sum of Total Strength of Wizards</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Contribution with min × sum: prefix sums of prefix sums inside each kingdom.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>The template has a <code>while</code> loop inside a <code>for</code> loop. Why is it O(n) and not O(n²)?</summary>
+<p>Every iteration of the <code>while</code> loop pops one index, and each index is pushed exactly once, so it can be popped at most once. Over the whole run the <code>while</code> body executes at most n times in total. One call can pop many indices, but then those indices are gone for every later call. This is amortised analysis: total work ≤ n pushes + n pops.</p>
+</details>
+<details class="quiz">
+<summary>You want "next smaller element". Should the values on the stack be increasing or decreasing from bottom to top, and why?</summary>
+<p>Increasing (non-decreasing). The stack holds elements that have <strong>not yet</strong> met a smaller element. If a waiting element sat above a bigger one, the smaller one would have popped the bigger one when it arrived. The rule is always: the stack is sorted the <strong>opposite</strong> way to the question.</p>
+</details>
+<details class="quiz">
+<summary>In Largest Rectangle, when bar <code>t</code> is popped by <code>i</code>, why is the left wall the new top of the stack and not <code>t − 1</code>?</summary>
+<p>Bars between the new top and <code>t</code> were popped earlier, and they were popped because they were <strong>taller or equal</strong> to some later bar (at most <code>t</code>). So all of them are at least <code>h[t]</code> tall, and the rectangle of height <code>h[t]</code> extends over them. The new top is the first index to the left that was never popped by a bar of height ≤ <code>h[t]</code>, which makes it the nearest shorter bar: the real wall.</p>
+</details>
+<details class="quiz">
+<summary>Compute Sum of Subarray Minimums for <code>[3, 1, 2, 4]</code> with the contribution formula.</summary>
+<p>Walls (left = previous strictly smaller, right = next smaller or equal): 3 has L = 1, R = 1, so 3 · 1 · 1 = 3. 1 has L = 2, R = 3, so 1 · 2 · 3 = 6. 2 has L = 1, R = 2, so 2 · 1 · 2 = 4. 4 has L = 1, R = 1, so 4. Total 3 + 6 + 4 + 4 = <strong>17</strong>. Check by brute force: the 10 subarrays have minimums 3, 1, 1, 1, 1, 1, 1, 2, 2, 4, which also sum to 17.</p>
+</details>
+<details class="quiz">
+<summary>Why is the greedy in Remove K Digits correct: why delete the first digit that is bigger than its right neighbour?</summary>
+<p>Compare the numbers left to right. If <code>num[i] &gt; num[i+1]</code> is the first descent, deleting <code>num[i]</code> leaves the prefix before it unchanged and makes position <code>i</code> smaller (it now holds <code>num[i+1]</code>). Deleting any digit before <code>i</code> would put a digit that is ≥ in that position (the prefix is non-decreasing), and deleting any digit after <code>i</code> leaves the bigger <code>num[i]</code> in place. So this deletion gives the smallest possible number with one digit removed, and repeating the argument k times gives the answer. The stack simply finds each next descent in O(1) amortised.</p>
+</details>
+<details class="quiz">
+<summary>In Shortest Subarray with Sum ≥ K, the front of the deque is popped once it is "answered". Why can it never be needed again?</summary>
+<p>A start <code>i</code> that already works with end <code>j</code> gives length <code>j − i</code>. Any later end <code>j' &gt; j</code> would give <code>j' − i &gt; j − i</code>, which is longer. Since we are looking for the shortest subarray, start <code>i</code> has already produced its best possible answer, and keeping it can only produce worse ones.</p>
+</details>
+<details class="quiz">
+<summary>Constrained Subsequence Sum uses <code>dp[i] = x + max(0, window max)</code>. What does the <code>max(0, …)</code> mean, and what happens if you leave it out?</summary>
+<p>It means "start a new subsequence at i" when every reachable earlier <code>dp</code> is negative: it is better to pick nothing before <code>i</code>. Without it, <code>dp[i]</code> would be forced to extend a negative chain, so on <code>[-1, -2, 5]</code> with <code>k = 1</code> you would get <code>dp = [-1, -3, 2]</code> and answer 2 instead of 5.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Invariant</strong>The stack holds indices still waiting; a pop is an answer; the stack is sorted opposite to the question.</div>
+<div><strong>Next greater</strong><code>while st and a[st[-1]] &lt; x: nxt[st.pop()] = i</code>, then push <code>i</code>.</div>
+<div><strong>Previous (free)</strong>After the pops, <code>prv[i] = st[-1]</code>, with the opposite strictness to "next".</div>
+<div><strong>Circular</strong>Loop <code>i</code> over <code>2n</code>, read <code>a[i % n]</code>, push only if <code>i &lt; n</code>.</div>
+<div><strong>Span</strong>Stack of <code>(value, count)</code>; <code>count += popped.count</code>.</div>
+<div><strong>Histogram</strong>Sentinel 0; at pop: <code>h[t] × (i − newTop − 1)</code>, with <code>newTop = −1</code> if empty.</div>
+<div><strong>Rain water</strong>At pop of <code>bottom</code> with a left wall: <code>(i − left − 1) × (min(h[left], h[i]) − h[bottom])</code>.</div>
+<div><strong>Contribution</strong><code>Σ a[j] (j − left)(right − j)</code>; one side strict, one non-strict.</div>
+<div><strong>Greedy delete</strong>Pop while <code>top &gt; x</code> and a deletion (or a later copy) is still available.</div>
+<div><strong>Deque</strong>Back pop: dominated. Front pop: expired (window) or answered (prefix sums).</div>
+<div><strong>DP + deque</strong><code>dp[i] = f(i) + max(dp[i−k..i−1])</code>: keep <code>dp</code> indices in a decreasing deque.</div>
+<div><strong>Cue words</strong>next greater, days until, span, visible, largest rectangle, sum over all subarrays of min, smallest after removing.</div>
+</div><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="hashing.html"><small>&larr; PREVIOUS</small>Hashing Patterns</a><a class="next" href="intervals-sweep-line.html"><small>NEXT &rarr;</small>Intervals &amp; Sweep Line</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#what-it-is-and-when-you-need-it">What it is and when you need it</a></li>
+<li><a href="#intuition-a-line-of-people-waiting-for-someone-taller">Intuition: a line of people waiting for someone taller</a></li>
+<li><a href="#one-template-four-questions">One template, four questions</a><ul>
+<li><a href="#the-mirror-view-scan-from-the-right-keep-the-candidates">The mirror view: scan from the right, keep the candidates</a></li>
+</ul>
+</li>
+<li><a href="#circular-arrays-walk-around-twice">Circular arrays: walk around twice</a></li>
+<li><a href="#daily-temperatures-and-stock-span">Daily temperatures and stock span</a></li>
+<li><a href="#largest-rectangle-in-a-histogram">Largest rectangle in a histogram</a><ul>
+<li><a href="#maximal-rectangle-a-histogram-on-every-row">Maximal rectangle: a histogram on every row</a></li>
+</ul>
+</li>
+<li><a href="#trapping-rain-water-layers-versus-columns">Trapping rain water: layers versus columns</a></li>
+<li><a href="#the-contribution-technique-sum-of-subarray-minimums">The contribution technique: sum of subarray minimums</a><ul>
+<li><a href="#the-tie-rule-decides-who-owns-a-subarray">The tie rule decides who owns a subarray</a></li>
+</ul>
+</li>
+<li><a href="#greedy-stacks-build-the-smallest-sequence">Greedy stacks: build the smallest sequence</a><ul>
+<li><a href="#remove-k-digits">Remove K digits</a></li>
+<li><a href="#smallest-subsequence-of-distinct-characters">Smallest subsequence of distinct characters</a></li>
+</ul>
+</li>
+<li><a href="#monotonic-queues-a-stack-with-a-second-exit">Monotonic queues: a stack with a second exit</a><ul>
+<li><a href="#shortest-subarray-with-sum-at-least-k-negative-numbers-allowed">Shortest subarray with sum at least K (negative numbers allowed)</a></li>
+<li><a href="#constrained-subsequence-sum-a-deque-inside-a-dp">Constrained subsequence sum: a deque inside a DP</a></li>
+</ul>
+</li>
+<li><a href="#which-tool-a-decision-guide">Which tool? A decision guide</a></li>
+<li><a href="#templates-at-a-glance">Templates at a glance</a><ul>
+<li><a href="#pitfalls">Pitfalls</a></li>
+</ul>
+</li>
+<li><a href="#worked-problems">Worked problems</a><ul>
+<li><a href="#1-next-greater-element-i">1. Next Greater Element I</a></li>
+<li><a href="#2-132-pattern">2. 132 Pattern</a></li>
+<li><a href="#3-sum-of-subarray-ranges">3. Sum of Subarray Ranges</a></li>
+<li><a href="#4-maximum-width-ramp">4. Maximum Width Ramp</a></li>
+<li><a href="#5-maximum-subarray-min-product">5. Maximum Subarray Min-Product</a></li>
+<li><a href="#6-number-of-visible-people-in-a-queue">6. Number of Visible People in a Queue</a></li>
+<li><a href="#7-max-value-of-equation">7. Max Value of Equation</a></li>
+<li><a href="#8-sum-of-total-strength-of-wizards">8. Sum of Total Strength of Wizards</a></li>
+</ul>
+</li>
+<li><a href="#problem-ladder">Problem ladder</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

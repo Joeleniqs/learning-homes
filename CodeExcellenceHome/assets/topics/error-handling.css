@@ -1,0 +1,117 @@
+/* Error handling: visualizer styles. Colours come only from theme variables. */
+.viz[data-viz^="error-handling-"] .viz-stage { padding: 16px 14px; gap: 12px; }
+.viz[data-viz^="error-handling-"] .viz-code li { font-size: 12px; white-space: pre; }
+.eh-fit { width: 100%; display: flex; justify-content: safe center; overflow-x: auto; }
+.eh-fit > svg { max-width: 100%; height: auto; }
+.eh-muted { color: var(--muted); font-size: 12.5px; text-align: center; }
+.eh-caption { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); font-weight: 650; text-align: center; }
+.eh-chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.eh-chip { border: 1px solid var(--line); background: var(--bg); border-radius: 999px; padding: 4px 12px; font: 12.5px "Cascadia Code", Consolas, monospace; }
+.eh-chip b { color: var(--muted); font-weight: 650; margin-right: 4px; }
+.eh-chip.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.eh-chip.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.eh-chip.accent { border-color: var(--warning-line); background: var(--warning); }
+.eh-row { display: flex; flex-wrap: wrap; gap: 14px; width: 100%; align-items: flex-start; }
+.eh-row.center { justify-content: center; }
+.eh-col { display: flex; flex-direction: column; gap: 6px; min-width: 150px; }
+.eh-col.grow { flex: 1 1 240px; }
+.eh-to { color: var(--muted); font-weight: 700; align-self: center; }
+
+/* unwind: stack frames, the resource, handlers */
+.eh-frame { border: 1.5px solid var(--line); border-radius: 8px; padding: 4px 9px; background: var(--surface); display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.eh-frame code { font-size: 12.5px; background: none; padding: 0; }
+.eh-frame small { font-size: 10.5px; color: var(--muted); }
+.eh-frame.threw { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.eh-frame.unwinding { border-color: var(--v-visit); background: var(--v-visit-soft); border-style: dashed; }
+.eh-frame.crashed { border-color: var(--v-bad); background: var(--v-bad-soft); opacity: .7; text-decoration: line-through; }
+.eh-res { border: 1.5px dashed var(--line); border-radius: 8px; padding: 3px 9px; font: 11.5px "Cascadia Code", Consolas, monospace; color: var(--muted); text-align: center; }
+.eh-res.open { border-style: solid; border-color: var(--v-path); background: var(--v-path-soft); color: var(--text); }
+.eh-res.closed { border-style: solid; border-color: var(--v-done); background: var(--v-done-soft); color: var(--text); }
+.eh-res.not-guaranteed, .eh-res.leaked { border-style: solid; border-color: var(--v-bad); background: var(--v-bad-soft); color: var(--text); }
+.eh-h { border: 1.5px solid var(--line); border-radius: 8px; padding: 4px 9px; background: var(--surface); display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: baseline; }
+.eh-h code { font-size: 12px; background: none; padding: 0; overflow-wrap: anywhere; }
+.eh-h small { font-size: 10.5px; color: var(--muted); text-align: right; }
+.eh-fn { font-size: 10.5px; color: var(--muted); font-weight: 650; }
+.eh-h.done, .eh-resbox.done, .eh-tier.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.eh-h.visit, .eh-resbox.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.eh-h.bad, .eh-resbox.bad, .eh-tier.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.eh-h.dim, .eh-resbox.dim { opacity: .5; border-style: dashed; }
+.eh-h.active, .eh-resbox.active, .eh-tier.active { box-shadow: 0 0 0 2px var(--v-active); }
+.eh-flight { border: 1.5px solid var(--v-bad); background: var(--v-bad-soft); border-radius: 999px; padding: 4px 14px; font-size: 12.5px; text-align: center; margin: 0 auto; max-width: 100%; }
+.eh-flight code { font-size: 12px; background: none; padding: 0; overflow-wrap: anywhere; }
+.eh-flight small { color: var(--muted); margin-left: 6px; }
+.eh-flight.calm { border-color: var(--line); background: var(--surface); color: var(--muted); }
+
+/* console, HTTP responses */
+.eh-console { width: 100%; display: flex; flex-direction: column; gap: 4px; }
+.prose .viz pre.eh-out { margin: 0; padding: 7px 10px; background: var(--code); border: 1px solid var(--line); border-radius: 8px; box-shadow: none; font: 12px/1.45 "Cascadia Code", Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--text); max-height: 260px; overflow: auto; width: 100%; box-sizing: border-box; }
+.prose .viz pre.eh-out.eh-http { border-width: 1.5px; border-left-width: 5px; }
+.prose .viz pre.eh-out.eh-http.done { border-color: var(--v-done); }
+.prose .viz pre.eh-out.eh-http.bad { border-color: var(--v-bad); }
+.prose .viz pre.eh-out.eh-http.warn { border-color: var(--warning-line); }
+
+/* cleanup: resource stack and error tree */
+.eh-stackres { display: flex; flex-direction: column; gap: 6px; min-width: 170px; }
+.eh-resbox { border: 1.5px solid var(--line); border-radius: 10px; padding: 7px 12px; background: var(--surface); display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.eh-resbox b { font: 700 13px "Cascadia Code", Consolas, monospace; }
+.eh-resbox small { font-size: 11px; color: var(--muted); }
+.eh-err { border: 1.5px solid var(--v-bad); background: var(--v-bad-soft); border-radius: 10px; padding: 6px 10px; display: flex; flex-direction: column; gap: 5px; }
+.eh-err.none { border-color: var(--line); background: var(--surface); color: var(--muted); font-size: 12.5px; text-align: center; }
+.eh-errh { font-size: 12.5px; overflow-wrap: anywhere; }
+.eh-errh b { font-family: "Cascadia Code", Consolas, monospace; }
+.eh-kid { border-left: 3px solid var(--v-bad); padding-left: 8px; display: flex; flex-direction: column; gap: 3px; }
+.eh-kid > small { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+.eh-kid .eh-err { background: var(--surface); }
+.eh-lost { border: 1.5px dashed var(--v-bad); border-radius: 8px; padding: 4px 10px; font: 12px "Cascadia Code", Consolas, monospace; text-decoration: line-through; color: var(--muted); }
+
+/* chain: layers and nested causes */
+.eh-layers { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.eh-layer { border: 1.5px solid var(--line); border-radius: 999px; padding: 3px 12px; font-size: 12.5px; background: var(--surface); }
+.eh-layer.active { border-color: var(--v-active); background: var(--v-active-soft); font-weight: 650; }
+.eh-doll { border: 1.5px solid var(--v-bad); border-radius: 10px; padding: 6px 10px 8px; background: var(--surface); display: flex; flex-direction: column; gap: 4px; width: 100%; box-sizing: border-box; }
+.eh-doll > b { font: 650 12.5px "Cascadia Code", Consolas, monospace; }
+.eh-doll > span { font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+.eh-doll .eh-doll { background: var(--bg); }
+.eh-doll.root { background: var(--v-bad-soft); border-width: 2px; }
+.eh-resp { border: 1.5px solid var(--line); border-left-width: 5px; border-radius: 8px; padding: 6px 12px; font: 12.5px "Cascadia Code", Consolas, monospace; overflow-wrap: anywhere; }
+.eh-resp.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.eh-resp.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+
+/* tables (decide idioms, stats, validation rules) */
+.prose .viz table.eh-tbl { width: 100%; max-width: 520px; margin: 0 auto; border-collapse: collapse; font-size: 12.5px; display: table; }
+.prose .viz table.eh-tbl th, .prose .viz table.eh-tbl td { border: 1px solid var(--line); padding: 5px 9px; text-align: left; background: var(--surface); vertical-align: top; }
+.prose .viz table.eh-tbl thead th { background: var(--bg); color: var(--muted); font-size: 11.5px; text-transform: uppercase; letter-spacing: .5px; }
+.prose .viz table.eh-tbl tbody th { font-weight: 600; white-space: nowrap; }
+.prose .viz table.eh-tbl code { font-size: 11.5px; background: none; padding: 0; overflow-wrap: anywhere; }
+.prose .viz table.eh-tbl tr.cur th { box-shadow: inset 4px 0 0 var(--v-active); }
+.prose .viz table.eh-tbl td.done { background: var(--v-done-soft); }
+.prose .viz table.eh-tbl td.bad { background: var(--v-bad-soft); }
+.prose .viz table.eh-tbl td.dim { color: var(--muted); font-style: italic; }
+
+/* boundary: tiers and log lines */
+.eh-tiers { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.eh-tier { border: 1.5px solid var(--line); border-radius: 10px; padding: 5px 9px; background: var(--surface); display: flex; flex-direction: column; gap: 1px; min-width: 88px; }
+.eh-tier b { font-size: 12px; }
+.eh-tier small { font-size: 10.5px; color: var(--muted); line-height: 1.3; }
+.eh-logl { font: 11.5px/1.45 "Cascadia Code", Consolas, monospace; border-left: 4px solid var(--line); padding: 2px 8px; background: var(--code); overflow-wrap: anywhere; }
+.eh-logl b { margin-right: 2px; }
+.eh-logl span { color: var(--muted); }
+.eh-logl i { color: var(--muted); }
+.eh-logl.dim { opacity: .6; }
+.eh-logl.done { border-left-color: var(--v-done); }
+.eh-logl.bad { border-left-color: var(--v-bad); }
+.eh-logl.bad b { color: var(--v-bad); }
+
+/* async: event log */
+.prose .viz ol.eh-evlog { margin: 0 auto; padding: 0 0 0 22px; width: 100%; max-width: 560px; font-size: 12.5px; display: flex; flex-direction: column; gap: 2px; box-sizing: border-box; }
+.prose .viz ol.eh-evlog li { margin: 0; padding: 1px 6px; border-radius: 5px; }
+.prose .viz ol.eh-evlog li.bad { background: var(--v-bad-soft); }
+.prose .viz ol.eh-evlog li.done { background: var(--v-done-soft); }
+.prose .viz ol.eh-evlog li b { font-weight: 650; margin-right: 4px; }
+
+@media (max-width: 700px) {
+  .eh-row { flex-direction: column; align-items: stretch; }
+  .eh-h { grid-template-columns: 1fr; gap: 2px; }
+  .eh-h small { text-align: left; }
+  .eh-tier { min-width: 0; flex: 1 1 40%; }
+}

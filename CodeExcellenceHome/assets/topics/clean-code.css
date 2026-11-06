@@ -1,0 +1,156 @@
+/* Clean code: visualizer and figure styles. Colours come only from theme variables. */
+.viz[data-viz^="clean-code-"] .viz-stage { padding: 16px 14px; gap: 12px; }
+
+/* layout */
+.cc-split { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; justify-content: center; width: 100%; }
+.cc-split-l { flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 10px; align-items: stretch; }
+.cc-split-r { flex: 0 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.cc-h { padding: 4px 10px; font: 700 10.5px "Segoe UI", system-ui, sans-serif; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+
+/* stats */
+.cc-stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.cc-stat { border: 1.5px solid var(--line); border-radius: 8px; padding: 5px 12px; text-align: center; background: var(--surface); min-width: 92px; }
+.cc-stat b { display: block; font: 700 15px "Cascadia Code", Consolas, monospace; }
+.cc-stat span { font-size: 10.5px; color: var(--muted); }
+.cc-stat.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.cc-stat.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.cc-stat.active { border-color: var(--v-active); background: var(--v-active-soft); }
+
+/* code panels */
+.cc-codebox { width: 100%; border: 1px solid var(--line); border-radius: 8px; background: var(--code); overflow: hidden; }
+.cc-codebox > .cc-h { background: var(--surface); border-bottom: 1px solid var(--line); text-transform: none; letter-spacing: .2px; }
+.cc-code { margin: 0; padding: 8px 0; list-style: none; counter-reset: ccln; overflow-x: auto; font: 12px/1.6 "Cascadia Code", Consolas, monospace; }
+.prose .cc-code li, .cc-code li { display: flex; gap: 8px; align-items: baseline; margin: 0; padding: 0 10px 0 6px; white-space: pre; counter-increment: ccln; border-left: 3px solid transparent; font-size: 12px; line-height: 1.6; }
+.cc-code li::before { content: counter(ccln); flex: 0 0 22px; color: var(--muted); opacity: .6; font-size: 10.5px; }
+.cc-code .cc-src { flex: 1 1 auto; }
+.cc-code li.cur { background: var(--v-active-soft); border-left-color: var(--v-active); }
+.cc-code li.in { background: var(--accent-soft); }
+.cc-code li.hot { background: var(--v-bad-soft); border-left-color: var(--v-bad); }
+.cc-code li.slip { background: var(--v-bad-soft); border-left-color: var(--v-bad); }
+.cc-code li.cur.slip, .cc-code li.cur.hot { background: var(--v-bad-soft); border-left-color: var(--v-bad); outline: 1.5px solid var(--v-bad); outline-offset: -1px; }
+.cc-side { flex: 0 0 auto; display: inline-flex; gap: 4px; align-items: center; margin-left: auto; }
+.cc-side em { font: 700 10px "Segoe UI", system-ui, sans-serif; font-style: normal; padding: 0 6px; border-radius: 9px; border: 1px solid var(--line); background: var(--surface); }
+.cc-side em.cc-cyc { color: var(--v-visit); border-color: var(--v-visit); }
+.cc-side em.cc-cog { color: var(--v-active); border-color: var(--v-active); }
+.cc-side em.cc-cog.hot { color: var(--v-bad); border-color: var(--v-bad); background: var(--v-bad-soft); }
+.cc-nest { display: inline-flex; gap: 2px; min-width: 34px; justify-content: flex-end; }
+.cc-nest i { display: inline-block; width: 6px; height: 11px; border-radius: 2px; background: var(--v-visit); opacity: .75; }
+
+/* complexity score bars */
+.cc-scale { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); padding: 4px 10px 8px; position: relative; }
+.cc-bar { display: flex; align-items: center; gap: 8px; font-size: 11.5px; margin: 4px 0; }
+.cc-bar span { flex: 0 0 150px; font-family: "Cascadia Code", Consolas, monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cc-bar b { display: block; height: 12px; border-radius: 3px; min-width: 2px; background: var(--line); }
+.cc-bar b.done { background: var(--v-done); }
+.cc-bar b.active { background: var(--v-active); }
+.cc-bar b.bad { background: var(--v-bad); }
+.cc-bar em { flex: 0 0 auto; white-space: nowrap; font: 700 12px "Cascadia Code", Consolas, monospace; font-style: normal; }
+.cc-tick { font-size: 10px; color: var(--muted); text-align: right; }
+
+/* key/value rows */
+.cc-kv { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline; padding: 4px 10px; border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 6px; background: var(--surface); font-size: 12px; }
+.cc-kv > span { font: 700 10px "Segoe UI", system-ui, sans-serif; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); }
+.cc-kv > code { font-size: 12px; word-break: break-all; }
+.cc-kv.cur { border-left-color: var(--v-active); background: var(--v-active-soft); }
+.cc-okc { color: var(--v-done); font-weight: 800; }
+.cc-koc { color: var(--v-bad); font-weight: 800; }
+.cc-warnc { color: var(--v-path); font-weight: 800; }
+
+/* refactoring step badges */
+.cc-steps { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; justify-content: center; }
+.prose .cc-steps li, .cc-steps li { margin: 0; min-width: 28px; padding: 2px 9px; text-align: center; border: 1.5px solid var(--line); border-radius: 14px; background: var(--surface); font: 700 12px "Segoe UI", system-ui, sans-serif; color: var(--muted); }
+.cc-steps li.cur { border-color: var(--v-active); background: var(--v-active-soft); color: var(--text); }
+.cc-steps li.done { border-color: var(--v-done); color: var(--v-done); }
+.cc-steps li.bad { border-color: var(--v-bad); background: var(--v-bad-soft); color: var(--v-bad); }
+
+/* tables inside visualizers (reset the prose table styles) */
+.prose table.cc-tbl, table.cc-tbl { border-collapse: collapse; margin: 0; font: 12px "Cascadia Code", Consolas, monospace; width: auto; display: table; }
+.prose table.cc-tbl th, .prose table.cc-tbl td, table.cc-tbl th, table.cc-tbl td { border: 1px solid var(--line); padding: 3px 8px; min-width: 0; text-align: left; background: var(--surface); vertical-align: top; }
+.prose table.cc-tbl th, table.cc-tbl th { font: 700 10px "Segoe UI", system-ui, sans-serif; letter-spacing: .2px; text-transform: uppercase; color: var(--muted); background: var(--code); white-space: nowrap; word-break: normal; overflow-wrap: normal; }
+table.cc-tbl tr.cc-bad td { background: var(--v-bad-soft); }
+table.cc-tbl tr.cc-good td { background: var(--v-done-soft); }
+table.cc-tbl tr.cc-cur td { box-shadow: inset 0 0 0 1.5px var(--v-active); }
+table.cc-tbl tr.cc-cur td + td { box-shadow: inset 0 1.5px 0 var(--v-active), inset 0 -1.5px 0 var(--v-active); }
+table.cc-tbl tr.cc-dim td { opacity: .4; }
+table.cc-tbl small { color: var(--muted); font-size: 10.5px; }
+table.cc-events td { font-family: "Segoe UI", system-ui, sans-serif; font-size: 12px; padding: 2px 8px; }
+table.cc-events td:first-child, table.cc-events td:nth-child(3) { font-family: "Cascadia Code", Consolas, monospace; text-align: center; }
+.cc-ev { display: inline-block; min-width: 54px; margin-right: 6px; padding: 0 5px; border-radius: 4px; text-align: center; font: 700 9.5px "Segoe UI", system-ui, sans-serif; letter-spacing: .5px; text-transform: uppercase; border: 1px solid var(--line); }
+.cc-ev.site { border-color: var(--accent); color: var(--accent); }
+.cc-ev.shared { border-color: var(--v-done); color: var(--v-done); }
+.cc-ev.div { border-color: var(--v-path); color: var(--v-path); }
+
+/* naming checker */
+.cc-bigname { padding: 6px 12px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--code); font: 700 17px "Cascadia Code", Consolas, monospace; word-break: break-all; }
+.cc-words { display: flex; flex-wrap: wrap; gap: 6px; }
+.cc-word { display: inline-flex; flex-direction: column; align-items: center; padding: 3px 10px; border: 1.5px solid var(--line); border-radius: 7px; background: var(--surface); font: 13px "Cascadia Code", Consolas, monospace; }
+.cc-word small { font: 700 8.5px "Segoe UI", system-ui, sans-serif; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); }
+.cc-word.drop { border-color: var(--v-bad); background: var(--v-bad-soft); text-decoration: line-through; }
+.cc-word.abbr { border-color: var(--v-active); background: var(--v-active-soft); }
+.cc-word.fixed, .cc-word.added { border-color: var(--v-done); background: var(--v-done-soft); font-weight: 700; }
+.cc-checks { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 3px; }
+.prose .cc-checks li, .cc-checks li { margin: 0; display: flex; gap: 8px; align-items: center; padding: 3px 10px; border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 6px; background: var(--surface); font-size: 12.5px; }
+.cc-checks li b { width: 14px; text-align: center; }
+.cc-checks li.ok { border-left-color: var(--v-done); }
+.cc-checks li.ok b { color: var(--v-done); }
+.cc-checks li.ko { border-left-color: var(--v-bad); }
+.cc-checks li.ko b { color: var(--v-bad); }
+.cc-checks li.cur { background: var(--v-active-soft); border-color: var(--v-active); }
+.cc-usage { display: flex; flex-direction: column; gap: 4px; }
+.cc-usage > div { display: flex; gap: 8px; align-items: baseline; padding: 4px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--code); }
+.cc-usage > div.after { border-color: var(--v-done); }
+.cc-usage > div > span { flex: 0 0 44px; font: 700 10px "Segoe UI", system-ui, sans-serif; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); }
+.cc-usage code { font-size: 12.5px; word-break: normal; overflow-wrap: break-word; min-width: 0; background: none; }
+
+/* parameter ladder */
+.cc-ladder { display: flex; flex-direction: column; gap: 3px; }
+.cc-ladder > div { display: flex; gap: 10px; align-items: baseline; padding: 3px 10px; border: 1.5px solid var(--line); border-radius: 6px; background: var(--surface); opacity: .55; font-size: 12px; }
+.cc-ladder b { flex: 0 0 110px; font-size: 12px; }
+.cc-ladder span { color: var(--muted); font-size: 11.5px; }
+.cc-ladder > div.hit { opacity: 1; }
+.cc-ladder > div.hit.good { border-color: var(--v-done); background: var(--v-done-soft); }
+.cc-ladder > div.hit.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.cc-outcome { padding: 6px 10px; border: 1px dashed var(--line); border-radius: 6px; font: 12px/1.5 "Cascadia Code", Consolas, monospace; }
+
+/* boy-scout heatmap and chart */
+.cc-heat { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+.cc-cell { position: relative; padding: 4px 4px 7px; border: 1.5px solid var(--line); border-radius: 6px; text-align: center; background: var(--surface); overflow: hidden; }
+.cc-cell b { display: block; font: 700 13px "Cascadia Code", Consolas, monospace; }
+.cc-cell small { font-size: 10px; color: var(--muted); }
+.cc-cell i { position: absolute; left: 0; bottom: 0; height: 4px; background: var(--accent); }
+.cc-cell.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.cc-cell.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.cc-cell.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+svg.cc-chart { width: 100%; max-width: 384px; height: auto; align-self: center; }
+svg.cc-chart .cc-axis { stroke: var(--line); stroke-width: 1.5; }
+svg.cc-chart .cc-axt { font-size: 10px; fill: var(--muted); }
+svg.cc-chart polyline { fill: none; stroke-width: 2; opacity: .55; }
+svg.cc-chart polyline.me { stroke-width: 3.2; opacity: 1; }
+svg.cc-chart .cc-lnl { font: 700 10px "Cascadia Code", Consolas, monospace; }
+svg.cc-chart .cc-ln0 { stroke: var(--v-bad); fill: var(--v-bad); }
+svg.cc-chart .cc-ln1 { stroke: var(--v-done); fill: var(--v-done); }
+svg.cc-chart .cc-ln2 { stroke: var(--v-path); fill: var(--v-path); }
+svg.cc-chart polyline.cc-ln0, svg.cc-chart polyline.cc-ln1, svg.cc-chart polyline.cc-ln2 { fill: none; }
+svg.cc-chart text.cc-lnl { stroke: none; }
+.cc-key { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; font-size: 11.5px; color: var(--muted); }
+.cc-key span { display: inline-flex; align-items: center; gap: 5px; }
+.cc-key span.me { color: var(--text); font-weight: 700; }
+.cc-key i { display: inline-block; width: 16px; height: 3px; border-radius: 2px; }
+.cc-key .cc-ln0 i { background: var(--v-bad); }
+.cc-key .cc-ln1 i { background: var(--v-done); }
+.cc-key .cc-ln2 i { background: var(--v-path); }
+
+/* chips */
+.cc-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.cc-chips span { padding: 2px 10px; border: 1.5px solid var(--line); border-radius: 14px; font-size: 11.5px; background: var(--surface); }
+.cc-chips span.bad { border-color: var(--v-bad); background: var(--v-bad-soft); font-weight: 700; }
+
+/* verdict */
+.cc-verdict { text-align: center; padding: 6px 12px; border: 2px solid var(--line); border-radius: 8px; font: 800 13px "Segoe UI", system-ui, sans-serif; letter-spacing: .6px; }
+.cc-verdict small { display: block; font: 500 11.5px "Cascadia Code", Consolas, monospace; letter-spacing: 0; margin-top: 3px; word-break: break-word; }
+.cc-verdict.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.cc-verdict.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.cc-verdict.active { border-color: var(--v-active); background: var(--v-active-soft); }
+
+/* static figures in the prose */
+.cc-figs { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; align-items: flex-end; }

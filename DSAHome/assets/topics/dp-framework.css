@@ -1,0 +1,62 @@
+/* The DP Framework: topic-only styles. Colours come from shared CSS variables only. */
+
+/* Wide visualizers: stage on top, code + variables side by side underneath */
+.viz.dpf-wide .viz-body.with-code { grid-template-columns: minmax(0, 1fr); }
+.viz.dpf-wide .viz-side { border-left: 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(200px, 1fr); }
+.viz.dpf-wide .viz-vars { border-top: 0; border-left: 1px solid var(--line); align-content: start; }
+@media (max-width: 720px) {
+  .viz.dpf-wide .viz-side { grid-template-columns: minmax(0, 1fr); }
+  .viz.dpf-wide .viz-vars { border-left: 0; border-top: 1px solid var(--line); }
+}
+
+/* Stacked column wrapper */
+.dpf-col { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; }
+
+/* SVG DP table */
+svg.dpf-g { overflow: visible; }
+svg.dpf-g .dpf-v { font: 600 15px "Cascadia Code", Consolas, monospace; fill: var(--text); }
+svg.dpf-g .dpf-sub { font: 600 10px "Cascadia Code", Consolas, monospace; fill: var(--muted); }
+svg.dpf-g .dpf-lab { font: 600 11px "Cascadia Code", Consolas, monospace; fill: var(--muted); }
+svg.dpf-g .box.wall { fill: var(--muted); stroke: var(--muted); }
+svg.dpf-g .dpf-v.wall { fill: var(--surface); }
+svg.dpf-g .box.dim, svg.dpf-g .dpf-v.dim { opacity: .35; }
+svg.dpf-g .box.dep { stroke: var(--v-visit); stroke-width: 2.6; stroke-dasharray: 5 3; }
+svg.dpf-g .box.bad.dep { stroke: var(--v-bad); }
+
+/* Dependency arrows: halo keeps them readable over cells */
+svg.dpf-g .dpf-halo { fill: none; stroke: var(--surface); stroke-width: 5.5; stroke-linecap: round; }
+svg.dpf-g .dpf-e { fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; }
+svg.dpf-g .dpf-e.active { stroke: var(--v-active); stroke-width: 2.6; }
+svg.dpf-g .dpf-e.visit { stroke: var(--v-visit); stroke-width: 2.4; }
+svg.dpf-g .dpf-e.done { stroke: var(--v-done); stroke-width: 2.4; }
+svg.dpf-g .dpf-e.bad { stroke: var(--v-bad); stroke-width: 2.4; stroke-dasharray: 5 4; }
+svg.dpf-g .dpf-e.path { stroke: var(--v-path); stroke-width: 3; }
+svg.dpf-g .dpf-e.dim { opacity: .3; }
+svg.dpf-g .dpf-ah { fill: var(--muted); }
+svg.dpf-g .dpf-ah.active { fill: var(--v-active); } svg.dpf-g .dpf-ah.visit { fill: var(--v-visit); }
+svg.dpf-g .dpf-ah.done { fill: var(--v-done); } svg.dpf-g .dpf-ah.bad { fill: var(--v-bad); }
+svg.dpf-g .dpf-ah.path { fill: var(--v-path); } svg.dpf-g .dpf-ah.dim { opacity: .3; }
+svg.dpf-g .dpf-el { font: 700 11px "Cascadia Code", Consolas, monospace; fill: var(--text); paint-order: stroke; stroke: var(--surface); stroke-width: 4px; }
+svg.dpf-g .dpf-el.active { fill: var(--v-active); } svg.dpf-g .dpf-el.visit { fill: var(--v-visit); }
+svg.dpf-g .dpf-el.done { fill: var(--v-done); } svg.dpf-g .dpf-el.bad { fill: var(--v-bad); }
+svg.dpf-g .dpf-el.path { fill: var(--v-path); } svg.dpf-g .dpf-el.dim { opacity: .4; }
+
+/* Recursion tree: nodes not yet called keep their place but stay hidden */
+svg .dpf-hide, .n.dpf-hide, .e.dpf-hide { visibility: hidden; }
+
+/* Five-step recipe card */
+.dpf-recipe { display: grid; grid-template-columns: 1fr; gap: 4px; width: min(680px, 100%); }
+.dpf-rstep {
+  display: grid; grid-template-columns: 112px 1fr; gap: 10px; align-items: baseline;
+  padding: 5px 10px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--surface);
+  font-size: 13.5px; line-height: 1.4; opacity: .55; transition: background .2s, border-color .2s, opacity .2s;
+}
+.dpf-rstep b { font-size: 11px; letter-spacing: 1.2px; color: var(--muted); }
+.dpf-rstep span { font-family: "Cascadia Code", Consolas, monospace; font-size: 12.5px; overflow-wrap: anywhere; }
+.dpf-rstep.past { opacity: 1; border-color: var(--v-done); }
+.dpf-rstep.past b { color: var(--v-done); }
+.dpf-rstep.on { opacity: 1; border-color: var(--v-active); background: var(--v-active-soft); }
+.dpf-rstep.on b { color: var(--text); }
+
+/* site.css has no visit-coloured edge; static figures on this page use one */
+svg.dg .edge.visit { stroke: var(--v-visit); stroke-width: 2.4; }

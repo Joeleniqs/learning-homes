@@ -1,0 +1,173 @@
+/* Topic styles for "Resilience" (prefix rs-). Colours come only from theme variables. */
+.viz[data-viz^="resilience-"] .viz-stage { padding: 16px 14px; gap: 12px; flex-direction: column; align-items: center; }
+.viz[data-viz^="resilience-"] .viz-code li { font-size: 12px; }
+.rs-fit { width: 100%; display: flex; justify-content: safe center; overflow-x: auto; }
+.rs-fit > svg { max-width: 100%; height: auto; }
+.rs-cap { margin: -6px 0 0; font-size: 11.5px; color: var(--muted); text-align: center; }
+
+/* ---- key/value panels and stat chips ---- */
+.rs-kv { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); font: 12px "Cascadia Code", Consolas, monospace; overflow: hidden; min-width: 260px; max-width: 440px; }
+.rs-kv-h { padding: 4px 10px; font: 700 10.5px "Segoe UI", system-ui, sans-serif; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line); background: var(--code); }
+.rs-kv-r { display: flex; justify-content: space-between; gap: 12px; padding: 3px 10px; border-left: 3px solid transparent; }
+.rs-kv-r > span { overflow-wrap: anywhere; min-width: 0; }
+.rs-kv-r > span:first-child { font-weight: 700; flex: none; max-width: 48%; }
+.rs-kv-r > span:last-child { text-align: right; }
+.rs-kv-r.done { border-left-color: var(--v-done); background: var(--v-done-soft); }
+.rs-kv-r.bad { border-left-color: var(--v-bad); background: var(--v-bad-soft); }
+.rs-kv-r.visit { border-left-color: var(--v-visit); background: var(--v-visit-soft); }
+.rs-kv-r.empty { color: var(--muted); }
+.rs-stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; width: 100%; }
+.rs-stat { border: 1.5px solid var(--line); border-radius: 8px; padding: 5px 12px; text-align: center; background: var(--surface); min-width: 92px; }
+.rs-stat b { display: block; font: 700 15px "Cascadia Code", Consolas, monospace; }
+.rs-stat span { font-size: 10.5px; color: var(--muted); }
+.rs-stat.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.rs-stat.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.rs-stat.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.rs-stat.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.rs-stat.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+
+/* ---- charts ---- */
+svg.rs-chart { font: 11px "Segoe UI", system-ui, sans-serif; display: block; }
+svg.rs-chart .grid { stroke: var(--line); stroke-width: 1; }
+svg.rs-chart .ax { fill: var(--muted); }
+svg.rs-chart .bar.done { fill: var(--v-done); }
+svg.rs-chart .bar.bad { fill: var(--v-bad); }
+svg.rs-chart .bar.visit { fill: var(--v-visit); opacity: .8; }
+svg.rs-chart .bar.path { fill: var(--v-path); }
+svg.rs-chart .bar.active { fill: var(--v-active); }
+svg.rs-chart .cap { stroke: var(--v-bad); stroke-width: 1.6; stroke-dasharray: 6 4; }
+svg.rs-chart .capt { fill: var(--v-bad); font-weight: 700; paint-order: stroke; stroke: var(--bg); stroke-width: 5px; stroke-linejoin: round; }
+svg.rs-chart .now { stroke: var(--v-active); stroke-width: 2; }
+svg.rs-chart .ln { fill: none; stroke: var(--v-active); stroke-width: 2; stroke-linejoin: round; }
+svg.rs-chart .ln.bad { stroke: var(--v-bad); }
+svg.rs-chart .ln.visit { stroke: var(--v-visit); }
+svg.rs-chart .ln.path { stroke: var(--v-path); }
+svg.rs-chart .ln.ghost { stroke: var(--text); stroke-width: 1.4; stroke-dasharray: 4 3; opacity: .55; }
+svg.rs-chart .band { fill: var(--text); opacity: .05; pointer-events: none; }
+svg.rs-chart .band.down { fill: var(--v-bad); opacity: .1; }
+svg.rs-chart .band.win { fill: var(--v-active); opacity: .07; }
+svg.rs-chart .bandt { fill: var(--v-bad); font-weight: 700; font-size: 10.5px; }
+svg.rs-chart .dot.done { fill: var(--v-done); }
+svg.rs-chart .dot.bad { fill: var(--v-bad); }
+svg.rs-chart .dot.visit { fill: var(--v-visit); }
+svg.rs-chart .pmk { stroke: var(--v-path); stroke-width: 1.6; stroke-dasharray: 3 2; }
+svg.rs-chart .pmt { fill: var(--v-path); font-weight: 700; font-size: 10.5px; paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; }
+
+/* ---- worker pool (cascade) ---- */
+.rs-pool { display: grid; grid-template-columns: repeat(var(--cols), 14px); gap: 3px; padding: 8px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--code); }
+.rs-pool i { width: 14px; height: 14px; border-radius: 3px; border: 1.5px solid var(--line); background: var(--v-node); }
+.rs-pool i.bad { background: var(--v-bad); border-color: var(--v-bad); }
+.rs-pool i.path { background: var(--v-path); border-color: var(--v-path); }
+.rs-pool i.done { background: var(--v-done); border-color: var(--v-done); }
+
+/* ---- timelines (deadline, hedge, pipeline) ---- */
+svg.rs-gantt { font: 11px "Segoe UI", system-ui, sans-serif; display: block; }
+svg.rs-gantt .grid { stroke: var(--line); stroke-width: 1; }
+svg.rs-gantt .ax { fill: var(--muted); }
+svg.rs-gantt .lane { fill: var(--text); font: 600 11px "Cascadia Code", Consolas, monospace; }
+svg.rs-gantt .iv { stroke-width: 1.3; }
+svg.rs-gantt .iv.work { fill: var(--v-done-soft); stroke: var(--v-done); }
+svg.rs-gantt .iv.wait { fill: var(--v-visit-soft); stroke: var(--v-visit); }
+svg.rs-gantt .iv.waste { fill: var(--v-bad-soft); stroke: var(--v-bad); stroke-dasharray: 4 2; }
+svg.rs-gantt .mk { fill: var(--text); font-weight: 700; font-size: 10.5px; paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; }
+svg.rs-gantt .mk.bad { fill: var(--v-bad); }
+svg.rs-gantt .mk.ff { fill: var(--v-visit); }
+svg.rs-gantt .mk.cancel { fill: var(--v-active); font-size: 13px; }
+svg.rs-gantt .dl { stroke: var(--accent); stroke-width: 2; stroke-dasharray: 6 3; }
+svg.rs-gantt .dlt { fill: var(--accent); font-weight: 700; font-size: 10.5px; paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; }
+svg.rs-gantt .now { stroke: var(--v-active); stroke-width: 2; }
+
+/* ---- amplification ---- */
+.rs-amp { display: flex; flex-direction: column; gap: 6px; width: min(520px, 100%); }
+.rs-amp-row, .rs-meter { display: grid; grid-template-columns: 150px 1fr 64px; align-items: center; gap: 10px; font: 600 12px "Cascadia Code", Consolas, monospace; }
+.rs-amp-row b, .rs-meter b { text-align: right; }
+.rs-amp-bar { position: relative; height: 16px; border-radius: 5px; background: var(--code); border: 1px solid var(--line); overflow: hidden; }
+.rs-amp-bar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--v-bad); opacity: .8; }
+.rs-meter { width: min(560px, 100%); grid-template-columns: 210px 1fr 64px; font-size: 11.5px; }
+.rs-meter span { color: var(--muted); font-weight: 400; }
+.rs-meter .rs-amp-bar i { background: var(--v-done); }
+.rs-meter .rs-amp-bar i.over { background: var(--v-bad); }
+.rs-meter .rs-amp-bar em { position: absolute; top: -1px; bottom: -1px; width: 2px; background: var(--text); opacity: .6; }
+.rs-tree { display: flex; flex-direction: column; gap: 6px; width: min(560px, 100%); }
+.rs-tree-row { display: grid; grid-template-columns: 96px 1fr 34px; gap: 8px; align-items: center; }
+.rs-tree-l { font: 600 11.5px "Cascadia Code", Consolas, monospace; color: var(--muted); text-align: right; }
+.rs-tree-row > b { font: 700 13px "Cascadia Code", Consolas, monospace; text-align: right; }
+.rs-tree-cells { display: flex; flex-wrap: wrap; gap: 5px; }
+.rs-grp { display: inline-flex; gap: 2px; padding: 2px; border-radius: 5px; border: 1px solid var(--line); background: var(--code); }
+.rs-grp i { width: 11px; height: 11px; border-radius: 50%; background: var(--v-node); border: 1.5px solid var(--line); }
+.rs-grp i.done { background: var(--v-done); border-color: var(--v-done); }
+.rs-grp i.bad { background: var(--v-bad); border-color: var(--v-bad); }
+.rs-grp i.thr { background: var(--v-visit-soft); border: 1.5px dashed var(--v-visit); border-radius: 2px; }
+
+/* ---- sequence diagram (idempotency) ---- */
+svg.rs-seq { font: 11px "Cascadia Code", Consolas, monospace; display: block; }
+svg.rs-seq .lh { fill: var(--v-node); stroke: var(--line); stroke-width: 1.5; }
+svg.rs-seq .lht { fill: var(--text); font: 700 12px "Segoe UI", system-ui, sans-serif; }
+svg.rs-seq .life { stroke: var(--line); stroke-width: 1.5; stroke-dasharray: 4 4; }
+svg.rs-seq .arr line { stroke: var(--muted); stroke-width: 1.6; }
+svg.rs-seq .arr polygon { fill: var(--muted); }
+svg.rs-seq .arr.done line { stroke: var(--v-done); }
+svg.rs-seq .arr.done polygon { fill: var(--v-done); }
+svg.rs-seq .arr.bad line { stroke: var(--v-bad); }
+svg.rs-seq .arr.bad polygon { fill: var(--v-bad); }
+svg.rs-seq .arr.visit line { stroke: var(--v-visit); }
+svg.rs-seq .arr.visit polygon { fill: var(--v-visit); }
+svg.rs-seq .arr.lost line { stroke: var(--v-bad); stroke-dasharray: 5 3; }
+svg.rs-seq .arr.cur line { stroke-width: 2.8; }
+svg.rs-seq .x { fill: var(--v-bad); font-size: 15px; font-weight: 700; }
+svg.rs-seq .msg { fill: var(--text); paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; }
+svg.rs-seq .msg.done { fill: var(--v-done); }
+svg.rs-seq .msg.bad { fill: var(--v-bad); }
+svg.rs-seq .msg.visit { fill: var(--v-visit); }
+svg.rs-seq .msg.cur { font-weight: 700; }
+svg.rs-seq .msg.self { font-style: italic; }
+svg.rs-seq .selfdot { fill: var(--v-node); stroke: var(--muted); stroke-width: 1.5; }
+svg.rs-seq .selfdot.bad { fill: var(--v-bad-soft); stroke: var(--v-bad); }
+
+/* ---- breaker state machine and strips ---- */
+svg.rs-sm { font: 11px "Segoe UI", system-ui, sans-serif; display: block; }
+svg.rs-sm .arr line { stroke: var(--muted); stroke-width: 1.6; }
+svg.rs-sm .arr polygon { fill: var(--muted); }
+svg.rs-sm .arr.hot line { stroke: var(--v-active); stroke-width: 3; }
+svg.rs-sm .arr.hot polygon { fill: var(--v-active); }
+svg.rs-sm .lbl { fill: var(--muted); font-size: 11px; paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; }
+svg.rs-sm .st rect { fill: var(--v-node); stroke: var(--line); stroke-width: 2; }
+svg.rs-sm .st text { fill: var(--text); font: 700 12.5px "Cascadia Code", Consolas, monospace; }
+svg.rs-sm .st text.sub { font: 400 10.5px "Segoe UI", system-ui, sans-serif; fill: var(--muted); }
+svg.rs-sm .st.closed.on rect { fill: var(--v-done-soft); stroke: var(--v-done); stroke-width: 3; }
+svg.rs-sm .st.open.on rect { fill: var(--v-bad-soft); stroke: var(--v-bad); stroke-width: 3; }
+svg.rs-sm .st.half.on rect { fill: var(--v-visit-soft); stroke: var(--v-visit); stroke-width: 3; }
+svg.rs-strip { font: 11px "Segoe UI", system-ui, sans-serif; display: block; }
+svg.rs-strip .ax { fill: var(--muted); }
+svg.rs-strip .c.done { fill: var(--v-done); }
+svg.rs-strip .c.bad { fill: var(--v-bad); }
+svg.rs-strip .c.visit { fill: var(--v-visit); }
+svg.rs-strip .c.none { fill: var(--line); }
+svg.rs-strip .now { stroke: var(--v-active); stroke-width: 2; }
+
+/* ---- load-shedding queue ---- */
+.rs-queue { display: flex; flex-wrap: wrap; gap: 2px; align-content: flex-start; width: min(560px, 100%); min-height: 30px; padding: 6px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--code); }
+.rs-queue i { width: 10px; height: 10px; border-radius: 2px; }
+.rs-queue i.done { background: var(--v-done); }
+.rs-queue i.visit { background: var(--v-visit); }
+.rs-queue i.bad { background: var(--v-bad); }
+.rs-empty, .rs-more { font: 11px "Cascadia Code", Consolas, monospace; color: var(--muted); padding: 0 4px; }
+
+/* ---- strategy-order onion ---- */
+.rs-pipe { display: flex; flex-direction: column; gap: 12px; width: 100%; align-items: center; }
+.rs-onion { width: min(420px, 100%); }
+.rs-layer { border: 2px solid var(--line); border-radius: 14px; padding: 5px 8px 8px; background: var(--surface); transition: background .2s, border-color .2s; }
+.rs-layer > span { display: block; font: 600 12px "Cascadia Code", Consolas, monospace; margin-bottom: 4px; }
+.rs-layer.on { border-color: var(--v-active); background: var(--v-active-soft); }
+.rs-layer.on.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.rs-layer.on.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.rs-layer.on.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.rs-core { border: 1.5px dashed var(--muted); border-radius: 10px; padding: 6px; text-align: center; font: 600 12px "Cascadia Code", Consolas, monospace; background: var(--code); }
+.rs-core.on { border-style: solid; border-color: var(--v-active); background: var(--v-active-soft); }
+.rs-core.on.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.rs-core.on.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+
+/* ---- static figure helpers (inside svg.dg) ---- */
+svg.dg .rs-t { font-size: 12.5px; font-weight: 650; }
+svg.dg .rs-s { font-size: 11px; fill: var(--muted); }
+svg.dg text.rs-h { paint-order: stroke; stroke: var(--bg); stroke-width: 7px; stroke-linejoin: round; }

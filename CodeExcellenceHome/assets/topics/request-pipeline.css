@@ -1,0 +1,114 @@
+/* Topic styles for "The Request Delegate Pipeline" (prefix rp-). Colours come only from site variables. */
+[data-viz^="request-pipeline"] .viz-legend .lg-dim::before { border-style: dashed; opacity: .5; }
+
+/* ---- generic panels ---- */
+.rp-col { display: flex; flex-direction: column; gap: 10px; width: 230px; min-width: 0; }
+.rp-col.wide { width: auto; flex: 1 1 260px; max-width: 420px; }
+.rp-panel { border: 1px solid var(--line); border-radius: 9px; background: var(--surface); padding: 8px 10px; font-size: 12.5px; min-width: 0; }
+.rp-ptitle { font-size: 10.5px; font-weight: 700; letter-spacing: .9px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.rp-kv { display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; font: 12px "Cascadia Code", Consolas, monospace; }
+.rp-kv > span:nth-child(odd) { color: var(--muted); }
+.rp-kv > span { overflow-wrap: anywhere; }
+.rp-kv .bad { color: var(--v-bad); } .rp-kv .warn { color: var(--v-active); font-weight: 700; }
+.rp-panel code { font-size: 11.5px; }
+.rp-chip { display: inline-block; margin: 2px 3px 2px 0; padding: 3px 8px; border-radius: 6px; border: 1.5px solid var(--line); background: var(--v-node); font: 600 12px "Cascadia Code", Consolas, monospace; }
+.rp-chip small { font-weight: 400; color: var(--muted); }
+.rp-chip.active { background: var(--v-active-soft); border-color: var(--v-active); }
+.rp-chip.visit { background: var(--v-visit-soft); border-color: var(--v-visit); }
+.rp-chip.done { background: var(--v-done-soft); border-color: var(--v-done); }
+.rp-chip.bad { background: var(--v-bad-soft); border-color: var(--v-bad); }
+.rp-chip.dim { opacity: .4; text-decoration: line-through; }
+.rp-error { margin-top: 10px; padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--v-bad); background: var(--v-bad-soft); font: 12px "Cascadia Code", Consolas, monospace; }
+
+/* ---- onion ---- */
+.rp-onion { width: 290px; }
+.rp-layer { border: 2px solid var(--line); border-radius: 14px; padding: 6px 8px 8px; background: var(--surface); transition: background .2s, border-color .2s, opacity .2s; }
+.rp-layer > .rp-layer { margin-top: 4px; }
+.rp-lname { display: flex; align-items: center; justify-content: space-between; gap: 6px; font-size: 12px; min-height: 20px; }
+.rp-core { padding: 12px 8px; }
+.rp-layer.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.rp-layer.visit { border-color: var(--v-visit); background: color-mix(in srgb, var(--v-visit-soft) 55%, var(--surface)); }
+.rp-layer.done { border-color: var(--v-done); background: color-mix(in srgb, var(--v-done-soft) 55%, var(--surface)); }
+.rp-layer.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.rp-layer.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.rp-layer.dim { border-style: dashed; opacity: .45; }
+.rp-badge { font: 700 10.5px "Cascadia Code", Consolas, monospace; padding: 1px 6px; border-radius: 5px; background: var(--v-active); color: var(--bg); white-space: nowrap; }
+.rp-badge.out, .rp-badge.catch { background: var(--v-done); }
+.rp-badge.short { background: var(--v-path); } .rp-badge.throw { background: var(--v-bad); } .rp-badge.finally { background: var(--v-visit); }
+.rp-trail { display: flex; flex-wrap: wrap; gap: 3px; }
+.rp-trail span { font: 600 12px "Cascadia Code", Consolas, monospace; padding: 1px 5px; border-radius: 5px; border: 1px solid var(--line); }
+.rp-trail span.out, .rp-trail span.finally, .rp-trail span.catch { background: var(--v-done-soft); }
+.rp-trail span.in { background: var(--v-visit-soft); }
+.rp-trail span.short { background: var(--v-path-soft); } .rp-trail span.throw { background: var(--v-bad-soft); }
+.rp-trail span.cur { outline: 2px solid var(--v-active); }
+.rp-log { list-style: none; margin: 0; padding: 0; font: 12px "Cascadia Code", Consolas, monospace; }
+.rp-log li { padding: 1px 0; } .rp-log li.metric { color: var(--v-visit); }
+
+/* ---- build-time fold ---- */
+.rp-expr { font: 700 13px "Cascadia Code", Consolas, monospace; color: var(--accent); margin-bottom: 8px; overflow-wrap: anywhere; }
+.rp-nest { border: 2px solid var(--v-done); border-radius: 9px; padding: 5px 7px 7px; background: color-mix(in srgb, var(--v-done-soft) 40%, var(--surface)); font: 700 12px "Cascadia Code", Consolas, monospace; }
+.rp-nest .rp-nest, .rp-nest > .rp-nest { margin-top: 4px; }
+.rp-nest small { font-weight: 400; color: var(--muted); }
+.rp-nest.fresh { border-color: var(--v-active); background: var(--v-active-soft); }
+.rp-nest.term { border-style: dashed; border-color: var(--muted); background: var(--surface); color: var(--muted); }
+.rp-nest.run { border-color: var(--v-path); background: var(--v-path-soft); }
+.rp-nest.term small, .rp-nest.run small { display: block; }
+
+/* ---- box-and-arrow flow svg ---- */
+svg.rp-flow { max-width: 100%; height: auto; font-family: "Cascadia Code", Consolas, monospace; }
+svg.rp-flow .nd rect { fill: var(--v-node); stroke: var(--muted); stroke-width: 1.6; transition: fill .2s, stroke .2s; }
+svg.rp-flow .nd text { fill: var(--text); font-size: 12.5px; font-weight: 700; }
+svg.rp-flow .nd text.sub { fill: var(--muted); font-size: 11px; font-weight: 400; }
+svg.rp-flow .nd.active rect { fill: var(--v-active-soft); stroke: var(--v-active); stroke-width: 3; }
+svg.rp-flow .nd.path rect { fill: var(--v-path-soft); stroke: var(--v-path); stroke-width: 2.4; }
+svg.rp-flow .nd.done rect { fill: var(--v-done-soft); stroke: var(--v-done); stroke-width: 2.4; }
+svg.rp-flow .nd.bad rect { fill: var(--v-bad-soft); stroke: var(--v-bad); stroke-width: 3; }
+svg.rp-flow .nd.dim { opacity: .35; }
+svg.rp-flow .ed path { fill: none; stroke: var(--v-dim); stroke-width: 2; }
+svg.rp-flow .ed polygon { fill: var(--v-dim); }
+svg.rp-flow .ed .el { fill: var(--muted); font-size: 11.5px; }
+svg.rp-flow .ed.path path { stroke: var(--v-path); stroke-width: 3.2; } svg.rp-flow .ed.path polygon { fill: var(--v-path); }
+svg.rp-flow .ed.path .el { fill: var(--v-path); font-weight: 700; }
+svg.rp-flow .ed.bad path { stroke: var(--v-bad); stroke-width: 2.6; stroke-dasharray: 5 4; } svg.rp-flow .ed.bad polygon { fill: var(--v-bad); }
+svg.rp-flow .ed.done path { stroke: var(--v-done); stroke-width: 2.6; } svg.rp-flow .ed.done polygon { fill: var(--v-done); }
+
+/* ---- DI scopes ---- */
+.rp-scopes { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; width: 100%; }
+.rp-scopes .rp-panel { flex: 0 1 160px; }
+.rp-scopes .rp-panel.root { flex-basis: 100%; border-width: 2px; }
+.rp-scopes .rp-panel.cur { border-color: var(--v-active); border-width: 2px; }
+.rp-scopes .rp-panel.closed { background: var(--bg); }
+
+/* ---- endpoint routing ---- */
+.rp-stages { display: flex; flex-direction: column; gap: 0; width: 200px; }
+.rp-stage { position: relative; border: 1.5px solid var(--line); border-radius: 8px; padding: 5px 9px; background: var(--v-node); font-size: 12px; margin-bottom: 14px; }
+.rp-stage:not(:last-child)::after { content: "↓"; position: absolute; left: 50%; bottom: -15px; transform: translateX(-50%); color: var(--muted); font-size: 12px; line-height: 14px; }
+.rp-stage small { display: block; font: 11px "Cascadia Code", Consolas, monospace; color: var(--muted); }
+.rp-stage.routing { border-style: dashed; border-color: var(--v-path); }
+.rp-stage.active { border-style: solid; border-color: var(--v-active); background: var(--v-active-soft); }
+.rp-stage.done { border-style: solid; border-color: var(--v-done); background: color-mix(in srgb, var(--v-done-soft) 50%, var(--surface)); }
+table.rp-routes { border-collapse: collapse; width: 100%; table-layout: fixed; font-size: 11.5px; margin: 0; display: table; }
+table.rp-routes th, table.rp-routes td { padding: 3px 5px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+table.rp-routes th { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; }
+table.rp-routes tr.done td { background: var(--v-done-soft); }
+table.rp-routes tr.bad td { background: var(--v-bad-soft); }
+table.rp-routes tr.dim td { opacity: .5; }
+table.rp-routes tr.cur td:first-child { box-shadow: inset 3px 0 0 var(--v-active); }
+table.rp-routes td + td, table.rp-routes th + th { white-space: normal; overflow-wrap: anywhere; }
+table.rp-routes code { font-size: 11px; white-space: normal; }
+table.rp-routes th:nth-child(1) { width: 44%; } table.rp-routes th:nth-child(2) { width: 30%; }
+
+/* ---- Express vs Koa lanes ---- */
+.rp-clock { display: flex; align-items: center; gap: 8px; width: 100%; font: 11px "Cascadia Code", Consolas, monospace; color: var(--muted); }
+.rp-clock .bar { flex: 1; height: 8px; border-radius: 4px; background: var(--line); overflow: hidden; }
+.rp-clock .bar i { display: block; height: 100%; background: var(--v-active); transition: width .3s; }
+.rp-lanes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
+.rp-lane { border: 1px solid var(--line); border-radius: 9px; padding: 8px; min-width: 0; }
+.rp-lane-h { font-weight: 700; font-size: 12.5px; margin-bottom: 6px; }
+.rp-lane ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.rp-lane li { margin: 0; font: 11.5px "Cascadia Code", Consolas, monospace; padding: 4px 6px; border-radius: 6px; border: 1.5px solid var(--line); background: var(--v-node); }
+.rp-lane li .t { display: inline-block; min-width: 50px; color: var(--muted); }
+.rp-lane li.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.rp-lane li.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.rp-lane li.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.rp-lane li.dim { opacity: .4; }

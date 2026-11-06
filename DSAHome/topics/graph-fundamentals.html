@@ -1,0 +1,2131 @@
+<!doctype html>
+<html lang="en" data-home="dsa-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Graph Fundamentals: BFS &amp; DFS | DSA Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#4f46e5;--accent-soft:#eef0ff;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#a5b4fc;--accent-soft:#252a5c;}}:root[data-theme=dark]{--accent:#a5b4fc;--accent-soft:#252a5c;}</style>
+  <link rel="stylesheet" href="../assets/topics/graph-fundamentals.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/graph-fundamentals.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="DSA Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">DS</span>DSA Home</a>
+    <p class="sidebar-caption">Data structures &amp; algorithms, seen.<br>Every idea animated, every pattern drilled.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations</summary><ul class="topic-list"><li data-search="The Problem-Solving Playbook Foundations A visual decision map from input size, shape and question type to the right technique, plus a repeatable interview/contest workflow. pattern recognition constraints approach interview" data-slug="problem-solving-playbook"><a href="../topics/problem-solving-playbook.html">The Problem-Solving Playbook</a></li><li data-search="Complexity Analysis Foundations Big-O growth you can see, amortized cost, recursion trees and the Master theorem, and what 10^8 operations per second really buys you. big o amortized master theorem time space" data-slug="complexity-analysis"><a href="../topics/complexity-analysis.html">Complexity Analysis</a></li><li data-search="Recursion &amp; the Call Stack Foundations Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from. call stack recursion tree divide and conquer" data-slug="recursion"><a href="../topics/recursion.html">Recursion &amp; the Call Stack</a></li></ul></details><details class="nav-track"><summary>Arrays &amp; Strings</summary><ul class="topic-list"><li data-search="Two Pointers Arrays &amp; Strings Opposite-end, same-direction and fast/slow pointers: why moving one pointer is safe, with partitioning and k-sum. pair sum partition dutch flag 3sum" data-slug="two-pointers"><a href="../topics/two-pointers.html">Two Pointers</a></li><li data-search="Sliding Window Arrays &amp; Strings Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows. substring subarray window at most k" data-slug="sliding-window"><a href="../topics/sliding-window.html">Sliding Window</a></li><li data-search="Prefix Sums &amp; Difference Arrays Arrays &amp; Strings 1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR. subarray sum equals k range sum 2d prefix difference array" data-slug="prefix-sums"><a href="../topics/prefix-sums.html">Prefix Sums &amp; Difference Arrays</a></li><li data-search="Binary Search Arrays &amp; Strings One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection. lower bound upper bound search on answer rotated monotonic predicate" data-slug="binary-search"><a href="../topics/binary-search.html">Binary Search</a></li><li data-search="Sorting Algorithms Arrays &amp; Strings Animated bubble, insertion, merge, quick, heap, counting and radix sorts; stability, quickselect and custom comparators. merge sort quick sort quickselect counting sort inversions" data-slug="sorting"><a href="../topics/sorting.html">Sorting Algorithms</a></li><li data-search="Hashing Patterns Arrays &amp; Strings How hash tables work inside, then frequency maps, grouping by canonical keys, complement lookups and rolling hashes. hash map hash set anagram two sum collision" data-slug="hashing"><a href="../topics/hashing.html">Hashing Patterns</a></li><li data-search="Monotonic Stack &amp; Queue Arrays &amp; Strings Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight. next greater largest rectangle deque trapping rain water" data-slug="monotonic-stack-queue"><a href="../topics/monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a></li><li data-search="Intervals &amp; Sweep Line Arrays &amp; Strings Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline. merge intervals meeting rooms events skyline" data-slug="intervals-sweep-line"><a href="../topics/intervals-sweep-line.html">Intervals &amp; Sweep Line</a></li><li data-search="String Algorithms Arrays &amp; Strings KMP failure function, Z-algorithm, Rabin–Karp, Manacher&#x27;s palindromes and string hashing, each animated character by character. kmp z algorithm rabin karp manacher palindrome pattern matching" data-slug="string-algorithms"><a href="../topics/string-algorithms.html">String Algorithms</a></li></ul></details><details class="nav-track"><summary>Linked Lists, Stacks, Queues &amp; Heaps</summary><ul class="topic-list"><li data-search="Linked Lists Linked Lists, Stacks, Queues &amp; Heaps Pointer rewiring you can watch: reversal, dummy heads, fast/slow cycle detection, merging, and LRU cache design. reverse floyd cycle merge lru" data-slug="linked-lists"><a href="../topics/linked-lists.html">Linked Lists</a></li><li data-search="Stacks &amp; Queues Linked Lists, Stacks, Queues &amp; Heaps Balanced brackets, expression evaluation, min-stack, queues from stacks, deques and BFS queues. parentheses calculator deque min stack" data-slug="stacks-queues"><a href="../topics/stacks-queues.html">Stacks &amp; Queues</a></li><li data-search="Heaps &amp; Priority Queues Linked Lists, Stacks, Queues &amp; Heaps Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling. heap top k median k way merge priority queue" data-slug="heaps-priority-queues"><a href="../topics/heaps-priority-queues.html">Heaps &amp; Priority Queues</a></li></ul></details><details class="nav-track"><summary>Trees</summary><ul class="topic-list"><li data-search="Tree Traversals Trees Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees. dfs bfs inorder level order morris" data-slug="tree-traversals"><a href="../topics/tree-traversals.html">Tree Traversals</a></li><li data-search="Binary Search Trees Trees Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters. bst validate successor avl red black" data-slug="binary-search-trees"><a href="../topics/binary-search-trees.html">Binary Search Trees</a></li><li data-search="Tree Problem Patterns Trees Return-value recursion (diameter, max path sum), top-down state, LCA, serialization, and binary lifting. lca diameter path sum binary lifting serialize" data-slug="tree-patterns"><a href="../topics/tree-patterns.html">Tree Problem Patterns</a></li><li data-search="Tries Trees Prefix trees animated insert by insert: autocomplete, word search on boards, and bitwise tries for max XOR. prefix tree autocomplete word search xor trie" data-slug="tries"><a href="../topics/tries.html">Tries</a></li><li data-search="Segment Trees, Fenwick Trees &amp; Sparse Tables Trees Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables. segment tree lazy propagation fenwick bit rmq" data-slug="segment-fenwick-trees"><a href="../topics/segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a></li></ul></details><details class="nav-track" open><summary>Graphs</summary><ul class="topic-list"><li data-search="Graph Fundamentals: BFS &amp; DFS Graphs Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS. bfs dfs grid islands connected components cycle" data-slug="graph-fundamentals"><a href="../topics/graph-fundamentals.html" aria-current="page">Graph Fundamentals: BFS &amp; DFS</a></li><li data-search="Topological Sort &amp; DAGs Graphs Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs. kahn course schedule dag dependency order" data-slug="topological-sort"><a href="../topics/topological-sort.html">Topological Sort &amp; DAGs</a></li><li data-search="Union-Find (Disjoint Set Union) Graphs Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries. dsu disjoint set path compression connectivity" data-slug="union-find"><a href="../topics/union-find.html">Union-Find (Disjoint Set Union)</a></li><li data-search="Shortest Paths Graphs BFS, 0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall and A* animated, and a chart to pick the right one every time. dijkstra bellman ford floyd warshall a star 0-1 bfs" data-slug="shortest-paths"><a href="../topics/shortest-paths.html">Shortest Paths</a></li><li data-search="Minimum Spanning Trees Graphs Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems. kruskal prim mst cut property" data-slug="minimum-spanning-trees"><a href="../topics/minimum-spanning-trees.html">Minimum Spanning Trees</a></li><li data-search="Advanced Graph Algorithms Graphs Strongly connected components, bridges and articulation points, bipartite checks, Euler paths, and max-flow / matching. tarjan kosaraju scc bridges euler max flow bipartite matching" data-slug="advanced-graphs"><a href="../topics/advanced-graphs.html">Advanced Graph Algorithms</a></li></ul></details><details class="nav-track"><summary>Backtracking &amp; Greedy</summary><ul class="topic-list"><li data-search="Backtracking Backtracking &amp; Greedy The choose/explore/un-choose template animated on a decision tree: subsets, permutations, combinations, N-Queens, Sudoku and pruning. subsets permutations n queens sudoku pruning" data-slug="backtracking"><a href="../topics/backtracking.html">Backtracking</a></li><li data-search="Greedy Algorithms Backtracking &amp; Greedy When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding. exchange argument interval scheduling jump game huffman" data-slug="greedy"><a href="../topics/greedy.html">Greedy Algorithms</a></li></ul></details><details class="nav-track"><summary>Dynamic Programming</summary><ul class="topic-list"><li data-search="The DP Framework Dynamic Programming Recursion → memoization → tabulation → space optimisation, visualised on one problem; how to design state and transitions. memoization tabulation state transition overlapping subproblems" data-slug="dp-framework"><a href="../topics/dp-framework.html">The DP Framework</a></li><li data-search="1D &amp; Grid DP Dynamic Programming Climbing stairs, house robber, decode ways, unique paths, min path sum, maximal square and dungeon game with animated tables. house robber unique paths grid dp maximal square" data-slug="dp-linear-grid"><a href="../topics/dp-linear-grid.html">1D &amp; Grid DP</a></li><li data-search="Knapsack Family Dynamic Programming 0/1 vs unbounded vs bounded knapsack, why loop direction matters, coin change, subset sum and target sum. knapsack coin change subset sum partition" data-slug="dp-knapsack"><a href="../topics/dp-knapsack.html">Knapsack Family</a></li><li data-search="Sequence &amp; String DP Dynamic Programming LIS with patience sorting, LCS, edit distance, palindromic subsequences, regex/wildcard matching and distinct subsequences. lis lcs edit distance regex matching palindrome" data-slug="dp-sequences-strings"><a href="../topics/dp-sequences-strings.html">Sequence &amp; String DP</a></li><li data-search="Interval &amp; Tree DP Dynamic Programming Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting). interval dp burst balloons matrix chain tree dp rerooting" data-slug="dp-intervals-trees"><a href="../topics/dp-intervals-trees.html">Interval &amp; Tree DP</a></li><li data-search="Bitmask &amp; Digit DP Dynamic Programming Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints. bitmask tsp digit dp subset dp" data-slug="dp-bitmask-digit"><a href="../topics/dp-bitmask-digit.html">Bitmask &amp; Digit DP</a></li><li data-search="State Machines &amp; DP Optimisations Dynamic Programming Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth. stock state machine convex hull trick knuth optimisation" data-slug="dp-advanced"><a href="../topics/dp-advanced.html">State Machines &amp; DP Optimisations</a></li></ul></details><details class="nav-track"><summary>Bits &amp; Math</summary><ul class="topic-list"><li data-search="Bit Manipulation Bits &amp; Math Bits drawn as switches: masks, XOR tricks, counting bits, subset enumeration and Gray codes. xor mask single number popcount subsets" data-slug="bit-manipulation"><a href="../topics/bit-manipulation.html">Bit Manipulation</a></li><li data-search="Math, Number Theory &amp; Combinatorics Bits &amp; Math GCD, sieves, fast power, modular inverses, nCr mod p, inclusion–exclusion, and the geometry primitives you need. gcd sieve modular fast exponentiation combinatorics geometry" data-slug="math-number-theory"><a href="../topics/math-number-theory.html">Math, Number Theory &amp; Combinatorics</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../CodeExcellenceHome/index.html">Code Excellence Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>DSA Home / Graph Fundamentals: BFS &amp; DFS</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">GRAPHS</p><h1>Graph Fundamentals: BFS &amp; DFS</h1><p class="lede">Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS.</p><div class="meta"><span class="level level-beginner">Beginner → Advanced</span><span>~70 min study</span><span>Builds on: <a href="stacks-queues.html">Stacks &amp; Queues</a>, <a href="recursion.html">Recursion &amp; the Call Stack</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="graph-fundamentals" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="what-a-graph-is-and-when-you-need-one">What a graph is, and when you need one</h2>
+<p>A graph is <strong>things</strong> (nodes, also called vertices) plus <strong>relationships</strong> between them (edges). The idea matters because most "from here I can go to there" problems are graph problems, even when nobody draws a graph. A maze, an island map, a lock dial, a word that changes one letter at a time, a social network and a build system are all graphs. Two traversals, <strong>breadth-first search (BFS)</strong> and <strong>depth-first search (DFS)</strong>, solve most of them.</p>
+<p>This page assumes <a href="stacks-queues.html">Stacks &amp; Queues</a> and <a href="recursion.html">Recursion &amp; the Call Stack</a>. The connection is direct: BFS <em>is</em> a queue, and DFS <em>is</em> a stack, either your own or the call stack.</p>
+<div class="rule">
+<p><strong>The traversal invariant.</strong> Every reachable node is discovered exactly once and every edge is examined at most twice, so BFS and DFS cost <strong>O(V + E)</strong>. That bound only holds if you <strong>mark a node the moment you discover it</strong> and never process a marked node again.</p>
+</div>
+<p>Everything else on this page is a variation on that one sentence: <em>what</em> you store when you discover a node (a distance, a colour, a component id, a parent) and <em>in which order</em> you discover nodes (a queue gives layers, a stack gives deep paths).</p>
+<h3 id="the-vocabulary-in-one-picture">The vocabulary, in one picture</h3>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 820 250" width="820" role="img" aria-label="Three small graphs: undirected with a cycle, directed acyclic, and weighted">
+<defs><marker id="gf-ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="20" y="24" class="title">Undirected</text>
+<line class="edge path" x1="50" y1="90" x2="150" y2="60"/><line class="edge path" x1="150" y1="60" x2="210" y2="150"/><line class="edge path" x1="50" y1="90" x2="210" y2="150"/><line class="edge" x1="210" y1="150" x2="90" y2="200"/>
+<circle class="box path" cx="50" cy="90" r="18"/><text x="50" y="95" text-anchor="middle" class="mono">A</text>
+<circle class="box path" cx="150" cy="60" r="18"/><text x="150" y="65" text-anchor="middle" class="mono">B</text>
+<circle class="box active" cx="210" cy="150" r="18"/><text x="210" y="155" text-anchor="middle" class="mono">C</text>
+<circle class="box" cx="90" cy="200" r="18"/><text x="90" y="205" text-anchor="middle" class="mono">D</text>
+<text x="20" y="238" class="small">deg(C) = 3 · A–B–C–A is a cycle</text>
+<text x="290" y="24" class="title">Directed (a DAG)</text>
+<line class="edge accent" x1="337" y1="85" x2="401" y2="66" marker-end="url(#gf-ar1)"/><line class="edge accent" x1="430" y1="75" x2="469" y2="133" marker-end="url(#gf-ar1)"/><line class="edge accent" x1="327" y1="107" x2="353" y2="171" marker-end="url(#gf-ar1)"/><line class="edge accent" x1="377" y1="184" x2="461" y2="156" marker-end="url(#gf-ar1)"/>
+<circle class="box" cx="320" cy="90" r="18"/><text x="320" y="95" text-anchor="middle" class="mono">P</text>
+<circle class="box" cx="420" cy="60" r="18"/><text x="420" y="65" text-anchor="middle" class="mono">Q</text>
+<circle class="box done" cx="480" cy="150" r="18"/><text x="480" y="155" text-anchor="middle" class="mono">R</text>
+<circle class="box" cx="360" cy="190" r="18"/><text x="360" y="195" text-anchor="middle" class="mono">S</text>
+<text x="290" y="238" class="small">in(R) = 2 · out(P) = 2 · no directed cycle</text>
+<text x="570" y="24" class="title">Weighted</text>
+<line class="edge" x1="600" y1="90" x2="720" y2="60"/><line class="edge" x1="720" y1="60" x2="770" y2="170"/><line class="edge" x1="600" y1="90" x2="640" y2="190"/><line class="edge" x1="640" y1="190" x2="770" y2="170"/>
+<text x="660" y="66" text-anchor="middle" class="mono fill-accent">6</text><text x="758" y="110" class="mono fill-accent">1</text><text x="606" y="146" text-anchor="end" class="mono fill-accent">2</text><text x="705" y="200" text-anchor="middle" class="mono fill-accent">3</text>
+<circle class="box" cx="600" cy="90" r="18"/><text x="600" y="95" text-anchor="middle" class="mono">X</text>
+<circle class="box" cx="720" cy="60" r="18"/><text x="720" y="65" text-anchor="middle" class="mono">Y</text>
+<circle class="box" cx="770" cy="170" r="18"/><text x="770" y="175" text-anchor="middle" class="mono">Z</text>
+<circle class="box" cx="640" cy="190" r="18"/><text x="640" y="195" text-anchor="middle" class="mono">W</text>
+<text x="570" y="238" class="small">X→Z: two edges either way; cost 7 via Y, 5 via W</text>
+</svg>
+<figcaption>Undirected edges go both ways; the degree is the number of edges at a node. Directed edges have an in-degree and an out-degree; a directed graph with no directed cycle is a DAG. Weights change what "shortest" means.</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>Why you care</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Path</td>
+<td>A sequence of nodes joined by edges</td>
+<td>BFS finds the one with the fewest edges</td>
+</tr>
+<tr>
+<td>Cycle</td>
+<td>A path that returns to its start</td>
+<td>Breaks topological order, and causes infinite loops if you forget to mark nodes</td>
+</tr>
+<tr>
+<td>Connected component</td>
+<td>A maximal set of mutually reachable nodes</td>
+<td>"How many islands / provinces / groups?"</td>
+</tr>
+<tr>
+<td>DAG</td>
+<td>A directed acyclic graph</td>
+<td>It can be ordered: see <a href="topological-sort.html">Topological Sort &amp; DAGs</a></td>
+</tr>
+<tr>
+<td>Sparse vs dense</td>
+<td>E ≈ V vs E ≈ V²</td>
+<td>Decides between an adjacency list and a matrix</td>
+</tr>
+<tr>
+<td>Weighted</td>
+<td>Edges carry a cost</td>
+<td>Plain BFS is no longer shortest; see <a href="shortest-paths.html">Shortest Paths</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="representations-the-same-graph-five-ways">Representations: the same graph, five ways</h2>
+<p>Before running any algorithm, decide how the graph lives in memory. The figure shows one graph (six nodes, seven edges) in every common form, with <strong>node 4 and its neighbours highlighted in each</strong>, so you can see where "the neighbours of 4" are stored and what it costs to find them.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 920 270" width="920" role="img" aria-label="One graph shown as a drawing, an edge list, an adjacency list, an adjacency matrix and an implicit grid">
+<text x="10" y="28" class="title">1 · Drawing</text>
+<line class="edge" x1="40" y1="80" x2="95" y2="80"/><line class="edge" x1="95" y1="80" x2="150" y2="80"/><line class="edge" x1="40" y1="80" x2="40" y2="150"/><line class="edge" x1="150" y1="80" x2="150" y2="150"/>
+<line class="edge path" x1="95" y1="80" x2="95" y2="150"/><line class="edge path" x1="40" y1="150" x2="95" y2="150"/><line class="edge path" x1="95" y1="150" x2="150" y2="150"/>
+<circle class="box" cx="40" cy="80" r="16"/><text x="40" y="85" text-anchor="middle" class="mono">0</text>
+<circle class="box visit" cx="95" cy="80" r="16"/><text x="95" y="85" text-anchor="middle" class="mono">1</text>
+<circle class="box" cx="150" cy="80" r="16"/><text x="150" y="85" text-anchor="middle" class="mono">2</text>
+<circle class="box visit" cx="40" cy="150" r="16"/><text x="40" y="155" text-anchor="middle" class="mono">3</text>
+<circle class="box path" cx="95" cy="150" r="16"/><text x="95" y="155" text-anchor="middle" class="mono">4</text>
+<circle class="box visit" cx="150" cy="150" r="16"/><text x="150" y="155" text-anchor="middle" class="mono">5</text>
+<text x="10" y="245" class="small muted">what we picture</text>
+<text x="190" y="28" class="title">2 · Edge list</text>
+<text x="200" y="62" class="mono">(0, 1)</text><text x="200" y="84" class="mono">(1, 2)</text><text x="200" y="106" class="mono fill-path">(3, 4)</text><text x="200" y="128" class="mono fill-path">(4, 5)</text><text x="200" y="150" class="mono">(0, 3)</text><text x="200" y="172" class="mono fill-path">(1, 4)</text><text x="200" y="194" class="mono">(2, 5)</text>
+<text x="190" y="245" class="small muted">O(E) memory</text><text x="190" y="261" class="small muted">Kruskal, DSU input</text>
+<text x="310" y="28" class="title">3 · Adjacency list</text>
+<rect class="box accent" x="310" y="46" width="26" height="24" rx="4"/><text x="323" y="63" text-anchor="middle" class="mono">0</text><rect class="box" x="346" y="46" width="26" height="24" rx="4"/><text x="359" y="63" text-anchor="middle" class="mono">1</text><rect class="box" x="376" y="46" width="26" height="24" rx="4"/><text x="389" y="63" text-anchor="middle" class="mono">3</text>
+<rect class="box accent" x="310" y="76" width="26" height="24" rx="4"/><text x="323" y="93" text-anchor="middle" class="mono">1</text><rect class="box" x="346" y="76" width="26" height="24" rx="4"/><text x="359" y="93" text-anchor="middle" class="mono">0</text><rect class="box" x="376" y="76" width="26" height="24" rx="4"/><text x="389" y="93" text-anchor="middle" class="mono">2</text><rect class="box" x="406" y="76" width="26" height="24" rx="4"/><text x="419" y="93" text-anchor="middle" class="mono">4</text>
+<rect class="box accent" x="310" y="106" width="26" height="24" rx="4"/><text x="323" y="123" text-anchor="middle" class="mono">2</text><rect class="box" x="346" y="106" width="26" height="24" rx="4"/><text x="359" y="123" text-anchor="middle" class="mono">1</text><rect class="box" x="376" y="106" width="26" height="24" rx="4"/><text x="389" y="123" text-anchor="middle" class="mono">5</text>
+<rect class="box accent" x="310" y="136" width="26" height="24" rx="4"/><text x="323" y="153" text-anchor="middle" class="mono">3</text><rect class="box" x="346" y="136" width="26" height="24" rx="4"/><text x="359" y="153" text-anchor="middle" class="mono">0</text><rect class="box" x="376" y="136" width="26" height="24" rx="4"/><text x="389" y="153" text-anchor="middle" class="mono">4</text>
+<rect class="box path" x="310" y="166" width="26" height="24" rx="4"/><text x="323" y="183" text-anchor="middle" class="mono">4</text><rect class="box visit" x="346" y="166" width="26" height="24" rx="4"/><text x="359" y="183" text-anchor="middle" class="mono">1</text><rect class="box visit" x="376" y="166" width="26" height="24" rx="4"/><text x="389" y="183" text-anchor="middle" class="mono">3</text><rect class="box visit" x="406" y="166" width="26" height="24" rx="4"/><text x="419" y="183" text-anchor="middle" class="mono">5</text>
+<rect class="box accent" x="310" y="196" width="26" height="24" rx="4"/><text x="323" y="213" text-anchor="middle" class="mono">5</text><rect class="box" x="346" y="196" width="26" height="24" rx="4"/><text x="359" y="213" text-anchor="middle" class="mono">2</text><rect class="box" x="376" y="196" width="26" height="24" rx="4"/><text x="389" y="213" text-anchor="middle" class="mono">4</text>
+<text x="310" y="245" class="small muted">O(V + E) memory</text><text x="310" y="261" class="small muted">default for BFS / DFS</text>
+<text x="490" y="28" class="title">4 · Adjacency matrix</text>
+<text x="542" y="56" text-anchor="middle" class="small mono muted">0</text><text x="566" y="56" text-anchor="middle" class="small mono muted">1</text><text x="590" y="56" text-anchor="middle" class="small mono muted">2</text><text x="614" y="56" text-anchor="middle" class="small mono muted">3</text><text x="638" y="56" text-anchor="middle" class="small mono muted">4</text><text x="662" y="56" text-anchor="middle" class="small mono muted">5</text>
+<text x="520" y="78" text-anchor="middle" class="small mono muted">0</text><text x="520" y="102" text-anchor="middle" class="small mono muted">1</text><text x="520" y="126" text-anchor="middle" class="small mono muted">2</text><text x="520" y="150" text-anchor="middle" class="small mono muted">3</text><text x="520" y="174" text-anchor="middle" class="small mono fill-path">4</text><text x="520" y="198" text-anchor="middle" class="small mono muted">5</text>
+<rect class="box" x="530" y="62" width="24" height="24"/><rect class="box done" x="554" y="62" width="24" height="24"/><rect class="box" x="578" y="62" width="24" height="24"/><rect class="box done" x="602" y="62" width="24" height="24"/><rect class="box" x="626" y="62" width="24" height="24"/><rect class="box" x="650" y="62" width="24" height="24"/>
+<rect class="box done" x="530" y="86" width="24" height="24"/><rect class="box" x="554" y="86" width="24" height="24"/><rect class="box done" x="578" y="86" width="24" height="24"/><rect class="box" x="602" y="86" width="24" height="24"/><rect class="box done" x="626" y="86" width="24" height="24"/><rect class="box" x="650" y="86" width="24" height="24"/>
+<rect class="box" x="530" y="110" width="24" height="24"/><rect class="box done" x="554" y="110" width="24" height="24"/><rect class="box" x="578" y="110" width="24" height="24"/><rect class="box" x="602" y="110" width="24" height="24"/><rect class="box" x="626" y="110" width="24" height="24"/><rect class="box done" x="650" y="110" width="24" height="24"/>
+<rect class="box done" x="530" y="134" width="24" height="24"/><rect class="box" x="554" y="134" width="24" height="24"/><rect class="box" x="578" y="134" width="24" height="24"/><rect class="box" x="602" y="134" width="24" height="24"/><rect class="box done" x="626" y="134" width="24" height="24"/><rect class="box" x="650" y="134" width="24" height="24"/>
+<rect class="box path" x="530" y="158" width="24" height="24"/><rect class="box path" x="554" y="158" width="24" height="24"/><rect class="box path" x="578" y="158" width="24" height="24"/><rect class="box path" x="602" y="158" width="24" height="24"/><rect class="box path" x="626" y="158" width="24" height="24"/><rect class="box path" x="650" y="158" width="24" height="24"/>
+<rect class="box" x="530" y="182" width="24" height="24"/><rect class="box" x="554" y="182" width="24" height="24"/><rect class="box done" x="578" y="182" width="24" height="24"/><rect class="box" x="602" y="182" width="24" height="24"/><rect class="box done" x="626" y="182" width="24" height="24"/><rect class="box" x="650" y="182" width="24" height="24"/>
+<text x="542" y="79" text-anchor="middle" class="small mono muted">0</text><text x="566" y="79" text-anchor="middle" class="small mono">1</text><text x="590" y="79" text-anchor="middle" class="small mono muted">0</text><text x="614" y="79" text-anchor="middle" class="small mono">1</text><text x="638" y="79" text-anchor="middle" class="small mono muted">0</text><text x="662" y="79" text-anchor="middle" class="small mono muted">0</text>
+<text x="542" y="103" text-anchor="middle" class="small mono">1</text><text x="566" y="103" text-anchor="middle" class="small mono muted">0</text><text x="590" y="103" text-anchor="middle" class="small mono">1</text><text x="614" y="103" text-anchor="middle" class="small mono muted">0</text><text x="638" y="103" text-anchor="middle" class="small mono">1</text><text x="662" y="103" text-anchor="middle" class="small mono muted">0</text>
+<text x="542" y="127" text-anchor="middle" class="small mono muted">0</text><text x="566" y="127" text-anchor="middle" class="small mono">1</text><text x="590" y="127" text-anchor="middle" class="small mono muted">0</text><text x="614" y="127" text-anchor="middle" class="small mono muted">0</text><text x="638" y="127" text-anchor="middle" class="small mono muted">0</text><text x="662" y="127" text-anchor="middle" class="small mono">1</text>
+<text x="542" y="151" text-anchor="middle" class="small mono">1</text><text x="566" y="151" text-anchor="middle" class="small mono muted">0</text><text x="590" y="151" text-anchor="middle" class="small mono muted">0</text><text x="614" y="151" text-anchor="middle" class="small mono muted">0</text><text x="638" y="151" text-anchor="middle" class="small mono">1</text><text x="662" y="151" text-anchor="middle" class="small mono muted">0</text>
+<text x="542" y="175" text-anchor="middle" class="small mono muted">0</text><text x="566" y="175" text-anchor="middle" class="small mono">1</text><text x="590" y="175" text-anchor="middle" class="small mono muted">0</text><text x="614" y="175" text-anchor="middle" class="small mono">1</text><text x="638" y="175" text-anchor="middle" class="small mono muted">0</text><text x="662" y="175" text-anchor="middle" class="small mono">1</text>
+<text x="542" y="199" text-anchor="middle" class="small mono muted">0</text><text x="566" y="199" text-anchor="middle" class="small mono muted">0</text><text x="590" y="199" text-anchor="middle" class="small mono">1</text><text x="614" y="199" text-anchor="middle" class="small mono muted">0</text><text x="638" y="199" text-anchor="middle" class="small mono">1</text><text x="662" y="199" text-anchor="middle" class="small mono muted">0</text>
+<text x="490" y="245" class="small muted">O(V²) memory, symmetric if undirected</text><text x="490" y="261" class="small muted">O(1) "is u–v an edge?", but O(V) per row</text>
+<text x="715" y="28" class="title">5 · Implicit grid</text>
+<rect class="box" x="730" y="50" width="50" height="50"/><rect class="box visit" x="780" y="50" width="50" height="50"/><rect class="box" x="830" y="50" width="50" height="50"/>
+<rect class="box visit" x="730" y="100" width="50" height="50"/><rect class="box path" x="780" y="100" width="50" height="50"/><rect class="box visit" x="830" y="100" width="50" height="50"/>
+<text x="755" y="76" text-anchor="middle" class="mono">0</text><text x="805" y="76" text-anchor="middle" class="mono">1</text><text x="855" y="76" text-anchor="middle" class="mono">2</text><text x="755" y="126" text-anchor="middle" class="mono">3</text><text x="805" y="126" text-anchor="middle" class="mono">4</text><text x="855" y="126" text-anchor="middle" class="mono">5</text>
+<text x="755" y="92" text-anchor="middle" class="small muted">0,0</text><text x="805" y="92" text-anchor="middle" class="small muted">0,1</text><text x="855" y="92" text-anchor="middle" class="small muted">0,2</text><text x="755" y="142" text-anchor="middle" class="small muted">1,0</text><text x="805" y="142" text-anchor="middle" class="small muted">1,1</text><text x="855" y="142" text-anchor="middle" class="small muted">1,2</text>
+<text x="722" y="178" class="small mono">id = r·C + c</text><text x="722" y="198" class="small mono">nbrs: (r±1, c), (r, c±1)</text><text x="722" y="218" class="small mono">if in bounds and open</text>
+<text x="715" y="245" class="small muted">O(1) extra memory</text><text x="715" y="261" class="small muted">edges computed, never stored</text>
+</svg>
+<figcaption>One graph in five representations. Highlighted: node 4 (path colour) and its neighbours 1, 3 and 5. The adjacency list hands you them directly, the matrix makes you scan a whole row, the edge list makes you scan everything, and the grid computes them with arithmetic.</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Edge list</th>
+<th>Adjacency list</th>
+<th>Adjacency matrix</th>
+<th>Implicit grid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Memory</td>
+<td>O(E)</td>
+<td>O(V + E)</td>
+<td>O(V²)</td>
+<td>O(1) extra</td>
+</tr>
+<tr>
+<td>Is u–v an edge?</td>
+<td>O(E)</td>
+<td>O(deg u), or O(1) with sets</td>
+<td><strong>O(1)</strong></td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>List the neighbours of u</td>
+<td>O(E)</td>
+<td><strong>O(deg u)</strong></td>
+<td>O(V)</td>
+<td>O(4) or O(8)</td>
+</tr>
+<tr>
+<td>Full BFS / DFS</td>
+<td>O(V·E)</td>
+<td><strong>O(V + E)</strong></td>
+<td>O(V²)</td>
+<td>O(R·C)</td>
+</tr>
+<tr>
+<td>Use it for</td>
+<td>Input format, Kruskal, union-find</td>
+<td>Almost everything</td>
+<td>Dense graphs, Floyd–Warshall, V ≤ ~2000</td>
+<td>Mazes, islands, boards</td>
+</tr>
+</tbody>
+</table>
+<div class="insight">
+<p><strong>Insight</strong>
+Problems usually <em>give</em> you an edge list (<code>edges = [[0,1],[1,2]]</code>) but traversals <em>want</em> an adjacency list. Converting costs O(V + E) once, and it is almost always your first line of code. An undirected edge is stored <strong>twice</strong>, once in each endpoint's list. Forgetting the second copy is the most common reason a BFS "can't reach" a node.</p>
+</div>
+<p>Build the graph edge by edge and watch all three stored forms grow together. Switch between undirected and directed to see the matrix lose its symmetry and each edge appear in only one list.</p>
+<div class="viz" data-viz="graph-fundamentals-repr"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">from collections import defaultdict
+
+def build_adj(n, edges, directed=False):
+    adj = [[] for _ in range(n)]          # node ids 0..n-1
+    for u, v in edges:
+        adj[u].append(v)
+        if not directed:
+            adj[v].append(u)              # undirected: store both directions
+    return adj
+
+def build_adj_labels(edges):              # arbitrary hashable labels (&quot;JFK&quot;, (r, c), ...)
+    adj = defaultdict(list)
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    return adj
+
+def build_matrix(n, edges):
+    m = [[0] * n for _ in range(n)]
+    for u, v in edges:
+        m[u][v] = m[v][u] = 1
+    return m
+</code></pre>
+<pre><code class="language-csharp">static List&lt;int&gt;[] BuildAdj(int n, int[][] edges, bool directed = false)
+{
+    var adj = new List&lt;int&gt;[n];
+    for (int i = 0; i &lt; n; i++) adj[i] = new List&lt;int&gt;();
+    foreach (var e in edges)
+    {
+        adj[e[0]].Add(e[1]);
+        if (!directed) adj[e[1]].Add(e[0]);   // undirected: store both directions
+    }
+    return adj;
+}
+
+static Dictionary&lt;string, List&lt;string&gt;&gt; BuildAdjLabels(IEnumerable&lt;(string U, string V)&gt; edges)
+{
+    var adj = new Dictionary&lt;string, List&lt;string&gt;&gt;();
+    foreach (var (u, v) in edges)
+    {
+        if (!adj.TryGetValue(u, out var lu)) adj[u] = lu = new List&lt;string&gt;();
+        if (!adj.TryGetValue(v, out var lv)) adj[v] = lv = new List&lt;string&gt;();
+        lu.Add(v);
+        lv.Add(u);
+    }
+    return adj;
+}
+
+static bool[,] BuildMatrix(int n, int[][] edges)
+{
+    var m = new bool[n, n];
+    foreach (var e in edges) m[e[0], e[1]] = m[e[1], e[0]] = true;
+    return m;
+}
+</code></pre>
+</div>
+<p>Building an adjacency list is O(V + E) time and memory; building a matrix is O(V²) however few edges there are.</p>
+<h2 id="bfs-explore-in-rings">BFS: explore in rings</h2>
+<p>BFS answers <em>"what is the fewest number of edges from s to every node?"</em> It works because a <strong>FIFO queue releases nodes in the order they were discovered</strong>. Everything at distance 1 is discovered before anything at distance 2, so it also leaves the queue first. When a node is discovered for the first time, it is therefore reached by a shortest path (counted in edges).</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 310" width="760" role="img" aria-label="BFS layers as concentric rings around the source, and a queue snapshot holding two adjacent layers">
+<circle class="gf-ring" cx="190" cy="155" r="55"/><circle class="gf-ring" cx="190" cy="155" r="98"/><circle class="gf-ring" cx="190" cy="155" r="138"/>
+<line class="edge path" x1="190" y1="155" x2="190" y2="100"/><line class="edge path" x1="190" y1="155" x2="237.6" y2="182.5"/><line class="edge path" x1="190" y1="155" x2="142.4" y2="182.5"/>
+<line class="edge path" x1="190" y1="100" x2="141" y2="70"/><line class="edge path" x1="190" y1="100" x2="275" y2="106"/><line class="edge path" x1="237.6" y1="182.5" x2="190" y2="253"/><line class="edge path" x1="142.4" y1="182.5" x2="105" y2="204"/>
+<line class="edge path" x1="275" y1="106" x2="259" y2="35.5"/><line class="edge path" x1="190" y1="253" x2="309.5" y2="224"/>
+<line class="edge dash" x1="237.6" y1="182.5" x2="275" y2="106"/><line class="edge dash" x1="142.4" y1="182.5" x2="190" y2="253"/><line class="edge dash" x1="141" y1="70" x2="105" y2="204"/>
+<circle class="box active" cx="190" cy="155" r="17"/><text x="190" y="160" text-anchor="middle" class="mono">S</text>
+<circle class="box visit" cx="190" cy="100" r="17"/><text x="190" y="105" text-anchor="middle" class="mono">A</text>
+<circle class="box visit" cx="237.6" cy="182.5" r="17"/><text x="237.6" y="187.5" text-anchor="middle" class="mono">B</text>
+<circle class="box visit" cx="142.4" cy="182.5" r="17"/><text x="142.4" y="187.5" text-anchor="middle" class="mono">C</text>
+<circle class="box done" cx="141" cy="70" r="17"/><text x="141" y="75" text-anchor="middle" class="mono">D</text>
+<circle class="box done" cx="275" cy="106" r="17"/><text x="275" y="111" text-anchor="middle" class="mono">E</text>
+<circle class="box done" cx="190" cy="253" r="17"/><text x="190" y="258" text-anchor="middle" class="mono">F</text>
+<circle class="box done" cx="105" cy="204" r="17"/><text x="105" y="209" text-anchor="middle" class="mono">G</text>
+<circle class="box path" cx="259" cy="35.5" r="17"/><text x="259" y="40.5" text-anchor="middle" class="mono">H</text>
+<circle class="box path" cx="309.5" cy="224" r="17"/><text x="309.5" y="229" text-anchor="middle" class="mono">I</text>
+<text x="137" y="145" text-anchor="middle" class="small muted gf-halo">d=1</text><text x="95" y="134" text-anchor="middle" class="small muted gf-halo">d=2</text><text x="57" y="123" text-anchor="middle" class="small muted gf-halo">d=3</text>
+<text x="400" y="30" class="title">Snapshot while processing C</text>
+<text x="400" y="62" class="small muted">front</text><text x="664" y="62" class="small muted" text-anchor="end">back</text>
+<rect class="box visit" x="400" y="70" width="58" height="40" rx="6"/><text x="429" y="95" text-anchor="middle" class="mono">C</text>
+<rect class="box done" x="464" y="70" width="58" height="40" rx="6"/><text x="493" y="95" text-anchor="middle" class="mono">D</text>
+<rect class="box done" x="528" y="70" width="58" height="40" rx="6"/><text x="557" y="95" text-anchor="middle" class="mono">E</text>
+<rect class="box done" x="592" y="70" width="58" height="40" rx="6"/><text x="621" y="95" text-anchor="middle" class="mono">F</text>
+<path class="edge" d="M402 120 v8 h54 v-8"/><text x="429" y="146" text-anchor="middle" class="small">tail of d=1</text>
+<path class="edge" d="M466 120 v8 h182 v-8"/><text x="557" y="146" text-anchor="middle" class="small">head of d=2</text>
+<text x="400" y="186" class="small">• The queue never holds more than two adjacent layers.</text>
+<text x="400" y="208" class="small">• Each node enters once, when it is first discovered.</text>
+<text x="400" y="230" class="small">• Dashed edges (B–E, C–F, D–G) find already-seen nodes</text>
+<text x="412" y="248" class="small">and are ignored: that is the "mark" doing its job.</text>
+<text x="400" y="270" class="small">• Solid edges form the BFS tree: following parent links</text>
+<text x="412" y="288" class="small">back from any node gives a shortest path to S.</text>
+</svg>
+<figcaption>BFS discovers the graph ring by ring. The solid edges are the BFS tree (who discovered whom); the dashed edges lead to nodes that were already seen. The queue holds the end of one layer followed by the start of the next, never anything further out.</figcaption>
+</figure>
+
+<p>Run it. Watch the <code>d=</code> labels appear ring by ring, the queue only ever holding two consecutive distances, and the layer table filling up. Set a target to see the shortest path reconstructed from parent links. Add a disconnected pair (like the default <code>8-9</code>) to see that BFS from one source never reaches another component.</p>
+<div class="viz" data-viz="graph-fundamentals-bfs"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def bfs(adj, src):
+    n = len(adj)
+    dist, parent = [-1] * n, [-1] * n     # -1 doubles as &quot;not seen yet&quot;
+    dist[src] = 0
+    q = deque([src])
+    while q:
+        u = q.popleft()
+        for v in adj[u]:
+            if dist[v] == -1:              # mark on ENQUEUE, not on pop
+                dist[v] = dist[u] + 1
+                parent[v] = u
+                q.append(v)
+    return dist, parent
+
+def path_to(dist, parent, t):
+    if dist[t] == -1:
+        return []                          # unreachable
+    path = []
+    while t != -1:
+        path.append(t)
+        t = parent[t]
+    return path[::-1]
+
+def bfs_by_level(adj, src):               # when you need &quot;minutes&quot;, &quot;steps&quot; or whole layers
+    seen = {src}
+    q, level = deque([src]), 0
+    while q:
+        for _ in range(len(q)):            # exactly the nodes of the current layer
+            u = q.popleft()
+            # ... process u at distance `level` ...
+            for v in adj[u]:
+                if v not in seen:
+                    seen.add(v)
+                    q.append(v)
+        level += 1
+</code></pre>
+<pre><code class="language-csharp">static (int[] Dist, int[] Parent) Bfs(List&lt;int&gt;[] adj, int src)
+{
+    int n = adj.Length;
+    var dist = new int[n];
+    var parent = new int[n];
+    Array.Fill(dist, -1);                  // -1 doubles as &quot;not seen yet&quot;
+    Array.Fill(parent, -1);
+    dist[src] = 0;
+    var q = new Queue&lt;int&gt;();
+    q.Enqueue(src);
+    while (q.Count &gt; 0)
+    {
+        int u = q.Dequeue();
+        foreach (int v in adj[u])
+        {
+            if (dist[v] != -1) continue;
+            dist[v] = dist[u] + 1;         // mark on ENQUEUE, not on dequeue
+            parent[v] = u;
+            q.Enqueue(v);
+        }
+    }
+    return (dist, parent);
+}
+
+static List&lt;int&gt; PathTo(int[] dist, int[] parent, int t)
+{
+    var path = new List&lt;int&gt;();
+    if (dist[t] == -1) return path;        // unreachable
+    for (int v = t; v != -1; v = parent[v]) path.Add(v);
+    path.Reverse();
+    return path;
+}
+
+static void BfsByLevel(List&lt;int&gt;[] adj, int src)
+{
+    var seen = new bool[adj.Length];
+    seen[src] = true;
+    var q = new Queue&lt;int&gt;();
+    q.Enqueue(src);
+    for (int level = 0; q.Count &gt; 0; level++)
+    {
+        for (int k = q.Count; k &gt; 0; k--)  // exactly the nodes of the current layer
+        {
+            int u = q.Dequeue();
+            // ... process u at distance `level` ...
+            foreach (int v in adj[u])
+                if (!seen[v]) { seen[v] = true; q.Enqueue(v); }
+        }
+    }
+}
+</code></pre>
+</div>
+<p>Time O(V + E) and memory O(V). The <code>for _ in range(len(q))</code> form tracks the layer number without storing a distance per node. Use it when the answer is "how many rounds" (minutes, moves, steps).</p>
+<h3 id="why-mark-on-enqueue">Why mark on enqueue?</h3>
+<div class="compare">
+<div class="bad">
+<h4 id="mark-when-popped">Mark when popped</h4>
+<p><code>u = q.popleft(); if seen[u]: continue; seen[u] = True</code>. Until <code>v</code> is popped, <em>every</em> neighbour that sees it pushes it again. On a dense graph the queue grows to O(E) entries, and on a grid each cell can be queued up to four times. Code that counts or sums while pushing (island area, number of fresh oranges) counts some cells twice.</p>
+</div>
+<div class="good">
+<h4 id="mark-when-pushed">Mark when pushed</h4>
+<p><code>if not seen[v]: seen[v] = True; q.append(v)</code>. Each node enters the queue exactly once, the queue holds at most V entries, and the distance stored at discovery is final. It's the same amount of code, and it is always correct.</p>
+</div>
+</div>
+<div class="tip">
+<p><strong>Tip</strong>
+BFS gives shortest paths <strong>only when every edge costs the same</strong>. For weights in {0, 1}, use 0-1 BFS with a deque (push 0-edges to the front). For general non-negative weights, use Dijkstra. Both are in <a href="shortest-paths.html">Shortest Paths</a>.</p>
+</div>
+<h2 id="dfs-go-deep-then-back-up">DFS: go deep, then back up</h2>
+<p>DFS follows one path as far as it can, then <strong>backtracks</strong> to the most recent node that still has an unexplored edge. The "most recent" is exactly what a stack gives you, and recursion uses the call stack for free. DFS doesn't find shortest paths. What it gives you is <strong>structure</strong>: the moment each node is entered and left, and whether an edge leads forward, back up the current path or sideways.</p>
+<p>Track each node with three colours:</p>
+<ul>
+<li><strong>WHITE</strong>: not discovered yet.</li>
+<li><strong>GREY</strong>: discovered, and still on the current recursion path (its call hasn't returned).</li>
+<li><strong>BLACK</strong>: finished; every node reachable from it has been explored.</li>
+</ul>
+<p>Recording a clock tick on entry (<code>d[u]</code>) and on exit (<code>f[u]</code>) turns the run into nested intervals.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 300" width="860" role="img" aria-label="DFS edge types on a directed graph, and the nested discovery and finish intervals">
+<defs><marker id="gf-ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="gf-ar2p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker><marker id="gf-ar2b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker><marker id="gf-ar2d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker><marker id="gf-ar2a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="10" y="294" class="small muted">labels are d / f (discover / finish time)</text>
+<line class="edge path" x1="88" y1="70" x2="150" y2="70" marker-end="url(#gf-ar2p)"/><line class="edge path" x1="188" y1="70" x2="250" y2="70" marker-end="url(#gf-ar2p)"/><line class="edge path" x1="270" y1="88" x2="270" y2="160" marker-end="url(#gf-ar2p)"/>
+<line class="edge bad dash" x1="257.9" y1="166.7" x2="183.4" y2="84.8" marker-end="url(#gf-ar2b)"/>
+<path class="edge done dash" d="M81.6 56.2 Q170 0 258.4 56.2" marker-end="url(#gf-ar2d)"/>
+<line class="edge accent dash" x1="188" y1="180" x2="250" y2="180" marker-end="url(#gf-ar2a)"/>
+<line class="edge path" x1="152" y1="180" x2="90" y2="180" marker-end="url(#gf-ar2p)"/><line class="edge path" x1="70" y1="198" x2="70" y2="240" marker-end="url(#gf-ar2p)"/>
+<circle class="box visit" cx="70" cy="70" r="18"/><text x="70" y="75" text-anchor="middle" class="mono">0</text>
+<circle class="box visit" cx="170" cy="70" r="18"/><text x="170" y="75" text-anchor="middle" class="mono">1</text>
+<circle class="box visit" cx="270" cy="70" r="18"/><text x="270" y="75" text-anchor="middle" class="mono">2</text>
+<circle class="box visit" cx="270" cy="180" r="18"/><text x="270" y="185" text-anchor="middle" class="mono">3</text>
+<circle class="box done" cx="170" cy="180" r="18"/><text x="170" y="185" text-anchor="middle" class="mono">4</text>
+<circle class="box done" cx="70" cy="180" r="18"/><text x="70" y="185" text-anchor="middle" class="mono">5</text>
+<circle class="box done" cx="70" cy="260" r="18"/><text x="70" y="265" text-anchor="middle" class="mono">6</text>
+<text x="70" y="104" text-anchor="middle" class="small mono">1/8</text><text x="170" y="104" text-anchor="middle" class="small mono">2/7</text><text x="294" y="74" class="small mono">3/6</text><text x="294" y="184" class="small mono">4/5</text><text x="170" y="214" text-anchor="middle" class="small mono">9/14</text><text x="44" y="184" text-anchor="end" class="small mono">10/13</text><text x="94" y="264" class="small mono">11/12</text>
+<text x="170" y="22" text-anchor="middle" class="small fill-done">forward 0→2</text><text x="208" y="136" text-anchor="end" class="small fill-bad">back 3→1</text><text x="219" y="170" text-anchor="middle" class="small fill-accent">cross</text>
+<text x="360" y="24" class="title">Intervals nest like parentheses</text>
+<line class="edge" x1="372" y1="250" x2="806" y2="250"/>
+<rect class="box visit" x="372" y="40" width="244" height="22" rx="5"/><text x="380" y="56" class="small mono">0  [1, 8]</text>
+<rect class="box visit" x="404" y="70" width="180" height="22" rx="5"/><text x="412" y="86" class="small mono">1  [2, 7]</text>
+<rect class="box visit" x="436" y="100" width="116" height="22" rx="5"/><text x="444" y="116" class="small mono">2  [3, 6]</text>
+<rect class="box visit" x="468" y="130" width="52" height="22" rx="5"/><text x="528" y="146" class="small mono">3  [4, 5]</text>
+<rect class="box done" x="628" y="160" width="180" height="22" rx="5"/><text x="636" y="176" class="small mono">4  [9, 14]</text>
+<rect class="box done" x="660" y="190" width="116" height="22" rx="5"/><text x="668" y="206" class="small mono">5  [10, 13]</text>
+<rect class="box done" x="692" y="220" width="52" height="22" rx="5"/><text x="752" y="236" class="small mono">6  [11, 12]</text>
+<text x="382" y="268" text-anchor="middle" class="small mono muted">1</text><text x="414" y="268" text-anchor="middle" class="small mono muted">2</text><text x="446" y="268" text-anchor="middle" class="small mono muted">3</text><text x="478" y="268" text-anchor="middle" class="small mono muted">4</text><text x="510" y="268" text-anchor="middle" class="small mono muted">5</text><text x="542" y="268" text-anchor="middle" class="small mono muted">6</text><text x="574" y="268" text-anchor="middle" class="small mono muted">7</text><text x="606" y="268" text-anchor="middle" class="small mono muted">8</text><text x="638" y="268" text-anchor="middle" class="small mono muted">9</text><text x="670" y="268" text-anchor="middle" class="small mono muted">10</text><text x="702" y="268" text-anchor="middle" class="small mono muted">11</text><text x="734" y="268" text-anchor="middle" class="small mono muted">12</text><text x="766" y="268" text-anchor="middle" class="small mono muted">13</text><text x="798" y="268" text-anchor="middle" class="small mono muted">14</text>
+<text x="590" y="292" text-anchor="middle" class="small muted">time →  (two DFS trees: rooted at 0, then at 4)</text>
+</svg>
+<figcaption>DFS from 0, then from 4, with neighbours taken in input order. Solid edges form the DFS forest. Edge 3→1 points at a GREY node, an ancestor still on the path, so it is a <strong>back edge</strong> and the graph has a cycle. 0→2 reaches a finished descendant (<strong>forward</strong>). 4→3 reaches a finished node in an earlier tree (<strong>cross</strong>). Interval containment equals ancestry: u is an ancestor of v exactly when d[u] &lt; d[v] &lt; f[v] &lt; f[u].</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th>Edge u→v, and v's colour when u examines it</th>
+<th>Name</th>
+<th>What it tells you</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WHITE</td>
+<td><strong>Tree</strong></td>
+<td>v is discovered <em>through</em> u (<code>parent[v] = u</code>)</td>
+</tr>
+<tr>
+<td>GREY</td>
+<td><strong>Back</strong></td>
+<td>v is an ancestor on the current path: <strong>a cycle</strong></td>
+</tr>
+<tr>
+<td>BLACK and <code>d[u] &lt; d[v]</code></td>
+<td><strong>Forward</strong></td>
+<td>v is a descendant that already finished; harmless</td>
+</tr>
+<tr>
+<td>BLACK and <code>d[u] &gt; d[v]</code></td>
+<td><strong>Cross</strong></td>
+<td>v is in another, finished branch; harmless</td>
+</tr>
+</tbody>
+</table>
+<p>In an <strong>undirected</strong> graph only tree and back edges exist, because a "cross" edge would have been taken as a tree edge earlier. That is why undirected cycle detection is simpler: see <a href="#cycle-detection-two-different-questions">Cycle detection</a>.</p>
+<p>Step through it. Watch the call stack grow and shrink, the colour array go white → grey → black, the <code>d/f</code> times appear above each node, and each edge get classified the moment it is examined. The default graph contains all four edge types.</p>
+<div class="viz" data-viz="graph-fundamentals-dfs"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">WHITE, GREY, BLACK = 0, 1, 2
+
+def dfs_all(adj):
+    n = len(adj)
+    color, d, f = [WHITE] * n, [0] * n, [0] * n
+    time = 0
+
+    def dfs(u):
+        nonlocal time
+        color[u] = GREY; time += 1; d[u] = time      # enter: on the current path
+        for v in adj[u]:
+            if color[v] == WHITE:
+                dfs(v)                                # tree edge
+            # GREY v -&gt; back edge (cycle); BLACK v -&gt; forward / cross
+        color[u] = BLACK; time += 1; f[u] = time     # leave: fully explored
+
+    for s in range(n):                                # restart in every unvisited part
+        if color[s] == WHITE:
+            dfs(s)
+    return d, f
+
+def dfs_iterative(adj):
+    &quot;&quot;&quot;Same colours and times as the recursive version: no recursion limit.&quot;&quot;&quot;
+    n = len(adj)
+    color, d, f = [WHITE] * n, [0] * n, [0] * n
+    time = 0
+    for s in range(n):
+        if color[s] != WHITE:
+            continue
+        time += 1; d[s] = time; color[s] = GREY
+        stack = [(s, 0)]                               # (node, index of next neighbour)
+        while stack:
+            u, i = stack[-1]
+            if i &lt; len(adj[u]):
+                stack[-1] = (u, i + 1)                 # resume point, like a saved PC
+                v = adj[u][i]
+                if color[v] == WHITE:
+                    time += 1; d[v] = time; color[v] = GREY
+                    stack.append((v, 0))
+            else:
+                stack.pop()
+                time += 1; f[u] = time; color[u] = BLACK
+    return d, f
+</code></pre>
+<pre><code class="language-csharp">const int White = 0, Grey = 1, Black = 2;
+
+static (int[] D, int[] F) DfsAll(List&lt;int&gt;[] adj)
+{
+    int n = adj.Length, time = 0;
+    var color = new int[n];
+    var d = new int[n];
+    var f = new int[n];
+
+    void Dfs(int u)
+    {
+        color[u] = Grey; d[u] = ++time;              // enter: on the current path
+        foreach (int v in adj[u])
+            if (color[v] == White) Dfs(v);            // tree edge
+        color[u] = Black; f[u] = ++time;             // leave: fully explored
+    }
+
+    for (int s = 0; s &lt; n; s++)
+        if (color[s] == White) Dfs(s);
+    return (d, f);
+}
+
+static (int[] D, int[] F) DfsIterative(List&lt;int&gt;[] adj)
+{
+    int n = adj.Length, time = 0;
+    var color = new int[n];
+    var d = new int[n];
+    var f = new int[n];
+    var stack = new Stack&lt;(int Node, int Next)&gt;();
+    for (int s = 0; s &lt; n; s++)
+    {
+        if (color[s] != White) continue;
+        d[s] = ++time; color[s] = Grey;
+        stack.Push((s, 0));
+        while (stack.Count &gt; 0)
+        {
+            var (u, i) = stack.Pop();
+            if (i &lt; adj[u].Count)
+            {
+                stack.Push((u, i + 1));               // resume point, like a saved PC
+                int v = adj[u][i];
+                if (color[v] == White)
+                {
+                    d[v] = ++time; color[v] = Grey;
+                    stack.Push((v, 0));
+                }
+            }
+            else
+            {
+                f[u] = ++time; color[u] = Black;
+            }
+        }
+    }
+    return (d, f);
+}
+</code></pre>
+</div>
+<p>Time O(V + E), memory O(V) for the colours plus O(depth) for the stack.</p>
+<div class="pitfall">
+<p><strong>Pitfall: recursion depth</strong>
+A path-shaped graph (or a 1000×1000 grid shaped like a snake) makes recursive DFS go V levels deep. Python stops at about 1000 frames by default. C# overflows its 1 MB thread stack somewhere around 10⁴–10⁵ frames, and a <code>StackOverflowException</code> <strong>cannot be caught</strong>. When V can exceed about 10⁴, use the iterative <code>(node, next-index)</code> version above. Alternatively, when you only need "visit everything" and not finish times, use the simpler "push all neighbours, skip on pop if seen" stack. <code>sys.setrecursionlimit</code> only moves the crash.</p>
+</div>
+<div class="insight">
+<p><strong>Insight: BFS or DFS?</strong>
+For plain reachability (components, flood fill, "can I reach t?") <strong>either works</strong>; choose whichever is shortest to write. You need <strong>BFS</strong> for fewest edges or steps, or when the answer is "how many rounds". You need <strong>DFS</strong> for finish order (topological sort, SCCs), back edges (directed cycles), ancestry, or when the work happens <em>after</em> the children return (subtree sizes, memoised DP on a DAG).</p>
+</div>
+<h2 id="grids-the-most-common-hidden-graph">Grids: the most common hidden graph</h2>
+<p>A 2-D grid is a graph: a node is a cell <code>(r, c)</code>, and the edges go to the open cells next to it. No adjacency list is ever built; the neighbours are computed with a direction array and a bounds check. A grid traversal costs <strong>O(R·C)</strong> time and memory.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 210" width="760" role="img" aria-label="4-way and 8-way neighbourhoods, and a map that has two islands with 4-way moves but one island with 8-way moves">
+<text x="20" y="34" class="title">4-way</text>
+<rect class="box" x="20" y="50" width="40" height="40"/>
+<rect class="box visit" x="60" y="50" width="40" height="40"/>
+<rect class="box" x="100" y="50" width="40" height="40"/>
+<rect class="box visit" x="20" y="90" width="40" height="40"/>
+<rect class="box active" x="60" y="90" width="40" height="40"/>
+<text x="80" y="115" text-anchor="middle" class="mono">u</text>
+<rect class="box visit" x="100" y="90" width="40" height="40"/>
+<rect class="box" x="20" y="130" width="40" height="40"/>
+<rect class="box visit" x="60" y="130" width="40" height="40"/>
+<rect class="box" x="100" y="130" width="40" height="40"/>
+<text x="20" y="190" class="small mono">(r±1,c) (r,c±1)</text>
+<text x="170" y="34" class="title">8-way</text>
+<rect class="box visit" x="170" y="50" width="40" height="40"/>
+<rect class="box visit" x="210" y="50" width="40" height="40"/>
+<rect class="box visit" x="250" y="50" width="40" height="40"/>
+<rect class="box visit" x="170" y="90" width="40" height="40"/>
+<rect class="box active" x="210" y="90" width="40" height="40"/>
+<text x="230" y="115" text-anchor="middle" class="mono">u</text>
+<rect class="box visit" x="250" y="90" width="40" height="40"/>
+<rect class="box visit" x="170" y="130" width="40" height="40"/>
+<rect class="box visit" x="210" y="130" width="40" height="40"/>
+<rect class="box visit" x="250" y="130" width="40" height="40"/>
+<text x="170" y="190" class="small mono">all dr,dc in -1..1</text>
+<text x="360" y="34" class="title">4-way: 2 islands</text>
+<rect class="box visit" x="360" y="50" width="30" height="30"/>
+<text x="375" y="70" text-anchor="middle" class="mono">A</text>
+<rect class="box visit" x="390" y="50" width="30" height="30"/>
+<text x="405" y="70" text-anchor="middle" class="mono">A</text>
+<rect class="box" x="420" y="50" width="30" height="30"/>
+<rect class="box" x="450" y="50" width="30" height="30"/>
+<rect class="box" x="480" y="50" width="30" height="30"/>
+<rect class="box visit" x="360" y="80" width="30" height="30"/>
+<text x="375" y="100" text-anchor="middle" class="mono">A</text>
+<rect class="box visit" x="390" y="80" width="30" height="30"/>
+<text x="405" y="100" text-anchor="middle" class="mono">A</text>
+<rect class="box" x="420" y="80" width="30" height="30"/>
+<rect class="box" x="450" y="80" width="30" height="30"/>
+<rect class="box" x="480" y="80" width="30" height="30"/>
+<rect class="box" x="360" y="110" width="30" height="30"/>
+<rect class="box" x="390" y="110" width="30" height="30"/>
+<rect class="box done" x="420" y="110" width="30" height="30"/>
+<text x="435" y="130" text-anchor="middle" class="mono">B</text>
+<rect class="box done" x="450" y="110" width="30" height="30"/>
+<text x="465" y="130" text-anchor="middle" class="mono">B</text>
+<rect class="box" x="480" y="110" width="30" height="30"/>
+<rect class="box" x="360" y="140" width="30" height="30"/>
+<rect class="box" x="390" y="140" width="30" height="30"/>
+<rect class="box" x="420" y="140" width="30" height="30"/>
+<rect class="box done" x="450" y="140" width="30" height="30"/>
+<text x="465" y="160" text-anchor="middle" class="mono">B</text>
+<rect class="box done" x="480" y="140" width="30" height="30"/>
+<text x="495" y="160" text-anchor="middle" class="mono">B</text>
+<text x="360" y="190" class="small">(1,1) and (2,2) only touch at a corner</text>
+<text x="570" y="34" class="title">8-way: 1 island</text>
+<rect class="box path" x="570" y="50" width="30" height="30"/>
+<text x="585" y="70" text-anchor="middle" class="mono">A</text>
+<rect class="box path" x="600" y="50" width="30" height="30"/>
+<text x="615" y="70" text-anchor="middle" class="mono">A</text>
+<rect class="box" x="630" y="50" width="30" height="30"/>
+<rect class="box" x="660" y="50" width="30" height="30"/>
+<rect class="box" x="690" y="50" width="30" height="30"/>
+<rect class="box path" x="570" y="80" width="30" height="30"/>
+<text x="585" y="100" text-anchor="middle" class="mono">A</text>
+<rect class="box path" x="600" y="80" width="30" height="30"/>
+<text x="615" y="100" text-anchor="middle" class="mono">A</text>
+<rect class="box" x="630" y="80" width="30" height="30"/>
+<rect class="box" x="660" y="80" width="30" height="30"/>
+<rect class="box" x="690" y="80" width="30" height="30"/>
+<rect class="box" x="570" y="110" width="30" height="30"/>
+<rect class="box" x="600" y="110" width="30" height="30"/>
+<rect class="box path" x="630" y="110" width="30" height="30"/>
+<text x="645" y="130" text-anchor="middle" class="mono">A</text>
+<rect class="box path" x="660" y="110" width="30" height="30"/>
+<text x="675" y="130" text-anchor="middle" class="mono">A</text>
+<rect class="box" x="690" y="110" width="30" height="30"/>
+<rect class="box" x="570" y="140" width="30" height="30"/>
+<rect class="box" x="600" y="140" width="30" height="30"/>
+<rect class="box" x="630" y="140" width="30" height="30"/>
+<rect class="box path" x="660" y="140" width="30" height="30"/>
+<text x="675" y="160" text-anchor="middle" class="mono">A</text>
+<rect class="box path" x="690" y="140" width="30" height="30"/>
+<text x="705" y="160" text-anchor="middle" class="mono">A</text>
+<text x="570" y="190" class="small">the corner counts as a connection</text>
+</svg>
+<figcaption>A grid is a graph whose edges you compute instead of storing. The problem statement decides the neighbourhood: "horizontally or vertically adjacent" means 4-way, and "including diagonals" means 8-way. The same map can then have a different number of islands.</figcaption>
+</figure>
+
+<h3 id="flood-fill-and-number-of-islands">Flood fill and Number of Islands</h3>
+<p>Scan every cell. Each time you find land that has not been visited yet, you have found a <strong>new island</strong>: count it, then flood it (with BFS or DFS) so that none of its cells is counted again. That is "count the connected components" on an implicit graph. Edit the grid, switch between a BFS queue and a DFS stack (the same island gets claimed, in a different order), and switch to 8-way neighbours to see diagonal islands merge.</p>
+<div class="viz" data-viz="graph-fundamentals-islands"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+DIRS = ((1, 0), (-1, 0), (0, 1), (0, -1))
+
+def num_islands(grid):
+    R, C = len(grid), len(grid[0])
+    seen = [[False] * C for _ in range(R)]
+    count = 0
+    for r in range(R):
+        for c in range(C):
+            if grid[r][c] != &quot;1&quot; or seen[r][c]:
+                continue
+            count += 1                                 # new component found
+            seen[r][c] = True
+            q = deque([(r, c)])
+            while q:                                   # flood it so it is never counted again
+                cr, cc = q.popleft()
+                for dr, dc in DIRS:
+                    nr, nc = cr + dr, cc + dc
+                    if 0 &lt;= nr &lt; R and 0 &lt;= nc &lt; C and grid[nr][nc] == &quot;1&quot; and not seen[nr][nc]:
+                        seen[nr][nc] = True
+                        q.append((nr, nc))
+    return count
+</code></pre>
+<pre><code class="language-csharp">static readonly (int Dr, int Dc)[] Dirs = { (1, 0), (-1, 0), (0, 1), (0, -1) };
+
+static int NumIslands(char[][] grid)
+{
+    int R = grid.Length, C = grid[0].Length, count = 0;
+    var seen = new bool[R, C];
+    var q = new Queue&lt;(int, int)&gt;();
+    for (int r = 0; r &lt; R; r++)
+    for (int c = 0; c &lt; C; c++)
+    {
+        if (grid[r][c] != '1' || seen[r, c]) continue;
+        count++;                                        // new component found
+        seen[r, c] = true;
+        q.Enqueue((r, c));
+        while (q.Count &gt; 0)                             // flood it so it is never counted again
+        {
+            var (cr, cc) = q.Dequeue();
+            foreach (var (dr, dc) in Dirs)
+            {
+                int nr = cr + dr, nc = cc + dc;
+                if (nr &lt; 0 || nr &gt;= R || nc &lt; 0 || nc &gt;= C) continue;
+                if (grid[nr][nc] != '1' || seen[nr, nc]) continue;
+                seen[nr, nc] = true;
+                q.Enqueue((nr, nc));
+            }
+        }
+    }
+    return count;
+}
+</code></pre>
+</div>
+<p>Time O(R·C) and memory O(R·C) for <code>seen</code>. If you are allowed to modify the input, overwrite <code>'1'</code> with <code>'0'</code> instead of keeping <code>seen</code>. That saves memory, but it destroys the input, so say so in an interview.</p>
+<div class="tip">
+<p><strong>Tip: grid habits that prevent bugs</strong></p>
+<ul>
+<li>Keep one <code>DIRS</code> constant and one bounds check: <code>0 &lt;= nr &lt; R and 0 &lt;= nc &lt; C</code>.</li>
+<li>Encode a cell as <code>r * C + c</code> when you need a 1-D id (for union-find, or a <code>seen</code> set of ints).</li>
+<li>Check "is it open?" <strong>before</strong> "have I seen it?". Both orders are correct; this one is just faster to read.</li>
+<li>For "border-connected" problems (Surrounded Regions, Pacific Atlantic, Number of Enclaves), <strong>start from the border</strong> and mark what is reachable. Everything left unmarked is the answer.</li>
+</ul>
+</div>
+<h2 id="multi-source-bfs-many-starting-points-one-pass">Multi-source BFS: many starting points, one pass</h2>
+<p>"Every rotten orange infects its neighbours each minute." "Fill each empty room with the distance to its <em>nearest</em> gate." Running one BFS per source costs k · O(V + E) and still needs a <code>min</code> at the end. Instead, <strong>put every source in the queue at distance 0 and run a single BFS</strong>. The layers grow outward from all sources at once, and the first wave to reach a cell is the one from the nearest source.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 780 250" width="780" role="img" aria-label="Distances from two sources on a grid, and the equivalent virtual super-source">
+<defs><marker id="gf-ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="20" y="28" class="title">Seed the queue with every source</text>
+<rect class="box visit" x="20" y="42" width="32" height="32"/>
+<text x="36" y="63" text-anchor="middle" class="mono">2</text>
+<rect class="box visit" x="52" y="42" width="32" height="32"/>
+<text x="68" y="63" text-anchor="middle" class="mono">1</text>
+<rect class="box visit" x="84" y="42" width="32" height="32"/>
+<text x="100" y="63" text-anchor="middle" class="mono">2</text>
+<rect class="box visit" x="116" y="42" width="32" height="32"/>
+<text x="132" y="63" text-anchor="middle" class="mono">3</text>
+<rect class="box path" x="148" y="42" width="32" height="32"/>
+<text x="164" y="63" text-anchor="middle" class="mono">4</text>
+<rect class="box done" x="180" y="42" width="32" height="32"/>
+<text x="196" y="63" text-anchor="middle" class="mono">3</text>
+<rect class="box done" x="212" y="42" width="32" height="32"/>
+<text x="228" y="63" text-anchor="middle" class="mono">4</text>
+<rect class="box visit" x="20" y="74" width="32" height="32"/>
+<text x="36" y="95" text-anchor="middle" class="mono">1</text>
+<rect class="box active" x="52" y="74" width="32" height="32"/>
+<text x="68" y="95" text-anchor="middle" class="mono">S</text>
+<rect class="box visit" x="84" y="74" width="32" height="32"/>
+<text x="100" y="95" text-anchor="middle" class="mono">1</text>
+<rect class="box visit" x="116" y="74" width="32" height="32"/>
+<text x="132" y="95" text-anchor="middle" class="mono">2</text>
+<rect class="box path" x="148" y="74" width="32" height="32"/>
+<text x="164" y="95" text-anchor="middle" class="mono">3</text>
+<rect class="box done" x="180" y="74" width="32" height="32"/>
+<text x="196" y="95" text-anchor="middle" class="mono">2</text>
+<rect class="box done" x="212" y="74" width="32" height="32"/>
+<text x="228" y="95" text-anchor="middle" class="mono">3</text>
+<rect class="box visit" x="20" y="106" width="32" height="32"/>
+<text x="36" y="127" text-anchor="middle" class="mono">2</text>
+<rect class="box visit" x="52" y="106" width="32" height="32"/>
+<text x="68" y="127" text-anchor="middle" class="mono">1</text>
+<rect class="box visit" x="84" y="106" width="32" height="32"/>
+<text x="100" y="127" text-anchor="middle" class="mono">2</text>
+<rect class="box path" x="116" y="106" width="32" height="32"/>
+<text x="132" y="127" text-anchor="middle" class="mono">3</text>
+<rect class="box done" x="148" y="106" width="32" height="32"/>
+<text x="164" y="127" text-anchor="middle" class="mono">2</text>
+<rect class="box done" x="180" y="106" width="32" height="32"/>
+<text x="196" y="127" text-anchor="middle" class="mono">1</text>
+<rect class="box done" x="212" y="106" width="32" height="32"/>
+<text x="228" y="127" text-anchor="middle" class="mono">2</text>
+<rect class="box visit" x="20" y="138" width="32" height="32"/>
+<text x="36" y="159" text-anchor="middle" class="mono">3</text>
+<rect class="box visit" x="52" y="138" width="32" height="32"/>
+<text x="68" y="159" text-anchor="middle" class="mono">2</text>
+<rect class="box path" x="84" y="138" width="32" height="32"/>
+<text x="100" y="159" text-anchor="middle" class="mono">3</text>
+<rect class="box done" x="116" y="138" width="32" height="32"/>
+<text x="132" y="159" text-anchor="middle" class="mono">2</text>
+<rect class="box done" x="148" y="138" width="32" height="32"/>
+<text x="164" y="159" text-anchor="middle" class="mono">1</text>
+<rect class="box active" x="180" y="138" width="32" height="32"/>
+<text x="196" y="159" text-anchor="middle" class="mono">S</text>
+<rect class="box done" x="212" y="138" width="32" height="32"/>
+<text x="228" y="159" text-anchor="middle" class="mono">1</text>
+<rect class="box visit" x="20" y="170" width="32" height="32"/>
+<text x="36" y="191" text-anchor="middle" class="mono">4</text>
+<rect class="box visit" x="52" y="170" width="32" height="32"/>
+<text x="68" y="191" text-anchor="middle" class="mono">3</text>
+<rect class="box path" x="84" y="170" width="32" height="32"/>
+<text x="100" y="191" text-anchor="middle" class="mono">4</text>
+<rect class="box done" x="116" y="170" width="32" height="32"/>
+<text x="132" y="191" text-anchor="middle" class="mono">3</text>
+<rect class="box done" x="148" y="170" width="32" height="32"/>
+<text x="164" y="191" text-anchor="middle" class="mono">2</text>
+<rect class="box done" x="180" y="170" width="32" height="32"/>
+<text x="196" y="191" text-anchor="middle" class="mono">1</text>
+<rect class="box done" x="212" y="170" width="32" height="32"/>
+<text x="228" y="191" text-anchor="middle" class="mono">2</text>
+<text x="20" y="242" class="small">each cell keeps the distance to its NEAREST source</text>
+<text x="300" y="28" class="title">…which is one BFS from a virtual node S*</text>
+<line class="edge accent dash" x1="376.4" y1="117.5" x2="461.8" y2="78.3" marker-end="url(#gf-ar3)"/>
+<text x="420" y="90" text-anchor="middle" class="small mono fill-accent">0</text>
+<line class="edge accent dash" x1="376.4" y1="132.5" x2="461.8" y2="171.7" marker-end="url(#gf-ar3)"/>
+<text x="420" y="170" text-anchor="middle" class="small mono fill-accent">0</text>
+<line class="edge" x1="497.5" y1="65.6" x2="580.6" y2="44.9"/>
+<line class="edge" x1="497.5" y1="74.4" x2="580.6" y2="95.1"/>
+<line class="edge" x1="497.6" y1="176.3" x2="580.4" y2="159.1"/>
+<line class="edge" x1="497.6" y1="183.7" x2="580.4" y2="200.9"/>
+<circle class="box accent" cx="360" cy="125" r="18"/><text x="360" y="130" text-anchor="middle" class="mono">S*</text>
+<circle class="box active" cx="480" cy="70" r="18"/><text x="480" y="75" text-anchor="middle" class="mono">S₁</text>
+<circle class="box active" cx="480" cy="180" r="18"/><text x="480" y="185" text-anchor="middle" class="mono">S₂</text>
+<circle class="box visit" cx="600" cy="40" r="18"/><text x="600" y="45" text-anchor="middle" class="mono">a</text>
+<circle class="box visit" cx="600" cy="100" r="18"/><text x="600" y="105" text-anchor="middle" class="mono">b</text>
+<circle class="box visit" cx="600" cy="155" r="18"/><text x="600" y="160" text-anchor="middle" class="mono">c</text>
+<circle class="box visit" cx="600" cy="205" r="18"/><text x="600" y="210" text-anchor="middle" class="mono">d</text>
+<text x="640" y="80" class="small">d = 1 from S₁</text><text x="640" y="190" class="small">d = 1 from S₂</text>
+<text x="300" y="242" class="small">Pushing all sources first = popping S* first. Same layers, no extra node.</text>
+</svg>
+<figcaption>Multi-source BFS. Instead of running one BFS per source (k·O(V+E)), start with <em>all</em> sources at distance 0. That is exactly a single BFS from an imaginary super-source joined to each real source by a free edge. Green cells are nearer S₂, blue cells nearer S₁, and path-coloured cells are tied.</figcaption>
+</figure>
+
+<p>Step through both stories on the same grid. In <em>rotting oranges</em> the answer is the number of layers (minutes), or −1 if a fresh orange is never reached. In <em>walls and gates</em> every reached cell stores its layer number, and unreachable rooms stay at ∞.</p>
+<div class="viz" data-viz="graph-fundamentals-multisource"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def oranges_rotting(grid):
+    R, C = len(grid), len(grid[0])
+    q, fresh = deque(), 0
+    for r in range(R):
+        for c in range(C):
+            if grid[r][c] == 2:
+                q.append((r, c))                 # ALL sources start at minute 0
+            elif grid[r][c] == 1:
+                fresh += 1
+    minutes = 0
+    while q and fresh:
+        for _ in range(len(q)):                  # one whole layer = one minute
+            r, c = q.popleft()
+            for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                nr, nc = r + dr, c + dc
+                if 0 &lt;= nr &lt; R and 0 &lt;= nc &lt; C and grid[nr][nc] == 1:
+                    grid[nr][nc] = 2             # mark on enqueue
+                    fresh -= 1
+                    q.append((nr, nc))
+        minutes += 1
+    return -1 if fresh else minutes
+</code></pre>
+<pre><code class="language-csharp">static int OrangesRotting(int[][] grid)
+{
+    int R = grid.Length, C = grid[0].Length, fresh = 0, minutes = 0;
+    var q = new Queue&lt;(int, int)&gt;();
+    for (int r = 0; r &lt; R; r++)
+        for (int c = 0; c &lt; C; c++)
+            if (grid[r][c] == 2) q.Enqueue((r, c));   // ALL sources start at minute 0
+            else if (grid[r][c] == 1) fresh++;
+    int[] dr = { 1, -1, 0, 0 }, dc = { 0, 0, 1, -1 };
+    while (q.Count &gt; 0 &amp;&amp; fresh &gt; 0)
+    {
+        for (int k = q.Count; k &gt; 0; k--)             // one whole layer = one minute
+        {
+            var (r, c) = q.Dequeue();
+            for (int d = 0; d &lt; 4; d++)
+            {
+                int nr = r + dr[d], nc = c + dc[d];
+                if (nr &lt; 0 || nr &gt;= R || nc &lt; 0 || nc &gt;= C || grid[nr][nc] != 1) continue;
+                grid[nr][nc] = 2;                     // mark on enqueue
+                fresh--;
+                q.Enqueue((nr, nc));
+            }
+        }
+        minutes++;
+    }
+    return fresh &gt; 0 ? -1 : minutes;
+}
+</code></pre>
+</div>
+<p>Time O(R·C) and memory O(R·C). The <code>while q and fresh</code> condition matters: without <code>and fresh</code>, the loop would count one extra minute after the last orange rots.</p>
+<div class="recognize">
+<p><strong>Recognize multi-source BFS when</strong></p>
+<ul>
+<li>The question asks for the distance to the <strong>nearest</strong> of many things: gates, zeros (01 Matrix), land (As Far from Land as Possible), or the nearest exit.</li>
+<li>Something <strong>spreads simultaneously</strong> from several places (rot, fire, infection, flooding).</li>
+<li>A brute force would run a BFS from <em>every</em> source. Reverse it: start from all the targets at once.</li>
+</ul>
+</div>
+<h2 id="connected-components">Connected components</h2>
+<p>In an undirected graph, a <strong>connected component</strong> is a maximal set of nodes that can all reach each other. Counting components uses the same outer loop as islands: <em>for each node not seen yet, start a new traversal and stamp every node it reaches with a new component id</em>. Each node is visited once, so the whole thing is O(V + E) even though there are several traversals.</p>
+<div class="viz" data-viz="graph-fundamentals-components"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def components(n, edges):
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    comp = [-1] * n
+    k = 0
+    for s in range(n):
+        if comp[s] != -1:
+            continue
+        comp[s] = k                       # s starts component k
+        q = deque([s])
+        while q:
+            u = q.popleft()
+            for v in adj[u]:
+                if comp[v] == -1:
+                    comp[v] = k
+                    q.append(v)
+        k += 1
+    return k, comp                        # number of components, label per node
+</code></pre>
+<pre><code class="language-csharp">static (int Count, int[] Comp) Components(int n, int[][] edges)
+{
+    var adj = new List&lt;int&gt;[n];
+    for (int i = 0; i &lt; n; i++) adj[i] = new List&lt;int&gt;();
+    foreach (var e in edges) { adj[e[0]].Add(e[1]); adj[e[1]].Add(e[0]); }
+    var comp = new int[n];
+    Array.Fill(comp, -1);
+    int k = 0;
+    var q = new Queue&lt;int&gt;();
+    for (int s = 0; s &lt; n; s++)
+    {
+        if (comp[s] != -1) continue;
+        comp[s] = k;                       // s starts component k
+        q.Enqueue(s);
+        while (q.Count &gt; 0)
+        {
+            int u = q.Dequeue();
+            foreach (int v in adj[u])
+                if (comp[v] == -1) { comp[v] = k; q.Enqueue(v); }
+        }
+        k++;
+    }
+    return (k, comp);
+}
+</code></pre>
+</div>
+<div class="callout">
+<p><strong>Traversal or union-find?</strong> Use a traversal when the graph is fixed and you need the components once. When edges <strong>arrive over time</strong> ("after each new connection, how many groups?") or you only need "are a and b connected?", use <a href="union-find.html">Union-Find</a>, which handles each union in near-O(1). In a <em>directed</em> graph, "mutually reachable" means <strong>strongly connected components</strong> (Tarjan or Kosaraju), covered in <a href="advanced-graphs.html">Advanced Graph Algorithms</a>.</p>
+</div>
+<h2 id="cycle-detection-two-different-questions">Cycle detection: two different questions</h2>
+<p>"Does this graph have a cycle?" has <strong>two different correct answers</strong>, depending on whether the edges are directed. Copying the undirected trick into a directed graph, or the reverse, is one of the most common graph bugs.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 840 250" width="840" role="img" aria-label="Four cycle-detection situations: undirected parent edge, undirected real cycle, directed diamond false alarm, directed real cycle">
+<defs><marker id="gf-ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="gf-ar4b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker><marker id="gf-ar4d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker></defs>
+<text x="10" y="24" class="title">Undirected · parent edge</text>
+<line class="edge path" x1="73.0" y1="105.0" x2="137.0" y2="105.0"/>
+<circle class="box visit" cx="55" cy="105" r="18"/><text x="55" y="110" text-anchor="middle" class="mono">0</text>
+<circle class="box active" cx="155" cy="105" r="18"/><text x="155" y="110" text-anchor="middle" class="mono">1</text>
+<text x="105" y="96" text-anchor="middle" class="small muted">came in on</text>
+<text x="10" y="170" class="small">at 1: neighbour 0 is seen,</text><text x="10" y="186" class="small">but it is my parent: skip</text>
+<text x="10" y="216" class="small fill-done">no cycle ✓</text>
+<text x="220" y="24" class="title">Undirected · real cycle</text>
+<line class="edge path" x1="278.0" y1="70.0" x2="342.0" y2="70.0"/>
+<line class="edge path" x1="350.5" y1="85.3" x2="319.5" y2="134.7"/>
+<line class="edge bad dash" x1="300.5" y1="134.7" x2="269.5" y2="85.3"/>
+<circle class="box visit" cx="260" cy="70" r="18"/><text x="260" y="75" text-anchor="middle" class="mono">0</text>
+<circle class="box visit" cx="360" cy="70" r="18"/><text x="360" y="75" text-anchor="middle" class="mono">1</text>
+<circle class="box active" cx="310" cy="150" r="18"/><text x="310" y="155" text-anchor="middle" class="mono">2</text>
+<text x="220" y="196" class="small">at 2: 0 is seen and is not</text><text x="220" y="212" class="small">my parent (1): <tspan class="fill-bad">cycle</tspan></text>
+<text x="430" y="24" class="title">Directed · diamond</text>
+<line class="edge path" x1="512.3" y1="72.7" x2="484.1" y2="100.9" marker-end="url(#gf-ar4)"/>
+<line class="edge path" x1="537.7" y1="72.7" x2="565.9" y2="100.9" marker-end="url(#gf-ar4)"/>
+<line class="edge path" x1="482.7" y1="127.7" x2="510.9" y2="155.9" marker-end="url(#gf-ar4)"/>
+<line class="edge done dash" x1="567.3" y1="127.7" x2="539.1" y2="155.9" marker-end="url(#gf-ar4d)"/>
+<circle class="box visit" cx="525" cy="60" r="18"/><text x="525" y="65" text-anchor="middle" class="mono">0</text>
+<circle class="box done" cx="470" cy="115" r="18"/><text x="470" y="120" text-anchor="middle" class="mono">1</text>
+<circle class="box visit" cx="580" cy="115" r="18"/><text x="580" y="120" text-anchor="middle" class="mono">2</text>
+<circle class="box done" cx="525" cy="170" r="18"/><text x="525" y="175" text-anchor="middle" class="mono">3</text>
+<text x="497" y="64" text-anchor="end" class="small mono muted">G</text><text x="444" y="119" text-anchor="end" class="small mono muted">B</text><text x="606" y="119" class="small mono muted">G</text><text x="551" y="182" class="small mono muted">B</text>
+<text x="430" y="212" class="small">at 2: 3 is BLACK (finished): <tspan class="fill-done">no cycle ✓</tspan></text>
+<text x="430" y="230" class="small">a "seen" check would report one <tspan class="fill-bad">✗</tspan></text>
+<text x="650" y="24" class="title">Directed · real cycle</text>
+<line class="edge path" x1="708.0" y1="70.0" x2="770.0" y2="70.0" marker-end="url(#gf-ar4)"/>
+<line class="edge path" x1="780.5" y1="85.3" x2="750.6" y2="133.0" marker-end="url(#gf-ar4)"/>
+<line class="edge bad dash" x1="730.5" y1="134.7" x2="700.6" y2="87.0" marker-end="url(#gf-ar4b)"/>
+<circle class="box visit" cx="690" cy="70" r="18"/><text x="690" y="75" text-anchor="middle" class="mono">a</text>
+<circle class="box visit" cx="790" cy="70" r="18"/><text x="790" y="75" text-anchor="middle" class="mono">b</text>
+<circle class="box active" cx="740" cy="150" r="18"/><text x="740" y="155" text-anchor="middle" class="mono">c</text>
+<text x="650" y="196" class="small">at c: a is GREY, still on</text><text x="650" y="212" class="small">the current path: <tspan class="fill-bad">cycle</tspan></text>
+<text x="10" y="246" class="small muted">G = GREY (on the current path) · B = BLACK (finished)</text>
+</svg>
+<figcaption>Two different questions. In an undirected graph every edge appears twice, so the edge back to your own parent is not a cycle; any <em>other</em> already-seen neighbour is. In a directed graph a node can be reached twice without a cycle (the diamond), so only an edge into a <strong>GREY</strong> node, an ancestor that is still on the path, proves a cycle.</figcaption>
+</figure>
+
+<p>Run all three rules on the same default diamond (<code>0-1, 0-2, 1-3, 2-3, 3-4</code>). Read as undirected edges, the diamond <em>is</em> a cycle (0–1–3–2–0), and the parent check finds it. Read as directed edges it has no cycle: the GREY check correctly says so, while the buggy visited-only rule raises a false alarm at node 3. Then try <code>0&gt;1,1&gt;2,2&gt;0</code> for a real directed cycle.</p>
+<div class="viz" data-viz="graph-fundamentals-cycle"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">WHITE, GREY, BLACK = 0, 1, 2
+
+def has_cycle_undirected(n, edges):
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    seen = [False] * n
+    for s in range(n):
+        if seen[s]:
+            continue
+        seen[s] = True
+        stack = [(s, -1)]                     # (node, the parent we came from)
+        while stack:
+            u, parent = stack.pop()
+            for v in adj[u]:
+                if v == parent:
+                    continue                  # the edge we arrived on, seen from the other end
+                if seen[v]:
+                    return True               # a second route to v: cycle
+                seen[v] = True
+                stack.append((v, u))
+    return False
+
+def has_cycle_directed(n, edges):
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+    state = [WHITE] * n
+    for s in range(n):
+        if state[s] != WHITE:
+            continue
+        state[s] = GREY
+        stack = [(s, 0)]
+        while stack:
+            u, i = stack[-1]
+            if i &lt; len(adj[u]):
+                stack[-1] = (u, i + 1)
+                v = adj[u][i]
+                if state[v] == GREY:
+                    return True               # back edge into the current path
+                if state[v] == WHITE:
+                    state[v] = GREY
+                    stack.append((v, 0))
+                # BLACK: finished earlier, reachable twice but no cycle
+            else:
+                state[u] = BLACK              # leaving the path
+                stack.pop()
+    return False
+</code></pre>
+<pre><code class="language-csharp">static bool HasCycleUndirected(int n, int[][] edges)
+{
+    var adj = new List&lt;int&gt;[n];
+    for (int i = 0; i &lt; n; i++) adj[i] = new List&lt;int&gt;();
+    foreach (var e in edges) { adj[e[0]].Add(e[1]); adj[e[1]].Add(e[0]); }
+    var seen = new bool[n];
+    var stack = new Stack&lt;(int Node, int Parent)&gt;();
+    for (int s = 0; s &lt; n; s++)
+    {
+        if (seen[s]) continue;
+        seen[s] = true;
+        stack.Push((s, -1));
+        while (stack.Count &gt; 0)
+        {
+            var (u, parent) = stack.Pop();
+            foreach (int v in adj[u])
+            {
+                if (v == parent) continue;        // the edge we arrived on
+                if (seen[v]) return true;         // a second route to v: cycle
+                seen[v] = true;
+                stack.Push((v, u));
+            }
+        }
+    }
+    return false;
+}
+
+static bool HasCycleDirected(int n, int[][] edges)
+{
+    const int White = 0, Grey = 1, Black = 2;
+    var adj = new List&lt;int&gt;[n];
+    for (int i = 0; i &lt; n; i++) adj[i] = new List&lt;int&gt;();
+    foreach (var e in edges) adj[e[0]].Add(e[1]);
+    var state = new int[n];
+    var stack = new Stack&lt;(int Node, int Next)&gt;();
+    for (int s = 0; s &lt; n; s++)
+    {
+        if (state[s] != White) continue;
+        state[s] = Grey;
+        stack.Push((s, 0));
+        while (stack.Count &gt; 0)
+        {
+            var (u, i) = stack.Pop();
+            if (i &lt; adj[u].Count)
+            {
+                stack.Push((u, i + 1));
+                int v = adj[u][i];
+                if (state[v] == Grey) return true;    // back edge into the current path
+                if (state[v] == White) { state[v] = Grey; stack.Push((v, 0)); }
+            }
+            else state[u] = Black;                     // leaving the path
+        }
+    }
+    return false;
+}
+</code></pre>
+</div>
+<p>Both are O(V + E).</p>
+<div class="compare">
+<div class="good">
+<h4 id="undirected-alternatives">Undirected alternatives</h4>
+<p><strong>Union-find</strong>: process the edges one by one; an edge whose endpoints are already connected closes a cycle. <strong>Counting</strong>: a connected undirected graph is a tree exactly when E = V − 1, so a connected graph with E ≥ V has a cycle.</p>
+</div>
+<div class="good">
+<h4 id="directed-alternative">Directed alternative</h4>
+<p><strong>Kahn's algorithm</strong>: repeatedly remove nodes with in-degree 0. If some nodes can never be removed, they sit on or behind a cycle. See <a href="topological-sort.html">Topological Sort &amp; DAGs</a>.</p>
+</div>
+<div class="warn">
+<h4 id="multigraph-caveat">Multigraph caveat</h4>
+<p>With <strong>parallel edges</strong> (u–v listed twice), "skip the parent" also skips the second copy, which <em>is</em> a 2-cycle. Skip the parent <strong>edge id</strong>, not the parent node, when duplicates are possible.</p>
+</div>
+</div>
+<h2 id="bipartite-graphs-2-colouring">Bipartite graphs: 2-colouring</h2>
+<p>Many problems ask whether you can split things into two groups so that every conflict crosses the split: "dislike" pairs, two teams, the two sides of a matching. That is a 2-colouring question. <strong>Colour the start node L, colour its neighbours R, their neighbours L, and so on.</strong> BFS does exactly this, layer by layer. Because each colour is <em>forced</em> by its neighbour, a conflict means no 2-colouring exists at all. It is not a bad choice you could undo.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 780 250" width="780" role="img" aria-label="An even cycle two-coloured, an odd cycle with a conflict, and the even cycle redrawn as two sides">
+<text x="10" y="24" class="title">Even cycle: 2-colourable</text>
+<line class="edge" x1="68.0" y1="70.0" x2="132.0" y2="70.0"/>
+<line class="edge" x1="150.0" y1="88.0" x2="150.0" y2="152.0"/>
+<line class="edge" x1="132.0" y1="170.0" x2="68.0" y2="170.0"/>
+<line class="edge" x1="50.0" y1="152.0" x2="50.0" y2="88.0"/>
+<circle class="box visit" cx="50" cy="70" r="18"/><text x="50" y="75" text-anchor="middle" class="mono">0</text>
+<circle class="box path" cx="150" cy="70" r="18"/><text x="150" y="75" text-anchor="middle" class="mono">1</text>
+<circle class="box visit" cx="150" cy="170" r="18"/><text x="150" y="175" text-anchor="middle" class="mono">2</text>
+<circle class="box path" cx="50" cy="170" r="18"/><text x="50" y="175" text-anchor="middle" class="mono">3</text>
+<text x="10" y="216" class="small">every edge joins two different colours <tspan class="fill-done">✓</tspan></text>
+<text x="270" y="24" class="title">Odd cycle: impossible</text>
+<line class="edge" x1="328.0" y1="70.0" x2="392.0" y2="70.0"/>
+<line class="edge" x1="401.3" y1="85.7" x2="368.7" y2="144.3"/>
+<line class="edge bad dash" x1="351.3" y1="144.3" x2="318.7" y2="85.7"/>
+<circle class="box visit" cx="310" cy="70" r="18"/><text x="310" y="75" text-anchor="middle" class="mono">0</text>
+<circle class="box path" cx="410" cy="70" r="18"/><text x="410" y="75" text-anchor="middle" class="mono">1</text>
+<circle class="box bad" cx="360" cy="160" r="18"/><text x="360" y="165" text-anchor="middle" class="mono">2</text>
+<text x="270" y="200" class="small">2 must differ from 1 (so be blue)</text><text x="270" y="216" class="small">and from 0 (so not blue): <tspan class="fill-bad">conflict</tspan></text>
+<text x="540" y="24" class="title">Same square, as two sides</text>
+<line class="edge" x1="598.0" y1="75.0" x2="702.0" y2="75.0"/>
+<line class="edge" x1="704.9" y1="84.7" x2="595.1" y2="155.3"/>
+<line class="edge" x1="598.0" y1="165.0" x2="702.0" y2="165.0"/>
+<line class="edge" x1="704.9" y1="155.3" x2="595.1" y2="84.7"/>
+<circle class="box visit" cx="580" cy="75" r="18"/><text x="580" y="80" text-anchor="middle" class="mono">0</text>
+<circle class="box visit" cx="580" cy="165" r="18"/><text x="580" y="170" text-anchor="middle" class="mono">2</text>
+<circle class="box path" cx="720" cy="75" r="18"/><text x="720" y="80" text-anchor="middle" class="mono">1</text>
+<circle class="box path" cx="720" cy="165" r="18"/><text x="720" y="170" text-anchor="middle" class="mono">3</text>
+<text x="580" y="210" text-anchor="middle" class="small">side L</text><text x="720" y="210" text-anchor="middle" class="small">side R</text>
+</svg>
+<figcaption>A graph is <strong>bipartite</strong> when its nodes split into two sides with every edge crossing between them. Equivalently, it can be 2-coloured, and equivalently it has <strong>no odd cycle</strong>. Walking around an odd cycle while alternating colours always brings you back to the start with the wrong colour.</figcaption>
+</figure>
+
+<p>The visualizer colours each component with BFS and shows the graph redrawn as two sides (L | uncoloured | R). When it finds an edge with the same colour at both ends, it walks the parent links from both endpoints up to their meeting point and highlights the <strong>odd cycle</strong> that proves the graph is not bipartite. Add <code>2-0</code> to the default input to create one.</p>
+<div class="viz" data-viz="graph-fundamentals-bipartite"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def is_bipartite(graph):                  # graph[u] = list of neighbours
+    n = len(graph)
+    color = [-1] * n
+    for s in range(n):                    # every component needs its own start
+        if color[s] != -1:
+            continue
+        color[s] = 0
+        q = deque([s])
+        while q:
+            u = q.popleft()
+            for v in graph[u]:
+                if color[v] == -1:
+                    color[v] = 1 - color[u]    # forced: the opposite side
+                    q.append(v)
+                elif color[v] == color[u]:
+                    return False               # odd cycle through u and v
+    return True
+</code></pre>
+<pre><code class="language-csharp">static bool IsBipartite(int[][] graph)
+{
+    int n = graph.Length;
+    var color = new int[n];
+    Array.Fill(color, -1);
+    var q = new Queue&lt;int&gt;();
+    for (int s = 0; s &lt; n; s++)            // every component needs its own start
+    {
+        if (color[s] != -1) continue;
+        color[s] = 0;
+        q.Enqueue(s);
+        while (q.Count &gt; 0)
+        {
+            int u = q.Dequeue();
+            foreach (int v in graph[u])
+            {
+                if (color[v] == -1) { color[v] = 1 - color[u]; q.Enqueue(v); }
+                else if (color[v] == color[u]) return false;   // odd cycle
+            }
+        }
+    }
+    return true;
+}
+</code></pre>
+</div>
+<p>Time O(V + E), memory O(V). Union-find works too: for every node u, union all of u's neighbours together, and fail if u ends up in the same set as one of them.</p>
+<div class="insight">
+<p><strong>Insight: why "no odd cycle" is the whole story</strong>
+In a BFS tree, nodes at even depth get colour L and nodes at odd depth get colour R. Every tree edge crosses. A non-tree edge u–v joins two layers that differ by at most 1, so it is either a crossing edge (fine) or an edge within one layer. In the second case u and v have the same depth, and the paths up to their common ancestor plus the edge u–v form a cycle of length 2k + 1, which is odd. So BFS finds a conflict <strong>exactly</strong> when an odd cycle exists.</p>
+</div>
+<h2 id="implicit-graphs-bfs-over-states">Implicit graphs: BFS over states</h2>
+<p>Many "minimum number of moves" puzzles are BFS on a graph that is never written down. <strong>A node is a complete state of the world, and an edge is one legal move.</strong> You don't build the graph; you generate a state's neighbours when you pop it, and keep a <code>seen</code> set of states.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 780 280" width="780" role="img" aria-label="Open the Lock as a state-space graph: 0000 and its eight neighbours">
+<line class="edge" x1="300" y1="140" x2="300" y2="40"/>
+<line class="edge" x1="300" y1="140" x2="420" y2="69"/>
+<line class="edge bad dash" x1="300" y1="140" x2="470" y2="140"/>
+<line class="edge" x1="300" y1="140" x2="420" y2="211"/>
+<line class="edge" x1="300" y1="140" x2="300" y2="240"/>
+<line class="edge" x1="300" y1="140" x2="180" y2="211"/>
+<line class="edge" x1="300" y1="140" x2="130" y2="140"/>
+<line class="edge" x1="300" y1="140" x2="180" y2="69"/>
+<line class="edge dash" x1="180" y1="69" x2="110" y2="30"/><text x="96" y="26" text-anchor="middle" class="small muted">…</text>
+<line class="edge dash" x1="420" y1="211" x2="490" y2="250"/><text x="500" y="258" class="small muted">…</text>
+<rect class="box active" x="270" y="126" width="60" height="28" rx="6"/><text x="300" y="145" text-anchor="middle" class="mono">0000</text>
+<rect class="box visit" x="270" y="26" width="60" height="28" rx="6"/><text x="300" y="45" text-anchor="middle" class="mono">1000</text>
+<rect class="box visit" x="390" y="55" width="60" height="28" rx="6"/><text x="420" y="74" text-anchor="middle" class="mono">0100</text>
+<rect class="box bad" x="440" y="126" width="60" height="28" rx="6"/><text x="470" y="145" text-anchor="middle" class="mono">0010</text>
+<rect class="box visit" x="390" y="197" width="60" height="28" rx="6"/><text x="420" y="216" text-anchor="middle" class="mono">0001</text>
+<rect class="box visit" x="270" y="226" width="60" height="28" rx="6"/><text x="300" y="245" text-anchor="middle" class="mono">0009</text>
+<rect class="box visit" x="150" y="197" width="60" height="28" rx="6"/><text x="180" y="216" text-anchor="middle" class="mono">0090</text>
+<rect class="box visit" x="100" y="126" width="60" height="28" rx="6"/><text x="130" y="145" text-anchor="middle" class="mono">0900</text>
+<rect class="box visit" x="150" y="55" width="60" height="28" rx="6"/><text x="180" y="74" text-anchor="middle" class="mono">9000</text>
+<text x="300" y="275" text-anchor="middle" class="small">"0010" is a dead end: it is simply not a node</text>
+<text x="540" y="40" class="title">State-space graph</text>
+<text x="540" y="72" class="small mono">node = a state of the world</text>
+<text x="582" y="94" class="small mono muted">here: the 4 dials</text>
+<text x="540" y="116" class="small mono">edge = one legal move</text>
+<text x="582" y="138" class="small mono muted">turn one dial ±1</text>
+<text x="540" y="160" class="small mono">V = 10⁴ states, E ≤ 8·10⁴</text>
+<text x="540" y="182" class="small mono">BFS distance = fewest moves</text>
+<text x="540" y="226" class="small mono">Never build it up front:</text>
+<text x="540" y="248" class="small mono">generate neighbours on pop.</text>
+</svg>
+<figcaption>Open the Lock. Each 4-digit combination is a node, and turning one wheel one notch (up or down) is an edge, so every state has exactly 8 neighbours. Dead ends are deleted nodes. "Minimum turns" is then just BFS distance in this implicit graph.</figcaption>
+</figure>
+
+<h3 id="word-ladder-step-by-step">Word Ladder, step by step</h3>
+<p>Word Ladder is the classic case. Each word is a node, and two words are adjacent when they differ in exactly one letter. Comparing every pair of words is O(N²·L). It is much cheaper to <strong>generate</strong> the candidates: for each position, try all 26 letters and look the result up in a hash set. That is 26·L lookups per word. The visualizer lays words out by BFS layer and draws the implicit edges faintly. Notice that a word is marked (removed from the set) the moment it is discovered, so no other word can claim it later.</p>
+<div class="viz" data-viz="graph-fundamentals-ladder"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def bfs_states(start, is_goal, neighbours):
+    &quot;&quot;&quot;Generic state-space BFS: fewest moves from start to a goal state, or -1.&quot;&quot;&quot;
+    dist = {start: 0}                      # doubles as the seen set; states must be hashable
+    q = deque([start])
+    while q:
+        s = q.popleft()
+        if is_goal(s):
+            return dist[s]
+        for t in neighbours(s):            # generated on demand, never stored
+            if t not in dist:
+                dist[t] = dist[s] + 1
+                q.append(t)
+    return -1
+
+# Open the Lock with the generic helper:
+def open_lock(deadends, target):
+    dead = set(deadends)
+    if &quot;0000&quot; in dead:
+        return -1
+    def nbrs(s):
+        for i in range(4):
+            d = int(s[i])
+            for nd in ((d + 1) % 10, (d - 1) % 10):
+                t = s[:i] + str(nd) + s[i + 1:]
+                if t not in dead:
+                    yield t
+    return bfs_states(&quot;0000&quot;, lambda s: s == target, nbrs)
+</code></pre>
+<pre><code class="language-csharp">static int BfsStates&lt;T&gt;(T start, Func&lt;T, bool&gt; isGoal, Func&lt;T, IEnumerable&lt;T&gt;&gt; neighbours)
+    where T : notnull
+{
+    var dist = new Dictionary&lt;T, int&gt; { [start] = 0 };   // doubles as the seen set
+    var q = new Queue&lt;T&gt;();
+    q.Enqueue(start);
+    while (q.Count &gt; 0)
+    {
+        T s = q.Dequeue();
+        if (isGoal(s)) return dist[s];
+        foreach (T t in neighbours(s))                   // generated on demand, never stored
+        {
+            if (dist.ContainsKey(t)) continue;
+            dist[t] = dist[s] + 1;
+            q.Enqueue(t);
+        }
+    }
+    return -1;
+}
+
+static int OpenLock(string[] deadends, string target)
+{
+    var dead = new HashSet&lt;string&gt;(deadends);
+    if (dead.Contains(&quot;0000&quot;)) return -1;
+    IEnumerable&lt;string&gt; Nbrs(string s)
+    {
+        var a = s.ToCharArray();
+        for (int i = 0; i &lt; 4; i++)
+        {
+            char orig = a[i];
+            foreach (int step in new[] { 1, 9 })            // +1 and -1 (mod 10)
+            {
+                a[i] = (char)('0' + (orig - '0' + step) % 10);
+                var t = new string(a);
+                if (!dead.Contains(t)) yield return t;
+            }
+            a[i] = orig;
+        }
+    }
+    return BfsStates(&quot;0000&quot;, s =&gt; s == target, Nbrs);
+}
+</code></pre>
+</div>
+<p>Time O(states × moves per state × cost of building a state). For the lock that is 10⁴ · 8 · 4. Memory is O(states).</p>
+<div class="tip">
+<p><strong>Tip: design the state first</strong>
+The state must contain <strong>everything that affects which future moves are possible</strong>, and nothing else.</p>
+<ul>
+<li>Plain maze: <code>(r, c)</code>.</li>
+<li>Maze with keys: <code>(r, c, keys_bitmask)</code>, because the same cell with different keys has a different future.</li>
+<li>Grid with k wall breaks: <code>(r, c, breaks_left)</code>.</li>
+<li>Visit every node: <code>(node, visited_mask)</code>.</li>
+</ul>
+<p>Too little in the state gives wrong answers, because a cell is marked "seen" while a better version of it is still possible. Too much blows up the state count. Multiply out the state count before you code; it is your complexity.</p>
+</div>
+<h2 id="how-to-model-a-problem-as-a-graph">How to model a problem as a graph</h2>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · NODES</small><strong>What is a state?</strong><p>A cell, a word, a lock combination, a course, an account, or a (cell, keys) pair.</p></div>
+<div class="flow-step"><small>2 · EDGES</small><strong>What is one move?</strong><p>Adjacent cells, a one-letter change, "a before b", or "shares an email". Directed or not?</p></div>
+<div class="flow-step"><small>3 · COST</small><strong>Do moves cost the same?</strong><p>All equal: BFS. 0/1: deque. Arbitrary: Dijkstra. None at all: any traversal.</p></div>
+<div class="flow-step"><small>4 · QUESTION</small><strong>What is asked?</strong><p>Reachable? Fewest steps? Groups? Cycle? Two sides? An order? Each maps to one pattern.</p></div>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>The problem says…</th>
+<th>Nodes / edges</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"minimum number of moves / steps / transformations"</td>
+<td>states / legal moves</td>
+<td>BFS (level by level)</td>
+</tr>
+<tr>
+<td>"nearest X" for every cell, or "spreads each minute"</td>
+<td>cells / adjacency, all X as sources</td>
+<td>Multi-source BFS</td>
+</tr>
+<tr>
+<td>"how many groups / islands / provinces"</td>
+<td>items / "connected" relation</td>
+<td>Traversal with an outer loop, or union-find</td>
+</tr>
+<tr>
+<td>"can you finish all / is there a valid order"</td>
+<td>tasks / prerequisite arrows</td>
+<td>Directed cycle check or <a href="topological-sort.html">Topological Sort</a></td>
+</tr>
+<tr>
+<td>"split into two groups so no conflict is inside a group"</td>
+<td>people / conflicts</td>
+<td>BFS 2-colouring</td>
+</tr>
+<tr>
+<td>"region connected to the border / edge of the ocean"</td>
+<td>cells / adjacency, border cells as sources</td>
+<td>Reverse flood from the border</td>
+</tr>
+<tr>
+<td>"same group if they share an email / a letter / a row"</td>
+<td>items, plus a hub node per shared attribute</td>
+<td>Traversal or union-find on the bipartite item–attribute graph</td>
+</tr>
+<tr>
+<td>"cheapest / weighted path"</td>
+<td>states / weighted moves</td>
+<td><a href="shortest-paths.html">Shortest Paths</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="recognize-it-cost-it-and-avoid-the-classic-bugs">Recognize it, cost it, and avoid the classic bugs</h2>
+<div class="recognize">
+<p><strong>Recognize a graph traversal when</strong></p>
+<ul>
+<li>There are <strong>things and connections</strong>, even if nobody says "graph": cells, words, accounts, cities, courses, states of a puzzle.</li>
+<li>The question is about <strong>reachability</strong> ("can I get from A to B?", "which cells can reach the ocean?"), <strong>groups</strong> ("how many islands / provinces?") or <strong>fewest steps</strong> ("minimum moves / transformations / minutes").</li>
+<li>Something <strong>spreads</strong> from one or more places, layer by layer.</li>
+<li>You must check for a <strong>cycle</strong>, a <strong>valid two-way split</strong>, or an order that respects dependencies.</li>
+<li>n is up to about 10⁵–10⁶ nodes and edges: an O(V + E) pass is the expected solution.</li>
+</ul>
+</div>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Time</th>
+<th>Extra memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Build an adjacency list from an edge list</td>
+<td>O(V + E)</td>
+<td>O(V + E)</td>
+</tr>
+<tr>
+<td>BFS / DFS on an adjacency list</td>
+<td>O(V + E)</td>
+<td>O(V)</td>
+</tr>
+<tr>
+<td>BFS / DFS on an adjacency matrix</td>
+<td>O(V²)</td>
+<td>O(V)</td>
+</tr>
+<tr>
+<td>Grid flood fill / islands / grid BFS</td>
+<td>O(R·C)</td>
+<td>O(R·C), or O(1) if you overwrite the grid</td>
+</tr>
+<tr>
+<td>Multi-source BFS from k sources</td>
+<td>O(V + E), <strong>not</strong> k·(V + E)</td>
+<td>O(V)</td>
+</tr>
+<tr>
+<td>Components, bipartite check, cycle check</td>
+<td>O(V + E)</td>
+<td>O(V)</td>
+</tr>
+<tr>
+<td>State-space BFS</td>
+<td>O(states × moves)</td>
+<td>O(states)</td>
+</tr>
+<tr>
+<td>Word Ladder with 26·L generation</td>
+<td>O(N · L · 26 · L) (building each candidate costs L)</td>
+<td>O(N · L)</td>
+</tr>
+</tbody>
+</table>
+<div class="pitfall">
+<p><strong>Pitfalls: the actual bug and its fix</strong></p>
+<ol>
+<li><strong>Undirected edge stored once.</strong> <code>adj[u].append(v)</code> alone makes v unable to see u, so half the graph becomes unreachable. <em>Fix:</em> also <code>adj[v].append(u)</code>.</li>
+<li><strong>Traversing only from node 0.</strong> Disconnected graphs are the norm in test cases, and the second component is silently ignored. <em>Fix:</em> an outer <code>for s in range(n): if not seen[s]: traverse(s)</code>.</li>
+<li><strong>Marking on pop.</strong> Nodes are queued many times, areas and counts come out too large, and dense graphs time out. <em>Fix:</em> mark the moment you push.</li>
+<li><strong>Python's negative indices.</strong> <code>grid[r-1][c]</code> with <code>r = 0</code> silently reads the <em>last</em> row instead of raising an error. <em>Fix:</em> bounds-check <code>0 &lt;= nr &lt; R</code> <strong>before</strong> indexing, every time.</li>
+<li><strong>"Visited" as a directed cycle test.</strong> The diamond 0→1→3, 0→2→3 is reported as a cycle. <em>Fix:</em> three colours; only an edge into a GREY node is a cycle.</li>
+<li><strong>Skipping the parent by node id in a multigraph.</strong> A doubled edge u–v is a real 2-cycle that gets skipped. <em>Fix:</em> skip the incoming <em>edge id</em>.</li>
+<li><strong>Off-by-one in level counting.</strong> Counting a minute for the final empty layer, or counting nodes instead of edges ("ladder length" counts words, so it is edges + 1). <em>Fix:</em> stop when nothing is left to do (<code>while q and fresh</code>), and re-read whether the answer counts nodes or edges.</li>
+<li><strong>Recursive DFS on 10⁵ nodes.</strong> <code>RecursionError</code> in Python, and an uncatchable <code>StackOverflowException</code> in C#. <em>Fix:</em> use an iterative stack.</li>
+<li><strong>BFS on a weighted graph.</strong> BFS minimises the <em>number</em> of edges, not their total weight. <em>Fix:</em> use 0-1 BFS or Dijkstra.</li>
+<li><strong>State too small in a state-space BFS.</strong> Marking <code>(r, c)</code> as seen when the real state is <code>(r, c, keys)</code> discards better routes that arrive later with more keys. <em>Fix:</em> the seen set must hold the <em>whole</em> state.</li>
+</ol>
+</div>
+<h2 id="worked-problems">Worked problems</h2>
+<h3 id="1-clone-graph-medium">1. Clone Graph <span class="diff medium">Medium</span></h3>
+<p>Given a node of a connected undirected graph, return a deep copy of the whole graph.</p>
+<p><strong>Key insight.</strong> The old → new map does two jobs. It is the <strong>seen set</strong> (a node has been discovered when it has a copy), and it is how you <strong>wire edges</strong> (the neighbours of <code>copy(u)</code> are <code>copy(v)</code> for each neighbour v). Create the copy when you <em>discover</em> a node, and add the edges when you <em>process</em> it. Every original edge is then copied exactly once from each side.</p>
+<details class="solution">
+<summary>Solution: BFS with an old → new map</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def clone_graph(node):
+    if node is None:
+        return None
+    copies = {node: Node(node.val)}            # original -&gt; copy; also the seen set
+    q = deque([node])
+    while q:
+        u = q.popleft()
+        for v in u.neighbors:
+            if v not in copies:
+                copies[v] = Node(v.val)        # discover: create the copy now
+                q.append(v)
+            copies[u].neighbors.append(copies[v])
+    return copies[node]
+</code></pre>
+<pre><code class="language-csharp">public Node? CloneGraph(Node? node)
+{
+    if (node == null) return null;
+    var copies = new Dictionary&lt;Node, Node&gt; { [node] = new Node(node.val) };
+    var q = new Queue&lt;Node&gt;();
+    q.Enqueue(node);
+    while (q.Count &gt; 0)
+    {
+        var u = q.Dequeue();
+        foreach (var v in u.neighbors)
+        {
+            if (!copies.ContainsKey(v))
+            {
+                copies[v] = new Node(v.val);       // discover: create the copy now
+                q.Enqueue(v);
+            }
+            copies[u].neighbors.Add(copies[v]);
+        }
+    }
+    return copies[node];
+}
+</code></pre>
+</div>
+<p>Time O(V + E), memory O(V).</p>
+</details>
+<h3 id="2-pacific-atlantic-water-flow-medium">2. Pacific Atlantic Water Flow <span class="diff medium">Medium</span></h3>
+<p>Water flows from a cell to a neighbour of <strong>equal or lower</strong> height. Return every cell from which water can reach both the Pacific (top and left edges) and the Atlantic (bottom and right edges).</p>
+<p><strong>Key insight.</strong> Simulating the flow from every cell costs O((R·C)²). Reverse it: <strong>start at each ocean and climb</strong>, moving to a neighbour of <em>equal or greater</em> height. That is a multi-source BFS from the border. The cells reached from both oceans are the answer. The general lesson: when every node asks "can I reach the target set?", search <em>backwards from the target set</em> once.</p>
+<details class="solution">
+<summary>Solution: two reverse floods, then intersect</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def pacific_atlantic(heights):
+    R, C = len(heights), len(heights[0])
+
+    def flood(starts):
+        seen = set(starts)
+        q = deque(starts)
+        while q:
+            r, c = q.popleft()
+            for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                nr, nc = r + dr, c + dc
+                if (0 &lt;= nr &lt; R and 0 &lt;= nc &lt; C and (nr, nc) not in seen
+                        and heights[nr][nc] &gt;= heights[r][c]):   # climb: water flows down to us
+                    seen.add((nr, nc))
+                    q.append((nr, nc))
+        return seen
+
+    pac = flood([(0, c) for c in range(C)] + [(r, 0) for r in range(1, R)])
+    atl = flood([(R - 1, c) for c in range(C)] + [(r, C - 1) for r in range(R - 1)])
+    return [[r, c] for r, c in sorted(pac &amp; atl)]
+</code></pre>
+<pre><code class="language-csharp">public IList&lt;IList&lt;int&gt;&gt; PacificAtlantic(int[][] h)
+{
+    int R = h.Length, C = h[0].Length;
+    int[] dr = { 1, -1, 0, 0 }, dc = { 0, 0, 1, -1 };
+
+    bool[,] Flood(IEnumerable&lt;(int R, int C)&gt; starts)
+    {
+        var seen = new bool[R, C];
+        var q = new Queue&lt;(int, int)&gt;();
+        foreach (var (r, c) in starts)
+            if (!seen[r, c]) { seen[r, c] = true; q.Enqueue((r, c)); }
+        while (q.Count &gt; 0)
+        {
+            var (r, c) = q.Dequeue();
+            for (int d = 0; d &lt; 4; d++)
+            {
+                int nr = r + dr[d], nc = c + dc[d];
+                if (nr &lt; 0 || nr &gt;= R || nc &lt; 0 || nc &gt;= C || seen[nr, nc]) continue;
+                if (h[nr][nc] &lt; h[r][c]) continue;        // climb: water flows down to us
+                seen[nr, nc] = true;
+                q.Enqueue((nr, nc));
+            }
+        }
+        return seen;
+    }
+
+    var pac = Flood(Enumerable.Range(0, C).Select(c =&gt; (0, c))
+        .Concat(Enumerable.Range(0, R).Select(r =&gt; (r, 0))));
+    var atl = Flood(Enumerable.Range(0, C).Select(c =&gt; (R - 1, c))
+        .Concat(Enumerable.Range(0, R).Select(r =&gt; (r, C - 1))));
+    var res = new List&lt;IList&lt;int&gt;&gt;();
+    for (int r = 0; r &lt; R; r++)
+        for (int c = 0; c &lt; C; c++)
+            if (pac[r, c] &amp;&amp; atl[r, c]) res.Add(new[] { r, c });
+    return res;
+}
+</code></pre>
+</div>
+<p>Time O(R·C), memory O(R·C).</p>
+</details>
+<h3 id="3-shortest-path-in-binary-matrix-medium">3. Shortest Path in Binary Matrix <span class="diff medium">Medium</span></h3>
+<p>In an n×n grid of 0s (open) and 1s (blocked), return the length of the shortest <strong>8-directional</strong> path of open cells from the top-left to the bottom-right, counting cells, or −1.</p>
+<p><strong>Key insight.</strong> It's a grid BFS with all 8 directions. The traps are in the details: the path length counts <strong>cells</strong>, so the start has distance 1; check whether the start or the end is blocked; and a 1×1 grid <code>[[0]]</code> has answer 1. Writing a 1 into each visited cell doubles as the seen mark.</p>
+<details class="solution">
+<summary>Solution: 8-way BFS, marking in place</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def shortest_path_binary_matrix(grid):
+    n = len(grid)
+    if grid[0][0] or grid[n - 1][n - 1]:
+        return -1
+    grid[0][0] = 1                          # mark visited in place
+    q = deque([(0, 0, 1)])                  # distance counts cells, so start at 1
+    while q:
+        r, c, d = q.popleft()
+        if r == n - 1 and c == n - 1:
+            return d
+        for dr in (-1, 0, 1):
+            for dc in (-1, 0, 1):
+                nr, nc = r + dr, c + dc
+                if 0 &lt;= nr &lt; n and 0 &lt;= nc &lt; n and grid[nr][nc] == 0:
+                    grid[nr][nc] = 1
+                    q.append((nr, nc, d + 1))
+    return -1
+</code></pre>
+<pre><code class="language-csharp">public int ShortestPathBinaryMatrix(int[][] grid)
+{
+    int n = grid.Length;
+    if (grid[0][0] == 1 || grid[n - 1][n - 1] == 1) return -1;
+    grid[0][0] = 1;                                  // mark visited in place
+    var q = new Queue&lt;(int R, int C, int D)&gt;();
+    q.Enqueue((0, 0, 1));                            // distance counts cells
+    while (q.Count &gt; 0)
+    {
+        var (r, c, d) = q.Dequeue();
+        if (r == n - 1 &amp;&amp; c == n - 1) return d;
+        for (int dr = -1; dr &lt;= 1; dr++)
+        for (int dc = -1; dc &lt;= 1; dc++)
+        {
+            int nr = r + dr, nc = c + dc;
+            if (nr &lt; 0 || nr &gt;= n || nc &lt; 0 || nc &gt;= n || grid[nr][nc] != 0) continue;
+            grid[nr][nc] = 1;
+            q.Enqueue((nr, nc, d + 1));
+        }
+    }
+    return -1;
+}
+</code></pre>
+</div>
+<p>Time O(n²), memory O(n²).</p>
+</details>
+<h3 id="4-word-ladder-hard">4. Word Ladder <span class="diff hard">Hard</span></h3>
+<p>Return the number of words in the shortest transformation sequence from <code>beginWord</code> to <code>endWord</code>, where each step changes one letter and every intermediate word must be in <code>wordList</code>. Return 0 if no sequence exists.</p>
+<p><strong>Key insight.</strong> This is BFS on the implicit graph from the <a href="#word-ladder-step-by-step">visualizer above</a>, with two refinements. First, <strong>remove a word from the set when it is discovered</strong>, so the set is both the dictionary and the seen mark. Second, use <strong>bidirectional BFS</strong>: grow a frontier from each end and always expand the <em>smaller</em> one. With branching factor b and answer depth d, a one-sided search explores about b^d states, while two searches meeting in the middle explore about 2·b^(d/2).</p>
+<details class="solution">
+<summary>Solution: bidirectional BFS</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def ladder_length(begin, end, word_list):
+    words = set(word_list)
+    if end not in words:
+        return 0
+    words.discard(begin)
+    words.discard(end)                    # both ends are already &quot;seen&quot;
+    front, back, steps = {begin}, {end}, 1
+    while front and back:
+        if len(front) &gt; len(back):
+            front, back = back, front    # always expand the smaller side
+        nxt = set()
+        for w in front:
+            for i in range(len(w)):
+                for ch in &quot;abcdefghijklmnopqrstuvwxyz&quot;:
+                    cand = w[:i] + ch + w[i + 1:]
+                    if cand in back:
+                        return steps + 1  # the two searches meet
+                    if cand in words:
+                        words.remove(cand)
+                        nxt.add(cand)
+        front, steps = nxt, steps + 1
+    return 0
+</code></pre>
+<pre><code class="language-csharp">public int LadderLength(string begin, string end, IList&lt;string&gt; wordList)
+{
+    var words = new HashSet&lt;string&gt;(wordList);
+    if (!words.Contains(end)) return 0;
+    words.Remove(begin);
+    words.Remove(end);                               // both ends are already &quot;seen&quot;
+    var front = new HashSet&lt;string&gt; { begin };
+    var back = new HashSet&lt;string&gt; { end };
+    for (int steps = 1; front.Count &gt; 0 &amp;&amp; back.Count &gt; 0; steps++)
+    {
+        if (front.Count &gt; back.Count) (front, back) = (back, front);   // expand the smaller side
+        var next = new HashSet&lt;string&gt;();
+        foreach (var w in front)
+        {
+            var a = w.ToCharArray();
+            for (int i = 0; i &lt; a.Length; i++)
+            {
+                char orig = a[i];
+                for (char ch = 'a'; ch &lt;= 'z'; ch++)
+                {
+                    a[i] = ch;
+                    var cand = new string(a);
+                    if (back.Contains(cand)) return steps + 1;          // the two searches meet
+                    if (words.Remove(cand)) next.Add(cand);
+                }
+                a[i] = orig;
+            }
+        }
+        front = next;
+    }
+    return 0;
+}
+</code></pre>
+</div>
+<p>Time O(N · L² · 26) in the worst case, usually far less with two frontiers. Memory O(N · L).</p>
+</details>
+<h3 id="5-shortest-path-in-a-grid-with-obstacles-elimination-hard">5. Shortest Path in a Grid with Obstacles Elimination <span class="diff hard">Hard</span></h3>
+<p>Move 4-directionally from the top-left to the bottom-right of a 0/1 grid. You may walk through at most k walls (1s). Return the fewest steps, or −1.</p>
+<p><strong>Key insight.</strong> Position alone is not a state, because reaching a cell with 3 breaks left is better than reaching it with 1 break left. The state is <code>(r, c, breaks_left)</code>, and BFS over it is correct. To prune, remember the <strong>most</strong> breaks left you have ever arrived with at each cell (<code>best[r][c]</code>). Because BFS arrives in non-decreasing step order, a later arrival with no more breaks left is dominated and can be dropped. Shortcut: if k ≥ R + C − 2, you can bulldoze a straight Manhattan path.</p>
+<details class="solution">
+<summary>Solution: BFS over (cell, breaks left) with dominance pruning</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def shortest_path(grid, k):
+    R, C = len(grid), len(grid[0])
+    if k &gt;= R + C - 2:
+        return R + C - 2
+    best = [[-1] * C for _ in range(R)]    # most breaks left on any arrival so far
+    best[0][0] = k
+    q = deque([(0, 0, k)])
+    steps = 0
+    while q:
+        for _ in range(len(q)):
+            r, c, left = q.popleft()
+            if r == R - 1 and c == C - 1:
+                return steps
+            for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                nr, nc = r + dr, c + dc
+                if 0 &lt;= nr &lt; R and 0 &lt;= nc &lt; C:
+                    nl = left - grid[nr][nc]
+                    if nl &gt; best[nr][nc]:  # strictly better than every earlier arrival
+                        best[nr][nc] = nl
+                        q.append((nr, nc, nl))
+        steps += 1
+    return -1
+</code></pre>
+<pre><code class="language-csharp">public int ShortestPath(int[][] grid, int k)
+{
+    int R = grid.Length, C = grid[0].Length;
+    if (k &gt;= R + C - 2) return R + C - 2;
+    var best = new int[R, C];                       // most breaks left on any arrival so far
+    for (int r = 0; r &lt; R; r++) for (int c = 0; c &lt; C; c++) best[r, c] = -1;
+    best[0, 0] = k;
+    var q = new Queue&lt;(int R, int C, int Left)&gt;();
+    q.Enqueue((0, 0, k));
+    int[] dr = { 1, -1, 0, 0 }, dc = { 0, 0, 1, -1 };
+    for (int steps = 0; q.Count &gt; 0; steps++)
+    {
+        for (int cnt = q.Count; cnt &gt; 0; cnt--)
+        {
+            var (r, c, left) = q.Dequeue();
+            if (r == R - 1 &amp;&amp; c == C - 1) return steps;
+            for (int d = 0; d &lt; 4; d++)
+            {
+                int nr = r + dr[d], nc = c + dc[d];
+                if (nr &lt; 0 || nr &gt;= R || nc &lt; 0 || nc &gt;= C) continue;
+                int nl = left - grid[nr][nc];
+                if (nl &lt;= best[nr, nc]) continue;   // dominated (or out of breaks: nl = -1)
+                best[nr, nc] = nl;
+                q.Enqueue((nr, nc, nl));
+            }
+        }
+    }
+    return -1;
+}
+</code></pre>
+</div>
+<p>Time O(R · C · k) in the worst case, memory O(R · C · k) for the queue.</p>
+</details>
+<h3 id="6-shortest-path-visiting-all-nodes-expert">6. Shortest Path Visiting All Nodes <span class="diff expert">Expert</span></h3>
+<p>Given an undirected connected graph with n ≤ 12 nodes, return the length of the shortest walk that visits every node. You may start and end anywhere, and revisit nodes and edges.</p>
+<p><strong>Key insight.</strong> Because revisiting is allowed, "where am I" is not enough: the state is <code>(node, set of visited nodes)</code>, with the set stored as a bitmask. That gives n · 2ⁿ ≈ 49k states. All moves cost 1, so BFS over states finds the minimum. Since the start is free, use <strong>multi-source BFS</strong> from every <code>(i, 1 &lt;&lt; i)</code> at distance 0. This problem combines three ideas from this page: implicit graphs, state design and multi-source BFS. It also opens the door to bitmask DP (<a href="dp-bitmask-digit.html">DP: Bitmask &amp; Digit</a>).</p>
+<details class="solution">
+<summary>Solution: multi-source BFS over (node, mask)</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def shortest_path_length(graph):
+    n = len(graph)
+    full = (1 &lt;&lt; n) - 1
+    q = deque((i, 1 &lt;&lt; i) for i in range(n))        # every start at distance 0
+    seen = [[False] * (1 &lt;&lt; n) for _ in range(n)]
+    for i in range(n):
+        seen[i][1 &lt;&lt; i] = True
+    steps = 0
+    while q:
+        for _ in range(len(q)):
+            u, mask = q.popleft()
+            if mask == full:
+                return steps
+            for v in graph[u]:
+                nm = mask | (1 &lt;&lt; v)
+                if not seen[v][nm]:
+                    seen[v][nm] = True
+                    q.append((v, nm))
+        steps += 1
+    return -1
+</code></pre>
+<pre><code class="language-csharp">public int ShortestPathLength(int[][] graph)
+{
+    int n = graph.Length, full = (1 &lt;&lt; n) - 1;
+    var seen = new bool[n, 1 &lt;&lt; n];
+    var q = new Queue&lt;(int Node, int Mask)&gt;();
+    for (int i = 0; i &lt; n; i++) { seen[i, 1 &lt;&lt; i] = true; q.Enqueue((i, 1 &lt;&lt; i)); }  // every start at distance 0
+    for (int steps = 0; q.Count &gt; 0; steps++)
+    {
+        for (int cnt = q.Count; cnt &gt; 0; cnt--)
+        {
+            var (u, mask) = q.Dequeue();
+            if (mask == full) return steps;
+            foreach (int v in graph[u])
+            {
+                int nm = mask | (1 &lt;&lt; v);
+                if (seen[v, nm]) continue;
+                seen[v, nm] = true;
+                q.Enqueue((v, nm));
+            }
+        }
+    }
+    return -1;
+}
+</code></pre>
+</div>
+<p>Time O(2ⁿ · n²), since each of the n · 2ⁿ states scans up to n neighbours. Memory O(n · 2ⁿ).</p>
+</details>
+<h2 id="problem-ladder">Problem ladder</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Level</th>
+<th>The key idea</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://leetcode.com/problems/flood-fill/">Flood Fill</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>One traversal from the start cell; return early if the new colour equals the old one.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://leetcode.com/problems/find-if-path-exists-in-graph/">Find if Path Exists in Graph</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Build the adjacency list (both directions), then BFS from the source.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://leetcode.com/problems/find-the-town-judge/">Find the Town Judge</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>No traversal at all: in-degree n − 1 and out-degree 0.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://leetcode.com/problems/number-of-islands/">Number of Islands</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Outer scan plus flood: the number of floods started is the answer.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://leetcode.com/problems/max-area-of-island/">Max Area of Island</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Same scan; count the cells as you mark them.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://leetcode.com/problems/clone-graph/">Clone Graph</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>The old → new map is both the seen set and the edge wiring.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://leetcode.com/problems/keys-and-rooms/">Keys and Rooms</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Reachability from room 0 in a directed graph.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://leetcode.com/problems/number-of-provinces/">Number of Provinces</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Components on an adjacency matrix: O(n²), which is fine there.</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://leetcode.com/problems/rotting-oranges/">Rotting Oranges</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Multi-source BFS; minutes = layers; −1 if any fresh orange is left.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://leetcode.com/problems/01-matrix/">01 Matrix</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Start from <strong>all zeros</strong> at once instead of searching from each 1.</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://leetcode.com/problems/surrounded-regions/">Surrounded Regions</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Flood from the border 'O's; everything not reached gets flipped.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://leetcode.com/problems/pacific-atlantic-water-flow/">Pacific Atlantic Water Flow</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Two reverse floods that climb uphill, then intersect.</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://leetcode.com/problems/is-graph-bipartite/">Is Graph Bipartite?</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>BFS 2-colouring, restarted in every component.</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="https://leetcode.com/problems/possible-bipartition/">Possible Bipartition</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>"Dislikes" are edges; can the graph be 2-coloured?</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="https://leetcode.com/problems/shortest-path-in-binary-matrix/">Shortest Path in Binary Matrix</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>8-way BFS; the length counts cells, so the start has distance 1.</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="https://leetcode.com/problems/open-the-lock/">Open the Lock</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>State-space BFS: 10⁴ nodes with 8 edges each; dead ends are deleted nodes.</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="https://leetcode.com/problems/snakes-and-ladders/">Snakes and Ladders</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>BFS over squares 1..n²; the boustrophedon index mapping is the real trap.</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="https://leetcode.com/problems/shortest-bridge/">Shortest Bridge</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Flood one island to collect it, then multi-source BFS outward to the other.</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="https://leetcode.com/problems/find-eventual-safe-states/">Find Eventual Safe States</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Three colours: a node is safe exactly when its DFS never meets a GREY node.</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="https://leetcode.com/problems/word-ladder/">Word Ladder</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Generate 26·L neighbours; bidirectional BFS.</td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="https://leetcode.com/problems/sliding-puzzle/">Sliding Puzzle</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>The state is the board as a string; there are only 6!/2 reachable states.</td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="https://leetcode.com/problems/bus-routes/">Bus Routes</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Make <strong>routes</strong> the nodes (or BFS stop → route → stop) so the answer counts buses.</td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="https://leetcode.com/problems/shortest-path-in-a-grid-with-obstacles-elimination/">Shortest Path in a Grid with Obstacles Elimination</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>The state includes the breaks left; prune arrivals that are dominated.</td>
+</tr>
+<tr>
+<td>24</td>
+<td><a href="https://leetcode.com/problems/shortest-path-to-get-all-keys/">Shortest Path to Get All Keys</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>State <code>(r, c, keys_mask)</code>; a door is open only if its key bit is set.</td>
+</tr>
+<tr>
+<td>25</td>
+<td><a href="https://leetcode.com/problems/shortest-path-visiting-all-nodes/">Shortest Path Visiting All Nodes</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Multi-source BFS over <code>(node, visited_mask)</code>: n·2ⁿ states.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>Why does BFS find shortest paths (in edges) but DFS does not?</summary>
+<p>BFS's FIFO queue releases nodes in non-decreasing distance order: every distance-k node is dequeued before any distance-(k+1) node. So the first time a node is discovered, it is discovered from a node at the smallest possible distance, and that label is final. DFS discovers a node along whatever path it happens to be exploring, which may be a long detour. On the cycle 0–1–2–3–0, DFS from 0 can reach 3 through 1 and 2 (distance 3) although the edge 0–3 gives distance 1.</p>
+</details>
+<details class="quiz">
+<summary>In a directed graph, why is "I reached an already-visited node" not proof of a cycle?</summary>
+<p>Two different paths can lead to the same node without forming a loop, as in the diamond 0→1→3 and 0→2→3. When the DFS explores 2→3, node 3 is already visited (BLACK, finished), but you cannot get from 3 back to 2. Only an edge into a <strong>GREY</strong> node, an ancestor that is still on the current recursion path, closes a cycle.</p>
+</details>
+<details class="quiz">
+<summary>A connected undirected graph has V nodes and exactly V edges. How many cycles does it have?</summary>
+<p>Exactly <strong>one</strong>. A connected graph with V − 1 edges is a tree (no cycles). Adding one more edge u–v creates exactly one cycle: the tree path from u to v plus the new edge. This is why "redundant connection" style problems look for <em>the</em> edge that closes the cycle, usually with union-find.</p>
+</details>
+<details class="quiz">
+<summary>You need the distance from every cell to its nearest gate, with k gates on an R×C grid. What is the cost of the obvious approach, and of the better one?</summary>
+<p>A BFS from each gate costs k · O(R·C), which is O((R·C)²) when gates are dense. A multi-source BFS seeded with all gates at distance 0 costs a single O(R·C). It is correct because it equals one BFS from a virtual super-source that is joined to every gate by a free edge, so the first wave to reach a cell comes from its nearest gate.</p>
+</details>
+<details class="quiz">
+<summary>Can DFS on an undirected graph produce a forward or cross edge?</summary>
+<p>No, only tree and back edges. Suppose u–v were a cross edge, with v finished before u was discovered. While v was GREY, it would have examined the edge v–u and found u WHITE, making u a descendant of v through a tree edge. A forward edge is the same edge seen from the other end, and it was already examined as a back edge. This is why an undirected cycle check only has to ignore the parent edge.</p>
+</details>
+<details class="quiz">
+<summary>Why is an adjacency matrix a bad idea for V = 10⁵ with E = 2·10⁵?</summary>
+<p>The matrix needs V² = 10¹⁰ cells (about 10 GB even as bits), and a traversal scans a full row per node, so O(V²) = 10¹⁰ steps. An adjacency list needs O(V + E) ≈ 3·10⁵ entries and the traversal costs the same. Use a matrix only for dense graphs or V up to a few thousand.</p>
+</details>
+<details class="quiz">
+<summary>In Shortest Path to Get All Keys (up to 6 keys), what is the state, and how many states are there?</summary>
+<p><code>(r, c, keys_mask)</code>: there are R · C · 2⁶ = 64·R·C states. The same cell with different keys has different futures, since a door may or may not open. So the seen set must be over the full triple. Marking only <code>(r, c)</code> would forbid walking back through a corridor after collecting a key, which is often required.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Build</strong><code>adj[u].append(v)</code> plus <code>adj[v].append(u)</code> if undirected · O(V + E)</div>
+<div><strong>BFS</strong>Queue, mark on push, <code>dist[v] = dist[u] + 1</code> · fewest edges</div>
+<div><strong>Level BFS</strong><code>for _ in range(len(q))</code> · minutes, rounds, steps</div>
+<div><strong>DFS</strong>Stack or recursion; WHITE / GREY / BLACK; d/f times · structure</div>
+<div><strong>Grid</strong><code>DIRS</code> plus bounds check <em>before</em> indexing · O(R·C)</div>
+<div><strong>Multi-source</strong>Push every source at distance 0 · nearest-of-many</div>
+<div><strong>Components</strong>Outer loop over nodes; count = traversals started</div>
+<div><strong>Border trick</strong>Flood from the border or target; the unreached part is the answer</div>
+<div><strong>Undirected cycle</strong>A seen neighbour that is not the parent</div>
+<div><strong>Directed cycle</strong>An edge into a GREY node (or Kahn leaves nodes behind)</div>
+<div><strong>Bipartite</strong><code>color[v] = 1 - color[u]</code>; conflict ⇔ odd cycle</div>
+<div><strong>State BFS</strong>Node = the whole state; the seen set holds states · O(states × moves)</div>
+<div><strong>Weighted?</strong>Not BFS: 0-1 BFS or Dijkstra</div>
+<div><strong>Depth &gt; ~10⁴</strong>Use an iterative DFS; recursion will overflow</div>
+</div><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="segment-fenwick-trees.html"><small>&larr; PREVIOUS</small>Segment Trees, Fenwick Trees &amp; Sparse Tables</a><a class="next" href="topological-sort.html"><small>NEXT &rarr;</small>Topological Sort &amp; DAGs</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#what-a-graph-is-and-when-you-need-one">What a graph is, and when you need one</a><ul>
+<li><a href="#the-vocabulary-in-one-picture">The vocabulary, in one picture</a></li>
+</ul>
+</li>
+<li><a href="#representations-the-same-graph-five-ways">Representations: the same graph, five ways</a></li>
+<li><a href="#bfs-explore-in-rings">BFS: explore in rings</a><ul>
+<li><a href="#why-mark-on-enqueue">Why mark on enqueue?</a></li>
+</ul>
+</li>
+<li><a href="#dfs-go-deep-then-back-up">DFS: go deep, then back up</a></li>
+<li><a href="#grids-the-most-common-hidden-graph">Grids: the most common hidden graph</a><ul>
+<li><a href="#flood-fill-and-number-of-islands">Flood fill and Number of Islands</a></li>
+</ul>
+</li>
+<li><a href="#multi-source-bfs-many-starting-points-one-pass">Multi-source BFS: many starting points, one pass</a></li>
+<li><a href="#connected-components">Connected components</a></li>
+<li><a href="#cycle-detection-two-different-questions">Cycle detection: two different questions</a></li>
+<li><a href="#bipartite-graphs-2-colouring">Bipartite graphs: 2-colouring</a></li>
+<li><a href="#implicit-graphs-bfs-over-states">Implicit graphs: BFS over states</a><ul>
+<li><a href="#word-ladder-step-by-step">Word Ladder, step by step</a></li>
+</ul>
+</li>
+<li><a href="#how-to-model-a-problem-as-a-graph">How to model a problem as a graph</a></li>
+<li><a href="#recognize-it-cost-it-and-avoid-the-classic-bugs">Recognize it, cost it, and avoid the classic bugs</a></li>
+<li><a href="#worked-problems">Worked problems</a><ul>
+<li><a href="#1-clone-graph-medium">1. Clone Graph Medium</a></li>
+<li><a href="#2-pacific-atlantic-water-flow-medium">2. Pacific Atlantic Water Flow Medium</a></li>
+<li><a href="#3-shortest-path-in-binary-matrix-medium">3. Shortest Path in Binary Matrix Medium</a></li>
+<li><a href="#4-word-ladder-hard">4. Word Ladder Hard</a></li>
+<li><a href="#5-shortest-path-in-a-grid-with-obstacles-elimination-hard">5. Shortest Path in a Grid with Obstacles Elimination Hard</a></li>
+<li><a href="#6-shortest-path-visiting-all-nodes-expert">6. Shortest Path Visiting All Nodes Expert</a></li>
+</ul>
+</li>
+<li><a href="#problem-ladder">Problem ladder</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

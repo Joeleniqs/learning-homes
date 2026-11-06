@@ -1,0 +1,1876 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/api-protocols.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/api-protocols.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track" open><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html" aria-current="page">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">API DEVELOPMENT</p><h1>Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</h1><p class="lede">The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost.</p><div class="meta"><span class="level level-intermediate">Intermediate → Advanced</span><span>~50 min study</span><span>Builds on: <a href="api-design.html">REST API Design</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="api-protocols" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-one-feature-five-protocols-five-different-bills">The problem: one feature, five protocols, five different bills</h2>
+<p>A customer opens the app and watches their order go from <em>placed</em> to <em>packed</em> to <em>shipped</em>. The feature sounds simple, but the protocol you choose decides your latency, your server bill, whether a proxy breaks it, and how much your team has to learn. Here is the same feature, an order tracker, built five ways:</p>
+<div class="code-tabs" data-labels="REST polling,gRPC streaming,GraphQL,Server-Sent Events,Webhook">
+<pre><code class="language-text">GET /v1/orders/42            → 200 {&quot;status&quot;:&quot;placed&quot;}    ETag: &quot;1&quot;
+… 5 s later …
+GET /v1/orders/42            If-None-Match: &quot;1&quot;   → 304 Not Modified     ← nothing changed; you paid a round trip anyway
+… 5 s later …
+GET /v1/orders/42            If-None-Match: &quot;1&quot;   → 200 {&quot;status&quot;:&quot;packed&quot;}  ETag: &quot;2&quot;
+Cost: one request per client every 5 s, whether or not anything happened. Latency: up to 5 s stale.
+Wins: works everywhere, cacheable, debuggable with curl. Loses: wasteful at scale, never &quot;live&quot;.
+</code></pre>
+<pre><code class="language-text">service Orders { rpc WatchOrder(WatchOrderRequest) returns (stream OrderEvent); }
+client → HEADERS  POST /shop.Orders/WatchOrder  grpc-timeout: 1H   + DATA {order_id: 42}
+server ← DATA {status: PACKED}  …  DATA {status: SHIPPED}  …  trailers grpc-status: 0
+Cost: one HTTP/2 stream per watcher, binary frames, typed contract and generated stubs.
+Wins: lowest overhead, deadlines, flow control. Loses: browsers can't speak it natively (needs grpc-web/Connect + a proxy).
+</code></pre>
+<pre><code class="language-text">subscription { orderUpdated(id: 42) { status eta courier { name } } }
+→ over a WebSocket (graphql-ws protocol): {&quot;type&quot;:&quot;next&quot;,&quot;payload&quot;:{&quot;data&quot;:{&quot;orderUpdated&quot;:{&quot;status&quot;:&quot;PACKED&quot;,...}}}}
+Cost: a socket per client plus a pub/sub backplane; resolvers run per event.
+Wins: the client picks exactly the fields it wants, in the same schema as its queries. Loses: the heaviest server stack.
+</code></pre>
+<pre><code class="language-text">GET /v1/orders/42/events     Accept: text/event-stream
+200 OK  Content-Type: text/event-stream
+id: 17
+event: status
+data: {&quot;status&quot;:&quot;packed&quot;}
+
+id: 18
+event: status
+data: {&quot;status&quot;:&quot;shipped&quot;}
+Cost: one long-lived HTTP response per client. Reconnects automatically and resends Last-Event-ID: 18.
+Wins: plain HTTP, works through most proxies, five lines of browser code. Loses: server→client only, text only.
+</code></pre>
+<pre><code class="language-text">(the tracker is a partner's system, not a browser)
+POST https://partner.example/hooks/orders
+Webhook-Id: evt_9c1   Webhook-Timestamp: 1767225600   Webhook-Signature: v1,Kq3…
+{&quot;type&quot;:&quot;order.shipped&quot;,&quot;data&quot;:{&quot;orderId&quot;:&quot;42&quot;}}
+Cost: nothing while idle; you retry with backoff until they answer 2xx.
+Wins: server-to-server push with no open connection. Loses: you must sign, retry and they must deduplicate.
+</code></pre>
+</div>
+<p>None of these is "the best protocol". Each is the right answer to a different question: <em>who is calling, which way does data flow, how big and how frequent is it, and what can your team operate?</em> This page teaches each protocol from the wire up, with simulators you can break, so you can answer that question with evidence instead of fashion.</p>
+<div class="rule">
+<p><strong>The rule</strong></p>
+<p>Pick the protocol from the <strong>caller</strong> and the <strong>direction of data flow</strong> first, then from performance. REST for public and cacheable request/response; gRPC for internal, typed, low-latency and streaming calls; GraphQL when many clients need different shapes of a rich graph; SSE for server push to browsers; WebSockets only when both sides really talk; webhooks and messaging when the receiver shouldn't be waiting at all.</p>
+</div>
+<p>This page builds on <a href="api-design.html">API design</a>, which covers resources, status codes, pagination, idempotency keys and ETags for REST. Here we go <em>under</em> and <em>beside</em> REST: the transports it runs on, and the alternatives. Security for all of them (authentication, rate limits, input limits) is in <a href="api-security.html">API security</a>.</p>
+<h2 id="the-mental-model-protocols-are-layers-and-most-of-them-ride-on-http">The mental model: protocols are layers, and most of them ride on HTTP</h2>
+<p>When people say "gRPC vs REST vs GraphQL vs WebSockets", they compare things on different layers. gRPC is an RPC convention <em>on top of</em> HTTP/2. GraphQL is a query language usually carried <em>in</em> an HTTP POST. SSE is just an HTTP response that never ends. Seeing the layers tells you what each one inherits for free, and what breaks when a proxy in the middle doesn't understand a layer.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 330" width="900" role="img" aria-label="Protocol layers: IP at the bottom; TCP plus TLS or UDP plus QUIC; HTTP/1.1, HTTP/2 and HTTP/3; and on top REST, GraphQL, gRPC, SSE, WebSocket and webhooks, with message brokers using their own protocols such as AMQP and Kafka">
+<rect class="box" x="10" y="280" width="880" height="38" rx="6"/><text class="mono" x="450" y="304" text-anchor="middle">IP: packets, may be lost, reordered or duplicated</text>
+<rect class="box visit" x="10" y="230" width="520" height="40" rx="6"/><text class="mono" x="270" y="255" text-anchor="middle">TCP + TLS 1.3: one ordered byte stream</text>
+<rect class="box accent" x="540" y="230" width="350" height="40" rx="6"/><text class="mono" x="715" y="255" text-anchor="middle">UDP + QUIC (TLS built in): many streams</text>
+<rect class="box" x="10" y="178" width="250" height="42" rx="6"/><text class="mono" x="135" y="204" text-anchor="middle">HTTP/1.1 (text)</text>
+<rect class="box" x="270" y="178" width="260" height="42" rx="6"/><text class="mono" x="400" y="204" text-anchor="middle">HTTP/2 (binary frames)</text>
+<rect class="box" x="540" y="178" width="200" height="42" rx="6"/><text class="mono" x="640" y="204" text-anchor="middle">HTTP/3</text>
+<rect class="box bad" x="750" y="178" width="140" height="42" rx="6"/><text class="mono" x="820" y="198" text-anchor="middle">AMQP, Kafka,</text><text class="mono" x="820" y="213" text-anchor="middle">MQTT (on TCP)</text>
+<rect class="box done" x="10" y="100" width="120" height="66" rx="6"/><text class="mono" x="70" y="130" text-anchor="middle">REST</text><text class="small muted" x="70" y="150" text-anchor="middle">any HTTP</text>
+<rect class="box done" x="138" y="100" width="120" height="66" rx="6"/><text class="mono" x="198" y="130" text-anchor="middle">GraphQL</text><text class="small muted" x="198" y="150" text-anchor="middle">POST /graphql</text>
+<rect class="box active" x="266" y="100" width="120" height="66" rx="6"/><text class="mono" x="326" y="130" text-anchor="middle">gRPC</text><text class="small muted" x="326" y="150" text-anchor="middle">needs HTTP/2+</text>
+<rect class="box done" x="394" y="100" width="110" height="66" rx="6"/><text class="mono" x="449" y="130" text-anchor="middle">SSE</text><text class="small muted" x="449" y="150" text-anchor="middle">endless GET</text>
+<rect class="box path" x="512" y="100" width="130" height="66" rx="6"/><text class="mono" x="577" y="130" text-anchor="middle">WebSocket</text><text class="small muted" x="577" y="150" text-anchor="middle">HTTP Upgrade</text>
+<rect class="box done" x="650" y="100" width="110" height="66" rx="6"/><text class="mono" x="705" y="130" text-anchor="middle">Webhooks</text><text class="small muted" x="705" y="150" text-anchor="middle">POST to you</text>
+<rect class="box bad" x="768" y="100" width="122" height="66" rx="6"/><text class="mono" x="829" y="130" text-anchor="middle">Messaging</text><text class="small muted" x="829" y="150" text-anchor="middle">via a broker</text>
+<text class="title" x="10" y="30">Same building, different floors</text>
+<text class="small muted" x="10" y="52">Everything on the top floor except messaging is "an HTTP request with conventions". That's why proxies, TLS, auth headers and</text>
+<text class="small muted" x="10" y="70">observability work for all of them, and why a proxy that only speaks HTTP/1.1 silently breaks gRPC and buffers SSE.</text>
+<text class="small muted" x="10" y="88">Serialization (JSON, Protobuf, MessagePack, Avro) is a separate choice: it describes the bytes inside a message.</text>
+</svg>
+<figcaption>Protocol layering. REST, GraphQL, SSE and webhooks run on any HTTP version; gRPC requires HTTP/2 or HTTP/3; WebSockets start as an HTTP/1.1 Upgrade (or an HTTP/2 extended CONNECT); messaging uses broker protocols.</figcaption>
+</figure>
+
+<p>Three consequences fall straight out of this picture:</p>
+<ul>
+<li><strong>Your API style and your transport are independent choices.</strong> A REST API can run on HTTP/3 and benefit from it without changing one endpoint. A GraphQL API inherits whatever HTTP version the server and client negotiate.</li>
+<li><strong>Anything that sits between client and server must understand your layer.</strong> A load balancer that terminates HTTP/2 and forwards HTTP/1.1 is fine for REST, but gRPC trailers don't survive it. A reverse proxy with response buffering turned on holds SSE events until its buffer fills. Most "gRPC works locally but not in production" stories are a middlebox that only speaks the lower layer.</li>
+<li><strong>Serialization is orthogonal.</strong> gRPC usually means Protobuf, but it can carry JSON. REST usually means JSON, but it can carry Protobuf or MessagePack. <a href="#serialization-formats-json-protobuf-messagepack-avro">Serialization formats</a> gets its own section below.</li>
+</ul>
+<h2 id="http11-vs-http2-vs-http3-head-of-line-blocking-from-the-wire-up">HTTP/1.1 vs HTTP/2 vs HTTP/3: head-of-line blocking, from the wire up</h2>
+<p>Every API on this page rides on HTTP, so the version underneath matters. Each new version fixed one specific bottleneck of the previous one, and the bottleneck in all three cases is <strong>head-of-line (HOL) blocking</strong>: a slow or lost thing at the front of a queue holds up everything behind it.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>HTTP/1.1 (1997)</th>
+<th>HTTP/2 (2015)</th>
+<th>HTTP/3 (2022)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Transport</td>
+<td>TCP (+TLS)</td>
+<td>TCP (+TLS)</td>
+<td><strong>QUIC over UDP</strong> (TLS 1.3 built in)</td>
+</tr>
+<tr>
+<td>Requests per connection at once</td>
+<td><strong>One.</strong> The next waits for the whole previous response. Pipelining exists but is broken in practice.</td>
+<td><strong>Many</strong> multiplexed streams, interleaved as frames</td>
+<td>Many streams, and <strong>each stream is independently ordered</strong></td>
+</tr>
+<tr>
+<td>Encoding</td>
+<td>Text headers</td>
+<td>Binary frames, HPACK header compression</td>
+<td>Binary frames, QPACK header compression</td>
+</tr>
+<tr>
+<td>Head-of-line blocking</td>
+<td>At the HTTP layer: a slow response blocks the connection, so browsers open ~6 connections per host</td>
+<td>Fixed at HTTP layer, <strong>but TCP's</strong> remains: one lost packet stalls <em>every</em> stream</td>
+<td>Fixed at both layers: a lost packet stalls only its own stream</td>
+</tr>
+<tr>
+<td>Connection setup</td>
+<td>TCP handshake + TLS 1.3 = 2 round trips</td>
+<td>Same 2 round trips</td>
+<td><strong>1 round trip</strong> (0-RTT on resumption, for idempotent requests only)</td>
+</tr>
+<tr>
+<td>Network change (Wi-Fi → 4G)</td>
+<td>New connection</td>
+<td>New connection</td>
+<td><strong>Connection migration</strong>: the connection ID survives the IP change</td>
+</tr>
+<tr>
+<td>Server push</td>
+<td>n/a</td>
+<td>Exists, but removed from browsers; don't use it</td>
+<td>Defined, rarely implemented</td>
+</tr>
+</tbody>
+</table>
+<p>The simulator below runs the same five responses over each transport. Each response is a number of frames; the network delivers one frame per tick per connection; a lost packet is retransmitted after the timeout you choose. Watch what happens to the <em>other</em> responses while one packet is missing.</p>
+<div class="viz apx-wide" data-viz="api-protocols-transport"></div>
+
+<p>What to notice:</p>
+<ul>
+<li><strong>HTTP/1.1 with one connection</strong> serialises everything: response 5 waits for 1 to 4 even if it's tiny. That is HTTP-level HOL blocking, and it's why browsers open six connections per host and why "domain sharding" and sprite sheets existed.</li>
+<li><strong>HTTP/1.1 with six connections</strong> fixes that, but pays six handshakes, six TCP slow-starts and six times the server memory, and a lost packet still stalls its connection.</li>
+<li><strong>HTTP/2</strong> interleaves frames from all streams on one connection, so small responses finish early. But TCP delivers bytes <em>in order</em>: when packet 9 is lost, every frame behind it is held in the kernel's receive buffer, <strong>including frames of other streams that arrived perfectly well</strong>. On a lossy mobile link HTTP/2 can be <em>slower</em> than six HTTP/1.1 connections.</li>
+<li><strong>HTTP/3</strong> puts streams into QUIC, which retransmits per stream. The lost packet delays only the stream it belonged to; the others are delivered to the application immediately. It also saves a round trip on setup.</li>
+</ul>
+<div class="insight">
+<p><strong>Why this matters for API design, not just browsers</strong></p>
+<p>gRPC multiplexes all calls from a client onto <strong>one</strong> HTTP/2 connection. That's efficient, but it means a single connection carries a whole service's traffic, inherits TCP HOL blocking, and pins to one backend behind an L4 load balancer. That is why gRPC needs <a href="#grpc-in-production-load-balancing-proxies-and-the-browser">L7 or client-side load balancing</a>, and why "one huge message" on a stream delays the small ones (keep messages small and stream them).</p>
+</div>
+<h3 id="what-you-actually-configure">What you actually configure</h3>
+<p>You rarely implement transports, but you do turn them on. Kestrel (ASP.NET Core) negotiates HTTP/2 by default over TLS and supports HTTP/3 with <code>Protocols = HttpProtocols.Http1AndHttp2AndHttp3</code>. Go's <code>net/http</code> does HTTP/2 automatically over TLS; HTTP/3 needs <code>quic-go</code>. Java's <code>HttpClient</code> speaks HTTP/2; Netty and Jetty add HTTP/3. Node has <code>http2</code> built in. In practice, HTTP/3 is usually enabled at the CDN or edge proxy (Cloudflare, Azure Front Door, Envoy, nginx) while services talk HTTP/2 inside the data centre. Browsers discover HTTP/3 through the <code>Alt-Svc: h3=":443"</code> header or an HTTPS DNS record, then switch on the next request.</p>
+<div class="tip">
+<p><strong>Cleartext HTTP/2 ("h2c")</strong> has no ALPN negotiation, so both ends must be told to use it ("prior knowledge"). It's common between a sidecar and the app inside a pod, and is the usual cause of "gRPC works with TLS but not without".</p>
+</div>
+<h2 id="rest-in-one-minute-and-where-it-stops">REST in one minute (and where it stops)</h2>
+<p>REST is covered in depth in <a href="api-design.html">API design</a>: resources and methods, the status-code chain, problem details, <a href="api-design.html#pagination-offset-drifts-cursors-dont">cursor pagination</a>, <a href="api-design.html#idempotency-keys-making-post-safe-to-retry">idempotency keys</a> and <a href="api-design.html#etags-and-conditional-requests-no-more-lost-updates">ETags</a>. The short version of why it remains the default:</p>
+<ul>
+<li><strong>Universality.</strong> Every language, tool, proxy, CDN, browser and junior engineer speaks it. <code>curl</code> is the debugger.</li>
+<li><strong>The web's machinery works for free.</strong> HTTP caching, conditional requests, content negotiation, redirects, compression. GET responses can be cached by a CDN you don't even run; see <a href="caching.html#http-caching-let-someone-else-store-it">HTTP caching</a>.</li>
+<li><strong>Loose coupling.</strong> Clients depend on resources and media types, not on generated stubs.</li>
+</ul>
+<p>REST starts to hurt in four specific situations, and each of the other protocols on this page exists to address one of them:</p>
+<div class="cheat">
+<div><strong>Chatty or over-fetching screens</strong>A mobile screen needs 6 calls and uses 10% of each payload. → GraphQL, or a backend-for-frontend.</div>
+<div><strong>Hot internal call paths</strong>JSON parsing and text headers cost CPU on every hop; no typed contract. → gRPC.</div>
+<div><strong>Server needs to push</strong>REST is request/response; polling wastes requests and is never live. → SSE, WebSockets, gRPC streaming.</div>
+<div><strong>Receiver shouldn't wait</strong>The caller doesn't need an answer now, or there are many consumers. → Webhooks, messaging.</div>
+</div>
+<h2 id="grpc-typed-contracts-and-streams-over-http2">gRPC: typed contracts and streams over HTTP/2</h2>
+<p>gRPC is a remote procedure call framework: you describe a <strong>service</strong> and its <strong>messages</strong> in a <code>.proto</code> file, a code generator produces client stubs and server base classes for each language, and calls travel as HTTP/2 streams carrying length-prefixed Protobuf messages. You call <code>client.GetOrder(req)</code> as though it were a local method, and get compile-time types on both sides.</p>
+<h3 id="the-contract-a-proto-file">The contract: a .proto file</h3>
+<pre><code class="language-text">syntax = &quot;proto3&quot;;
+package shop;
+
+import &quot;google/protobuf/timestamp.proto&quot;;
+
+option csharp_namespace = &quot;Shop.Grpc&quot;;
+option java_package = &quot;com.example.shop.grpc&quot;;
+option java_multiple_files = true;
+option go_package = &quot;example.com/shop/gen/shoppb&quot;;
+
+service Orders {
+  rpc GetOrder(GetOrderRequest) returns (Order);                  // unary
+  rpc WatchOrder(WatchOrderRequest) returns (stream OrderEvent);  // server streaming
+  rpc UploadLines(stream OrderLine) returns (UploadSummary);      // client streaming
+  rpc Chat(stream ChatMessage) returns (stream ChatMessage);      // bidirectional streaming
+}
+
+message GetOrderRequest   { int64 id = 1; }
+message WatchOrderRequest { int64 id = 1; }
+
+message Order {
+  int64 id = 1;
+  string customer = 2;
+  reserved 3;                 // was &quot;int32 qty&quot;: never reuse the number…
+  reserved &quot;qty&quot;;             // …or the name (it would break JSON mapping)
+  bool gift = 4;
+  repeated OrderLine lines = 5;
+  OrderStatus status = 6;
+  google.protobuf.Timestamp created_at = 7;
+  optional string note = 8;   // &quot;optional&quot; gives presence: unset vs &quot;&quot; are distinguishable
+}
+
+enum OrderStatus {
+  ORDER_STATUS_UNSPECIFIED = 0;   // proto3 enums must start at 0; make 0 mean &quot;unknown&quot;
+  ORDER_STATUS_PLACED = 1;
+  ORDER_STATUS_PACKED = 2;
+  ORDER_STATUS_SHIPPED = 3;
+}
+
+message OrderLine     { string sku = 1; int32 qty = 2; }
+message OrderEvent    { int64 order_id = 1; OrderStatus status = 2; google.protobuf.Timestamp at = 3; }
+message UploadSummary { int32 accepted = 1; int32 rejected = 2; }
+message ChatMessage   { string from = 1; string text = 2; }
+</code></pre>
+<p>The single most important thing to understand about Protobuf is this: <strong>field names never go on the wire, only field numbers and a 3-bit wire type.</strong> A message is a sequence of <code>(field number, wire type) → value</code> pairs. The decoder looks up each number in <em>its own</em> copy of the schema. That is what makes schema evolution possible, and it's also exactly how you corrupt data silently if you reuse a number.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 200" width="900" role="img" aria-label="Encoding of Order id 150 and customer ana: tag byte 08 for field 1 varint, then 96 01 for 150; tag byte 12 for field 2 length-delimited, length 03, then the bytes of ana">
+<text class="title" x="10" y="24">Order { id: 150, customer: "ana" } is 8 bytes</text>
+<rect class="box accent" x="10" y="44" width="70" height="40" rx="6"/><text class="mono" x="45" y="69" text-anchor="middle">08</text>
+<rect class="box done" x="84" y="44" width="70" height="40" rx="6"/><text class="mono" x="119" y="69" text-anchor="middle">96</text>
+<rect class="box done" x="158" y="44" width="70" height="40" rx="6"/><text class="mono" x="193" y="69" text-anchor="middle">01</text>
+<rect class="box accent" x="250" y="44" width="70" height="40" rx="6"/><text class="mono" x="285" y="69" text-anchor="middle">12</text>
+<rect class="box visit" x="324" y="44" width="70" height="40" rx="6"/><text class="mono" x="359" y="69" text-anchor="middle">03</text>
+<rect class="box done" x="398" y="44" width="70" height="40" rx="6"/><text class="mono" x="433" y="69" text-anchor="middle">61</text>
+<rect class="box done" x="472" y="44" width="70" height="40" rx="6"/><text class="mono" x="507" y="69" text-anchor="middle">6E</text>
+<rect class="box done" x="546" y="44" width="70" height="40" rx="6"/><text class="mono" x="581" y="69" text-anchor="middle">61</text>
+<text class="small" x="45" y="104" text-anchor="middle">tag</text><text class="small muted" x="45" y="120" text-anchor="middle">(1 &lt;&lt; 3) | 0</text><text class="small muted" x="45" y="136" text-anchor="middle">field 1, varint</text>
+<text class="small" x="156" y="104" text-anchor="middle">varint 150</text><text class="small muted" x="156" y="120" text-anchor="middle">7 bits per byte,</text><text class="small muted" x="156" y="136" text-anchor="middle">high bit = "more"</text>
+<text class="small" x="285" y="104" text-anchor="middle">tag</text><text class="small muted" x="285" y="120" text-anchor="middle">(2 &lt;&lt; 3) | 2</text><text class="small muted" x="285" y="136" text-anchor="middle">field 2, length</text>
+<text class="small" x="359" y="104" text-anchor="middle">length 3</text>
+<text class="small" x="507" y="104" text-anchor="middle">"ana" in UTF-8</text>
+<text class="small muted" x="640" y="62">No "id", no "customer", no quotes,</text><text class="small muted" x="640" y="80">no braces. Compare JSON:</text><text class="mono" x="640" y="100">{"id":150,"customer":"ana"}</text><text class="small muted" x="640" y="118">= 27 bytes</text>
+<text class="small muted" x="10" y="170">Wire types: 0 = varint (int32, int64, uint*, bool, enum), 1 = 64-bit, 2 = length-delimited (string, bytes, messages, packed repeated), 5 = 32-bit.</text>
+<text class="small muted" x="10" y="188">Unknown field numbers are skipped using the wire type, which is why old readers survive new fields.</text>
+</svg>
+<figcaption>Protobuf wire format. Each field is a tag (field number shifted left 3, OR wire type) followed by the value. Defaults (0, "", false) aren't written at all in proto3.</figcaption>
+</figure>
+
+<h3 id="schema-evolution-the-rules-and-what-breaks-when-you-ignore-them">Schema evolution: the rules, and what breaks when you ignore them</h3>
+<p>Producers and consumers deploy at different times, so for a while <strong>an old reader will decode a new writer's bytes, and vice versa</strong>. Encode a v1 <code>Order</code> below, then decode it with a changed schema. Try the safe changes first (rename, add a field, delete with <code>reserved</code>, widen int32 to int64), then the dangerous ones (renumber, reuse a number with the same wire type, change a type).</p>
+<div class="viz apx-wide" data-viz="api-protocols-proto"></div>
+
+<p>The "reuse 3 as int64 discount_cents" case is the nightmare: <strong>nothing fails</strong>. Old messages carrying <code>qty = 2</code> are read as a two-cent discount. No exception, no log line, just wrong data in production. That is why <code>reserved</code> exists.</p>
+<div class="compare">
+<div class="good">
+<h4 id="safe-wire-compatible">Safe (wire-compatible)</h4>
+<ul>
+<li>Add a new field with a <strong>new</strong> number. Old readers skip it; new readers see the default in old messages.</li>
+<li>Delete a field, <strong>and</strong> add <code>reserved &lt;n&gt;</code> and <code>reserved "&lt;name&gt;"</code>.</li>
+<li>Rename a field (the wire doesn't care; JSON transcoding and reflection-based code do).</li>
+<li>Widen <code>int32</code> → <code>int64</code>, and swap among <code>int32</code>/<code>uint32</code>/<code>int64</code>/<code>uint64</code>/<code>bool</code> within limits.</li>
+<li>Add a value to an enum (readers must handle unknown values: proto3 keeps the number).</li>
+<li>Turn a single field into a member of a new <code>oneof</code>.</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="breaking">Breaking</h4>
+<ul>
+<li>Change a field's <strong>number</strong>: the data appears to vanish.</li>
+<li>Reuse a deleted number for another meaning: silent corruption.</li>
+<li>Change a field's type across wire types (<code>int64</code> → <code>string</code>): the field is dropped or the parse fails.</li>
+<li>Narrow <code>int64</code> → <code>int32</code>: large values are truncated.</li>
+<li>Move fields into an existing <code>oneof</code>, or change <code>repeated</code> ↔ scalar for messages.</li>
+<li>Rename a service or method: its path <code>/shop.Orders/GetOrder</code> <em>is</em> the address.</li>
+</ul>
+</div>
+</div>
+<div class="tip">
+<p><strong>Let a tool enforce it.</strong> <code>buf breaking --against '.git#branch=main'</code> fails CI when a change is wire- or source-incompatible, and <code>buf lint</code> enforces naming rules such as <code>ORDER_STATUS_UNSPECIFIED = 0</code>. Treat the <code>.proto</code> files as a published contract, in their own module or repository, just like an OpenAPI document (see <a href="api-design.html#contracts-openapi-contract-first-or-code-first">contracts in API design</a>).</p>
+</div>
+<h3 id="the-four-call-types">The four call types</h3>
+<p>Every gRPC call, of any type, is <strong>one HTTP/2 stream</strong>: request headers (<code>:path /shop.Orders/WatchOrder</code>, <code>content-type: application/grpc</code>, <code>grpc-timeout</code>), then zero or more length-prefixed messages in DATA frames, then response headers, response messages, and finally <strong>trailers</strong> containing <code>grpc-status</code> and <code>grpc-message</code>. The status is in the trailers because a streaming response can fail after it has started sending. That's also why gRPC needs a proxy that forwards HTTP trailers.</p>
+<div class="viz apx-wide" data-viz="api-protocols-grpc-calls"></div>
+
+<table>
+<thead>
+<tr>
+<th>Call type</th>
+<th>Shape</th>
+<th>Use it for</th>
+<th>Watch out for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Unary</strong></td>
+<td>1 request → 1 response</td>
+<td>90% of calls: get, create, update</td>
+<td>Nothing special; it's a function call with a network in the middle</td>
+</tr>
+<tr>
+<td><strong>Server streaming</strong></td>
+<td>1 request → N responses</td>
+<td>Watching changes, large result sets in chunks, progress, LLM token streams</td>
+<td>Long-lived streams pin a connection to one backend; set keepalives; resume after reconnects</td>
+</tr>
+<tr>
+<td><strong>Client streaming</strong></td>
+<td>N requests → 1 response</td>
+<td>Uploads, telemetry batching, bulk import with one summary</td>
+<td>The server can't answer until the client half-closes</td>
+</tr>
+<tr>
+<td><strong>Bidirectional</strong></td>
+<td>N ↔ M, independent</td>
+<td>Chat, collaborative editing, game state, interactive sessions</td>
+<td>Ordering <em>within</em> each direction only; you need your own application protocol and flow control discipline</td>
+</tr>
+</tbody>
+</table>
+<div class="insight">
+<p><strong>Cancellation is a first-class signal</strong></p>
+<p>When the client cancels (user navigates away, deadline fires), the client sends <code>RST_STREAM(CANCEL)</code>. The server's call context (<code>ServerCallContext.CancellationToken</code>, Go's <code>ctx.Done()</code>, grpc-java's <code>Context</code> or <code>ServerCallStreamObserver.setOnCancelHandler</code>, Python's cancelled task) fires immediately. <strong>Pass it to every database call and outbound call</strong>, or the server keeps working for a client that has gone. This is the same lesson as <a href="concurrency-async.html">cancellation in async code</a>.</p>
+</div>
+<h3 id="the-same-service-in-five-stacks">The same service in five stacks</h3>
+<p>All five generate code from the same <code>.proto</code>. The ecosystems differ in how streaming is expressed: C# uses <code>IAsyncEnumerable</code> and stream writers, Java uses <code>StreamObserver</code> callbacks (or Kotlin coroutines / Reactor with extra libraries), Python's <code>grpc.aio</code> uses async generators, Go uses blocking <code>Send</code>/<code>Recv</code> on a stream object (because goroutines make blocking cheap), and Node uses event emitters.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// ASP.NET Core + Grpc.AspNetCore (the .proto is listed in the .csproj: &lt;Protobuf Include=&quot;orders.proto&quot; /&gt;)
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddGrpc(o =&gt; o.Interceptors.Add&lt;LoggingInterceptor&gt;());
+var app = builder.Build();
+app.MapGrpcService&lt;OrdersService&gt;();
+app.Run();
+
+public sealed class OrdersService(IOrderStore store) : Orders.OrdersBase
+{
+    public override async Task&lt;Order&gt; GetOrder(GetOrderRequest req, ServerCallContext ctx) =&gt;
+        await store.FindAsync(req.Id, ctx.CancellationToken)
+        ?? throw new RpcException(new Status(StatusCode.NotFound, $&quot;order {req.Id} not found&quot;));
+
+    public override async Task WatchOrder(WatchOrderRequest req,
+        IServerStreamWriter&lt;OrderEvent&gt; stream, ServerCallContext ctx)
+    {
+        // The token fires when the client cancels or its deadline passes.
+        await foreach (var ev in store.WatchAsync(req.Id, ctx.CancellationToken))
+            await stream.WriteAsync(ev, ctx.CancellationToken);
+    }
+}
+
+// Client (Grpc.Net.Client). Prefer AddGrpcClient&lt;Orders.OrdersClient&gt;() in DI apps.
+using var channel = GrpcChannel.ForAddress(&quot;https://orders:5001&quot;);
+var client = new Orders.OrdersClient(channel);
+var order = await client.GetOrderAsync(new GetOrderRequest { Id = 42 },
+    deadline: DateTime.UtcNow.AddSeconds(2));
+
+using var call = client.WatchOrder(new WatchOrderRequest { Id = 42 }, cancellationToken: ct);
+await foreach (var ev in call.ResponseStream.ReadAllAsync(ct))
+    Console.WriteLine(ev.Status);
+</code></pre>
+<pre><code class="language-java">// grpc-java (protoc + protoc-gen-grpc-java). Spring Boot users: spring-grpc wires this as beans.
+public final class OrdersService extends OrdersGrpc.OrdersImplBase {
+  private final OrderStore store;
+  public OrdersService(OrderStore store) { this.store = store; }
+
+  @Override
+  public void getOrder(GetOrderRequest req, StreamObserver&lt;Order&gt; out) {
+    store.find(req.getId()).ifPresentOrElse(
+        o -&gt; { out.onNext(o); out.onCompleted(); },
+        () -&gt; out.onError(Status.NOT_FOUND
+            .withDescription(&quot;order &quot; + req.getId() + &quot; not found&quot;).asRuntimeException()));
+  }
+
+  @Override
+  public void watchOrder(WatchOrderRequest req, StreamObserver&lt;OrderEvent&gt; out) {
+    var serverOut = (ServerCallStreamObserver&lt;OrderEvent&gt;) out;
+    Subscription sub = store.watch(req.getId(), out::onNext);   // pushes events as they happen
+    serverOut.setOnCancelHandler(sub::close);                   // client left or deadline fired
+  }
+}
+
+Server server = ServerBuilder.forPort(9090)
+    .addService(ServerInterceptors.intercept(new OrdersService(store), new LoggingInterceptor()))
+    .build().start();
+
+// Client
+ManagedChannel ch = ManagedChannelBuilder.forTarget(&quot;dns:///orders:9090&quot;).useTransportSecurity().build();
+Order o = OrdersGrpc.newBlockingStub(ch)
+    .withDeadlineAfter(2, TimeUnit.SECONDS)
+    .getOrder(GetOrderRequest.newBuilder().setId(42).build());
+
+Iterator&lt;OrderEvent&gt; events = OrdersGrpc.newBlockingStub(ch)
+    .watchOrder(WatchOrderRequest.newBuilder().setId(42).build());
+while (events.hasNext()) System.out.println(events.next().getStatus());
+</code></pre>
+<pre><code class="language-python"># grpcio + grpcio-tools (python -m grpc_tools.protoc ... --python_out --grpc_python_out)
+import grpc
+from shop import orders_pb2 as pb, orders_pb2_grpc as rpc
+
+class OrdersService(rpc.OrdersServicer):
+    def __init__(self, store):
+        self.store = store
+
+    async def GetOrder(self, request, context: grpc.aio.ServicerContext):
+        order = await self.store.find(request.id)
+        if order is None:
+            await context.abort(grpc.StatusCode.NOT_FOUND, f&quot;order {request.id} not found&quot;)
+        return order
+
+    async def WatchOrder(self, request, context):
+        # An async generator: each yield is one DATA frame. If the client cancels,
+        # grpc.aio cancels this task, so the loop stops at the next await.
+        async for event in self.store.watch(request.id):
+            yield event
+
+async def serve(store):
+    server = grpc.aio.server(interceptors=[LoggingInterceptor()])
+    rpc.add_OrdersServicer_to_server(OrdersService(store), server)
+    server.add_insecure_port(&quot;[::]:50051&quot;)          # TLS: add_secure_port(..., grpc.ssl_server_credentials(...))
+    await server.start()
+    await server.wait_for_termination()
+
+# Client
+async def track():
+    async with grpc.aio.secure_channel(&quot;orders:50051&quot;, grpc.ssl_channel_credentials()) as ch:
+        stub = rpc.OrdersStub(ch)
+        order = await stub.GetOrder(pb.GetOrderRequest(id=42), timeout=2.0)
+        async for event in stub.WatchOrder(pb.WatchOrderRequest(id=42)):
+            print(event.status)
+</code></pre>
+<pre><code class="language-go">// google.golang.org/grpc (protoc-gen-go + protoc-gen-go-grpc)
+type ordersServer struct {
+    shoppb.UnimplementedOrdersServer // forward compatibility: new RPCs return Unimplemented
+    store OrderStore
+}
+
+func (s *ordersServer) GetOrder(ctx context.Context, req *shoppb.GetOrderRequest) (*shoppb.Order, error) {
+    o, err := s.store.Find(ctx, req.GetId())
+    if errors.Is(err, ErrNotFound) {
+        return nil, status.Errorf(codes.NotFound, &quot;order %d not found&quot;, req.GetId())
+    }
+    return o, err
+}
+
+func (s *ordersServer) WatchOrder(req *shoppb.WatchOrderRequest,
+    stream grpc.ServerStreamingServer[shoppb.OrderEvent]) error {
+    for ev := range s.store.Watch(stream.Context(), req.GetId()) { // channel closes when ctx is done
+        if err := stream.Send(ev); err != nil {
+            return err
+        }
+    }
+    return stream.Context().Err() // nil on normal end; Canceled / DeadlineExceeded otherwise
+}
+
+func main() {
+    lis, _ := net.Listen(&quot;tcp&quot;, &quot;:50051&quot;)
+    srv := grpc.NewServer(grpc.ChainUnaryInterceptor(logging))
+    shoppb.RegisterOrdersServer(srv, &amp;ordersServer{store: newStore()})
+    log.Fatal(srv.Serve(lis))
+}
+
+// Client
+conn, err := grpc.NewClient(&quot;dns:///orders:50051&quot;,
+    grpc.WithTransportCredentials(credentials.NewTLS(&amp;tls.Config{})))
+client := shoppb.NewOrdersClient(conn)
+ctx, cancel := context.WithTimeout(ctx, 2*time.Second) // the deadline rides along in ctx
+defer cancel()
+order, err := client.GetOrder(ctx, &amp;shoppb.GetOrderRequest{Id: 42})
+</code></pre>
+<pre><code class="language-typescript">// @grpc/grpc-js + @grpc/proto-loader (dynamic). For generated types use ts-proto, or Connect (@connectrpc/connect).
+import * as grpc from &quot;@grpc/grpc-js&quot;;
+import * as protoLoader from &quot;@grpc/proto-loader&quot;;
+
+const def = protoLoader.loadSync(&quot;orders.proto&quot;, { longs: String, enums: String, defaults: true });
+const shop = (grpc.loadPackageDefinition(def) as any).shop;
+
+const server = new grpc.Server({ interceptors: [logging] });
+server.addService(shop.Orders.service, {
+  async getOrder(call: grpc.ServerUnaryCall&lt;any, any&gt;, cb: grpc.sendUnaryData&lt;any&gt;) {
+    const order = await store.find(call.request.id);
+    if (!order) return cb({ code: grpc.status.NOT_FOUND, details: `order ${call.request.id} not found` });
+    cb(null, order);
+  },
+  watchOrder(call: grpc.ServerWritableStream&lt;any, any&gt;) {
+    const unsubscribe = store.watch(call.request.id, (ev: unknown) =&gt; call.write(ev));
+    call.on(&quot;cancelled&quot;, unsubscribe); // client cancelled or deadline passed
+  },
+});
+server.bindAsync(&quot;0.0.0.0:50051&quot;, grpc.ServerCredentials.createInsecure(), () =&gt; {});
+
+// Client
+const client = new shop.Orders(&quot;orders:50051&quot;, grpc.credentials.createSsl());
+client.getOrder({ id: 42 }, { deadline: Date.now() + 2000 }, (err: grpc.ServiceError | null, order: any) =&gt; {
+  if (err?.code === grpc.status.NOT_FOUND) console.log(&quot;no such order&quot;);
+});
+const stream = client.watchOrder({ id: 42 });
+stream.on(&quot;data&quot;, (ev: any) =&gt; console.log(ev.status));
+stream.on(&quot;error&quot;, (e: grpc.ServiceError) =&gt; console.error(grpc.status[e.code]));
+</code></pre>
+</div>
+<h3 id="deadlines-and-cancellation-propagation">Deadlines and cancellation propagation</h3>
+<p>A <strong>timeout</strong> is "give up after 2 seconds"; a <strong>deadline</strong> is "give up at 10:00:02.000". The difference matters as soon as calls chain. gRPC sends the remaining time in the <code>grpc-timeout</code> header, and each server turns it back into an absolute deadline. If the server passes that same deadline to its own outbound calls, the whole chain gives up together. If each hop invents a fresh timeout, downstream services keep working long after the original caller has gone.</p>
+<p>Run the three strategies below: a gateway calls Orders, which calls Inventory, which calls Pricing. The defaults (1000 ms budget, Pricing slow at 900 ms) show the difference: propagating the deadline stops everything at 1000 ms with <strong>no wasted work</strong>; fresh per-hop timeouts waste <strong>750 ms</strong> of server time on an answer nobody will read; no timeouts at all means the user waits 1300 ms (or forever, if Pricing hangs).</p>
+<div class="viz apx-wide" data-viz="api-protocols-deadline"></div>
+
+<div class="code-tabs">
+<pre><code class="language-csharp">// Inside a gRPC handler: pass the incoming deadline and token to outbound calls.
+public override async Task&lt;Order&gt; GetOrder(GetOrderRequest req, ServerCallContext ctx)
+{
+    var stock = await _inventory.CheckAsync(new CheckRequest { Id = req.Id },
+        deadline: ctx.Deadline, cancellationToken: ctx.CancellationToken);
+    // ...
+}
+
+// Or let the client factory do it for every call made inside a gRPC request:
+builder.Services.AddGrpcClient&lt;Inventory.InventoryClient&gt;(o =&gt; o.Address = new(&quot;https://inventory&quot;))
+    .EnableCallContextPropagation();
+</code></pre>
+<pre><code class="language-java">// grpc-java propagates automatically: the incoming deadline lives in io.grpc.Context,
+// and stubs called from that Context inherit it. Just don't detach from it:
+Context.current().getDeadline();                 // what's left of the caller's budget
+var stock = inventoryStub.check(CheckRequest.newBuilder().setId(req.getId()).build());
+
+// Careful: work handed to another executor loses the Context unless you wrap it:
+executor.execute(Context.current().wrap(() -&gt; callPricing()));
+</code></pre>
+<pre><code class="language-python"># grpc.aio: read what's left and pass it on as the outbound timeout.
+async def GetOrder(self, request, context):
+    remaining = context.time_remaining()          # seconds, or None if the caller set no deadline
+    stock = await self.inventory.Check(pb.CheckRequest(id=request.id), timeout=remaining)
+    ...
+</code></pre>
+<pre><code class="language-go">// Go: the deadline and cancellation travel inside ctx. Pass the same ctx downstream.
+func (s *ordersServer) GetOrder(ctx context.Context, req *shoppb.GetOrderRequest) (*shoppb.Order, error) {
+    stock, err := s.inventory.Check(ctx, &amp;invpb.CheckRequest{Id: req.GetId()})
+    if status.Code(err) == codes.DeadlineExceeded {
+        return nil, err // don't retry: the caller's budget is gone
+    }
+    // You may shorten (never extend) the budget for one hop:
+    pctx, cancel := context.WithTimeout(ctx, 300*time.Millisecond)
+    defer cancel()
+    price, err := s.pricing.Quote(pctx, &amp;pricepb.QuoteRequest{Id: req.GetId()})
+    // ...
+}
+</code></pre>
+<pre><code class="language-typescript">// grpc-js: pass the incoming call as `parent`; deadline and cancellation propagate by default.
+getOrder(call: grpc.ServerUnaryCall&lt;any, any&gt;, cb: grpc.sendUnaryData&lt;any&gt;) {
+  inventory.check({ id: call.request.id }, { parent: call }, (err: grpc.ServiceError | null, stock: any) =&gt; {
+    if (err) return cb(err);
+    // ...
+  });
+}
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Deadline anti-patterns</strong></p>
+<ul>
+<li><strong>No deadline at all.</strong> The default in most gRPC clients is <em>infinite</em>. One hung dependency then holds a connection, a thread or task, and memory for ever. Every client call needs a deadline.</li>
+<li><strong>Retrying <code>DEADLINE_EXCEEDED</code> with the same budget.</strong> The caller has already given up. Retries belong to the outermost layer, with a fresh budget, and only for idempotent calls; see <a href="resilience.html">resilience</a>.</li>
+<li><strong>Losing the context.</strong> Starting a background task, a new thread or a fire-and-forget call drops the deadline and the cancellation. That's sometimes what you want (send an email even if the user leaves), but it should be a deliberate choice.</li>
+</ul>
+</div>
+<h3 id="status-codes-and-errors">Status codes and errors</h3>
+<p>gRPC has 17 status codes instead of HTTP's dozens. Learn them by the question they answer for the <em>caller</em>: should I retry, fix my request, or give up?</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+<th>Caller should</th>
+<th>Nearest HTTP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OK</code> (0)</td>
+<td>Success</td>
+<td></td>
+<td>200</td>
+</tr>
+<tr>
+<td><code>INVALID_ARGUMENT</code> (3)</td>
+<td>Request is malformed regardless of state</td>
+<td>Fix the request; never retry</td>
+<td>400</td>
+</tr>
+<tr>
+<td><code>FAILED_PRECONDITION</code> (9)</td>
+<td>Valid request, wrong state (e.g. cancel a shipped order)</td>
+<td>Change state first</td>
+<td>400 / 409</td>
+</tr>
+<tr>
+<td><code>NOT_FOUND</code> (5)</td>
+<td>Entity doesn't exist</td>
+<td>Don't retry</td>
+<td>404</td>
+</tr>
+<tr>
+<td><code>ALREADY_EXISTS</code> (6)</td>
+<td>Create conflicted</td>
+<td>Don't retry; fetch it</td>
+<td>409</td>
+</tr>
+<tr>
+<td><code>ABORTED</code> (10)</td>
+<td>Concurrency conflict (optimistic lock failed)</td>
+<td>Retry the whole read-modify-write</td>
+<td>409</td>
+</tr>
+<tr>
+<td><code>PERMISSION_DENIED</code> (7) / <code>UNAUTHENTICATED</code> (16)</td>
+<td>Not allowed / who are you?</td>
+<td>Fix credentials</td>
+<td>403 / 401</td>
+</tr>
+<tr>
+<td><code>RESOURCE_EXHAUSTED</code> (8)</td>
+<td>Rate limit, quota, message too large</td>
+<td>Back off</td>
+<td>429</td>
+</tr>
+<tr>
+<td><code>UNAVAILABLE</code> (14)</td>
+<td>Transient: server down, connection reset</td>
+<td><strong>Retry with backoff</strong> (non-idempotent calls only if the request never reached the server)</td>
+<td>503</td>
+</tr>
+<tr>
+<td><code>DEADLINE_EXCEEDED</code> (4)</td>
+<td>Ran out of time</td>
+<td>Retry only if idempotent and there's budget left</td>
+<td>504</td>
+</tr>
+<tr>
+<td><code>UNIMPLEMENTED</code> (12)</td>
+<td>Method not on this server (version skew)</td>
+<td>Don't retry</td>
+<td>501</td>
+</tr>
+<tr>
+<td><code>INTERNAL</code> (13) / <code>UNKNOWN</code> (2)</td>
+<td>Bug or unmapped exception</td>
+<td>Don't retry blindly</td>
+<td>500</td>
+</tr>
+</tbody>
+</table>
+<p>For rich errors (field violations, retry info), use the <code>google.rpc.Status</code> model with <code>details</code> (the <code>grpc-status-details-bin</code> trailer): <code>ErrorInfo</code>, <code>BadRequest.FieldViolation</code>, <code>RetryInfo</code>. It plays the role of <a href="api-design.html#errors-problem-details-rfc-9457">problem details</a> in REST.</p>
+<h3 id="interceptors-middleware-for-rpcs">Interceptors: middleware for RPCs</h3>
+<p>An interceptor wraps every call, exactly like HTTP middleware: it runs code before the handler, calls <code>next</code>, and runs code after, including on the error path. Server interceptors handle logging, metrics, authentication, validation and exception-to-status mapping; client interceptors add auth tokens, deadlines, retries and tracing headers. The ordering and short-circuit rules are the same ones explained in <a href="middleware-patterns.html">middleware patterns</a> and, for the client side, <a href="outbound-pipelines.html">outbound pipelines</a>.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">public sealed class LoggingInterceptor(ILogger&lt;LoggingInterceptor&gt; log) : Interceptor
+{
+    public override async Task&lt;TResponse&gt; UnaryServerHandler&lt;TRequest, TResponse&gt;(
+        TRequest request, ServerCallContext ctx, UnaryServerMethod&lt;TRequest, TResponse&gt; next)
+    {
+        var sw = Stopwatch.StartNew();
+        try { return await next(request, ctx); }
+        catch (RpcException ex) { log.LogWarning(&quot;{Method} -&gt; {Code}&quot;, ctx.Method, ex.StatusCode); throw; }
+        finally { log.LogInformation(&quot;{Method} took {Ms} ms&quot;, ctx.Method, sw.ElapsedMilliseconds); }
+    }
+}
+</code></pre>
+<pre><code class="language-java">final class LoggingInterceptor implements ServerInterceptor {
+  @Override
+  public &lt;Q, R&gt; ServerCall.Listener&lt;Q&gt; interceptCall(ServerCall&lt;Q, R&gt; call, Metadata headers,
+                                                     ServerCallHandler&lt;Q, R&gt; next) {
+    long start = System.nanoTime();
+    var timed = new ForwardingServerCall.SimpleForwardingServerCall&lt;Q, R&gt;(call) {
+      @Override public void close(Status status, Metadata trailers) {
+        log.info(&quot;{} -&gt; {} in {} ms&quot;, call.getMethodDescriptor().getFullMethodName(),
+            status.getCode(), (System.nanoTime() - start) / 1_000_000);
+        super.close(status, trailers);
+      }
+    };
+    return next.startCall(timed, headers);
+  }
+}
+</code></pre>
+<pre><code class="language-python">class LoggingInterceptor(grpc.aio.ServerInterceptor):
+    async def intercept_service(self, continuation, details):
+        # Runs once per call when the method is looked up; wrap the returned
+        # handler's behaviour if you need per-call timing or error mapping.
+        log.info(&quot;rpc %s&quot;, details.method)
+        return await continuation(details)
+</code></pre>
+<pre><code class="language-go">func logging(ctx context.Context, req any, info *grpc.UnaryServerInfo,
+    next grpc.UnaryHandler) (any, error) {
+    start := time.Now()
+    resp, err := next(ctx, req)
+    slog.InfoContext(ctx, &quot;rpc&quot;, &quot;method&quot;, info.FullMethod,
+        &quot;code&quot;, status.Code(err).String(), &quot;took&quot;, time.Since(start))
+    return resp, err
+}
+</code></pre>
+<pre><code class="language-typescript">const logging: grpc.ServerInterceptor = (method, call) =&gt; {
+  const start = Date.now();
+  return new grpc.ServerInterceptingCall(call, {
+    sendStatus(status, next) {
+      console.log(method.path, grpc.status[status.code], `${Date.now() - start} ms`);
+      next(status);
+    },
+  });
+};
+</code></pre>
+</div>
+<h3 id="grpc-in-production-load-balancing-proxies-and-the-browser">gRPC in production: load balancing, proxies and the browser</h3>
+<p>Three things surprise teams the first time they put gRPC behind real infrastructure.</p>
+<p><strong>1. Load balancing.</strong> A gRPC client opens one long-lived HTTP/2 connection and multiplexes everything over it. An L4 (TCP) load balancer balances <em>connections</em>, so every request from that client lands on the same backend, and new pods get no traffic until clients reconnect. Fix it with an L7 proxy that balances <em>requests</em> (Envoy, Linkerd, Istio, YARP, nginx with <code>grpc_pass</code>), or client-side balancing (<code>dns:///orders</code> plus a <code>round_robin</code> policy, or xDS). Also set <code>MaxConnectionAge</code> on servers so clients periodically reconnect and rebalance.</p>
+<p><strong>2. Browsers.</strong> Browser JavaScript can't control HTTP/2 framing or read trailers, so it can't speak native gRPC. There are three ways around that:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 250" width="900" role="img" aria-label="Three ways to reach a gRPC service from outside: grpc-web through a translating proxy, the Connect protocol served directly, and JSON transcoding that exposes REST endpoints from the same proto">
+<defs><marker id="api-protocols-ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box" x="10" y="20" width="150" height="50" rx="6"/><text class="mono" x="85" y="42" text-anchor="middle">Browser</text><text class="small muted" x="85" y="60" text-anchor="middle">grpc-web client</text>
+<line class="edge path" x1="160" y1="45" x2="330" y2="45" marker-end="url(#api-protocols-ar1)"/><text class="small" x="245" y="36" text-anchor="middle">application/grpc-web</text><text class="small muted" x="245" y="62" text-anchor="middle">trailers moved into body</text>
+<rect class="box accent" x="330" y="20" width="200" height="50" rx="6"/><text class="mono" x="430" y="42" text-anchor="middle">Envoy / YARP</text><text class="small muted" x="430" y="60" text-anchor="middle">or UseGrpcWeb() in-process</text>
+<line class="edge" x1="530" y1="45" x2="700" y2="45" marker-end="url(#api-protocols-ar1)"/><text class="small" x="615" y="36" text-anchor="middle">native gRPC, HTTP/2</text>
+<rect class="box" x="10" y="100" width="150" height="50" rx="6"/><text class="mono" x="85" y="122" text-anchor="middle">Browser / curl</text><text class="small muted" x="85" y="140" text-anchor="middle">Connect client</text>
+<line class="edge path" x1="160" y1="125" x2="700" y2="125" marker-end="url(#api-protocols-ar1)"/><text class="small" x="430" y="116" text-anchor="middle">Connect protocol: POST /shop.Orders/GetOrder with JSON or binary, any HTTP version</text>
+<rect class="box" x="10" y="180" width="150" height="50" rx="6"/><text class="mono" x="85" y="202" text-anchor="middle">Any HTTP client</text><text class="small muted" x="85" y="220" text-anchor="middle">plain REST + JSON</text>
+<line class="edge path" x1="160" y1="205" x2="330" y2="205" marker-end="url(#api-protocols-ar1)"/><text class="small" x="245" y="196" text-anchor="middle">GET /v1/orders/42</text>
+<rect class="box accent" x="330" y="180" width="200" height="50" rx="6"/><text class="mono" x="430" y="202" text-anchor="middle">JSON transcoding</text><text class="small muted" x="430" y="220" text-anchor="middle">google.api.http rules</text>
+<line class="edge" x1="530" y1="205" x2="700" y2="205" marker-end="url(#api-protocols-ar1)"/><text class="small" x="615" y="196" text-anchor="middle">calls the gRPC method</text>
+<rect class="box done" x="700" y="20" width="190" height="210" rx="8"/><text class="mono" x="795" y="110" text-anchor="middle">gRPC service</text><text class="small muted" x="795" y="130" text-anchor="middle">one .proto,</text><text class="small muted" x="795" y="146" text-anchor="middle">one implementation</text>
+</svg>
+<figcaption>Reaching gRPC from browsers and REST clients. grpc-web needs a translating proxy or middleware; Connect servers speak the gRPC, grpc-web and Connect protocols directly; transcoding maps HTTP routes to RPCs.</figcaption>
+</figure>
+
+<ul>
+<li><strong>grpc-web</strong>: a variant protocol that browsers can speak, translated by Envoy, YARP, or in-process with ASP.NET Core's <code>app.UseGrpcWeb()</code> plus <code>.EnableGrpcWeb()</code>. Client and server streaming are limited (no client streaming from browsers).</li>
+<li><strong>Connect</strong> (<code>connectrpc.com</code>): a protocol and a family of libraries (Go, TypeScript, Kotlin, Swift) that serve gRPC, grpc-web <em>and</em> a simple POST-JSON protocol from the same handler. <code>curl -d '{"id":42}' -H 'content-type: application/json' https://api/shop.Orders/GetOrder</code> just works.</li>
+<li><strong>JSON transcoding</strong>: annotate the RPC and get a REST endpoint for free. ASP.NET Core: <code>builder.Services.AddGrpc().AddJsonTranscoding()</code>. Go: grpc-gateway. Envoy: the <code>grpc_json_transcoder</code> filter.</li>
+</ul>
+<pre><code class="language-text">import &quot;google/api/annotations.proto&quot;;
+
+service Orders {
+  rpc GetOrder(GetOrderRequest) returns (Order) {
+    option (google.api.http) = { get: &quot;/v1/orders/{id}&quot; };
+  }
+  rpc CreateOrder(CreateOrderRequest) returns (Order) {
+    option (google.api.http) = { post: &quot;/v1/orders&quot; body: &quot;order&quot; };
+  }
+}
+</code></pre>
+<p><strong>3. Operating it.</strong> You can't <code>curl</code> a binary protocol. Turn on <strong>server reflection</strong> in non-production environments and use <code>grpcurl</code> or Postman; implement the standard <code>grpc.health.v1.Health</code> service so Kubernetes probes and load balancers can check you; raise the 4 MB default maximum message size only deliberately (stream big payloads instead); and configure HTTP/2 keepalive pings so idle streams through NATs and load balancers aren't silently dropped.</p>
+<div class="recognize">
+<p><strong>gRPC is a good fit when</strong></p>
+<ul>
+<li>You own both ends (service-to-service inside your platform), and several languages need the same contract.</li>
+<li>Calls are frequent and small, and JSON parsing or header overhead shows up in profiles.</li>
+<li>You need streaming in either direction, with flow control, deadlines and cancellation built in.</li>
+<li><strong>Not</strong> when the consumer is a third party with <code>curl</code>, when you need HTTP caching at a CDN, or when a team can't run L7 load balancing.</li>
+</ul>
+</div>
+<h2 id="graphql-the-client-chooses-the-shape">GraphQL: the client chooses the shape</h2>
+<p>GraphQL turns the API inside out. Instead of the server defining one response per endpoint, the server publishes a <strong>typed schema of everything that can be asked</strong>, and each client sends a query naming exactly the fields it needs, across relationships, in one round trip. A mobile list view asks for three fields; the desktop detail page asks for thirty; both hit the same <code>POST /graphql</code>.</p>
+<div class="code-tabs" data-labels="Schema (SDL),Query,Response">
+<pre><code class="language-text">type Query {
+  orders(first: Int = 20, after: String): OrderConnection!
+  order(id: ID!): Order
+}
+type Mutation  { placeOrder(input: PlaceOrderInput!): PlaceOrderPayload! }
+type Subscription { orderUpdated(id: ID!): Order! }
+
+type Order    { id: ID!  total: Float!  status: OrderStatus!  customer: Customer!  items: [Item!]! }
+type Item     { qty: Int!  product: Product! }
+type Customer { id: ID!  name: String!  orders(first: Int = 10): [Order!]! }
+type Product  { id: ID!  name: String! }
+enum OrderStatus { PLACED PACKED SHIPPED }
+
+type OrderConnection { edges: [OrderEdge!]!  pageInfo: PageInfo! }
+type OrderEdge  { node: Order!  cursor: String! }
+type PageInfo   { hasNextPage: Boolean!  endCursor: String }
+input PlaceOrderInput { lines: [LineInput!]! }
+input LineInput { sku: String!  qty: Int! }
+type PlaceOrderPayload { order: Order  errors: [UserError!]! }
+type UserError { field: [String!]  message: String! }
+</code></pre>
+<pre><code class="language-text">query OrdersScreen {
+  orders(first: 4) {
+    edges {
+      node {
+        id
+        status
+        customer { name }
+        items { qty product { name } }
+      }
+    }
+  }
+}
+</code></pre>
+<pre><code class="language-text">200 OK
+{
+  &quot;data&quot;: {
+    &quot;orders&quot;: { &quot;edges&quot;: [
+      { &quot;node&quot;: { &quot;id&quot;: &quot;1&quot;, &quot;status&quot;: &quot;PACKED&quot;,
+                  &quot;customer&quot;: { &quot;name&quot;: &quot;Ana&quot; },
+                  &quot;items&quot;: [ { &quot;qty&quot;: 2, &quot;product&quot;: { &quot;name&quot;: &quot;Mug&quot; } } ] } },
+      …
+    ] }
+  }
+}
+// On partial failure it's STILL 200: &quot;data&quot; holds what worked, &quot;errors&quot; lists what didn't,
+// each with a &quot;path&quot; like [&quot;orders&quot;,&quot;edges&quot;,2,&quot;node&quot;,&quot;customer&quot;].
+</code></pre>
+</div>
+<h3 id="how-a-query-executes-a-tree-of-resolvers">How a query executes: a tree of resolvers</h3>
+<p>The server parses and <strong>validates</strong> the query against the schema (unknown fields, wrong argument types and missing variables are rejected before anything runs). Then it walks the query tree, calling a <strong>resolver</strong> function for every field of every object. A resolver receives its <em>parent</em> object and returns the field's value. Scalars resolve trivially from the parent; relationships (<code>customer</code>, <code>items</code>, <code>product</code>) usually hit a database or another service.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 300" width="900" role="img" aria-label="Resolver tree for the orders query: one orders resolver returns 4 orders; each order runs a customer resolver and an items resolver; each of the 8 items runs a product resolver; naive execution makes 17 queries">
+<defs><marker id="api-protocols-ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text class="title" x="10" y="24">Execution is breadth-first by level; each level waits for its parents</text>
+<rect class="box accent" x="370" y="40" width="160" height="36" rx="6"/><text class="mono" x="450" y="63" text-anchor="middle">Query.orders</text>
+<text class="small muted" x="560" y="63">1 call → 4 orders</text>
+<rect class="box done" x="40" y="110" width="80" height="32" rx="6"/><text class="mono" x="80" y="131" text-anchor="middle">Order 1</text>
+<rect class="box done" x="270" y="110" width="80" height="32" rx="6"/><text class="mono" x="310" y="131" text-anchor="middle">Order 2</text>
+<rect class="box done" x="500" y="110" width="80" height="32" rx="6"/><text class="mono" x="540" y="131" text-anchor="middle">Order 3</text>
+<rect class="box done" x="730" y="110" width="80" height="32" rx="6"/><text class="mono" x="770" y="131" text-anchor="middle">Order 4</text>
+<line class="edge" x1="450" y1="76" x2="80" y2="110" marker-end="url(#api-protocols-ar2)"/><line class="edge" x1="450" y1="76" x2="310" y2="110" marker-end="url(#api-protocols-ar2)"/><line class="edge" x1="450" y1="76" x2="540" y2="110" marker-end="url(#api-protocols-ar2)"/><line class="edge" x1="450" y1="76" x2="770" y2="110" marker-end="url(#api-protocols-ar2)"/>
+<rect class="box active" x="10" y="175" width="80" height="30" rx="6"/><text class="mono" x="50" y="195" text-anchor="middle">customer</text>
+<rect class="box active" x="100" y="175" width="60" height="30" rx="6"/><text class="mono" x="130" y="195" text-anchor="middle">items</text>
+<rect class="box active" x="240" y="175" width="80" height="30" rx="6"/><text class="mono" x="280" y="195" text-anchor="middle">customer</text>
+<rect class="box active" x="330" y="175" width="60" height="30" rx="6"/><text class="mono" x="360" y="195" text-anchor="middle">items</text>
+<rect class="box active" x="470" y="175" width="80" height="30" rx="6"/><text class="mono" x="510" y="195" text-anchor="middle">customer</text>
+<rect class="box active" x="560" y="175" width="60" height="30" rx="6"/><text class="mono" x="590" y="195" text-anchor="middle">items</text>
+<rect class="box active" x="700" y="175" width="80" height="30" rx="6"/><text class="mono" x="740" y="195" text-anchor="middle">customer</text>
+<rect class="box active" x="790" y="175" width="60" height="30" rx="6"/><text class="mono" x="820" y="195" text-anchor="middle">items</text>
+<line class="edge" x1="80" y1="142" x2="50" y2="175"/><line class="edge" x1="80" y1="142" x2="130" y2="175"/><line class="edge" x1="310" y1="142" x2="280" y2="175"/><line class="edge" x1="310" y1="142" x2="360" y2="175"/><line class="edge" x1="540" y1="142" x2="510" y2="175"/><line class="edge" x1="540" y1="142" x2="590" y2="175"/><line class="edge" x1="770" y1="142" x2="740" y2="175"/><line class="edge" x1="770" y1="142" x2="820" y2="175"/>
+<rect class="box bad" x="95" y="235" width="34" height="26" rx="5"/><rect class="box bad" x="133" y="235" width="34" height="26" rx="5"/>
+<rect class="box bad" x="325" y="235" width="34" height="26" rx="5"/><rect class="box bad" x="363" y="235" width="34" height="26" rx="5"/>
+<rect class="box bad" x="555" y="235" width="34" height="26" rx="5"/><rect class="box bad" x="593" y="235" width="34" height="26" rx="5"/>
+<rect class="box bad" x="785" y="235" width="34" height="26" rx="5"/><rect class="box bad" x="823" y="235" width="34" height="26" rx="5"/>
+<line class="edge" x1="130" y1="205" x2="112" y2="235"/><line class="edge" x1="130" y1="205" x2="150" y2="235"/><line class="edge" x1="360" y1="205" x2="342" y2="235"/><line class="edge" x1="360" y1="205" x2="380" y2="235"/><line class="edge" x1="590" y1="205" x2="572" y2="235"/><line class="edge" x1="590" y1="205" x2="610" y2="235"/><line class="edge" x1="820" y1="205" x2="802" y2="235"/><line class="edge" x1="820" y1="205" x2="840" y2="235"/>
+<text class="small" x="10" y="286">Naive: 1 (orders) + 4 (customer) + 4 (items) + 8 (product, the small red boxes) = 17 database round trips for one request.</text>
+</svg>
+<figcaption>The resolver tree for the query above. Every red box is a separate <code>product</code> resolver call. Each resolver is written in isolation, so none of them knows that seven siblings are about to run the same query with a different id.</figcaption>
+</figure>
+
+<h3 id="the-n1-problem-and-dataloader">The N+1 problem, and DataLoader</h3>
+<p>That's the classic <strong>N+1 query problem</strong> (1 query for the list, then N more, one per row), which GraphQL makes <em>structural</em>: resolvers are deliberately independent, so the natural implementation of <code>Order.customer</code> is "look up this order's customer", and it runs once per order. The ORM version of the same bug is explained, with its own visualizer, in <a href="anti-patterns.html#leaky-abstractions">anti-patterns</a> and <a href="data-access.html">data access</a>.</p>
+<p>The fix is <strong>DataLoader</strong>: instead of fetching, a resolver calls <code>loader.load(key)</code>, which returns a promise and remembers the key. When the current level of resolvers has finished queuing keys (the end of the event-loop tick in JavaScript; a scheduler hook in other runtimes), the loader calls your <strong>batch function once</strong> with all the distinct keys: <code>SELECT … WHERE id IN (…)</code>. It also caches per request, so the same customer appearing on three orders is fetched once.</p>
+<div class="viz apx-wide" data-viz="api-protocols-dataloader"></div>
+
+<p>With the defaults (4 orders, 2 items each, 2 distinct customers, 3 distinct products) naive resolvers make <strong>17 queries</strong>; DataLoader makes <strong>4</strong>: one per <em>level</em> of the tree, regardless of how many rows. Increase the order count to 50 and naive grows to hundreds while the loader stays at 4.</p>
+<div class="rule">
+<p><strong>Three DataLoader rules that every implementation shares</strong></p>
+<ul>
+<li><strong>One loader instance per request.</strong> The cache isn't a shared cache; it holds data fetched with <em>this</em> user's permissions. A singleton loader leaks one user's data to another and never sees updates. (For cross-request caching, see <a href="caching.html">caching</a>.)</li>
+<li><strong>The batch function returns results in the same order and the same count as the keys</strong>, with null (or an error) for missing keys. Building a dictionary by id and mapping the keys through it is the standard idiom.</li>
+<li><strong>Batch by the foreign key you have.</strong> <code>items</code> is batched by order id (<code>WHERE order_id IN (…)</code>, then grouped), not by item id.</li>
+</ul>
+</div>
+<div class="code-tabs">
+<pre><code class="language-csharp">// HotChocolate (ASP.NET Core). A batch DataLoader; HotChocolate schedules the batch per level.
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType&lt;Query&gt;()
+    .AddTypeExtension&lt;OrderExtensions&gt;()
+    .AddDataLoader&lt;CustomerByIdDataLoader&gt;()
+    .AddMaxExecutionDepthRule(6);
+
+public sealed class CustomerByIdDataLoader(
+    IDbContextFactory&lt;ShopDb&gt; dbFactory, IBatchScheduler scheduler, DataLoaderOptions options)
+    : BatchDataLoader&lt;int, Customer&gt;(scheduler, options)
+{
+    protected override async Task&lt;IReadOnlyDictionary&lt;int, Customer&gt;&gt; LoadBatchAsync(
+        IReadOnlyList&lt;int&gt; keys, CancellationToken ct)
+    {
+        await using var db = await dbFactory.CreateDbContextAsync(ct);
+        return await db.Customers.Where(c =&gt; keys.Contains(c.Id)).ToDictionaryAsync(c =&gt; c.Id, ct);
+    }
+}
+
+[ExtendObjectType&lt;Order&gt;]
+public sealed class OrderExtensions
+{
+    public Task&lt;Customer&gt; GetCustomerAsync([Parent] Order order, CustomerByIdDataLoader loader,
+        CancellationToken ct) =&gt; loader.LoadAsync(order.CustomerId, ct);
+}
+</code></pre>
+<pre><code class="language-java">// Spring for GraphQL. @BatchMapping is a DataLoader generated for you:
+// it receives ALL parent orders of the current level and returns a map.
+@Controller
+class OrderController {
+  private final OrderRepository orders;
+  private final CustomerRepository customers;
+
+  OrderController(OrderRepository orders, CustomerRepository customers) {
+    this.orders = orders; this.customers = customers;
+  }
+
+  @QueryMapping
+  List&lt;Order&gt; orders(@Argument int first) { return orders.findFirst(Math.min(first, 50)); }
+
+  @BatchMapping
+  Map&lt;Order, Customer&gt; customer(List&lt;Order&gt; orders) {
+    Set&lt;Integer&gt; ids = orders.stream().map(Order::customerId).collect(Collectors.toSet());
+    Map&lt;Integer, Customer&gt; byId = customers.findAllById(ids).stream()
+        .collect(Collectors.toMap(Customer::id, c -&gt; c));
+    Map&lt;Order, Customer&gt; result = new HashMap&lt;&gt;();
+    for (Order o : orders) result.put(o, byId.get(o.customerId()));
+    return result;
+  }
+}
+
+// Limits: graphql-java instrumentations as beans
+@Bean Instrumentation maxDepth() { return new MaxQueryDepthInstrumentation(6); }
+@Bean Instrumentation maxComplexity() { return new MaxQueryComplexityInstrumentation(500); }
+</code></pre>
+<pre><code class="language-python"># Strawberry (+ FastAPI). strawberry.dataloader batches all .load() calls made in the same tick.
+import strawberry
+from strawberry.dataloader import DataLoader
+from strawberry.extensions import QueryDepthLimiter
+from strawberry.fastapi import GraphQLRouter
+
+@strawberry.type
+class Customer:
+    id: int
+    name: str
+
+async def load_customers(ids: list[int]) -&gt; list[Customer | None]:
+    rows = await db.fetch(&quot;SELECT id, name FROM customers WHERE id = ANY($1)&quot;, ids)
+    by_id = {r[&quot;id&quot;]: Customer(id=r[&quot;id&quot;], name=r[&quot;name&quot;]) for r in rows}
+    return [by_id.get(i) for i in ids]            # same order and length as ids
+
+@strawberry.type
+class Order:
+    id: int
+    total: float
+    customer_id: strawberry.Private[int]          # not exposed in the schema
+
+    @strawberry.field
+    async def customer(self, info: strawberry.Info) -&gt; Customer | None:
+        return await info.context[&quot;customer_loader&quot;].load(self.customer_id)
+
+@strawberry.type
+class Query:
+    @strawberry.field
+    async def orders(self, first: int = 20) -&gt; list[Order]:
+        rows = await db.fetch(&quot;SELECT id, total, customer_id FROM orders ORDER BY id LIMIT $1&quot;, min(first, 50))
+        return [Order(id=r[&quot;id&quot;], total=r[&quot;total&quot;], customer_id=r[&quot;customer_id&quot;]) for r in rows]
+
+schema = strawberry.Schema(query=Query, extensions=[QueryDepthLimiter(max_depth=6)])
+
+async def get_context():                           # called per request: a fresh loader each time
+    return {&quot;customer_loader&quot;: DataLoader(load_fn=load_customers)}
+
+graphql_app = GraphQLRouter(schema, context_getter=get_context)
+</code></pre>
+<pre><code class="language-go">// gqlgen + github.com/vikstrous/dataloadgen. Loaders are created per request in middleware.
+type Loaders struct {
+    CustomerByID *dataloadgen.Loader[int, *model.Customer]
+}
+
+func NewLoaders(db *sql.DB) *Loaders {
+    fetch := func(ctx context.Context, ids []int) ([]*model.Customer, []error) {
+        byID, err := customersByIDs(ctx, db, ids) // SELECT id, name FROM customers WHERE id = ANY($1)
+        out, errs := make([]*model.Customer, len(ids)), make([]error, len(ids))
+        for i, id := range ids {
+            out[i], errs[i] = byID[id], err // same order and length as ids
+        }
+        return out, errs
+    }
+    return &amp;Loaders{CustomerByID: dataloadgen.NewLoader(fetch, dataloadgen.WithWait(time.Millisecond))}
+}
+
+type ctxKey struct{}
+
+func LoaderMiddleware(db *sql.DB, next http.Handler) http.Handler {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        ctx := context.WithValue(r.Context(), ctxKey{}, NewLoaders(db))
+        next.ServeHTTP(w, r.WithContext(ctx))
+    })
+}
+
+// schema.resolvers.go: gqlgen generates the signature, you write the body.
+func (r *orderResolver) Customer(ctx context.Context, obj *model.Order) (*model.Customer, error) {
+    return ctx.Value(ctxKey{}).(*Loaders).CustomerByID.Load(ctx, obj.CustomerID)
+}
+
+// Limits: srv.Use(extension.FixedComplexityLimit(500))
+</code></pre>
+<pre><code class="language-typescript">// Apollo Server 4 + the original &quot;dataloader&quot; package.
+import DataLoader from &quot;dataloader&quot;;
+import { ApolloServer } from &quot;@apollo/server&quot;;
+import { startStandaloneServer } from &quot;@apollo/server/standalone&quot;;
+import depthLimit from &quot;graphql-depth-limit&quot;;
+
+interface Ctx { customerById: DataLoader&lt;number, Customer | undefined&gt; }
+
+const resolvers = {
+  Query: {
+    orders: (_: unknown, { first }: { first: number }) =&gt;
+      db.order.findMany({ take: Math.min(first, 50), orderBy: { id: &quot;asc&quot; } }),
+  },
+  Order: {
+    customer: (o: Order, _: unknown, ctx: Ctx) =&gt; ctx.customerById.load(o.customerId),
+  },
+};
+
+const makeContext = (): Ctx =&gt; ({
+  customerById: new DataLoader(async (ids: readonly number[]) =&gt; {
+    const rows = await db.customer.findMany({ where: { id: { in: [...ids] } } });
+    const byId = new Map(rows.map((c) =&gt; [c.id, c]));
+    return ids.map((id) =&gt; byId.get(id)); // same order and length as ids
+  }),
+});
+
+const server = new ApolloServer&lt;Ctx&gt;({ typeDefs, resolvers, validationRules: [depthLimit(6)] });
+await startStandaloneServer(server, { context: async () =&gt; makeContext() });
+</code></pre>
+</div>
+<h3 id="query-cost-one-request-can-ask-for-a-million-rows">Query cost: one request can ask for a million rows</h3>
+<p>The flexibility that makes GraphQL pleasant also makes it easy to abuse. A REST endpoint has a fixed cost; a GraphQL query's cost is chosen by the <em>client</em>. Nested lists multiply: 50 customers × 20 orders × 10 items is 10,000 product lookups from a 90-byte query. Because the query is parsed and validated before execution, the server can <strong>compute the cost first and refuse</strong> expensive queries with no work done.</p>
+<p>The analyser below parses a GraphQL subset, multiplies list sizes by their <code>first:</code> arguments, and checks the depth and node count against limits. The default query costs <strong>11,050 nodes</strong> at depth 5, so a 5,000-node limit rejects it. Edit the query or the limits and step through the scoring.</p>
+<div class="viz apx-wide" data-viz="api-protocols-gql-cost"></div>
+
+<div class="cheat">
+<div><strong>Depth limit</strong>Reject queries nested deeper than ~6–10. Stops cyclic abuse (<code>customer { orders { customer { orders … } } }</code>).</div>
+<div><strong>Cost / complexity</strong>Score fields; multiply by list arguments; reject over budget. HotChocolate and GitHub publish costs per field.</div>
+<div><strong>Required page sizes</strong>Every list field takes <code>first</code> with a server-side maximum; no unbounded lists, ever.</div>
+<div><strong>Rate limit by cost</strong>Charge each client the query's cost from a points budget, not one per request. GitHub's GraphQL API does exactly this.</div>
+<div><strong>Timeouts</strong>A whole-request deadline, propagated to every resolver's database call.</div>
+<div><strong>Introspection</strong>Off in production for private APIs (it's not a security boundary, but it's free reconnaissance).</div>
+</div>
+<h3 id="persisted-queries-smaller-requests-cdn-caching-and-an-allowlist">Persisted queries: smaller requests, CDN caching, and an allowlist</h3>
+<p>GraphQL requests are usually POSTs with the full query text in the body, so nothing caches them and anyone can send any query. <strong>Persisted queries</strong> replace the text with a hash.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 230" width="900" role="img" aria-label="Automatic persisted queries: the client first sends only the hash; on a miss the server answers PersistedQueryNotFound and the client resends hash plus query; afterwards GET requests with only the hash can be cached by a CDN">
+<defs><marker id="api-protocols-ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box" x="10" y="20" width="120" height="190" rx="8"/><text class="mono" x="70" y="115" text-anchor="middle">Client</text>
+<rect class="box" x="770" y="20" width="120" height="190" rx="8"/><text class="mono" x="830" y="110" text-anchor="middle">GraphQL</text><text class="small muted" x="830" y="128" text-anchor="middle">hash → query</text>
+<rect class="box accent" x="390" y="140" width="170" height="70" rx="8"/><text class="mono" x="475" y="168" text-anchor="middle">CDN</text><text class="small muted" x="475" y="186" text-anchor="middle">caches GETs by URL</text><text class="small muted" x="475" y="201" text-anchor="middle">passes misses and POSTs on</text>
+<line class="edge path" x1="130" y1="45" x2="770" y2="45" marker-end="url(#api-protocols-ar3)"/><text class="small" x="150" y="38">1. GET /graphql?extensions={persistedQuery:{sha256Hash:"ab12…"}}</text>
+<line class="edge bad" x1="770" y1="80" x2="130" y2="80" marker-end="url(#api-protocols-ar3)"/><text class="small" x="150" y="73">2. PersistedQueryNotFound (only the first time this hash is seen)</text>
+<line class="edge path" x1="130" y1="115" x2="770" y2="115" marker-end="url(#api-protocols-ar3)"/><text class="small" x="150" y="108">3. POST hash + full query text → the server stores it</text>
+<line class="edge path" x1="130" y1="160" x2="390" y2="160" marker-end="url(#api-protocols-ar3)"/><text class="small" x="145" y="153">4. GET with hash + variables</text>
+<line class="edge done" x1="390" y1="195" x2="130" y2="195" marker-end="url(#api-protocols-ar3)"/><text class="small" x="145" y="188">5. served from the CDN cache</text>
+<text class="small muted" x="585" y="160">Trusted documents: register</text><text class="small muted" x="585" y="177">hashes at build time and reject</text><text class="small muted" x="585" y="194">everything else.</text>
+</svg>
+<figcaption>Automatic persisted queries (APQ) register queries lazily. Trusted documents (build-time registration plus an allowlist) are stronger: for first-party clients, the server then executes only queries you shipped.</figcaption>
+</figure>
+
+<ul>
+<li><strong>APQ</strong> saves bandwidth and enables GET + CDN caching, but any client can still register any query.</li>
+<li><strong>Trusted documents / persisted operations</strong> (Relay's persisted queries, Apollo's operation manifests, HotChocolate's persisted operations) extract every query from the client code at build time. In production the server accepts <strong>only</strong> those hashes. For a first-party API, this removes most of the abuse surface, and cost limits become a second line of defence.</li>
+</ul>
+<h3 id="caching-errors-and-other-differences-from-rest">Caching, errors and other differences from REST</h3>
+<ul>
+<li><strong>HTTP caching mostly disappears.</strong> One URL, POST, and every response is a different shape. Caching moves to the client (Apollo Client and Relay normalise objects by <code>__typename</code> + <code>id</code>), to persisted GETs, and to the server's resolvers and loaders. If CDN caching of public data is your scaling strategy, that's a strong vote for REST.</li>
+<li><strong>Errors are data.</strong> Responses are <code>200</code> with an <code>errors</code> array and partial <code>data</code>. Monitoring that counts 5xx sees nothing. Instrument the <code>errors</code> array, and model <em>expected</em> business errors as typed results (<code>PlaceOrderPayload.errors: [UserError!]!</code> or a union such as <code>Order | OutOfStock</code>) instead of top-level errors.</li>
+<li><strong>Versioning is replaced by evolution.</strong> Add fields freely; mark old ones <code>@deprecated(reason: "use totalMoney")</code>; track field usage before removing anything. It's the same compatibility discipline as <a href="api-design.html#versioning-and-evolution-change-without-breaking">API design</a>, applied per field.</li>
+<li><strong>Subscriptions</strong> carry the same selection set over a WebSocket (the <code>graphql-ws</code> protocol) or SSE. They need the same scaling machinery as any <a href="#real-time-polling-long-polling-sse-and-websockets">real-time</a> connection.</li>
+<li><strong>Federation</strong> composes one graph from many services' subgraphs (Apollo Federation, HotChocolate Fusion, WunderGraph Cosmo). It's an organisational tool for many teams sharing one graph; see <a href="distributed-architecture.html">distributed architecture</a>.</li>
+</ul>
+<div class="compare">
+<div class="good">
+<h4 id="graphql-earns-its-cost-when">GraphQL earns its cost when</h4>
+<ul>
+<li>Several clients (web, iOS, Android, partners) need different slices of the same rich, connected data.</li>
+<li>Screens compose data from many sources, and round trips on mobile networks dominate latency.</li>
+<li>You want one strongly typed, introspectable contract and client codegen across teams.</li>
+<li>A backend-for-frontend would otherwise be hand-written per client.</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="prefer-rest-or-grpc-when">Prefer REST or gRPC when</h4>
+<ul>
+<li>The API is simple CRUD or one client: GraphQL adds a server runtime, cost analysis and loaders for nothing.</li>
+<li>Public data that should be HTTP-cached at the edge.</li>
+<li>Server-to-server calls with fixed shapes (gRPC is faster and simpler).</li>
+<li>File uploads and downloads, or bulk exports (use plain HTTP endpoints next to the graph).</li>
+<li>The team hasn't budgeted for N+1 prevention, query limits and per-field authorization.</li>
+</ul>
+</div>
+</div>
+<h2 id="real-time-polling-long-polling-sse-and-websockets">Real-time: polling, long polling, SSE and WebSockets</h2>
+<p>The browser can only <em>ask</em>; the server can only <em>answer</em>. Every real-time technique is a trick for getting the server's news to the client sooner. The simulator puts four of them on the same timeline: the same server events, the same network drop, and you see when each event reaches the user, how many requests it took, and what happens to events that occur while the network is down.</p>
+<div class="viz apx-wide" data-viz="api-protocols-realtime"></div>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Short polling</th>
+<th>Long polling</th>
+<th>Server-Sent Events</th>
+<th>WebSocket</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Direction</td>
+<td>client pulls</td>
+<td>client pulls, server holds</td>
+<td><strong>server → client</strong></td>
+<td><strong>both ways</strong></td>
+</tr>
+<tr>
+<td>Latency</td>
+<td>up to the interval</td>
+<td>~1 round trip</td>
+<td>~½ round trip</td>
+<td>~½ round trip</td>
+</tr>
+<tr>
+<td>Cost when idle</td>
+<td>a request per interval per client</td>
+<td>one parked request per client</td>
+<td>one open response per client</td>
+<td>one open socket per client</td>
+</tr>
+<tr>
+<td>Transport</td>
+<td>plain HTTP</td>
+<td>plain HTTP</td>
+<td>plain HTTP, <code>text/event-stream</code></td>
+<td>HTTP Upgrade, then its own framing</td>
+</tr>
+<tr>
+<td>Reconnect and resume</td>
+<td>n/a (stateless)</td>
+<td>you write it</td>
+<td><strong>built in</strong>: <code>retry:</code> and <code>Last-Event-ID</code></td>
+<td>you write it (or SignalR / Socket.IO do)</td>
+</tr>
+<tr>
+<td>Binary data</td>
+<td>yes</td>
+<td>yes</td>
+<td>text only (base64 if you must)</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Proxies and corporate networks</td>
+<td>always work</td>
+<td>usually work</td>
+<td>work, if buffering is off</td>
+<td>sometimes blocked or cut after idle time</td>
+</tr>
+<tr>
+<td>Best for</td>
+<td>rare updates, simplest code</td>
+<td>fallback</td>
+<td>feeds, notifications, progress, LLM token streams</td>
+<td>chat, games, collaborative editing, trading</td>
+</tr>
+</tbody>
+</table>
+<div class="rule">
+<p><strong>Default to SSE for server push</strong></p>
+<p>If data flows mainly from server to client, SSE gives you real-time delivery over ordinary HTTP with automatic reconnection and resume, and client actions stay as normal POST requests. Reach for WebSockets when the <em>client</em> also streams at high frequency (keystrokes, cursor positions, game input), or when you need binary frames.</p>
+</div>
+<h3 id="sse-in-five-stacks">SSE in five stacks</h3>
+<p>The protocol is tiny: respond with <code>Content-Type: text/event-stream</code>, then write <code>id:</code>, <code>event:</code> and <code>data:</code> lines, each event ending with a blank line. Disable response buffering and compression for that route, send a comment line (<code>: ping</code>) every 15–30 seconds so proxies don't close idle connections, and use <code>Last-Event-ID</code> to replay what the client missed.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// ASP.NET Core 10 has TypedResults.ServerSentEvents; this is the manual version that works everywhere.
+app.MapGet(&quot;/orders/{id}/events&quot;, async (long id, HttpContext http, IOrderFeed feed, CancellationToken ct) =&gt;
+{
+    http.Response.ContentType = &quot;text/event-stream&quot;;
+    http.Response.Headers.CacheControl = &quot;no-cache&quot;;
+    var lastId = http.Request.Headers[&quot;Last-Event-ID&quot;].FirstOrDefault();
+    await foreach (var ev in feed.ReadFromAsync(id, lastId, ct))   // replays missed events, then live
+    {
+        await http.Response.WriteAsync($&quot;id: {ev.Seq}\nevent: status\ndata: {ev.Json}\n\n&quot;, ct);
+        await http.Response.Body.FlushAsync(ct);
+    }
+});
+</code></pre>
+<pre><code class="language-java">// Spring MVC: SseEmitter (WebFlux: return Flux&lt;ServerSentEvent&lt;T&gt;&gt;)
+@GetMapping(path = &quot;/orders/{id}/events&quot;, produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+SseEmitter events(@PathVariable long id,
+                  @RequestHeader(value = &quot;Last-Event-ID&quot;, required = false) String lastId) {
+  var emitter = new SseEmitter(0L);                       // 0 = no server-side timeout
+  var sub = feed.subscribe(id, lastId, ev -&gt; {
+    try { emitter.send(SseEmitter.event().id(ev.seq()).name(&quot;status&quot;).data(ev.json())); }
+    catch (IOException e) { emitter.completeWithError(e); }
+  });
+  emitter.onCompletion(sub::close);
+  emitter.onTimeout(sub::close);
+  return emitter;
+}
+</code></pre>
+<pre><code class="language-python"># FastAPI / Starlette: a StreamingResponse over an async generator (sse-starlette adds pings for you)
+@app.get(&quot;/orders/{order_id}/events&quot;)
+async def events(order_id: int, request: Request):
+    last_id = request.headers.get(&quot;last-event-id&quot;)
+    async def stream():
+        async for ev in feed.read_from(order_id, last_id):
+            if await request.is_disconnected():
+                break
+            yield f&quot;id: {ev.seq}\nevent: status\ndata: {ev.json}\n\n&quot;
+    return StreamingResponse(stream(), media_type=&quot;text/event-stream&quot;,
+                             headers={&quot;Cache-Control&quot;: &quot;no-cache&quot;, &quot;X-Accel-Buffering&quot;: &quot;no&quot;})
+</code></pre>
+<pre><code class="language-go">// net/http: write, then flush after every event
+func events(w http.ResponseWriter, r *http.Request) {
+    w.Header().Set(&quot;Content-Type&quot;, &quot;text/event-stream&quot;)
+    w.Header().Set(&quot;Cache-Control&quot;, &quot;no-cache&quot;)
+    rc := http.NewResponseController(w)
+    ping := time.NewTicker(20 * time.Second)
+    defer ping.Stop()
+    feed := orders.ReadFrom(r.Context(), r.PathValue(&quot;id&quot;), r.Header.Get(&quot;Last-Event-ID&quot;))
+    for {
+        select {
+        case ev, ok := &lt;-feed:
+            if !ok {
+                return
+            }
+            fmt.Fprintf(w, &quot;id: %d\nevent: status\ndata: %s\n\n&quot;, ev.Seq, ev.JSON)
+        case &lt;-ping.C:
+            fmt.Fprint(w, &quot;: ping\n\n&quot;)
+        case &lt;-r.Context().Done(): // client went away
+            return
+        }
+        rc.Flush()
+    }
+}
+</code></pre>
+<pre><code class="language-typescript">// Express server
+app.get(&quot;/orders/:id/events&quot;, (req, res) =&gt; {
+  res.set({ &quot;Content-Type&quot;: &quot;text/event-stream&quot;, &quot;Cache-Control&quot;: &quot;no-cache&quot; }).flushHeaders();
+  const unsubscribe = feed.readFrom(req.params.id, req.get(&quot;Last-Event-ID&quot;), (ev) =&gt;
+    res.write(`id: ${ev.seq}\nevent: status\ndata: ${ev.json}\n\n`));
+  const ping = setInterval(() =&gt; res.write(&quot;: ping\n\n&quot;), 20_000);
+  req.on(&quot;close&quot;, () =&gt; { clearInterval(ping); unsubscribe(); });
+});
+
+// Browser: reconnects by itself and sends Last-Event-ID on reconnect
+const es = new EventSource(&quot;/orders/42/events&quot;);
+es.addEventListener(&quot;status&quot;, (e) =&gt; render(JSON.parse(e.data)));
+</code></pre>
+</div>
+<h3 id="websockets-signalr-and-socketio">WebSockets, SignalR and Socket.IO</h3>
+<p>A WebSocket starts as an HTTP request with <code>Upgrade: websocket</code>; after the <code>101 Switching Protocols</code> response, the TCP connection carries framed messages in both directions with no HTTP semantics at all. That means <strong>no status codes, no retries, no request ids, no auth per message</strong>: you design that application protocol yourself. Raw WebSocket libraries are <code>System.Net.WebSockets</code> (ASP.NET Core), Spring's <code>WebSocketHandler</code>, FastAPI's <code>WebSocket</code>, <code>github.com/coder/websocket</code> in Go, and <code>ws</code> in Node.</p>
+<p>Most teams should use a library that adds the missing layer:</p>
+<ul>
+<li><strong>SignalR</strong> (.NET, with JavaScript, Java and Swift clients): hubs with typed method calls, groups, automatic transport fallback (WebSocket → SSE → long polling), reconnection, and a scale-out backplane (Redis or Azure SignalR Service).</li>
+<li><strong>Socket.IO</strong> (Node, with many clients): rooms, acknowledgements, reconnection, and a Redis adapter for scale-out. It's its own protocol, so a plain WebSocket client can't talk to it.</li>
+<li><strong>Spring STOMP over WebSocket</strong>: a pub/sub messaging protocol with destinations, optionally relayed to a broker.</li>
+</ul>
+<div class="code-tabs" data-labels="SignalR hub (C#),Socket.IO (TypeScript)">
+<pre><code class="language-csharp">public sealed class OrdersHub : Hub
+{
+    public Task Watch(long orderId) =&gt; Groups.AddToGroupAsync(Context.ConnectionId, $&quot;order-{orderId}&quot;);
+}
+
+builder.Services.AddSignalR().AddStackExchangeRedis(redisConn); // backplane for &gt;1 server
+app.MapHub&lt;OrdersHub&gt;(&quot;/hubs/orders&quot;);
+
+// Anywhere in the app (e.g. after an order changes):
+await hub.Clients.Group($&quot;order-{order.Id}&quot;).SendAsync(&quot;status&quot;, new { order.Status }, ct);
+</code></pre>
+<pre><code class="language-typescript">import { Server } from &quot;socket.io&quot;;
+import { createAdapter } from &quot;@socket.io/redis-adapter&quot;;
+
+const io = new Server(httpServer, { adapter: createAdapter(pubClient, subClient) });
+io.on(&quot;connection&quot;, (socket) =&gt; {
+  socket.on(&quot;watch&quot;, (orderId: string, ack: (ok: boolean) =&gt; void) =&gt; {
+    socket.join(`order-${orderId}`);
+    ack(true); // acknowledgements: request/response on top of a socket
+  });
+});
+
+// After an order changes, on any server instance:
+io.to(`order-${order.id}`).emit(&quot;status&quot;, { status: order.status });
+</code></pre>
+</div>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 210" width="900" role="img" aria-label="Scaling persistent connections: clients are spread over three servers; an event raised on server 1 must reach a client connected to server 3, so servers publish through a backplane such as Redis pub/sub">
+<defs><marker id="api-protocols-ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text class="title" x="10" y="22">The scale-out problem: the event happens on one server, the client is on another</text>
+<rect class="box" x="20" y="50" width="90" height="30" rx="6"/><text class="small" x="65" y="70" text-anchor="middle">clients A, B</text>
+<rect class="box" x="20" y="100" width="90" height="30" rx="6"/><text class="small" x="65" y="120" text-anchor="middle">clients C, D</text>
+<rect class="box active" x="20" y="150" width="90" height="30" rx="6"/><text class="small" x="65" y="170" text-anchor="middle">client E</text>
+<rect class="box done" x="200" y="45" width="150" height="40" rx="6"/><text class="mono" x="275" y="70" text-anchor="middle">server 1</text>
+<rect class="box" x="200" y="95" width="150" height="40" rx="6"/><text class="mono" x="275" y="120" text-anchor="middle">server 2</text>
+<rect class="box active" x="200" y="145" width="150" height="40" rx="6"/><text class="mono" x="275" y="170" text-anchor="middle">server 3</text>
+<line class="edge" x1="110" y1="65" x2="200" y2="65"/><line class="edge" x1="110" y1="115" x2="200" y2="115"/><line class="edge active" x1="110" y1="165" x2="200" y2="165"/>
+<rect class="box accent" x="480" y="80" width="160" height="70" rx="8"/><text class="mono" x="560" y="110" text-anchor="middle">backplane</text><text class="small muted" x="560" y="130" text-anchor="middle">Redis pub/sub, NATS,</text><text class="small muted" x="560" y="144" text-anchor="middle">managed service</text>
+<line class="edge path" x1="350" y1="60" x2="480" y2="100" marker-end="url(#api-protocols-ar4)"/><text class="small" x="370" y="62">1. publish "order 42 shipped"</text>
+<line class="edge path" x1="480" y1="135" x2="350" y2="168" marker-end="url(#api-protocols-ar4)"/><text class="small" x="380" y="180">2. fan out to every server</text>
+<text class="small muted" x="670" y="70">3. server 3 holds E's socket,</text><text class="small muted" x="670" y="88">so it delivers the event.</text>
+<text class="small muted" x="670" y="120">Sticky sessions are also needed</text><text class="small muted" x="670" y="138">for SignalR/Socket.IO when</text><text class="small muted" x="670" y="156">long-polling fallback is on.</text>
+</svg>
+<figcaption>Persistent connections are stateful. With more than one server, use a backplane (or a managed service such as Azure SignalR or Web PubSub) so any server can reach any client. Plan for connection limits, draining on deploy, and reconnect storms.</figcaption>
+</figure>
+
+<div class="pitfall">
+<p><strong>Real-time war stories</strong></p>
+<ul>
+<li><strong>"SSE works locally but events arrive in bursts in production."</strong> A reverse proxy (nginx, an API gateway) or response compression is buffering the stream. Turn off buffering for that route (<code>X-Accel-Buffering: no</code>, <code>proxy_buffering off</code>) and don't gzip event streams.</li>
+<li><strong>Reconnect storms.</strong> A deploy drops 50,000 sockets, all clients reconnect in the same second, and the new pods fall over. Add jittered reconnect delays on clients and drain connections gradually.</li>
+<li><strong>Lost events during a reconnect.</strong> Without event ids and a replay buffer, anything published while a client was reconnecting is gone. SSE's <code>Last-Event-ID</code> is the protocol for this; with WebSockets you must build it.</li>
+<li><strong>Authorization only at connect time.</strong> A socket opened at 9:00 is still open at 17:00, after the user's permissions were revoked. Re-check periodically, or close sockets when tokens expire.</li>
+<li><strong>HTTP/1.1 connection limits.</strong> Browsers allow about six connections per host on HTTP/1.1, and each SSE stream holds one. Serve SSE over HTTP/2, or share one stream across tabs.</li>
+</ul>
+</div>
+<h2 id="webhooks-push-to-servers-you-dont-control">Webhooks: push to servers you don't control</h2>
+<p>A webhook is an HTTP POST that <strong>your</strong> system sends to a URL that a customer registered: "tell me when an order ships". It's the server-to-server answer to polling. It's simple to send and hard to send <em>well</em>, because the receiver is someone else's code on someone else's network. They will be down, slow, and occasionally attacked.</p>
+<p>The simulator follows one event through delivery. Pick a scenario: a receiver that's down, a slow receiver that times out (so the provider retries an event that was actually processed), a body tampered with in transit, or an old request replayed by an attacker. The HMAC is computed for real, so change the secret and watch the signature change. Then flip <strong>deduplication</strong> on and off in the slow-receiver scenario.</p>
+<div class="viz apx-wide" data-viz="api-protocols-webhook"></div>
+
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · SIGN</small><strong>HMAC over id + timestamp + body</strong><p>Shared secret per endpoint; the timestamp is inside the signature so it can't be swapped.</p></div>
+<div class="flow-step"><small>2 · DELIVER</small><strong>POST, short timeout</strong><p>2xx = done. Anything else, or no answer within ~10 s, is a failure.</p></div>
+<div class="flow-step"><small>3 · RETRY</small><strong>Exponential backoff for days</strong><p>Then disable the endpoint and tell its owner. Offer a manual replay.</p></div>
+<div class="flow-step"><small>4 · RECEIVE</small><strong>Verify, dedupe, enqueue, 200</strong><p>Do the real work asynchronously; delivery is at-least-once.</p></div>
+</div>
+
+<div class="rule">
+<p><strong>Webhook delivery is at-least-once: receivers must be idempotent</strong></p>
+<p>A timeout doesn't mean "not processed"; it means "don't know". The provider must retry, so the receiver will sometimes get the same event twice. Store each processed <code>webhook-id</code> (with a unique constraint, in the same transaction as the side effect) and answer duplicates with <code>200</code>. This is the same idea as <a href="api-design.html#idempotency-keys-making-post-safe-to-retry">idempotency keys</a>, with the roles reversed.</p>
+</div>
+<p>Use the <a href="https://www.standardwebhooks.com/">Standard Webhooks</a> conventions (<code>webhook-id</code>, <code>webhook-timestamp</code>, <code>webhook-signature: v1,&lt;base64 HMAC-SHA256 of "id.timestamp.body"&gt;</code>) rather than inventing a scheme. Verification must use the <strong>raw body bytes</strong> (re-serialising parsed JSON changes whitespace and breaks the signature) and a <strong>constant-time comparison</strong>.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// ASP.NET Core minimal API
+app.MapPost(&quot;/webhooks/orders&quot;, async (HttpRequest req, IWebhookInbox inbox) =&gt;
+{
+    using var ms = new MemoryStream();
+    await req.Body.CopyToAsync(ms);
+    var body = ms.ToArray();
+    string id = req.Headers[&quot;webhook-id&quot;]!, ts = req.Headers[&quot;webhook-timestamp&quot;]!;
+    if (Math.Abs(DateTimeOffset.UtcNow.ToUnixTimeSeconds() - long.Parse(ts)) &gt; 300) return Results.BadRequest();
+
+    var signed = Encoding.UTF8.GetBytes($&quot;{id}.{ts}.&quot;).Concat(body).ToArray();
+    var expected = Encoding.UTF8.GetBytes(&quot;v1,&quot; + Convert.ToBase64String(HMACSHA256.HashData(secret, signed)));
+    var ok = req.Headers[&quot;webhook-signature&quot;].ToString().Split(' ')     // may hold several (key rotation)
+        .Any(s =&gt; CryptographicOperations.FixedTimeEquals(Encoding.UTF8.GetBytes(s), expected));
+    if (!ok) return Results.Unauthorized();
+
+    await inbox.AddIfNewAsync(id, body);   // unique key on id; a duplicate is a no-op
+    return Results.Ok();                   // the real work happens in a background consumer
+});
+</code></pre>
+<pre><code class="language-java">// Spring MVC: take the raw body as byte[]
+@PostMapping(&quot;/webhooks/orders&quot;)
+ResponseEntity&lt;Void&gt; receive(@RequestHeader(&quot;webhook-id&quot;) String id,
+                             @RequestHeader(&quot;webhook-timestamp&quot;) long ts,
+                             @RequestHeader(&quot;webhook-signature&quot;) String sigHeader,
+                             @RequestBody byte[] body) throws Exception {
+  if (Math.abs(Instant.now().getEpochSecond() - ts) &gt; 300) return ResponseEntity.badRequest().build();
+  Mac mac = Mac.getInstance(&quot;HmacSHA256&quot;);
+  mac.init(new SecretKeySpec(secret, &quot;HmacSHA256&quot;));
+  mac.update((id + &quot;.&quot; + ts + &quot;.&quot;).getBytes(StandardCharsets.UTF_8));
+  byte[] expected = (&quot;v1,&quot; + Base64.getEncoder().encodeToString(mac.doFinal(body))).getBytes(StandardCharsets.UTF_8);
+  boolean ok = Arrays.stream(sigHeader.split(&quot; &quot;))
+      .anyMatch(s -&gt; MessageDigest.isEqual(s.getBytes(StandardCharsets.UTF_8), expected));
+  if (!ok) return ResponseEntity.status(401).build();
+  inbox.addIfNew(id, body);
+  return ResponseEntity.ok().build();
+}
+</code></pre>
+<pre><code class="language-python"># FastAPI
+import base64, hashlib, hmac, time
+from fastapi import FastAPI, Request, Response
+
+@app.post(&quot;/webhooks/orders&quot;)
+async def receive(request: Request) -&gt; Response:
+    body = await request.body()                                   # raw bytes, not parsed JSON
+    msg_id = request.headers[&quot;webhook-id&quot;]
+    ts = request.headers[&quot;webhook-timestamp&quot;]
+    if abs(time.time() - int(ts)) &gt; 300:
+        return Response(status_code=400)
+    digest = hmac.new(SECRET, f&quot;{msg_id}.{ts}.&quot;.encode() + body, hashlib.sha256).digest()
+    expected = &quot;v1,&quot; + base64.b64encode(digest).decode()
+    if not any(hmac.compare_digest(s, expected) for s in request.headers[&quot;webhook-signature&quot;].split()):
+        return Response(status_code=401)
+    await inbox.add_if_new(msg_id, body)
+    return Response(status_code=200)
+</code></pre>
+<pre><code class="language-go">func receive(w http.ResponseWriter, r *http.Request) {
+    body, err := io.ReadAll(http.MaxBytesReader(w, r.Body, 1&lt;&lt;20))
+    if err != nil {
+        http.Error(w, &quot;too large&quot;, http.StatusRequestEntityTooLarge)
+        return
+    }
+    id, ts := r.Header.Get(&quot;webhook-id&quot;), r.Header.Get(&quot;webhook-timestamp&quot;)
+    sec, err := strconv.ParseInt(ts, 10, 64)
+    if err != nil || math.Abs(float64(time.Now().Unix()-sec)) &gt; 300 {
+        http.Error(w, &quot;stale&quot;, http.StatusBadRequest)
+        return
+    }
+    mac := hmac.New(sha256.New, secret)
+    mac.Write([]byte(id + &quot;.&quot; + ts + &quot;.&quot;))
+    mac.Write(body)
+    expected := []byte(&quot;v1,&quot; + base64.StdEncoding.EncodeToString(mac.Sum(nil)))
+    ok := false
+    for _, s := range strings.Fields(r.Header.Get(&quot;webhook-signature&quot;)) {
+        ok = ok || hmac.Equal([]byte(s), expected) // constant-time
+    }
+    if !ok {
+        http.Error(w, &quot;bad signature&quot;, http.StatusUnauthorized)
+        return
+    }
+    _ = inbox.AddIfNew(r.Context(), id, body)
+    w.WriteHeader(http.StatusOK)
+}
+</code></pre>
+<pre><code class="language-typescript">// Express: express.raw keeps the body as a Buffer
+import { createHmac, timingSafeEqual } from &quot;node:crypto&quot;;
+
+app.post(&quot;/webhooks/orders&quot;, express.raw({ type: &quot;application/json&quot; }), async (req, res) =&gt; {
+  const id = req.get(&quot;webhook-id&quot;)!, ts = req.get(&quot;webhook-timestamp&quot;)!;
+  if (Math.abs(Date.now() / 1000 - Number(ts)) &gt; 300) return res.sendStatus(400);
+  const mac = createHmac(&quot;sha256&quot;, secret).update(`${id}.${ts}.`).update(req.body).digest(&quot;base64&quot;);
+  const expected = Buffer.from(`v1,${mac}`);
+  const ok = (req.get(&quot;webhook-signature&quot;) ?? &quot;&quot;).split(&quot; &quot;).some((s) =&gt; {
+    const got = Buffer.from(s);
+    return got.length === expected.length &amp;&amp; timingSafeEqual(got, expected); // throws on length mismatch
+  });
+  if (!ok) return res.sendStatus(401);
+  await inbox.addIfNew(id, req.body);
+  res.sendStatus(200);
+});
+</code></pre>
+</div>
+<p><strong>As the sender</strong>, also: send <em>thin</em> events (<code>{"type":"order.shipped","data":{"id":"42"}}</code>) and let receivers fetch the current state, so retries and out-of-order deliveries can't apply stale data; never follow redirects or post to private IP ranges (that's <a href="api-security.html">SSRF</a>); sign with per-endpoint secrets and support two at once for rotation; and expose a delivery log with a "resend" button. Managed services (Svix, Azure Event Grid, Hookdeck) do all of this for you.</p>
+<h2 id="async-apis-messaging-and-asyncapi">Async APIs: messaging and AsyncAPI</h2>
+<p>Webhooks push events to the outside world. Inside your platform, the same decoupling is usually done with a <strong>message broker</strong>: the producer publishes <code>OrderPlaced</code> to a topic and moves on; any number of consumers (billing, email, analytics) subscribe independently, at their own pace, even if they're down when it's published.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 190" width="900" role="img" aria-label="Synchronous call chain versus publish/subscribe: in the synchronous chain the order service waits for billing, email and analytics; with a broker it publishes one event and three consumers process it independently">
+<defs><marker id="api-protocols-ar5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text class="title" x="10" y="22">Request/response couples availability; publish/subscribe decouples it</text>
+<rect class="box bad" x="10" y="40" width="100" height="36" rx="6"/><text class="mono" x="60" y="63" text-anchor="middle">Orders</text>
+<rect class="box" x="170" y="40" width="90" height="36" rx="6"/><text class="small" x="215" y="63" text-anchor="middle">Billing</text>
+<rect class="box" x="300" y="40" width="90" height="36" rx="6"/><text class="small" x="345" y="63" text-anchor="middle">Email</text>
+<rect class="box bad" x="430" y="40" width="90" height="36" rx="6"/><text class="small" x="475" y="63" text-anchor="middle">Analytics ✗</text>
+<line class="edge" x1="110" y1="58" x2="170" y2="58" marker-end="url(#api-protocols-ar5)"/><line class="edge" x1="260" y1="58" x2="300" y2="58" marker-end="url(#api-protocols-ar5)"/><line class="edge bad" x1="390" y1="58" x2="430" y2="58" marker-end="url(#api-protocols-ar5)"/>
+<text class="small muted" x="10" y="98">Synchronous: latency adds up, and if Analytics is down, placing an order fails.</text>
+<rect class="box done" x="10" y="120" width="100" height="36" rx="6"/><text class="mono" x="60" y="143" text-anchor="middle">Orders</text>
+<rect class="box accent" x="180" y="115" width="200" height="46" rx="6"/><text class="mono" x="280" y="137" text-anchor="middle">topic: orders.placed</text><text class="small muted" x="280" y="153" text-anchor="middle">Kafka, RabbitMQ, Service Bus</text>
+<line class="edge path" x1="110" y1="138" x2="180" y2="138" marker-end="url(#api-protocols-ar5)"/>
+<rect class="box done" x="470" y="110" width="110" height="26" rx="6"/><text class="small" x="525" y="128" text-anchor="middle">Billing</text>
+<rect class="box done" x="600" y="110" width="110" height="26" rx="6"/><text class="small" x="655" y="128" text-anchor="middle">Email</text>
+<rect class="box visit" x="730" y="110" width="160" height="26" rx="6"/><text class="small" x="810" y="128" text-anchor="middle">Analytics (catches up)</text>
+<line class="edge path" x1="380" y1="138" x2="470" y2="124" marker-end="url(#api-protocols-ar5)"/>
+<text class="small muted" x="470" y="160">Each consumer group gets every event, at its own pace. Orders</text><text class="small muted" x="470" y="178">never waits, and doesn't know who listens. The cost: eventual consistency.</text>
+</svg>
+<figcaption>Messaging trades immediacy for decoupling. The patterns that make it reliable (outbox, idempotent consumers, ordering, sagas) belong to <a href="distributed-architecture.html">distributed architecture</a>.</figcaption>
+</figure>
+
+<p><strong>AsyncAPI</strong> is OpenAPI's sibling for event-driven APIs: it documents channels, operations and message schemas, and generates docs and code the same way.</p>
+<pre><code class="language-text">asyncapi: 3.0.0
+info: { title: Orders events, version: 1.2.0 }
+channels:
+  orderPlaced:
+    address: orders.placed
+    messages:
+      OrderPlaced:
+        contentType: application/json
+        payload:
+          type: object
+          required: [orderId, customerId, total, occurredAt]
+          properties:
+            orderId:    { type: string }
+            customerId: { type: string }
+            total:      { type: number }
+            occurredAt: { type: string, format: date-time }
+operations:
+  publishOrderPlaced:
+    action: send
+    channel: { $ref: '#/channels/orderPlaced' }
+</code></pre>
+<p>Event schemas evolve under the same rules as Protobuf (add optional fields; never change meaning). Kafka shops usually enforce them with a <strong>schema registry</strong> (Avro or Protobuf), which rejects incompatible producer schemas before they can break consumers. <strong>CloudEvents</strong> standardises the envelope (<code>id</code>, <code>source</code>, <code>type</code>, <code>time</code>) across brokers and webhooks.</p>
+<h2 id="serialization-formats-json-protobuf-messagepack-avro">Serialization formats: JSON, Protobuf, MessagePack, Avro</h2>
+<p>The protocol decides <em>how</em> messages move; the format decides <em>what the bytes look like</em>. Encode the same product four ways below and watch where the bytes go: JSON repeats every field name as text in every message; MessagePack keeps the names but encodes them in binary; Protobuf replaces names with field-number tags; Avro writes no tags at all, because the reader must already have the writer's schema.</p>
+<div class="viz apx-wide" data-viz="api-protocols-serialize"></div>
+
+<p>Measured on this machine (Python 3.11, 1,000 messages of the same product with three tags; <code>json</code>, <code>msgpack</code>, <code>protobuf</code> with the upb backend, <code>fastavro</code> schemaless):</p>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Bytes / message</th>
+<th>Encode</th>
+<th>Decode</th>
+<th>Schema</th>
+<th>Human-readable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JSON</td>
+<td>104</td>
+<td>4.1 µs</td>
+<td>5.3 µs</td>
+<td>optional (JSON Schema)</td>
+<td><strong>yes</strong></td>
+</tr>
+<tr>
+<td>MessagePack</td>
+<td>78</td>
+<td>1.9 µs</td>
+<td>1.0 µs</td>
+<td>none</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Protobuf</td>
+<td>49</td>
+<td><strong>0.4 µs</strong></td>
+<td><strong>0.6 µs</strong></td>
+<td>required, tags on the wire</td>
+<td>no (<code>protoc --decode</code>)</td>
+</tr>
+<tr>
+<td>Avro</td>
+<td><strong>44</strong></td>
+<td>4.6 µs</td>
+<td>3.7 µs</td>
+<td>required, <strong>writer's schema needed to read</strong></td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+<div class="insight">
+<p><strong>Read benchmarks as orders of magnitude, not rankings</strong></p>
+<p>The library matters more than the format: fastavro pays per-message Python overhead here, while Avro in Java is fast; <code>System.Text.Json</code> source-generated serializers come close to binary formats; compression (gzip, Brotli, zstd) shrinks JSON's repeated keys dramatically for larger payloads. The robust conclusions are: <strong>binary formats are 2–4× smaller</strong> for small records; <strong>schema-based formats are safer to evolve</strong>; and <strong>JSON wins on debuggability and reach</strong>. Measure with your own payloads before switching. See <a href="performance-patterns.html">performance patterns</a> and <a href="memory-and-gc.html">memory and GC</a> for allocation-free serialization.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Use</th>
+<th>Pick</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Public APIs, browsers, config, logs</td>
+<td>JSON (with a JSON Schema or OpenAPI contract)</td>
+</tr>
+<tr>
+<td>gRPC and internal RPC</td>
+<td>Protobuf</td>
+</tr>
+<tr>
+<td>Kafka events with a schema registry, data lakes (with Parquet downstream)</td>
+<td>Avro (or Protobuf)</td>
+</tr>
+<tr>
+<td>Drop-in binary JSON for caches and real-time payloads (SignalR's MessagePack protocol)</td>
+<td>MessagePack</td>
+</tr>
+<tr>
+<td>Hot paths with huge messages, zero-copy reads</td>
+<td>FlatBuffers, Cap'n Proto (rarely needed)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="which-protocol-when">Which protocol when</h2>
+<p>Answer four questions about the API you're building. The chooser scores each option, eliminates the ones that <em>can't</em> work (a browser can't receive a webhook; plain REST can't stream both ways), and explains every point it adds or removes.</p>
+<div class="viz apx-wide" data-viz="api-protocols-decide"></div>
+
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 380" width="900" role="img" aria-label="Decision tree: if the caller does not wait, use messaging inside your platform or webhooks to external systems; if both sides stream, use WebSockets for browsers or gRPC bidi internally; if only the server pushes, use SSE for browsers or gRPC server streaming internally; for request/response, use gRPC between your own services, GraphQL for many clients with different shapes, otherwise REST">
+<defs><marker id="api-protocols-ar6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box accent" x="10" y="20" width="220" height="44" rx="8"/><text class="mono" x="120" y="47" text-anchor="middle">Does the caller wait?</text>
+<line class="edge" x1="230" y1="42" x2="330" y2="42" marker-end="url(#api-protocols-ar6)"/>
+<text class="small" x="280" y="34" text-anchor="middle">no</text>
+<rect class="box" x="330" y="24" width="200" height="36" rx="8"/><text class="small" x="430" y="47" text-anchor="middle">Consumer inside your platform?</text>
+<line class="edge" x1="530" y1="34" x2="640" y2="24" marker-end="url(#api-protocols-ar6)"/>
+<text class="small" x="585" y="22" text-anchor="middle">yes</text>
+<rect class="box bad" x="640" y="10" width="250" height="28" rx="6"/><text class="mono" x="765" y="29" text-anchor="middle">Messaging</text>
+<line class="edge" x1="530" y1="50" x2="640" y2="62" marker-end="url(#api-protocols-ar6)"/>
+<text class="small" x="585" y="76" text-anchor="middle">no</text>
+<rect class="box done" x="640" y="48" width="250" height="28" rx="6"/><text class="mono" x="765" y="67" text-anchor="middle">Webhooks</text>
+<line class="edge" x1="120" y1="64" x2="120" y2="130" marker-end="url(#api-protocols-ar6)"/>
+<text class="small" x="130" y="102" text-anchor="start">yes</text>
+<rect class="box accent" x="10" y="130" width="220" height="44" rx="8"/><text class="mono" x="120" y="157" text-anchor="middle">Who sends what?</text>
+<line class="edge" x1="230" y1="145" x2="330" y2="118" marker-end="url(#api-protocols-ar6)"/>
+<text class="small" x="272" y="110" text-anchor="middle">both stream</text>
+<rect class="box" x="330" y="100" width="200" height="36" rx="8"/><text class="small" x="430" y="123" text-anchor="middle">Browser on the other end?</text>
+<line class="edge" x1="530" y1="110" x2="640" y2="105" marker-end="url(#api-protocols-ar6)"/>
+<text class="small" x="585" y="99" text-anchor="middle">yes</text>
+<rect class="box path" x="640" y="92" width="250" height="28" rx="6"/><text class="mono" x="765" y="111" text-anchor="middle">WebSocket</text>
+<line class="edge" x1="530" y1="126" x2="640" y2="137" marker-end="url(#api-protocols-ar6)"/>
+<text class="small" x="585" y="150" text-anchor="middle">no</text>
+<rect class="box active" x="640" y="124" width="250" height="28" rx="6"/><text class="mono" x="765" y="143" text-anchor="middle">gRPC bidi streaming</text>
+<line class="edge" x1="230" y1="160" x2="330" y2="188" marker-end="url(#api-protocols-ar6)"/>
+<text class="small" x="272" y="210" text-anchor="middle">server pushes</text>
+<rect class="box" x="330" y="170" width="200" height="36" rx="8"/><text class="small" x="430" y="193" text-anchor="middle">Browser on the other end?</text>
+<line class="edge" x1="530" y1="180" x2="640" y2="175" marker-end="url(#api-protocols-ar6)"/>
+<text class="small" x="585" y="169" text-anchor="middle">yes</text>
+<rect class="box done" x="640" y="162" width="250" height="28" rx="6"/><text class="mono" x="765" y="181" text-anchor="middle">SSE</text>
+<line class="edge" x1="530" y1="196" x2="640" y2="207" marker-end="url(#api-protocols-ar6)"/>
+<text class="small" x="585" y="220" text-anchor="middle">no</text>
+<rect class="box active" x="640" y="194" width="250" height="28" rx="6"/><text class="mono" x="765" y="213" text-anchor="middle">gRPC server streaming</text>
+<line class="edge" x1="120" y1="174" x2="120" y2="270" marker-end="url(#api-protocols-ar6)"/>
+<text class="small" x="130" y="216" text-anchor="start">request /</text>
+<text class="small" x="130" y="231" text-anchor="start">response</text>
+<rect class="box accent" x="10" y="270" width="220" height="44" rx="8"/><text class="mono" x="120" y="297" text-anchor="middle">Who calls it?</text>
+<line class="edge" x1="230" y1="292" x2="260" y2="292"/><line class="edge" x1="260" y1="254" x2="260" y2="330"/>
+<line class="edge" x1="260" y1="254" x2="640" y2="254" marker-end="url(#api-protocols-ar6)"/>
+<text class="small" x="280" y="247" text-anchor="start">your own services (internal, latency-sensitive)</text>
+<rect class="box active" x="640" y="240" width="250" height="28" rx="6"/><text class="mono" x="765" y="259" text-anchor="middle">gRPC</text>
+<line class="edge" x1="260" y1="292" x2="640" y2="292" marker-end="url(#api-protocols-ar6)"/>
+<text class="small" x="280" y="285" text-anchor="start">many UIs needing different shapes of graph data</text>
+<rect class="box done" x="640" y="278" width="250" height="28" rx="6"/><text class="mono" x="765" y="297" text-anchor="middle">GraphQL</text>
+<line class="edge" x1="260" y1="330" x2="640" y2="330" marker-end="url(#api-protocols-ar6)"/>
+<text class="small" x="280" y="323" text-anchor="start">public, partners, simple or HTTP-cacheable</text>
+<rect class="box done" x="640" y="316" width="250" height="28" rx="6"/><text class="mono" x="765" y="335" text-anchor="middle">REST</text>
+<text class="small muted" x="10" y="370">Mixing is normal: REST + webhooks for partners, gRPC between services, SSE for the UI's live bits, a broker for events.</text>
+</svg>
+<figcaption>A first-cut decision tree. Then check the costs in the table below: team familiarity and operability often outweigh a few milliseconds.</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>REST</th>
+<th>gRPC</th>
+<th>GraphQL</th>
+<th>SSE</th>
+<th>WebSocket</th>
+<th>Webhooks</th>
+<th>Messaging</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Typical caller</td>
+<td>anyone</td>
+<td>your services</td>
+<td>your UIs</td>
+<td>browsers</td>
+<td>browsers, apps</td>
+<td>partner servers</td>
+<td>your services</td>
+</tr>
+<tr>
+<td>Direction</td>
+<td>req/resp</td>
+<td>req/resp + streams</td>
+<td>req/resp + subscriptions</td>
+<td>server → client</td>
+<td>both</td>
+<td>server → server</td>
+<td>pub/sub</td>
+</tr>
+<tr>
+<td>Contract</td>
+<td>OpenAPI</td>
+<td><code>.proto</code> (required)</td>
+<td>SDL (required)</td>
+<td>ad hoc</td>
+<td>ad hoc</td>
+<td>event schemas</td>
+<td>AsyncAPI, registry</td>
+</tr>
+<tr>
+<td>Payload</td>
+<td>JSON (usually)</td>
+<td>Protobuf</td>
+<td>JSON</td>
+<td>text</td>
+<td>text or binary</td>
+<td>JSON</td>
+<td>any</td>
+</tr>
+<tr>
+<td>HTTP caching / CDN</td>
+<td><strong>excellent</strong></td>
+<td>no</td>
+<td>only persisted GETs</td>
+<td>no</td>
+<td>no</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>Browser support</td>
+<td>native</td>
+<td>via grpc-web / Connect</td>
+<td>native</td>
+<td>native</td>
+<td>native</td>
+<td>n/a</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Latency and efficiency</td>
+<td>good</td>
+<td><strong>best</strong></td>
+<td>good (watch N+1)</td>
+<td>good</td>
+<td>good</td>
+<td>async</td>
+<td>async</td>
+</tr>
+<tr>
+<td>Debuggability</td>
+<td><strong>curl</strong></td>
+<td>grpcurl + reflection</td>
+<td>GraphiQL</td>
+<td>curl</td>
+<td>devtools</td>
+<td>request logs</td>
+<td>broker tooling</td>
+</tr>
+<tr>
+<td>Team and ops cost</td>
+<td>low</td>
+<td>medium (codegen, L7 LB)</td>
+<td><strong>high</strong> (loaders, limits, authz per field)</td>
+<td>low</td>
+<td>medium (stateful)</td>
+<td>medium (retries, signing)</td>
+<td>high (broker ops)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common-pitfalls">Common pitfalls</h2>
+<div class="pitfall">
+<p><strong>Pitfalls across protocols</strong></p>
+<ul>
+<li><strong>Choosing by hype.</strong> Rewriting a simple CRUD API in GraphQL or gRPC adds a runtime, codegen and new failure modes for no user benefit. Start from the caller and the data flow.</li>
+<li><strong>gRPC behind an L4 load balancer.</strong> All traffic from a client goes to one pod. Use L7 or client-side balancing, and set <code>MaxConnectionAge</code>.</li>
+<li><strong>Missing deadlines.</strong> gRPC's default is no deadline. Every outbound call needs one, propagated from the incoming request.</li>
+<li><strong>Reusing Protobuf field numbers.</strong> Silent corruption. Delete with <code>reserved</code>, and run <code>buf breaking</code> in CI.</li>
+<li><strong>GraphQL without DataLoader or limits.</strong> N+1 makes it slow; unbounded nesting makes it a denial-of-service endpoint.</li>
+<li><strong>A shared DataLoader across requests.</strong> One user's data appears in another user's response.</li>
+<li><strong>Buffered SSE.</strong> A proxy or compression middleware holds events; nothing looks wrong until production.</li>
+<li><strong>WebSockets without reconnect, resume or backplane.</strong> Works with one server and a perfect network; loses events everywhere else.</li>
+<li><strong>Webhooks verified against re-serialised JSON</strong>, compared with <code>==</code>, without a timestamp window, or processed synchronously before returning 200.</li>
+<li><strong>Non-idempotent consumers.</strong> Webhooks and message brokers deliver at least once. Duplicates will happen.</li>
+</ul>
+</div>
+<h2 id="checklist">Checklist</h2>
+<div class="rule">
+<p><strong>Before you ship a non-REST API</strong></p>
+<ul>
+<li>[ ] The choice is justified by the caller and data flow (the decision tree), and documented in an ADR.</li>
+<li>[ ] <strong>gRPC</strong>: <code>.proto</code> in a shared module; <code>buf lint</code> and <code>buf breaking</code> in CI; deadlines on every call and propagated; status codes mapped deliberately; health service, reflection in non-prod, L7 load balancing, keepalives, message size limits.</li>
+<li>[ ] <strong>GraphQL</strong>: per-request DataLoaders for every relationship; depth and cost limits; <code>first</code> required with a maximum; trusted documents for first-party clients; per-field authorization; <code>errors</code> monitored.</li>
+<li>[ ] <strong>Real-time</strong>: SSE unless clients stream; heartbeats; event ids with replay; jittered reconnects; backplane for more than one server; authorization re-checked for long-lived connections.</li>
+<li>[ ] <strong>Webhooks</strong>: Standard Webhooks headers; HMAC over id, timestamp and raw body; 5-minute tolerance; constant-time comparison; retries with backoff for days; receivers dedupe on <code>webhook-id</code>; SSRF-safe sender.</li>
+<li>[ ] <strong>Messaging</strong>: AsyncAPI document; schema registry or contract tests; idempotent consumers; outbox for publishing (see <a href="distributed-architecture.html">distributed architecture</a>).</li>
+<li>[ ] Security applies to all of them: TLS, authentication, rate limits and input limits, per <a href="api-security.html">API security</a>. Traces flow across every hop, per <a href="observability.html">observability</a>.</li>
+</ul>
+</div>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>HTTP/2 multiplexes requests on one connection. Why can it still be slower than HTTP/1.1 on a lossy mobile network?</summary>
+<p>TCP delivers bytes in order. When one packet is lost, every byte after it waits in the receive buffer until the retransmission arrives, including frames from other streams that arrived fine. All multiplexed streams stall together. Six HTTP/1.1 connections each stall independently. HTTP/3 fixes this because QUIC orders bytes per stream, not per connection.</p>
+</details>
+<details class="quiz">
+<summary>You delete the field <code>int32 qty = 3</code> and later add <code>int64 discount_cents = 3</code>. What happens, and how do you prevent it?</summary>
+<p>Both are varints, so old messages decode without any error: their <code>qty</code> values are read as discounts. It's silent data corruption. When deleting a field, add <code>reserved 3;</code> and <code>reserved "qty";</code> so the compiler rejects reuse, and run <code>buf breaking</code> in CI.</p>
+</details>
+<details class="quiz">
+<summary>A gateway gives a request 1 s. Orders calls Inventory with its own 2 s timeout. What's wrong?</summary>
+<p>Inventory keeps working for up to a second after the user has received a timeout: wasted capacity exactly when the system is slow, which is when you can least afford it. Pass the incoming <em>deadline</em> (not a fresh timeout) to outbound calls: <code>ctx</code> in Go, <code>ctx.Deadline</code> / <code>EnableCallContextPropagation</code> in .NET, <code>Context</code> in grpc-java, <code>time_remaining()</code> in Python, <code>parent: call</code> in grpc-js.</p>
+</details>
+<details class="quiz">
+<summary>A GraphQL query for 50 orders with their customers makes 51 SQL queries. Fix it without changing the schema.</summary>
+<p>Resolve <code>Order.customer</code> through a per-request DataLoader keyed by customer id. All 50 <code>load(id)</code> calls in the same level are collected and the batch function runs once: <code>SELECT … WHERE id IN (…)</code>, returning results in key order. That's 2 queries in total, and repeated customers are fetched once.</p>
+</details>
+<details class="quiz">
+<summary>The UI needs live order status. Your colleague proposes WebSockets. What do you ask, and what would you probably choose?</summary>
+<p>Does the client send a stream of messages too, or does it only receive? Status updates flow server → client; the client's actions are ordinary POSTs. SSE gives that over plain HTTP with automatic reconnection and <code>Last-Event-ID</code> resume, and far less infrastructure. Use WebSockets only for genuinely bidirectional, high-frequency traffic.</p>
+</details>
+<details class="quiz">
+<summary>Your webhook receiver charges a card, then returns 200. Sometimes customers are charged twice. Why, and what's the fix?</summary>
+<p>Charging took longer than the provider's timeout, so the provider marked the delivery failed and retried the same event. Fix: verify, store the <code>webhook-id</code> with a unique constraint (in the same transaction as the work, or in an inbox table), return 200 quickly, process asynchronously, and treat a duplicate id as already done.</p>
+</details>
+<details class="quiz">
+<summary>Why is the gRPC status sent in trailers rather than the HTTP status line?</summary>
+<p>A streaming response may fail after it has started sending messages, when the <code>:status 200</code> headers are already gone. Trailers come at the end of the stream, so they can report the final outcome. That's also why gRPC needs proxies that forward HTTP/2 trailers, and why browsers need grpc-web, which moves the trailers into the body.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>HTTP versions</strong>1.1: one request at a time per connection. 2: multiplexed, but TCP HOL. 3: QUIC, per-stream loss recovery, 1-RTT setup.</div>
+<div><strong>REST</strong>Public, cacheable, universal. The default. See <a href="api-design.html">API design</a>.</div>
+<div><strong>gRPC</strong>Internal, typed, fast, streaming. Deadlines everywhere; L7 load balancing; grpc-web or Connect for browsers.</div>
+<div><strong>Protobuf evolution</strong>Numbers are forever. Add new numbers; <code>reserved</code> deleted ones; never change types.</div>
+<div><strong>gRPC call types</strong>Unary; server streaming; client streaming; bidi. One HTTP/2 stream each; status in trailers.</div>
+<div><strong>GraphQL</strong>Client-shaped queries over one schema. Per-request DataLoaders, depth and cost limits, trusted documents.</div>
+<div><strong>Real-time</strong>SSE for push (auto reconnect, <code>Last-Event-ID</code>). WebSocket for two-way. Backplane to scale.</div>
+<div><strong>Webhooks</strong>Sign <code>id.timestamp.body</code>; 5-minute window; constant-time compare; retry with backoff; receivers dedupe.</div>
+<div><strong>Messaging</strong>Fire and forget, many consumers, eventual consistency. Document with AsyncAPI; idempotent consumers.</div>
+<div><strong>Formats</strong>JSON for reach; Protobuf for RPC; Avro with a registry for events; MessagePack as binary JSON.</div>
+<div><strong>Status → action</strong><code>UNAVAILABLE</code>: retry with backoff. <code>DEADLINE_EXCEEDED</code>: retry only if idempotent with budget left. <code>INVALID_ARGUMENT</code>: never retry.</div>
+<div><strong>Choose by</strong>Caller → direction → shape → performance → team cost. Mixing protocols is normal.</div>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://www.rfc-editor.org/rfc/rfc9113">RFC 9113: HTTP/2</a>, <a href="https://www.rfc-editor.org/rfc/rfc9114">RFC 9114: HTTP/3</a> and <a href="https://www.rfc-editor.org/rfc/rfc9000">RFC 9000: QUIC</a></li>
+<li><a href="https://grpc.io/docs/">gRPC documentation</a>: <a href="https://grpc.io/docs/what-is-grpc/core-concepts/">core concepts</a>, <a href="https://grpc.io/docs/guides/deadlines/">deadlines</a>, <a href="https://grpc.io/docs/guides/status-codes/">status codes</a>, <a href="https://grpc.io/blog/grpc-load-balancing/">load balancing</a></li>
+<li><a href="https://protobuf.dev/programming-guides/proto3/">Protocol Buffers: language guide (proto3)</a>, <a href="https://protobuf.dev/programming-guides/encoding/">encoding</a> and <a href="https://protobuf.dev/best-practices/dos-donts/">best practices</a>; <a href="https://buf.build/docs/breaking/">Buf breaking-change detection</a></li>
+<li><a href="https://learn.microsoft.com/aspnet/core/grpc/">gRPC on .NET</a>, <a href="https://learn.microsoft.com/aspnet/core/grpc/json-transcoding">JSON transcoding</a> and <a href="https://learn.microsoft.com/aspnet/core/grpc/grpcweb">grpc-web</a>; <a href="https://connectrpc.com/docs/introduction">Connect</a></li>
+<li><a href="https://graphql.org/learn/">GraphQL specification and learn pages</a>, <a href="https://github.com/graphql/dataloader">DataLoader</a>, <a href="https://chillicream.com/docs/hotchocolate">HotChocolate</a>, <a href="https://docs.spring.io/spring-graphql/reference/">Spring for GraphQL</a>, <a href="https://strawberry.rocks/docs">Strawberry</a>, <a href="https://gqlgen.com/">gqlgen</a>, <a href="https://www.apollographql.com/docs/apollo-server/">Apollo Server</a></li>
+<li><a href="https://html.spec.whatwg.org/multipage/server-sent-events.html">HTML Living Standard: server-sent events</a>, <a href="https://www.rfc-editor.org/rfc/rfc6455">RFC 6455: WebSocket</a>, <a href="https://learn.microsoft.com/aspnet/core/signalr/introduction">ASP.NET Core SignalR</a>, <a href="https://socket.io/docs/v4/">Socket.IO</a></li>
+<li><a href="https://www.standardwebhooks.com/">Standard Webhooks specification</a>, <a href="https://www.asyncapi.com/docs">AsyncAPI</a>, <a href="https://cloudevents.io/">CloudEvents</a></li>
+<li><a href="https://msgpack.org/">MessagePack</a> and <a href="https://avro.apache.org/docs/">Apache Avro specification</a></li>
+<li>Related topics: <a href="api-design.html">API design</a>, <a href="api-security.html">API security</a>, <a href="request-pipeline.html">request pipeline</a>, <a href="middleware-patterns.html">middleware patterns</a>, <a href="outbound-pipelines.html">outbound pipelines</a>, <a href="resilience.html">resilience</a>, <a href="caching.html">caching</a>, <a href="concurrency-async.html">concurrency and async</a>, <a href="data-access.html">data access</a>, <a href="distributed-architecture.html">distributed architecture</a>, <a href="observability.html">observability</a></li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="api-design.html"><small>&larr; PREVIOUS</small>REST API Design</a><a class="next" href="api-security.html"><small>NEXT &rarr;</small>API Security: AuthN, AuthZ &amp; Rate Limiting</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-one-feature-five-protocols-five-different-bills">The problem: one feature, five protocols, five different bills</a></li>
+<li><a href="#the-mental-model-protocols-are-layers-and-most-of-them-ride-on-http">The mental model: protocols are layers, and most of them ride on HTTP</a></li>
+<li><a href="#http11-vs-http2-vs-http3-head-of-line-blocking-from-the-wire-up">HTTP/1.1 vs HTTP/2 vs HTTP/3: head-of-line blocking, from the wire up</a><ul>
+<li><a href="#what-you-actually-configure">What you actually configure</a></li>
+</ul>
+</li>
+<li><a href="#rest-in-one-minute-and-where-it-stops">REST in one minute (and where it stops)</a></li>
+<li><a href="#grpc-typed-contracts-and-streams-over-http2">gRPC: typed contracts and streams over HTTP/2</a><ul>
+<li><a href="#the-contract-a-proto-file">The contract: a .proto file</a></li>
+<li><a href="#schema-evolution-the-rules-and-what-breaks-when-you-ignore-them">Schema evolution: the rules, and what breaks when you ignore them</a></li>
+<li><a href="#the-four-call-types">The four call types</a></li>
+<li><a href="#the-same-service-in-five-stacks">The same service in five stacks</a></li>
+<li><a href="#deadlines-and-cancellation-propagation">Deadlines and cancellation propagation</a></li>
+<li><a href="#status-codes-and-errors">Status codes and errors</a></li>
+<li><a href="#interceptors-middleware-for-rpcs">Interceptors: middleware for RPCs</a></li>
+<li><a href="#grpc-in-production-load-balancing-proxies-and-the-browser">gRPC in production: load balancing, proxies and the browser</a></li>
+</ul>
+</li>
+<li><a href="#graphql-the-client-chooses-the-shape">GraphQL: the client chooses the shape</a><ul>
+<li><a href="#how-a-query-executes-a-tree-of-resolvers">How a query executes: a tree of resolvers</a></li>
+<li><a href="#the-n1-problem-and-dataloader">The N+1 problem, and DataLoader</a></li>
+<li><a href="#query-cost-one-request-can-ask-for-a-million-rows">Query cost: one request can ask for a million rows</a></li>
+<li><a href="#persisted-queries-smaller-requests-cdn-caching-and-an-allowlist">Persisted queries: smaller requests, CDN caching, and an allowlist</a></li>
+<li><a href="#caching-errors-and-other-differences-from-rest">Caching, errors and other differences from REST</a></li>
+</ul>
+</li>
+<li><a href="#real-time-polling-long-polling-sse-and-websockets">Real-time: polling, long polling, SSE and WebSockets</a><ul>
+<li><a href="#sse-in-five-stacks">SSE in five stacks</a></li>
+<li><a href="#websockets-signalr-and-socketio">WebSockets, SignalR and Socket.IO</a></li>
+</ul>
+</li>
+<li><a href="#webhooks-push-to-servers-you-dont-control">Webhooks: push to servers you don't control</a></li>
+<li><a href="#async-apis-messaging-and-asyncapi">Async APIs: messaging and AsyncAPI</a></li>
+<li><a href="#serialization-formats-json-protobuf-messagepack-avro">Serialization formats: JSON, Protobuf, MessagePack, Avro</a></li>
+<li><a href="#which-protocol-when">Which protocol when</a></li>
+<li><a href="#common-pitfalls">Common pitfalls</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

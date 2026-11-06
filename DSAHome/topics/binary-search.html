@@ -1,0 +1,1429 @@
+<!doctype html>
+<html lang="en" data-home="dsa-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Binary Search | DSA Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#4f46e5;--accent-soft:#eef0ff;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#a5b4fc;--accent-soft:#252a5c;}}:root[data-theme=dark]{--accent:#a5b4fc;--accent-soft:#252a5c;}</style>
+  <link rel="stylesheet" href="../assets/topics/binary-search.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/binary-search.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="DSA Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">DS</span>DSA Home</a>
+    <p class="sidebar-caption">Data structures &amp; algorithms, seen.<br>Every idea animated, every pattern drilled.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations</summary><ul class="topic-list"><li data-search="The Problem-Solving Playbook Foundations A visual decision map from input size, shape and question type to the right technique, plus a repeatable interview/contest workflow. pattern recognition constraints approach interview" data-slug="problem-solving-playbook"><a href="../topics/problem-solving-playbook.html">The Problem-Solving Playbook</a></li><li data-search="Complexity Analysis Foundations Big-O growth you can see, amortized cost, recursion trees and the Master theorem, and what 10^8 operations per second really buys you. big o amortized master theorem time space" data-slug="complexity-analysis"><a href="../topics/complexity-analysis.html">Complexity Analysis</a></li><li data-search="Recursion &amp; the Call Stack Foundations Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from. call stack recursion tree divide and conquer" data-slug="recursion"><a href="../topics/recursion.html">Recursion &amp; the Call Stack</a></li></ul></details><details class="nav-track" open><summary>Arrays &amp; Strings</summary><ul class="topic-list"><li data-search="Two Pointers Arrays &amp; Strings Opposite-end, same-direction and fast/slow pointers: why moving one pointer is safe, with partitioning and k-sum. pair sum partition dutch flag 3sum" data-slug="two-pointers"><a href="../topics/two-pointers.html">Two Pointers</a></li><li data-search="Sliding Window Arrays &amp; Strings Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows. substring subarray window at most k" data-slug="sliding-window"><a href="../topics/sliding-window.html">Sliding Window</a></li><li data-search="Prefix Sums &amp; Difference Arrays Arrays &amp; Strings 1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR. subarray sum equals k range sum 2d prefix difference array" data-slug="prefix-sums"><a href="../topics/prefix-sums.html">Prefix Sums &amp; Difference Arrays</a></li><li data-search="Binary Search Arrays &amp; Strings One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection. lower bound upper bound search on answer rotated monotonic predicate" data-slug="binary-search"><a href="../topics/binary-search.html" aria-current="page">Binary Search</a></li><li data-search="Sorting Algorithms Arrays &amp; Strings Animated bubble, insertion, merge, quick, heap, counting and radix sorts; stability, quickselect and custom comparators. merge sort quick sort quickselect counting sort inversions" data-slug="sorting"><a href="../topics/sorting.html">Sorting Algorithms</a></li><li data-search="Hashing Patterns Arrays &amp; Strings How hash tables work inside, then frequency maps, grouping by canonical keys, complement lookups and rolling hashes. hash map hash set anagram two sum collision" data-slug="hashing"><a href="../topics/hashing.html">Hashing Patterns</a></li><li data-search="Monotonic Stack &amp; Queue Arrays &amp; Strings Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight. next greater largest rectangle deque trapping rain water" data-slug="monotonic-stack-queue"><a href="../topics/monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a></li><li data-search="Intervals &amp; Sweep Line Arrays &amp; Strings Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline. merge intervals meeting rooms events skyline" data-slug="intervals-sweep-line"><a href="../topics/intervals-sweep-line.html">Intervals &amp; Sweep Line</a></li><li data-search="String Algorithms Arrays &amp; Strings KMP failure function, Z-algorithm, Rabin–Karp, Manacher&#x27;s palindromes and string hashing, each animated character by character. kmp z algorithm rabin karp manacher palindrome pattern matching" data-slug="string-algorithms"><a href="../topics/string-algorithms.html">String Algorithms</a></li></ul></details><details class="nav-track"><summary>Linked Lists, Stacks, Queues &amp; Heaps</summary><ul class="topic-list"><li data-search="Linked Lists Linked Lists, Stacks, Queues &amp; Heaps Pointer rewiring you can watch: reversal, dummy heads, fast/slow cycle detection, merging, and LRU cache design. reverse floyd cycle merge lru" data-slug="linked-lists"><a href="../topics/linked-lists.html">Linked Lists</a></li><li data-search="Stacks &amp; Queues Linked Lists, Stacks, Queues &amp; Heaps Balanced brackets, expression evaluation, min-stack, queues from stacks, deques and BFS queues. parentheses calculator deque min stack" data-slug="stacks-queues"><a href="../topics/stacks-queues.html">Stacks &amp; Queues</a></li><li data-search="Heaps &amp; Priority Queues Linked Lists, Stacks, Queues &amp; Heaps Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling. heap top k median k way merge priority queue" data-slug="heaps-priority-queues"><a href="../topics/heaps-priority-queues.html">Heaps &amp; Priority Queues</a></li></ul></details><details class="nav-track"><summary>Trees</summary><ul class="topic-list"><li data-search="Tree Traversals Trees Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees. dfs bfs inorder level order morris" data-slug="tree-traversals"><a href="../topics/tree-traversals.html">Tree Traversals</a></li><li data-search="Binary Search Trees Trees Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters. bst validate successor avl red black" data-slug="binary-search-trees"><a href="../topics/binary-search-trees.html">Binary Search Trees</a></li><li data-search="Tree Problem Patterns Trees Return-value recursion (diameter, max path sum), top-down state, LCA, serialization, and binary lifting. lca diameter path sum binary lifting serialize" data-slug="tree-patterns"><a href="../topics/tree-patterns.html">Tree Problem Patterns</a></li><li data-search="Tries Trees Prefix trees animated insert by insert: autocomplete, word search on boards, and bitwise tries for max XOR. prefix tree autocomplete word search xor trie" data-slug="tries"><a href="../topics/tries.html">Tries</a></li><li data-search="Segment Trees, Fenwick Trees &amp; Sparse Tables Trees Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables. segment tree lazy propagation fenwick bit rmq" data-slug="segment-fenwick-trees"><a href="../topics/segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a></li></ul></details><details class="nav-track"><summary>Graphs</summary><ul class="topic-list"><li data-search="Graph Fundamentals: BFS &amp; DFS Graphs Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS. bfs dfs grid islands connected components cycle" data-slug="graph-fundamentals"><a href="../topics/graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></li><li data-search="Topological Sort &amp; DAGs Graphs Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs. kahn course schedule dag dependency order" data-slug="topological-sort"><a href="../topics/topological-sort.html">Topological Sort &amp; DAGs</a></li><li data-search="Union-Find (Disjoint Set Union) Graphs Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries. dsu disjoint set path compression connectivity" data-slug="union-find"><a href="../topics/union-find.html">Union-Find (Disjoint Set Union)</a></li><li data-search="Shortest Paths Graphs BFS, 0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall and A* animated, and a chart to pick the right one every time. dijkstra bellman ford floyd warshall a star 0-1 bfs" data-slug="shortest-paths"><a href="../topics/shortest-paths.html">Shortest Paths</a></li><li data-search="Minimum Spanning Trees Graphs Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems. kruskal prim mst cut property" data-slug="minimum-spanning-trees"><a href="../topics/minimum-spanning-trees.html">Minimum Spanning Trees</a></li><li data-search="Advanced Graph Algorithms Graphs Strongly connected components, bridges and articulation points, bipartite checks, Euler paths, and max-flow / matching. tarjan kosaraju scc bridges euler max flow bipartite matching" data-slug="advanced-graphs"><a href="../topics/advanced-graphs.html">Advanced Graph Algorithms</a></li></ul></details><details class="nav-track"><summary>Backtracking &amp; Greedy</summary><ul class="topic-list"><li data-search="Backtracking Backtracking &amp; Greedy The choose/explore/un-choose template animated on a decision tree: subsets, permutations, combinations, N-Queens, Sudoku and pruning. subsets permutations n queens sudoku pruning" data-slug="backtracking"><a href="../topics/backtracking.html">Backtracking</a></li><li data-search="Greedy Algorithms Backtracking &amp; Greedy When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding. exchange argument interval scheduling jump game huffman" data-slug="greedy"><a href="../topics/greedy.html">Greedy Algorithms</a></li></ul></details><details class="nav-track"><summary>Dynamic Programming</summary><ul class="topic-list"><li data-search="The DP Framework Dynamic Programming Recursion → memoization → tabulation → space optimisation, visualised on one problem; how to design state and transitions. memoization tabulation state transition overlapping subproblems" data-slug="dp-framework"><a href="../topics/dp-framework.html">The DP Framework</a></li><li data-search="1D &amp; Grid DP Dynamic Programming Climbing stairs, house robber, decode ways, unique paths, min path sum, maximal square and dungeon game with animated tables. house robber unique paths grid dp maximal square" data-slug="dp-linear-grid"><a href="../topics/dp-linear-grid.html">1D &amp; Grid DP</a></li><li data-search="Knapsack Family Dynamic Programming 0/1 vs unbounded vs bounded knapsack, why loop direction matters, coin change, subset sum and target sum. knapsack coin change subset sum partition" data-slug="dp-knapsack"><a href="../topics/dp-knapsack.html">Knapsack Family</a></li><li data-search="Sequence &amp; String DP Dynamic Programming LIS with patience sorting, LCS, edit distance, palindromic subsequences, regex/wildcard matching and distinct subsequences. lis lcs edit distance regex matching palindrome" data-slug="dp-sequences-strings"><a href="../topics/dp-sequences-strings.html">Sequence &amp; String DP</a></li><li data-search="Interval &amp; Tree DP Dynamic Programming Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting). interval dp burst balloons matrix chain tree dp rerooting" data-slug="dp-intervals-trees"><a href="../topics/dp-intervals-trees.html">Interval &amp; Tree DP</a></li><li data-search="Bitmask &amp; Digit DP Dynamic Programming Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints. bitmask tsp digit dp subset dp" data-slug="dp-bitmask-digit"><a href="../topics/dp-bitmask-digit.html">Bitmask &amp; Digit DP</a></li><li data-search="State Machines &amp; DP Optimisations Dynamic Programming Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth. stock state machine convex hull trick knuth optimisation" data-slug="dp-advanced"><a href="../topics/dp-advanced.html">State Machines &amp; DP Optimisations</a></li></ul></details><details class="nav-track"><summary>Bits &amp; Math</summary><ul class="topic-list"><li data-search="Bit Manipulation Bits &amp; Math Bits drawn as switches: masks, XOR tricks, counting bits, subset enumeration and Gray codes. xor mask single number popcount subsets" data-slug="bit-manipulation"><a href="../topics/bit-manipulation.html">Bit Manipulation</a></li><li data-search="Math, Number Theory &amp; Combinatorics Bits &amp; Math GCD, sieves, fast power, modular inverses, nCr mod p, inclusion–exclusion, and the geometry primitives you need. gcd sieve modular fast exponentiation combinatorics geometry" data-slug="math-number-theory"><a href="../topics/math-number-theory.html">Math, Number Theory &amp; Combinatorics</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../CodeExcellenceHome/index.html">Code Excellence Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>DSA Home / Binary Search</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">ARRAYS &AMP; STRINGS</p><h1>Binary Search</h1><p class="lede">One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection.</p><div class="meta"><span class="level level-beginner">Beginner → Expert</span><span>~60 min study</span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="binary-search" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="what-binary-search-really-is">What binary search really is</h2>
+<p>Most people learn binary search as “look for a number in a sorted array”. That version is a special case, and it is the
+source of nearly every off-by-one bug. The real idea is much bigger and much simpler:</p>
+<div class="rule">
+<p><strong>The invariant.</strong> If a yes/no question <code>p(i)</code> is <strong>false, false, …, false, true, true, …, true</strong> over a range, you can find the <strong>first true</strong> in O(log n) probes by keeping <code>lo</code> at the edge of the known-false zone and <code>hi</code> at the edge of the known-true zone, and halving the unknown gap between them.</p>
+</div>
+<p>Everything on this page is that one sentence: lower and upper bound, exact match, first and last occurrence, insert
+position, rotated arrays, peaks, “minimum speed / capacity / days” problems, k-th smallest, square roots and the median of two
+sorted arrays. You only have to choose <code>p</code> and the range. The loop never changes.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 236" width="760" role="img" aria-label="Sorted values above, the predicate a[i] greater or equal 23 below, false then true, with the first true marked as the answer">
+<defs><marker id="binary-search-ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="20" y="22" class="title">A sorted array turns “find 23” into a monotone yes/no question</text>
+<text x="112" y="62" text-anchor="end" class="small muted">a[i]</text>
+<rect class="box" x="120" y="40" width="50" height="36" rx="6"/><text x="145" y="63" text-anchor="middle" class="mono">2</text>
+<rect class="box" x="176" y="40" width="50" height="36" rx="6"/><text x="201" y="63" text-anchor="middle" class="mono">5</text>
+<rect class="box" x="232" y="40" width="50" height="36" rx="6"/><text x="257" y="63" text-anchor="middle" class="mono">8</text>
+<rect class="box" x="288" y="40" width="50" height="36" rx="6"/><text x="313" y="63" text-anchor="middle" class="mono">12</text>
+<rect class="box" x="344" y="40" width="50" height="36" rx="6"/><text x="369" y="63" text-anchor="middle" class="mono">16</text>
+<rect class="box path" x="400" y="40" width="50" height="36" rx="6"/><text x="425" y="63" text-anchor="middle" class="mono">23</text>
+<rect class="box" x="456" y="40" width="50" height="36" rx="6"/><text x="481" y="63" text-anchor="middle" class="mono">38</text>
+<rect class="box" x="512" y="40" width="50" height="36" rx="6"/><text x="537" y="63" text-anchor="middle" class="mono">56</text>
+<rect class="box" x="568" y="40" width="50" height="36" rx="6"/><text x="593" y="63" text-anchor="middle" class="mono">72</text>
+<rect class="box" x="624" y="40" width="50" height="36" rx="6"/><text x="649" y="63" text-anchor="middle" class="mono">91</text>
+<text x="112" y="112" text-anchor="end" class="small muted">a[i] ≥ 23 ?</text>
+<rect class="box bad" x="120" y="90" width="50" height="36" rx="6"/><text x="145" y="113" text-anchor="middle" class="mono">F</text>
+<rect class="box bad" x="176" y="90" width="50" height="36" rx="6"/><text x="201" y="113" text-anchor="middle" class="mono">F</text>
+<rect class="box bad" x="232" y="90" width="50" height="36" rx="6"/><text x="257" y="113" text-anchor="middle" class="mono">F</text>
+<rect class="box bad" x="288" y="90" width="50" height="36" rx="6"/><text x="313" y="113" text-anchor="middle" class="mono">F</text>
+<rect class="box bad" x="344" y="90" width="50" height="36" rx="6"/><text x="369" y="113" text-anchor="middle" class="mono">F</text>
+<rect class="box done" x="400" y="90" width="50" height="36" rx="6"/><text x="425" y="113" text-anchor="middle" class="mono">T</text>
+<rect class="box done" x="456" y="90" width="50" height="36" rx="6"/><text x="481" y="113" text-anchor="middle" class="mono">T</text>
+<rect class="box done" x="512" y="90" width="50" height="36" rx="6"/><text x="537" y="113" text-anchor="middle" class="mono">T</text>
+<rect class="box done" x="568" y="90" width="50" height="36" rx="6"/><text x="593" y="113" text-anchor="middle" class="mono">T</text>
+<rect class="box done" x="624" y="90" width="50" height="36" rx="6"/><text x="649" y="113" text-anchor="middle" class="mono">T</text>
+<rect class="box" x="680" y="90" width="50" height="36" rx="6" stroke-dasharray="5 4"/><text x="705" y="113" text-anchor="middle" class="mono muted">n</text>
+<text x="145" y="142" text-anchor="middle" class="small muted">0</text><text x="201" y="142" text-anchor="middle" class="small muted">1</text><text x="257" y="142" text-anchor="middle" class="small muted">2</text><text x="313" y="142" text-anchor="middle" class="small muted">3</text><text x="369" y="142" text-anchor="middle" class="small muted">4</text><text x="425" y="142" text-anchor="middle" class="small muted">5</text><text x="481" y="142" text-anchor="middle" class="small muted">6</text><text x="537" y="142" text-anchor="middle" class="small muted">7</text><text x="593" y="142" text-anchor="middle" class="small muted">8</text><text x="649" y="142" text-anchor="middle" class="small muted">9</text><text x="705" y="142" text-anchor="middle" class="small muted">10</text>
+<path class="edge bad" d="M120 156 L394 156"/><text x="257" y="174" text-anchor="middle" class="small">each F says: “the answer is to my right”</text>
+<path class="edge done" d="M400 156 L674 156"/><text x="537" y="174" text-anchor="middle" class="small">each T says: “the answer is me or to my left”</text>
+<path class="edge accent" d="M425 222 L425 186" marker-end="url(#binary-search-ar1)"/>
+<text x="436" y="214" class="title">first true = index 5 = where 23 is (or would go)</text>
+</svg>
+<figcaption>The question is never “is a[mid] equal to 23?” (that is not monotone). It is “is a[mid] ≥ 23?”, which flips once. The dashed cell n stands for “no element qualifies”.</figcaption>
+</figure>
+
+<p><strong>Why you need it.</strong> A sorted array of a billion elements needs at most 30 probes (2³⁰ ≈ 10⁹). More importantly, the same
+trick works when there is <em>no array at all</em>: if you can answer “is speed k fast enough?”, you can binary search the speed.
+That is what turns many “looks like DP or brute force” problems into O(n log range).</p>
+<h2 id="intuition-halving-what-you-know">Intuition: halving what you know</h2>
+<p>Picture the range as three zones. Left of <code>lo</code>, everything is known <strong>F</strong>. From <code>hi</code> onward, everything is known <strong>T</strong>.
+In between is the unknown gap. One probe at <code>mid</code> reveals <code>p(mid)</code>, and because <code>p</code> is monotone that single answer also
+settles one whole side of the gap.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 740 262" width="740" role="img" aria-label="Three zones: known false left of lo, unknown between lo and hi, known true from hi. Probing mid either moves hi to mid or lo to mid plus one.">
+<text x="20" y="22" class="title">The loop invariant: [0, lo) is F, [hi, n) is T, [lo, hi) is unknown</text>
+<rect class="box bad" x="30" y="44" width="180" height="40" rx="6"/><text x="120" y="69" text-anchor="middle" class="mono">F F F F</text>
+<rect class="box" x="214" y="44" width="300" height="40" rx="6"/><text x="364" y="69" text-anchor="middle" class="mono">?  ?  ?  ?  ?  ?</text>
+<rect class="box done" x="518" y="44" width="190" height="40" rx="6"/><text x="613" y="69" text-anchor="middle" class="mono">T T T T</text>
+<text x="214" y="102" text-anchor="middle" class="mono">↑lo</text><text x="364" y="102" text-anchor="middle" class="mono">↑mid</text><text x="518" y="102" text-anchor="middle" class="mono">↑hi</text>
+<text x="30" y="140" class="small">p(mid) = T  →  hi = mid (mid may be the first T, so keep it)</text>
+<rect class="box bad" x="30" y="148" width="180" height="30" rx="6"/>
+<rect class="box" x="214" y="148" width="146" height="30" rx="6"/><text x="287" y="168" text-anchor="middle" class="mono small">? ? ?</text>
+<rect class="box done" x="364" y="148" width="344" height="30" rx="6"/><text x="536" y="168" text-anchor="middle" class="mono small">T T T T T T T</text>
+<text x="30" y="206" class="small">p(mid) = F  →  lo = mid + 1 (mid is F, so it cannot be the answer)</text>
+<rect class="box bad" x="30" y="214" width="340" height="30" rx="6"/><text x="200" y="234" text-anchor="middle" class="mono small">F F F F F F F</text>
+<rect class="box" x="374" y="214" width="140" height="30" rx="6"/><text x="444" y="234" text-anchor="middle" class="mono small">? ?</text>
+<rect class="box done" x="518" y="214" width="190" height="30" rx="6"/>
+</svg>
+<figcaption>Either way the unknown gap at least halves. When it is empty, lo == hi sits exactly on the boundary: the first T (or n if there is none).</figcaption>
+</figure>
+
+<h3 id="watch-the-boundary-search-find-a-target">Watch the boundary search find a target</h3>
+<p>Step through it. The dimmed cells are gone for good; the strip on the right shows the candidate count halving.
+Try a target that is absent, one smaller than everything, and one larger than everything.</p>
+<div class="viz" data-viz="binary-search-classic"></div>
+
+<h3 id="the-predicate-strip-lo-and-hi-are-walls-of-knowledge">The predicate strip: lo and hi are walls of knowledge</h3>
+<p>Here the second row is the predicate itself. Cells start as “?” and turn into known F or T as the walls move. Pick
+different questions: notice that <strong>count</strong> and <strong>last occurrence</strong> are just a second search with <code>&gt;</code> instead of <code>≥</code>.</p>
+<div class="viz" data-viz="binary-search-predicate"></div>
+
+<h2 id="the-one-template">The one template</h2>
+<p>Memorise this and nothing else. It returns the first index in <code>[lo, hi)</code> where <code>pred</code> is true, or <code>hi</code> if there is none.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def first_true(lo: int, hi: int, pred) -&gt; int:
+    &quot;&quot;&quot;Smallest i in [lo, hi) with pred(i) true; hi if none.
+    pred must be monotone: F...F T...T on [lo, hi).&quot;&quot;&quot;
+    while lo &lt; hi:                      # unknown gap [lo, hi) is non-empty
+        mid = lo + (hi - lo) // 2       # lo &lt;= mid &lt; hi, never overflows
+        if pred(mid):
+            hi = mid                    # mid is T: answer is mid or left of it
+        else:
+            lo = mid + 1                # mid is F: answer is strictly right
+    return lo                           # lo == hi == the boundary
+</code></pre>
+<pre><code class="language-csharp">/// Smallest i in [lo, hi) with pred(i) true; hi if none.
+/// pred must be monotone: F...F T...T on [lo, hi).
+public static int FirstTrue(int lo, int hi, Func&lt;int, bool&gt; pred)
+{
+    while (lo &lt; hi)                       // unknown gap [lo, hi) is non-empty
+    {
+        int mid = lo + (hi - lo) / 2;     // lo &lt;= mid &lt; hi, never overflows
+        if (pred(mid)) hi = mid;          // mid is T: answer is mid or left of it
+        else lo = mid + 1;                // mid is F: answer is strictly right
+    }
+    return lo;                            // lo == hi == the boundary
+}
+</code></pre>
+</div>
+<p><strong>Cost:</strong> O(log(hi − lo)) calls to <code>pred</code>, O(1) extra space. If <code>pred</code> costs C, the total is O(C · log range).</p>
+<p>Every choice in those eight lines has a reason:</p>
+<table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Why it is written this way</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hi</code> is <strong>exclusive</strong> (<code>len(a)</code>, not <code>len(a) − 1</code>)</td>
+<td>The answer may be “nobody qualifies”. Index <code>n</code> represents that, so it must be a possible return value.</td>
+</tr>
+<tr>
+<td><code>while lo &lt; hi</code></td>
+<td>The gap <code>[lo, hi)</code> is non-empty exactly when <code>lo &lt; hi</code>. When it is empty, <code>lo</code> is the answer. No extra check after the loop.</td>
+</tr>
+<tr>
+<td><code>mid = lo + (hi − lo) // 2</code></td>
+<td>Rounds <strong>down</strong>, so <code>lo ≤ mid &lt; hi</code>: <code>mid</code> is always a real index inside the gap and <code>pred(mid)</code> never reads past the end.</td>
+</tr>
+<tr>
+<td><code>hi = mid</code></td>
+<td><code>mid</code> is T, so it <em>might</em> be the first T. Keep it in play by putting it on the T side of the wall.</td>
+</tr>
+<tr>
+<td><code>lo = mid + 1</code></td>
+<td><code>mid</code> is F, so it can never be the answer. Moving past it is what guarantees progress.</td>
+</tr>
+</tbody>
+</table>
+<div class="insight">
+<p><strong>Why it always terminates</strong>
+Because <code>mid &lt; hi</code>, the update <code>hi = mid</code> strictly shrinks the gap; because <code>lo = mid + 1 &gt; lo</code>, so does the other branch.
+Precisely: a gap of size g becomes ⌊g/2⌋ on a T and ⌈g/2⌉ − 1 on an F. Both are at most g/2, so after ⌈log₂(g + 1)⌉ probes the gap is empty and the loop cannot spin.</p>
+</div>
+<h3 id="deriving-everything-from-first_true">Deriving everything from first_true</h3>
+<p>Each classic question is one predicate and one line of interpretation:</p>
+<table>
+<thead>
+<tr>
+<th>Question on a sorted <code>a</code></th>
+<th>Predicate <code>p(i)</code></th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>lower bound</strong>: first <code>a[i] ≥ t</code></td>
+<td><code>a[i] &gt;= t</code></td>
+<td><code>L = first_true(0, n, p)</code></td>
+</tr>
+<tr>
+<td><strong>upper bound</strong>: first <code>a[i] &gt; t</code></td>
+<td><code>a[i] &gt; t</code></td>
+<td><code>U = first_true(0, n, p)</code></td>
+</tr>
+<tr>
+<td><strong>exact match</strong> (any index of <code>t</code>)</td>
+<td><code>a[i] &gt;= t</code></td>
+<td><code>L</code> if <code>L &lt; n and a[L] == t</code>, else −1</td>
+</tr>
+<tr>
+<td><strong>first occurrence</strong> of <code>t</code></td>
+<td><code>a[i] &gt;= t</code></td>
+<td>same as exact match (it is the leftmost)</td>
+</tr>
+<tr>
+<td><strong>last occurrence</strong> of <code>t</code></td>
+<td><code>a[i] &gt; t</code></td>
+<td><code>U − 1</code> if <code>U &gt; 0 and a[U−1] == t</code>, else −1</td>
+</tr>
+<tr>
+<td><strong>count</strong> of <code>t</code></td>
+<td>both</td>
+<td><code>U − L</code></td>
+</tr>
+<tr>
+<td><strong>search insert position</strong></td>
+<td><code>a[i] &gt;= t</code></td>
+<td><code>L</code> (before equal copies) or <code>U</code> (after them)</td>
+</tr>
+<tr>
+<td><strong>floor</strong>: last <code>a[i] ≤ t</code></td>
+<td><code>a[i] &gt; t</code></td>
+<td><code>U − 1</code> (−1 means none)</td>
+</tr>
+<tr>
+<td><strong>ceiling</strong>: first <code>a[i] ≥ t</code></td>
+<td><code>a[i] &gt;= t</code></td>
+<td><code>L</code> (<code>n</code> means none)</td>
+</tr>
+<tr>
+<td><strong>last <code>a[i] &lt; t</code></strong></td>
+<td><code>a[i] &gt;= t</code></td>
+<td><code>L − 1</code></td>
+</tr>
+</tbody>
+</table>
+<figure class="figure">
+<svg class="dg" viewBox="0 -14 860 236" width="860" role="img" aria-label="Array with duplicates 1 3 3 5 5 5 5 8 9 12. Lower bound of 5 is 3, upper bound is 7, count is 4.">
+<text x="20" y="2" class="title">Duplicates: lower and upper bound bracket every copy of t = 5</text>
+<path class="edge done" d="M288 40 L288 33 L512 33 L512 40"/><text x="400" y="28" text-anchor="middle" class="small">copies of 5 = [L, U) = [3, 7) → count = U − L = 4</text>
+<text x="112" y="68" text-anchor="end" class="small muted">a</text>
+<rect class="box" x="120" y="46" width="48" height="34" rx="6"/><text x="144" y="68" text-anchor="middle" class="mono">1</text>
+<rect class="box" x="176" y="46" width="48" height="34" rx="6"/><text x="200" y="68" text-anchor="middle" class="mono">3</text>
+<rect class="box" x="232" y="46" width="48" height="34" rx="6"/><text x="256" y="68" text-anchor="middle" class="mono">3</text>
+<rect class="box done" x="288" y="46" width="48" height="34" rx="6"/><text x="312" y="68" text-anchor="middle" class="mono">5</text>
+<rect class="box done" x="344" y="46" width="48" height="34" rx="6"/><text x="368" y="68" text-anchor="middle" class="mono">5</text>
+<rect class="box done" x="400" y="46" width="48" height="34" rx="6"/><text x="424" y="68" text-anchor="middle" class="mono">5</text>
+<rect class="box done" x="456" y="46" width="48" height="34" rx="6"/><text x="480" y="68" text-anchor="middle" class="mono">5</text>
+<rect class="box" x="512" y="46" width="48" height="34" rx="6"/><text x="536" y="68" text-anchor="middle" class="mono">8</text>
+<rect class="box" x="568" y="46" width="48" height="34" rx="6"/><text x="592" y="68" text-anchor="middle" class="mono">9</text>
+<rect class="box" x="624" y="46" width="48" height="34" rx="6"/><text x="648" y="68" text-anchor="middle" class="mono">12</text>
+<text x="144" y="96" text-anchor="middle" class="small muted">0</text><text x="200" y="96" text-anchor="middle" class="small muted">1</text><text x="256" y="96" text-anchor="middle" class="small muted">2</text><text x="312" y="96" text-anchor="middle" class="small muted">3</text><text x="368" y="96" text-anchor="middle" class="small muted">4</text><text x="424" y="96" text-anchor="middle" class="small muted">5</text><text x="480" y="96" text-anchor="middle" class="small muted">6</text><text x="536" y="96" text-anchor="middle" class="small muted">7</text><text x="592" y="96" text-anchor="middle" class="small muted">8</text><text x="648" y="96" text-anchor="middle" class="small muted">9</text>
+<text x="112" y="128" text-anchor="end" class="small muted">a[i] ≥ 5</text>
+<rect class="box bad" x="120" y="108" width="48" height="30" rx="6"/><rect class="box bad" x="176" y="108" width="48" height="30" rx="6"/><rect class="box bad" x="232" y="108" width="48" height="30" rx="6"/>
+<rect class="box path" x="288" y="108" width="48" height="30" rx="6"/><rect class="box done" x="344" y="108" width="48" height="30" rx="6"/><rect class="box done" x="400" y="108" width="48" height="30" rx="6"/><rect class="box done" x="456" y="108" width="48" height="30" rx="6"/><rect class="box done" x="512" y="108" width="48" height="30" rx="6"/><rect class="box done" x="568" y="108" width="48" height="30" rx="6"/><rect class="box done" x="624" y="108" width="48" height="30" rx="6"/>
+<text x="144" y="128" text-anchor="middle" class="mono small">F</text><text x="200" y="128" text-anchor="middle" class="mono small">F</text><text x="256" y="128" text-anchor="middle" class="mono small">F</text><text x="312" y="128" text-anchor="middle" class="mono small">T</text><text x="368" y="128" text-anchor="middle" class="mono small">T</text><text x="424" y="128" text-anchor="middle" class="mono small">T</text><text x="480" y="128" text-anchor="middle" class="mono small">T</text><text x="536" y="128" text-anchor="middle" class="mono small">T</text><text x="592" y="128" text-anchor="middle" class="mono small">T</text><text x="648" y="128" text-anchor="middle" class="mono small">T</text>
+<text x="690" y="128" class="small">L = lower = 3 (insert before)</text>
+<text x="112" y="170" text-anchor="end" class="small muted">a[i] &gt; 5</text>
+<rect class="box bad" x="120" y="150" width="48" height="30" rx="6"/><rect class="box bad" x="176" y="150" width="48" height="30" rx="6"/><rect class="box bad" x="232" y="150" width="48" height="30" rx="6"/><rect class="box bad" x="288" y="150" width="48" height="30" rx="6"/><rect class="box bad" x="344" y="150" width="48" height="30" rx="6"/><rect class="box bad" x="400" y="150" width="48" height="30" rx="6"/><rect class="box bad" x="456" y="150" width="48" height="30" rx="6"/>
+<rect class="box path" x="512" y="150" width="48" height="30" rx="6"/><rect class="box done" x="568" y="150" width="48" height="30" rx="6"/><rect class="box done" x="624" y="150" width="48" height="30" rx="6"/>
+<text x="144" y="170" text-anchor="middle" class="mono small">F</text><text x="200" y="170" text-anchor="middle" class="mono small">F</text><text x="256" y="170" text-anchor="middle" class="mono small">F</text><text x="312" y="170" text-anchor="middle" class="mono small">F</text><text x="368" y="170" text-anchor="middle" class="mono small">F</text><text x="424" y="170" text-anchor="middle" class="mono small">F</text><text x="480" y="170" text-anchor="middle" class="mono small">F</text><text x="536" y="170" text-anchor="middle" class="mono small">T</text><text x="592" y="170" text-anchor="middle" class="mono small">T</text><text x="648" y="170" text-anchor="middle" class="mono small">T</text>
+<text x="690" y="170" class="small">U = upper = 7 (insert after)</text>
+<text x="120" y="208" class="small">last occurrence = U − 1 = 6 · floor(5) = U − 1 · last element &lt; 5 = L − 1 = 2</text>
+</svg>
+<figcaption>Two predicates, two searches, every question answered. No “keep searching left after a match” special cases.</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-python">def lower_bound(a, t):            # first index with a[i] &gt;= t  (== bisect_left)
+    return first_true(0, len(a), lambda i: a[i] &gt;= t)
+
+def upper_bound(a, t):            # first index with a[i] &gt; t   (== bisect_right)
+    return first_true(0, len(a), lambda i: a[i] &gt; t)
+
+def search(a, t):                 # leftmost index of t, or -1
+    i = lower_bound(a, t)
+    return i if i &lt; len(a) and a[i] == t else -1
+
+def search_range(a, t):           # [first, last] occurrence, or [-1, -1]
+    lo = lower_bound(a, t)
+    if lo == len(a) or a[lo] != t:
+        return [-1, -1]
+    return [lo, upper_bound(a, t) - 1]
+
+def count(a, t):
+    return upper_bound(a, t) - lower_bound(a, t)
+</code></pre>
+<pre><code class="language-csharp">public static int LowerBound(int[] a, int t) =&gt; FirstTrue(0, a.Length, i =&gt; a[i] &gt;= t);
+public static int UpperBound(int[] a, int t) =&gt; FirstTrue(0, a.Length, i =&gt; a[i] &gt; t);
+
+public static int Search(int[] a, int t)          // leftmost index of t, or -1
+{
+    int i = LowerBound(a, t);
+    return i &lt; a.Length &amp;&amp; a[i] == t ? i : -1;
+}
+
+public static int[] SearchRange(int[] a, int t)   // [first, last] occurrence
+{
+    int lo = LowerBound(a, t);
+    if (lo == a.Length || a[lo] != t) return new[] { -1, -1 };
+    return new[] { lo, UpperBound(a, t) - 1 };
+}
+
+public static int Count(int[] a, int t) =&gt; UpperBound(a, t) - LowerBound(a, t);
+</code></pre>
+</div>
+<p>All O(log n) time and O(1) space. (The lambdas cost a delegate call per probe in C#; inline the loop on a hot path.)</p>
+<h3 id="overflow-safe-mid">Overflow-safe mid</h3>
+<p><code>(lo + hi) / 2</code> is the most famous bug in the history of binary search: it sat in Java's <code>Arrays.binarySearch</code> for nine
+years. With 32-bit <code>int</code>, <code>lo + hi</code> overflows once both are above about 1.07 billion, <code>mid</code> goes negative, and you index out
+of range. Python integers never overflow, but C#, Java, C++ and Go all do.</p>
+<table>
+<thead>
+<tr>
+<th>Form</th>
+<th>Safe?</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(lo + hi) / 2</code></td>
+<td>❌ in C#/Java</td>
+<td>Overflows when <code>lo + hi &gt; int.MaxValue</code>.</td>
+</tr>
+<tr>
+<td><code>lo + (hi - lo) / 2</code></td>
+<td>✅</td>
+<td><code>hi − lo</code> fits because <code>0 ≤ lo ≤ hi</code>. Also correct for negative <code>lo</code> (the difference is never negative, so truncation equals floor).</td>
+</tr>
+<tr>
+<td><code>(int)((uint)lo + (uint)hi &gt;&gt; 1)</code></td>
+<td>✅ for <code>lo, hi ≥ 0</code></td>
+<td>The trick .NET's own <code>Array.BinarySearch</code> uses. Java writes <code>(lo + hi) &gt;&gt;&gt; 1</code>.</td>
+</tr>
+<tr>
+<td><code>(lo + hi) // 2</code> in Python</td>
+<td>✅</td>
+<td>Arbitrary-precision ints, and <code>//</code> floors even for negatives.</td>
+</tr>
+</tbody>
+</table>
+<div class="pitfall">
+<p><strong>Pitfall: truncation versus floor with negative bounds</strong>
+When you binary search an answer that can be negative (say the range is [−10⁹, 10⁹]), C#'s <code>(lo + hi) / 2</code> rounds
+<strong>toward zero</strong>, so for <code>lo = −3, hi = −2</code> it gives −2 = <code>hi</code>. With <code>hi</code> exclusive that reads outside the range; with the
+<code>lo = mid</code> variant it loops forever. <code>lo + (hi − lo) / 2</code> is always a floor because <code>hi − lo ≥ 0</code>. Use it everywhere.</p>
+</div>
+<h3 id="infinite-loops-why-lo-mid-needs-the-upper-mid">Infinite loops: why <code>lo = mid</code> needs the upper mid</h3>
+<p>Sometimes the natural predicate runs the other way: <strong>T…T F…F</strong>, and you want the <strong>last</strong> true (for example “the largest
+x with x² ≤ n”). If you write <code>if pred(mid): lo = mid</code> with a floor <code>mid</code>, a two-element gap never shrinks:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 740 196" width="740" role="img" aria-label="With lo 3 and hi 4, floor mid equals lo, so lo equals mid changes nothing and the loop never ends. Ceiling mid fixes it.">
+<defs><marker id="binary-search-ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker><marker id="binary-search-ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker></defs>
+<text x="20" y="22" class="title">Last-true search with a floor mid: stuck forever</text>
+<rect class="box done" x="40" y="56" width="56" height="40" rx="6"/><text x="68" y="81" text-anchor="middle" class="mono">T</text>
+<rect class="box bad" x="104" y="56" width="56" height="40" rx="6"/><text x="132" y="81" text-anchor="middle" class="mono">F</text>
+<text x="68" y="114" text-anchor="middle" class="mono small">↑lo=3, mid</text><text x="132" y="114" text-anchor="middle" class="mono small">↑hi=4</text>
+<path class="edge bad" d="M60 54 C 40 22, 100 22, 76 52" marker-end="url(#binary-search-ar2)"/>
+<text x="190" y="62" class="small">mid = (3 + 4) // 2 = 3 = lo</text>
+<text x="190" y="80" class="small">pred(3) is T  →  lo = mid = 3   (nothing changed)</text>
+<text x="190" y="98" class="small">next iteration: identical state  →  infinite loop</text>
+<text x="20" y="146" class="title">Fix A: mid = lo + (hi − lo + 1) // 2 (upper mid), so mid &gt; lo and lo = mid moves</text>
+<text x="20" y="176" class="title">Fix B (preferred): last_true(p) = first_true(not p) − 1. One template, no new rules.</text>
+</svg>
+<figcaption>The rule: the branch that does not add or subtract 1 must use the mid that rounds <em>away</em> from it. hi = mid pairs with floor; lo = mid pairs with ceiling.</figcaption>
+</figure>
+
+<h3 id="template-variants-at-a-glance">Template variants at a glance</h3>
+<p>You will meet all of these in other people's code. They are equivalent when done right; they differ in what <code>hi</code> means.</p>
+<table>
+<thead>
+<tr>
+<th>Variant</th>
+<th>Range</th>
+<th>Loop</th>
+<th>mid</th>
+<th>p(mid) true</th>
+<th>p(mid) false</th>
+<th>Returns</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>First true</strong> (this page)</td>
+<td><code>[lo, hi)</code></td>
+<td><code>lo &lt; hi</code></td>
+<td>floor</td>
+<td><code>hi = mid</code></td>
+<td><code>lo = mid + 1</code></td>
+<td><code>lo</code> (= <code>hi</code> if none)</td>
+<td>Everything; the default</td>
+</tr>
+<tr>
+<td>Last true</td>
+<td><code>[lo, hi]</code>, <code>p(lo)</code> true</td>
+<td><code>lo &lt; hi</code></td>
+<td><strong>ceil</strong></td>
+<td><code>lo = mid</code></td>
+<td><code>hi = mid − 1</code></td>
+<td><code>lo</code></td>
+<td>Max feasible value (or use <code>first_true(¬p) − 1</code>)</td>
+</tr>
+<tr>
+<td>Classic exact</td>
+<td><code>[lo, hi]</code></td>
+<td><code>lo &lt;= hi</code></td>
+<td>floor</td>
+<td><code>return mid</code> on <code>==</code></td>
+<td><code>lo = mid + 1</code> / <code>hi = mid − 1</code></td>
+<td>index or −1</td>
+<td>Distinct keys, exact hit only</td>
+</tr>
+<tr>
+<td>Closed + answer var</td>
+<td><code>[lo, hi]</code></td>
+<td><code>lo &lt;= hi</code></td>
+<td>floor</td>
+<td><code>ans = mid; hi = mid − 1</code></td>
+<td><code>lo = mid + 1</code></td>
+<td><code>ans</code></td>
+<td>Same as first true; popular in contests</td>
+</tr>
+<tr>
+<td>Real-valued</td>
+<td><code>[lo, hi]</code> reals</td>
+<td>100 iterations or <code>hi − lo &gt; ε</code></td>
+<td><code>(lo+hi)/2</code></td>
+<td><code>hi = mid</code></td>
+<td><code>lo = mid</code></td>
+<td><code>(lo+hi)/2</code></td>
+<td>√x, geometry, ratios</td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs">
+<pre><code class="language-python">def last_true(lo, hi, pred):
+    &quot;&quot;&quot;pred is T...T F...F on [lo, hi] and pred(lo) is true. Returns the last true.&quot;&quot;&quot;
+    while lo &lt; hi:
+        mid = lo + (hi - lo + 1) // 2   # upper mid: lo &lt; mid &lt;= hi
+        if pred(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+
+def classic_search(a, t):             # exact match only; any copy of t
+    lo, hi = 0, len(a) - 1
+    while lo &lt;= hi:
+        mid = lo + (hi - lo) // 2
+        if a[mid] == t:
+            return mid
+        if a[mid] &lt; t:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return -1
+</code></pre>
+<pre><code class="language-csharp">/// pred is T...T F...F on [lo, hi] and pred(lo) is true. Returns the last true.
+public static int LastTrue(int lo, int hi, Func&lt;int, bool&gt; pred)
+{
+    while (lo &lt; hi)
+    {
+        int mid = lo + (hi - lo + 1) / 2;   // upper mid: lo &lt; mid &lt;= hi
+        if (pred(mid)) lo = mid;
+        else hi = mid - 1;
+    }
+    return lo;
+}
+
+public static int ClassicSearch(int[] a, int t)   // exact match only
+{
+    int lo = 0, hi = a.Length - 1;
+    while (lo &lt;= hi)
+    {
+        int mid = lo + (hi - lo) / 2;
+        if (a[mid] == t) return mid;
+        if (a[mid] &lt; t) lo = mid + 1;
+        else hi = mid - 1;
+    }
+    return -1;
+}
+</code></pre>
+</div>
+<h3 id="library-calls-python-bisect-and-c-arraybinarysearch">Library calls: Python <code>bisect</code> and C# <code>Array.BinarySearch</code></h3>
+<p><strong>Python.</strong> <code>bisect.bisect_left(a, x)</code> is exactly lower bound and <code>bisect.bisect_right(a, x)</code> is upper bound. Both take
+optional <code>lo</code> and <code>hi</code>, and since Python 3.10 a <code>key=</code> function that is applied to the elements (not to <code>x</code>).
+<code>insort_left</code> / <code>insort_right</code> insert while keeping order, but the insert itself is O(n) because lists shift.</p>
+<p>A neat trick: <code>range</code> objects support indexing, so <code>bisect</code> can search a predicate over integers without building a list.</p>
+<div class="code-tabs">
+<pre><code class="language-python">from bisect import bisect_left, bisect_right, insort
+
+a = [1, 3, 3, 5, 5, 5, 5, 8, 9, 12]
+bisect_left(a, 5), bisect_right(a, 5)      # (3, 7)
+bisect_right(a, 5) - bisect_left(a, 5)     # 4 copies
+
+# Search on the answer with no hand-written loop (Python 3.10+):
+# first k in [1, hi] with feasible(k) True. False &lt; True, so bools sort F...F T...T.
+k = 1 + bisect_left(range(1, hi + 1), True, key=feasible)
+</code></pre>
+<pre><code class="language-csharp">int[] a = { 10, 20, 30, 40 };
+int r = Array.BinarySearch(a, 25);     // -3: not found
+int insertAt = r &gt;= 0 ? r : ~r;        // ~(-3) == 2: 25 belongs at index 2
+
+var list = new List&lt;int&gt; { 10, 20, 30, 40 };
+int idx = list.BinarySearch(35);
+if (idx &lt; 0) list.Insert(~idx, 35);    // keeps the list sorted
+
+int[] d = { 5, 5, 5, 5, 5, 5, 5 };
+Array.BinarySearch(d, 5);              // 3 here: ANY matching index, not the first
+</code></pre>
+</div>
+<p><strong>C#.</strong> <code>Array.BinarySearch</code>, <code>List&lt;T&gt;.BinarySearch</code> and <code>MemoryExtensions.BinarySearch</code> (for spans) return the index of
+<strong>a</strong> match if one exists. Otherwise they return the <strong>bitwise complement</strong> of the insertion point: <code>~i = −i − 1</code>, which
+is always negative, so “found” and “not found” share one <code>int</code>. Apply <code>~</code> again to recover the index of the first element
+larger than the value (or <code>Length</code>).</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 640 170" width="640" role="img" aria-label="Array 10 20 30 40. Searching 25 returns the complement of 2, which is minus 3.">
+<defs><marker id="binary-search-ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="20" y="22" class="title">Array.BinarySearch(a, 25) on a sorted array</text>
+<rect class="box" x="40" y="50" width="60" height="40" rx="6"/><text x="70" y="75" text-anchor="middle" class="mono">10</text>
+<rect class="box" x="108" y="50" width="60" height="40" rx="6"/><text x="138" y="75" text-anchor="middle" class="mono">20</text>
+<rect class="box visit" x="176" y="50" width="60" height="40" rx="6"/><text x="206" y="75" text-anchor="middle" class="mono">30</text>
+<rect class="box" x="244" y="50" width="60" height="40" rx="6"/><text x="274" y="75" text-anchor="middle" class="mono">40</text>
+<text x="70" y="108" text-anchor="middle" class="small muted">0</text><text x="138" y="108" text-anchor="middle" class="small muted">1</text><text x="206" y="108" text-anchor="middle" class="small muted">2</text><text x="274" y="108" text-anchor="middle" class="small muted">3</text>
+<path class="edge accent" d="M172 144 L172 96" marker-end="url(#binary-search-ar4)"/>
+<text x="182" y="150" class="small">25 would go here: insertion point 2</text>
+<text x="340" y="66" class="mono">returns ~2 = −3   (negative ⇒ not found)</text>
+<text x="340" y="90" class="mono">~(−3) = 2         (first element &gt; 25)</text>
+<text x="340" y="114" class="small muted">found ⇒ some index of a match (any copy)</text>
+</svg>
+<figcaption>C# has no built-in lower_bound for arrays. When duplicates matter, write FirstTrue; when only membership or an insertion point matters, BinarySearch plus ~ is fine.</figcaption>
+</figure>
+
+<h2 id="variants-and-sub-patterns">Variants and sub-patterns</h2>
+<h3 id="rotated-sorted-arrays">Rotated sorted arrays</h3>
+<p>Rotating a sorted array (<code>[3,5,8,10,12,15,18,22,27,31]</code> → <code>[15,18,22,27,31,3,5,8,10,12]</code>) breaks “sorted” but keeps a
+lot of structure: two ascending runs and one cliff. Two monotone facts survive, and each gives a binary search.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 240" width="760" role="img" aria-label="Rotated array as bars: a tall first run, a cliff, a short second run. The predicate a[i] less or equal to the last element is false on the first run and true on the second.">
+<text x="20" y="22" class="title">Rotated: every element of run 1 is &gt; a[−1]; every element of run 2 is ≤ a[−1]</text>
+<rect class="box accent" x="110" y="102" width="44" height="48" rx="4"/><rect class="box accent" x="166" y="92.4" width="44" height="57.6" rx="4"/><rect class="box accent" x="222" y="79.6" width="44" height="70.4" rx="4"/><rect class="box accent" x="278" y="63.6" width="44" height="86.4" rx="4"/><rect class="box accent" x="334" y="50.8" width="44" height="99.2" rx="4"/>
+<rect class="box done" x="390" y="140.4" width="44" height="9.6" rx="3"/><rect class="box done" x="446" y="134" width="44" height="16" rx="3"/><rect class="box done" x="502" y="124.4" width="44" height="25.6" rx="4"/><rect class="box done" x="558" y="118" width="44" height="32" rx="4"/><rect class="box done" x="614" y="111.6" width="44" height="38.4" rx="4"/>
+<text x="132" y="96" text-anchor="middle" class="mono small">15</text><text x="188" y="86" text-anchor="middle" class="mono small">18</text><text x="244" y="73" text-anchor="middle" class="mono small">22</text><text x="300" y="57" text-anchor="middle" class="mono small">27</text><text x="356" y="44" text-anchor="middle" class="mono small">31</text>
+<text x="412" y="134" text-anchor="middle" class="mono small">3</text><text x="468" y="128" text-anchor="middle" class="mono small">5</text><text x="524" y="118" text-anchor="middle" class="mono small">8</text><text x="580" y="112" text-anchor="middle" class="mono small">10</text><text x="636" y="105" text-anchor="middle" class="mono small">12</text>
+<path class="edge accent dash" d="M100 111.6 L384 111.6"/><path class="edge accent dash" d="M660 111.6 L672 111.6"/><text x="676" y="115" class="small">a[−1] = 12</text>
+<text x="236" y="44" text-anchor="middle" class="small">run 1</text><text x="524" y="80" text-anchor="middle" class="small">run 2</text>
+<text x="102" y="183" text-anchor="end" class="small muted">a[i] ≤ 12 ?</text>
+<rect class="box bad" x="110" y="164" width="44" height="28" rx="5"/><rect class="box bad" x="166" y="164" width="44" height="28" rx="5"/><rect class="box bad" x="222" y="164" width="44" height="28" rx="5"/><rect class="box bad" x="278" y="164" width="44" height="28" rx="5"/><rect class="box bad" x="334" y="164" width="44" height="28" rx="5"/>
+<rect class="box path" x="390" y="164" width="44" height="28" rx="5"/><rect class="box done" x="446" y="164" width="44" height="28" rx="5"/><rect class="box done" x="502" y="164" width="44" height="28" rx="5"/><rect class="box done" x="558" y="164" width="44" height="28" rx="5"/><rect class="box done" x="614" y="164" width="44" height="28" rx="5"/>
+<text x="132" y="183" text-anchor="middle" class="mono small">F</text><text x="188" y="183" text-anchor="middle" class="mono small">F</text><text x="244" y="183" text-anchor="middle" class="mono small">F</text><text x="300" y="183" text-anchor="middle" class="mono small">F</text><text x="356" y="183" text-anchor="middle" class="mono small">F</text><text x="412" y="183" text-anchor="middle" class="mono small">T</text><text x="468" y="183" text-anchor="middle" class="mono small">T</text><text x="524" y="183" text-anchor="middle" class="mono small">T</text><text x="580" y="183" text-anchor="middle" class="mono small">T</text><text x="636" y="183" text-anchor="middle" class="mono small">T</text>
+<text x="110" y="222" class="small">first_true(a[i] ≤ a[−1]) = 5 = index of the minimum = the rotation offset. Then search the right run with lower bound.</text>
+</svg>
+<figcaption>Fact 1 gives “find minimum” directly with the template. Fact 2, “one side of mid is always sorted”, gives the one-pass search below.</figcaption>
+</figure>
+
+<ul>
+<li><strong>Find the minimum / rotation point:</strong> <code>first_true(0, n, lambda i: a[i] &lt;= a[-1])</code>. Compare with the <strong>last</strong> element,
+  not the first: with no rotation at all, <code>a[i] ≤ a[0]</code> is T only at index 0 and the predicate is not F…T.</li>
+<li><strong>Search a target, two passes:</strong> find the rotation point <code>k</code>, then run lower bound on <code>[k, n)</code> if <code>t ≤ a[-1]</code>, else on
+  <code>[0, k)</code>. Pure template, easy to get right.</li>
+<li><strong>Search a target, one pass:</strong> at each <code>mid</code>, one of <code>[lo..mid]</code> or <code>[mid..hi]</code> is sorted (the cliff can only be on one
+  side). Range-check the target against the sorted side; that tells you which half to keep.</li>
+</ul>
+<div class="viz" data-viz="binary-search-rotated"></div>
+
+<div class="callout">
+<p><strong>Duplicates (LeetCode 81 and 154).</strong> With duplicates, <code>a[lo] == a[mid] == a[hi]</code> tells you nothing about which side
+holds the cliff (<code>[1,1,1,0,1]</code> versus <code>[1,0,1,1,1]</code>). The standard fix is to shrink by one (<code>hi -= 1</code>, after checking <code>a[hi]</code>),
+which keeps correctness but degrades the worst case to O(n). No algorithm can do better on all-equal-but-one input.</p>
+</div>
+<h3 id="peak-finding-binary-search-without-a-sorted-array">Peak finding: binary search without a sorted array</h3>
+<p>A <strong>peak</strong> is an element larger than both neighbours (with <code>a[−1] = a[n] = −∞</code>). The array is not sorted and the “slope”
+strip is not monotone, yet binary search works because it only needs one thing: <strong>a boundary is guaranteed to exist inside
+<code>[lo, hi]</code></strong>. If <code>a[mid] &lt; a[mid+1]</code>, climbing right must eventually come down (the far end is −∞), so a peak lies in
+<code>(mid, hi]</code>. Otherwise a peak lies in <code>[lo, mid]</code>. The invariant “there is a peak in <code>[lo, hi]</code>” survives every step.</p>
+<div class="viz" data-viz="binary-search-peak"></div>
+
+<div class="insight">
+<p><strong>The general principle</strong>
+Binary search does not need global monotonicity. It needs an invariant of the form “an answer exists in [lo, hi]” and a
+probe that can always discard half while preserving it. Monotone predicates are the most common way to get that, not the only one.
+The same reasoning solves bitonic (“mountain”) arrays: find the peak, then binary search each monotone side.</p>
+</div>
+<h3 id="search-on-the-answer">Search on the answer</h3>
+<p>This is where binary search becomes a superpower. When a problem asks for the <strong>minimum (or maximum) value X such that
+something is possible</strong>, and making X bigger never makes it impossible, then <code>feasible(X)</code> is F…F T…T over the <em>answer
+range</em>. Binary search that range and simulate <code>feasible</code> at each probe.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 214" width="760" role="img" aria-label="Koko eating bananas: speeds 1 to 11, hours needed 27 15 10 8 8 6 5 5 5 5 4, feasible when hours are at most 8, first feasible speed 4.">
+<defs><marker id="binary-search-ar5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="20" y="22" class="title">piles = [3, 6, 7, 11], h = 8: the answer axis is the speed k, not an index</text>
+<text x="122" y="60" text-anchor="end" class="small muted">speed k</text>
+<text x="122" y="98" text-anchor="end" class="small muted">hours(k)</text>
+<text x="122" y="136" text-anchor="end" class="small muted">hours ≤ 8 ?</text>
+<rect class="box" x="130" y="40" width="46" height="30" rx="5"/><rect class="box" x="184" y="40" width="46" height="30" rx="5"/><rect class="box" x="238" y="40" width="46" height="30" rx="5"/><rect class="box path" x="292" y="40" width="46" height="30" rx="5"/><rect class="box" x="346" y="40" width="46" height="30" rx="5"/><rect class="box" x="400" y="40" width="46" height="30" rx="5"/><rect class="box" x="454" y="40" width="46" height="30" rx="5"/><rect class="box" x="508" y="40" width="46" height="30" rx="5"/><rect class="box" x="562" y="40" width="46" height="30" rx="5"/><rect class="box" x="616" y="40" width="46" height="30" rx="5"/><rect class="box" x="670" y="40" width="46" height="30" rx="5"/>
+<text x="153" y="60" text-anchor="middle" class="mono">1</text><text x="207" y="60" text-anchor="middle" class="mono">2</text><text x="261" y="60" text-anchor="middle" class="mono">3</text><text x="315" y="60" text-anchor="middle" class="mono">4</text><text x="369" y="60" text-anchor="middle" class="mono">5</text><text x="423" y="60" text-anchor="middle" class="mono">6</text><text x="477" y="60" text-anchor="middle" class="mono">7</text><text x="531" y="60" text-anchor="middle" class="mono">8</text><text x="585" y="60" text-anchor="middle" class="mono">9</text><text x="639" y="60" text-anchor="middle" class="mono">10</text><text x="693" y="60" text-anchor="middle" class="mono">11</text>
+<rect class="box" x="130" y="78" width="46" height="30" rx="5"/><rect class="box" x="184" y="78" width="46" height="30" rx="5"/><rect class="box" x="238" y="78" width="46" height="30" rx="5"/><rect class="box" x="292" y="78" width="46" height="30" rx="5"/><rect class="box" x="346" y="78" width="46" height="30" rx="5"/><rect class="box" x="400" y="78" width="46" height="30" rx="5"/><rect class="box" x="454" y="78" width="46" height="30" rx="5"/><rect class="box" x="508" y="78" width="46" height="30" rx="5"/><rect class="box" x="562" y="78" width="46" height="30" rx="5"/><rect class="box" x="616" y="78" width="46" height="30" rx="5"/><rect class="box" x="670" y="78" width="46" height="30" rx="5"/>
+<text x="153" y="98" text-anchor="middle" class="mono">27</text><text x="207" y="98" text-anchor="middle" class="mono">15</text><text x="261" y="98" text-anchor="middle" class="mono">10</text><text x="315" y="98" text-anchor="middle" class="mono">8</text><text x="369" y="98" text-anchor="middle" class="mono">8</text><text x="423" y="98" text-anchor="middle" class="mono">6</text><text x="477" y="98" text-anchor="middle" class="mono">5</text><text x="531" y="98" text-anchor="middle" class="mono">5</text><text x="585" y="98" text-anchor="middle" class="mono">5</text><text x="639" y="98" text-anchor="middle" class="mono">5</text><text x="693" y="98" text-anchor="middle" class="mono">4</text>
+<rect class="box bad" x="130" y="116" width="46" height="30" rx="5"/><rect class="box bad" x="184" y="116" width="46" height="30" rx="5"/><rect class="box bad" x="238" y="116" width="46" height="30" rx="5"/><rect class="box path" x="292" y="116" width="46" height="30" rx="5"/><rect class="box done" x="346" y="116" width="46" height="30" rx="5"/><rect class="box done" x="400" y="116" width="46" height="30" rx="5"/><rect class="box done" x="454" y="116" width="46" height="30" rx="5"/><rect class="box done" x="508" y="116" width="46" height="30" rx="5"/><rect class="box done" x="562" y="116" width="46" height="30" rx="5"/><rect class="box done" x="616" y="116" width="46" height="30" rx="5"/><rect class="box done" x="670" y="116" width="46" height="30" rx="5"/>
+<text x="153" y="136" text-anchor="middle" class="mono">F</text><text x="207" y="136" text-anchor="middle" class="mono">F</text><text x="261" y="136" text-anchor="middle" class="mono">F</text><text x="315" y="136" text-anchor="middle" class="mono">T</text><text x="369" y="136" text-anchor="middle" class="mono">T</text><text x="423" y="136" text-anchor="middle" class="mono">T</text><text x="477" y="136" text-anchor="middle" class="mono">T</text><text x="531" y="136" text-anchor="middle" class="mono">T</text><text x="585" y="136" text-anchor="middle" class="mono">T</text><text x="639" y="136" text-anchor="middle" class="mono">T</text><text x="693" y="136" text-anchor="middle" class="mono">T</text>
+<path class="edge accent" d="M315 190 L315 152" marker-end="url(#binary-search-ar5)"/>
+<text x="326" y="186" class="small">answer = 4: the first speed that fits in 8 hours</text>
+<text x="130" y="208" class="small muted">hours(k) never increases as k grows, so “hours(k) ≤ h” can only flip from F to T once.</text>
+</svg>
+<figcaption>We never compute this whole table. Binary search evaluates about log₂(11) ≈ 4 columns, each costing one O(n) simulation.</figcaption>
+</figure>
+
+<p>The recipe has four questions. Answer them out loud before coding:</p>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · ANSWER</small><strong>What number am I choosing?</strong><p>Speed, capacity, days, max sum, distance, time.</p></div>
+<div class="flow-step"><small>2 · CHECK</small><strong>Given X, can I verify fast?</strong><p>Usually a greedy O(n) simulation.</p></div>
+<div class="flow-step"><small>3 · MONOTONE</small><strong>Does X+1 stay feasible?</strong><p>If yes: min-feasible = first true. If it flips the other way: max-feasible.</p></div>
+<div class="flow-step"><small>4 · BOUNDS</small><strong>Smallest and largest sane X</strong><p>lo must be a legal input to check; hi must be surely feasible.</p></div>
+</div>
+
+<div class="viz" data-viz="binary-search-koko"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def min_eating_speed(piles: list[int], h: int) -&gt; int:
+    def feasible(k: int) -&gt; bool:               # O(n)
+        return sum((p + k - 1) // k for p in piles) &lt;= h
+
+    # answer is in [1, max(piles)]; max(piles) is always feasible (h &gt;= len(piles))
+    return first_true(1, max(piles), feasible)  # hi = max(piles) acts as the known-T wall
+</code></pre>
+<pre><code class="language-csharp">public static int MinEatingSpeed(int[] piles, int h)
+{
+    bool Feasible(int k)                         // O(n)
+    {
+        long hours = 0;                          // long: n * 1e9 hours overflows int
+        foreach (int p in piles) hours += (p + k - 1L) / k;
+        return hours &lt;= h;
+    }
+    return FirstTrue(1, piles.Max(), Feasible);  // max(piles) is always feasible
+}
+</code></pre>
+</div>
+<p>O(n log M) time, M = max(piles); O(1) space. Note the trick: passing <code>hi = max(piles)</code> as the <em>exclusive</em> bound is fine
+because we know <code>max(piles)</code> is feasible, so the search never needs to return anything above it.</p>
+<div class="tip">
+<p><strong>Minimise the maximum, maximise the minimum</strong>
+“Minimise the largest piece” (split array, ship capacity, painters) is min-feasible: bigger limits are easier, so F…F T…T.
+“Maximise the smallest gap” (magnetic balls, aggressive cows) is max-feasible: bigger gaps are harder, so T…T F…F, and the
+answer is <code>first_true(not feasible) − 1</code>. Both phrases are a loud hint to search on the answer.</p>
+</div>
+<h3 id="k-th-smallest-by-counting">K-th smallest by counting</h3>
+<p>To find the k-th smallest element of something huge and implicit (all pairwise distances, a multiplication table, a sorted
+matrix, all fractions <code>p/q</code>), binary search the <strong>value</strong> with <code>p(x) = count(elements ≤ x) ≥ k</code>. The count is monotone
+in x, and the first x that reaches k is always an actual element: the count only jumps at real values. The whole game
+is writing <code>count</code> in O(n) or O(n log n), often with two pointers.</p>
+<h3 id="real-valued-bisection">Real-valued bisection</h3>
+<p>With real numbers there is no “next value”, so there is no <code>+ 1</code>: both branches assign <code>mid</code>. The loop stops on
+precision, not on <code>lo == hi</code>. Two safe stopping rules:</p>
+<ul>
+<li><strong>Fixed iteration count</strong> (<code>for _ in range(100)</code>): each halving gains one bit, and a double has 53, so 60–100
+  iterations reach full precision from any sane range. It cannot loop forever. Prefer this.</li>
+<li><strong>Width tolerance</strong> (<code>while hi − lo &gt; eps</code>): readable, but if <code>eps</code> is smaller than the gap between adjacent doubles
+  near the answer (for example <code>eps = 1e−12</code> when the answer is near 10⁶), <code>mid</code> stops changing and the loop never ends.</li>
+</ul>
+<div class="viz" data-viz="binary-search-sqrt"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def sqrt_real(x: float) -&gt; float:
+    lo, hi = 0.0, max(1.0, x)            # for x &lt; 1, sqrt(x) &gt; x
+    for _ in range(100):                 # ~1 bit per iteration; cannot hang
+        mid = (lo + hi) / 2
+        if mid * mid &gt;= x:
+            hi = mid
+        else:
+            lo = mid
+    return (lo + hi) / 2
+
+def my_sqrt(x: int) -&gt; int:              # LeetCode 69: floor(sqrt(x)) with integers only
+    # last m with m*m &lt;= x  ==  (first m with m*m &gt; x) - 1
+    return first_true(0, x + 1, lambda m: m * m &gt; x) - 1
+</code></pre>
+<pre><code class="language-csharp">public static double Sqrt(double x)
+{
+    double lo = 0, hi = Math.Max(1.0, x);    // for x &lt; 1, sqrt(x) &gt; x
+    for (int it = 0; it &lt; 100; it++)         // ~1 bit per iteration; cannot hang
+    {
+        double mid = (lo + hi) / 2;
+        if (mid * mid &gt;= x) hi = mid; else lo = mid;
+    }
+    return (lo + hi) / 2;
+}
+
+public static int MySqrt(int x)              // floor(sqrt(x)); long avoids m*m overflow
+    =&gt; (int)(FirstTrueLong(0, (long)x + 1, m =&gt; m * m &gt; x) - 1);
+
+public static long FirstTrueLong(long lo, long hi, Func&lt;long, bool&gt; pred)
+{
+    while (lo &lt; hi)
+    {
+        long mid = lo + (hi - lo) / 2;
+        if (pred(mid)) hi = mid; else lo = mid + 1;
+    }
+    return lo;
+}
+</code></pre>
+</div>
+<p>Real bisection is O(log(range/ε)) iterations. The integer version is O(log x) and exact.</p>
+<h3 id="median-of-two-sorted-arrays-binary-search-a-partition">Median of two sorted arrays: binary search a partition</h3>
+<p>The hardest classic (LeetCode 4) is the same template in disguise. Do not search for the median <em>value</em>; search for <strong>how
+many elements of the shorter array A belong to the lower half</strong> of the merged order. Call that <code>i</code>. The lower half must
+hold <code>half = (m + n + 1) // 2</code> elements, so <code>j = half − i</code> of them come from B. A cut is correct exactly when every left
+element is ≤ every right element, which (both arrays being sorted) reduces to two cross comparisons.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 238" width="760" role="img" aria-label="A is 1 4 7 9 12 and B is 2 3 5 8 10 11 15. The cut takes three from each. Cross checks 7 at most 8 and 5 at most 9 hold, so the median is 7.5.">
+<defs><marker id="binary-search-ar6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker></defs>
+<text x="20" y="22" class="title">Cut A after i = 3 and B after j = half − i = 6 − 3 = 3</text>
+<text x="180" y="66" text-anchor="end" class="small muted">A (m = 5)</text>
+<rect class="box visit" x="192" y="44" width="48" height="36" rx="6"/><text x="216" y="67" text-anchor="middle" class="mono">1</text>
+<rect class="box visit" x="248" y="44" width="48" height="36" rx="6"/><text x="272" y="67" text-anchor="middle" class="mono">4</text>
+<rect class="box visit" x="304" y="44" width="48" height="36" rx="6"/><text x="328" y="67" text-anchor="middle" class="mono">7</text>
+<rect class="box" x="368" y="44" width="48" height="36" rx="6"/><text x="392" y="67" text-anchor="middle" class="mono">9</text>
+<rect class="box" x="424" y="44" width="48" height="36" rx="6"/><text x="448" y="67" text-anchor="middle" class="mono">12</text>
+<text x="180" y="150" text-anchor="end" class="small muted">B (n = 7)</text>
+<rect class="box visit" x="192" y="128" width="48" height="36" rx="6"/><text x="216" y="151" text-anchor="middle" class="mono">2</text>
+<rect class="box visit" x="248" y="128" width="48" height="36" rx="6"/><text x="272" y="151" text-anchor="middle" class="mono">3</text>
+<rect class="box visit" x="304" y="128" width="48" height="36" rx="6"/><text x="328" y="151" text-anchor="middle" class="mono">5</text>
+<rect class="box" x="368" y="128" width="48" height="36" rx="6"/><text x="392" y="151" text-anchor="middle" class="mono">8</text>
+<rect class="box" x="424" y="128" width="48" height="36" rx="6"/><text x="448" y="151" text-anchor="middle" class="mono">10</text>
+<rect class="box" x="480" y="128" width="48" height="36" rx="6"/><text x="504" y="151" text-anchor="middle" class="mono">11</text>
+<rect class="box" x="536" y="128" width="48" height="36" rx="6"/><text x="560" y="151" text-anchor="middle" class="mono">15</text>
+<path class="edge accent dash" d="M360 34 L360 176"/>
+<text x="270" y="192" text-anchor="middle" class="small">left half: 6 smallest</text><text x="440" y="192" text-anchor="middle" class="small">right half</text>
+<path class="edge done" d="M332 82 L386 124" marker-end="url(#binary-search-ar6)"/>
+<path class="edge done" d="M332 126 L386 84" marker-end="url(#binary-search-ar6)"/>
+<text x="600" y="66" class="mono small">A[i−1] = 7 ≤ B[j] = 8</text>
+<text x="600" y="88" class="mono small">B[j−1] = 5 ≤ A[i] = 9</text>
+<text x="600" y="110" class="small muted">both hold ⇒ valid cut</text>
+<text x="192" y="222" class="small">left_max = max(7, 5) = 7, right_min = min(9, 8) = 8; total 12 is even ⇒ median = (7 + 8) / 2 = 7.5</text>
+</svg>
+<figcaption>Only i is free. The test p(i) = A[i] ≥ B[j−1] is monotone (A[i] grows with i while B[j−1] shrinks), so the first true i is the valid cut.</figcaption>
+</figure>
+
+<p>Why the first true <code>i</code> is valid: <code>p(i)</code> gives <code>B[j−1] ≤ A[i]</code> directly; and <code>p(i−1)</code> being false means
+<code>A[i−1] &lt; B[j]</code>, the other half of the condition. Searching the shorter array keeps <code>j</code> inside B for every <code>i</code>, and
+makes it O(log min(m, n)).</p>
+<div class="viz" data-viz="binary-search-median"></div>
+
+<h2 id="recognize-it-when">Recognize it when</h2>
+<div class="recognize">
+<p><strong>Recognize it when</strong></p>
+<ul>
+<li>The input is <strong>sorted</strong> (or sorted after rotation), and you need a position, a count, a first/last, or a closest value.</li>
+<li>The task says <strong>“minimum X such that …”</strong> or <strong>“maximum X such that …”</strong>, and a bigger X is clearly easier (or harder).</li>
+<li>Phrases like <strong>minimise the maximum</strong>, <strong>maximise the minimum</strong>, “at least”, “within D days”, “at speed k”.</li>
+<li>The answer range is huge (10⁹, 10¹⁸) but checking one candidate is cheap: O(n log range) beats anything that iterates the range.</li>
+<li><strong>K-th smallest</strong> over an implicit sorted set (pair distances, matrix, multiplication table, fractions).</li>
+<li>A real-valued answer “within 10⁻⁶”.</li>
+<li>The constraints demand O(log n) per query, or O(n log n) overall with n ≈ 10⁵.</li>
+</ul>
+</div>
+<table>
+<thead>
+<tr>
+<th>Use</th>
+<th>Time</th>
+<th>Space</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Search a sorted array (any bound)</td>
+<td>O(log n)</td>
+<td>O(1)</td>
+<td>30 probes for 10⁹ elements</td>
+</tr>
+<tr>
+<td>Rotated array search / find min</td>
+<td>O(log n)</td>
+<td>O(1)</td>
+<td>O(n) worst case with duplicates</td>
+</tr>
+<tr>
+<td>Peak element</td>
+<td>O(log n)</td>
+<td>O(1)</td>
+<td>Any peak, not the global max</td>
+</tr>
+<tr>
+<td>Search on the answer</td>
+<td>O(C · log R)</td>
+<td>O(1) + check</td>
+<td>C = cost of <code>feasible</code>, R = answer range</td>
+</tr>
+<tr>
+<td>K-th smallest by counting</td>
+<td>O(n · log R)</td>
+<td>O(1)</td>
+<td>Count with two pointers inside</td>
+</tr>
+<tr>
+<td>Median of two sorted arrays</td>
+<td>O(log min(m, n))</td>
+<td>O(1)</td>
+<td>Partition search</td>
+</tr>
+<tr>
+<td>Real bisection</td>
+<td>O(log(R/ε))</td>
+<td>O(1)</td>
+<td>Or a fixed 100 iterations</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pitfalls">Pitfalls</h2>
+<div class="pitfall">
+<p><strong>Using equality as the predicate</strong>
+<code>p(i) = a[i] == t</code> is F…F T…T F…F, not monotone, so “first true” is meaningless. <strong>Fix:</strong> search <code>a[i] &gt;= t</code> and check
+equality once, after the loop.</p>
+</div>
+<div class="pitfall">
+<p><strong><code>hi = len(a) − 1</code> with the half-open loop</strong>
+If <code>hi</code> starts at <code>n − 1</code> but you use <code>while lo &lt; hi</code> and <code>hi = mid</code>, the search can return <code>n − 1</code> even when <code>p(n − 1)</code> is
+false, because “no answer” has no slot. <strong>Fix:</strong> <code>hi = n</code> (exclusive), or verify <code>p(lo)</code> after the loop.</p>
+</div>
+<div class="pitfall">
+<p><strong><code>lo = mid</code> with a floor mid</strong>
+Spins forever on a two-element gap. <strong>Fix:</strong> ceiling mid for that branch, or rewrite as <code>first_true(not p) − 1</code>.</p>
+</div>
+<div class="pitfall">
+<p><strong>Overflow: in mid, and inside the check</strong>
+<code>(lo + hi) / 2</code> overflows <code>int</code>; so does <code>mid * mid</code> in an integer square root, and summing hours or loads across 10⁵
+items of size 10⁹. <strong>Fix:</strong> <code>lo + (hi − lo) / 2</code>, and <code>long</code> for products and running sums in C#.</p>
+</div>
+<div class="pitfall">
+<p><strong>Lower bound of the answer range breaks the check</strong>
+Ship capacity with <code>lo = 1</code>: the greedy “start a new day when the next package does not fit” silently accepts a package
+heavier than the capacity. <strong>Fix:</strong> <code>lo = max(weights)</code>, the smallest capacity that can carry every package at all.</p>
+</div>
+<div class="pitfall">
+<p><strong>Floating-point loops that never end</strong>
+<code>while hi − lo &gt; 1e−12</code> around 10⁶ can stall when <code>mid</code> rounds to <code>lo</code> or <code>hi</code>. <strong>Fix:</strong> a fixed number of iterations,
+or a relative tolerance.</p>
+</div>
+<div class="pitfall">
+<p><strong>Trusting <code>Array.BinarySearch</code> for the first copy</strong>
+With duplicates it returns <em>some</em> matching index (3 in a run of seven 5s). <strong>Fix:</strong> your own lower bound when position
+among equals matters.</p>
+</div>
+<h2 id="worked-problems">Worked problems</h2>
+<p>Every solution below reuses <code>first_true</code> / <code>FirstTrue</code> from the template section. The interesting part is always the
+same: <strong>name the predicate, prove it is F…F T…T, pick the range.</strong></p>
+<h3 id="1-find-first-and-last-position-medium">1. Find First and Last Position <span class="diff medium">Medium</span></h3>
+<p>Given a sorted array with duplicates, return <code>[first, last]</code> index of <code>target</code>, or <code>[−1, −1]</code>, in O(log n).</p>
+<p><strong>Insight.</strong> First copy = first <code>a[i] ≥ t</code>. Last copy = (first <code>a[i] &gt; t</code>) − 1. Two template calls, no special cases.
+The <a href="#the-predicate-strip-lo-and-hi-are-walls-of-knowledge">predicate strip</a> visualizer shows both passes.</p>
+<details class="solution">
+<summary>Solution: two boundary searches</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def search_range(nums: list[int], target: int) -&gt; list[int]:
+    lo = lower_bound(nums, target)                   # first a[i] &gt;= target
+    if lo == len(nums) or nums[lo] != target:
+        return [-1, -1]                              # target absent
+    return [lo, upper_bound(nums, target) - 1]       # last = first a[i] &gt; target, minus 1
+</code></pre>
+<pre><code class="language-csharp">public static int[] SearchRange(int[] nums, int target)
+{
+    int lo = LowerBound(nums, target);               // first a[i] &gt;= target
+    if (lo == nums.Length || nums[lo] != target) return new[] { -1, -1 };
+    return new[] { lo, UpperBound(nums, target) - 1 };
+}
+</code></pre>
+</div>
+<p>O(log n) time, O(1) space.</p>
+</details>
+<h3 id="2-find-minimum-in-rotated-sorted-array-medium">2. Find Minimum in Rotated Sorted Array <span class="diff medium">Medium</span></h3>
+<p>A sorted array of distinct values was rotated. Return its minimum in O(log n).</p>
+<p><strong>Insight.</strong> <code>a[i] ≤ a[−1]</code> is F on the first run and T on the second (see the rotated picture above). The minimum is
+the first true. If the array was not rotated, every element is ≤ the last one and the answer is index 0, as it should be.</p>
+<details class="solution">
+<summary>Solution: first index with a[i] ≤ a[−1]</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def find_min(nums: list[int]) -&gt; int:
+    last = nums[-1]
+    return nums[first_true(0, len(nums), lambda i: nums[i] &lt;= last)]
+</code></pre>
+<pre><code class="language-csharp">public static int FindMin(int[] nums)
+{
+    int last = nums[^1];
+    return nums[FirstTrue(0, nums.Length, i =&gt; nums[i] &lt;= last)];
+}
+</code></pre>
+</div>
+<p>O(log n) time, O(1) space.</p>
+</details>
+<h3 id="3-search-in-rotated-sorted-array-medium">3. Search in Rotated Sorted Array <span class="diff medium">Medium</span></h3>
+<p>Return the index of <code>target</code> in a rotated sorted array of distinct values, or −1.</p>
+<p><strong>Insight.</strong> Two clean options. <em>Two passes:</em> find the rotation point with problem 2, decide which run can hold the
+target (<code>t ≤ a[−1]</code> means the right run), lower-bound inside it. <em>One pass:</em> one side of <code>mid</code> is always sorted; if the
+target is inside that side’s range go there, else go to the other side. The visualizer above runs the one-pass version.</p>
+<details class="solution">
+<summary>Solution: both versions</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def search_two_pass(a: list[int], t: int) -&gt; int:
+    n = len(a)
+    k = first_true(0, n, lambda i: a[i] &lt;= a[-1])     # start of the second run
+    lo, hi = (k, n) if t &lt;= a[-1] else (0, k)         # the only run that can hold t
+    i = first_true(lo, hi, lambda i: a[i] &gt;= t)       # lower bound inside that run
+    return i if i &lt; hi and a[i] == t else -1
+
+def search_one_pass(a: list[int], t: int) -&gt; int:
+    lo, hi = 0, len(a) - 1                            # closed interval [lo, hi]
+    while lo &lt;= hi:
+        mid = (lo + hi) // 2
+        if a[mid] == t:
+            return mid
+        if a[lo] &lt;= a[mid]:                           # left half [lo..mid] is sorted
+            if a[lo] &lt;= t &lt; a[mid]: hi = mid - 1
+            else:                   lo = mid + 1
+        else:                                         # right half [mid..hi] is sorted
+            if a[mid] &lt; t &lt;= a[hi]: lo = mid + 1
+            else:                   hi = mid - 1
+    return -1
+</code></pre>
+<pre><code class="language-csharp">public static int SearchTwoPass(int[] a, int t)
+{
+    int n = a.Length, last = a[^1];
+    int k = FirstTrue(0, n, i =&gt; a[i] &lt;= last);       // start of the second run
+    (int lo, int hi) = t &lt;= last ? (k, n) : (0, k);   // the only run that can hold t
+    int i = FirstTrue(lo, hi, i =&gt; a[i] &gt;= t);
+    return i &lt; hi &amp;&amp; a[i] == t ? i : -1;
+}
+
+public static int SearchOnePass(int[] a, int t)
+{
+    int lo = 0, hi = a.Length - 1;                    // closed interval [lo, hi]
+    while (lo &lt;= hi)
+    {
+        int mid = lo + (hi - lo) / 2;
+        if (a[mid] == t) return mid;
+        if (a[lo] &lt;= a[mid])                          // left half is sorted
+        {
+            if (a[lo] &lt;= t &amp;&amp; t &lt; a[mid]) hi = mid - 1;
+            else lo = mid + 1;
+        }
+        else                                          // right half is sorted
+        {
+            if (a[mid] &lt; t &amp;&amp; t &lt;= a[hi]) lo = mid + 1;
+            else hi = mid - 1;
+        }
+    }
+    return -1;
+}
+</code></pre>
+</div>
+<p>Both O(log n) time, O(1) space. The <code>a[lo] &lt;= a[mid]</code> uses <code>&lt;=</code> because when <code>lo == mid</code> the one-element left side is sorted.</p>
+</details>
+<h3 id="4-capacity-to-ship-packages-within-d-days-medium">4. Capacity to Ship Packages Within D Days <span class="diff medium">Medium</span></h3>
+<p>Packages go in order; each day the ship carries a prefix of the remaining ones up to its capacity. Find the least
+capacity that ships everything in <code>days</code> days.</p>
+<p><strong>Insight.</strong> Search on the answer. <code>feasible(cap)</code> = greedy: keep loading until the next package would overflow, then
+start a new day. More capacity never needs more days, so F…F T…T. Range: <code>[max(w), sum(w)]</code>: anything below
+<code>max(w)</code> cannot lift the heaviest package; <code>sum(w)</code> ships everything in one day.</p>
+<details class="solution">
+<summary>Solution: first feasible capacity</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def ship_within_days(weights: list[int], days: int) -&gt; int:
+    def feasible(cap: int) -&gt; bool:                   # greedy is optimal for a fixed cap
+        need, load = 1, 0
+        for w in weights:
+            if load + w &gt; cap:                        # does not fit: start the next day
+                need, load = need + 1, 0
+            load += w
+        return need &lt;= days
+
+    return first_true(max(weights), sum(weights), feasible)  # sum(weights) is always feasible
+</code></pre>
+<pre><code class="language-csharp">public static int ShipWithinDays(int[] weights, int days)
+{
+    bool Feasible(int cap)                            // greedy is optimal for a fixed cap
+    {
+        int need = 1, load = 0;
+        foreach (int w in weights)
+        {
+            if (load + w &gt; cap) { need++; load = 0; } // start the next day
+            load += w;
+        }
+        return need &lt;= days;
+    }
+    return FirstTrue(weights.Max(), weights.Sum(), Feasible);
+}
+</code></pre>
+</div>
+<p>O(n log S) time with S = sum(weights); O(1) space. Why greedy is right for a fixed cap: packing as much as possible today
+can only leave less for later days, never more.</p>
+</details>
+<h3 id="5-magnetic-force-between-two-balls-medium">5. Magnetic Force Between Two Balls <span class="diff medium">Medium</span></h3>
+<p>Place <code>m</code> balls in baskets at the given positions to <strong>maximise the minimum</strong> distance between any two balls.</p>
+<p><strong>Insight.</strong> Max-feasible. <code>can_place(d)</code> greedily puts a ball in the first basket and then in every basket at least <code>d</code>
+after the last ball. Larger <code>d</code> is harder, so <code>can_place</code> is T…T F…F. The answer is the last true, which is
+<code>first_true(not can_place) − 1</code>, with no ceiling-mid trickery.</p>
+<details class="solution">
+<summary>Solution: last feasible distance</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def max_distance(position: list[int], m: int) -&gt; int:
+    position.sort()
+    def can_place(d: int) -&gt; bool:                    # greedy: leftmost legal basket each time
+        count, last = 1, position[0]
+        for p in position:
+            if p - last &gt;= d:
+                count, last = count + 1, p
+        return count &gt;= m
+
+    span = position[-1] - position[0]
+    # can_place(1) is True (m &lt;= n); can_place(span + 1) is False
+    return first_true(1, span + 1, lambda d: not can_place(d)) - 1
+</code></pre>
+<pre><code class="language-csharp">public static int MaxDistance(int[] position, int m)
+{
+    Array.Sort(position);
+    bool CanPlace(int d)                              // greedy: leftmost legal basket each time
+    {
+        int count = 1, last = position[0];
+        foreach (int p in position)
+            if (p - last &gt;= d) { count++; last = p; }
+        return count &gt;= m;
+    }
+    int span = position[^1] - position[0];
+    return FirstTrue(1, span + 1, d =&gt; !CanPlace(d)) - 1;
+}
+</code></pre>
+</div>
+<p>O(n log n + n log R) time with R = span; O(1) extra space besides the sort.</p>
+</details>
+<h3 id="6-split-array-largest-sum-hard">6. Split Array Largest Sum <span class="diff hard">Hard</span></h3>
+<p>Split <code>nums</code> (non-negative) into <code>k</code> non-empty contiguous parts to minimise the largest part sum.</p>
+<p><strong>Insight.</strong> It is problem 4 wearing a different coat: “largest part sum ≤ cap” is “ship capacity cap”, and “k parts” is
+“k days”. If greedy needs at most k pieces it can always split further to use exactly k (each split only lowers sums).
+The DP alternative is O(k·n²); binary search on the answer is O(n log S).</p>
+<details class="solution">
+<summary>Solution: minimise the maximum</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def split_array(nums: list[int], k: int) -&gt; int:
+    def pieces(cap: int) -&gt; int:                      # fewest parts with every sum &lt;= cap
+        count, run = 1, 0
+        for x in nums:
+            if run + x &gt; cap:
+                count, run = count + 1, 0
+            run += x
+        return count
+
+    return first_true(max(nums), sum(nums), lambda cap: pieces(cap) &lt;= k)
+</code></pre>
+<pre><code class="language-csharp">public static int SplitArray(int[] nums, int k)
+{
+    int Pieces(long cap)                              // fewest parts with every sum &lt;= cap
+    {
+        int count = 1; long run = 0;
+        foreach (int x in nums)
+        {
+            if (run + x &gt; cap) { count++; run = 0; }
+            run += x;
+        }
+        return count;
+    }
+    long lo = nums.Max(), hi = nums.Sum(x =&gt; (long)x);   // the sum can exceed int
+    while (lo &lt; hi)
+    {
+        long mid = lo + (hi - lo) / 2;
+        if (Pieces(mid) &lt;= k) hi = mid; else lo = mid + 1;
+    }
+    return (int)lo;
+}
+</code></pre>
+</div>
+<p>O(n log S) time, O(1) space.</p>
+</details>
+<h3 id="7-find-k-th-smallest-pair-distance-hard">7. Find K-th Smallest Pair Distance <span class="diff hard">Hard</span></h3>
+<p>Among all n(n−1)/2 pairs, return the k-th smallest <code>|a[i] − a[j]|</code>. n up to 10⁴, so listing pairs (5·10⁷) is too slow.</p>
+<p><strong>Insight.</strong> K-th smallest by counting. Sort; <code>count_le(d)</code> = number of pairs with distance ≤ d, computed by a
+sliding window in O(n): for each right end <code>r</code>, advance <code>l</code> while <code>a[r] − a[l] &gt; d</code>; then <code>r − l</code> pairs end at <code>r</code>.
+The first <code>d</code> with <code>count_le(d) ≥ k</code> is the answer, and it is a real distance because the count only changes at real distances.</p>
+<details class="solution">
+<summary>Solution: binary search the distance, count with two pointers</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def smallest_distance_pair(nums: list[int], k: int) -&gt; int:
+    nums.sort()
+    def count_le(d: int) -&gt; int:                      # pairs with distance &lt;= d
+        count, l = 0, 0
+        for r, x in enumerate(nums):
+            while x - nums[l] &gt; d:
+                l += 1
+            count += r - l                            # pairs (l..r-1, r)
+        return count
+
+    # count_le(max - min) = all pairs &gt;= k, so hi is a safe exclusive-or-answer wall
+    return first_true(0, nums[-1] - nums[0], lambda d: count_le(d) &gt;= k)
+</code></pre>
+<pre><code class="language-csharp">public static int SmallestDistancePair(int[] nums, int k)
+{
+    Array.Sort(nums);
+    int CountAtMost(int d)                            // pairs with distance &lt;= d
+    {
+        int count = 0, l = 0;
+        for (int r = 0; r &lt; nums.Length; r++)
+        {
+            while (nums[r] - nums[l] &gt; d) l++;
+            count += r - l;
+        }
+        return count;
+    }
+    return FirstTrue(0, nums[^1] - nums[0], d =&gt; CountAtMost(d) &gt;= k);
+}
+</code></pre>
+</div>
+<p>O(n log n + n log R) time with R = max − min; O(1) extra space.</p>
+</details>
+<h3 id="8-median-of-two-sorted-arrays-expert">8. Median of Two Sorted Arrays <span class="diff expert">Expert</span></h3>
+<p>Return the median of two sorted arrays in O(log min(m, n)).</p>
+<p><strong>Insight.</strong> Binary search the cut <code>i</code> in the shorter array with <code>p(i) = A[i] ≥ B[half − i − 1]</code> (the
+<a href="#median-of-two-sorted-arrays-binary-search-a-partition">partition picture</a> above). Out-of-range neighbours count as −∞
+on the left and +∞ on the right.</p>
+<details class="solution">
+<summary>Solution: first-true partition</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from math import inf
+
+def find_median_sorted_arrays(A: list[int], B: list[int]) -&gt; float:
+    if len(A) &gt; len(B):
+        A, B = B, A                                   # search the shorter array
+    m, n = len(A), len(B)
+    half = (m + n + 1) // 2                           # size of the left half
+    # first i in [0, m) with A[i] &gt;= B[half-i-1]; m if none
+    i = first_true(0, m, lambda i: A[i] &gt;= B[half - i - 1])
+    j = half - i
+    left = max(A[i - 1] if i &gt; 0 else -inf, B[j - 1] if j &gt; 0 else -inf)
+    if (m + n) % 2:
+        return float(left)                            # odd: the left half holds the median
+    right = min(A[i] if i &lt; m else inf, B[j] if j &lt; n else inf)
+    return (left + right) / 2
+</code></pre>
+<pre><code class="language-csharp">public static double FindMedianSortedArrays(int[] A, int[] B)
+{
+    if (A.Length &gt; B.Length) (A, B) = (B, A);         // search the shorter array
+    int m = A.Length, n = B.Length, half = (m + n + 1) / 2;
+    int i = FirstTrue(0, m, i =&gt; A[i] &gt;= B[half - i - 1]);
+    int j = half - i;
+    long left = Math.Max(i &gt; 0 ? A[i - 1] : long.MinValue, j &gt; 0 ? B[j - 1] : long.MinValue);
+    if ((m + n) % 2 == 1) return left;                // odd: the left half holds the median
+    long right = Math.Min(i &lt; m ? A[i] : long.MaxValue, j &lt; n ? B[j] : long.MaxValue);
+    return (left + right) / 2.0;
+}
+</code></pre>
+</div>
+<p>O(log min(m, n)) time, O(1) space. Inside the search <code>i &lt; m ≤ n</code> gives <code>half − i − 1 ≥ 0</code>, so <code>B[half − i − 1]</code> is
+always a real element.</p>
+</details>
+<h2 id="problem-ladder">Problem ladder</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Level</th>
+<th>The key idea</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://leetcode.com/problems/binary-search/">Binary Search</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Lower bound, then one equality check.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://leetcode.com/problems/search-insert-position/">Search Insert Position</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>It <em>is</em> lower bound; return it as is.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://leetcode.com/problems/first-bad-version/">First Bad Version</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>The predicate is given to you: <code>isBadVersion</code>.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://leetcode.com/problems/sqrtx/">Sqrt(x)</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>First m with m² &gt; x, minus 1; watch overflow.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://leetcode.com/problems/guess-number-higher-or-lower/">Guess Number Higher or Lower</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Predicate <code>guess(m) ≤ 0</code>.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/">Find First and Last Position of Element in Sorted Array</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Lower bound and upper bound − 1.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://leetcode.com/problems/search-a-2d-matrix/">Search a 2D Matrix</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Treat it as one sorted array: index k → (k // n, k % n).</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/">Find Minimum in Rotated Sorted Array</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>First i with a[i] ≤ a[−1].</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://leetcode.com/problems/search-in-rotated-sorted-array/">Search in Rotated Sorted Array</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>One side of mid is sorted; range-check it.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://leetcode.com/problems/find-peak-element/">Find Peak Element</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Walk uphill; a peak always exists that way.</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://leetcode.com/problems/single-element-in-a-sorted-array/">Single Element in a Sorted Array</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Predicate on even indices: <code>a[2i] != a[2i+1]</code>.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://leetcode.com/problems/koko-eating-bananas/">Koko Eating Bananas</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Search the speed; hours(k) ≤ h.</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/">Capacity To Ship Packages Within D Days</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>lo = max(w), greedy check.</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/">Minimum Number of Days to Make m Bouquets</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Search the day; count runs of bloomed flowers.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="https://leetcode.com/problems/time-based-key-value-store/">Time Based Key-Value Store</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Last timestamp ≤ t = upper bound − 1.</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="https://leetcode.com/problems/find-k-closest-elements/">Find K Closest Elements</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Binary search the window start: <code>x − a[i] &gt; a[i+k] − x</code>.</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="https://leetcode.com/problems/magnetic-force-between-two-balls/">Magnetic Force Between Two Balls</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Maximise the minimum: last feasible gap.</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/">Kth Smallest Element in a Sorted Matrix</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Search the value; count ≤ x by a staircase walk.</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="https://leetcode.com/problems/search-in-rotated-sorted-array-ii/">Search in Rotated Sorted Array II</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Duplicates: shrink by one when the ends tie.</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="https://leetcode.com/problems/split-array-largest-sum/">Split Array Largest Sum</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Minimise the maximum part sum.</td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="https://leetcode.com/problems/find-k-th-smallest-pair-distance/">Find K-th Smallest Pair Distance</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Search the distance; count with a sliding window.</td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="https://leetcode.com/problems/kth-smallest-number-in-multiplication-table/">Kth Smallest Number in Multiplication Table</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>count ≤ x = Σ min(x // i, n).</td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="https://leetcode.com/problems/find-in-mountain-array/">Find in Mountain Array</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Peak, then two monotone searches (one reversed).</td>
+</tr>
+<tr>
+<td>24</td>
+<td><a href="https://leetcode.com/problems/median-of-two-sorted-arrays/">Median of Two Sorted Arrays</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>First-true partition in the shorter array.</td>
+</tr>
+<tr>
+<td>25</td>
+<td><a href="https://leetcode.com/problems/k-th-smallest-prime-fraction/">K-th Smallest Prime Fraction</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Real bisection on the value; count fractions ≤ x with two pointers.</td>
+</tr>
+</tbody>
+</table>
+<p>Also worth knowing (premium on LeetCode): <em>Minimize Max Distance to Gas Station</em> (real-valued search on the answer) and
+<em>Maximum Average Subarray II</em> (bisect the average; check with prefix sums of <code>a[i] − x</code>, see <a href="prefix-sums.html">Prefix Sums</a>).</p>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>Your predicate is <code>a[i] == t</code>. Why is <code>first_true</code> wrong, and what do you use instead?</summary>
+<p>Equality is F…F T…T F…F on a sorted array with duplicates, and F…F T F…F with one copy: not monotone. Probes can
+land on an F to the right of the T’s and discard them. Search the monotone <code>a[i] ≥ t</code> and check <code>a[i] == t</code> once at the end.</p>
+</details>
+<details class="quiz">
+<summary>With <code>lo, hi = 0, n</code> and <code>while lo &lt; hi</code>, can <code>mid</code> ever equal <code>n</code>?</summary>
+<p>No. While <code>lo &lt; hi</code>, <code>mid = lo + (hi − lo) // 2 &lt; hi ≤ n</code>, so <code>a[mid]</code> is always in range. The value <code>n</code> is only ever
+<em>returned</em>, meaning “no true in range”.</p>
+</details>
+<details class="quiz">
+<summary>You need the last index where <code>p</code> holds and <code>p</code> is T…T F…F. What is the shortest correct code?</summary>
+<p><code>first_true(lo, hi, lambda i: not p(i)) − 1</code>. Negating flips T…T F…F into F…F T…T, the first true of <code>not p</code> is the first
+F, and the cell before it is the last T. This sidesteps the ceiling-mid variant entirely. (If it returns <code>lo − 1</code>, no index satisfies <code>p</code>.)</p>
+</details>
+<details class="quiz">
+<summary><code>Array.BinarySearch(a, 25)</code> on <code>[10, 20, 30, 40]</code> returns −3. What does that mean?</summary>
+<p>25 is absent and would be inserted at index <code>~(−3) = 2</code>, between 20 and 30. The method returns the bitwise complement of
+the insertion point so that every “not found” result is negative (insertion point 0 becomes −1, not 0).</p>
+</details>
+<details class="quiz">
+<summary>Why must Koko’s search start at speed 1 and not 0, and why may it end at max(piles)?</summary>
+<p>Speed 0 makes <code>feasible</code> divide by zero, and it is never a valid answer anyway. <code>max(piles)</code> eats any pile in one hour,
+so the total is <code>len(piles) ≤ h</code>: it is guaranteed feasible. That is what lets it serve as the exclusive “known T” wall.</p>
+</details>
+<details class="quiz">
+<summary>Why is peak finding a binary search even though the array is unsorted?</summary>
+<p>The invariant is “a peak exists in [lo, hi]”, not “the array is sorted”. If <code>a[mid] &lt; a[mid+1]</code>, walking right from
+<code>mid + 1</code> must go down eventually (the outside is −∞), so a peak lies in <code>(mid, hi]</code>. Otherwise <code>mid</code> itself or something
+left of it is a peak. Either way half is discarded and the invariant still holds.</p>
+</details>
+<details class="quiz">
+<summary>In the median partition, why search the shorter array?</summary>
+<p><code>j = half − i</code> must stay in <code>[0, n]</code>. With <code>m ≤ n</code>, every <code>i ∈ [0, m]</code> gives a legal <code>j</code>, and in the loop <code>B[half − i − 1]</code>
+is always a real element. It also makes the cost O(log min(m, n)).</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Template</strong><code>lo, hi = L, R</code>, <code>while lo &lt; hi</code>, <code>mid = lo + (hi−lo)//2</code>, T → <code>hi = mid</code>, F → <code>lo = mid+1</code>. Returns first T in [L, R), or R.</div>
+<div><strong>Bounds</strong>lower = first <code>a[i] ≥ t</code> · upper = first <code>a[i] &gt; t</code> · count = upper − lower · last copy = upper − 1</div>
+<div><strong>Last true</strong><code>first_true(not p) − 1</code>; never <code>lo = mid</code> with a floor mid.</div>
+<div><strong>Rotated</strong>min = first <code>a[i] ≤ a[−1]</code>; search: one side of mid is sorted. Duplicates: O(n) worst case.</div>
+<div><strong>Peak</strong><code>a[mid] &lt; a[mid+1]</code> → go right. Any boundary that must exist is enough.</div>
+<div><strong>On the answer</strong>“min X such that…” / “max X such that…”: feasible(X) monotone, O(check · log range).</div>
+<div><strong>K-th smallest</strong>First x with count(≤ x) ≥ k; count with two pointers.</div>
+<div><strong>Reals</strong>Fixed 100 iterations, both branches assign mid.</div>
+<div><strong>Median of two</strong>Cut i in shorter array, <code>j = half − i</code>, first i with <code>A[i] ≥ B[j−1]</code>.</div>
+<div><strong>Libraries</strong>Python <code>bisect_left/right</code>, <code>key=</code> (3.10+). C# <code>Array.BinarySearch</code>: ≥ 0 found (any copy), else <code>~r</code> = insert point.</div>
+</div>
+<p>Related: <a href="prefix-sums.html">Prefix Sums</a> (binary search over a monotone prefix array), <a href="two-pointers.html">Two Pointers</a>
+(the counting step inside k-th smallest searches).</p><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="prefix-sums.html"><small>&larr; PREVIOUS</small>Prefix Sums &amp; Difference Arrays</a><a class="next" href="sorting.html"><small>NEXT &rarr;</small>Sorting Algorithms</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#what-binary-search-really-is">What binary search really is</a></li>
+<li><a href="#intuition-halving-what-you-know">Intuition: halving what you know</a><ul>
+<li><a href="#watch-the-boundary-search-find-a-target">Watch the boundary search find a target</a></li>
+<li><a href="#the-predicate-strip-lo-and-hi-are-walls-of-knowledge">The predicate strip: lo and hi are walls of knowledge</a></li>
+</ul>
+</li>
+<li><a href="#the-one-template">The one template</a><ul>
+<li><a href="#deriving-everything-from-first_true">Deriving everything from first_true</a></li>
+<li><a href="#overflow-safe-mid">Overflow-safe mid</a></li>
+<li><a href="#infinite-loops-why-lo-mid-needs-the-upper-mid">Infinite loops: why lo = mid needs the upper mid</a></li>
+<li><a href="#template-variants-at-a-glance">Template variants at a glance</a></li>
+<li><a href="#library-calls-python-bisect-and-c-arraybinarysearch">Library calls: Python bisect and C# Array.BinarySearch</a></li>
+</ul>
+</li>
+<li><a href="#variants-and-sub-patterns">Variants and sub-patterns</a><ul>
+<li><a href="#rotated-sorted-arrays">Rotated sorted arrays</a></li>
+<li><a href="#peak-finding-binary-search-without-a-sorted-array">Peak finding: binary search without a sorted array</a></li>
+<li><a href="#search-on-the-answer">Search on the answer</a></li>
+<li><a href="#k-th-smallest-by-counting">K-th smallest by counting</a></li>
+<li><a href="#real-valued-bisection">Real-valued bisection</a></li>
+<li><a href="#median-of-two-sorted-arrays-binary-search-a-partition">Median of two sorted arrays: binary search a partition</a></li>
+</ul>
+</li>
+<li><a href="#recognize-it-when">Recognize it when</a></li>
+<li><a href="#pitfalls">Pitfalls</a></li>
+<li><a href="#worked-problems">Worked problems</a><ul>
+<li><a href="#1-find-first-and-last-position-medium">1. Find First and Last Position Medium</a></li>
+<li><a href="#2-find-minimum-in-rotated-sorted-array-medium">2. Find Minimum in Rotated Sorted Array Medium</a></li>
+<li><a href="#3-search-in-rotated-sorted-array-medium">3. Search in Rotated Sorted Array Medium</a></li>
+<li><a href="#4-capacity-to-ship-packages-within-d-days-medium">4. Capacity to Ship Packages Within D Days Medium</a></li>
+<li><a href="#5-magnetic-force-between-two-balls-medium">5. Magnetic Force Between Two Balls Medium</a></li>
+<li><a href="#6-split-array-largest-sum-hard">6. Split Array Largest Sum Hard</a></li>
+<li><a href="#7-find-k-th-smallest-pair-distance-hard">7. Find K-th Smallest Pair Distance Hard</a></li>
+<li><a href="#8-median-of-two-sorted-arrays-expert">8. Median of Two Sorted Arrays Expert</a></li>
+</ul>
+</li>
+<li><a href="#problem-ladder">Problem ladder</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

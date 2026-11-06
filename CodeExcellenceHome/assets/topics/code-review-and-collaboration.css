@@ -1,0 +1,101 @@
+/* Code review and collaboration: visualizer and figure styles. Colours come only from theme variables. */
+.viz[data-viz^="code-review-and-collaboration-"] .viz-stage { padding: 16px 14px; gap: 12px; }
+
+/* layout */
+.cr-col { display: flex; flex-direction: column; gap: 10px; align-items: center; width: 100%; min-width: 0; }
+.cr-split { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; justify-content: center; width: 100%; }
+.cr-split-l { flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 10px; align-items: stretch; }
+.cr-split-r { flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+svg.cr-lanes, svg.cr-dag, svg.cr-gantt, svg.cr-grid { max-width: 100%; height: auto; }
+svg.cr-dag { align-self: center; }
+.cr-gridwrap { display: flex; justify-content: center; width: 100%; }
+svg.cr-grid { max-width: 600px; }
+
+/* stats */
+.cr-stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.cr-stat { border: 1.5px solid var(--line); border-radius: 8px; padding: 5px 12px; text-align: center; background: var(--surface); min-width: 92px; }
+.cr-stat b { display: block; font: 700 15px "Cascadia Code", Consolas, monospace; white-space: nowrap; }
+.cr-stat span { font-size: 10.5px; color: var(--muted); }
+.cr-stat.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.cr-stat.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.cr-stat.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.cr-stat.path { border-color: var(--v-path); background: var(--v-path-soft); }
+
+/* command line and logs */
+.cr-cmd { display: flex; gap: 8px; align-items: baseline; width: 100%; padding: 6px 12px; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 6px; background: var(--code); font: 12.5px "Cascadia Code", Consolas, monospace; }
+.cr-cmd > span { color: var(--muted); font-weight: 700; }
+.cr-cmd code { background: none; padding: 0; font-size: 12.5px; word-break: normal; overflow-wrap: break-word; min-width: 0; }
+.prose pre.cr-log, pre.cr-log { margin: 0; width: 100%; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--code); color: var(--text); font: 11.5px/1.55 "Cascadia Code", Consolas, monospace; white-space: pre; overflow-x: auto; }
+
+/* tables inside visualizers (reset the prose table styles) */
+.prose table.cr-tbl, table.cr-tbl { border-collapse: collapse; margin: 0; font: 12px "Cascadia Code", Consolas, monospace; width: auto; max-width: 100%; display: table; }
+.prose table.cr-tbl th, .prose table.cr-tbl td, table.cr-tbl th, table.cr-tbl td { border: 1px solid var(--line); padding: 3px 8px; min-width: 0; text-align: left; background: var(--surface); vertical-align: top; }
+.prose table.cr-tbl th, table.cr-tbl th { font: 700 10px "Segoe UI", system-ui, sans-serif; letter-spacing: .2px; text-transform: uppercase; color: var(--muted); background: var(--code); white-space: nowrap; word-break: normal; overflow-wrap: normal; }
+table.cr-tbl td code { background: none; padding: 0; font-size: 12px; word-break: normal; overflow-wrap: anywhere; }
+table.cr-tbl tr.cr-good td { background: var(--v-done-soft); }
+table.cr-tbl tr.cr-cur td { box-shadow: inset 0 0 0 1.5px var(--v-active); }
+table.cr-tbl tr.cr-cur td + td { box-shadow: inset 0 1.5px 0 var(--v-active), inset 0 -1.5px 0 var(--v-active); }
+table.cr-tbl tr.cr-dim td { opacity: .4; }
+table.cr-tbl tr.cr-ok td:first-child { border-left: 4px solid var(--v-done); }
+table.cr-tbl tr.cr-ok td { background: var(--v-done-soft); }
+table.cr-tbl tr.cr-warn td:first-child { border-left: 4px solid var(--v-active); }
+table.cr-tbl tr.cr-warn td { background: var(--v-active-soft); }
+table.cr-tbl tr.cr-bad td:first-child { border-left: 4px solid var(--v-bad); }
+table.cr-tbl tr.cr-bad td { background: var(--v-bad-soft); }
+table.cr-tbl tr.cr-muted td { color: var(--muted); }
+table.cr-tbl small { color: var(--muted); font-size: 10.5px; }
+table.cr-msgs td:nth-child(3) { font-family: "Segoe UI", system-ui, sans-serif; }
+table.cr-cc { width: 100%; }
+table.cr-cc td:nth-child(6) { font-family: "Segoe UI", system-ui, sans-serif; font-size: 11.5px; }
+.cr-lint { display: block; }
+.cr-lint::before { content: "⚠ "; color: var(--v-active); }
+.cr-lint.error::before { content: "✗ "; color: var(--v-bad); font-weight: 700; }
+
+/* chips and steps */
+.cr-chips, .cr-steps { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; align-items: center; color: var(--muted); }
+.cr-chip { padding: 2px 10px; border: 1.5px solid var(--line); border-radius: 14px; font: 600 11.5px "Segoe UI", system-ui, sans-serif; background: var(--surface); color: var(--text); white-space: nowrap; }
+.cr-chip.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.cr-chip.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.cr-chip.bad { border-color: var(--v-bad); background: var(--v-bad-soft); font-weight: 700; }
+
+/* review: attention budget */
+.cr-budget { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 560px; font-size: 11.5px; color: var(--muted); }
+.cr-budget > div { flex: 1 1 auto; height: 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); overflow: hidden; }
+.cr-budget > div > i { display: block; height: 100%; background: var(--v-active); }
+.cr-budget > b { color: var(--text); font: 700 12px "Cascadia Code", Consolas, monospace; white-space: nowrap; }
+
+/* review: diff with line numbers */
+.cr-code { width: 100%; border: 1px solid var(--line); border-radius: 8px; background: var(--code); overflow-x: auto; padding-bottom: 4px; }
+.cr-file { padding: 4px 10px; border-bottom: 1px solid var(--line); background: var(--surface); font: 700 11px "Cascadia Code", Consolas, monospace; color: var(--muted); }
+.cr-ln { display: flex; align-items: baseline; gap: 6px; padding: 0 10px 0 4px; border-left: 3px solid transparent; font: 12px/1.6 "Cascadia Code", Consolas, monospace; white-space: pre; }
+.cr-ln > code { background: none; padding: 0; font-size: 12px; white-space: pre; }
+.cr-ln-cur { background: var(--v-active-soft); border-left-color: var(--v-active); }
+.cr-no { flex: 0 0 20px; text-align: right; color: var(--muted); opacity: .7; font-size: 10.5px; }
+.cr-dots { flex: 0 0 34px; display: inline-flex; gap: 2px; justify-content: flex-end; }
+.cr-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--surface); }
+.cr-dot.done { border-color: var(--v-done); background: var(--v-done); }
+.cr-dot.bad { border-color: var(--v-bad); background: var(--v-bad); }
+.cr-dot.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.cr-dot.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+
+/* review: comment thread */
+.prose ul.cr-thread, ul.cr-thread { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 5px; max-height: 330px; overflow-y: auto; }
+.prose .cr-thread li.cr-cm, .cr-thread li.cr-cm { margin: 0; padding: 5px 10px; border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 6px; background: var(--surface); font-size: 12px; line-height: 1.45; }
+.cr-cm > b { font-size: 11px; }
+.cr-cm > code { font-weight: 700; }
+.cr-thread li.cr-cm-block { border-left-color: var(--v-bad); }
+.cr-thread li.cr-cm-cur { border-color: var(--v-active); background: var(--v-active-soft); }
+.cr-thread li.cr-cm-block.cr-cm-cur { border-left-color: var(--v-bad); }
+.cr-thread li.cr-empty { color: var(--muted); font-style: italic; }
+
+/* verdict */
+.cr-verdict { text-align: center; padding: 6px 12px; border: 2px solid var(--line); border-radius: 8px; font: 800 13px "Segoe UI", system-ui, sans-serif; letter-spacing: .6px; }
+.cr-verdict small { display: block; font: 500 11.5px "Cascadia Code", Consolas, monospace; letter-spacing: 0; margin-top: 3px; word-break: break-word; }
+.cr-verdict.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.cr-verdict.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.cr-verdict.active { border-color: var(--v-active); background: var(--v-active-soft); }
+
+/* static figures in the prose */
+.cr-figs { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; align-items: flex-end; }
+table.cr-props td:first-child { white-space: nowrap; }
+svg.cr-bgrid { max-width: 100%; height: auto; align-self: center; }

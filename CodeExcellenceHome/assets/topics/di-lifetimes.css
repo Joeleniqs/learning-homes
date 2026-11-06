@@ -1,0 +1,134 @@
+/* Topic styles for "DI Lifetimes and Scopes" (prefix dil-). Colours come only from site variables. */
+.viz [class^="dil-"], .viz [class*=" dil-"] { overflow-wrap: normal; }
+.viz-legend .lg-warn::before { border-color: var(--v-active); background: var(--v-active-soft); border-style: dashed; }
+
+/* wide visualizers: stage gets the full width, code + vars sit underneath side by side */
+.viz.dil-wide .viz-body.with-code { grid-template-columns: minmax(0, 1fr); }
+.viz.dil-wide .viz-side { border-left: 0; border-top: 1px solid var(--line); flex-direction: row; }
+.viz.dil-wide .viz-code { flex: 2.3 1 0; min-width: 0; }
+.viz.dil-wide .viz-vars { flex: 1 1 0; border-top: 0; border-left: 1px solid var(--line); align-content: start; }
+@media (max-width: 900px) { .viz.dil-wide .viz-side { flex-direction: column; } .viz.dil-wide .viz-vars { border-left: 0; border-top: 1px solid var(--line); } }
+
+.dil-mute { color: var(--muted); }
+.dil-life { font-weight: 700; }
+.dil-life.singleton { color: var(--v-path); } .dil-life.scoped { color: var(--v-visit); } .dil-life.transient { color: var(--muted); }
+.dil-id { font: 700 11px "Cascadia Code", Consolas, monospace; color: var(--muted); }
+
+/* ---- instance chips: border colour = lifetime, solid = new, dashed = reused ---- */
+.dil-chip { display: inline-flex; align-items: baseline; gap: 5px; margin: 2px 3px 2px 0; padding: 2px 8px; border: 1.8px solid var(--muted); border-radius: 6px; background: var(--v-node); font: 600 11.5px "Cascadia Code", Consolas, monospace; white-space: nowrap; transition: opacity .2s; }
+.dil-chip b { font-weight: 700; }
+.dil-chip i { font: 700 9.5px system-ui, sans-serif; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); font-style: normal; }
+.dil-chip.singleton { border-color: var(--v-path); } .dil-chip.scoped { border-color: var(--v-visit); } .dil-chip.transient { border-color: var(--muted); }
+.dil-chip.new.singleton { background: var(--v-path-soft); } .dil-chip.new.scoped { background: var(--v-visit-soft); } .dil-chip.new.transient { background: var(--code); }
+.dil-chip.reused { border-style: dashed; background: var(--surface); }
+.dil-chip.reused i { color: var(--v-done); }
+.dil-chip.disposed { opacity: .6; } .dil-chip.disposed b { text-decoration: line-through; }
+.dil-chip.gone { opacity: .45; border-style: dotted; }
+.dil-chip.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.dil-chip.bad i { color: var(--v-bad); }
+
+/* ---- request lanes over time ---- */
+.dil-lanes { display: grid; grid-template-columns: auto repeat(3, minmax(0, 1fr)); width: 100%; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); font-size: 12.5px; }
+.dil-lr { display: contents; }
+.dil-lr > * { padding: 5px 9px; border-top: 1px solid var(--line); min-width: 0; transition: background .2s; }
+.dil-lr > .dil-lc + .dil-lc, .dil-lr > .dil-lh + .dil-lh { border-left: 1px dashed var(--line); }
+.dil-lr.dil-head > * { border-top: 0; background: var(--bg); }
+.dil-lr.cur > * { background: var(--v-active-soft); }
+.dil-lr.cur > .dil-t { box-shadow: inset 3px 0 0 var(--v-active); }
+.dil-lr.bad > * { background: var(--v-bad-soft); }
+.dil-lr.bad > .dil-t { box-shadow: inset 3px 0 0 var(--v-bad); }
+.dil-t { display: flex; flex-direction: column; font: 700 11.5px "Cascadia Code", Consolas, monospace; color: var(--muted); white-space: nowrap; }
+.dil-t small { font: 600 10.5px system-ui, sans-serif; color: var(--text); max-width: 130px; white-space: normal; }
+.dil-lh { display: flex; flex-direction: column; gap: 1px; }
+.dil-lh b { font-size: 12.5px; }
+.dil-lh small { font: 700 9.5px system-ui, sans-serif; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); }
+.dil-lh.running small { color: var(--v-visit); } .dil-lh.always small { color: var(--v-path); } .dil-lh.ended small { color: var(--v-done); }
+.dil-lc { display: flex; flex-wrap: wrap; align-items: center; align-content: center; }
+.dil-txt { font-size: 12px; color: var(--muted); margin-right: 4px; }
+
+/* ---- grid tables (divs, so prose table rules never apply) ---- */
+.dil-tbl { display: grid; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; font: 11.5px "Cascadia Code", Consolas, monospace; background: var(--surface); max-width: 100%; }
+.dil-tbl.dil-inst { grid-template-columns: auto auto auto auto auto auto minmax(0, 1fr); }
+.dil-tr { display: contents; }
+.dil-tr > span { padding: 3px 9px; border-top: 1px solid var(--line); white-space: nowrap; }
+.dil-tr.dil-th > span { border-top: 0; background: var(--bg); color: var(--muted); font: 700 10px system-ui, sans-serif; letter-spacing: .8px; text-transform: uppercase; }
+.dil-tr.disposed > span { color: var(--muted); }
+.dil-tr > span:last-child { white-space: normal; min-width: 170px; }
+.dil-ts { font-family: system-ui, sans-serif; font-weight: 600; }
+.dil-ts.ok { color: var(--v-done); } .dil-ts.warn { color: var(--v-active); } .dil-ts.bad { color: var(--v-bad); font-weight: 700; }
+.dil-tr.disposed > .dil-ts { color: var(--muted); }
+
+.dil-err { width: 100%; max-width: 820px; padding: 9px 13px; border: 1.5px solid var(--v-bad); border-radius: 9px; background: var(--v-bad-soft); font: 12px/1.5 "Cascadia Code", Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* ---- event log ---- */
+.dil-logwrap { flex: 1 1 320px; max-width: 480px; min-width: 0; align-items: stretch; }
+.dil-log { display: flex; flex-direction: column; gap: 4px; }
+.dil-ev { padding: 4px 9px; border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 6px; background: var(--v-node); font-size: 12px; line-height: 1.45; }
+.dil-ev code { font-size: 11px; }
+.dil-ev.ok { border-left-color: var(--v-done); }
+.dil-ev.warn { border-left-color: var(--v-active); background: var(--v-active-soft); }
+.dil-ev.bad { border-left-color: var(--v-bad); background: var(--v-bad-soft); }
+.dil-ev.cur { box-shadow: 0 0 0 2px var(--accent); }
+
+/* ---- captive: owner boxes ---- */
+.dil-owners { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; width: 100%; }
+@media (max-width: 760px) { .dil-owners { grid-template-columns: minmax(0, 1fr); } }
+.dil-own { display: flex; flex-direction: column; gap: 6px; padding: 8px 10px; border: 1.5px solid var(--line); border-top-width: 4px; border-radius: 10px; background: var(--surface); min-width: 0; transition: border-color .2s, background .2s; }
+.dil-own-h { display: flex; flex-direction: column; }
+.dil-own-h b { font-size: 13px; }
+.dil-own-h small { font-size: 11px; color: var(--muted); }
+.dil-own-b { display: flex; flex-wrap: wrap; align-items: center; min-height: 26px; }
+.dil-own.path { border-top-color: var(--v-path); }
+.dil-own.visit { border-top-color: var(--v-visit); background: var(--v-visit-soft); }
+.dil-own.done { border-top-color: var(--v-done); opacity: .75; }
+
+/* ---- horizontal bars ---- */
+.dil-bars { display: grid; grid-template-columns: auto minmax(120px, 220px) auto; align-items: center; gap: 5px 10px; font: 11.5px "Cascadia Code", Consolas, monospace; }
+.dil-bars.wide { grid-template-columns: auto minmax(140px, 280px) auto; }
+.dil-bar { display: contents; }
+.dil-bar > span { white-space: nowrap; }
+.dil-bar > i { display: block; height: 14px; border-radius: 4px; background: var(--v-visit); transition: width .3s; }
+.dil-bar > b { font-weight: 700; white-space: nowrap; }
+.dil-bar.bad > i { background: var(--v-bad); } .dil-bar.bad > b { color: var(--v-bad); }
+.dil-bar.gone > i { background: var(--v-dim); } .dil-bar.gone > b, .dil-bar.gone > span { color: var(--muted); }
+.dil-bar.done > i { background: var(--v-done); }
+.dil-bar.active > i { background: var(--v-active); } .dil-bar.active > span { font-weight: 700; }
+
+/* ---- validator chain + matrix ---- */
+.dil-chain { display: flex; flex-direction: column; align-items: stretch; min-width: 260px; }
+.dil-node { display: flex; flex-direction: column; gap: 2px; padding: 6px 11px; border: 1.8px solid var(--line); border-radius: 8px; background: var(--v-node); font: 600 12px "Cascadia Code", Consolas, monospace; transition: background .2s, border-color .2s; }
+.dil-node > div { display: flex; justify-content: space-between; gap: 14px; }
+.dil-node small { font: 600 11px system-ui, sans-serif; color: var(--muted); min-height: 1em; }
+.dil-node.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.dil-node.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.dil-node.warn { border-color: var(--v-active); border-style: dashed; background: var(--v-active-soft); }
+.dil-node.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.dil-node.cur { box-shadow: 0 0 0 2px var(--accent); }
+.dil-dn { align-self: center; padding: 1px 0; font: 700 10px system-ui, sans-serif; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); }
+.dil-matrix { display: grid; grid-template-columns: auto repeat(3, minmax(96px, auto)); gap: 4px; font-size: 12px; }
+.dil-mh { padding: 5px 8px; font: 700 10.5px system-ui, sans-serif; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); align-self: center; }
+.dil-mc { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6px 8px; border: 1.5px solid var(--line); border-radius: 7px; text-align: center; font-weight: 700; transition: box-shadow .2s; }
+.dil-mc.ok { border-color: var(--v-done); background: var(--v-done-soft); }
+.dil-mc.warn { border-color: var(--v-active); background: var(--v-active-soft); }
+.dil-mc.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.dil-mc i { font: 700 9.5px system-ui, sans-serif; letter-spacing: .6px; text-transform: uppercase; font-style: normal; color: var(--accent); }
+.dil-mc.hit { box-shadow: 0 0 0 3px var(--accent); }
+.dil-mc.eff { box-shadow: 0 0 0 3px var(--accent); outline: 2px dashed var(--surface); outline-offset: -5px; }
+
+/* ---- disposal stack ---- */
+.dil-col { display: flex; flex-direction: column; gap: 14px; min-width: 300px; }
+.dil-stack, .dil-untracked { display: flex; flex-direction: column; gap: 4px; }
+.dil-si, .dil-ui { display: grid; grid-template-columns: 34px auto 1fr auto; align-items: baseline; gap: 2px 8px; padding: 5px 10px; border: 1.8px solid var(--line); border-radius: 7px; background: var(--v-node); font: 600 12px "Cascadia Code", Consolas, monospace; transition: background .2s, border-color .2s; }
+.dil-si small, .dil-ui small { grid-column: 2 / -1; font: 600 11px system-ui, sans-serif; color: var(--muted); }
+.dil-si em { font: 700 10px system-ui, sans-serif; letter-spacing: .6px; text-transform: uppercase; font-style: normal; color: var(--muted); justify-self: end; }
+.dil-si .dil-life { font-size: 11px; }
+.dil-si.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.dil-si.active em { color: var(--v-active); }
+.dil-si.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.dil-si.done b { text-decoration: line-through; }
+.dil-si.done em { color: var(--v-done); }
+.dil-si.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.dil-si.bad em { color: var(--v-bad); }
+.dil-si.more { border-style: dashed; }
+.dil-ui { grid-template-columns: 34px 1fr; border-style: dashed; opacity: .8; }
+.viz-legend .lg-dil-trn::before { border-color: var(--muted); border-style: dashed; background: var(--code); }

@@ -1,0 +1,1484 @@
+<!doctype html>
+<html lang="en" data-home="dsa-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Recursion &amp; the Call Stack | DSA Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#4f46e5;--accent-soft:#eef0ff;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#a5b4fc;--accent-soft:#252a5c;}}:root[data-theme=dark]{--accent:#a5b4fc;--accent-soft:#252a5c;}</style>
+  <link rel="stylesheet" href="../assets/topics/recursion.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/recursion.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="DSA Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">DS</span>DSA Home</a>
+    <p class="sidebar-caption">Data structures &amp; algorithms, seen.<br>Every idea animated, every pattern drilled.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track" open><summary>Foundations</summary><ul class="topic-list"><li data-search="The Problem-Solving Playbook Foundations A visual decision map from input size, shape and question type to the right technique, plus a repeatable interview/contest workflow. pattern recognition constraints approach interview" data-slug="problem-solving-playbook"><a href="../topics/problem-solving-playbook.html">The Problem-Solving Playbook</a></li><li data-search="Complexity Analysis Foundations Big-O growth you can see, amortized cost, recursion trees and the Master theorem, and what 10^8 operations per second really buys you. big o amortized master theorem time space" data-slug="complexity-analysis"><a href="../topics/complexity-analysis.html">Complexity Analysis</a></li><li data-search="Recursion &amp; the Call Stack Foundations Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from. call stack recursion tree divide and conquer" data-slug="recursion"><a href="../topics/recursion.html" aria-current="page">Recursion &amp; the Call Stack</a></li></ul></details><details class="nav-track"><summary>Arrays &amp; Strings</summary><ul class="topic-list"><li data-search="Two Pointers Arrays &amp; Strings Opposite-end, same-direction and fast/slow pointers: why moving one pointer is safe, with partitioning and k-sum. pair sum partition dutch flag 3sum" data-slug="two-pointers"><a href="../topics/two-pointers.html">Two Pointers</a></li><li data-search="Sliding Window Arrays &amp; Strings Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows. substring subarray window at most k" data-slug="sliding-window"><a href="../topics/sliding-window.html">Sliding Window</a></li><li data-search="Prefix Sums &amp; Difference Arrays Arrays &amp; Strings 1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR. subarray sum equals k range sum 2d prefix difference array" data-slug="prefix-sums"><a href="../topics/prefix-sums.html">Prefix Sums &amp; Difference Arrays</a></li><li data-search="Binary Search Arrays &amp; Strings One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection. lower bound upper bound search on answer rotated monotonic predicate" data-slug="binary-search"><a href="../topics/binary-search.html">Binary Search</a></li><li data-search="Sorting Algorithms Arrays &amp; Strings Animated bubble, insertion, merge, quick, heap, counting and radix sorts; stability, quickselect and custom comparators. merge sort quick sort quickselect counting sort inversions" data-slug="sorting"><a href="../topics/sorting.html">Sorting Algorithms</a></li><li data-search="Hashing Patterns Arrays &amp; Strings How hash tables work inside, then frequency maps, grouping by canonical keys, complement lookups and rolling hashes. hash map hash set anagram two sum collision" data-slug="hashing"><a href="../topics/hashing.html">Hashing Patterns</a></li><li data-search="Monotonic Stack &amp; Queue Arrays &amp; Strings Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight. next greater largest rectangle deque trapping rain water" data-slug="monotonic-stack-queue"><a href="../topics/monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a></li><li data-search="Intervals &amp; Sweep Line Arrays &amp; Strings Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline. merge intervals meeting rooms events skyline" data-slug="intervals-sweep-line"><a href="../topics/intervals-sweep-line.html">Intervals &amp; Sweep Line</a></li><li data-search="String Algorithms Arrays &amp; Strings KMP failure function, Z-algorithm, Rabin–Karp, Manacher&#x27;s palindromes and string hashing, each animated character by character. kmp z algorithm rabin karp manacher palindrome pattern matching" data-slug="string-algorithms"><a href="../topics/string-algorithms.html">String Algorithms</a></li></ul></details><details class="nav-track"><summary>Linked Lists, Stacks, Queues &amp; Heaps</summary><ul class="topic-list"><li data-search="Linked Lists Linked Lists, Stacks, Queues &amp; Heaps Pointer rewiring you can watch: reversal, dummy heads, fast/slow cycle detection, merging, and LRU cache design. reverse floyd cycle merge lru" data-slug="linked-lists"><a href="../topics/linked-lists.html">Linked Lists</a></li><li data-search="Stacks &amp; Queues Linked Lists, Stacks, Queues &amp; Heaps Balanced brackets, expression evaluation, min-stack, queues from stacks, deques and BFS queues. parentheses calculator deque min stack" data-slug="stacks-queues"><a href="../topics/stacks-queues.html">Stacks &amp; Queues</a></li><li data-search="Heaps &amp; Priority Queues Linked Lists, Stacks, Queues &amp; Heaps Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling. heap top k median k way merge priority queue" data-slug="heaps-priority-queues"><a href="../topics/heaps-priority-queues.html">Heaps &amp; Priority Queues</a></li></ul></details><details class="nav-track"><summary>Trees</summary><ul class="topic-list"><li data-search="Tree Traversals Trees Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees. dfs bfs inorder level order morris" data-slug="tree-traversals"><a href="../topics/tree-traversals.html">Tree Traversals</a></li><li data-search="Binary Search Trees Trees Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters. bst validate successor avl red black" data-slug="binary-search-trees"><a href="../topics/binary-search-trees.html">Binary Search Trees</a></li><li data-search="Tree Problem Patterns Trees Return-value recursion (diameter, max path sum), top-down state, LCA, serialization, and binary lifting. lca diameter path sum binary lifting serialize" data-slug="tree-patterns"><a href="../topics/tree-patterns.html">Tree Problem Patterns</a></li><li data-search="Tries Trees Prefix trees animated insert by insert: autocomplete, word search on boards, and bitwise tries for max XOR. prefix tree autocomplete word search xor trie" data-slug="tries"><a href="../topics/tries.html">Tries</a></li><li data-search="Segment Trees, Fenwick Trees &amp; Sparse Tables Trees Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables. segment tree lazy propagation fenwick bit rmq" data-slug="segment-fenwick-trees"><a href="../topics/segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a></li></ul></details><details class="nav-track"><summary>Graphs</summary><ul class="topic-list"><li data-search="Graph Fundamentals: BFS &amp; DFS Graphs Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS. bfs dfs grid islands connected components cycle" data-slug="graph-fundamentals"><a href="../topics/graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></li><li data-search="Topological Sort &amp; DAGs Graphs Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs. kahn course schedule dag dependency order" data-slug="topological-sort"><a href="../topics/topological-sort.html">Topological Sort &amp; DAGs</a></li><li data-search="Union-Find (Disjoint Set Union) Graphs Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries. dsu disjoint set path compression connectivity" data-slug="union-find"><a href="../topics/union-find.html">Union-Find (Disjoint Set Union)</a></li><li data-search="Shortest Paths Graphs BFS, 0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall and A* animated, and a chart to pick the right one every time. dijkstra bellman ford floyd warshall a star 0-1 bfs" data-slug="shortest-paths"><a href="../topics/shortest-paths.html">Shortest Paths</a></li><li data-search="Minimum Spanning Trees Graphs Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems. kruskal prim mst cut property" data-slug="minimum-spanning-trees"><a href="../topics/minimum-spanning-trees.html">Minimum Spanning Trees</a></li><li data-search="Advanced Graph Algorithms Graphs Strongly connected components, bridges and articulation points, bipartite checks, Euler paths, and max-flow / matching. tarjan kosaraju scc bridges euler max flow bipartite matching" data-slug="advanced-graphs"><a href="../topics/advanced-graphs.html">Advanced Graph Algorithms</a></li></ul></details><details class="nav-track"><summary>Backtracking &amp; Greedy</summary><ul class="topic-list"><li data-search="Backtracking Backtracking &amp; Greedy The choose/explore/un-choose template animated on a decision tree: subsets, permutations, combinations, N-Queens, Sudoku and pruning. subsets permutations n queens sudoku pruning" data-slug="backtracking"><a href="../topics/backtracking.html">Backtracking</a></li><li data-search="Greedy Algorithms Backtracking &amp; Greedy When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding. exchange argument interval scheduling jump game huffman" data-slug="greedy"><a href="../topics/greedy.html">Greedy Algorithms</a></li></ul></details><details class="nav-track"><summary>Dynamic Programming</summary><ul class="topic-list"><li data-search="The DP Framework Dynamic Programming Recursion → memoization → tabulation → space optimisation, visualised on one problem; how to design state and transitions. memoization tabulation state transition overlapping subproblems" data-slug="dp-framework"><a href="../topics/dp-framework.html">The DP Framework</a></li><li data-search="1D &amp; Grid DP Dynamic Programming Climbing stairs, house robber, decode ways, unique paths, min path sum, maximal square and dungeon game with animated tables. house robber unique paths grid dp maximal square" data-slug="dp-linear-grid"><a href="../topics/dp-linear-grid.html">1D &amp; Grid DP</a></li><li data-search="Knapsack Family Dynamic Programming 0/1 vs unbounded vs bounded knapsack, why loop direction matters, coin change, subset sum and target sum. knapsack coin change subset sum partition" data-slug="dp-knapsack"><a href="../topics/dp-knapsack.html">Knapsack Family</a></li><li data-search="Sequence &amp; String DP Dynamic Programming LIS with patience sorting, LCS, edit distance, palindromic subsequences, regex/wildcard matching and distinct subsequences. lis lcs edit distance regex matching palindrome" data-slug="dp-sequences-strings"><a href="../topics/dp-sequences-strings.html">Sequence &amp; String DP</a></li><li data-search="Interval &amp; Tree DP Dynamic Programming Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting). interval dp burst balloons matrix chain tree dp rerooting" data-slug="dp-intervals-trees"><a href="../topics/dp-intervals-trees.html">Interval &amp; Tree DP</a></li><li data-search="Bitmask &amp; Digit DP Dynamic Programming Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints. bitmask tsp digit dp subset dp" data-slug="dp-bitmask-digit"><a href="../topics/dp-bitmask-digit.html">Bitmask &amp; Digit DP</a></li><li data-search="State Machines &amp; DP Optimisations Dynamic Programming Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth. stock state machine convex hull trick knuth optimisation" data-slug="dp-advanced"><a href="../topics/dp-advanced.html">State Machines &amp; DP Optimisations</a></li></ul></details><details class="nav-track"><summary>Bits &amp; Math</summary><ul class="topic-list"><li data-search="Bit Manipulation Bits &amp; Math Bits drawn as switches: masks, XOR tricks, counting bits, subset enumeration and Gray codes. xor mask single number popcount subsets" data-slug="bit-manipulation"><a href="../topics/bit-manipulation.html">Bit Manipulation</a></li><li data-search="Math, Number Theory &amp; Combinatorics Bits &amp; Math GCD, sieves, fast power, modular inverses, nCr mod p, inclusion–exclusion, and the geometry primitives you need. gcd sieve modular fast exponentiation combinatorics geometry" data-slug="math-number-theory"><a href="../topics/math-number-theory.html">Math, Number Theory &amp; Combinatorics</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../CodeExcellenceHome/index.html">Code Excellence Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>DSA Home / Recursion &amp; the Call Stack</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">FOUNDATIONS</p><h1>Recursion &amp; the Call Stack</h1><p class="lede">Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from.</p><div class="meta"><span class="level level-beginner">Beginner → Intermediate</span><span>~50 min study</span><span>Builds on: <a href="complexity-analysis.html">Complexity Analysis</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="recursion" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="what-recursion-is">What recursion is</h2>
+<div class="rule">
+<p><strong>A recursive function solves a problem by trusting itself on a smaller copy of the same problem.</strong> Answer the tiny cases directly (the <em>base case</em>), make every other call strictly smaller, and combine the smaller answer into yours. If those three things hold, the function is correct by induction. You never need to trace the whole chain in your head.</p>
+</div>
+<p>Recursion is not a trick for factorials. It is the natural shape of anything <strong>self-similar</strong>: a tree is a node plus two smaller trees, a list is a head plus a shorter list, a sorted array is two sorted halves merged, and "all subsets" is "subsets without the first item, plus the same with it". Whenever the problem contains smaller copies of itself, recursion lets the code say exactly that, and nothing else.</p>
+<p>This page builds on <a href="complexity-analysis.html">Complexity Analysis</a> (recursion trees, the stack as space). It is also the foundation for everything that follows: <a href="tree-traversals.html">Tree Traversals</a>, <a href="backtracking.html">Backtracking</a>, <a href="sorting.html">Sorting</a> (merge sort and quicksort) and <a href="dp-framework.html">Dynamic Programming</a> are all recursion with one extra idea added.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 270" width="900" role="img" aria-label="The leap of faith: sum of a list equals the first item plus the trusted sum of the rest">
+<defs><marker id="recursion-f1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-muted"/></marker></defs>
+<text x="20" y="24" class="title">The leap of faith: solve one layer, trust the rest</text>
+<rect class="box accent" x="30" y="50" width="380" height="60" rx="10"/>
+<text x="220" y="76" text-anchor="middle" class="mono">total([3, 1, 4, 1])</text>
+<text x="220" y="98" text-anchor="middle" class="small muted">the problem you were given</text>
+<line class="edge" x1="220" y1="112" x2="220" y2="148" marker-end="url(#recursion-f1)"/>
+<rect class="box active" x="30" y="152" width="70" height="56" rx="10"/>
+<text x="65" y="186" text-anchor="middle" class="mono">3</text>
+<text x="118" y="186" text-anchor="middle" class="mono">+</text>
+<rect class="box visit" x="140" y="152" width="270" height="56" rx="10" style="stroke-dasharray:7 5"/>
+<text x="275" y="176" text-anchor="middle" class="mono">total([1, 4, 1])</text>
+<text x="275" y="196" text-anchor="middle" class="small">trust it: it returns 6</text>
+<text x="65" y="232" text-anchor="middle" class="small">your layer</text>
+<text x="275" y="232" text-anchor="middle" class="small">a smaller copy</text>
+<text x="220" y="258" text-anchor="middle" class="small">3 + 6 = 10 ✓</text>
+<rect class="box" x="470" y="50" width="410" height="190" rx="10"/>
+<text x="490" y="78" class="title">Correct by induction</text>
+<text x="490" y="106" class="small">1. Base case: total([]) = 0 is right.</text>
+<text x="490" y="132" class="small">2. Assume total is right for every shorter list.</text>
+<text x="490" y="158" class="small">3. Then first + total(rest) is right for this list.</text>
+<text x="490" y="184" class="small">4. Each call is one shorter, so we reach the base.</text>
+<text x="490" y="218" class="small fill-done">So total is right for every list. No tracing needed.</text>
+</svg>
+<figcaption>Write the function as if the recursive call already works. Your only job is one layer: peel off a piece, call yourself on the rest, and combine. Induction guarantees the rest.</figcaption>
+</figure>
+
+<p>The same function in code. Notice that it reads like the definition of a sum, not like a procedure:</p>
+<div class="code-tabs">
+<pre><code class="language-python">def total(nums, i=0):
+    if i == len(nums):               # base case: empty suffix
+        return 0
+    return nums[i] + total(nums, i + 1)   # my layer + trusted rest
+</code></pre>
+<pre><code class="language-csharp">static int Total(int[] nums, int i = 0)
+{
+    if (i == nums.Length) return 0;          // base case: empty suffix
+    return nums[i] + Total(nums, i + 1);     // my layer + trusted rest
+}
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Insight: pass an index, not a slice</strong>
+<code>total(nums[1:])</code> reads nicely but copies the list on every call: O(n) per call, O(n²) in total. Passing a start index <code>i</code> keeps each call O(1). The same applies to strings (<code>s[1:]</code>) and to C# <code>Skip(1).ToArray()</code>.</p>
+</div>
+<h2 id="the-leap-of-faith-a-design-method">The leap of faith: a design method</h2>
+<p>Tracing recursion is how you <em>check</em> it. <strong>Designing</strong> it is a different skill, and it follows the same four questions every time:</p>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · DEFINE</small><strong>What does f(x) return?</strong><p>One precise sentence. "height(node) = number of nodes on the longest path down from node." Vague definitions make bugs.</p></div>
+<div class="flow-step"><small>2 · SHRINK</small><strong>Which smaller inputs?</strong><p>A shorter list, a child node, half the array, n−1, n/2. Every call must move strictly closer to a base case.</p></div>
+<div class="flow-step"><small>3 · TRUST</small><strong>Assume they are solved</strong><p>Write the combine step using f on the smaller inputs as if it were a library function that already works.</p></div>
+<div class="flow-step"><small>4 · BASE</small><strong>Stop at the smallest</strong><p>Which inputs cannot shrink further? Answer them directly. Check that every path reaches one.</p></div>
+</div>
+
+<p>Walk through it for <strong>reverse a string</strong>, a typical first problem:</p>
+<ol>
+<li><strong>Define:</strong> <code>rev(s, i, j)</code> reverses <code>s[i..j]</code> in place.</li>
+<li><strong>Shrink:</strong> after swapping the outer pair, the inside <code>s[i+1..j-1]</code> is a smaller copy.</li>
+<li><strong>Trust:</strong> <code>rev(s, i+1, j-1)</code> reverses the inside. Swap the ends, call it, done.</li>
+<li><strong>Base:</strong> when <code>i &gt;= j</code> there are 0 or 1 characters: nothing to do.</li>
+</ol>
+<div class="code-tabs">
+<pre><code class="language-python">def reverse_string(s: list[str]) -&gt; None:
+    def rev(i, j):
+        if i &gt;= j:                    # 0 or 1 chars: already reversed
+            return
+        s[i], s[j] = s[j], s[i]       # my layer: the outer pair
+        rev(i + 1, j - 1)             # trust: the inside
+    rev(0, len(s) - 1)
+</code></pre>
+<pre><code class="language-csharp">public void ReverseString(char[] s)
+{
+    void Rev(int i, int j)
+    {
+        if (i &gt;= j) return;                    // 0 or 1 chars
+        (s[i], s[j]) = (s[j], s[i]);           // my layer
+        Rev(i + 1, j - 1);                     // trust: the inside
+    }
+    Rev(0, s.Length - 1);
+}
+</code></pre>
+</div>
+<div class="compare">
+<div class="bad">
+<h4 id="tracing-to-design-slow-error-prone">Tracing to design (slow, error-prone)</h4>
+<p>"rev(0,4) swaps, calls rev(1,3), which swaps, calls rev(2,2), which returns, then rev(1,3) returns, then…"</p>
+<p>You run out of working memory at depth 3, and you still have not decided what the function <em>means</em>.</p>
+</div>
+<div class="good">
+<h4 id="defining-to-design-fast-provable">Defining to design (fast, provable)</h4>
+<p>"rev(i, j) reverses s[i..j]. If the inside is reversed and I swap the ends, the whole range is reversed."</p>
+<p>One layer, one sentence. Trace only afterwards, on a tiny input, to check the base case.</p>
+</div>
+</div>
+<h3 id="base-cases-the-part-that-actually-goes-wrong">Base cases: the part that actually goes wrong</h3>
+<p>Most recursion bugs are base-case bugs. Ask three questions:</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Typical mistake</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Does <strong>every</strong> path hit a base case?</td>
+<td><code>fib(n)</code> handles <code>n == 1</code> but is called with <code>n == 0</code></td>
+<td>Cover the whole smallest range: <code>if n &lt; 2: return n</code></td>
+</tr>
+<tr>
+<td>Is the base case <strong>the right value</strong>?</td>
+<td><code>count_paths</code> returns 0 for the empty path instead of 1</td>
+<td>Ask "how many ways to do nothing?" (usually 1) and "best of nothing?" (0, −∞ or +∞)</td>
+</tr>
+<tr>
+<td>Does the input <strong>strictly shrink</strong>?</td>
+<td><code>solve(lo, hi)</code> recurses on <code>(lo, mid)</code> with <code>mid = (lo + hi + 1) // 2</code> when <code>hi = lo + 1</code></td>
+<td>Check the two-element case by hand; it is where off-by-one recursions loop forever</td>
+</tr>
+</tbody>
+</table>
+<div class="tip">
+<p><strong>Tip: prefer the emptiest base case</strong>
+<code>total([]) = 0</code> is better than <code>total([x]) = x</code>: it handles the empty input for free and needs no special case. For trees, <code>if node is None: return …</code> at the top is almost always cleaner than checking <code>node.left</code> and <code>node.right</code> before every call.</p>
+</div>
+<h2 id="the-call-stack-frame-by-frame">The call stack, frame by frame</h2>
+<p>When a function calls itself, the current call does not disappear. It is <strong>paused</strong> in a <em>stack frame</em> that remembers its arguments, its local variables and the exact line to resume at. The new call gets its own frame on top. When it returns, its frame is popped and the paused frame below resumes with the returned value in hand.</p>
+<p>So recursion has two phases. <strong>Going down</strong> (the <em>winding</em> phase), frames pile up and nothing is computed yet. <strong>Coming back up</strong> (the <em>unwinding</em> phase), each frame finishes its pending work, like <code>n * …</code> in factorial. Pick a program and step through it. Watch which frame is running (amber), which are paused (blue) and what each paused frame is waiting to do.</p>
+<div class="viz rc-wide" data-viz="recursion-stack" data-opts='{"fn":"factorial(n)"}'></div>
+
+<p>Things to notice as you step:</p>
+<ul>
+<li><strong>factorial(n)</strong> pushes n frames before any multiplication happens. All the work happens on the way back up. Depth is n, so space is O(n).</li>
+<li><strong>The tail-call version</strong> carries an accumulator, so nothing is pending when it recurses. In theory the frame could be reused; Python and C# do not do that, so the stack still grows to n. See <a href="#tail-recursion-and-why-it-does-not-save-you">tail recursion</a> below.</li>
+<li><strong>fib(n)</strong> makes two calls per frame. The stack only ever holds one path from the root, so it stays at most n deep even though the number of calls explodes.</li>
+<li><strong>power(2, n) by halving</strong> recurses on n/2. Depth is the number of binary digits of n: log₂ n frames for 2⁴⁰.</li>
+</ul>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 220" width="900" role="img" aria-label="What a stack frame holds">
+<text x="20" y="24" class="title">What one frame remembers</text>
+<rect class="box active" x="30" y="44" width="290" height="150" rx="10"/>
+<text x="46" y="70" class="mono">factorial(n=3)</text>
+<line class="edge" x1="30" y1="82" x2="320" y2="82"/>
+<text x="46" y="106" class="small">arguments: n = 3</text>
+<text x="46" y="130" class="small">locals: (none yet)</text>
+<text x="46" y="154" class="small">resume at: return n * ▢</text>
+<text x="46" y="178" class="small muted">≈ 50–200 bytes on the machine stack</text>
+<rect class="box" x="370" y="44" width="510" height="150" rx="10"/>
+<text x="390" y="72" class="title">Why depth is a resource</text>
+<text x="390" y="100" class="small">The stack is small and fixed: about 1 MB per thread in .NET,</text>
+<text x="390" y="122" class="small">and CPython stops at 1,000 frames by default (RecursionError).</text>
+<text x="390" y="150" class="small">A path-shaped tree or a 10⁵-node list recursed naively</text>
+<text x="390" y="172" class="small fill-bad">will crash, even though the algorithm is O(n).</text>
+</svg>
+<figcaption>Space for recursion = maximum depth × frame size. Count the depth, not the number of calls: fib(30) makes 1.6 million calls but never has more than 30 frames alive.</figcaption>
+</figure>
+
+<div class="pitfall">
+<p><strong>Pitfall: StackOverflowException cannot be caught in C#</strong>
+In Python a too-deep recursion raises <code>RecursionError</code>, which you can catch, and <code>sys.setrecursionlimit</code> raises the limit (the real C stack can still overflow beyond about 10⁴–10⁵ frames). In .NET a stack overflow kills the whole process; <code>try/catch</code> does not help. If depth can reach about 10⁴ or more (a degenerate tree, a long linked list, n up to 10⁵), use an <a href="#recursion-without-recursion-an-explicit-stack">explicit stack</a> or a loop.</p>
+</div>
+<h2 id="recursion-trees-where-the-time-goes">Recursion trees: where the time goes</h2>
+<p>The call stack shows one moment. The <strong>recursion tree</strong> shows the whole run: each node is one call, its children are the calls it makes. Two numbers fall out of the picture:</p>
+<ul>
+<li><strong>Time</strong> = (number of nodes) × (work per node, excluding the recursive calls).</li>
+<li><strong>Space</strong> = (height of the tree) × (frame size), plus whatever you allocate.</li>
+</ul>
+<p>For <code>fib</code>, every node makes two calls, so the tree has about 1.6ⁿ nodes. But look at the labels: <code>fib(3)</code> is computed again and again, and <code>fib(2)</code> even more. Step through and watch the call counts on the right.</p>
+<div class="viz rc-wide" data-viz="recursion-tree" data-opts='{"mode":"plain recursion","n":6}'></div>
+
+<p>The tree has exponentially many nodes but only <strong>n + 1 distinct labels</strong>. That gap, many calls but few distinct arguments, is the definition of <em>overlapping subproblems</em>. Cache each answer the first time you compute it and every later call becomes a lookup. Switch the mode to <strong>with memo (cache)</strong> and the tree collapses: one full path down the left, and every right child is an instant cache hit.</p>
+<div class="viz rc-wide" data-viz="recursion-tree" data-opts='{"mode":"with memo (cache)","n":6}'></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">from functools import cache
+
+@cache                          # memo keyed by the arguments
+def fib(n: int) -&gt; int:
+    if n &lt; 2:
+        return n
+    return fib(n - 1) + fib(n - 2)
+
+# The same thing by hand (works for unhashable state too):
+def fib_memo(n, memo=None):
+    if memo is None:
+        memo = {}
+    if n &lt; 2:
+        return n
+    if n not in memo:
+        memo[n] = fib_memo(n - 1, memo) + fib_memo(n - 2, memo)
+    return memo[n]
+</code></pre>
+<pre><code class="language-csharp">static long Fib(int n, Dictionary&lt;int, long&gt;? memo = null)
+{
+    memo ??= new Dictionary&lt;int, long&gt;();
+    if (n &lt; 2) return n;
+    if (memo.TryGetValue(n, out var hit)) return hit;
+    long r = Fib(n - 1, memo) + Fib(n - 2, memo);
+    memo[n] = r;
+    return r;
+}
+</code></pre>
+</div>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Calls</th>
+<th>Time</th>
+<th>Space</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plain recursion</td>
+<td>≈ 1.6ⁿ (fib(40) ≈ 3.3 × 10⁸)</td>
+<td>O(φⁿ)</td>
+<td>O(n) stack</td>
+</tr>
+<tr>
+<td>Memoized</td>
+<td>2n − 1</td>
+<td>O(n)</td>
+<td>O(n) memo + O(n) stack</td>
+</tr>
+<tr>
+<td>Bottom-up loop</td>
+<td>none</td>
+<td>O(n)</td>
+<td>O(1) with two variables</td>
+</tr>
+</tbody>
+</table>
+<div class="insight">
+<p><strong>Insight: memoization needs a pure function</strong>
+A cache is only valid if the answer depends on the arguments alone. If the function reads or mutates outer state (a running <code>path</code> list, a global counter), two calls with the same arguments can return different results and the memo silently gives wrong answers. Make every input that changes the answer an argument; that set of arguments <em>is</em> the DP state. This is the bridge to <a href="dp-framework.html">Dynamic Programming</a>.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: mutable default arguments in Python</strong>
+<code>def f(n, memo={})</code> creates <strong>one</strong> dict when the function is defined and shares it across every top-level call, including calls on different inputs in the same test run. Use <code>memo=None</code> and create it inside, as above, or <code>@cache</code> on an inner function.</p>
+</div>
+<h2 id="divide-and-conquer">Divide and conquer</h2>
+<p>Divide and conquer is recursion with a specific shape: <strong>split</strong> the input into independent parts, <strong>solve</strong> each part recursively, then <strong>combine</strong> the answers. Merge sort is the cleanest example: split the array in half, sort each half (trust!), then merge two sorted lists in linear time.</p>
+<p>Step through it below. The top half of the picture is the split phase going down; the bottom half is the merge phase coming back up. The merge also counts <strong>inversions</strong> (pairs <code>i &lt; j</code> with <code>a[i] &gt; a[j]</code>): whenever an item from the right half jumps ahead of items still waiting in the left half, it forms an inversion with each of them. That one extra line is the whole idea behind several Hard problems.</p>
+<div class="viz rc-wide" data-viz="recursion-mergesort"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def merge_sort(a: list[int]) -&gt; list[int]:
+    if len(a) &lt;= 1:                       # base: already sorted
+        return a
+    mid = len(a) // 2
+    left = merge_sort(a[:mid])            # trust: sorted left half
+    right = merge_sort(a[mid:])           # trust: sorted right half
+    out, i, j = [], 0, 0
+    while i &lt; len(left) and j &lt; len(right):
+        if left[i] &lt;= right[j]:           # &lt;= keeps the sort stable
+            out.append(left[i]); i += 1
+        else:
+            out.append(right[j]); j += 1
+    out.extend(left[i:]); out.extend(right[j:])
+    return out
+</code></pre>
+<pre><code class="language-csharp">static int[] MergeSort(int[] a)
+{
+    if (a.Length &lt;= 1) return a;                  // base: already sorted
+    int mid = a.Length / 2;
+    int[] left = MergeSort(a[..mid]);             // trust: sorted halves
+    int[] right = MergeSort(a[mid..]);
+    var res = new int[a.Length];
+    int i = 0, j = 0, k = 0;
+    while (i &lt; left.Length &amp;&amp; j &lt; right.Length)
+        res[k++] = left[i] &lt;= right[j] ? left[i++] : right[j++];
+    while (i &lt; left.Length) res[k++] = left[i++];
+    while (j &lt; right.Length) res[k++] = right[j++];
+    return res;
+}
+</code></pre>
+</div>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 230" width="900" role="img" aria-label="Recursion tree of merge sort: log n levels, n work per level">
+<text x="20" y="24" class="title">Why merge sort is O(n log n): count the work per level</text>
+<rect class="box accent" x="250" y="42" width="320" height="30" rx="6"/><text x="410" y="62" text-anchor="middle" class="mono">n</text>
+<rect class="box visit" x="170" y="92" width="225" height="30" rx="6"/><text x="282" y="112" text-anchor="middle" class="mono">n/2</text>
+<rect class="box visit" x="425" y="92" width="225" height="30" rx="6"/><text x="537" y="112" text-anchor="middle" class="mono">n/2</text>
+<rect class="box" x="130" y="142" width="125" height="30" rx="6"/><text x="192" y="162" text-anchor="middle" class="mono">n/4</text>
+<rect class="box" x="270" y="142" width="125" height="30" rx="6"/><text x="332" y="162" text-anchor="middle" class="mono">n/4</text>
+<rect class="box" x="425" y="142" width="125" height="30" rx="6"/><text x="487" y="162" text-anchor="middle" class="mono">n/4</text>
+<rect class="box" x="565" y="142" width="125" height="30" rx="6"/><text x="627" y="162" text-anchor="middle" class="mono">n/4</text>
+<text x="410" y="200" text-anchor="middle" class="small muted">… down to n leaves of size 1</text>
+<text x="720" y="62" class="small">level 0: n work</text>
+<text x="720" y="112" class="small">level 1: 2 × n/2 = n</text>
+<text x="720" y="162" class="small">level 2: 4 × n/4 = n</text>
+<text x="720" y="200" class="small fill-done">log₂ n levels × n = n log n</text>
+</svg>
+<figcaption>Every level of the tree touches all n items once while merging, and halving reaches size 1 after log₂ n levels. This is case 2 of the Master theorem: T(n) = 2T(n/2) + O(n). See <a href="complexity-analysis.html">Complexity Analysis</a> for the general recipe.</figcaption>
+</figure>
+
+<p>Divide and conquer appears in many disguises. The split does not have to be "two halves", and the combine step is where the problem lives:</p>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Split</th>
+<th>Combine</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Merge sort / count inversions</td>
+<td>two halves</td>
+<td>merge, counting right-before-left jumps</td>
+</tr>
+<tr>
+<td>Pow(x, n)</td>
+<td>n → n/2 (one call, reused)</td>
+<td>square, times x if n is odd</td>
+</tr>
+<tr>
+<td>Different Ways to Add Parentheses</td>
+<td>every operator position</td>
+<td>all pairs (left result, right result)</td>
+</tr>
+<tr>
+<td>Build tree from preorder + inorder</td>
+<td>root splits inorder into left and right</td>
+<td>attach the two subtrees</td>
+</tr>
+<tr>
+<td>Majority element / max subarray (D&amp;C version)</td>
+<td>two halves</td>
+<td>look at the crossing case</td>
+</tr>
+</tbody>
+</table>
+<h2 id="recursion-on-trees-return-what-the-parent-needs">Recursion on trees: return what the parent needs</h2>
+<p>Trees are recursive by definition, so tree code is almost always a post-order recursion: get an answer from each child, combine them at the node, return the result upwards. The design question is always the same: <strong>what does my parent need from me?</strong></p>
+<p>Choose a question below and step through. The same skeleton answers all of them; only the combine line changes. Watch the <strong>diameter</strong> case closely: the function <em>returns</em> the height (what the parent needs) but <em>records</em> the best path through the node in an outer variable (what the question asks). Separating "what I return" from "what I record" is the key to every "path in a tree" problem.</p>
+<div class="viz rc-wide" data-viz="recursion-treereturn" data-opts='{"q":"diameter (longest path)"}'></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def diameter_of_binary_tree(root) -&gt; int:
+    best = 0
+    def height(node) -&gt; int:          # returns: what the parent needs
+        nonlocal best
+        if node is None:
+            return 0
+        l, r = height(node.left), height(node.right)
+        best = max(best, l + r)       # records: the answer we want
+        return 1 + max(l, r)
+    height(root)
+    return best
+</code></pre>
+<pre><code class="language-csharp">public int DiameterOfBinaryTree(TreeNode? root)
+{
+    int best = 0;
+    int Height(TreeNode? node)            // returns what the parent needs
+    {
+        if (node is null) return 0;
+        int l = Height(node.left), r = Height(node.right);
+        best = Math.Max(best, l + r);     // records the answer
+        return 1 + Math.Max(l, r);
+    }
+    Height(root);
+    return best;
+}
+</code></pre>
+</div>
+<div class="tip">
+<p><strong>Tip: sentinels instead of a second pass</strong>
+"Is the tree balanced?" can be written as <code>abs(height(l) - height(r)) &lt;= 1 and balanced(l) and balanced(r)</code>, but that recomputes heights: O(n²) on a path. Instead return the height, or <strong>−1</strong> to mean "already unbalanced", and short-circuit as soon as either child returns −1. One pass, O(n). The visualizer's "is it balanced?" mode shows the −1 travelling up.</p>
+</div>
+<h2 id="recursion-on-linked-lists">Recursion on linked lists</h2>
+<p>A linked list is a node followed by a shorter list, so list recursion follows the same leap of faith. To <strong>reverse</strong> a list: trust <code>reverse(head.next)</code> to reverse everything after <code>head</code> and hand back the new head. After that call, <code>head.next</code> still points at the node that is now the <strong>tail</strong> of the reversed part. Point that node back at <code>head</code>, cut <code>head</code>'s forward arrow, and return the same new head.</p>
+<div class="viz rc-wide" data-viz="recursion-list"></div>
+
+<p>Merging two sorted lists is the other classic. The smaller head goes first, and its <code>next</code> is "the merge of everything else":</p>
+<div class="code-tabs">
+<pre><code class="language-python">def merge_two_lists(a, b):
+    if a is None:
+        return b
+    if b is None:
+        return a
+    if a.val &lt;= b.val:
+        a.next = merge_two_lists(a.next, b)
+        return a
+    b.next = merge_two_lists(a, b.next)
+    return b
+</code></pre>
+<pre><code class="language-csharp">public ListNode? MergeTwoLists(ListNode? a, ListNode? b)
+{
+    if (a is null) return b;
+    if (b is null) return a;
+    if (a.val &lt;= b.val) { a.next = MergeTwoLists(a.next, b); return a; }
+    b.next = MergeTwoLists(a, b.next);
+    return b;
+}
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: list recursion is O(n) deep</strong>
+Lists are the worst case for depth: every node adds a frame. These versions are perfect for understanding and for n up to about 10³, but with n = 5 × 10⁴ they overflow Python's default limit and risk the .NET stack. In production, and when the constraints say n ≤ 10⁵, write the iterative version: three pointers for reversal, a dummy head for merging. See <a href="linked-lists.html">Linked Lists</a>.</p>
+</div>
+<h2 id="tail-recursion-and-why-it-does-not-save-you">Tail recursion, and why it does not save you</h2>
+<p>A call is a <strong>tail call</strong> when it is the very last thing the function does: <code>return f(x)</code>, with nothing left to compute afterwards. <code>return n * fact(n - 1)</code> is <em>not</em> a tail call, because the multiplication waits. Rewrite with an accumulator and it becomes one:</p>
+<div class="code-tabs">
+<pre><code class="language-python">def fact(n, acc=1):
+    if n &lt;= 1:
+        return acc
+    return fact(n - 1, acc * n)   # tail call: nothing pending
+
+# What a tail call really is: a loop in disguise
+def fact_loop(n):
+    acc = 1
+    while n &gt; 1:                  # same state (n, acc), updated in place
+        acc, n = acc * n, n - 1
+    return acc
+</code></pre>
+<pre><code class="language-csharp">static long Fact(int n, long acc = 1)
+{
+    if (n &lt;= 1) return acc;
+    return Fact(n - 1, acc * n);      // tail call: nothing pending
+}
+
+static long FactLoop(int n)
+{
+    long acc = 1;
+    while (n &gt; 1) { acc *= n; n--; }  // same state, updated in place
+    return acc;
+}
+</code></pre>
+</div>
+<p>In languages with <em>tail-call elimination</em> (Scheme, and often Scala with <code>@tailrec</code>), the compiler reuses the frame and a tail-recursive function runs in O(1) stack. <strong>Python never does this</strong> (by design), and <strong>C# does not guarantee it</strong>: the 64-bit JIT sometimes emits a tail call in Release builds, but you cannot rely on it, and Debug builds never do. So in both languages:</p>
+<div class="compare">
+<div class="bad">
+<h4 id="relying-on-tail-recursion">Relying on tail recursion</h4>
+<p>"It is tail-recursive, so it uses constant stack."</p>
+<p>Still n frames deep in Python and C#. <code>fact(5000)</code> raises RecursionError, and a long C# chain can kill the process.</p>
+</div>
+<div class="good">
+<h4 id="using-it-as-a-design-step">Using it as a design step</h4>
+<p>Write the accumulator version to find the loop state <code>(n, acc)</code>, then turn it into a <code>while</code> loop mechanically: the arguments become variables and the tail call becomes "update and continue".</p>
+</div>
+</div>
+<h2 id="recursion-without-recursion-an-explicit-stack">Recursion without recursion: an explicit stack</h2>
+<p>Any recursion can be run with your own stack: the stack holds what the call stack would have held. This removes the depth limit (your list lives on the heap) and gives you control (you can pause, stop early or interleave). The price is that you must store by hand whatever the paused frame needed to remember.</p>
+<ul>
+<li><strong>Preorder</strong> is easy: nothing happens after the recursive calls, so pop, output, push the children (right first so that left is popped first).</li>
+<li><strong>Inorder</strong> needs the node to wait until its left subtree is done: walk left pushing every node, then pop one, output it and go right.</li>
+<li><strong>Postorder</strong>, and any recursion with work <em>after</em> the calls, needs the frame to remember <strong>how far it got</strong>. Push <code>(node, seen)</code>: the first pop schedules the children and pushes the node back as seen, and the second pop does the "after" work.</li>
+</ul>
+<div class="viz rc-wide" data-viz="recursion-explicit" data-opts='{"o":"postorder with (node, seen) frames"}'></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def postorder(root):
+    out, stack = [], [(root, False)] if root else []
+    while stack:
+        node, seen = stack.pop()
+        if seen:                      # children done: &quot;after the calls&quot;
+            out.append(node.val)
+            continue
+        stack.append((node, True))    # come back to me later
+        if node.right:
+            stack.append((node.right, False))
+        if node.left:                 # pushed last, so handled first
+            stack.append((node.left, False))
+    return out
+</code></pre>
+<pre><code class="language-csharp">public IList&lt;int&gt; Postorder(TreeNode? root)
+{
+    var output = new List&lt;int&gt;();
+    var stack = new Stack&lt;(TreeNode node, bool seen)&gt;();
+    if (root is not null) stack.Push((root, false));
+    while (stack.Count &gt; 0)
+    {
+        var (node, seen) = stack.Pop();
+        if (seen) { output.Add(node.val); continue; }
+        stack.Push((node, true));                    // revisit later
+        if (node.right is not null) stack.Push((node.right, false));
+        if (node.left is not null) stack.Push((node.left, false));
+    }
+    return output;
+}
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Insight: a frame is just a tuple</strong>
+The general recipe: a frame = (arguments, locals the code still needs, where to resume). For a function that calls itself k times, <code>seen</code> becomes a small integer "stage" (0 = before the first call, 1 = after it, …). Every recursive algorithm, including DFS on graphs with millions of nodes, can be converted this way. In interviews, mention it when the depth can reach 10⁵.</p>
+</div>
+<h2 id="recursion-or-a-loop">Recursion or a loop?</h2>
+<p>Every recursion can become a loop and every loop can become a recursion, so the choice is about clarity and limits, not power.</p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Prefer</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tree or nested input with depth O(log n) or small</td>
+<td><strong>Recursion</strong></td>
+<td>The code mirrors the data; depth is never a problem.</td>
+</tr>
+<tr>
+<td>One smaller call and nothing pending (tail shape)</td>
+<td><strong>Loop</strong></td>
+<td>It <em>is</em> a loop; recursion only adds frames.</td>
+</tr>
+<tr>
+<td>Linked list or path-shaped input with n ≥ 10⁴</td>
+<td><strong>Loop or explicit stack</strong></td>
+<td>O(n) depth overflows the stack.</td>
+</tr>
+<tr>
+<td>Generate all, try every choice</td>
+<td><strong>Recursion</strong></td>
+<td>The undo-on-return structure is natural; depth = number of choices.</td>
+</tr>
+<tr>
+<td>Overlapping subproblems</td>
+<td><strong>Recursion + memo</strong> first, then <strong>bottom-up</strong> if the depth or speed matters</td>
+<td>Top-down is easier to get right; bottom-up has no depth limit and lower constants.</td>
+</tr>
+<tr>
+<td>Graph DFS on 10⁵–10⁶ nodes</td>
+<td><strong>Explicit stack</strong></td>
+<td>A long chain is common in graphs; a crash is not an acceptable failure mode.</td>
+</tr>
+</tbody>
+</table>
+<p>When you must keep a deep recursion (for example a contest solution or a quick script), you can give it a bigger stack. Treat this as a tool for scripts and contests, not for services:</p>
+<div class="code-tabs">
+<pre><code class="language-python">import sys, threading
+
+def main():
+    def depth(n):                      # deliberately deep: n frames
+        return 0 if n == 0 else 1 + depth(n - 1)
+    print(depth(200_000))
+
+sys.setrecursionlimit(1_000_000)       # Python's own frame counter
+threading.stack_size(128 * 1024 * 1024)  # real C stack for new threads (Windows caps near 256 MB)
+t = threading.Thread(target=main)
+t.start()
+t.join()
+</code></pre>
+<pre><code class="language-csharp">// Run deep recursion on a thread with a 512 MB stack.
+static int Depth(int n) =&gt; n == 0 ? 0 : 1 + Depth(n - 1);
+
+static void RunDeep()
+{
+    int result = 0;
+    var t = new Thread(() =&gt; result = Depth(200_000), maxStackSize: 512 * 1024 * 1024);
+    t.Start();
+    t.Join();
+    Console.WriteLine(result);
+}
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: raising only the recursion limit</strong>
+<code>sys.setrecursionlimit(10**6)</code> alone does not add stack memory. It only lets Python go deeper before raising <code>RecursionError</code>, so the interpreter can then crash hard with a segmentation fault. Raise the limit <strong>and</strong> run the work on a thread with a bigger stack, or better, remove the depth.</p>
+</div>
+<h2 id="templates">Templates</h2>
+<p>Five shapes cover nearly every recursive solution. Learn to name which one you are writing before you write it.</p>
+<h3 id="1-reduce-by-one-or-by-half-and-combine">1 · Reduce by one (or by half) and combine</h3>
+<p>The answer for <code>x</code> is built from the answer for one smaller input. Factorial, sum of a list, power, reverse, "K-th symbol". Time = depth × work per call.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def solve(x):
+    if is_base(x):
+        return base_answer(x)
+    sub = solve(smaller(x))          # exactly one recursive call
+    return combine(x, sub)
+
+# Example: x**n by halving, O(log n) calls
+def my_pow(x: float, n: int) -&gt; float:
+    if n &lt; 0:
+        return 1 / my_pow(x, -n)
+    if n == 0:
+        return 1.0
+    half = my_pow(x, n // 2)         # call once, use twice
+    return half * half * (x if n % 2 else 1)
+</code></pre>
+<pre><code class="language-csharp">// Example: x^n by halving, O(log n) calls
+static double MyPow(double x, long n)
+{
+    if (n &lt; 0) return 1 / MyPow(x, -n);
+    if (n == 0) return 1.0;
+    double half = MyPow(x, n / 2);       // call once, use twice
+    return n % 2 == 0 ? half * half : half * half * x;
+}
+</code></pre>
+</div>
+<h3 id="2-post-order-on-a-tree-return-up-record-aside">2 · Post-order on a tree: return up, record aside</h3>
+<p>Each node combines its children's answers. Return what the parent needs; keep the global best in an outer variable. O(n) time, O(h) stack.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def tree_answer(root):
+    best = initial
+    def dfs(node):
+        nonlocal best
+        if node is None:
+            return empty_value           # e.g. 0 height, 0 sum
+        l, r = dfs(node.left), dfs(node.right)
+        best = better(best, through(node, l, r))
+        return up(node, l, r)            # what the parent needs
+    dfs(root)
+    return best
+</code></pre>
+<pre><code class="language-csharp">int TreeAnswer(TreeNode? root)
+{
+    int best = 0;                        // initial
+    int Dfs(TreeNode? node)
+    {
+        if (node is null) return 0;      // empty value
+        int l = Dfs(node.left), r = Dfs(node.right);
+        best = Math.Max(best, l + r);    // record: through this node
+        return 1 + Math.Max(l, r);       // return: what the parent needs
+    }
+    Dfs(root);
+    return best;
+}
+</code></pre>
+</div>
+<h3 id="3-divide-and-conquer">3 · Divide and conquer</h3>
+<p>Split into independent parts, solve each, combine. The cost follows the Master theorem: two halves plus linear combine gives O(n log n).</p>
+<div class="code-tabs">
+<pre><code class="language-python">def dc(lo, hi):                          # solve a[lo:hi]
+    if hi - lo &lt;= 1:
+        return leaf(lo, hi)
+    mid = (lo + hi) // 2
+    left, right = dc(lo, mid), dc(mid, hi)
+    return merge(left, right, lo, mid, hi)   # the problem lives here
+</code></pre>
+<pre><code class="language-csharp">Result Dc(int lo, int hi)                // solve a[lo..hi)
+{
+    if (hi - lo &lt;= 1) return Leaf(lo, hi);
+    int mid = lo + (hi - lo) / 2;
+    var left = Dc(lo, mid);
+    var right = Dc(mid, hi);
+    return Merge(left, right, lo, mid, hi);
+}
+</code></pre>
+</div>
+<h3 id="4-memoized-recursion-top-down-dp">4 · Memoized recursion (top-down DP)</h3>
+<p>Same as any recursion, plus a cache keyed by the full state. Time = (number of distinct states) × (work per state).</p>
+<div class="code-tabs">
+<pre><code class="language-python">from functools import cache
+
+def count_ways(n: int) -&gt; int:           # e.g. climb 1 or 2 steps
+    @cache
+    def f(i):
+        if i == n:
+            return 1                     # one way to do nothing more
+        if i &gt; n:
+            return 0
+        return f(i + 1) + f(i + 2)
+    return f(0)
+</code></pre>
+<pre><code class="language-csharp">static long CountWays(int n)
+{
+    var memo = new long?[n + 2];
+    long F(int i)
+    {
+        if (i == n) return 1;
+        if (i &gt; n) return 0;
+        return memo[i] ??= F(i + 1) + F(i + 2);
+    }
+    return F(0);
+}
+</code></pre>
+</div>
+<h3 id="5-generate-all-one-branch-per-choice">5 · Generate all: one branch per choice</h3>
+<p>Each call makes one decision and recurses on the rest. The output size drives the cost, so 2ⁿ subsets or n! permutations is the best possible. This is the doorway to <a href="backtracking.html">Backtracking</a>.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def subsets(nums: list[int]) -&gt; list[list[int]]:
+    out, cur = [], []
+    def go(i):
+        if i == len(nums):
+            out.append(cur.copy())       # copy: cur keeps changing
+            return
+        go(i + 1)                        # choice 1: skip nums[i]
+        cur.append(nums[i])              # choice 2: take nums[i]
+        go(i + 1)
+        cur.pop()                        # undo before returning
+    go(0)
+    return out
+</code></pre>
+<pre><code class="language-csharp">public IList&lt;IList&lt;int&gt;&gt; Subsets(int[] nums)
+{
+    var output = new List&lt;IList&lt;int&gt;&gt;();
+    var cur = new List&lt;int&gt;();
+    void Go(int i)
+    {
+        if (i == nums.Length) { output.Add(new List&lt;int&gt;(cur)); return; }
+        Go(i + 1);                       // skip nums[i]
+        cur.Add(nums[i]);                // take nums[i]
+        Go(i + 1);
+        cur.RemoveAt(cur.Count - 1);     // undo
+    }
+    Go(0);
+    return output;
+}
+</code></pre>
+</div>
+<h2 id="complexity-of-recursive-code">Complexity of recursive code</h2>
+<p>Draw (or imagine) the recursion tree, then multiply:</p>
+<div class="rule">
+<p><strong>Time = number of calls × work per call</strong> (not counting the work inside the child calls). <strong>Space = maximum depth × frame size</strong> plus anything you allocate, such as slices, memo tables and output.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Recursion</th>
+<th>Calls</th>
+<th>Work per call</th>
+<th>Time</th>
+<th>Depth (stack)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>f(n-1)</code> + O(1) (factorial, list)</td>
+<td>n</td>
+<td>O(1)</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td><code>f(n/2)</code> + O(1) (power, binary search)</td>
+<td>log n</td>
+<td>O(1)</td>
+<td>O(log n)</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td><code>f(n-1)</code> + <code>f(n-2)</code> (plain fib)</td>
+<td>≈ 1.6ⁿ</td>
+<td>O(1)</td>
+<td>O(φⁿ)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>same, memoized</td>
+<td>2n − 1</td>
+<td>O(1)</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td><code>2·f(n/2)</code> + O(n) (merge sort)</td>
+<td>≈ 2n</td>
+<td>O(size)</td>
+<td>O(n log n)</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td>tree DFS</td>
+<td>n</td>
+<td>O(1)</td>
+<td>O(n)</td>
+<td>O(h): log n balanced, n on a path</td>
+</tr>
+<tr>
+<td>subsets (2 branches, depth n)</td>
+<td>2ⁿ⁺¹</td>
+<td>O(n) at leaves to copy</td>
+<td>O(n · 2ⁿ)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>permutations</td>
+<td>≈ e · n!</td>
+<td>O(n)</td>
+<td>O(n · n!)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td><code>f(s[1:])</code> on a string</td>
+<td>n</td>
+<td><strong>O(n) copy</strong></td>
+<td><strong>O(n²)</strong></td>
+<td>O(n), plus O(n²) total allocation</td>
+</tr>
+</tbody>
+</table>
+<div class="tip">
+<p><strong>Tip: depth limits from the constraints</strong>
+n ≤ 10³: any recursion is fine. n ≤ 10⁴: recursion along n is risky in Python (raise the limit) and fine in C#. n ≥ 10⁵ with O(n) depth: use a loop or an explicit stack. Depth O(log n) (halving, balanced trees, merge sort) is always safe: log₂ 10⁹ is only 30.</p>
+</div>
+<h2 id="recognize-it-and-the-usual-pitfalls">Recognize it, and the usual pitfalls</h2>
+<div class="recognize">
+<p><strong>Signals that recursion is the natural fit</strong></p>
+<ul>
+<li>The input <strong>is</strong> recursive: a tree, nested lists or brackets (<code>"3[a2[c]]"</code>), an expression, a file system.</li>
+<li>The problem says <strong>"all"</strong> combinations, subsets, permutations, partitions or ways to parenthesise.</li>
+<li>The answer for n is defined via <strong>smaller n</strong>: a recurrence, a grammar, "row n is built from row n−1".</li>
+<li>You can <strong>split</strong> the input into independent parts and combine them: halves, left and right of a root, both sides of an operator.</li>
+<li>The problem is a <strong>game or a choice</strong> at each step, and you want the best outcome (this becomes memoized recursion).</li>
+</ul>
+</div>
+<div class="pitfall">
+<p><strong>Pitfalls checklist</strong></p>
+<ol>
+<li><strong>No base case, or one that is never reached.</strong> Check n = 0, n = 1, the empty list, <code>None</code>, and odd/even sizes when halving.</li>
+<li><strong>The input does not shrink</strong> on some path (for example <code>mid</code> rounding up when <code>hi = lo + 1</code>): infinite recursion.</li>
+<li><strong>Exponential blow-up</strong> from recomputing the same state. Count distinct arguments; if they are far fewer than the calls, memoize.</li>
+<li><strong>Hidden copies:</strong> <code>s[1:]</code>, <code>nums[:mid]</code>, <code>list(path)</code> at every node, string concatenation in a loop. Pass indices and copy only at the leaves.</li>
+<li><strong>Shared mutable state:</strong> a <code>path</code> list appended to the output without copying (every result ends up empty), or <code>def f(x, memo={})</code>.</li>
+<li><strong>Forgetting to undo</strong> a choice in generate-all recursion (<code>cur.pop()</code>, <code>visited.remove</code>).</li>
+<li><strong>Depth:</strong> CPython's default limit is 1,000; .NET has about 1 MB of stack per thread and an overflow kills the process. Long chains need a loop.</li>
+<li><strong>Mixing "returned" and "recorded" values</strong> in tree problems: return what the parent needs, and record the answer separately.</li>
+</ol>
+</div>
+<h2 id="worked-problems">Worked problems</h2>
+<p>Seven problems, from a two-line recursion to a Hard divide and conquer. For each one, find the <strong>smaller copy</strong> of the problem first; the code follows from it.</p>
+<h3 id="1-k-th-symbol-in-grammar-medium">1 · K-th Symbol in Grammar <span class="diff medium">Medium</span></h3>
+<p>Row 1 is <code>0</code>. Each row replaces <code>0 → 01</code> and <code>1 → 10</code>. Return the k-th symbol (1-indexed) of row n, with n up to 30. Row 30 has 2²⁹ symbols, so building it is out of the question.</p>
+<p><strong>Smaller copy:</strong> symbol k of row n is produced by symbol ⌈k/2⌉ of row n − 1. A left child (k odd) copies its parent; a right child (k even) flips it. So the answer is one walk up the tree: n calls, O(n) time.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 220" width="900" role="img" aria-label="K-th symbol grammar tree: left child copies the parent, right child flips it">
+<text x="20" y="24" class="title">Each symbol has a parent: left child = same, right child = flipped</text>
+<rect class="box accent" x="425" y="40" width="50" height="30" rx="6"/><text x="450" y="60" text-anchor="middle" class="mono">0</text>
+<line class="edge" x1="440" y1="70" x2="250" y2="98"/><line class="edge path" x1="460" y1="70" x2="650" y2="98"/>
+<rect class="box" x="225" y="98" width="50" height="30" rx="6"/><text x="250" y="118" text-anchor="middle" class="mono">0</text>
+<rect class="box path" x="625" y="98" width="50" height="30" rx="6"/><text x="650" y="118" text-anchor="middle" class="mono">1</text>
+<line class="edge" x1="240" y1="128" x2="150" y2="156"/><line class="edge" x1="260" y1="128" x2="350" y2="156"/>
+<line class="edge path" x1="640" y1="128" x2="550" y2="156"/><line class="edge" x1="660" y1="128" x2="750" y2="156"/>
+<rect class="box" x="125" y="156" width="50" height="30" rx="6"/><text x="150" y="176" text-anchor="middle" class="mono">0</text>
+<rect class="box" x="325" y="156" width="50" height="30" rx="6"/><text x="350" y="176" text-anchor="middle" class="mono">1</text>
+<rect class="box active" x="525" y="156" width="50" height="30" rx="6"/><text x="550" y="176" text-anchor="middle" class="mono">1</text>
+<rect class="box" x="725" y="156" width="50" height="30" rx="6"/><text x="750" y="176" text-anchor="middle" class="mono">0</text>
+<text x="150" y="206" text-anchor="middle" class="small muted">k=1</text><text x="350" y="206" text-anchor="middle" class="small muted">k=2</text>
+<text x="550" y="206" text-anchor="middle" class="small">k=3 (odd: copy)</text><text x="750" y="206" text-anchor="middle" class="small muted">k=4</text>
+<text x="700" y="88" class="small">k=2 (even: flip of 0)</text>
+<text x="20" y="118" class="small">row 2</text><text x="20" y="176" class="small">row 3</text><text x="20" y="60" class="small">row 1</text>
+</svg>
+<figcaption>kth(3, 3): k = 3 is odd, so it copies its parent kth(2, 2). k = 2 is even, so that flips kth(1, 1) = 0 into 1. Answer 1, after only n calls.</figcaption>
+</figure>
+
+<details class="solution">
+<p><summary>Solution: walk up to the parent</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def kthGrammar(n: int, k: int) -&gt; int:
+    if n == 1:
+        return 0
+    parent = kthGrammar(n - 1, (k + 1) // 2)
+    return parent if k % 2 == 1 else 1 - parent
+</code></pre>
+<pre><code class="language-csharp">public int KthGrammar(int n, int k)
+{
+    if (n == 1) return 0;
+    int parent = KthGrammar(n - 1, (k + 1) / 2);
+    return k % 2 == 1 ? parent : 1 - parent;
+}
+</code></pre>
+</div>
+<p>O(n) time and O(n) stack. Unrolled, the answer is the parity of the number of 1 bits in k − 1, which gives an O(1) version: <code>bin(k - 1).count("1") % 2</code>.</p>
+</details>
+<h3 id="2-find-the-winner-of-the-circular-game-medium">2 · Find the Winner of the Circular Game <span class="diff medium">Medium</span></h3>
+<p>n friends sit in a circle; counting k at a time, the k-th person leaves, and counting restarts from the next one. Who is last? (The Josephus problem.)</p>
+<p><strong>Smaller copy:</strong> after the first person leaves, the game continues with n − 1 people, starting from the position just after the one removed. If <code>f(n−1)</code> is the winner's 0-based seat <em>in that smaller game</em>, then in the original numbering it is <code>k</code> seats further around: <code>f(n) = (f(n−1) + k) mod n</code>. The base case is one person, who wins at seat 0.</p>
+<details class="solution">
+<p><summary>Solution: re-number the smaller circle</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def findTheWinner(n: int, k: int) -&gt; int:
+    def seat(m):                     # 0-based winner among m people
+        if m == 1:
+            return 0
+        return (seat(m - 1) + k) % m
+    return seat(n) + 1
+</code></pre>
+<pre><code class="language-csharp">public int FindTheWinner(int n, int k)
+{
+    int Seat(int m) =&gt; m == 1 ? 0 : (Seat(m - 1) + k) % m;
+    return Seat(n) + 1;
+}
+</code></pre>
+</div>
+<p>O(n) time and O(n) stack versus O(n·k) to simulate. It is a tail-shaped recursion over m, so it unrolls into <code>w = 0; for m in 2..n: w = (w + k) % m</code>. That loop form is the one to use for n = 10⁵.</p>
+</details>
+<h3 id="3-decode-string-medium">3 · Decode String <span class="diff medium">Medium</span></h3>
+<p>Expand <code>"3[a2[c]]"</code> into <code>"accaccacc"</code>. Brackets nest arbitrarily.</p>
+<p><strong>Smaller copy:</strong> the text inside a bracket is itself an encoded string. Write <code>parse()</code> to read until the matching <code>]</code> (or the end) and return the decoded text. When it meets <code>k[</code>, it calls itself for the inside and repeats the result k times. A shared index <code>i</code> walks the input once. This is <em>recursive descent</em>, the standard way to parse anything nested.</p>
+<details class="solution">
+<p><summary>Solution: recursive descent with a shared index</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def decodeString(s: str) -&gt; str:
+    i = 0
+    def parse() -&gt; str:
+        nonlocal i
+        out, num = [], 0
+        while i &lt; len(s):
+            c = s[i]
+            i += 1
+            if c.isdigit():
+                num = num * 10 + int(c)
+            elif c == &quot;[&quot;:
+                out.append(parse() * num)    # trust: decodes the inside
+                num = 0
+            elif c == &quot;]&quot;:
+                break                        # end of this level
+            else:
+                out.append(c)
+        return &quot;&quot;.join(out)
+    return parse()
+</code></pre>
+<pre><code class="language-csharp">public string DecodeString(string s)
+{
+    int i = 0;
+    string Parse()
+    {
+        var sb = new StringBuilder();
+        int num = 0;
+        while (i &lt; s.Length)
+        {
+            char c = s[i++];
+            if (char.IsDigit(c)) num = num * 10 + (c - '0');
+            else if (c == '[')
+            {
+                string inner = Parse();          // trust: decodes the inside
+                for (int r = 0; r &lt; num; r++) sb.Append(inner);
+                num = 0;
+            }
+            else if (c == ']') break;            // end of this level
+            else sb.Append(c);
+        }
+        return sb.ToString();
+    }
+    return Parse();
+}
+</code></pre>
+</div>
+<p>Time is linear in the size of the output; the stack depth is the bracket nesting depth. The same skeleton parses arithmetic (Basic Calculator), Lisp expressions and chemical formulas (Number of Atoms).</p>
+</details>
+<h3 id="4-construct-binary-tree-from-preorder-and-inorder-traversal-medium">4 · Construct Binary Tree from Preorder and Inorder Traversal <span class="diff medium">Medium</span></h3>
+<p>Rebuild a tree (with distinct values) from its preorder and inorder traversals.</p>
+<p><strong>Smaller copy:</strong> preorder starts with the root. Find that value in inorder: everything to its left is the left subtree and everything to its right is the right subtree, and each of those is the same problem on a smaller range. Preorder lists the whole left subtree before the right one, so if the recursion builds left before right, it can simply consume preorder from a shared pointer.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 200" width="900" role="img" aria-label="The root from preorder splits inorder into left and right subtrees">
+<text x="20" y="24" class="title">The preorder root splits the inorder range in two</text>
+<text x="20" y="66" class="small">preorder</text>
+<rect class="box active" x="110" y="44" width="50" height="34" rx="6"/><text x="135" y="66" text-anchor="middle" class="mono">3</text>
+<rect class="box visit" x="166" y="44" width="50" height="34" rx="6"/><text x="191" y="66" text-anchor="middle" class="mono">9</text>
+<rect class="box done" x="222" y="44" width="50" height="34" rx="6"/><text x="247" y="66" text-anchor="middle" class="mono">20</text>
+<rect class="box done" x="278" y="44" width="50" height="34" rx="6"/><text x="303" y="66" text-anchor="middle" class="mono">15</text>
+<rect class="box done" x="334" y="44" width="50" height="34" rx="6"/><text x="359" y="66" text-anchor="middle" class="mono">7</text>
+<text x="20" y="136" class="small">inorder</text>
+<rect class="box visit" x="110" y="114" width="50" height="34" rx="6"/><text x="135" y="136" text-anchor="middle" class="mono">9</text>
+<rect class="box active" x="166" y="114" width="50" height="34" rx="6"/><text x="191" y="136" text-anchor="middle" class="mono">3</text>
+<rect class="box done" x="222" y="114" width="50" height="34" rx="6"/><text x="247" y="136" text-anchor="middle" class="mono">15</text>
+<rect class="box done" x="278" y="114" width="50" height="34" rx="6"/><text x="303" y="136" text-anchor="middle" class="mono">20</text>
+<rect class="box done" x="334" y="114" width="50" height="34" rx="6"/><text x="359" y="136" text-anchor="middle" class="mono">7</text>
+<line class="edge active" x1="135" y1="80" x2="186" y2="112"/>
+<text x="135" y="172" text-anchor="middle" class="small">left: 1 node</text>
+<text x="303" y="172" text-anchor="middle" class="small">right: 3 nodes</text>
+<rect class="box active" x="640" y="40" width="46" height="34" rx="17"/><text x="663" y="62" text-anchor="middle" class="mono">3</text>
+<line class="edge" x1="650" y1="74" x2="580" y2="110"/><line class="edge" x1="676" y1="74" x2="746" y2="110"/>
+<rect class="box visit" x="540" y="110" width="80" height="34" rx="17"/><text x="580" y="132" text-anchor="middle" class="mono">build(9)</text>
+<rect class="box done" x="680" y="110" width="140" height="34" rx="17"/><text x="750" y="132" text-anchor="middle" class="mono">build(15,20,7)</text>
+<text x="663" y="180" text-anchor="middle" class="small">each side is the same problem on a smaller range</text>
+</svg>
+<figcaption>Root 3 sits at inorder index 1, so the left subtree has 1 node and the right has 3. Recurse on each inorder range; the preorder pointer advances through 9, then 20, 15 and 7 in exactly the order the calls need them.</figcaption>
+</figure>
+
+<details class="solution">
+<p><summary>Solution: split the inorder range, consume preorder in order</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def buildTree(preorder: list[int], inorder: list[int]):
+    pos = {v: i for i, v in enumerate(inorder)}    # O(1) root lookup
+    it = iter(preorder)                            # roots, in call order
+
+    def build(lo: int, hi: int):                   # subtree of inorder[lo:hi]
+        if lo == hi:
+            return None
+        val = next(it)
+        node = TreeNode(val)
+        node.left = build(lo, pos[val])            # left first: preorder order
+        node.right = build(pos[val] + 1, hi)
+        return node
+
+    return build(0, len(inorder))
+</code></pre>
+<pre><code class="language-csharp">public TreeNode? BuildTree(int[] preorder, int[] inorder)
+{
+    var pos = new Dictionary&lt;int, int&gt;();
+    for (int i = 0; i &lt; inorder.Length; i++) pos[inorder[i]] = i;
+    int next = 0;                                  // shared preorder pointer
+    TreeNode? Build(int lo, int hi)                // subtree of inorder[lo..hi)
+    {
+        if (lo == hi) return null;
+        int val = preorder[next++];
+        var node = new TreeNode(val);
+        node.left = Build(lo, pos[val]);           // left first: preorder order
+        node.right = Build(pos[val] + 1, hi);
+        return node;
+    }
+    return Build(0, inorder.Length);
+}
+</code></pre>
+</div>
+<p>O(n) time with the value → index map; calling <code>inorder.index(val)</code> instead makes it O(n²) on a path-shaped tree. The depth equals the tree height, so a degenerate tree with n = 3000 needs the recursion limit raised in Python. The same split works for inorder + postorder: consume postorder from the end and build the right subtree first.</p>
+</details>
+<h3 id="5-different-ways-to-add-parentheses-medium">5 · Different Ways to Add Parentheses <span class="diff medium">Medium</span></h3>
+<p>Given <code>"2*3-4*5"</code>, return the results of every way to fully parenthesise it: <code>[-34, -14, -10, -10, 10]</code>.</p>
+<p><strong>Smaller copy:</strong> whichever operator is evaluated <strong>last</strong> splits the expression into a left part and a right part, and each part is the same problem on a shorter string. For every operator: get all results on the left, all on the right, and combine every pair. Memoize on the substring bounds, because the same sub-expressions appear under many splits.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 200" width="900" role="img" aria-label="Splitting an expression at each operator">
+<text x="20" y="24" class="title">Choose the operator that runs last; recurse on both sides</text>
+<rect class="box accent" x="350" y="40" width="200" height="34" rx="8"/><text x="450" y="62" text-anchor="middle" class="mono">2*3-4*5</text>
+<line class="edge" x1="390" y1="74" x2="150" y2="110"/><line class="edge" x1="450" y1="74" x2="450" y2="110"/><line class="edge" x1="510" y1="74" x2="750" y2="110"/>
+<rect class="box" x="40" y="110" width="220" height="34" rx="8"/><text x="150" y="132" text-anchor="middle" class="mono">2  *  (3-4*5)</text>
+<rect class="box active" x="340" y="110" width="220" height="34" rx="8"/><text x="450" y="132" text-anchor="middle" class="mono">(2*3)  -  (4*5)</text>
+<rect class="box" x="640" y="110" width="220" height="34" rx="8"/><text x="750" y="132" text-anchor="middle" class="mono">(2*3-4)  *  5</text>
+<text x="150" y="168" text-anchor="middle" class="small">right has 2 results → 2</text>
+<text x="450" y="168" text-anchor="middle" class="small">1 × 1 → 1 result: −14</text>
+<text x="750" y="168" text-anchor="middle" class="small">left has 2 results → 2</text>
+<text x="450" y="192" text-anchor="middle" class="small fill-done">2 + 1 + 2 = 5 results = Catalan(3)</text>
+</svg>
+<figcaption>The number of results for k operators is the Catalan number C(k): 1, 1, 2, 5, 14, 42… The output itself is exponential, so no algorithm can be polynomial; memoization removes the repeated sub-expressions.</figcaption>
+</figure>
+
+<details class="solution">
+<p><summary>Solution: split at every operator, memoize by bounds</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">from functools import cache
+
+def diffWaysToCompute(expression: str) -&gt; list[int]:
+    @cache
+    def ways(lo: int, hi: int) -&gt; tuple[int, ...]:    # expression[lo:hi]
+        res = []
+        for i in range(lo, hi):
+            op = expression[i]
+            if op in &quot;+-*&quot;:
+                for a in ways(lo, i):
+                    for b in ways(i + 1, hi):
+                        res.append(a + b if op == &quot;+&quot; else a - b if op == &quot;-&quot; else a * b)
+        if not res:                                   # no operator: a number
+            res.append(int(expression[lo:hi]))
+        return tuple(res)                             # immutable: safe to cache
+    return list(ways(0, len(expression)))
+</code></pre>
+<pre><code class="language-csharp">public IList&lt;int&gt; DiffWaysToCompute(string expression)
+{
+    var memo = new Dictionary&lt;(int, int), List&lt;int&gt;&gt;();
+    List&lt;int&gt; Ways(int lo, int hi)                    // expression[lo..hi)
+    {
+        if (memo.TryGetValue((lo, hi), out var hit)) return hit;
+        var res = new List&lt;int&gt;();
+        for (int i = lo; i &lt; hi; i++)
+        {
+            char op = expression[i];
+            if (op != '+' &amp;&amp; op != '-' &amp;&amp; op != '*') continue;
+            foreach (int a in Ways(lo, i))
+                foreach (int b in Ways(i + 1, hi))
+                    res.Add(op == '+' ? a + b : op == '-' ? a - b : a * b);
+        }
+        if (res.Count == 0) res.Add(int.Parse(expression.AsSpan(lo, hi - lo)));
+        return memo[(lo, hi)] = res;
+    }
+    return Ways(0, expression.Length);
+}
+</code></pre>
+</div>
+<p>There are O(n²) distinct (lo, hi) states, and the work is dominated by the size of the output, which is Catalan in the number of operators. The same "pick the last operation" split solves Unique Binary Search Trees II (pick the root) and Burst Balloons (pick the last balloon).</p>
+</details>
+<h3 id="6-strobogrammatic-number-iii-hard">6 · Strobogrammatic Number III <span class="diff hard">Hard</span></h3>
+<p>Count the numbers in <code>[low, high]</code> (strings of up to 15 digits) that look the same when rotated 180°. The digits map as 0→0, 1→1, 6→9, 8→8, 9→6.</p>
+<p><strong>Smaller copy:</strong> a strobogrammatic number of length L is a valid outer pair wrapped around a strobogrammatic <strong>middle</strong> of length L − 2. Fill the string from both ends inward: positions <code>i</code> and <code>j</code> get a pair, then recurse on <code>(i+1, j−1)</code>. Two base cases: <code>i &gt; j</code> (complete) and <code>i == j</code> (a single middle digit, which must map to itself: 0, 1 or 8). Generate every length between <code>len(low)</code> and <code>len(high)</code>, and compare as strings only when the length equals a bound's length.</p>
+<details class="solution">
+<p><summary>Solution: build from the outside in</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def strobogrammaticInRange(low: str, high: str) -&gt; int:
+    pairs = [(&quot;0&quot;, &quot;0&quot;), (&quot;1&quot;, &quot;1&quot;), (&quot;6&quot;, &quot;9&quot;), (&quot;8&quot;, &quot;8&quot;), (&quot;9&quot;, &quot;6&quot;)]
+    count = 0
+
+    def fill(buf: list[str], i: int, j: int) -&gt; None:
+        nonlocal count
+        L = len(buf)
+        if i &gt; j:                                  # every position filled
+            s = &quot;&quot;.join(buf)
+            if (L == len(low) and s &lt; low) or (L == len(high) and s &gt; high):
+                return
+            count += 1
+            return
+        for a, b in pairs:
+            if i == 0 and a == &quot;0&quot; and L &gt; 1:      # no leading zero
+                continue
+            if i == j and a != b:                  # middle: 0, 1 or 8
+                continue
+            buf[i], buf[j] = a, b
+            fill(buf, i + 1, j - 1)
+
+    for L in range(len(low), len(high) + 1):
+        fill([&quot;&quot;] * L, 0, L - 1)
+    return count
+</code></pre>
+<pre><code class="language-csharp">public int StrobogrammaticInRange(string low, string high)
+{
+    var pairs = new (char a, char b)[] { ('0', '0'), ('1', '1'), ('6', '9'), ('8', '8'), ('9', '6') };
+    int count = 0;
+    void Fill(char[] buf, int i, int j)
+    {
+        int L = buf.Length;
+        if (i &gt; j)
+        {
+            var s = new string(buf);
+            if (L == low.Length &amp;&amp; string.CompareOrdinal(s, low) &lt; 0) return;
+            if (L == high.Length &amp;&amp; string.CompareOrdinal(s, high) &gt; 0) return;
+            count++;
+            return;
+        }
+        foreach (var (a, b) in pairs)
+        {
+            if (i == 0 &amp;&amp; a == '0' &amp;&amp; L &gt; 1) continue;     // no leading zero
+            if (i == j &amp;&amp; a != b) continue;                // middle: 0, 1 or 8
+            buf[i] = a; buf[j] = b;
+            Fill(buf, i + 1, j - 1);
+        }
+    }
+    for (int L = low.Length; L &lt;= high.Length; L++) Fill(new char[L], 0, L - 1);
+    return count;
+}
+</code></pre>
+</div>
+<p>Equal-length digit strings compare correctly as strings, which is why the check only runs when L matches a bound's length. Length 15 has 4 · 5⁶ · 3 = 187,500 candidates, so generating everything is fast. The recursion depth is only L/2. Strobogrammatic Number II is the same generator returning the strings.</p>
+</details>
+<h3 id="7-count-of-smaller-numbers-after-self-hard">7 · Count of Smaller Numbers After Self <span class="diff hard">Hard</span></h3>
+<p>For each <code>nums[i]</code>, count the elements to its right that are strictly smaller. With n up to 10⁵, the O(n²) double loop is too slow.</p>
+<p><strong>Smaller copy:</strong> merge sort the <strong>indices</strong> by value. During a merge, the left half's items were originally to the left of the right half's items. When a left item is placed, every right item already placed is smaller and was originally to its right. Add that count (<code>j - mid</code>) to the left item's answer. Each level of the recursion adds the cross-half counts, and the halves handle themselves. Replay the <a href="#divide-and-conquer">merge sort visualizer</a> with this in mind: its inversion counter is exactly the sum of these answers.</p>
+<details class="solution">
+<p><summary>Solution: merge sort on indices, count right-side jumps</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def countSmaller(nums: list[int]) -&gt; list[int]:
+    n = len(nums)
+    res, idx = [0] * n, list(range(n))
+
+    def sort(lo: int, hi: int) -&gt; None:           # sorts idx[lo:hi] by value
+        if hi - lo &lt;= 1:
+            return
+        mid = (lo + hi) // 2
+        sort(lo, mid)
+        sort(mid, hi)
+        merged, j = [], mid
+        for i in range(lo, mid):
+            while j &lt; hi and nums[idx[j]] &lt; nums[idx[i]]:
+                merged.append(idx[j])              # smaller right item jumps ahead
+                j += 1
+            res[idx[i]] += j - mid                 # all of them were to my right
+            merged.append(idx[i])
+        merged.extend(idx[j:hi])
+        idx[lo:hi] = merged
+
+    sort(0, n)
+    return res
+</code></pre>
+<pre><code class="language-csharp">public IList&lt;int&gt; CountSmaller(int[] nums)
+{
+    int n = nums.Length;
+    var res = new int[n];
+    var idx = Enumerable.Range(0, n).ToArray();
+    var tmp = new int[n];
+    void Sort(int lo, int hi)                          // sorts idx[lo..hi)
+    {
+        if (hi - lo &lt;= 1) return;
+        int mid = (lo + hi) / 2;
+        Sort(lo, mid);
+        Sort(mid, hi);
+        int j = mid, k = lo;
+        for (int i = lo; i &lt; mid; i++)
+        {
+            while (j &lt; hi &amp;&amp; nums[idx[j]] &lt; nums[idx[i]]) tmp[k++] = idx[j++];
+            res[idx[i]] += j - mid;                    // right items that jumped ahead
+            tmp[k++] = idx[i];
+        }
+        while (j &lt; hi) tmp[k++] = idx[j++];
+        Array.Copy(tmp, lo, idx, lo, hi - lo);
+    }
+    Sort(0, n);
+    return res;
+}
+</code></pre>
+</div>
+<p>O(n log n) time, O(n) extra space and O(log n) depth, so it is safe for n = 10⁵. Ties are not counted because the comparison is strict. The same merge-and-count idea solves Reverse Pairs (count <code>a[i] &gt; 2·a[j]</code> with a separate two-pointer pass before merging) and Count of Range Sum (on prefix sums).</p>
+</details>
+<h2 id="problem-ladder">Problem ladder</h2>
+<p>For each problem, write down the four answers before coding: <strong>what f returns, the smaller input, the combine step and the base case</strong>. If you cannot fill all four, you are not ready to code it.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Level</th>
+<th>The key idea</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://leetcode.com/problems/fibonacci-number/">Fibonacci Number</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Base <code>n &lt; 2</code>; then memoize or keep two variables. Feel the 1.6ⁿ blow-up first.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://leetcode.com/problems/reverse-string/">Reverse String</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Swap the ends, recurse on the inside; base <code>i &gt;= j</code>.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://leetcode.com/problems/power-of-two/">Power of Two</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td><code>n == 1</code> → true; odd or ≤ 0 → false; else recurse on n/2.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://leetcode.com/problems/merge-two-sorted-lists/">Merge Two Sorted Lists</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Smaller head first; its next = merge of the rest.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://leetcode.com/problems/reverse-linked-list/">Reverse Linked List</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Trust <code>reverse(head.next)</code>, then <code>head.next.next = head</code>.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://leetcode.com/problems/maximum-depth-of-binary-tree/">Maximum Depth of Binary Tree</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td><code>1 + max(depth(left), depth(right))</code>; <code>None</code> → 0.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://leetcode.com/problems/balanced-binary-tree/">Balanced Binary Tree</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Return the height, or −1 as a "broken" sentinel: one O(n) pass.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://leetcode.com/problems/diameter-of-binary-tree/">Diameter of Binary Tree</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Return the height; record <code>l + r</code> aside.</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://leetcode.com/problems/powx-n/">Pow(x, n)</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Halve n, call once and square; handle negative n (and −2³¹ in C#: use <code>long</code>).</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://leetcode.com/problems/swap-nodes-in-pairs/">Swap Nodes in Pairs</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Swap the first two, attach <code>swap(rest)</code>; base: fewer than 2 nodes.</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://leetcode.com/problems/k-th-symbol-in-grammar/">K-th Symbol in Grammar</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Parent at ⌈k/2⌉ in row n−1; even k flips it.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://leetcode.com/problems/find-the-winner-of-the-circular-game/">Find the Winner of the Circular Game</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Josephus: <code>f(n) = (f(n−1) + k) mod n</code>, by re-numbering the smaller circle.</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://leetcode.com/problems/decode-string/">Decode String</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Recursive descent: <code>parse()</code> returns at <code>]</code>; <code>k[</code> calls itself.</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="https://leetcode.com/problems/count-good-numbers/">Count Good Numbers</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>5^⌈n/2⌉ · 4^⌊n/2⌋ mod 10⁹+7 with recursive fast power (n up to 10¹⁵).</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="https://leetcode.com/problems/different-ways-to-add-parentheses/">Different Ways to Add Parentheses</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Split at the operator that runs last; combine all pairs; memoize by bounds.</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/">Construct Binary Tree from Preorder and Inorder Traversal</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td><code>preorder[0]</code> is the root; its inorder position splits both sides. Use a value → index map, not <code>index()</code>.</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="https://leetcode.com/problems/strobogrammatic-number-ii/">Strobogrammatic Number II</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Wrap valid pairs around the answers for n − 2; no leading zero at the outer level.</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="https://leetcode.com/problems/sort-an-array/">Sort an Array</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Merge sort: O(n log n) guaranteed, O(log n) depth.</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="https://leetcode.com/problems/unique-binary-search-trees-ii/">Unique Binary Search Trees II</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Pick each root; combine every left subtree with every right one. Catalan output.</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="https://leetcode.com/problems/super-pow/">Super Pow</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>a^(10·p + d) = (a^p)^10 · a^d mod 1337: recurse on the digit prefix.</td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="https://leetcode.com/problems/strobogrammatic-number-iii/">Strobogrammatic Number III</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Generate from the outside in for each length; compare only at bound lengths.</td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="https://leetcode.com/problems/count-of-smaller-numbers-after-self/">Count of Smaller Numbers After Self</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Merge sort indices; when a left item is placed, add how many right items jumped ahead.</td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="https://leetcode.com/problems/reverse-pairs/">Reverse Pairs</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Merge sort; count <code>a[i] &gt; 2·a[j]</code> with two pointers <em>before</em> merging each level.</td>
+</tr>
+<tr>
+<td>24</td>
+<td><a href="https://leetcode.com/problems/scramble-string/">Scramble String</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Try every split, swapped or not; memoize on (i, j, length); prune with letter counts.</td>
+</tr>
+<tr>
+<td>25</td>
+<td><a href="https://leetcode.com/problems/parse-lisp-expression/">Parse Lisp Expression</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Recursive descent plus a scope stack: each <code>let</code> pushes variables and pops them on return.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>Plain recursive <code>fib(n)</code> makes about 1.6ⁿ calls. How much stack space does it use?</summary>
+<p><strong>O(n).</strong> Only the frames on the current root-to-leaf path are alive at once, and the longest path is <code>fib(n) → fib(n−1) → … → fib(1)</code>: n frames. Calls measure time and depth measures space; they are different numbers. Step through fib in the call-stack visualizer and watch the depth counter.</p>
+</details>
+<details class="quiz">
+<summary>What does this cost? <code>def rev(s): return "" if not s else rev(s[1:]) + s[0]</code></summary>
+<p><strong>O(n²) time and O(n²) total allocation.</strong> There are n calls, but each <code>s[1:]</code> copies up to n characters, and each <code>+</code> builds a new string. The work per call is O(n), not O(1). Pass an index (or reverse a list in place) to get O(n). Recursion cost is always <em>calls × work per call</em>, and slicing hides the work.</p>
+</details>
+<details class="quiz">
+<summary>Compare <code>return f(n // 2) * f(n // 2)</code> with <code>h = f(n // 2); return h * h</code> for computing a power.</summary>
+<p>The first makes two identical calls per level: T(n) = 2T(n/2) + O(1) = <strong>O(n)</strong> calls, which throws away the whole point of halving. The second makes one call per level: T(n) = T(n/2) + O(1) = <strong>O(log n)</strong>. When the two branches are identical, call once and reuse the result. When they differ but overlap, memoize.</p>
+</details>
+<details class="quiz">
+<summary>You add <code>@cache</code> to a recursive function that appends to a shared <code>path</code> list and reads <code>len(path)</code>. The answers become wrong. Why?</summary>
+<p>The result depends on <code>path</code>, which is <strong>not an argument</strong>, so two calls with the same arguments can legitimately return different values, and the cache returns whichever came first. A memo is valid only for a pure function of its arguments. Put every value that affects the answer into the arguments (that set is the DP state), or do not memoize. Generate-all backtracking with a shared path is usually not memoizable for this reason.</p>
+</details>
+<details class="quiz">
+<summary>Your recursive tree DFS passes random tests but crashes on a test with n = 10⁵. What is the likely input, and what are two fixes?</summary>
+<p>A <strong>degenerate tree</strong> (every node has only one child) has depth n = 10⁵: far beyond CPython's 1,000-frame default and risky for the 1 MB .NET stack, where an overflow kills the process. Fixes: (1) rewrite it with an <strong>explicit stack</strong> (preorder, inorder or postorder with <code>(node, seen)</code> frames); (2) in Python, raise <code>sys.setrecursionlimit</code> <em>and</em> run the work in a <code>threading.Thread</code> started after <code>threading.stack_size(...)</code> has been raised. In C#, you can likewise start a <code>Thread</code> with a larger <code>maxStackSize</code>. Option 1 is the robust one.</p>
+</details>
+<details class="quiz">
+<summary>Is <code>return 1 + count(node.next)</code> a tail call? Would it matter in C#?</summary>
+<p><strong>No.</strong> The <code>1 +</code> still has to run after the call returns, so the frame must stay. The accumulator form <code>return count(node.next, acc + 1)</code> <em>is</em> a tail call, but neither Python nor C# guarantees eliminating it, so both versions use O(n) stack. Treat tail recursion as a stepping stone: once the state is <code>(node, acc)</code>, write <code>while node: acc += 1; node = node.next</code>.</p>
+</details>
+<details class="quiz">
+<summary>A recursive "count the ways" function returns 0 for its base case <code>remaining == 0</code>, and every answer comes out as 0. What is wrong?</summary>
+<p>Reaching <code>remaining == 0</code> means you <strong>found one complete way</strong>, so it must return <strong>1</strong>. Ways are counted by adding the leaves that return 1; if every leaf returns 0, every sum is 0. Ask "how many ways are there to do nothing more?": exactly one. Return 0 only for dead ends (overshooting, out of bounds). The same care applies to minimum problems (an impossible branch returns +∞, not 0).</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Design</strong>Define f precisely → pick the smaller input → trust f on it → combine → base case</div>
+<div><strong>Correctness</strong>Induction: the base case is right, every call shrinks, and the combine is right if the sub-answers are</div>
+<div><strong>Base cases</strong>Prefer the emptiest: <code>None</code>, <code>[]</code>, n = 0. Count of ways to do nothing = 1</div>
+<div><strong>Time</strong>Number of calls × work per call (draw the recursion tree)</div>
+<div><strong>Space</strong>Maximum depth × frame size, plus copies, memo and output</div>
+<div><strong>Depth limits</strong>CPython 1,000 frames by default; .NET about 1 MB per thread and the overflow is fatal. n ≥ 10⁵ deep → loop or explicit stack</div>
+<div><strong>Memoize when</strong>Distinct arguments ≪ calls, and the function is pure. Cost = states × work per state</div>
+<div><strong>Divide and conquer</strong>Split → solve parts → combine. 2T(n/2) + O(n) = O(n log n)</div>
+<div><strong>Trees</strong>Post-order: return what the parent needs, record the answer aside; sentinels like −1 short-circuit</div>
+<div><strong>Lists</strong>Trust <code>f(head.next)</code>, fix one link on the way back; O(n) depth</div>
+<div><strong>Tail calls</strong>Not eliminated in Python or C#; use the accumulator form to find the loop</div>
+<div><strong>Explicit stack</strong>Frame = (arguments, needed locals, stage). Postorder: push <code>(node, seen)</code></div>
+<div><strong>Avoid</strong>Slicing per call, shared mutable defaults, forgetting to undo, two identical calls</div>
+<div><strong>Generate all</strong>One branch per choice; copy at the leaf; output size bounds the time</div>
+</div><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="complexity-analysis.html"><small>&larr; PREVIOUS</small>Complexity Analysis</a><a class="next" href="two-pointers.html"><small>NEXT &rarr;</small>Two Pointers</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#what-recursion-is">What recursion is</a></li>
+<li><a href="#the-leap-of-faith-a-design-method">The leap of faith: a design method</a><ul>
+<li><a href="#base-cases-the-part-that-actually-goes-wrong">Base cases: the part that actually goes wrong</a></li>
+</ul>
+</li>
+<li><a href="#the-call-stack-frame-by-frame">The call stack, frame by frame</a></li>
+<li><a href="#recursion-trees-where-the-time-goes">Recursion trees: where the time goes</a></li>
+<li><a href="#divide-and-conquer">Divide and conquer</a></li>
+<li><a href="#recursion-on-trees-return-what-the-parent-needs">Recursion on trees: return what the parent needs</a></li>
+<li><a href="#recursion-on-linked-lists">Recursion on linked lists</a></li>
+<li><a href="#tail-recursion-and-why-it-does-not-save-you">Tail recursion, and why it does not save you</a></li>
+<li><a href="#recursion-without-recursion-an-explicit-stack">Recursion without recursion: an explicit stack</a></li>
+<li><a href="#recursion-or-a-loop">Recursion or a loop?</a></li>
+<li><a href="#templates">Templates</a><ul>
+<li><a href="#1-reduce-by-one-or-by-half-and-combine">1 · Reduce by one (or by half) and combine</a></li>
+<li><a href="#2-post-order-on-a-tree-return-up-record-aside">2 · Post-order on a tree: return up, record aside</a></li>
+<li><a href="#3-divide-and-conquer">3 · Divide and conquer</a></li>
+<li><a href="#4-memoized-recursion-top-down-dp">4 · Memoized recursion (top-down DP)</a></li>
+<li><a href="#5-generate-all-one-branch-per-choice">5 · Generate all: one branch per choice</a></li>
+</ul>
+</li>
+<li><a href="#complexity-of-recursive-code">Complexity of recursive code</a></li>
+<li><a href="#recognize-it-and-the-usual-pitfalls">Recognize it, and the usual pitfalls</a></li>
+<li><a href="#worked-problems">Worked problems</a><ul>
+<li><a href="#1-k-th-symbol-in-grammar-medium">1 · K-th Symbol in Grammar Medium</a></li>
+<li><a href="#2-find-the-winner-of-the-circular-game-medium">2 · Find the Winner of the Circular Game Medium</a></li>
+<li><a href="#3-decode-string-medium">3 · Decode String Medium</a></li>
+<li><a href="#4-construct-binary-tree-from-preorder-and-inorder-traversal-medium">4 · Construct Binary Tree from Preorder and Inorder Traversal Medium</a></li>
+<li><a href="#5-different-ways-to-add-parentheses-medium">5 · Different Ways to Add Parentheses Medium</a></li>
+<li><a href="#6-strobogrammatic-number-iii-hard">6 · Strobogrammatic Number III Hard</a></li>
+<li><a href="#7-count-of-smaller-numbers-after-self-hard">7 · Count of Smaller Numbers After Self Hard</a></li>
+</ul>
+</li>
+<li><a href="#problem-ladder">Problem ladder</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

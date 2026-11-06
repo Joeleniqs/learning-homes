@@ -1,0 +1,1539 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Code Review, Git &amp; Engineering Habits | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/code-review-and-collaboration.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/code-review-and-collaboration.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track" open><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html" aria-current="page">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Code Review, Git &amp; Engineering Habits</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">PRODUCTION EXCELLENCE</p><h1>Code Review, Git &amp; Engineering Habits</h1><p class="lede">What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill.</p><div class="meta"><span class="level level-beginner">Beginner → Advanced</span><span>~40 min study</span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="code-review-and-collaboration" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-the-pull-request-nobody-could-review">The problem: the pull request nobody could review</h2>
+<p>Maya opens a pull request on Monday: <strong>"Refactor orders + add search + misc fixes"</strong>. It's 2,300 changed lines across 41 files, in 37 commits with messages like <code>wip</code>, <code>fix</code>, <code>fix again</code> and <code>address comments</code>. Then this happens:</p>
+<ul>
+<li><strong>Day 1–4.</strong> Nobody picks it up. Everyone means to "block out an hour for it".</li>
+<li><strong>Day 5.</strong> A reviewer scrolls for six minutes, leaves three comments about naming and a missing semicolon, and approves with "LGTM 👍".</li>
+<li><strong>Day 6.</strong> <code>main</code> has moved 40 commits. The rebase hits conflicts in eleven files. Maya resolves them at 7 p.m., gets one wrong, and the tests still pass because the conflicting branch had no tests.</li>
+<li><strong>Day 9.</strong> In production, the search endpoint turns out to build SQL with string concatenation. Paging silently skips the first 50 results. A pricing rule that was correct last week is now off by a cent.</li>
+<li><strong>Day 10.</strong> The team runs <code>git bisect</code> to find which change broke pricing. Half the 37 commits don't compile, so bisect gives up and points at a range.</li>
+</ul>
+<p>Nobody here was careless. <strong>The process made carelessness the easy path.</strong> A 2,300-line diff can't be reviewed well, so it wasn't. A 9-day-old branch is guaranteed to conflict, so it did. Commit history nobody can read can't be searched. And because the formatter wasn't in CI, the reviewer's limited attention went to semicolons.</p>
+<div class="rule">
+<p><strong>Engineering habits exist to keep feedback loops short and changes understandable.</strong> Integrate small changes often. Review them in priority order, with your best attention on correctness and security. Let machines enforce everything machines can check. Write history, PR descriptions and decisions for the person who reads them a year from now. Every practice on this page shortens a loop or makes a change easier to understand later; judge new practices by the same test.</p>
+</div>
+<p>This page covers the team side of software: Git workflows, pull requests, review, CI and documentation. The code-level side is in <a href="clean-code.html">Clean Code</a> and <a href="design-principles.html">Design Principles</a>. For what to look for in tests and security, see <a href="testing-strategy.html">Testing Strategy</a> and <a href="security-fundamentals.html">Security Fundamentals</a>.</p>
+<h2 id="the-mental-model-a-change-is-a-batch-moving-through-feedback-loops">The mental model: a change is a batch moving through feedback loops</h2>
+<p>Every change travels the same path, from an idea in your head to behaviour that users depend on. Each arrow below is a place where you can learn you were wrong. The longer a change waits at any step, the more expensive that lesson becomes.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 290" width="900" role="img" aria-label="A change flows from local edit to commit, pull request, review, CI, merge, deploy, release and production feedback. Inner loops take seconds, outer loops take days. Small batches move through every loop faster.">
+<defs><marker id="code-review-and-collaboration-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text class="title" x="20" y="24">One change, eight hand-offs, four feedback loops</text>
+<rect class="box visit" x="20" y="60" width="92" height="46" rx="8"/><text x="66" y="80" text-anchor="middle" font-weight="700">edit</text><text class="small muted" x="66" y="97" text-anchor="middle">IDE, linter</text>
+<rect class="box visit" x="130" y="60" width="92" height="46" rx="8"/><text x="176" y="80" text-anchor="middle" font-weight="700">commit</text><text class="small muted" x="176" y="97" text-anchor="middle">pre-commit hook</text>
+<rect class="box active" x="240" y="60" width="92" height="46" rx="8"/><text x="286" y="80" text-anchor="middle" font-weight="700">open PR</text><text class="small muted" x="286" y="97" text-anchor="middle">description</text>
+<rect class="box active" x="350" y="60" width="92" height="46" rx="8"/><text x="396" y="80" text-anchor="middle" font-weight="700">CI gates</text><text class="small muted" x="396" y="97" text-anchor="middle">build, test, scan</text>
+<rect class="box active" x="460" y="60" width="92" height="46" rx="8"/><text x="506" y="80" text-anchor="middle" font-weight="700">review</text><text class="small muted" x="506" y="97" text-anchor="middle">a human</text>
+<rect class="box done" x="570" y="60" width="92" height="46" rx="8"/><text x="616" y="80" text-anchor="middle" font-weight="700">merge</text><text class="small muted" x="616" y="97" text-anchor="middle">main is green</text>
+<rect class="box done" x="680" y="60" width="92" height="46" rx="8"/><text x="726" y="80" text-anchor="middle" font-weight="700">deploy</text><text class="small muted" x="726" y="97" text-anchor="middle">flag off (dark)</text>
+<rect class="box path" x="790" y="60" width="92" height="46" rx="8"/><text x="836" y="80" text-anchor="middle" font-weight="700">release</text><text class="small muted" x="836" y="97" text-anchor="middle">flag 1% → 100%</text>
+<line class="edge accent" x1="112" y1="83" x2="128" y2="83" marker-end="url(#code-review-and-collaboration-ar)"/>
+<line class="edge accent" x1="222" y1="83" x2="238" y2="83" marker-end="url(#code-review-and-collaboration-ar)"/>
+<line class="edge accent" x1="332" y1="83" x2="348" y2="83" marker-end="url(#code-review-and-collaboration-ar)"/>
+<line class="edge accent" x1="442" y1="83" x2="458" y2="83" marker-end="url(#code-review-and-collaboration-ar)"/>
+<line class="edge accent" x1="552" y1="83" x2="568" y2="83" marker-end="url(#code-review-and-collaboration-ar)"/>
+<line class="edge accent" x1="662" y1="83" x2="678" y2="83" marker-end="url(#code-review-and-collaboration-ar)"/>
+<line class="edge accent" x1="772" y1="83" x2="788" y2="83" marker-end="url(#code-review-and-collaboration-ar)"/>
+<path class="edge dash" d="M176,112 C176,140 66,140 66,112" marker-end="url(#code-review-and-collaboration-ar)"/>
+<text class="small" x="121" y="152" text-anchor="middle">seconds</text>
+<path class="edge dash" d="M396,112 C396,170 176,170 176,112" marker-end="url(#code-review-and-collaboration-ar)"/>
+<text class="small" x="286" y="170" text-anchor="middle">minutes</text>
+<path class="edge dash" d="M506,112 C506,210 66,210 66,112" marker-end="url(#code-review-and-collaboration-ar)"/>
+<text class="small" x="390" y="206" text-anchor="middle">hours (or days, if the PR is big)</text>
+<path class="edge dash" d="M836,112 C836,260 66,260 66,112" marker-end="url(#code-review-and-collaboration-ar)"/>
+<text class="small" x="451" y="240" text-anchor="middle">days: real users, metrics, incidents</text>
+<text class="small muted" x="620" y="160">Small batches pass every loop faster,</text>
+<text class="small muted" x="620" y="176">and each loop catches different mistakes.</text>
+</svg>
+<figcaption>Push every check as far left (and as fast) as it can go. A formatter in the editor gives feedback in seconds; the same rule found in review costs hours and a human's attention.</figcaption>
+</figure>
+
+<p>Three consequences follow, and the rest of the page is built on them:</p>
+<ol>
+<li><strong>Batch size is the master variable.</strong> A small change passes every loop faster, is easier to review, is less likely to conflict, and is trivial to revert. Most of the habits below (trunk-based development, small PRs, feature flags, atomic commits) are ways to make batches smaller.</li>
+<li><strong>Machines first, humans last.</strong> Anything a tool can check (format, lint, types, tests, known vulnerabilities, secrets) should be checked before a human looks. Human attention is the scarcest resource in the pipeline, so spend it on what only humans can judge: is this correct, is it the right design, is it safe?</li>
+<li><strong>Write for the future reader.</strong> The commit message, the PR description and the decision record are read far more often than they're written: by the reviewer, by <code>git blame</code> during an incident, and by the new hire next year.</li>
+</ol>
+<div class="insight">
+<p><strong>Deploy is not release.</strong> With feature flags, <em>deploy</em> means the code is running in production, and <em>release</em> means users can see it. Separating them is what makes trunk-based development safe: unfinished work can be merged and deployed every day while staying invisible. The <a href="https://dora.dev/">DORA research</a> links this pattern of small batches and frequent deploys to both higher speed <em>and</em> higher stability. The two aren't a trade-off.</p>
+</div>
+<h2 id="git-workflows-how-work-flows-back-to-main">Git workflows: how work flows back to main</h2>
+<p>A branching workflow answers three questions: how long do branches live, where do they merge, and when does merged code reach users? Those answers decide how much you integrate at once, and that decides how often you fight conflicts.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 330" width="900" role="img" aria-label="Three branching workflows side by side: trunk-based with tiny same-day branches, GitHub flow with short feature branches and pull requests, and GitFlow with develop, release and hotfix branches.">
+<text class="title" x="20" y="24">Three ways to get work back to main</text>
+<text x="20" y="56" font-weight="700">Trunk-based</text><text class="small muted" x="20" y="72">branches live hours; flags hide unfinished work</text>
+<line class="edge accent" x1="20" y1="100" x2="280" y2="100"/><text class="small mono" x="20" y="92">main</text>
+<circle class="box done" cx="50" cy="100" r="6"/><circle class="box done" cx="90" cy="100" r="6"/><circle class="box done" cx="130" cy="100" r="6"/><circle class="box done" cx="170" cy="100" r="6"/><circle class="box done" cx="210" cy="100" r="6"/><circle class="box done" cx="250" cy="100" r="6"/>
+<path class="edge" d="M50,100 Q60,126 76,126 L82,126 Q88,126 90,106"/><circle class="box active" cx="76" cy="126" r="5"/>
+<path class="edge" d="M130,100 Q140,126 156,126 L162,126 Q168,126 170,106"/><circle class="box active" cx="156" cy="126" r="5"/>
+<path class="edge" d="M210,100 Q220,126 236,126 L242,126 Q248,126 250,106"/><circle class="box active" cx="236" cy="126" r="5"/>
+<path class="fill-path" d="M85,82 L95,82 L90,90 z"/><path class="fill-path" d="M165,82 L175,82 L170,90 z"/><path class="fill-path" d="M245,82 L255,82 L250,90 z"/>
+<text class="small" x="20" y="160">deploy many times a day</text>
+<text x="320" y="56" font-weight="700">GitHub flow</text><text class="small muted" x="320" y="72">one short branch + PR per change</text>
+<line class="edge accent" x1="320" y1="100" x2="580" y2="100"/><text class="small mono" x="320" y="92">main</text>
+<circle class="box done" cx="345" cy="100" r="6"/><circle class="box done" cx="470" cy="100" r="6"/><circle class="box done" cx="555" cy="100" r="6"/>
+<path class="edge" d="M345,100 Q355,130 375,130 L440,130 Q462,130 470,106"/><circle class="box active" cx="380" cy="130" r="5"/><circle class="box active" cx="410" cy="130" r="5"/><circle class="box active" cx="440" cy="130" r="5"/><text class="small mono" x="372" y="150">feature/search</text>
+<path class="edge" d="M470,100 Q478,124 495,124 L530,124 Q550,124 555,106"/><circle class="box active" cx="500" cy="124" r="5"/><circle class="box active" cx="530" cy="124" r="5"/>
+<path class="fill-path" d="M465,82 L475,82 L470,90 z"/><path class="fill-path" d="M550,82 L560,82 L555,90 z"/>
+<text class="small" x="320" y="172">deploy on every merge to main</text>
+<text x="620" y="56" font-weight="700">GitFlow</text><text class="small muted" x="620" y="72">develop + release + hotfix branches</text>
+<line class="edge accent" x1="620" y1="100" x2="880" y2="100"/><text class="small mono" x="620" y="92">main</text>
+<line class="edge" x1="620" y1="170" x2="880" y2="170"/><text class="small mono" x="620" y="190">develop</text>
+<circle class="box done" cx="640" cy="100" r="6"/><circle class="box done" cx="800" cy="100" r="6"/><circle class="box done" cx="855" cy="100" r="6"/>
+<circle class="box visit" cx="660" cy="170" r="6"/><circle class="box visit" cx="700" cy="170" r="6"/><circle class="box visit" cx="740" cy="170" r="6"/><circle class="box visit" cx="820" cy="170" r="6"/>
+<path class="edge" d="M660,170 Q668,215 690,215 L715,215 Q735,215 740,176"/><circle class="box active" cx="690" cy="215" r="5"/><circle class="box active" cx="715" cy="215" r="5"/><text class="small mono" x="672" y="236">feature/x</text>
+<path class="edge" d="M740,170 Q748,135 760,135 L790,135 Q798,135 800,106"/><circle class="box path" cx="770" cy="135" r="5"/><text class="small mono" x="762" y="128" text-anchor="end">release/1.4</text>
+<path class="edge dash" d="M790,135 Q815,140 820,164"/>
+<path class="edge" d="M800,100 Q820,78 835,78 Q850,78 855,94"/><circle class="box bad" cx="830" cy="78" r="5"/><text class="small mono" x="800" y="68">hotfix</text>
+<path class="edge dash" d="M840,82 Q870,130 822,166"/>
+<path class="fill-path" d="M795,112 L805,112 L800,120 z"/><path class="fill-path" d="M850,112 L860,112 L855,120 z"/>
+<text class="small" x="620" y="262">deploy per scheduled release</text>
+<text class="small muted" x="20" y="300">▼ = deploy to production · dashed = merge back so fixes aren't lost · grey circles = commits on develop not yet released</text>
+</svg>
+<figcaption>The further a branch lives from main, and the more branches there are to keep in sync, the more integration work you defer. GitFlow's back-merges (dashed) are where hotfixes get lost.</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Trunk-based</th>
+<th>GitHub flow</th>
+<th>GitFlow</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Branch lifetime</td>
+<td>hours, at most a day or two</td>
+<td>a few days</td>
+<td>features: days to weeks; release branches: days</td>
+</tr>
+<tr>
+<td>Where work merges</td>
+<td><code>main</code> (the trunk)</td>
+<td><code>main</code></td>
+<td><code>develop</code>, then <code>release/*</code> into <code>main</code></td>
+</tr>
+<tr>
+<td>Unfinished features</td>
+<td>merged behind a flag</td>
+<td>stay on the branch until done</td>
+<td>stay on the branch until done</td>
+</tr>
+<tr>
+<td>Release cadence</td>
+<td>continuous</td>
+<td>continuous (each merge)</td>
+<td>scheduled, versioned</td>
+</tr>
+<tr>
+<td>Needs</td>
+<td>strong CI, flags, small tasks</td>
+<td>CI, fast reviews</td>
+<td>release management</td>
+</tr>
+<tr>
+<td>Fits best</td>
+<td>services you deploy yourself</td>
+<td>most web services and open source</td>
+<td>installed or versioned software with several supported versions (mobile apps, SDKs, on-prem products)</td>
+</tr>
+</tbody>
+</table>
+<p>Run the same backlog through each workflow. Four developers, ten days, the same features: only the integration habits change.</p>
+<div class="viz" data-viz="code-review-and-collaboration-workflows"></div>
+
+<p>What the simulation shows is a general rule: <strong>the risk of integration grows with the product of branch lifetime and team activity.</strong> A branch open for 4 days on a team that merges 12 commits a day must absorb 48 foreign commits. A branch that lives 4 hours absorbs 2. Conflicts are just the visible part. The invisible part is <em>semantic</em> drift: your code compiles against an API another developer has since changed in meaning.</p>
+<div class="compare">
+<div class="good">
+<h4 id="trunk-based-development">Trunk-based development</h4>
+<ul>
+<li>Merge to main at least daily; break features into slices that are each safe to ship.</li>
+<li>Unfinished work is hidden by a <a href="#feature-flags-separate-deploy-from-release">feature flag</a>, or by <em>branch by abstraction</em> (build the new implementation behind an interface, switch over, delete the old one).</li>
+<li>Requires fast CI and fast reviews; otherwise people batch up to avoid the wait.</li>
+<li>Many teams use short-lived branches + PRs and still call it trunk-based, as long as branches live less than a day or two.</li>
+</ul>
+</div>
+<div class="warn">
+<h4 id="gitflow-and-long-lived-branches">GitFlow (and long-lived branches)</h4>
+<ul>
+<li>Created for software shipped as numbered versions, where several versions are supported at once.</li>
+<li>For a continuously deployed web service, <code>develop</code> and <code>release/*</code> mostly add waiting, merge-backs and "which branch is the truth?" confusion. Its author added a note in 2020 recommending simpler workflows for web apps.</li>
+<li>If you need to support old versions, keep <code>release/x.y</code> branches cut from main and cherry-pick fixes into them. That's simpler than full GitFlow.</li>
+</ul>
+</div>
+</div>
+<h3 id="feature-flags-separate-deploy-from-release">Feature flags: separate deploy from release</h3>
+<p>A feature flag is a runtime decision: <code>if (flags.isEnabled("new-checkout", user)) newFlow() else oldFlow()</code>. It lets you merge and deploy incomplete code safely, roll out to 1% of users first, and turn a bad feature off in seconds, without a rollback deploy.</p>
+<p>The interesting part is <em>who</em> gets the feature. A good rollout is <strong>deterministic and sticky</strong>: the same user always gets the same answer, and raising the percentage only adds users, never flips existing ones back. The standard trick is to hash the flag key and the user id into a bucket from 0 to 9,999 and compare it with the rollout percentage. The simulation below does that for 1,000 users, with an error-rate SLO that can trip a kill switch.</p>
+<div class="viz" data-viz="code-review-and-collaboration-flags"></div>
+
+<p>Not every flag is the same. Pete Hodgson's taxonomy, from Martin Fowler's <a href="https://martinfowler.com/articles/feature-toggles.html">Feature Toggles</a> article, is worth knowing, because the lifetime of the flag decides how you manage it:</p>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Purpose</th>
+<th>Lifetime</th>
+<th>Decided by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Release</strong> flag</td>
+<td>hide unfinished or risky work; progressive rollout</td>
+<td>days to weeks, then <strong>delete it</strong></td>
+<td>percentage, internal users first</td>
+</tr>
+<tr>
+<td><strong>Experiment</strong> flag</td>
+<td>A/B test two variants and measure</td>
+<td>the length of the experiment</td>
+<td>random but sticky cohort</td>
+</tr>
+<tr>
+<td><strong>Ops</strong> flag / kill switch</td>
+<td>turn off an expensive or failing dependency under load</td>
+<td>long-lived, tested regularly</td>
+<td>operators, automation on SLOs</td>
+</tr>
+<tr>
+<td><strong>Permission</strong> flag</td>
+<td>entitlements: beta testers, premium plans</td>
+<td>permanent (really configuration)</td>
+<td>user attributes</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://openfeature.dev/">OpenFeature</a> is a CNCF standard API for flags with SDKs in every language below. You code against one interface, and the <em>provider</em> (LaunchDarkly, Flagsmith, Unleash, flagd, Azure App Configuration, or your own) is configured at startup, the same way you'd register any dependency with <a href="di-fundamentals.html">DI</a>. The targeting key is what makes the bucket sticky.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// OpenFeature .NET SDK. The provider is registered once at startup:
+// await Api.Instance.SetProviderAsync(new FlagdProvider());
+using OpenFeature;
+using OpenFeature.Model;
+
+public sealed class CheckoutController(IFeatureClient flags, NewCheckout next, LegacyCheckout legacy)
+{
+    public async Task&lt;IResult&gt; Checkout(Cart cart, ClaimsPrincipal user)
+    {
+        var ctx = EvaluationContext.Builder()
+            .SetTargetingKey(user.FindFirstValue(&quot;sub&quot;)!)   // same user -&gt; same bucket
+            .Set(&quot;plan&quot;, user.FindFirstValue(&quot;plan&quot;) ?? &quot;free&quot;)
+            .Build();
+
+        // The default (false) is used if the provider is down: fail safe, not fail open.
+        bool useNew = await flags.GetBooleanValueAsync(&quot;new-checkout&quot;, false, ctx);
+        return useNew ? await next.Run(cart) : await legacy.Run(cart);
+    }
+}
+</code></pre>
+<pre><code class="language-java">// OpenFeature Java SDK. At startup: OpenFeatureAPI.getInstance().setProviderAndWait(new FlagdProvider());
+import dev.openfeature.sdk.*;
+
+@RestController
+class CheckoutController {
+    private final Client flags = OpenFeatureAPI.getInstance().getClient(&quot;checkout&quot;);
+    private final NewCheckout next;
+    private final LegacyCheckout legacy;
+
+    CheckoutController(NewCheckout next, LegacyCheckout legacy) { this.next = next; this.legacy = legacy; }
+
+    @PostMapping(&quot;/checkout&quot;)
+    Receipt checkout(@RequestBody Cart cart, @AuthenticationPrincipal Jwt user) {
+        var ctx = new ImmutableContext(user.getSubject(),               // targeting key
+                Map.of(&quot;plan&quot;, new Value(user.getClaimAsString(&quot;plan&quot;))));
+        boolean useNew = flags.getBooleanValue(&quot;new-checkout&quot;, false, ctx);
+        return useNew ? next.run(cart) : legacy.run(cart);
+    }
+}
+</code></pre>
+<pre><code class="language-python"># OpenFeature Python SDK. At startup: api.set_provider(FlagdProvider())
+from fastapi import Depends
+from openfeature import api
+from openfeature.evaluation_context import EvaluationContext
+
+flags = api.get_client(&quot;checkout&quot;)
+
+@app.post(&quot;/checkout&quot;)
+async def checkout(cart: Cart, user: User = Depends(current_user)) -&gt; Receipt:
+    ctx = EvaluationContext(targeting_key=user.id, attributes={&quot;plan&quot;: user.plan})
+    # False is the safe default if the provider can't be reached.
+    if flags.get_boolean_value(&quot;new-checkout&quot;, False, ctx):
+        return await new_checkout(cart)
+    return await legacy_checkout(cart)
+</code></pre>
+<pre><code class="language-go">// OpenFeature Go SDK. At startup: openfeature.SetProviderAndWait(flagd.NewProvider())
+import &quot;github.com/open-feature/go-sdk/openfeature&quot;
+
+var flags = openfeature.NewClient(&quot;checkout&quot;)
+
+func (h *Handler) Checkout(w http.ResponseWriter, r *http.Request) {
+    user := auth.UserFrom(r.Context())
+    evalCtx := openfeature.NewEvaluationContext(user.ID, map[string]any{&quot;plan&quot;: user.Plan})
+
+    // On error the default (false) is returned, so a flag outage falls back to the old flow.
+    useNew, _ := flags.BooleanValue(r.Context(), &quot;new-checkout&quot;, false, evalCtx)
+    if useNew {
+        h.next.Run(w, r)
+        return
+    }
+    h.legacy.Run(w, r)
+}
+</code></pre>
+<pre><code class="language-typescript">// OpenFeature server SDK. At startup: await OpenFeature.setProviderAndWait(new FlagdProvider());
+import { OpenFeature } from &quot;@openfeature/server-sdk&quot;;
+
+const flags = OpenFeature.getClient(&quot;checkout&quot;);
+
+app.post(&quot;/checkout&quot;, async (req, res) =&gt; {
+  const user = req.user!;
+  const useNew = await flags.getBooleanValue(&quot;new-checkout&quot;, false, {
+    targetingKey: user.id, // same user -&gt; same bucket
+    plan: user.plan,
+  });
+  res.json(useNew ? await newCheckout(req.body) : await legacyCheckout(req.body));
+});
+</code></pre>
+</div>
+<p>How the ecosystems differ: .NET also has <code>Microsoft.FeatureManagement</code> (flags in <code>appsettings.json</code> or Azure App Configuration, <code>[FeatureGate]</code> on endpoints). Spring teams often use Togglz or Unleash. Go and Python codebases tend to call a flag SDK directly. All of them evaluate flags <strong>locally</strong> from a cached rule set, refreshed by streaming or polling, so a flag check costs microseconds rather than a network call. Where flag <em>configuration</em> lives and how it's secured is covered in <a href="configuration-and-secrets.html">Configuration &amp; Secrets</a>.</p>
+<div class="pitfall">
+<p><strong>Flag debt.</strong> Every flag doubles the number of states your code can be in. Five live flags give 32 combinations, and nobody tests them all. Knight Capital lost $440 million in 45 minutes in 2012, partly because an old, unused flag was reused for new behaviour, and one server was still running code that read it the old way. <strong>Fix:</strong> every release flag gets an owner and an expiry date when it's created. Remove it within a sprint or two of reaching 100%: delete the old path and the flag together. Never reuse a flag name.</p>
+</div>
+<h2 id="small-pull-requests-and-stacking-them">Small pull requests, and stacking them</h2>
+<p>The single most effective review habit is the author's: <strong>send smaller changes.</strong> A well-known study of 2,500 reviews at Cisco (SmartBear, 2006) found that reviewers stay effective up to about 200–400 lines and 60–90 minutes; past that, the defect-finding rate collapses. Google's engineering practices guide, <a href="https://google.github.io/eng-practices/review/developer/small-cls.html">Small CLs</a>, says the same thing from a decade of experience: small changes are reviewed faster and more thoroughly, are less likely to introduce bugs, are easier to merge and easier to roll back.</p>
+<p>The mechanism is in the simulation. Same feature, same planted defects (about one per 100 lines), shipped three ways. Watch two things: how long each PR waits before anyone starts, and how likely each defect is to be noticed.</p>
+<div class="viz" data-viz="code-review-and-collaboration-prsize"></div>
+
+<p>Two effects compound. Big PRs <strong>wait longer</strong>, because nobody has a free two-hour block, so they get postponed. Then they are <strong>reviewed worse</strong>, because attention runs out and the reviewer starts skimming. "LGTM" on a 2,000-line diff usually means "I scrolled".</p>
+<h3 id="how-to-split-a-change">How to split a change</h3>
+<p>"Make it smaller" is useless advice without techniques. These work in every codebase:</p>
+<table>
+<thead>
+<tr>
+<th>Technique</th>
+<th>Example</th>
+<th>Why it helps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Preparatory refactor first</strong></td>
+<td>PR 1: extract <code>OrderRepository</code> (no behaviour change). PR 2: add search that uses it.</td>
+<td>Structure changes are easy to review when they come alone; <a href="clean-code.html">Clean Code</a> calls this wearing one hat at a time.</td>
+</tr>
+<tr>
+<td><strong>Vertical slices</strong></td>
+<td>"Search by customer name" end to end, then "filter by date", then "paging".</td>
+<td>Each slice is shippable and testable on its own.</td>
+</tr>
+<tr>
+<td><strong>Behind a flag</strong></td>
+<td>Merge the new flow with the flag off; turn it on in a later PR.</td>
+<td>Unfinished work can merge without being visible.</td>
+</tr>
+<tr>
+<td><strong>Expand, then contract</strong></td>
+<td>Add the new column → write both → backfill → read new → drop old, one PR each.</td>
+<td>Each step is backwards compatible, so deploys and rollbacks stay safe.</td>
+</tr>
+<tr>
+<td><strong>Generated and mechanical changes separately</strong></td>
+<td>One PR for the dependency bump or the codemod, one for the hand-written logic.</td>
+<td>The reviewer can skim the mechanical part and focus on the logic.</td>
+</tr>
+<tr>
+<td><strong>Tests and docs travel with the code</strong></td>
+<td>Never "tests in a follow-up PR".</td>
+<td>The test is how the reviewer knows what the code is meant to do.</td>
+</tr>
+</tbody>
+</table>
+<p>A useful limit: <strong>a PR should be reviewable in one sitting of under 30 minutes</strong>, which usually means under ~400 changed lines of hand-written code. That's a guideline, not a law: a 600-line PR that renames a type mechanically is fine, and a 40-line PR that changes the locking strategy deserves an hour.</p>
+<h3 id="stacked-pull-requests">Stacked pull requests</h3>
+<p>Small PRs have a cost: if PR 2 needs PR 1, do you wait for PR 1 to merge before starting PR 2? <strong>Stacking</strong> removes the wait. Each PR targets the branch of the one below it, so reviewers see only that layer's diff, and you keep working on top.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 230" width="900" role="img" aria-label="A stack of three pull requests. PR 1 targets main, PR 2 targets PR 1's branch, PR 3 targets PR 2's branch. When PR 1 changes after review, the branches above are rebased onto it with git rebase --update-refs.">
+<defs><marker id="code-review-and-collaboration-ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text class="title" x="20" y="24">A stack: each PR shows only its own layer</text>
+<line class="edge accent" x1="20" y1="190" x2="420" y2="190"/><text class="small mono" x="20" y="182">main</text><circle class="box done" cx="60" cy="190" r="7"/><circle class="box done" cx="100" cy="190" r="7"/>
+<path class="edge" d="M100,190 Q120,150 150,150 L200,150"/><circle class="box active" cx="170" cy="150" r="7"/><circle class="box active" cx="200" cy="150" r="7"/>
+<text class="small mono" x="150" y="134">orders/1-repository</text>
+<path class="edge" d="M200,150 Q220,110 250,110 L300,110"/><circle class="box active" cx="270" cy="110" r="7"/><circle class="box active" cx="300" cy="110" r="7"/>
+<text class="small mono" x="240" y="94">orders/2-search-api</text>
+<path class="edge" d="M300,110 Q320,70 350,70 L380,70"/><circle class="box active" cx="365" cy="70" r="7"/><circle class="box active" cx="390" cy="70" r="7"/>
+<text class="small mono" x="320" y="54">orders/3-search-ui</text>
+<rect class="box visit" x="480" y="40" width="400" height="44" rx="8"/><text x="495" y="60" font-weight="700">PR #3: search UI</text><text class="small mono" x="495" y="76">base: orders/2-search-api · diff: 2 commits</text>
+<rect class="box visit" x="480" y="94" width="400" height="44" rx="8"/><text x="495" y="114" font-weight="700">PR #2: search endpoint</text><text class="small mono" x="495" y="130">base: orders/1-repository · diff: 2 commits</text>
+<rect class="box visit" x="480" y="148" width="400" height="44" rx="8"/><text x="495" y="168" font-weight="700">PR #1: extract OrderRepository (no behaviour change)</text><text class="small mono" x="495" y="184">base: main · merges first</text>
+<line class="edge accent" x1="420" y1="70" x2="476" y2="62" marker-end="url(#code-review-and-collaboration-ar2)"/>
+<line class="edge accent" x1="320" y1="112" x2="476" y2="116" marker-end="url(#code-review-and-collaboration-ar2)"/>
+<line class="edge accent" x1="220" y1="152" x2="476" y2="170" marker-end="url(#code-review-and-collaboration-ar2)"/>
+<text class="small muted" x="20" y="220">When PR #1 merges, PR #2's base becomes main automatically (GitHub retargets it), and so on up the stack.</text>
+</svg>
+<figcaption>Three 150-line PRs reviewed in parallel instead of one 450-line PR, or three PRs reviewed one after another.</figcaption>
+</figure>
+
+<p>The price is <strong>restacking</strong>: when review changes PR 1, every branch above it must be rebased. Since Git 2.38, one command does it, moving every branch ref in the stack:</p>
+<pre><code class="language-bash"># build the stack
+git switch -c orders/1-repository main          # commit, push, open PR against main
+git switch -c orders/2-search-api               # commit, push, open PR against orders/1-repository
+git switch -c orders/3-search-ui                # commit, push, open PR against orders/2-search-api
+
+# review asked for a change in PR 1: fix it there...
+git switch orders/1-repository
+git commit -am &quot;refactor(orders): make repository async&quot;
+
+# ...then replay everything above it in one go
+git switch orders/3-search-ui
+git rebase --update-refs orders/1-repository     # also moves orders/2-search-api
+git push --force-with-lease origin orders/2-search-api orders/3-search-ui
+</code></pre>
+<p>Tools such as Graphite, ghstack, git-branchless, spr and <code>gh stack</code> extensions automate this further. Gerrit and Phabricator were built around stacks from the start: each <em>commit</em> is reviewed on its own.</p>
+<div class="tip">
+<p><strong>Self-review first.</strong> Before you request a review, read your own diff in the PR UI, not your editor. You will find debug logging, a commented-out block and a missing test about half the time. Then write the description. Both take five minutes and save a review round-trip, which costs hours.</p>
+</div>
+<h2 id="commit-messages-and-conventional-commits">Commit messages and Conventional Commits</h2>
+<p>A commit message is a note to whoever runs <code>git blame</code> on this line in two years, quite possibly during an incident. The diff shows <em>what</em> changed. Only the message can say <em>why</em>.</p>
+<pre><code class="language-text">fix(cart): round each line to whole cents before tax
+
+Totals were rounded once, after tax, so a three-item cart could differ
+by one cent from the invoice service, which rounds per line. Finance
+reconciles the two every night and flagged 212 mismatches last week.
+
+Round each line first, matching the invoice service and the rule in
+ADR-0012. Rounding mode stays MidpointRounding.ToEven (banker's).
+
+Fixes: #482
+</code></pre>
+<p>The long-standing conventions (Chris Beams's widely cited <a href="https://cbea.ms/git-commit/">seven rules</a>, and what Git itself expects):</p>
+<ol>
+<li><strong>A short subject line</strong>, ideally ≤ 50 characters and never more than 72, because tools truncate it.</li>
+<li><strong>Imperative mood</strong>: "add", "fix", "remove". A good subject completes the sentence "If applied, this commit will …".</li>
+<li><strong>No trailing period.</strong></li>
+<li><strong>A blank line, then a body</strong> that explains <em>what</em> and <em>why</em>, not <em>how</em> (the diff shows how). Wrap it at about 72 columns.</li>
+<li><strong>Footers</strong> for machine-readable metadata: <code>Fixes: #482</code>, <code>Co-authored-by:</code>, <code>BREAKING CHANGE:</code>, <code>Signed-off-by:</code>.</li>
+<li><strong>One logical change per commit.</strong> A commit that both reformats a file and changes logic can't be reviewed, reverted or bisected cleanly.</li>
+</ol>
+<p><a href="https://www.conventionalcommits.org/">Conventional Commits</a> adds a machine-readable header, <code>type(scope)!: subject</code>, so tools can compute the next <a href="https://semver.org/">semantic version</a> and write the changelog for you. (Conventional Commits keeps the subject lowercase after the type, which overrides Beams's "capitalize the subject".)</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Meaning</th>
+<th>Release effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>feat</code></td>
+<td>a new capability for users</td>
+<td>MINOR (1.4.2 → 1.5.0)</td>
+</tr>
+<tr>
+<td><code>fix</code></td>
+<td>a bug fix</td>
+<td>PATCH (1.4.2 → 1.4.3)</td>
+</tr>
+<tr>
+<td><code>perf</code></td>
+<td>a performance improvement with no behaviour change</td>
+<td>PATCH</td>
+</tr>
+<tr>
+<td><code>refactor</code></td>
+<td>restructuring with no behaviour change</td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>docs</code>, <code>test</code>, <code>style</code>, <code>build</code>, <code>ci</code>, <code>chore</code></td>
+<td>documentation, tests, formatting, build system, pipeline, housekeeping</td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>revert</code></td>
+<td>reverts an earlier commit</td>
+<td>depends on what's reverted</td>
+</tr>
+<tr>
+<td><code>!</code> after the type, or a <code>BREAKING CHANGE:</code> footer</td>
+<td>an incompatible API change</td>
+<td>MAJOR (1.4.2 → 2.0.0)</td>
+</tr>
+</tbody>
+</table>
+<p>Try it. Pick a history, or type your own commit, and watch the parser, the linter and the version bump. Use <code>\n</code> for line breaks to add a <code>BREAKING CHANGE:</code> footer.</p>
+<div class="viz" data-viz="code-review-and-collaboration-commits"></div>
+
+<p>Enforce the convention with tools, not with review comments. A <code>commit-msg</code> hook rejects bad messages locally in milliseconds, and a CI check catches anyone who skipped the hook.</p>
+<table>
+<thead>
+<tr>
+<th>Ecosystem</th>
+<th>Local hook</th>
+<th>Version + changelog from commits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C# / .NET</td>
+<td>Husky.Net, or lefthook, running commitlint</td>
+<td>Versionize, GitVersion, release-please (<code>simple</code> strategy)</td>
+</tr>
+<tr>
+<td>Java</td>
+<td>lefthook or a Maven/Gradle git-hook plugin, running commitlint</td>
+<td>release-please (<code>maven</code>/<code>java</code> strategy), semantic-release, JReleaser</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>pre-commit with the <code>commitizen</code> hook</td>
+<td>commitizen (<code>cz bump</code>), python-semantic-release</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>lefthook running commitlint</td>
+<td>release-please (<code>go</code> strategy), GoReleaser's changelog groups, svu</td>
+</tr>
+<tr>
+<td>TypeScript</td>
+<td>husky + <code>@commitlint/config-conventional</code></td>
+<td>semantic-release, release-please, Changesets</td>
+</tr>
+</tbody>
+</table>
+<div class="insight">
+<p><strong>With squash merges, only the PR title needs the convention.</strong> The squash commit takes the PR title as its subject, so you can lint the <em>title</em> in CI (for example with <code>amannn/action-semantic-pull-request</code> on GitHub) and let people commit freely on their branch. That's the lowest-friction way to adopt Conventional Commits.</p>
+</div>
+<h2 id="merge-rebase-or-squash">Merge, rebase or squash</h2>
+<p>When your branch is ready, how do its commits land on main? This is the most argued-about question in Git, and the arguments make more sense once you see the graph. In the simulation, every hash is computed from the commit's parents, message and content, exactly as in Git. Watch which commits get <em>new</em> hashes.</p>
+<div class="viz" data-viz="code-review-and-collaboration-merge"></div>
+
+<p>What the graph shows:</p>
+<ul>
+<li><strong>A merge commit</strong> preserves history exactly as it happened. Nothing is rewritten, so it's always safe on shared branches, and a conflict is resolved once. The cost is a non-linear history, and every <code>wip</code> and <code>fix typo</code> commit lands on main.</li>
+<li><strong>Rebase</strong> replays your commits on top of main, giving them new parents and therefore <strong>new hashes</strong>. History becomes linear, but conflicts are resolved once <em>per commit</em> that touches the conflicting lines (<code>git rerere</code> remembers repeated resolutions). Because hashes change, anyone else who built on the old commits now has to rebase too.</li>
+<li><strong>Squash</strong> turns the whole branch into one new commit. Main gets exactly one commit per PR, easy to revert, with the PR title as its message. The individual steps are gone from main (the PR page keeps them).</li>
+<li><strong>Interactive rebase</strong> (<code>git rebase -i</code>) lets you <em>curate</em> first: fold fixups into the commits they fix, reword messages, reorder, drop. You get a linear history of meaningful commits, each of which builds.</li>
+</ul>
+<div class="rule">
+<p><strong>The golden rule: never rewrite commits that others have built on.</strong> Rebase, squash and amend freely on your own branch before it's shared, or when you are its only user. Once someone else has based work on your commits, merge instead. If you must update a pushed branch, use <code>git push --force-with-lease</code>. It refuses to overwrite commits you haven't seen, while plain <code>--force</code> silently deletes a colleague's work.</p>
+</div>
+<p>Sensible team defaults:</p>
+<ul>
+<li><strong>Most teams: squash merge</strong>, with a Conventional Commit PR title. One commit per PR on main, linear history, trivial reverts.</li>
+<li><strong>Teams that curate commits</strong> (open source, kernel-style, stacked commits): rebase-and-merge, with each commit required to build.</li>
+<li><strong>Merge commits</strong> where topology matters: merging release branches back, or long-lived integration branches.</li>
+<li>Locally, always <code>git pull --rebase</code>, so you don't create pointless "Merge branch 'main' into main" commits.</li>
+</ul>
+<pre><code class="language-bash"># a sane global git setup
+git config --global pull.rebase true            # rebase local commits on pull instead of merging
+git config --global rebase.autoStash true       # stash and unstash uncommitted work around a rebase
+git config --global rebase.updateRefs true      # always move stacked branch refs (Git 2.38+)
+git config --global rerere.enabled true         # remember conflict resolutions and reuse them
+git config --global push.autoSetupRemote true   # first push creates the upstream branch
+git config --global fetch.prune true            # drop remote branches that were deleted
+
+# clean up before review: fold a fix into the commit it belongs to
+git commit --fixup=3f2a9c1                      # creates &quot;fixup! &lt;subject of 3f2a9c1&gt;&quot;
+git rebase -i --autosquash main                 # moves it next to 3f2a9c1 and folds it in
+</code></pre>
+<h3 id="git-bisect-history-as-a-debugging-tool">git bisect: history as a debugging tool</h3>
+<p>Here's the payoff for all that history hygiene. When something broke in the last 200 commits, <code>git bisect</code> does a binary search: test the middle commit, mark it good or bad, and halve the suspects. 200 commits take about 8 tests. Try a history that contains WIP commits that don't compile.</p>
+<div class="viz" data-viz="code-review-and-collaboration-bisect"></div>
+
+<p>Bisect only works if <strong>every commit on main builds and passes tests</strong>. That's one more reason for squash merges or curated rebases, and for CI on every merge. Automate the search with <code>git bisect run</code>, giving it a script that exits 0 for good, 1–127 for bad (except 125), and <strong>125 for "can't test this one, skip it"</strong>:</p>
+<div class="code-tabs" data-labels="C#,Java,Python,Go,TypeScript">
+<pre><code class="language-bash">git bisect start HEAD v1.4.0          # first bad, then last known good
+git bisect run sh -c '
+  dotnet build -c Release -warnaserror:false || exit 125
+  dotnet test --no-build -c Release --filter &quot;FullyQualifiedName~PricingTests&quot;'
+git bisect reset                      # back to where you started
+</code></pre>
+<pre><code class="language-bash">git bisect start HEAD v1.4.0
+git bisect run sh -c '
+  ./mvnw -q -DskipTests package || exit 125
+  ./mvnw -q test -Dtest=PricingTest'
+git bisect reset
+</code></pre>
+<pre><code class="language-bash">git bisect start HEAD v1.4.0
+git bisect run sh -c '
+  pip install -q -e . || exit 125
+  pytest -q tests/test_pricing.py'
+git bisect reset
+</code></pre>
+<pre><code class="language-bash">git bisect start HEAD v1.4.0
+git bisect run sh -c '
+  go build ./... || exit 125
+  go test ./pricing/ -run TestTotal'
+git bisect reset
+</code></pre>
+<pre><code class="language-bash">git bisect start HEAD v1.4.0
+git bisect run sh -c '
+  npm ci --silent &amp;&amp; npx tsc --noEmit || exit 125
+  npx vitest run pricing'
+git bisect reset
+</code></pre>
+</div>
+<p>Write the failing test <em>first</em> (outside the repo, or as an untracked file that the script copies in), so the same check runs at every step. When bisect lands on a 40-line commit with a clear message, the investigation is usually over. When it lands on "misc fixes (2,300 lines)", it has only just started.</p>
+<h2 id="how-to-review">How to review</h2>
+<p>A code review has three jobs, in this order: <strong>catch defects</strong> that would hurt users, <strong>keep the codebase healthy</strong> so the next change stays easy, and <strong>share knowledge</strong> so more than one person understands every part. Google's guide sets the bar like this: approve once the change <em>definitely improves the overall code health</em>, even if it isn't perfect. "Perfect" isn't the standard. "Better than before, and nothing dangerous" is.</p>
+<h3 id="what-to-look-for-in-order">What to look for, in order</h3>
+<p>Your attention is limited, so spend it from the top of this list down. A reviewer who leaves fourteen naming nits and misses the SQL injection has done worse than no review at all, because the author now believes the code was checked.</p>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>0 · Context</small><strong>Read the description</strong><p>What problem, why this approach, how was it tested? No description: ask for one before reading the code.</p></div>
+<div class="flow-step"><small>1 · Correctness</small><strong>Does it do the right thing?</strong><p>Logic, edge cases (empty, null, zero, max), error paths, concurrency, data migrations, backwards compatibility.</p></div>
+<div class="flow-step"><small>2 · Design</small><strong>Is it the right shape?</strong><p>Right layer, right abstraction, fits the architecture, no hidden coupling, not over-engineered.</p></div>
+<div class="flow-step"><small>3 · Security</small><strong>Can it be abused?</strong><p>Untrusted input, injection, authz checks, secrets, logging of personal data, new dependencies.</p></div>
+<div class="flow-step"><small>4 · Tests</small><strong>Would a bug be caught?</strong><p>Do the tests fail if the code is wrong? Is the risky path tested, not just the happy one?</p></div>
+<div class="flow-step"><small>5 · Readability</small><strong>Can the next person change it?</strong><p>Names, function size, comments that explain why, consistency with the codebase.</p></div>
+<div class="flow-step"><small>6 · Nits</small><strong>Polish, if time allows</strong><p>Label as nit. Anything a tool could check should be automated, not commented.</p></div>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Questions worth asking</th>
+<th>Typical finds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Correctness</strong></td>
+<td>What happens with an empty list, a null, a duplicate, a retry, two requests at once? What if the call times out halfway?</td>
+<td>Off-by-one, missing <code>await</code>, non-idempotent retry, race on a shared dictionary, wrong time zone</td>
+</tr>
+<tr>
+<td><strong>Design</strong></td>
+<td>Does this belong here? Will the next feature fit? Is there a simpler way? Is a new abstraction earning its keep?</td>
+<td>Business logic in a controller, a new <code>static</code> singleton, a speculative interface with one implementation (<a href="design-principles.html">design principles</a>, <a href="anti-patterns.html">anti-patterns</a>)</td>
+</tr>
+<tr>
+<td><strong>Security</strong></td>
+<td>Where does each input come from? Who is allowed to call this? What ends up in logs?</td>
+<td>String-built SQL, missing ownership check (IDOR), token in a log line, new package nobody has heard of (<a href="security-fundamentals.html">security fundamentals</a>, <a href="api-security.html">API security</a>)</td>
+</tr>
+<tr>
+<td><strong>Tests</strong></td>
+<td>If I break the code, does a test go red? Are the assertions specific?</td>
+<td>Tests that assert only "no exception", mocks that make the test tautological, no test for the bug being fixed (<a href="testing-strategy.html">testing strategy</a>)</td>
+</tr>
+<tr>
+<td><strong>Operability</strong></td>
+<td>How will we know it's broken in production? Can we roll it back?</td>
+<td>No log or metric on the new failure path, a migration with no way back, no timeout on a new HTTP call (<a href="observability.html">observability</a>, <a href="resilience.html">resilience</a>)</td>
+</tr>
+<tr>
+<td><strong>Readability</strong></td>
+<td>Would a new team member understand this in six months?</td>
+<td>Misleading names, a 90-line method, a comment that repeats the code (<a href="clean-code.html">clean code</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>The simulation below gives two reviewers the same diff and the same time budget. One reads in priority order; the other starts at the top of the file and comments on everything as they meet it. Change the budget and see what each one finds before time runs out.</p>
+<div class="viz" data-viz="code-review-and-collaboration-checklist"></div>
+
+<div class="recognize">
+<p><strong>You are reviewing in the wrong order if</strong> most of your comments are about naming and formatting, you approved a PR whose description you didn't read, you can't say in one sentence what the change does, or you never run the code or open the files around the diff. The diff view hides the callers. For anything non-trivial, check out the branch and look at the whole file.</p>
+</div>
+<h3 id="writing-review-comments">Writing review comments</h3>
+<p>Text loses tone. "Why did you do it this way?" can be curiosity or an accusation, and the author will usually read it as the second. Three habits fix most of this.</p>
+<p><strong>1. Label every comment</strong> so the author knows what's required. <a href="https://conventionalcomments.org/">Conventional Comments</a> is a lightweight, widely used scheme:</p>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Means</th>
+<th>Blocks merge?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>issue (blocking):</code></td>
+<td>A real problem: bug, security hole, data loss</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>suggestion:</code></td>
+<td>A concrete improvement, with the reason</td>
+<td>Author decides, unless marked blocking</td>
+</tr>
+<tr>
+<td><code>question:</code></td>
+<td>I don't understand; please explain (maybe in a code comment)</td>
+<td>Until answered</td>
+</tr>
+<tr>
+<td><code>nit:</code></td>
+<td>Trivial preference or polish</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>thought:</code> / <code>note:</code></td>
+<td>An idea for later, or useful context</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>praise:</code></td>
+<td>Something done well, said specifically</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p><strong>2. Talk about the code, not the person, and give the reason.</strong> Ask questions when you are unsure, but be direct when you are sure.</p>
+<div class="compare">
+<div class="bad">
+<h4 id="comments-that-hurt">Comments that hurt</h4>
+<ul>
+<li>"Why would you do it like this?"</li>
+<li>"This is wrong."</li>
+<li>"Use a dictionary."</li>
+<li>"Did you even test this?"</li>
+<li>"We don't do it that way here."</li>
+<li>23 separate comments about spacing.</li>
+</ul>
+</div>
+<div class="good">
+<h4 id="comments-that-help">Comments that help</h4>
+<ul>
+<li>"question: <code>Find</code> is called once per order in this loop, so 1,000 orders = 1,000 queries. Could we load them in one query?"</li>
+<li>"issue (blocking): <code>amount</code> comes from the request body, so a client can set its own price. Look it up from <code>catalog</code> instead."</li>
+<li>"suggestion: a <code>Dictionary&lt;Sku, Price&gt;</code> makes this O(1) instead of a list scan. Not urgent at our sizes."</li>
+<li>"nit: the formatter would fix these; can we turn on <code>dotnet format</code> in CI instead of me commenting?"</li>
+<li>"praise: the test names read like a spec. I learned the rules from them."</li>
+</ul>
+</div>
+</div>
+<p><strong>3. Say what you expect.</strong> End the review with a summary: "Approved, two nits, take them or leave them", or "Requesting changes for the price issue; the rest is optional." Approve-with-comments ("LGTM once the null check is in, no need for another round") saves a full round-trip when you trust the author.</p>
+<div class="tip">
+<p><strong>Move long discussions to a call.</strong> If a thread has gone back and forth three times, talk for five minutes, then write the outcome in the thread so the decision is recorded. A design disagreement in PR comments can burn days.</p>
+</div>
+<h3 id="review-latency-and-process">Review latency and process</h3>
+<p>Review speed matters more than most teams think. A PR that waits a day for review makes the author context-switch away and come back cold. DORA's research links short lead times with both better delivery <em>and</em> better stability.</p>
+<ul>
+<li><strong>Respond within one business day</strong>, and ideally within a few hours. "Respond" can mean "I'll look this afternoon", or a first pass on the design before the details. Google's guidance is that a review response should come quickly, though the full review can take longer.</li>
+<li><strong>Review between tasks</strong>, after lunch, after a meeting, not in the middle of deep work. Batching reviews twice a day is fine.</li>
+<li><strong>Use <code>CODEOWNERS</code></strong> so the right people are asked automatically, and require <em>one</em> approval for normal code, two for risky areas (auth, payments, migrations).</li>
+<li><strong>Automate everything mechanical</strong> in <a href="#ci-quality-gates">CI</a>: formatting, linting, tests, coverage, dependency scanning. A human shouldn't spend attention on anything a machine can check.</li>
+<li><strong>Review tests first.</strong> They're the spec: they tell you what the code is supposed to do before you read how.</li>
+<li><strong>Track it.</strong> Time to first review, time to merge and PR size are worth watching as team metrics, never as individual targets.</li>
+</ul>
+<pre><code class="language-text"># .github/CODEOWNERS (GitHub) — Azure Repos uses branch policies with &quot;required reviewers&quot; by path instead
+*                       @shop/backend
+/src/Payments/          @shop/payments @shop/security
+/db/migrations/         @shop/dba
+/.github/workflows/     @shop/platform
+*.md                    @shop/docs
+</code></pre>
+<h2 id="receiving-feedback">Receiving feedback</h2>
+<p>The author's half of the conversation matters just as much.</p>
+<ul>
+<li><strong>You are not your code.</strong> A comment on a function is not a verdict on you. The reviewer is spending their time to make your work better.</li>
+<li><strong>Assume good intent, and ask when unsure.</strong> "Do you mean this is blocking, or a preference?" is a fine reply.</li>
+<li><strong>Reply to every comment</strong>, even with "Done" or a commit link. Resolve the threads you've fixed so the reviewer knows what's left.</li>
+<li><strong>Disagree with reasons, not feelings.</strong> "I kept the loop because the list is ≤ 5 items and the query version needs a new index; happy to change it if you feel strongly." When it's genuinely a matter of taste, the author's choice should usually win.</li>
+<li><strong>If you had to explain it, the code isn't clear yet.</strong> When a reviewer asks "what does this do?", the best answer is often a better name or a comment <em>in the code</em>, not a reply in the PR that nobody will find later.</li>
+<li><strong>Don't argue in the 40th comment.</strong> Talk, decide, record.</li>
+<li><strong>Say thanks</strong> when a reviewer catches a real bug. It encourages the behaviour you want.</li>
+</ul>
+<h3 id="turning-feedback-into-lasting-skill">Turning feedback into lasting skill</h3>
+<p>A review comment fixes one line. The real return comes when the <em>pattern</em> behind the comment never needs to be written again, by you or anyone else. Every repeated comment should move one step up this ladder:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 250" width="900" role="img" aria-label="A ladder for review feedback. A comment on one line becomes a pattern you recognize, then a personal checklist item, then team guidance, then an automated check in the linter or CI, which removes it from human review entirely.">
+<text class="title" x="20" y="24">From one comment to never needing it again</text>
+<rect class="box" x="20" y="180" width="160" height="56" rx="8"/><text x="34" y="202" font-weight="700">1 · A comment</text><text class="small" x="34" y="222">"missing CancellationToken"</text>
+<rect class="box visit" x="195" y="145" width="160" height="56" rx="8"/><text x="209" y="167" font-weight="700">2 · A pattern</text><text class="small" x="209" y="187">"3rd time this month"</text>
+<rect class="box visit" x="370" y="110" width="160" height="56" rx="8"/><text x="384" y="132" font-weight="700">3 · Your checklist</text><text class="small" x="384" y="152">self-review before PR</text>
+<rect class="box active" x="545" y="75" width="160" height="56" rx="8"/><text x="559" y="97" font-weight="700">4 · Team guidance</text><text class="small" x="559" y="117">style guide, ADR, example</text>
+<rect class="box done" x="720" y="40" width="165" height="56" rx="8"/><text x="734" y="62" font-weight="700">5 · Automated</text><text class="small" x="734" y="82">analyzer / lint rule in CI</text>
+<line class="edge accent" x1="180" y1="196" x2="195" y2="180" marker-end="url(#code-review-and-collaboration-ar2)"/>
+<line class="edge accent" x1="355" y1="161" x2="370" y2="145" marker-end="url(#code-review-and-collaboration-ar2)"/>
+<line class="edge accent" x1="530" y1="126" x2="545" y2="110" marker-end="url(#code-review-and-collaboration-ar2)"/>
+<line class="edge accent" x1="705" y1="91" x2="720" y2="75" marker-end="url(#code-review-and-collaboration-ar2)"/>
+<text class="small muted" x="560" y="200">Each step up costs a little once</text>
+<text class="small muted" x="560" y="218">and saves a comment on every future PR.</text>
+</svg>
+<figcaption>A team that climbs this ladder ends up with reviews about design and correctness, because tools already handled the rest.</figcaption>
+</figure>
+
+<p>Practical ways to climb it:</p>
+<ol>
+<li><strong>Keep a personal "things reviewers caught" list.</strong> Once a week, group the comments you received. If three are about missing null checks or unclear names, that's your self-review checklist for the next month.</li>
+<li><strong>Fix the class, not the instance.</strong> When a reviewer finds a bug, search for the same pattern elsewhere: <code>grep</code> for other <code>string.Format</code> SQL, other <code>async void</code>, other unbounded caches.</li>
+<li><strong>Write the test that would have caught it.</strong> The comment disappears when the PR merges; a regression test stays forever.</li>
+<li><strong>Promote repeated comments to tools.</strong> Most ecosystems let you turn a convention into a build-breaking rule: a Roslyn analyzer severity in <code>.editorconfig</code> (<code>dotnet_diagnostic.CA2007.severity = error</code>), an Error Prone or ArchUnit check in Java, a <code>ruff</code> rule in Python, a <code>golangci-lint</code> linter or a <code>go vet</code> analyzer in Go, an ESLint rule in TypeScript. ArchUnit, NetArchTest and import-linter can even enforce architecture rules ("controllers never touch the DbContext").</li>
+<li><strong>Review others' code to learn.</strong> Reading reviews by senior colleagues on <em>other people's</em> PRs is one of the fastest ways to absorb a codebase's standards. Many teams let juniors review from week one, as a learning exercise, with a second approver.</li>
+</ol>
+<h2 id="pr-descriptions">PR descriptions</h2>
+<p>The description is the first thing a reviewer reads and the last thing anyone reads before running <code>git blame</code> in two years (with squash merges, the PR description often <em>becomes</em> the commit body). It should answer: what changed, why, how was it tested, and what should the reviewer look at.</p>
+<pre><code class="language-markdown">&lt;!-- .github/pull_request_template.md  (Azure Repos: .azuredevops/pull_request_template.md) --&gt;
+What and why
+------------
+&lt;!-- One paragraph. The problem, and why this approach. Link the issue/work item. --&gt;
+Totals could differ by 1 cent from invoices because we rounded after tax.
+Round each line first, matching the invoice service (ADR-0012). Fixes #482.
+
+How to review
+-------------
+&lt;!-- Where to start, what's mechanical, what deserves the most attention. --&gt;
+Start with `CartTotals.cs`. The changes in `*.Tests` are the spec.
+`PriceFormatter` changes are a mechanical rename.
+
+How it was tested
+-----------------
+- [x] Unit tests for per-line rounding, including the 3 × 0.335 case from the bug
+- [x] Replayed last week's 212 mismatched carts: all now match
+- [ ] Not tested: carts with &gt; 1,000 lines (none exist in production)
+
+Risk and rollout
+----------------
+Behind flag `cart.per-line-rounding` (off). Roll back by turning the flag off.
+No schema change.
+
+Screenshots / output
+--------------------
+&lt;!-- For UI, API shape or CLI changes. --&gt;
+</code></pre>
+<p>Both GitHub and Azure DevOps pick up the template automatically for new PRs. (A heading underlined with dashes is standard Markdown for a level-2 heading, the same as <code>## Heading</code>.) Keep it short enough that people actually fill it in; delete sections that don't apply instead of writing "N/A" in each.</p>
+<h2 id="architecture-decision-records">Architecture decision records</h2>
+<p>Some decisions shape a codebase for years: "we use PostgreSQL, not Cosmos DB", "services talk through events, not direct calls", "we chose squash merges". Six months later nobody remembers <em>why</em>, so the decision is either followed blindly or reversed without knowing what it was protecting. An <strong>architecture decision record (ADR)</strong> is a short document that captures one such decision, its context and its consequences, stored in the repository next to the code.</p>
+<p>Michael Nygard's original 2011 format is still the most common. It fits on one screen:</p>
+<pre><code class="language-markdown">&lt;!-- docs/adr/0012-round-money-per-line.md --&gt;
+# 12. Round money per line, half-to-even, before tax
+
+Date: 2026-03-14
+Status: Accepted  &lt;!-- Proposed | Accepted | Deprecated | Superseded by ADR-0019 --&gt;
+
+Context
+-------
+Cart, invoice and refund services each rounded money differently. Finance
+reconciles them nightly and found 212 one-cent mismatches in a week. The tax
+authority requires invoice lines to be rounded individually.
+
+Decision
+--------
+Every service rounds each line amount to the currency's minor unit, using
+half-to-even (banker's) rounding, *before* applying tax. Totals are sums of
+rounded lines. All money uses the shared `Money` type; `double` is banned for
+money by an analyzer rule.
+
+Consequences
+------------
++ Cart, invoice and refund totals match by construction.
++ One rule to test, in one library.
+- Totals can differ from &quot;mathematically exact&quot; by up to n/2 minor units for n lines.
+- Existing open carts are recalculated on the next change (one-off migration).
+
+Alternatives considered
+-----------------------
+- Round only the total: simpler, but violates the tax rule and keeps the mismatches.
+- Half-away-from-zero: matches what most people expect, but biases totals upwards over volume.
+</code></pre>
+<p>How to make ADRs work:</p>
+<ul>
+<li><strong>One decision per file, numbered, never deleted.</strong> <code>docs/adr/0001-record-architecture-decisions.md</code> is traditionally the first one. When a decision changes, write a new ADR and mark the old one <code>Superseded by ADR-0019</code>. The history of <em>why</em> is the whole point.</li>
+<li><strong>Review ADRs like code</strong>, in a PR. The PR discussion is part of the record.</li>
+<li><strong>Write one when a decision is costly to reverse</strong>, affects more than one team, or when you catch yourself explaining the same choice for the third time. Don't write one for which logging library to use in a script.</li>
+<li><strong>Link them</strong> from code comments and PR descriptions ("see ADR-0012"), so they're found when they matter.</li>
+<li>Variants: <a href="https://adr.github.io/madr/">MADR</a> adds explicit "considered options" and "decision drivers"; Y-statements fit a decision in one sentence ("In the context of …, facing …, we decided … to achieve …, accepting …"). Tools such as <code>adr-tools</code> and <code>log4brains</code> create and index the files.</li>
+</ul>
+<h2 id="ci-quality-gates">CI quality gates</h2>
+<p>Every check a machine can do should run on every PR, before a human looks at it. That way reviewers spend their attention on design and correctness, and "it works on my machine" stops being an argument. The simulation runs a pipeline of eight jobs against different kinds of breakage. Compare the layouts: how long until the author hears that something is wrong, and how many runner-minutes it burns.</p>
+<div class="viz" data-viz="code-review-and-collaboration-ci"></div>
+
+<p>Notice that "fail fast" doesn't always win. Every separate job pays for a runner, a checkout and a cache restore (half a minute in this model, often more in real life), so for a small project one sequential job can report a failing unit test sooner and use far less compute. Splitting pays off when the slow stages are genuinely slow: long integration suites, container builds, multi-platform matrices. Put the cheapest, most-often-failing checks first, and split only where parallelism saves more than the setup costs.</p>
+<table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Catches</th>
+<th>Typical time</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Format check</strong></td>
+<td>Style drift; ends formatting debates in review</td>
+<td>seconds</td>
+<td>Run the same formatter on save and in a pre-commit hook.</td>
+</tr>
+<tr>
+<td><strong>Build, warnings as errors</strong></td>
+<td>Compile errors, nullable warnings, analyzer findings</td>
+<td>1–3 min</td>
+<td>Treat new warnings as errors; keep a baseline for old code if needed.</td>
+</tr>
+<tr>
+<td><strong>Lint / static analysis</strong></td>
+<td>Bug patterns, complexity, banned APIs</td>
+<td>1–2 min</td>
+<td>Promote repeated review comments into rules here.</td>
+</tr>
+<tr>
+<td><strong>Unit tests</strong></td>
+<td>Logic regressions</td>
+<td>1–5 min</td>
+<td>Must be fast and deterministic, or people learn to re-run until green.</td>
+</tr>
+<tr>
+<td><strong>Integration tests</strong></td>
+<td>Wiring, SQL, serialization, real databases via Testcontainers</td>
+<td>3–10 min</td>
+<td>Run in parallel with unit tests (<a href="testing-strategy.html">testing strategy</a>).</td>
+</tr>
+<tr>
+<td><strong>Coverage threshold</strong></td>
+<td>New code without tests</td>
+<td>—</td>
+<td>Gate on coverage of <em>changed lines</em> (diff coverage), not a global number.</td>
+</tr>
+<tr>
+<td><strong>Dependency scan (SCA)</strong></td>
+<td>Known-vulnerable packages, licence problems</td>
+<td>&lt; 1 min</td>
+<td>Plus Dependabot or Renovate to keep them updated (<a href="security-fundamentals.html">supply chain</a>).</td>
+</tr>
+<tr>
+<td><strong>Secret scan</strong></td>
+<td>API keys and passwords in the diff</td>
+<td>seconds</td>
+<td>gitleaks, GitHub push protection, or Microsoft Security DevOps in Azure Pipelines.</td>
+</tr>
+<tr>
+<td><strong>PR title / commit lint</strong></td>
+<td>Messages that break changelog automation</td>
+<td>seconds</td>
+<td>Only the PR title, if you squash merge.</td>
+</tr>
+</tbody>
+</table>
+<p>The same pipeline in each ecosystem, as a GitHub Actions workflow (Azure Pipelines and GitLab CI need the same steps in a different YAML dialect):</p>
+<div class="code-tabs" data-labels="C#,Java,Python,Go,TypeScript">
+<pre><code class="language-yaml"># .github/workflows/ci.yml
+name: ci
+on:
+  pull_request:
+  push: { branches: [main] }
+permissions: { contents: read }
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with: { dotnet-version: '10.0.x' }
+      # NuGetAudit runs during restore; make vulnerable packages fail it with
+      # &lt;WarningsAsErrors&gt;NU1902;NU1903;NU1904&lt;/WarningsAsErrors&gt; in Directory.Build.props
+      - run: dotnet restore --locked-mode
+      - run: dotnet format --verify-no-changes --no-restore
+      - run: dotnet build --no-restore -c Release -warnaserror
+      - run: dotnet test --no-build -c Release --collect:&quot;XPlat Code Coverage&quot;
+</code></pre>
+<pre><code class="language-yaml"># .github/workflows/ci.yml
+name: ci
+on:
+  pull_request:
+  push: { branches: [main] }
+permissions: { contents: read }
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '21', cache: maven }
+      - run: ./mvnw -B spotless:check
+      # verify = compile, unit + integration tests, plus Checkstyle, SpotBugs
+      # and the JaCoCo coverage check if they are bound to the verify phase
+      - run: ./mvnw -B verify
+      - run: ./mvnw -B org.owasp:dependency-check-maven:check -DfailBuildOnCVSS=7
+</code></pre>
+<pre><code class="language-yaml"># .github/workflows/ci.yml
+name: ci
+on:
+  pull_request:
+  push: { branches: [main] }
+permissions: { contents: read }
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12', cache: pip }
+      - run: pip install -r requirements.lock -r requirements-dev.txt
+      - run: ruff format --check .
+      - run: ruff check .
+      - run: mypy --strict src
+      - run: pytest --cov=src --cov-fail-under=80
+      - run: pip-audit -r requirements.lock
+</code></pre>
+<pre><code class="language-yaml"># .github/workflows/ci.yml
+name: ci
+on:
+  pull_request:
+  push: { branches: [main] }
+permissions: { contents: read }
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: { go-version-file: go.mod }
+      - run: test -z &quot;$(gofmt -l .)&quot;
+      - run: go vet ./...
+      - uses: golangci/golangci-lint-action@v8
+      - run: go test -race -coverprofile=cover.out ./...
+      - run: go run golang.org/x/vuln/cmd/govulncheck@latest ./...
+</code></pre>
+<pre><code class="language-yaml"># .github/workflows/ci.yml
+name: ci
+on:
+  pull_request:
+  push: { branches: [main] }
+permissions: { contents: read }
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npx prettier --check .
+      - run: npx eslint . --max-warnings 0
+      - run: npx tsc --noEmit
+      - run: npx vitest run --coverage
+      - run: npm audit --audit-level=high
+</code></pre>
+</div>
+<p>A CI pipeline only protects <code>main</code> if it's <strong>required</strong>. Turn on branch protection (GitHub rulesets, or Azure Repos branch policies): require the status checks to pass, require at least one approving review, require branches to be up to date (or use a merge queue, which tests the PR <em>as it would be merged</em> with everything ahead of it), and block force-pushes to main.</p>
+<div class="insight">
+<p><strong>Hooks are for speed, CI is for truth.</strong> A pre-commit hook (pre-commit, husky, lefthook, Husky.Net) running the formatter and a fast lint gives feedback in seconds, but anyone can skip it with <code>--no-verify</code>, and it only runs on machines where it's installed. CI is the gate that can't be skipped. Run the same commands in both, from the same config, so they never disagree.</p>
+</div>
+<h2 id="pair-and-mob-programming">Pair and mob programming</h2>
+<p>Review after the fact isn't the only way to get a second pair of eyes. <strong>Pairing</strong> puts them there while the code is written: two people, one problem, one keyboard (or a shared editor session such as VS Code Live Share or JetBrains Code With Me). <strong>Mob</strong> (or <em>ensemble</em>) programming puts the whole team on one problem.</p>
+<table>
+<thead>
+<tr>
+<th>Style</th>
+<th>How it works</th>
+<th>Good for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Driver / navigator</strong></td>
+<td>The driver types; the navigator thinks ahead, watches for mistakes and keeps the bigger picture. Swap every 15–30 minutes.</td>
+<td>General feature work</td>
+</tr>
+<tr>
+<td><strong>Ping-pong</strong></td>
+<td>A writes a failing test, B makes it pass and writes the next failing test, and so on.</td>
+<td>TDD, and keeping both people engaged</td>
+</tr>
+<tr>
+<td><strong>Strong-style</strong></td>
+<td>"For an idea to go from your head into the computer, it must go through someone else's hands." The navigator decides, the driver types.</td>
+<td>Onboarding, and transferring knowledge from expert to newcomer</td>
+</tr>
+<tr>
+<td><strong>Mob / ensemble</strong></td>
+<td>The whole team, one screen, a driver who rotates every few minutes.</td>
+<td>Hard design problems, a new codebase, incidents, setting team conventions</td>
+</tr>
+<tr>
+<td><strong>Async pairing</strong></td>
+<td>Hand over a branch with a short note at the end of the day, across time zones.</td>
+<td>Distributed teams</td>
+</tr>
+</tbody>
+</table>
+<p>Pairing costs two people's time, but it isn't twice the cost: pairs get stuck less, produce fewer defects, and the review is effectively done when they finish. Many teams that pair let a paired change merge with a single quick approval. It's at its best for <strong>complex or risky code, onboarding, and unfamiliar areas</strong>, and at its worst for routine work that one person can do on autopilot. Pairing all day, every day is exhausting; a few focused hours with breaks works better.</p>
+<h2 id="documentation-as-code">Documentation as code</h2>
+<p>Documentation goes stale when it lives somewhere else. <strong>Docs as code</strong> means keeping docs in the repository, in plain text (Markdown, AsciiDoc), changed in the same PR as the code, reviewed the same way, and built and published by CI. A PR that changes behaviour and leaves the README wrong should fail review for the same reason a PR without tests would.</p>
+<h3 id="the-readme-is-the-front-door">The README is the front door</h3>
+<p>A newcomer should get from <code>git clone</code> to a running app and a passing test suite using only the README, in under an hour. Aim for these sections, in this order:</p>
+<ol>
+<li><strong>What it is</strong>, in two sentences, and who uses it.</li>
+<li><strong>Quick start</strong>: prerequisites with versions, then one command to build, one to run, one to test.</li>
+<li><strong>Configuration</strong>: environment variables and where secrets come from (never the secrets themselves; see <a href="configuration-and-secrets.html">configuration and secrets</a>).</li>
+<li><strong>Architecture at a glance</strong>: one diagram and links to the ADRs.</li>
+<li><strong>How to contribute</strong>: link to <code>CONTRIBUTING.md</code> (branching, commit convention, how to run checks locally, review expectations).</li>
+<li><strong>Ownership and support</strong>: team, chat channel, on-call, dashboards, runbooks.</li>
+</ol>
+<h3 id="four-kinds-of-documentation">Four kinds of documentation</h3>
+<p>The <a href="https://diataxis.fr/">Diátaxis</a> framework explains why so much documentation feels unhelpful: it mixes four different kinds of document that serve four different needs.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 270" width="900" role="img" aria-label="The Diátaxis framework as a two by two grid. Tutorials are for learning by doing. How-to guides help a working user complete a task. Reference describes the machinery for a working user. Explanation helps a learner understand. The horizontal axis is action versus understanding; the vertical axis is learning versus working.">
+<text class="title" x="20" y="24">Diátaxis: write the kind of document the reader needs right now</text>
+<text class="small muted" x="250" y="50">doing (practical)</text><text class="small muted" x="610" y="50">knowing (theoretical)</text>
+<text class="small muted" x="20" y="110">learning</text><text class="small muted" x="20" y="125">(study)</text>
+<text class="small muted" x="20" y="205">working</text><text class="small muted" x="20" y="220">(on the job)</text>
+<rect class="box active" x="120" y="60" width="370" height="90" rx="10"/><text x="140" y="88" font-weight="700">Tutorials</text><text class="small" x="140" y="110">A guided lesson: "Build your first order API".</text><text class="small" x="140" y="128">Learning-oriented. Must work every time.</text>
+<rect class="box visit" x="505" y="60" width="375" height="90" rx="10"/><text x="525" y="88" font-weight="700">Explanation</text><text class="small" x="525" y="110">Background and reasons: "Why we use events".</text><text class="small" x="525" y="128">Understanding-oriented. ADRs live here.</text>
+<rect class="box visit" x="120" y="160" width="370" height="90" rx="10"/><text x="140" y="188" font-weight="700">How-to guides</text><text class="small" x="140" y="210">Steps for a real task: "Rotate the DB password".</text><text class="small" x="140" y="228">Goal-oriented. Assumes competence. Runbooks.</text>
+<rect class="box done" x="505" y="160" width="375" height="90" rx="10"/><text x="525" y="188" font-weight="700">Reference</text><text class="small" x="525" y="210">Exact facts: API docs, config keys, CLI flags.</text><text class="small" x="525" y="228">Information-oriented. Generate it from code.</text>
+</svg>
+<figcaption>When a page tries to be a tutorial, a reference and an explanation at once, it ends up being none of them well.</figcaption>
+</figure>
+
+<h3 id="diagrams-api-docs-and-onboarding-as-code">Diagrams, API docs and onboarding as code</h3>
+<ul>
+<li><strong>Diagrams as code</strong>: <a href="https://mermaid.js.org/">Mermaid</a> renders in GitHub and Azure DevOps Markdown; PlantUML and Structurizr (for C4 models) are common alternatives. Text diagrams get diffed, reviewed and updated in the same PR, unlike a PNG exported from a drawing tool two years ago.</li>
+<li><strong>API reference generated from code</strong>: OpenAPI from ASP.NET Core / springdoc / FastAPI / NestJS, published in CI.</li>
+<li><strong>Onboarding as code</strong>: a dev container (<code>.devcontainer/devcontainer.json</code>) or a <code>make setup</code> / <code>./scripts/bootstrap</code> script, so "set up your machine" is a command, not a wiki page. Add <code>CONTRIBUTING.md</code>, <code>CODEOWNERS</code>, the PR template, and a "good first issue" label.</li>
+<li><strong>Check docs in CI</strong>: link checkers, Markdown lint, spell check (cspell, Vale), and run the code samples (doctests) so examples can't rot.</li>
+</ul>
+<h3 id="doc-comments-the-contract-not-the-implementation">Doc comments: the contract, not the implementation</h3>
+<p>Public APIs deserve a doc comment that says what the caller needs to know: what it does, what each parameter means, units and ranges, what it returns, what it throws. Your IDE shows it on hover, and generators turn it into reference docs. Don't restate the code; say what the code can't. (See <a href="clean-code.html">Clean Code</a> on comments that explain <em>why</em>.)</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">/// &lt;summary&gt;
+/// Returns the number of items to skip to reach the first item of a page.
+/// &lt;/summary&gt;
+/// &lt;param name=&quot;page&quot;&gt;1-based page number.&lt;/param&gt;
+/// &lt;param name=&quot;size&quot;&gt;Items per page, from 1 to &lt;see cref=&quot;MaxPageSize&quot;/&gt;.&lt;/param&gt;
+/// &lt;returns&gt;&lt;c&gt;(page - 1) * size&lt;/c&gt;; 0 for the first page.&lt;/returns&gt;
+/// &lt;exception cref=&quot;ArgumentOutOfRangeException&quot;&gt;
+/// &lt;paramref name=&quot;page&quot;/&gt; is below 1, or &lt;paramref name=&quot;size&quot;/&gt; is outside 1..MaxPageSize.
+/// &lt;/exception&gt;
+/// &lt;example&gt;&lt;code&gt;Paging.PageOffset(3, 50) // 100&lt;/code&gt;&lt;/example&gt;
+public static int PageOffset(int page, int size)
+</code></pre>
+<pre><code class="language-java">/**
+ * Returns the number of items to skip to reach the first item of a page.
+ *
+ * &lt;p&gt;Example: {@code pageOffset(3, 50)} returns {@code 100}.
+ *
+ * @param page 1-based page number
+ * @param size items per page, from 1 to {@link #MAX_PAGE_SIZE}
+ * @return {@code (page - 1) * size}; 0 for the first page
+ * @throws IllegalArgumentException if {@code page &lt; 1} or {@code size} is out of range
+ */
+public static int pageOffset(int page, int size)
+</code></pre>
+<pre><code class="language-python">def page_offset(page: int, size: int) -&gt; int:
+    &quot;&quot;&quot;Return the number of items to skip to reach the first item of a page.
+
+    Args:
+        page: 1-based page number.
+        size: Items per page, from 1 to MAX_PAGE_SIZE.
+
+    Returns:
+        ``(page - 1) * size``; 0 for the first page.
+
+    Raises:
+        ValueError: If ``page`` is below 1 or ``size`` is out of range.
+
+    &gt;&gt;&gt; page_offset(3, 50)
+    100
+    &quot;&quot;&quot;
+</code></pre>
+<pre><code class="language-go">// PageOffset returns the number of items to skip to reach the first item
+// of a page. Page is 1-based; size must be between 1 and MaxPageSize.
+// For the first page the offset is 0.
+//
+// It returns an error wrapping [ErrOutOfRange] if page or size is out of range.
+//
+//  offset, err := PageOffset(3, 50) // 100, nil
+func PageOffset(page, size int) (int, error)
+</code></pre>
+<pre><code class="language-typescript">/**
+ * Returns the number of items to skip to reach the first item of a page.
+ *
+ * @param page - 1-based page number
+ * @param size - items per page, from 1 to {@link MAX_PAGE_SIZE}
+ * @returns `(page - 1) * size`; 0 for the first page
+ * @throws {RangeError} if `page` is below 1 or `size` is out of range
+ *
+ * @example
+ * pageOffset(3, 50); // 100
+ */
+export function pageOffset(page: number, size: number): number
+</code></pre>
+</div>
+<p>Go's convention is worth noticing: the comment starts with the name of the thing and reads as a sentence, and <code>go doc</code> and pkg.go.dev render it directly. Python's <code>&gt;&gt;&gt;</code> example is a real test if you run <code>python -m doctest</code> or <code>pytest --doctest-modules</code>.</p>
+<h2 id="working-with-ai-assistants">Working with AI assistants</h2>
+<p>AI coding assistants write a lot of plausible code very quickly. That shifts the bottleneck to <strong>review</strong>, and every habit on this page matters more, not less. Treat AI output like a PR from a fast, well-read contributor who has never seen your codebase, can't run it, and never says "I'm not sure".</p>
+<table>
+<thead>
+<tr>
+<th>Failure mode</th>
+<th>What it looks like</th>
+<th>Defence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hallucinated APIs</strong></td>
+<td>A method or config option that doesn't exist, or existed three versions ago</td>
+<td>Compile and run it; read the real docs for anything unfamiliar.</td>
+</tr>
+<tr>
+<td><strong>Hallucinated packages ("slopsquatting")</strong></td>
+<td><code>pip install</code> / <code>npm install</code> of a plausible package name that attackers have registered</td>
+<td>Check every new dependency exists, is maintained and is the one you meant (<a href="security-fundamentals.html">supply chain</a>). Let SCA run in CI.</td>
+</tr>
+<tr>
+<td><strong>Insecure defaults</strong></td>
+<td>String-built SQL, disabled TLS validation, <code>allow all</code> CORS, secrets in code, MD5 for passwords</td>
+<td>Review AI code for <a href="security-fundamentals.html">security</a> as strictly as anyone's; keep secret scanning and analyzers on.</td>
+</tr>
+<tr>
+<td><strong>Tests that test nothing</strong></td>
+<td>Tests that mock the unit under test, assert only "not null", or were written to match the (wrong) code</td>
+<td>Read the assertions. Break the code on purpose and check a test fails; mutation testing does this automatically (<a href="testing-strategy.html">testing strategy</a>).</td>
+</tr>
+<tr>
+<td><strong>Confident, subtle logic errors</strong></td>
+<td>Off-by-one, wrong time zone, missing <code>await</code>, a race</td>
+<td>Same priority order as any review: correctness first.</td>
+</tr>
+<tr>
+<td><strong>Off-pattern code</strong></td>
+<td>A new HTTP client instead of the shared one, a different error-handling style, a new library for something you already do</td>
+<td>Point the assistant at examples in your codebase; review for design fit.</td>
+</tr>
+<tr>
+<td><strong>Huge diffs</strong></td>
+<td>800 lines generated in a minute</td>
+<td>The small-PR rule still applies. Generate in small steps and commit each one.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tests-as-the-spec">Tests as the spec</h3>
+<p>The most reliable way to work with an assistant is to <strong>write (or at least carefully review) the tests first, and let the tests define "done"</strong>. Tests are precise in a way a prompt can't be: "page numbers start at 1" is ambiguous until a test says <code>offset(1, 50) == 0</code> and <code>offset(0, 50)</code> throws. Then the assistant's job is to make them pass, and you can verify that in seconds instead of reasoning about the code line by line.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">public class PagingTests
+{
+    [Theory]
+    [InlineData(1, 50, 0)]     // first page starts at the beginning
+    [InlineData(3, 50, 100)]   // pages are 1-based
+    [InlineData(2, 1, 1)]
+    [InlineData(7, 100, 600)]  // largest allowed page size
+    public void Offset_skips_previous_pages(int page, int size, int expected) =&gt;
+        Assert.Equal(expected, Paging.PageOffset(page, size));
+
+    [Theory]
+    [InlineData(0, 50)]
+    [InlineData(-1, 50)]
+    [InlineData(1, 0)]
+    [InlineData(1, 101)]
+    public void Out_of_range_input_is_rejected(int page, int size) =&gt;
+        Assert.Throws&lt;ArgumentOutOfRangeException&gt;(() =&gt; Paging.PageOffset(page, size));
+}
+</code></pre>
+<pre><code class="language-java">class PagingTest {
+    @ParameterizedTest(name = &quot;page {0}, size {1} -&gt; offset {2}&quot;)
+    @CsvSource({&quot;1, 50, 0&quot;, &quot;3, 50, 100&quot;, &quot;2, 1, 1&quot;, &quot;7, 100, 600&quot;})
+    void offsetSkipsPreviousPages(int page, int size, int expected) {
+        assertEquals(expected, Paging.pageOffset(page, size));
+    }
+
+    @ParameterizedTest
+    @CsvSource({&quot;0, 50&quot;, &quot;-1, 50&quot;, &quot;1, 0&quot;, &quot;1, 101&quot;})
+    void outOfRangeInputIsRejected(int page, int size) {
+        assertThrows(IllegalArgumentException.class, () -&gt; Paging.pageOffset(page, size));
+    }
+}
+</code></pre>
+<pre><code class="language-python">import pytest
+from paging import page_offset
+
+@pytest.mark.parametrize(&quot;page, size, expected&quot;, [
+    (1, 50, 0),      # first page starts at the beginning
+    (3, 50, 100),    # pages are 1-based
+    (2, 1, 1),
+    (7, 100, 600),   # largest allowed page size
+])
+def test_offset_skips_previous_pages(page, size, expected):
+    assert page_offset(page, size) == expected
+
+@pytest.mark.parametrize(&quot;page&quot;, [0, -1])
+def test_page_below_one_is_rejected(page):
+    with pytest.raises(ValueError, match=&quot;page starts at 1&quot;):
+        page_offset(page, 50)
+
+@pytest.mark.parametrize(&quot;size&quot;, [0, 101])
+def test_size_outside_limits_is_rejected(size):
+    with pytest.raises(ValueError, match=&quot;size&quot;):
+        page_offset(1, size)
+</code></pre>
+<pre><code class="language-go">func TestPageOffset(t *testing.T) {
+    tests := []struct {
+        name             string
+        page, size, want int
+    }{
+        {&quot;first page starts at 0&quot;, 1, 50, 0},
+        {&quot;pages are 1-based&quot;, 3, 50, 100},
+        {&quot;size one&quot;, 2, 1, 1},
+        {&quot;largest allowed size&quot;, 7, 100, 600},
+    }
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got, err := PageOffset(tt.page, tt.size)
+            if err != nil || got != tt.want {
+                t.Fatalf(&quot;PageOffset(%d, %d) = %d, %v; want %d, nil&quot;, tt.page, tt.size, got, err, tt.want)
+            }
+        })
+    }
+}
+
+func TestPageOffsetRejectsBadInput(t *testing.T) {
+    for _, in := range [][2]int{{0, 50}, {-1, 50}, {1, 0}, {1, 101}} {
+        if _, err := PageOffset(in[0], in[1]); !errors.Is(err, ErrOutOfRange) {
+            t.Errorf(&quot;PageOffset(%d, %d): want ErrOutOfRange, got %v&quot;, in[0], in[1], err)
+        }
+    }
+}
+</code></pre>
+<pre><code class="language-typescript">import { describe, it, expect } from &quot;vitest&quot;;
+import { pageOffset } from &quot;./paging&quot;;
+
+describe(&quot;pageOffset&quot;, () =&gt; {
+  it.each([
+    [1, 50, 0],     // first page starts at the beginning
+    [3, 50, 100],   // pages are 1-based
+    [2, 1, 1],
+    [7, 100, 600],  // largest allowed page size
+  ])(&quot;page %i, size %i -&gt; offset %i&quot;, (page, size, expected) =&gt; {
+    expect(pageOffset(page, size)).toBe(expected);
+  });
+
+  it.each([
+    [0, 50], [-1, 50], [1, 0], [1, 101],
+  ])(&quot;rejects page %i, size %i&quot;, (page, size) =&gt; {
+    expect(() =&gt; pageOffset(page, size)).toThrow(RangeError);
+  });
+});
+</code></pre>
+</div>
+<p>A workflow that holds up:</p>
+<ol>
+<li><strong>Describe the change in small steps</strong>, as you would split a PR. Give the assistant the relevant files, an example of the house style, and the constraints ("use the existing <code>HttpClientFactory</code>", "no new dependencies").</li>
+<li><strong>Agree the tests first.</strong> Write them, or have the assistant draft them and review them <em>before</em> any implementation exists. Check they fail for the right reason.</li>
+<li><strong>Generate the implementation</strong>, run the tests, the linters and the type checker. Iterate on failures by pasting the actual error, not a paraphrase.</li>
+<li><strong>Review the diff yourself</strong>, in the same order as any review: correctness, design, security, tests, readability. If you can't explain a line, you can't approve it.</li>
+<li><strong>You are the author of record.</strong> The PR has your name on it; "the AI wrote it" isn't a defence in a postmortem. Say in the description which parts were generated if your team asks for it.</li>
+</ol>
+<p>AI reviewers (Copilot code review and similar) are useful as a first pass that catches typos, obvious bugs and missing null checks before a human looks. They complement human review; they don't replace the person who understands what the change is <em>for</em>.</p>
+<h2 id="when-to-use-what">When to use what</h2>
+<div class="compare">
+<div class="good">
+<h4 id="do">Do</h4>
+<ul>
+<li>Merge small changes to main at least daily, with unfinished work behind flags.</li>
+<li>Keep PRs reviewable in one sitting (roughly under 400 hand-written lines), and stack them when they depend on each other.</li>
+<li>Write commit messages and PR descriptions that explain <em>why</em>, and lint the convention automatically.</li>
+<li>Review in priority order: correctness, design, security, tests, readability, then nits.</li>
+<li>Label comments (<code>issue</code>, <code>suggestion</code>, <code>question</code>, <code>nit</code>, <code>praise</code>) and say clearly what blocks.</li>
+<li>Respond to reviews within a business day.</li>
+<li>Automate every mechanical check as a required CI gate, mirrored in fast local hooks.</li>
+<li>Turn repeated review comments into checklists, tests and lint rules.</li>
+<li>Record decisions that are costly to reverse as ADRs in the repo.</li>
+<li>Keep docs next to the code and change them in the same PR.</li>
+<li>Give AI assistants tests as the spec, and review their output like anyone else's.</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="dont">Don't</h4>
+<ul>
+<li>Keep long-lived feature branches that merge once a month.</li>
+<li>Send 2,000-line PRs, or mix refactoring, formatting and behaviour changes in one.</li>
+<li>Write "fix", "wip", "changes" as the only record of a change on main.</li>
+<li>Rewrite history others have built on, or use <code>--force</code> instead of <code>--force-with-lease</code>.</li>
+<li>Spend review time on things a formatter or linter could check.</li>
+<li>Approve a diff you didn't understand, or comment on the person instead of the code.</li>
+<li>Let PRs wait days for a first response.</li>
+<li>Leave feature flags in the code after they're fully rolled out.</li>
+<li>Keep architecture knowledge only in people's heads or in a wiki nobody updates.</li>
+<li>Merge AI-generated code, or new dependencies, that nobody has read.</li>
+</ul>
+</div>
+</div>
+<h2 id="pitfalls">Pitfalls</h2>
+<div class="pitfall">
+<p><strong>The rubber stamp.</strong> A team's review approval rate was 99%, with a median review time of four minutes for PRs of 900 lines. An authorization check was missing in a new endpoint for three months. <strong>Fix:</strong> smaller PRs, a description that says where to look, and reviewers who are honest about what they checked ("I reviewed the API layer only; someone from payments should check the ledger part"). Measure PR size and time-to-first-review, not approval counts.</p>
+</div>
+<div class="pitfall">
+<p><strong>Death by nits.</strong> Every PR got thirty comments about naming and spacing, rounds took a week, and juniors stopped sending PRs until they were "perfect", which made them huge. <strong>Fix:</strong> a formatter and linter in CI, <code>nit:</code> labels that are explicitly optional, and the rule that a PR which improves code health gets approved even if it isn't how you'd have written it.</p>
+</div>
+<div class="pitfall">
+<p><strong>The force-push that ate a colleague's work.</strong> Two people pushed to the same branch. One rebased and ran <code>git push --force</code>, silently discarding the other's two commits. <strong>Fix:</strong> <code>--force-with-lease</code> always (alias it), branch protection on shared branches, and a team agreement about who owns a branch. <code>git reflog</code> on the overwritten machine can usually recover the commits.</p>
+</div>
+<div class="pitfall">
+<p><strong>The red build everyone ignores.</strong> A flaky test failed about one run in five, so people re-ran CI until it went green. A real failure in the same test went unnoticed for a week. <strong>Fix:</strong> treat flaky tests as bugs. Quarantine them with an owner and a deadline, and fix the cause (time, ordering, shared state; see <a href="testing-strategy.html">testing strategy</a>). A required gate that people routinely bypass is worse than none.</p>
+</div>
+<div class="pitfall">
+<p><strong>The ADR nobody could find.</strong> The team had written good ADRs, in a wiki space that was migrated and lost. A new lead reversed a decision whose reason was "the vendor's API rate-limits per tenant", and production fell over. <strong>Fix:</strong> ADRs live in the repo (<code>docs/adr/</code>), are linked from the code they affect, and are superseded, never deleted.</p>
+</div>
+<div class="pitfall">
+<p><strong>The plausible package.</strong> An assistant suggested <code>pip install fastapi-jwt-helper</code>. It didn't exist when the model was trained; an attacker registered it later, with a post-install script that read environment variables. <strong>Fix:</strong> every new dependency is a review item: does it exist, who maintains it, how many users, is it the official one? Lockfiles, SCA and a private registry with an allow-list for production builds.</p>
+</div>
+<h2 id="checklist">Checklist</h2>
+<ul>
+<li><code>main</code> is always releasable; branches live hours to a couple of days; unfinished work hides behind flags with an owner and an expiry date.</li>
+<li>PRs are small, single-purpose and self-reviewed, with a description that says what, why, how it was tested and where to start reading.</li>
+<li>Commit messages (or squash PR titles) follow Conventional Commits and are linted; history on main builds at every commit.</li>
+<li><code>--force-with-lease</code>, <code>pull.rebase</code>, <code>rerere</code> and <code>rebase.updateRefs</code> are configured.</li>
+<li>Reviewers read the description first and work through correctness, design, security, tests and readability before nits.</li>
+<li>Comments are labelled, explain the reason, and say what blocks; the review ends with a summary.</li>
+<li>First response to a PR comes within one business day; <code>CODEOWNERS</code> routes reviews automatically.</li>
+<li>CI gates (format, build, lint, tests, coverage of changed lines, SCA, secret scan) are required by branch protection, and the same checks run in local hooks.</li>
+<li>Repeated review comments are turned into tests, checklists or lint rules.</li>
+<li>Significant decisions are ADRs in the repo; the README gets a newcomer to a passing test run in under an hour.</li>
+<li>AI-generated code and new dependencies get the same review as any other code, with tests agreed first.</li>
+</ul>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<p><summary>Your team uses GitFlow and releases monthly. Every release week is a merge-conflict marathon. What would you change first, and what has to be in place before you can?</summary></p>
+<p>Move toward trunk-based development: short-lived branches merged to main at least daily, so conflicts stay small and are found while the change is fresh. Before you can, you need things that make merging unfinished work safe: a required CI pipeline that people trust (fast and not flaky), feature flags so incomplete features can merge switched off, and small PRs so daily merging is realistic. Release branches can stay if you need to support old versions, but cut them from main and fix bugs on main first, then cherry-pick.</p>
+</details>
+<details class="quiz">
+<p><summary>A colleague's PR is 1,800 lines: a new feature, a rename across 40 files, and a dependency upgrade. How do you respond, constructively?</summary></p>
+<p>Ask for it to be split, and offer a concrete plan: the dependency upgrade alone (mechanical, CI verifies it), then the rename alone (mechanical, skim it), then the feature on top, ideally as a stack so the author isn't blocked. Explain <em>why</em>: you'd review the feature far more carefully without 1,400 lines of noise around it. If splitting is genuinely impossible right now, ask for a description that says which files are mechanical and where the real logic is, and review the logic first. Next time, suggest the author check in early with a draft PR.</p>
+</details>
+<details class="quiz">
+<p><summary>You rebased your feature branch onto main and the commit hashes all changed. Why? And when is this a problem?</summary></p>
+<p>A commit's hash covers its content <em>and</em> its parent's hash. Rebasing gives your first commit a new parent (the tip of main), so its hash changes, which changes the parent of the next commit, and so on up the branch. It's a problem only if somebody else has those old commits: a colleague who branched from yours, or a pushed branch someone has checked out. They now have commits that look like duplicates, and pushing requires a force-push. That's why the golden rule is to rewrite only commits nobody else has built on, and to use <code>--force-with-lease</code>.</p>
+</details>
+<details class="quiz">
+<p><summary>Your commit history since v2.3.1 contains: <code>fix(api): handle empty cart</code>, <code>feat(search): filter by date</code>, <code>docs: fix typo</code>, and <code>refactor(core)!: drop .NET 6 support</code>. What's the next version, and why?</summary></p>
+<p><strong>3.0.0.</strong> The <code>!</code> on the refactor marks a breaking change, which forces a MAJOR bump regardless of the type; the <code>feat</code> alone would have given 2.4.0 and the <code>fix</code> alone 2.3.2. <code>docs</code> doesn't affect the version. (If the project were still at 0.x, many tools would bump the minor version instead, because in semver 0.x anything may change.)</p>
+</details>
+<details class="quiz">
+<p><summary>A reviewer leaves 12 comments: 9 about formatting, 2 about naming, and 1 noting that a new endpoint doesn't check that the order belongs to the caller. What should change, on both sides?</summary></p>
+<p>The authorization comment is the only one that matters; it should be labelled <code>issue (blocking)</code> and stated first, because it's a security hole (IDOR). The 9 formatting comments shouldn't exist: add the formatter to the editor, a pre-commit hook and CI, and the whole category disappears. The naming comments should be labelled <code>nit</code> or <code>suggestion</code> so the author knows they're optional. The author should fix the authorization check, add a test that another user gets a 403/404, and search for the same missing check in other endpoints, then maybe propose a policy or analyzer that makes it hard to forget.</p>
+</details>
+<details class="quiz">
+<p><summary>An AI assistant generated a 300-line service and 20 passing tests in two minutes. What do you check before you approve it?</summary></p>
+<p>That the tests actually specify the behaviour: read the assertions, check they don't mock the unit under test, and break the code on purpose (or run mutation testing) to confirm the tests fail. Check every new dependency exists and is the real, maintained package. Then review like any PR: correctness (edge cases, errors, concurrency), design fit (does it use our existing clients, error handling and patterns?), security (input handling, authz, secrets, logging), readability. If you can't explain a line, ask or rewrite it. Better still, next time agree the tests first and generate in smaller steps.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Trunk-based</strong>Short-lived branches, merge to main daily, flags hide unfinished work.</div>
+<div><strong>Deploy ≠ release</strong>Ship code dark; turn it on with a flag; roll back with the flag.</div>
+<div><strong>Small PRs</strong>Under ~400 hand-written lines; reviewable in one sitting.</div>
+<div><strong>Stacked PRs</strong>Each PR targets the branch below; <code>git rebase --update-refs</code>.</div>
+<div><strong>Commit message</strong><code>type(scope)!: imperative subject</code>, blank line, body says why.</div>
+<div><strong>SemVer from commits</strong><code>fix</code> → patch, <code>feat</code> → minor, <code>!</code>/<code>BREAKING CHANGE</code> → major.</div>
+<div><strong>Squash merge</strong>One commit per PR; lint the PR title.</div>
+<div><strong>Rebase</strong>New hashes; never on shared history; <code>--force-with-lease</code>.</div>
+<div><strong>git bisect run</strong>Exit 0 good, 1–127 bad, 125 skip.</div>
+<div><strong>Review order</strong>Description → correctness → design → security → tests → readability → nits.</div>
+<div><strong>Comment labels</strong><code>issue (blocking)</code>, <code>suggestion</code>, <code>question</code>, <code>nit</code>, <code>praise</code>.</div>
+<div><strong>Latency</strong>First response within one business day.</div>
+<div><strong>Feedback ladder</strong>Comment → pattern → checklist → guidance → lint rule.</div>
+<div><strong>ADR</strong>Context, decision, consequences; numbered; superseded, never deleted.</div>
+<div><strong>CI gates</strong>Format, build, lint, test, diff coverage, SCA, secret scan; required.</div>
+<div><strong>Diátaxis</strong>Tutorial, how-to, reference, explanation: one kind per page.</div>
+<div><strong>AI code</strong>Tests first as the spec; verify packages; you're the author of record.</div>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li>Google, <a href="https://google.github.io/eng-practices/">Engineering Practices: code review</a> (both the reviewer's and the author's guide, including Small CLs)</li>
+<li><a href="https://www.conventionalcommits.org/">Conventional Commits</a>, <a href="https://semver.org/">Semantic Versioning</a>, <a href="https://conventionalcomments.org/">Conventional Comments</a>, Chris Beams, <a href="https://cbea.ms/git-commit/">How to Write a Git Commit Message</a></li>
+<li><a href="https://trunkbaseddevelopment.com/">Trunk Based Development</a>; Martin Fowler, <a href="https://martinfowler.com/articles/branching-patterns.html">Patterns for Managing Source Code Branches</a>; Pete Hodgson, <a href="https://martinfowler.com/articles/feature-toggles.html">Feature Toggles</a>; <a href="https://openfeature.dev/">OpenFeature</a></li>
+<li><a href="https://git-scm.com/book/en/v2">Pro Git</a> (free), especially <em>Rewriting History</em> and <em>Git Tools: Rerere</em>; <a href="https://git-scm.com/docs/git-bisect">git bisect</a> reference</li>
+<li>Michael Nygard, <a href="https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions">Documenting Architecture Decisions</a>; <a href="https://adr.github.io/">adr.github.io</a> and <a href="https://adr.github.io/madr/">MADR</a></li>
+<li><a href="https://diataxis.fr/">Diátaxis</a>; <a href="https://www.writethedocs.org/guide/docs-as-code/">Docs as Code</a> (Write the Docs)</li>
+<li><a href="https://dora.dev/">DORA research</a> and <em>Accelerate</em> (Forsgren, Humble, Kim); SmartBear, <em>Best Kept Secrets of Peer Code Review</em> (the Cisco study)</li>
+<li>Release tooling: <a href="https://github.com/googleapis/release-please">release-please</a>, <a href="https://semantic-release.gitbook.io/">semantic-release</a>, <a href="https://commitlint.js.org/">commitlint</a></li>
+<li>Birgitta Böckeler and colleagues on <a href="https://martinfowler.com/articles/on-pair-programming.html">pair programming</a>; Woody Zuill, <em>Software Teaming</em> (mob programming)</li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="security-fundamentals.html"><small>&larr; PREVIOUS</small>Secure Coding Fundamentals</a><span></span></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-the-pull-request-nobody-could-review">The problem: the pull request nobody could review</a></li>
+<li><a href="#the-mental-model-a-change-is-a-batch-moving-through-feedback-loops">The mental model: a change is a batch moving through feedback loops</a></li>
+<li><a href="#git-workflows-how-work-flows-back-to-main">Git workflows: how work flows back to main</a><ul>
+<li><a href="#feature-flags-separate-deploy-from-release">Feature flags: separate deploy from release</a></li>
+</ul>
+</li>
+<li><a href="#small-pull-requests-and-stacking-them">Small pull requests, and stacking them</a><ul>
+<li><a href="#how-to-split-a-change">How to split a change</a></li>
+<li><a href="#stacked-pull-requests">Stacked pull requests</a></li>
+</ul>
+</li>
+<li><a href="#commit-messages-and-conventional-commits">Commit messages and Conventional Commits</a></li>
+<li><a href="#merge-rebase-or-squash">Merge, rebase or squash</a><ul>
+<li><a href="#git-bisect-history-as-a-debugging-tool">git bisect: history as a debugging tool</a></li>
+</ul>
+</li>
+<li><a href="#how-to-review">How to review</a><ul>
+<li><a href="#what-to-look-for-in-order">What to look for, in order</a></li>
+<li><a href="#writing-review-comments">Writing review comments</a></li>
+<li><a href="#review-latency-and-process">Review latency and process</a></li>
+</ul>
+</li>
+<li><a href="#receiving-feedback">Receiving feedback</a><ul>
+<li><a href="#turning-feedback-into-lasting-skill">Turning feedback into lasting skill</a></li>
+</ul>
+</li>
+<li><a href="#pr-descriptions">PR descriptions</a></li>
+<li><a href="#architecture-decision-records">Architecture decision records</a></li>
+<li><a href="#ci-quality-gates">CI quality gates</a></li>
+<li><a href="#pair-and-mob-programming">Pair and mob programming</a></li>
+<li><a href="#documentation-as-code">Documentation as code</a><ul>
+<li><a href="#the-readme-is-the-front-door">The README is the front door</a></li>
+<li><a href="#four-kinds-of-documentation">Four kinds of documentation</a></li>
+<li><a href="#diagrams-api-docs-and-onboarding-as-code">Diagrams, API docs and onboarding as code</a></li>
+<li><a href="#doc-comments-the-contract-not-the-implementation">Doc comments: the contract, not the implementation</a></li>
+</ul>
+</li>
+<li><a href="#working-with-ai-assistants">Working with AI assistants</a><ul>
+<li><a href="#tests-as-the-spec">Tests as the spec</a></li>
+</ul>
+</li>
+<li><a href="#when-to-use-what">When to use what</a></li>
+<li><a href="#pitfalls">Pitfalls</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

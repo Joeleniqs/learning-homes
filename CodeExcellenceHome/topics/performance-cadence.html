@@ -1,0 +1,957 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>The Performance Cadence | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/performance-cadence.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/performance-cadence.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track" open><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html" aria-current="page">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / The Performance Cadence</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">PERFORMANCE</p><h1>The Performance Cadence</h1><p class="lede">The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets.</p><div class="meta"><span class="level level-intermediate">Intermediate → Advanced</span><span>~60 min study</span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="performance-cadence" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-speed-work-without-a-loop">The problem: speed work without a loop</h2>
+<p>A team gets a ticket: "the orders page is slow". Someone is sure the JSON serializer is to blame, so they spend two weeks rewriting it with hand-tuned buffers. The serializer gets 3× faster. The page does not get noticeably faster, because the serializer was 6% of the request and the real cost was 31 sequential database round trips. Months later a refactor quietly brings back an N+1 query, and nobody notices until a customer complains.</p>
+<p>Each step in that story is a skipped part of one loop. Nobody wrote down a goal. Nobody measured a baseline or profiled. The change was not tied to a hypothesis that could be proved wrong, and the win had no guard. <strong>Performance work is a cadence, not a talent.</strong> Run the loop and you get a faster system, along with proof of why it is faster.</p>
+<div class="rule">
+<p><strong>The rule.</strong> Never optimise without (1) a numeric goal, (2) a profile that points at the cost, and (3) a benchmark that proves the change helped. Make one change per loop, keep it only if the statistics say it is real, then add a guard so it stays fixed.</p>
+</div>
+<div class="recognize">
+<p><strong>Recognize that you are skipping the cadence when</strong></p>
+<ul>
+<li>Someone says "I think X is slow" and nobody has a flame graph or trace.</li>
+<li>A PR says "performance improvements" and changes six things at once.</li>
+<li>Results are a single number ("it took 412 ms") with no runs, no spread and no percentile.</li>
+<li>The dashboard shows <strong>average</strong> latency only.</li>
+<li>A fix from last quarter has silently regressed.</li>
+</ul>
+</div>
+<h2 id="the-cadence-at-a-glance">The cadence at a glance</h2>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 395" width="760" role="img" aria-label="The performance cadence: a cycle of eight steps from goal to repeat">
+<defs><marker id="performance-cadence-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="performance-cadence-arb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker></defs>
+<path class="edge accent" d="M455 50 Q540 48 560 74" marker-end="url(#performance-cadence-ar)"/>
+<path class="edge accent" d="M632 122 Q656 150 652 180" marker-end="url(#performance-cadence-ar)"/>
+<path class="edge accent" d="M652 228 Q656 262 632 286" marker-end="url(#performance-cadence-ar)"/>
+<path class="edge accent" d="M560 334 Q540 358 457 358" marker-end="url(#performance-cadence-ar)"/>
+<path class="edge accent" d="M305 358 Q220 358 200 336" marker-end="url(#performance-cadence-ar)"/>
+<path class="edge accent" d="M128 288 Q104 262 108 230" marker-end="url(#performance-cadence-ar)"/>
+<path class="edge accent" d="M108 182 Q104 150 128 124" marker-end="url(#performance-cadence-ar)"/>
+<path class="edge accent" d="M200 76 Q220 50 303 50" marker-end="url(#performance-cadence-ar)"/>
+<rect class="box accent" x="305" y="32" width="150" height="46" rx="8"/><text x="380" y="52" text-anchor="middle" class="title">1 · Goal / budget</text><text x="380" y="69" text-anchor="middle" class="small muted">SLO: p95 ≤ 140 ms</text>
+<rect class="box visit" x="496" y="76" width="150" height="46" rx="8"/><text x="571" y="96" text-anchor="middle" class="title">2 · Measure</text><text x="571" y="113" text-anchor="middle" class="small muted">baseline, many runs</text>
+<rect class="box visit" x="575" y="182" width="150" height="46" rx="8"/><text x="650" y="202" text-anchor="middle" class="title">3 · Profile</text><text x="650" y="219" text-anchor="middle" class="small muted">flame graph, traces</text>
+<rect class="box active" x="496" y="288" width="150" height="46" rx="8"/><text x="571" y="308" text-anchor="middle" class="title">4 · Hypothesis</text><text x="571" y="325" text-anchor="middle" class="small muted">written, with a prediction</text>
+<rect class="box active" x="305" y="332" width="150" height="46" rx="8"/><text x="380" y="352" text-anchor="middle" class="title">5 · Change ONE thing</text><text x="380" y="369" text-anchor="middle" class="small muted">one branch, one variable</text>
+<rect class="box done" x="114" y="288" width="150" height="46" rx="8"/><text x="189" y="308" text-anchor="middle" class="title">6 · Verify</text><text x="189" y="325" text-anchor="middle" class="small muted">benchmark + statistics</text>
+<rect class="box done" x="35" y="182" width="150" height="46" rx="8"/><text x="110" y="202" text-anchor="middle" class="title">7 · Guard</text><text x="110" y="219" text-anchor="middle" class="small muted">CI gate, budget test</text>
+<rect class="box path" x="114" y="76" width="150" height="46" rx="8"/><text x="189" y="96" text-anchor="middle" class="title">8 · Repeat</text><text x="189" y="113" text-anchor="middle" class="small muted">re-profile from scratch</text>
+<path class="edge bad dash" d="M266 300 L494 300" marker-end="url(#performance-cadence-arb)"/>
+<text x="380" y="292" text-anchor="middle" class="small">not significant → revert, new hypothesis</text>
+<text x="380" y="168" text-anchor="middle" class="title">The performance cadence</text>
+<text x="380" y="192" text-anchor="middle" class="small muted">one hypothesis per lap</text>
+<text x="380" y="222" text-anchor="middle" class="small">goal met at step 2? → stop optimising</text>
+</svg>
+<figcaption>Steps 1 to 3 decide <em>what</em> to change. Steps 4 to 6 decide whether the change was <em>real</em>. Step 7 stops it from regressing. The exit is in step 2: when the measurement meets the goal, you stop.</figcaption>
+</figure>
+
+<p>Here is the whole loop run on a simulated endpoint. Watch each component's bar shrink. Notice the change that gets <strong>reverted</strong> because the statistics said it did nothing, and notice where the loop <strong>stops</strong> even though ideas are left. Change the target or the noise and run it again.</p>
+<div class="viz" data-viz="performance-cadence-loop"></div>
+
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · GOAL</small><strong>A number users feel</strong><p>p95/p99 latency, throughput, memory or cost, at a stated load. Not "faster".</p></div>
+<div class="flow-step"><small>2 · MEASURE</small><strong>Baseline with spread</strong><p>Same environment, realistic data, many runs. Record a distribution, not a value.</p></div>
+<div class="flow-step"><small>3 · PROFILE</small><strong>Find the widest cost</strong><p>Flame graphs for CPU, traces for waiting, allocation profiles for GC.</p></div>
+<div class="flow-step"><small>4 · HYPOTHESIS</small><strong>Predict before coding</strong><p>"Batching cuts DB from 155 to ~40 ms because of 31 round trips."</p></div>
+<div class="flow-step"><small>5 · CHANGE</small><strong>One variable</strong><p>One commit per idea, so the result is attributable.</p></div>
+<div class="flow-step"><small>6 · VERIFY</small><strong>Statistics, not vibes</strong><p>Compare distributions. Keep it only if it is significant and matches the prediction.</p></div>
+<div class="flow-step"><small>7 · GUARD</small><strong>Lock in the win</strong><p>A CI benchmark gate or a deterministic budget test (allocations, queries).</p></div>
+<div class="flow-step"><small>8 · REPEAT</small><strong>The profile changed</strong><p>Fixing the top item reshuffles the ranking. Measure again.</p></div>
+</div>
+
+<h2 id="1-define-the-goal-slos-percentiles-and-why-averages-lie">1 · Define the goal: SLOs, percentiles and why averages lie</h2>
+<p>A performance goal has four parts: a <strong>metric</strong> (latency, throughput, memory, cost), a <strong>statistic</strong> (p95, p99, max), a <strong>threshold</strong>, and a <strong>load</strong>. For example: "<code>GET /orders</code> p95 ≤ 140 ms and p99 ≤ 400 ms at 200 req/s, error rate &lt; 0.1%". A Service Level Objective (SLO) is that sentence with a time window ("over 28 days").</p>
+<p>Latency is never a bell curve. It has a hard floor (the fast path) and a long tail (cache misses, GC pauses, lock waits, retries, cold connections). Step through the visualizer below to see why the mean misleads, what a tail regression looks like, how fan-out turns a backend's p99 into a page's typical case, and how a load tester can hide a stall completely (<strong>coordinated omission</strong>).</p>
+<div class="viz" data-viz="performance-cadence-latency"></div>
+
+<div class="insight">
+<p><strong>Insight</strong>
+Percentiles answer "how bad is it for the unluckiest X% of requests?", which is the question users and SLOs ask. The mean answers "how much total time did we spend?", which matters for capacity and cost. Use the mean for throughput math. Use percentiles for anything a human waits for.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: you cannot average percentiles</strong>
+The average of ten hosts' p99 is not the fleet p99. Neither is a p99 of per-minute p99s. To combine, merge the <strong>histograms</strong> and then compute the percentile. That is why HdrHistogram, OpenTelemetry exponential histograms, Prometheus histograms (not summaries) and DDSketch exist. Record histograms at the source; derive percentiles at query time.</p>
+</div>
+<p>How to record latency distributions in each stack:</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// .NET 8+: System.Diagnostics.Metrics histogram, exported by OpenTelemetry
+private static readonly Meter Meter = new(&quot;Shop.Orders&quot;);
+private static readonly Histogram&lt;double&gt; Duration =
+    Meter.CreateHistogram&lt;double&gt;(&quot;orders.get.duration&quot;, unit: &quot;ms&quot;);
+
+var start = Stopwatch.GetTimestamp();
+var orders = await repository.GetOrdersAsync(customerId, ct);
+Duration.Record(Stopwatch.GetElapsedTime(start).TotalMilliseconds,
+    new KeyValuePair&lt;string, object?&gt;(&quot;route&quot;, &quot;/orders&quot;));
+</code></pre>
+<pre><code class="language-java">// Micrometer Timer with a percentile histogram (Spring Boot exposes it to Prometheus)
+Timer timer = Timer.builder(&quot;orders.get.duration&quot;)
+        .publishPercentileHistogram()          // buckets, so percentiles can be merged later
+        .serviceLevelObjectives(Duration.ofMillis(140))
+        .register(registry);
+
+List&lt;Order&gt; orders = timer.recordCallable(() -&gt; repository.getOrders(customerId));
+</code></pre>
+<pre><code class="language-python"># prometheus_client Histogram: buckets are merged across pods by the server
+from prometheus_client import Histogram
+
+ORDERS_LATENCY = Histogram(
+    &quot;orders_get_duration_seconds&quot;, &quot;GET /orders latency&quot;,
+    buckets=(0.025, 0.05, 0.1, 0.14, 0.2, 0.4, 0.8, 1.6, 3.2),
+)
+
+with ORDERS_LATENCY.time():
+    orders = repository.get_orders(customer_id)
+</code></pre>
+<pre><code class="language-go">// prometheus/client_golang histogram; native histograms avoid choosing buckets
+var ordersLatency = promauto.NewHistogram(prometheus.HistogramOpts{
+    Name:    &quot;orders_get_duration_seconds&quot;,
+    Help:    &quot;GET /orders latency&quot;,
+    Buckets: []float64{.025, .05, .1, .14, .2, .4, .8, 1.6, 3.2},
+})
+
+timer := prometheus.NewTimer(ordersLatency)
+orders, err := repo.GetOrders(ctx, customerID)
+timer.ObserveDuration()
+</code></pre>
+<pre><code class="language-typescript">// OpenTelemetry JS: a histogram instrument; the SDK aggregates buckets
+import { metrics } from &quot;@opentelemetry/api&quot;;
+
+const meter = metrics.getMeter(&quot;shop-orders&quot;);
+const duration = meter.createHistogram(&quot;orders.get.duration&quot;, { unit: &quot;ms&quot; });
+
+const start = performance.now();
+const orders = await repository.getOrders(customerId);
+duration.record(performance.now() - start, { route: &quot;/orders&quot; });
+</code></pre>
+</div>
+<h2 id="2-measure-the-baseline-then-profile">2 · Measure the baseline, then profile</h2>
+<p><strong>Measure</strong> the way production runs: Release build, production-like data volume, the same hardware class, the target load, and enough runs to see the spread. Write the baseline down. Every later number is compared against it.</p>
+<p><strong>Profile</strong> to find where the time goes. A sampling profiler interrupts the program many times a second and records the call stack. A <strong>flame graph</strong> folds identical stacks together. The width of a box is its share of samples, and the y-axis is stack depth. Step through one being built from 23 samples, then look for the cost that hides by being spread across several callers.</p>
+<div class="viz" data-viz="performance-cadence-flame"></div>
+
+<div class="compare">
+<div class="good">
+<h4 id="cpu-on-cpu-profile">CPU (on-CPU) profile</h4>
+<p>Samples threads that are <strong>running</strong>. Answers "what burns cycles?". Use it for hot loops, serialisation, regex, hashing and allocation-heavy code. Tools: <code>dotnet-trace</code>, async-profiler <code>-e cpu</code>, pprof CPU, py-spy, <code>--cpu-prof</code>.</p>
+</div>
+<div class="warn">
+<h4 id="wall-clock-off-cpu-profile">Wall-clock / off-CPU profile</h4>
+<p>Samples threads whether they run or <strong>wait</strong> (locks, I/O, sleeps). A request that is slow because it waits on the database looks idle in a CPU profile. Use async-profiler <code>-e wall</code>, py-spy <code>--idle</code>, <code>dotnet-trace</code> thread time, Go's block and mutex profiles, or distributed tracing.</p>
+</div>
+<div class="bad">
+<h4 id="instrumenting-profiler">Instrumenting profiler</h4>
+<p>Wraps every function call with timing code. Exact call counts, but the overhead distorts small functions, so they look slower than they are. <code>cProfile</code> is this kind. Use it to count calls, and confirm timings with a sampler.</p>
+</div>
+</div>
+<div class="tip">
+<p><strong>Tip: profile the right thing</strong>
+Profile Release / optimised builds with symbols. Inlined functions vanish from stacks, so a function can "disappear" into its caller. Older JVM profilers only sampled at safepoints (<strong>safepoint bias</strong>), so hot loops were blamed on the wrong line. async-profiler and JFR avoid this. In production, continuous profilers sample at about 1% overhead and show the real workload, not the one you guessed.</p>
+</div>
+<h2 id="3-hypothesis-let-amdahls-law-pick-the-target">3 · Hypothesis: let Amdahl's law pick the target</h2>
+<p>Before you write code, write a falsifiable sentence: "<strong>Batching the 31 queries into one should cut DB time from 155 ms to about 40 ms, because the trace shows 31 sequential round trips of ~5 ms.</strong>" The prediction lets you tell a real cause from a lucky coincidence.</p>
+<p>The profile bounds the prize. If a part takes fraction <em>p</em> of the time and you make it <em>s</em> times faster, the whole thing becomes <code>1 / ((1 − p) + p / s)</code> times faster. The best you can ever do is <code>1 / (1 − p)</code>, which is what you get if you delete that part entirely.</p>
+<div class="viz" data-viz="performance-cadence-amdahl"></div>
+
+<div class="insight">
+<p><strong>Insight</strong>
+A 2× speed-up of the 60% part (1.43× overall) beats deleting the 10% part (1.11× at best). Rank ideas by <strong>profile share × plausible local speed-up ÷ effort</strong>, not by how fun or clever they are. Amdahl also applies to parallelism: the serial fraction caps how much more cores can help.</p>
+</div>
+<h2 id="4-change-one-thing-then-verify-with-statistics">4 · Change one thing, then verify with statistics</h2>
+<p>Change one variable per experiment. If you upgrade a library, change a pool size and rewrite a loop in one PR, a 10% improvement could be one 25% win hiding a 15% regression.</p>
+<p>Then verify. A benchmark is a measurement experiment, and measurements have noise. The visualizer below runs a simulated micro-benchmark and shows each classic trap: JIT warm-up tiers, noisy neighbours, outliers, confidence intervals, an A/B comparison with Welch's t-test, too few runs, and dead-code elimination.</p>
+<div class="viz" data-viz="performance-cadence-bench"></div>
+
+<p>Every harness exists to handle those traps for you. Compare the hand-rolled version with a harness in C#.</p>
+<div class="code-tabs" data-labels="Before: Stopwatch,After: BenchmarkDotNet">
+<pre><code class="language-csharp">// Measures JIT compilation, cold caches and timer resolution. One number, no spread.
+var items = Enumerable.Range(0, 1000).ToArray();
+var sw = Stopwatch.StartNew();
+for (int i = 0; i &lt; 10; i++)
+{
+    var s = &quot;&quot;;
+    foreach (var x in items) s += x + &quot;,&quot;;     // result unused: may be optimised away
+}
+Console.WriteLine($&quot;concat: {sw.ElapsedMilliseconds / 10.0} ms&quot;);   // Debug build? Who knows.
+</code></pre>
+<pre><code class="language-csharp">using System.Text;
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Running;
+
+[MemoryDiagnoser]                                  // adds Gen0 collections and bytes allocated per op
+public class JoinBench
+{
+    private int[] _items = [];
+
+    [Params(10, 1000)]                             // check how the cost scales, not one size
+    public int N;
+
+    [GlobalSetup]
+    public void Setup() =&gt; _items = Enumerable.Range(0, N).ToArray();
+
+    [Benchmark(Baseline = true)]
+    public string Concat()
+    {
+        var s = &quot;&quot;;
+        foreach (var x in _items) s += x + &quot;,&quot;;
+        return s;                                  // returning the result defeats dead-code elimination
+    }
+
+    [Benchmark]
+    public string Builder()
+    {
+        var sb = new StringBuilder();
+        foreach (var x in _items) sb.Append(x).Append(',');
+        return sb.ToString();
+    }
+}
+
+public static class Program
+{
+    // dotnet run -c Release -- --filter *JoinBench*
+    public static void Main(string[] args) =&gt;
+        BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args);
+}
+</code></pre>
+</div>
+<p>BenchmarkDotNet launches a separate process, runs pilot and warm-up iterations, picks an iteration count, removes outliers, and reports the mean, error (half the 99.9% confidence interval), standard deviation, a ratio against the baseline, and allocated bytes. On one laptop, <code>N = 1000</code> concatenation took <strong>~330 µs and 3.8 MB per call</strong> against <strong>~31 µs and 17 KB</strong> for <code>StringBuilder</code>.</p>
+<h2 id="5-guard-against-regressions-in-ci">5 · Guard against regressions in CI</h2>
+<p>A win without a guard lasts until the next refactor. There are two kinds of guard, and you want both.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 230" width="860" role="img" aria-label="CI regression guard pipeline: pull request, benchmark base and head, compare, gate, merge">
+<defs><marker id="performance-cadence-ci" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="10" y="20" class="title">Statistical gate (timing): needs a quiet runner and repeated runs</text>
+<rect class="box visit" x="10" y="34" width="150" height="58" rx="8"/><text x="85" y="58" text-anchor="middle" class="title">Pull request</text><text x="85" y="77" text-anchor="middle" class="small muted">build Release</text>
+<rect class="box active" x="185" y="34" width="150" height="58" rx="8"/><text x="260" y="58" text-anchor="middle" class="title">Bench base + head</text><text x="260" y="77" text-anchor="middle" class="small muted">same machine, interleaved</text>
+<rect class="box active" x="360" y="34" width="150" height="58" rx="8"/><text x="435" y="58" text-anchor="middle" class="title">Compare</text><text x="435" y="77" text-anchor="middle" class="small muted">benchstat · ResultsComparer</text>
+<rect class="box bad" x="535" y="34" width="150" height="58" rx="8"/><text x="610" y="58" text-anchor="middle" class="title">Gate</text><text x="610" y="77" text-anchor="middle" class="small muted">Δ &gt; 5% and p &lt; 0.05 → fail</text>
+<rect class="box done" x="710" y="34" width="140" height="58" rx="8"/><text x="780" y="58" text-anchor="middle" class="title">Merge</text><text x="780" y="77" text-anchor="middle" class="small muted">post the table on the PR</text>
+<path class="edge accent" d="M160 63 L183 63" marker-end="url(#performance-cadence-ci)"/><path class="edge accent" d="M335 63 L358 63" marker-end="url(#performance-cadence-ci)"/><path class="edge accent" d="M510 63 L533 63" marker-end="url(#performance-cadence-ci)"/><path class="edge accent" d="M685 63 L708 63" marker-end="url(#performance-cadence-ci)"/>
+<text x="10" y="132" class="title">Deterministic budget tests: run in the normal unit-test job, never flaky</text>
+<rect class="box done" x="10" y="146" width="200" height="58" rx="8"/><text x="110" y="170" text-anchor="middle" class="title">Allocations per op</text><text x="110" y="189" text-anchor="middle" class="small muted">≤ 2 KB per Serialize()</text>
+<rect class="box done" x="225" y="146" width="200" height="58" rx="8"/><text x="325" y="170" text-anchor="middle" class="title">Queries per request</text><text x="325" y="189" text-anchor="middle" class="small muted">GET /orders ≤ 2 queries</text>
+<rect class="box done" x="440" y="146" width="200" height="58" rx="8"/><text x="540" y="170" text-anchor="middle" class="title">Bundle / payload size</text><text x="540" y="189" text-anchor="middle" class="small muted">app.js ≤ 45 kB gzip</text>
+<rect class="box done" x="655" y="146" width="195" height="58" rx="8"/><text x="752" y="170" text-anchor="middle" class="title">Complexity</text><text x="752" y="189" text-anchor="middle" class="small muted">calls grow O(n), not O(n²)</text>
+<text x="10" y="224" class="small muted">Timing on shared cloud runners can vary 5 to 20% between runs. Counts of allocations, queries and bytes do not.</text>
+</svg>
+<figcaption>Run timing gates on dedicated or bare-metal runners, comparing base and head in the same job. Put deterministic proxies in every PR.</figcaption>
+</figure>
+
+<p>Deterministic budget tests catch most real regressions (an N+1 query, an accidental allocation per item) with zero flakiness:</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">[Fact]
+public void Serialize_order_stays_within_allocation_budget()
+{
+    var order = TestData.Order(lines: 20);
+    OrderSerializer.Serialize(order);                          // warm up: JIT, static caches
+
+    long before = GC.GetAllocatedBytesForCurrentThread();
+    OrderSerializer.Serialize(order);
+    long allocated = GC.GetAllocatedBytesForCurrentThread() - before;
+
+    Assert.True(allocated &lt;= 2_048, $&quot;Serialize allocated {allocated} B; budget is 2048 B&quot;);
+}
+</code></pre>
+<pre><code class="language-java">@Test
+void getOrdersIssuesAtMostTwoQueries() {
+    Statistics stats = sessionFactory.getStatistics();         // Hibernate
+    stats.setStatisticsEnabled(true);
+    stats.clear();
+
+    orderService.getOrders(42L);
+
+    assertThat(stats.getPrepareStatementCount())
+            .as(&quot;an N+1 query has crept back in&quot;)
+            .isLessThanOrEqualTo(2);
+}
+</code></pre>
+<pre><code class="language-python"># pytest-django: fails if the view issues more than two SQL queries
+def test_get_orders_query_budget(client, django_assert_max_num_queries):
+    with django_assert_max_num_queries(2):
+        response = client.get(&quot;/orders?customer=42&quot;)
+    assert response.status_code == 200
+</code></pre>
+<pre><code class="language-go">func TestSerializeAllocationBudget(t *testing.T) {
+    order := testOrder(20)
+    allocs := testing.AllocsPerRun(100, func() { sink = Serialize(order) })
+    if allocs &gt; 3 {
+        t.Fatalf(&quot;Serialize allocates %.0f times per call; budget is 3&quot;, allocs)
+    }
+}
+</code></pre>
+<pre><code class="language-typescript">import { test, expect, vi } from &quot;vitest&quot;;
+import { app } from &quot;../src/app&quot;;   // a Fastify instance
+import { db } from &quot;../src/db&quot;;
+
+test(&quot;GET /orders issues at most 2 queries&quot;, async () =&gt; {
+  const query = vi.spyOn(db, &quot;query&quot;);
+  const res = await app.inject({ method: &quot;GET&quot;, url: &quot;/orders?customer=42&quot; });
+  expect(res.statusCode).toBe(200);
+  expect(query.mock.calls.length).toBeLessThanOrEqual(2);
+});
+</code></pre>
+</div>
+<p>For timing gates: BenchmarkDotNet can export JSON that the dotnet/performance <code>ResultsComparer</code> diffs with a threshold. Go's <code>benchstat old.txt new.txt</code> prints the delta and a p-value per benchmark. JMH writes JSON (<code>-rf json</code>), and pyperf has <code>compare_to</code>. A GitHub Action such as <code>github-action-benchmark</code> can store history and alert on a percentage threshold.</p>
+<h2 id="the-tooling-per-language">The tooling per language</h2>
+<table>
+<thead>
+<tr>
+<th>Runtime</th>
+<th>Micro-benchmark harness</th>
+<th>Allocations</th>
+<th>CPU / wall profiler</th>
+<th>Live counters and traces</th>
+<th>Compare two runs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>.NET</strong></td>
+<td>BenchmarkDotNet</td>
+<td><code>[MemoryDiagnoser]</code></td>
+<td><code>dotnet-trace</code>, Visual Studio Profiler, PerfView</td>
+<td><code>dotnet-counters</code>, EventPipe, OpenTelemetry</td>
+<td>baseline ratio, <code>ResultsComparer</code></td>
+</tr>
+<tr>
+<td><strong>Java</strong></td>
+<td>JMH (<code>Blackhole</code>)</td>
+<td><code>-prof gc</code></td>
+<td>async-profiler, JFR</td>
+<td>JFR + JDK Mission Control, <code>jcmd</code></td>
+<td>JMH JSON (<code>-rf json</code>)</td>
+</tr>
+<tr>
+<td><strong>Go</strong></td>
+<td><code>testing.B</code> (<code>b.Loop</code>, <code>b.ReportAllocs</code>)</td>
+<td><code>-benchmem</code>, heap pprof</td>
+<td>pprof (<code>-cpuprofile</code>, <code>net/http/pprof</code>)</td>
+<td><code>runtime/metrics</code>, <code>go tool trace</code></td>
+<td><code>benchstat</code></td>
+</tr>
+<tr>
+<td><strong>Python</strong></td>
+<td><code>timeit</code>, pyperf</td>
+<td><code>tracemalloc</code>, Scalene</td>
+<td>cProfile + SnakeViz, py-spy, Scalene</td>
+<td><code>py-spy top</code></td>
+<td><code>pyperf compare_to</code></td>
+</tr>
+<tr>
+<td><strong>Node / TS</strong></td>
+<td>tinybench, mitata</td>
+<td><code>--heap-prof</code>, DevTools Memory</td>
+<td><code>--cpu-prof</code>, clinic.js flame, Chrome DevTools</td>
+<td><code>clinic doctor</code>, <code>perf_hooks</code></td>
+<td>compare result tables</td>
+</tr>
+</tbody>
+</table>
+<p>Runtimes behave differently, and that changes how you benchmark them:</p>
+<div class="compare">
+<div class="warn">
+<h4 id="jit-runtimes-net-jvm-v8">JIT runtimes: .NET, JVM, V8</h4>
+<p>Code starts interpreted or in a quick tier, then is recompiled with optimisations once it is hot (.NET tier-0 → tier-1 with dynamic PGO; HotSpot C1 → C2; V8 Ignition → Sparkplug → Maglev → TurboFan). <strong>Warm-up is mandatory</strong>, results depend on what ran before (profile pollution), and the optimiser can delete unused work. Use BenchmarkDotNet or JMH, which fork fresh processes.</p>
+</div>
+<div class="good">
+<h4 id="ahead-of-time-go-native-aot">Ahead-of-time: Go, Native AOT</h4>
+<p>No tiering, so the first call is close to the steady state. You still need warm CPU caches and many iterations, and the <strong>garbage collector</strong> shows up as variance. Watch <code>allocs/op</code>. Inlining and escape analysis decide whether a value lives on the heap: <code>go build -gcflags=-m</code> shows the decisions.</p>
+</div>
+<div class="bad">
+<h4 id="interpreted-cpython">Interpreted: CPython</h4>
+<p>Each bytecode has a fixed overhead, so the fastest Python is usually "do less Python": push loops into C (built-ins, <code>str.join</code>, NumPy). 3.11+ specialises hot bytecodes, 3.13 has an experimental JIT, and the GIL limits CPU parallelism in threads. pyperf spawns worker processes and calibrates loops for you.</p>
+</div>
+</div>
+<h2 id="one-micro-benchmark-five-languages">One micro-benchmark, five languages</h2>
+<p>Here is the same experiment in every stack: build a comma-separated string from 1,000 integers, comparing naive <code>+=</code> concatenation with a builder or join. Each version returns or sinks the result so the optimiser cannot delete the work.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// dotnet add package BenchmarkDotNet; dotnet run -c Release -- --filter *JoinBench*
+[MemoryDiagnoser]
+public class JoinBench
+{
+    private int[] _items = [];
+
+    [GlobalSetup]
+    public void Setup() =&gt; _items = Enumerable.Range(0, 1000).ToArray();
+
+    [Benchmark(Baseline = true)]
+    public string Concat()
+    {
+        var s = &quot;&quot;;
+        foreach (var x in _items) s += x + &quot;,&quot;;
+        return s;
+    }
+
+    [Benchmark]
+    public string Builder()
+    {
+        var sb = new StringBuilder();
+        foreach (var x in _items) sb.Append(x).Append(',');
+        return sb.ToString();
+    }
+}
+</code></pre>
+<pre><code class="language-java">// JMH: mvn archetype jmh-java-benchmark-archetype; java -jar target/benchmarks.jar JoinBench -prof gc
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.MICROSECONDS)
+@Warmup(iterations = 5, time = 1)
+@Measurement(iterations = 10, time = 1)
+@Fork(3)                                   // three fresh JVMs: JIT decisions differ per process
+@State(Scope.Benchmark)
+public class JoinBench {
+    int[] items;
+
+    @Setup
+    public void setup() { items = IntStream.range(0, 1000).toArray(); }
+
+    @Benchmark
+    public void concat(Blackhole bh) {
+        String s = &quot;&quot;;
+        for (int x : items) s += x + &quot;,&quot;;
+        bh.consume(s);                     // Blackhole: the JIT cannot prove the result is unused
+    }
+
+    @Benchmark
+    public String builder() {              // returning a value is an implicit Blackhole
+        StringBuilder sb = new StringBuilder();
+        for (int x : items) sb.append(x).append(',');
+        return sb.toString();
+    }
+}
+</code></pre>
+<pre><code class="language-python"># pip install pyperf; python bench.py -o new.json; python -m pyperf compare_to old.json new.json
+import pyperf
+
+ITEMS = list(range(1000))
+
+
+def concat(items):
+    s = &quot;&quot;
+    for x in items:
+        s += str(x) + &quot;,&quot;
+    return s
+
+
+def join(items):
+    return &quot;&quot;.join(f&quot;{x},&quot; for x in items)
+
+
+runner = pyperf.Runner()       # spawns worker processes, calibrates loops, reports mean ± std dev
+runner.bench_func(&quot;concat&quot;, concat, ITEMS)
+runner.bench_func(&quot;join&quot;, join, ITEMS)
+</code></pre>
+<pre><code class="language-go">// join_test.go; go test -bench=. -benchmem -count=10 &gt; new.txt; benchstat old.txt new.txt
+package join
+
+import (
+    &quot;strconv&quot;
+    &quot;strings&quot;
+    &quot;testing&quot;
+)
+
+var sink string // package-level sink: the compiler cannot delete the work
+
+func items(n int) []int {
+    xs := make([]int, n)
+    for i := range xs {
+        xs[i] = i
+    }
+    return xs
+}
+
+func BenchmarkConcat(b *testing.B) {
+    xs := items(1000) // setup before b.Loop is not timed
+    b.ReportAllocs()
+    for b.Loop() { // Go 1.24+: replaces for i := 0; i &lt; b.N; i++
+        s := &quot;&quot;
+        for _, x := range xs {
+            s += strconv.Itoa(x) + &quot;,&quot;
+        }
+        sink = s
+    }
+}
+
+func BenchmarkBuilder(b *testing.B) {
+    xs := items(1000)
+    b.ReportAllocs()
+    for b.Loop() {
+        var sb strings.Builder
+        for _, x := range xs {
+            sb.WriteString(strconv.Itoa(x))
+            sb.WriteByte(',')
+        }
+        sink = sb.String()
+    }
+}
+</code></pre>
+<pre><code class="language-typescript">// npm i -D tinybench; npx tsx bench.ts
+import { Bench } from &quot;tinybench&quot;;
+
+const items = Array.from({ length: 1000 }, (_, i) =&gt; i);
+export let sink = &quot;&quot;;
+
+const bench = new Bench({ time: 1000, warmupTime: 250 });
+bench
+  .add(&quot;concat&quot;, () =&gt; {
+    let s = &quot;&quot;;
+    for (const x of items) s += x + &quot;,&quot;;
+    sink = s;
+  })
+  .add(&quot;join&quot;, () =&gt; {
+    sink = items.map((x) =&gt; x + &quot;,&quot;).join(&quot;&quot;);
+  });
+
+await bench.run();
+console.table(bench.table());   // ops/s, average time, margin of error, samples
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Insight: the "obvious" answer depends on the runtime</strong>
+In .NET, Java and Go, strings are immutable and <code>+=</code> copies everything so far, so the loop is O(n²) in bytes copied. On one laptop the C# version was about 10× slower and allocated 230× more. In CPython, <code>+=</code> on a string with a single reference is resized in place, so it was only ~1.7× slower than <code>join</code>. In V8, <code>+=</code> builds a rope and <strong>beat</strong> <code>map().join()</code> by about 2×. Same idea, three different verdicts. That is why you measure instead of applying folklore.</p>
+</div>
+<p>Once a benchmark or load test shows <em>where</em> to look, these commands produce the profile:</p>
+<div class="code-tabs" data-labels="C#,Java,Python,Go,TypeScript">
+<pre><code class="language-bash">dotnet-counters monitor --name Shop.Api --counters System.Runtime     # live GC, CPU, thread pool, exceptions
+dotnet-trace collect --name Shop.Api --format Speedscope --duration 00:00:30
+# open the .speedscope.json in speedscope.app, or the .nettrace in PerfView / Visual Studio
+# Visual Studio: Debug &gt; Performance Profiler &gt; CPU Usage / .NET Object Allocation
+</code></pre>
+<pre><code class="language-bash">asprof -e cpu  -d 30 -f cpu.html  &lt;pid&gt;     # async-profiler: interactive flame graph
+asprof -e wall -d 30 -f wall.html &lt;pid&gt;     # include threads waiting on locks and I/O
+java -XX:StartFlightRecording=duration=60s,filename=app.jfr -jar app.jar   # JFR, open in JDK Mission Control
+</code></pre>
+<pre><code class="language-bash">python -m cProfile -o out.prof app.py &amp;&amp; snakeviz out.prof    # exact call counts (instrumenting)
+py-spy record -o flame.svg --pid 1234                          # sampling, attach to a live process
+py-spy top --pid 1234                                          # a live &quot;top&quot; of functions
+scalene app.py                                                 # CPU split Python vs native, plus memory
+</code></pre>
+<pre><code class="language-bash">go test -bench=Builder -cpuprofile cpu.out -memprofile mem.out
+go tool pprof -http=:8080 cpu.out                              # flame graph, top, source views
+# in a service: import _ &quot;net/http/pprof&quot;, then
+go tool pprof -http=:8080 &quot;http://localhost:6060/debug/pprof/profile?seconds=30&quot;
+</code></pre>
+<pre><code class="language-bash">node --cpu-prof dist/server.js            # writes a .cpuprofile: open in Chrome DevTools &gt; Performance
+npx clinic flame -- node dist/server.js   # clinic.js flame graph under load
+node --inspect dist/server.js             # attach Chrome DevTools via chrome://inspect
+</code></pre>
+</div>
+<h2 id="macro-benchmarks-and-load-testing">Macro benchmarks and load testing</h2>
+<p>A micro-benchmark tells you a function got faster. Only a <strong>load test</strong> tells you whether the service meets its SLO at the target rate, and where it falls over. There are two load models, and choosing the wrong one hides exactly the stalls you are hunting (coordinated omission, from the latency visualizer above).</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 210" width="860" role="img" aria-label="Closed versus open load models during a server stall">
+<text x="10" y="20" class="title">Closed model: N users, each waits for a reply</text>
+<text x="10" y="38" class="small muted">wrk, JMeter thread groups, Locust users, k6 VUs with iterations</text>
+<line x1="20" y1="110" x2="410" y2="110" class="edge"/>
+<rect class="box visit" x="24" y="96" width="12" height="14"/><rect class="box visit" x="46" y="96" width="12" height="14"/><rect class="box visit" x="68" y="96" width="12" height="14"/><rect class="box visit" x="90" y="96" width="12" height="14"/><rect class="box visit" x="112" y="96" width="12" height="14"/>
+<rect class="box bad" x="134" y="96" width="180" height="14"/><text x="224" y="88" text-anchor="middle" class="small">server stalls 1 s</text>
+<rect class="box visit" x="324" y="96" width="12" height="14"/><rect class="box visit" x="346" y="96" width="12" height="14"/><rect class="box visit" x="368" y="96" width="12" height="14"/><rect class="box visit" x="390" y="96" width="12" height="14"/>
+<text x="224" y="134" text-anchor="middle" class="small">the tester waits too, so it sends nothing</text>
+<text x="224" y="152" text-anchor="middle" class="small">recorded: 1 slow sample out of 10</text>
+<text x="450" y="20" class="title">Open model: arrivals on a clock</text>
+<text x="450" y="38" class="small muted">wrk2 -R, k6 arrival-rate executors, Gatling injectOpen, NBomber Inject</text>
+<line x1="460" y1="110" x2="850" y2="110" class="edge"/>
+<rect class="box visit" x="464" y="96" width="12" height="14"/><rect class="box visit" x="486" y="96" width="12" height="14"/><rect class="box visit" x="508" y="96" width="12" height="14"/><rect class="box visit" x="530" y="96" width="12" height="14"/><rect class="box visit" x="552" y="96" width="12" height="14"/>
+<rect class="box bad" x="574" y="96" width="180" height="14"/>
+<rect class="box bad" x="580" y="80" width="12" height="14"/><rect class="box bad" x="602" y="80" width="12" height="14"/><rect class="box bad" x="624" y="80" width="12" height="14"/><rect class="box bad" x="646" y="80" width="12" height="14"/><rect class="box bad" x="668" y="80" width="12" height="14"/><rect class="box bad" x="690" y="80" width="12" height="14"/><rect class="box bad" x="712" y="80" width="12" height="14"/><rect class="box bad" x="734" y="80" width="12" height="14"/>
+<text x="664" y="70" text-anchor="middle" class="small">requests keep arriving and queue</text>
+<rect class="box visit" x="764" y="96" width="12" height="14"/><rect class="box visit" x="786" y="96" width="12" height="14"/><rect class="box visit" x="808" y="96" width="12" height="14"/><rect class="box visit" x="830" y="96" width="12" height="14"/>
+<text x="664" y="134" text-anchor="middle" class="small">every request in the stall waits, and is recorded</text>
+<text x="664" y="152" text-anchor="middle" class="small">recorded: 8 slow samples out of 17</text>
+<text x="10" y="194" class="small muted">Real users do not wait for each other. Model public traffic as open. Use closed only for systems with a fixed number of clients, such as a batch worker pool.</text>
+</svg>
+<figcaption>Coordinated omission in one picture: the closed-model tester slows down exactly when the server does, so it under-samples the bad period.</figcaption>
+</figure>
+
+<p>Why does latency explode near capacity? Queueing. Step utilisation up for a service with 4 workers and watch the mean barely move while the p99 takes off past the <strong>knee</strong>:</p>
+<div class="viz" data-viz="performance-cadence-knee"></div>
+
+<p>The same open-model load test, with the SLO written as pass/fail thresholds, in five tools:</p>
+<div class="code-tabs" data-labels="k6,wrk2,Gatling,NBomber,Locust">
+<pre><code class="language-javascript">// k6 run orders.js: exits non-zero if a threshold fails, so CI can gate on it
+import http from &quot;k6/http&quot;;
+import { check } from &quot;k6&quot;;
+
+export const options = {
+  scenarios: {
+    orders: {
+      executor: &quot;constant-arrival-rate&quot;,   // open model: 200 new requests per second, no matter what
+      rate: 200,
+      timeUnit: &quot;1s&quot;,
+      duration: &quot;5m&quot;,
+      preAllocatedVUs: 50,
+      maxVUs: 500,
+    },
+  },
+  thresholds: {
+    http_req_duration: [&quot;p(95)&lt;140&quot;, &quot;p(99)&lt;400&quot;],
+    http_req_failed: [&quot;rate&lt;0.001&quot;],
+  },
+};
+
+export default function () {
+  const res = http.get(&quot;https://staging.example.com/orders?customer=42&quot;);
+  check(res, { &quot;status is 200&quot;: (r) =&gt; r.status === 200 });
+}
+</code></pre>
+<pre><code class="language-bash"># wrk2: -R sets a constant request rate and corrects for coordinated omission
+wrk -t4 -c100 -d300s -R200 --latency &quot;https://staging.example.com/orders?customer=42&quot;
+# prints an HdrHistogram percentile spectrum: check the 95% and 99% lines against the SLO
+</code></pre>
+<pre><code class="language-java">// Gatling Java DSL: injectOpen = open model
+public class OrdersSimulation extends Simulation {
+    HttpProtocolBuilder httpProtocol = http.baseUrl(&quot;https://staging.example.com&quot;);
+
+    ScenarioBuilder orders = scenario(&quot;orders&quot;)
+            .exec(http(&quot;get orders&quot;).get(&quot;/orders?customer=42&quot;).check(status().is(200)));
+
+    {
+        setUp(orders.injectOpen(constantUsersPerSec(200).during(Duration.ofMinutes(5))))
+                .protocols(httpProtocol)
+                .assertions(
+                        global().responseTime().percentile(95.0).lt(140),
+                        global().failedRequests().percent().lt(0.1));
+    }
+}
+</code></pre>
+<pre><code class="language-csharp">// NBomber: Inject = open model (a fixed rate of new scenario copies)
+using NBomber.CSharp;
+using NBomber.Http.CSharp;
+
+using var httpClient = new HttpClient();
+
+var orders = Scenario.Create(&quot;orders&quot;, async context =&gt;
+    {
+        var request = Http.CreateRequest(&quot;GET&quot;, &quot;https://staging.example.com/orders?customer=42&quot;);
+        return await Http.Send(httpClient, request);
+    })
+    .WithWarmUpDuration(TimeSpan.FromSeconds(30))
+    .WithLoadSimulations(
+        Simulation.Inject(rate: 200, interval: TimeSpan.FromSeconds(1), during: TimeSpan.FromMinutes(5)));
+
+NBomberRunner.RegisterScenarios(orders).Run();
+</code></pre>
+<pre><code class="language-python"># locust -f locustfile.py --headless -u 200 -r 20 -t 5m --host https://staging.example.com
+# Locust users are a closed model; constant_throughput paces each user so the rate stays ~fixed
+from locust import HttpUser, constant_throughput, task
+
+
+class OrdersUser(HttpUser):
+    wait_time = constant_throughput(1)     # each user aims for 1 request per second
+
+    @task
+    def get_orders(self):
+        self.client.get(&quot;/orders?customer=42&quot;)
+</code></pre>
+</div>
+<div class="tip">
+<p><strong>Tip: a load-test plan</strong>
+Ramp the arrival rate in steps (50, 100, 150 … req/s) and hold each step for several minutes. Plot p50/p95/p99 against rate to find the knee. Run a <strong>soak</strong> test (hours at target load) for leaks and slow drift, and a <strong>spike</strong> test for autoscaling and cold starts. Test from a machine that is not itself the bottleneck: check the load generator's CPU.</p>
+</div>
+<h2 id="latency-numbers-every-programmer-should-know">Latency numbers every programmer should know</h2>
+<p>These are order-of-magnitude figures for modern server hardware. Exact values vary by a factor of 2 or 3. What matters is the <strong>ratios</strong>: a network round trip costs as much as thousands of memory reads.</p>
+<figure class="figure">
+<svg class="dg pc-ladder" viewBox="0 0 860 370" width="860" role="img" aria-label="Latency numbers on a logarithmic scale from 1 nanosecond to 150 milliseconds">
+<text x="10" y="18" class="title">Latency on a log scale (each grid line is 10× slower)</text>
+<line x1="250" y1="30" x2="250" y2="348" class="edge dash"/><text x="250" y="364" text-anchor="middle" class="small muted">1 ns</text>
+<line x1="310" y1="30" x2="310" y2="348" class="edge dash"/><text x="310" y="364" text-anchor="middle" class="small muted">10 ns</text>
+<line x1="370" y1="30" x2="370" y2="348" class="edge dash"/><text x="370" y="364" text-anchor="middle" class="small muted">100 ns</text>
+<line x1="430" y1="30" x2="430" y2="348" class="edge dash"/><text x="430" y="364" text-anchor="middle" class="small muted">1 µs</text>
+<line x1="490" y1="30" x2="490" y2="348" class="edge dash"/><text x="490" y="364" text-anchor="middle" class="small muted">10 µs</text>
+<line x1="550" y1="30" x2="550" y2="348" class="edge dash"/><text x="550" y="364" text-anchor="middle" class="small muted">100 µs</text>
+<line x1="610" y1="30" x2="610" y2="348" class="edge dash"/><text x="610" y="364" text-anchor="middle" class="small muted">1 ms</text>
+<line x1="670" y1="30" x2="670" y2="348" class="edge dash"/><text x="670" y="364" text-anchor="middle" class="small muted">10 ms</text>
+<line x1="730" y1="30" x2="730" y2="348" class="edge dash"/><text x="730" y="364" text-anchor="middle" class="small muted">100 ms</text>
+<line x1="790" y1="30" x2="790" y2="348" class="edge dash"/><text x="790" y="364" text-anchor="middle" class="small muted">1 s</text>
+<text x="240" y="51" text-anchor="end" class="small">L1 cache reference</text><rect class="box active" x="250" y="39" width="12" height="17" rx="3"/><rect class="pc-lbl-bg" x="266" y="39" width="43" height="17" rx="3"/><text x="270" y="52" class="small mono">~1 ns</text>
+<text x="240" y="77" text-anchor="end" class="small">Branch mispredict</text><rect class="box active" x="250" y="65" width="35" height="17" rx="3"/><rect class="pc-lbl-bg" x="289" y="65" width="43" height="17" rx="3"/><text x="293" y="78" class="small mono">~3 ns</text>
+<text x="240" y="103" text-anchor="end" class="small">L2 cache reference</text><rect class="box active" x="250" y="91" width="42" height="17" rx="3"/><rect class="pc-lbl-bg" x="296" y="91" width="43" height="17" rx="3"/><text x="300" y="104" class="small mono">~4 ns</text>
+<text x="240" y="129" text-anchor="end" class="small">Uncontended lock / unlock</text><rect class="box active" x="250" y="117" width="84" height="17" rx="3"/><rect class="pc-lbl-bg" x="338" y="117" width="50" height="17" rx="3"/><text x="342" y="130" class="small mono">~20 ns</text>
+<text x="240" y="155" text-anchor="end" class="small">Main memory reference</text><rect class="box visit" x="250" y="143" width="126" height="17" rx="3"/><rect class="pc-lbl-bg" x="380" y="143" width="57" height="17" rx="3"/><text x="384" y="156" class="small mono">~100 ns</text>
+<text x="240" y="181" text-anchor="end" class="small">Compress 1 KB (zstd, snappy)</text><rect class="box visit" x="250" y="169" width="204" height="17" rx="3"/><rect class="pc-lbl-bg" x="458" y="169" width="43" height="17" rx="3"/><text x="462" y="182" class="small mono">~2 µs</text>
+<text x="240" y="207" text-anchor="end" class="small">Read 1 MB sequentially from RAM</text><rect class="box visit" x="250" y="195" width="270" height="17" rx="3"/><rect class="pc-lbl-bg" x="524" y="195" width="50" height="17" rx="3"/><text x="528" y="208" class="small mono">~25 µs</text>
+<text x="240" y="233" text-anchor="end" class="small">Random 4 KB read, NVMe SSD</text><rect class="box path" x="250" y="221" width="288" height="17" rx="3"/><rect class="pc-lbl-bg" x="542" y="221" width="50" height="17" rx="3"/><text x="546" y="234" class="small mono">~50 µs</text>
+<text x="240" y="259" text-anchor="end" class="small">Read 1 MB sequentially, SSD</text><rect class="box path" x="250" y="247" width="335" height="17" rx="3"/><rect class="pc-lbl-bg" x="589" y="247" width="57" height="17" rx="3"/><text x="593" y="260" class="small mono">~300 µs</text>
+<text x="240" y="285" text-anchor="end" class="small">Round trip in one datacenter</text><rect class="box bad" x="250" y="273" width="348" height="17" rx="3"/><rect class="pc-lbl-bg" x="602" y="273" width="57" height="17" rx="3"/><text x="606" y="286" class="small mono">~500 µs</text>
+<text x="240" y="311" text-anchor="end" class="small">HDD seek</text><rect class="box path" x="250" y="299" width="408" height="17" rx="3"/><rect class="pc-lbl-bg" x="662" y="299" width="43" height="17" rx="3"/><text x="666" y="312" class="small mono">~5 ms</text>
+<text x="240" y="337" text-anchor="end" class="small">Round trip, US ↔ Europe</text><rect class="box bad" x="250" y="325" width="497" height="17" rx="3"/><rect class="pc-lbl-bg" x="751" y="325" width="57" height="17" rx="3"/><text x="755" y="338" class="small mono">~150 ms</text>
+</svg>
+<figcaption>Bar length is logarithmic. Colours group CPU (amber), memory (blue), storage (purple) and network (red).</figcaption>
+</figure>
+
+<div class="pc-latency-table">
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Approx. time</th>
+<th>If 1 ns were 1 second</th>
+<th>Design consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1 cache reference</td>
+<td>~1 ns</td>
+<td>1 s</td>
+<td>Sequential, compact data (arrays of structs) is fast.</td>
+</tr>
+<tr>
+<td>Main memory reference</td>
+<td>~100 ns</td>
+<td>1.7 min</td>
+<td>Pointer chasing (linked lists, object graphs) costs 100× an L1 hit.</td>
+</tr>
+<tr>
+<td>Compress 1 KB</td>
+<td>~2 µs</td>
+<td>33 min</td>
+<td>Compressing before sending over a network is almost always worth it.</td>
+</tr>
+<tr>
+<td>Random 4 KB read, NVMe SSD</td>
+<td>~50 µs</td>
+<td>14 h</td>
+<td>Indexes and caches exist to avoid storage reads.</td>
+</tr>
+<tr>
+<td>Round trip in one datacenter</td>
+<td>~500 µs</td>
+<td>6 days</td>
+<td><strong>31 sequential queries ≈ 15 ms of pure waiting.</strong> Batch, join, or parallelise.</td>
+</tr>
+<tr>
+<td>HDD seek</td>
+<td>~5 ms</td>
+<td>2 months</td>
+<td>Spinning disks want sequential access (logs, LSM trees).</td>
+</tr>
+<tr>
+<td>Round trip, US ↔ Europe</td>
+<td>~150 ms</td>
+<td>4.8 years</td>
+<td>Put data near users. Avoid chatty cross-region calls.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="performance-budgets">Performance budgets</h2>
+<p>A budget turns a goal into an engineering constraint that each team owns. Split the end-to-end target across the components on the critical path, and keep some headroom.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 170" width="860" role="img" aria-label="A 200 millisecond p95 budget split across the components of a request">
+<text x="20" y="20" class="title">Budget: GET /checkout, p95 ≤ 200 ms at 300 req/s</text>
+<rect class="box visit" x="20" y="36" width="82" height="46" rx="4"/><text x="61" y="64" text-anchor="middle" class="small mono">20</text>
+<line x1="61" y1="82" x2="61" y2="92" class="edge"/><text x="61" y="104" text-anchor="middle" class="small">Edge + TLS</text>
+<rect class="box visit" x="102" y="36" width="41" height="46" rx="4"/><text x="122" y="64" text-anchor="middle" class="small mono">10</text>
+<line x1="122" y1="82" x2="122" y2="112" class="edge"/><text x="122" y="124" text-anchor="middle" class="small">Gateway</text>
+<rect class="box active" x="143" y="36" width="41" height="46" rx="4"/><text x="164" y="64" text-anchor="middle" class="small mono">10</text>
+<line x1="164" y1="82" x2="164" y2="92" class="edge"/><text x="164" y="104" text-anchor="middle" class="small">Auth</text>
+<rect class="box active" x="184" y="36" width="123" height="46" rx="4"/><text x="246" y="64" text-anchor="middle" class="small mono">30</text>
+<line x1="246" y1="82" x2="246" y2="112" class="edge"/><text x="246" y="124" text-anchor="middle" class="small">Business logic</text>
+<rect class="box path" x="307" y="36" width="287" height="46" rx="4"/><text x="450" y="64" text-anchor="middle" class="small mono">70</text>
+<line x1="450" y1="82" x2="450" y2="92" class="edge"/><text x="450" y="104" text-anchor="middle" class="small">Database</text>
+<rect class="box bad" x="594" y="36" width="123" height="46" rx="4"/><text x="656" y="64" text-anchor="middle" class="small mono">30</text>
+<line x1="656" y1="82" x2="656" y2="112" class="edge"/><text x="656" y="124" text-anchor="middle" class="small">Pricing service</text>
+<rect class="box active" x="717" y="36" width="41" height="46" rx="4"/><text x="738" y="64" text-anchor="middle" class="small mono">10</text>
+<line x1="738" y1="82" x2="738" y2="92" class="edge"/><text x="738" y="104" text-anchor="middle" class="small">Serialise</text>
+<rect class="box done" x="758" y="36" width="82" height="46" rx="4"/><text x="799" y="64" text-anchor="middle" class="small mono">20</text>
+<line x1="799" y1="82" x2="799" y2="112" class="edge"/><text x="799" y="124" text-anchor="middle" class="small">Headroom</text>
+<text x="20" y="156" class="small muted">Each owner gets a number. A change that spends more than its slice must buy the time back elsewhere, or renegotiate the budget.</text></svg>
+<figcaption>A latency budget for one request path. Headroom absorbs variance and future features.</figcaption>
+</figure>
+
+<p>Budgets come in several currencies. Choose the ones your users and your bill actually feel:</p>
+<div class="cheat">
+<div><strong>Latency</strong>p95 / p99 per endpoint, at a stated load. The SLO itself.</div>
+<div><strong>Throughput</strong>req/s per instance at the latency SLO (not at 100% CPU).</div>
+<div><strong>Resources</strong>CPU ms per request, bytes allocated per op, memory RSS, connections.</div>
+<div><strong>Web vitals</strong>At p75 of page loads: LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1.</div>
+<div><strong>Payload</strong>JavaScript kB (gzip) per route, image weight, API response size.</div>
+<div><strong>Cost</strong>$ per million requests. Often the budget that finally gets attention.</div>
+</div>
+<h2 id="when-not-to-optimise">When NOT to optimise</h2>
+<p>Donald Knuth's famous line is usually quoted half-way. The full sentence is: "We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil. Yet we should not pass up our opportunities in that critical 3%." The cadence is how you find the 3%.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 330" width="860" role="img" aria-label="Decision flow for whether to optimise">
+<defs><marker id="performance-cadence-dn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box visit" x="20" y="14" width="470" height="44" rx="8"/><text x="255" y="41" text-anchor="middle">Does it miss a written goal or budget (now, or at forecast load)?</text>
+<rect class="box visit" x="20" y="84" width="470" height="44" rx="8"/><text x="255" y="111" text-anchor="middle">Does the profile put this code on the critical path?</text>
+<rect class="box visit" x="20" y="154" width="470" height="44" rx="8"/><text x="255" y="181" text-anchor="middle">Is the prize (Amdahl) worth the time, risk and readability?</text>
+<rect class="box visit" x="20" y="224" width="470" height="44" rx="8"/><text x="255" y="251" text-anchor="middle">Is there a cheaper fix: config, caching, batching, an index?</text>
+<rect class="box done" x="20" y="286" width="470" height="36" rx="8"/><text x="255" y="309" text-anchor="middle" class="title">Optimise: one change, verify, guard</text>
+<rect class="box bad" x="560" y="14" width="280" height="44" rx="8"/><text x="700" y="41" text-anchor="middle">Stop. Write the goal first.</text>
+<rect class="box bad" x="560" y="84" width="280" height="44" rx="8"/><text x="700" y="111" text-anchor="middle">Optimise what the profile shows.</text>
+<rect class="box bad" x="560" y="154" width="280" height="44" rx="8"/><text x="700" y="181" text-anchor="middle">Accept it, or buy hardware.</text>
+<rect class="box active" x="560" y="224" width="280" height="44" rx="8"/><text x="700" y="251" text-anchor="middle">Do that first, then re-measure.</text>
+<path class="edge accent" d="M490 36 L558 36" marker-end="url(#performance-cadence-dn)"/><text x="524" y="30" text-anchor="middle" class="small">no</text>
+<path class="edge accent" d="M490 106 L558 106" marker-end="url(#performance-cadence-dn)"/><text x="524" y="100" text-anchor="middle" class="small">no</text>
+<path class="edge accent" d="M490 176 L558 176" marker-end="url(#performance-cadence-dn)"/><text x="524" y="170" text-anchor="middle" class="small">no</text>
+<path class="edge accent" d="M490 246 L558 246" marker-end="url(#performance-cadence-dn)"/><text x="524" y="240" text-anchor="middle" class="small">yes</text>
+<path class="edge accent" d="M255 58 L255 82" marker-end="url(#performance-cadence-dn)"/><text x="268" y="74" class="small">yes</text>
+<path class="edge accent" d="M255 128 L255 152" marker-end="url(#performance-cadence-dn)"/><text x="268" y="144" class="small">yes</text>
+<path class="edge accent" d="M255 198 L255 222" marker-end="url(#performance-cadence-dn)"/><text x="268" y="214" class="small">yes</text>
+<path class="edge accent" d="M255 268 L255 284" marker-end="url(#performance-cadence-dn)"/><text x="268" y="281" class="small">no</text>
+</svg>
+<figcaption>Most "should we optimise this?" debates end at the first or second question.</figcaption>
+</figure>
+
+<div class="compare">
+<div class="good">
+<h4 id="do-it-up-front-these-are-design-not-optimisation">Do it up front: these are design, not optimisation</h4>
+<p>Pick the right algorithm and data structure (O(n log n), not O(n²)). Avoid N+1 queries. Page and stream large results. Use async I/O for I/O-bound services. Add indexes for known query shapes. Set timeouts. Changing these later is expensive, and they rarely cost readability.</p>
+</div>
+<div class="bad">
+<h4 id="do-not-do-it-without-a-profile">Do NOT do it without a profile</h4>
+<p>Micro-tuning (manual loop unrolling, object pooling, <code>unsafe</code>, <code>stackalloc</code>, bit tricks, caching every call). Rewriting in a "faster" language. Adding a cache "just in case" (now you have invalidation bugs). Parallelising code that is waiting on one database.</p>
+</div>
+<div class="warn">
+<h4 id="stop-when-the-goal-is-met">Stop when the goal is met</h4>
+<p>Past the goal, every gain costs engineering time and usually clarity, and buys nothing users notice. Record the remaining ideas with their estimated prize and move on. Re-open them when the goal or the load changes.</p>
+</div>
+</div>
+<h2 id="pitfalls-and-war-stories">Pitfalls and war stories</h2>
+<div class="pitfall">
+<p><strong>The Debug-build benchmark</strong>
+A team "proved" a new parser was 4× faster. Both versions had been run in Debug with the debugger attached, where the old code's small methods were never inlined. In Release the difference was 6%. Benchmark Release builds with no debugger attached. BenchmarkDotNet refuses to run otherwise, for good reason.</p>
+</div>
+<div class="pitfall">
+<p><strong>The benchmark that measured nothing</strong>
+A Go hashing benchmark reported 0.3 ns/op, which is one clock cycle. The result was never used, so the compiler removed the call. Anything below about a nanosecond per op deserves suspicion. Sink the result to a package-level variable, return it from a BenchmarkDotNet method, or consume it in a JMH <code>Blackhole</code>.</p>
+</div>
+<div class="pitfall">
+<p><strong>The load test that could not see the outage</strong>
+A closed-loop test with 50 threads reported p99 = 80 ms. Production had 2-second pauses every few minutes during GC. Each pause blocked all 50 test threads, so only 50 slow samples were recorded against hundreds of thousands of fast ones. An open-model test (wrk2, k6 arrival-rate) at the same rate reported p99 = 1.9 s.</p>
+</div>
+<div class="pitfall">
+<p><strong>The averaged dashboard</strong>
+An API's average latency stayed flat at 45 ms through a release that doubled the p99 for the largest tenants: their requests had moved from the fast path to the slow path. Alert on percentiles from merged histograms, and break them down by the dimension that matters (tenant, endpoint, region).</p>
+</div>
+<div class="pitfall">
+<p><strong>Optimising the benchmark, not the product</strong>
+A micro-benchmark with a 100-element input fits in L1 cache. Production lists had 2 million elements, and the "optimised" layout was slower once data came from RAM. Benchmark realistic sizes (use <code>[Params]</code>, <code>@Param</code>, or sub-benchmarks) and confirm with a macro benchmark.</p>
+</div>
+<h2 id="checklist">Checklist</h2>
+<ul>
+<li>[ ] A written goal: metric, percentile, threshold and load (and, for SLOs, a time window).</li>
+<li>[ ] Baseline measured in a production-like environment, as a distribution with enough runs.</li>
+<li>[ ] A profile (CPU <strong>and</strong> wall-clock or trace) identifies the widest cost before any code changes.</li>
+<li>[ ] A written hypothesis with a predicted number. Amdahl confirms that the prize is worth it.</li>
+<li>[ ] Exactly one change per experiment, on its own branch or commit.</li>
+<li>[ ] Verified with a harness (BenchmarkDotNet, JMH, <code>testing.B</code> + benchstat, pyperf, tinybench) and a significance test or non-overlapping intervals.</li>
+<li>[ ] Load tests use an open model at the target arrival rate, with SLO thresholds that fail the build.</li>
+<li>[ ] A guard: a deterministic budget test (allocations, queries, bytes) plus a timing gate where the runners allow it.</li>
+<li>[ ] Re-profiled after each change. Stopped when the goal was met.</li>
+</ul>
+<h2 id="quiz">Quiz</h2>
+<details class="quiz">
+<summary>Your service's mean latency is 50 ms and the SLO is "p99 ≤ 300 ms". Can you tell from the mean whether you meet it?</summary>
+<p>No. Latency is right-skewed, and the mean says nothing about the tail. The latency visualizer has a mean of ~51 ms with a p99 of ~358 ms. Only a histogram (or the raw samples) can answer a percentile question.</p>
+</details>
+<details class="quiz">
+<summary>Parsing takes 25% of a request. A colleague makes parsing 5× faster. What is the best-case overall speed-up?</summary>
+<p>Amdahl: <code>1 / (0.75 + 0.25/5) = 1 / 0.8 = 1.25×</code>. Even deleting parsing entirely caps out at <code>1 / 0.75 ≈ 1.33×</code>.</p>
+</details>
+<details class="quiz">
+<summary>A flame graph shows no single wide plateau, but the function <code>Regex.Match</code> appears at the top of many thin towers. What view do you switch to, and why?</summary>
+<p>The <strong>bottom-up</strong> (callers, butterfly or "self by function") view. It sums self time per function across every call site, which shows that a function spread over many callers can be the biggest single cost.</p>
+</details>
+<details class="quiz">
+<summary>Benchmark A: 120 ± 25 ns (n = 5). Benchmark B: 112 ± 24 ns (n = 5). Is B faster?</summary>
+<p>You cannot tell. The intervals overlap almost completely, and with n = 5 the t-test is inconclusive. Run more iterations and several process forks, interleave A and B, and compare with benchstat, pyperf <code>compare_to</code> or a Welch t-test.</p>
+</details>
+<details class="quiz">
+<summary>Why does a closed-loop load tester under-report latency during a server stall?</summary>
+<p>Because it waits for each reply before sending the next request, it stops sending during the stall. The requests real users would have sent in that window are never made, so their long waits are never recorded. This is coordinated omission. Use an open model (fixed arrival rate) or correct the measurements to the intended send times.</p>
+</details>
+<details class="quiz">
+<summary>CPU is at 45%, but p95 latency is 4× over budget. What kind of profile do you need?</summary>
+<p>A wall-clock or off-CPU profile, or a distributed trace. The time is spent <strong>waiting</strong> (database, locks, downstream calls, thread-pool starvation), and a CPU profile only sees threads that are running.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Loop</strong>Goal → measure → profile → hypothesis → one change → verify → guard → repeat. Stop at the goal.</div>
+<div><strong>Goal</strong>Metric + percentile + threshold + load. "p95 ≤ 140 ms at 200 req/s".</div>
+<div><strong>Percentiles</strong>Record histograms, merge them, then compute percentiles. Never average percentiles.</div>
+<div><strong>Amdahl</strong>Speed-up = 1 / ((1 − p) + p/s). The ceiling is 1 / (1 − p).</div>
+<div><strong>Flame graph</strong>Width = samples, y = depth, x is not time. Check the bottom-up view too.</div>
+<div><strong>Benchmarks</strong>Release, warm-up, many runs and forks, sink the result, confidence intervals, compare distributions.</div>
+<div><strong>.NET</strong>BenchmarkDotNet + [MemoryDiagnoser], dotnet-counters, dotnet-trace, PerfView, VS Profiler.</div>
+<div><strong>Java</strong>JMH + Blackhole + @Fork, async-profiler, JFR + JMC.</div>
+<div><strong>Go</strong>testing.B + b.Loop + b.ReportAllocs, -benchmem -count=10, pprof, benchstat.</div>
+<div><strong>Python</strong>timeit, pyperf, cProfile + SnakeViz, py-spy, Scalene.</div>
+<div><strong>Node / TS</strong>tinybench or mitata, --cpu-prof, clinic.js, Chrome DevTools.</div>
+<div><strong>Load</strong>Open model (k6 arrival-rate, wrk2 -R, Gatling injectOpen, NBomber Inject). Find the knee and stay left of it.</div>
+</div>
+<h2 id="related-topics-and-further-reading">Related topics and further reading</h2>
+<p>Next: <a href="performance-patterns.html">Performance Patterns</a> applies this loop to caching, batching, pooling and data layout. <a href="memory-and-gc.html">Memory &amp; GC</a> explains the allocation numbers you just learned to measure, and <a href="observability.html">Observability</a> covers production histograms and traces.</p>
+<ul>
+<li><a href="https://benchmarkdotnet.org/articles/overview.html">BenchmarkDotNet documentation</a> and <a href="https://learn.microsoft.com/dotnet/core/diagnostics/dotnet-trace">dotnet-trace</a> / <a href="https://learn.microsoft.com/dotnet/core/diagnostics/dotnet-counters">dotnet-counters</a></li>
+<li><a href="https://github.com/openjdk/jmh">JMH (OpenJDK Code Tools)</a>, <a href="https://github.com/async-profiler/async-profiler">async-profiler</a> and <a href="https://docs.oracle.com/en/java/java-components/jdk-mission-control/">JDK Flight Recorder / Mission Control</a></li>
+<li>Go <a href="https://pkg.go.dev/testing#hdr-Benchmarks"><code>testing</code> benchmarks</a>, <a href="https://pkg.go.dev/runtime/pprof"><code>runtime/pprof</code></a> and <a href="https://pkg.go.dev/golang.org/x/perf/cmd/benchstat">benchstat</a></li>
+<li>Python <a href="https://docs.python.org/3/library/timeit.html"><code>timeit</code></a>, <a href="https://docs.python.org/3/library/profile.html">The Python Profilers</a> and <a href="https://pyperf.readthedocs.io/">pyperf</a></li>
+<li>Node.js <a href="https://nodejs.org/en/learn/getting-started/profiling">Profiling Node.js applications</a> and <a href="https://github.com/tinylibs/tinybench">tinybench</a></li>
+<li><a href="https://grafana.com/docs/k6/latest/using-k6/scenarios/concepts/open-vs-closed/">Grafana k6 documentation: open and closed models</a></li>
+<li><a href="https://sre.google/sre-book/service-level-objectives/">Google SRE book: Service Level Objectives</a> and <a href="https://web.dev/articles/vitals">web.dev: Web Vitals</a></li>
+<li><a href="https://www.brendangregg.com/flamegraphs.html">Brendan Gregg: Flame Graphs</a></li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="data-access.html"><small>&larr; PREVIOUS</small>Data Access Patterns</a><a class="next" href="memory-and-gc.html"><small>NEXT &rarr;</small>Memory, Allocation &amp; Garbage Collection</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-speed-work-without-a-loop">The problem: speed work without a loop</a></li>
+<li><a href="#the-cadence-at-a-glance">The cadence at a glance</a></li>
+<li><a href="#1-define-the-goal-slos-percentiles-and-why-averages-lie">1 · Define the goal: SLOs, percentiles and why averages lie</a></li>
+<li><a href="#2-measure-the-baseline-then-profile">2 · Measure the baseline, then profile</a></li>
+<li><a href="#3-hypothesis-let-amdahls-law-pick-the-target">3 · Hypothesis: let Amdahl's law pick the target</a></li>
+<li><a href="#4-change-one-thing-then-verify-with-statistics">4 · Change one thing, then verify with statistics</a></li>
+<li><a href="#5-guard-against-regressions-in-ci">5 · Guard against regressions in CI</a></li>
+<li><a href="#the-tooling-per-language">The tooling per language</a></li>
+<li><a href="#one-micro-benchmark-five-languages">One micro-benchmark, five languages</a></li>
+<li><a href="#macro-benchmarks-and-load-testing">Macro benchmarks and load testing</a></li>
+<li><a href="#latency-numbers-every-programmer-should-know">Latency numbers every programmer should know</a></li>
+<li><a href="#performance-budgets">Performance budgets</a></li>
+<li><a href="#when-not-to-optimise">When NOT to optimise</a></li>
+<li><a href="#pitfalls-and-war-stories">Pitfalls and war stories</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#quiz">Quiz</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#related-topics-and-further-reading">Related topics and further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

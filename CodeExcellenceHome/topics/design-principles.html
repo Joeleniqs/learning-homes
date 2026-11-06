@@ -1,0 +1,1665 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Design Principles: SOLID, DRY, KISS, YAGNI | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/design-principles.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/design-principles.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track" open><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html" aria-current="page">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Design Principles: SOLID, DRY, KISS, YAGNI</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">FOUNDATIONS OF CRAFT</p><h1>Design Principles: SOLID, DRY, KISS, YAGNI</h1><p class="lede">Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied.</p><div class="meta"><span class="level level-beginner">Beginner → Advanced</span><span>~60 min study</span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="design-principles" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-every-change-touches-everything">The problem: every change touches everything</h2>
+<p>A product owner asks for "SMS receipts as well as email". It sounds like a one-day job. Then the developer finds that <code>OrderService</code> builds the email itself, the email template is assembled inside the PDF renderer, the tests construct a real <code>SmtpClient</code>, and the admin page calls <code>OrderService.SendEmail</code> directly. The one-day job touches nine files owned by three teams, and the release slips a week.</p>
+<p>None of that code was <em>wrong</em>. Each line worked. The problem was the <strong>shape</strong>: which pieces knew about which other pieces. Design principles (SOLID, DRY, KISS, YAGNI, the Law of Demeter, composition over inheritance, separation of concerns) are not style rules. They are heuristics that keep the <strong>cost of change</strong> low by controlling two things: what changes together (cohesion) and what breaks together (coupling).</p>
+<div class="rule">
+<p><strong>The rule.</strong> A design is good if the changes you actually get are cheap. Put things that change for the same reason together, put things that change for different reasons apart, and make dependencies point from volatile code toward stable code. Apply a principle when it lowers the cost of a change you can name. Do not apply it to a change you are only imagining.</p>
+</div>
+<div class="recognize">
+<p><strong>Recognize that your design is fighting you when</strong></p>
+<ul>
+<li>A small feature request needs edits in many files, across team boundaries (<strong>shotgun surgery</strong>).</li>
+<li>One class changes for unrelated reasons: tax rules on Monday, PDF layout on Tuesday (<strong>divergent change</strong>).</li>
+<li>You cannot unit test business rules without a database, an HTTP server or a clock.</li>
+<li>A subclass overrides a method to throw <code>NotSupportedException</code>, or a base class change breaks subclasses you have never seen.</li>
+<li>Shared helpers have five boolean parameters, and nobody knows which combinations are used.</li>
+<li>Or the reverse: every class has an <code>I</code>-prefixed interface with one implementation, and a "simple" feature means changing a controller, a service, a manager, a factory and a provider.</li>
+</ul>
+</div>
+<h2 id="the-mental-model-coupling-cohesion-and-the-cost-of-change">The mental model: coupling, cohesion and the cost of change</h2>
+<p>Every principle on this page is a special case of one idea: <strong>draw module boundaries around things that change together.</strong></p>
+<ul>
+<li><strong>Cohesion</strong> is how strongly the pieces <em>inside</em> a module belong together. High cohesion means a module has one job, and its methods use the same data.</li>
+<li><strong>Coupling</strong> is how much a module <em>knows about other modules</em>: their types, their internals, their order of calls, their data formats. Low coupling means you can change one module without opening the others.</li>
+</ul>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 420" width="860" role="img" aria-label="Four ways to group the same nine pieces of code: ideal, big ball of mud, god object, destructive decoupling">
+<defs><marker id="design-principles-quad-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="design-principles-quad-arb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker><marker id="design-principles-quad-ard" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker><marker id="design-principles-quad-arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker><marker id="design-principles-quad-ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="design-principles-quad-tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" class="edge"/></marker><marker id="design-principles-quad-trp" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" class="box path"/></marker></defs>
+<rect class="box" x="20" y="22" width="400" height="176" rx="8" style="fill:none"/>
+<text x="32" y="40" class="title">Ideal: high cohesion, low coupling</text>
+<text x="32" y="55" class="small muted">Things that change together live together.</text>
+<rect class="box" x="50" y="80" width="110" height="95" rx="6"/>
+<rect class="box" x="170" y="80" width="110" height="95" rx="6"/>
+<rect class="box" x="290" y="80" width="110" height="95" rx="6"/>
+<line x1="77" y1="108" x2="133" y2="108" class="edge done"/>
+<line x1="133" y1="108" x2="105" y2="150" class="edge done"/>
+<line x1="197" y1="108" x2="253" y2="108" class="edge done"/>
+<line x1="253" y1="108" x2="225" y2="150" class="edge done"/>
+<line x1="317" y1="108" x2="373" y2="108" class="edge done"/>
+<line x1="373" y1="108" x2="345" y2="150" class="edge done"/>
+<path d="M105 150 Q151 90 197 108" class="edge bad"/>
+<path d="M225 150 Q271 90 317 108" class="edge bad"/>
+<circle cx="77" cy="108" r="7" class="fill-visit"/>
+<circle cx="133" cy="108" r="7" class="fill-visit"/>
+<circle cx="105" cy="150" r="7" class="fill-visit"/>
+<circle cx="197" cy="108" r="7" class="fill-done"/>
+<circle cx="253" cy="108" r="7" class="fill-done"/>
+<circle cx="225" cy="150" r="7" class="fill-done"/>
+<circle cx="317" cy="108" r="7" class="fill-path"/>
+<circle cx="373" cy="108" r="7" class="fill-path"/>
+<circle cx="345" cy="150" r="7" class="fill-path"/>
+<text x="32" y="191" class="small mono">links inside a module: 6   ·   links across modules: 2</text>
+<rect class="box" x="440" y="22" width="400" height="176" rx="8" style="fill:none"/>
+<text x="452" y="40" class="title">Big ball of mud: low cohesion, high coupling</text>
+<text x="452" y="55" class="small muted">Every change crosses module lines.</text>
+<rect class="box" x="470" y="80" width="110" height="95" rx="6"/>
+<rect class="box" x="590" y="80" width="110" height="95" rx="6"/>
+<rect class="box" x="710" y="80" width="110" height="95" rx="6"/>
+<path d="M497 108 Q585 90 673 108" class="edge bad"/>
+<path d="M673 108 Q719 90 765 150" class="edge bad"/>
+<path d="M553 108 Q599 90 645 150" class="edge bad"/>
+<path d="M645 150 Q691 90 737 108" class="edge bad"/>
+<path d="M525 150 Q571 90 617 108" class="edge bad"/>
+<path d="M617 108 Q705 90 793 108" class="edge bad"/>
+<circle cx="497" cy="108" r="7" class="fill-visit"/>
+<circle cx="553" cy="108" r="7" class="fill-done"/>
+<circle cx="525" cy="150" r="7" class="fill-path"/>
+<circle cx="617" cy="108" r="7" class="fill-path"/>
+<circle cx="673" cy="108" r="7" class="fill-visit"/>
+<circle cx="645" cy="150" r="7" class="fill-done"/>
+<circle cx="737" cy="108" r="7" class="fill-done"/>
+<circle cx="793" cy="108" r="7" class="fill-path"/>
+<circle cx="765" cy="150" r="7" class="fill-visit"/>
+<text x="452" y="191" class="small mono">links inside a module: 0   ·   links across modules: 6</text>
+<rect class="box" x="20" y="212" width="400" height="176" rx="8" style="fill:none"/>
+<text x="32" y="230" class="title">God object: everything in one place</text>
+<text x="32" y="245" class="small muted">No coupling to see, because nothing is separated.</text>
+<rect class="box" x="50" y="270" width="350" height="95" rx="6"/>
+<line x1="80" y1="300" x2="189" y2="335" class="edge done"/>
+<line x1="189" y1="335" x2="298" y2="300" class="edge done"/>
+<line x1="116" y1="335" x2="225" y2="300" class="edge done"/>
+<line x1="225" y1="300" x2="334" y2="335" class="edge done"/>
+<line x1="152" y1="300" x2="261" y2="335" class="edge done"/>
+<line x1="261" y1="335" x2="370" y2="300" class="edge done"/>
+<circle cx="80" cy="300" r="7" class="fill-visit"/>
+<circle cx="116" cy="335" r="7" class="fill-done"/>
+<circle cx="152" cy="300" r="7" class="fill-path"/>
+<circle cx="189" cy="335" r="7" class="fill-visit"/>
+<circle cx="225" cy="300" r="7" class="fill-done"/>
+<circle cx="261" cy="335" r="7" class="fill-path"/>
+<circle cx="298" cy="300" r="7" class="fill-visit"/>
+<circle cx="334" cy="335" r="7" class="fill-done"/>
+<circle cx="370" cy="300" r="7" class="fill-path"/>
+<text x="32" y="381" class="small mono">links inside a module: 6   ·   links across modules: 0</text>
+<rect class="box" x="440" y="212" width="400" height="176" rx="8" style="fill:none"/>
+<text x="452" y="230" class="title">Destructive decoupling: split too fine</text>
+<text x="452" y="245" class="small muted">Each piece alone, behind an interface.</text>
+<rect class="box" x="470" y="292" width="32" height="50" rx="6"/>
+<rect class="box" x="509" y="292" width="32" height="50" rx="6"/>
+<rect class="box" x="548" y="292" width="32" height="50" rx="6"/>
+<rect class="box" x="587" y="292" width="32" height="50" rx="6"/>
+<rect class="box" x="626" y="292" width="32" height="50" rx="6"/>
+<rect class="box" x="665" y="292" width="32" height="50" rx="6"/>
+<rect class="box" x="704" y="292" width="32" height="50" rx="6"/>
+<rect class="box" x="743" y="292" width="32" height="50" rx="6"/>
+<rect class="box" x="782" y="292" width="32" height="50" rx="6"/>
+<path d="M486 317 Q506 299 525 317" class="edge bad"/>
+<path d="M525 317 Q544 299 564 317" class="edge bad"/>
+<path d="M603 317 Q622 299 642 317" class="edge bad"/>
+<path d="M642 317 Q662 299 681 317" class="edge bad"/>
+<path d="M720 317 Q740 299 759 317" class="edge bad"/>
+<path d="M759 317 Q778 299 798 317" class="edge bad"/>
+<circle cx="486" cy="317" r="7" class="fill-visit"/>
+<circle cx="525" cy="317" r="7" class="fill-visit"/>
+<circle cx="564" cy="317" r="7" class="fill-visit"/>
+<circle cx="603" cy="317" r="7" class="fill-done"/>
+<circle cx="642" cy="317" r="7" class="fill-done"/>
+<circle cx="681" cy="317" r="7" class="fill-done"/>
+<circle cx="720" cy="317" r="7" class="fill-path"/>
+<circle cx="759" cy="317" r="7" class="fill-path"/>
+<circle cx="798" cy="317" r="7" class="fill-path"/>
+<text x="452" y="381" class="small mono">links inside a module: 0   ·   links across modules: 6</text>
+<text x="20" y="412" class="small muted">Dot colour = the business concern a piece of code belongs to. Green line = cohesion (inside a module). Red curve = coupling (across modules).</text>
+</svg>
+<figcaption>Cohesion and coupling are two views of one question: <em>where are the lines between things that change together?</em> Good design draws module boundaries so the green lines stay inside and the red curves are few.</figcaption>
+</figure>
+
+<p>Coupling is not inherently bad: a program with zero coupling does nothing. What matters is <strong>what kind of coupling</strong> you have and <strong>where</strong> it sits. Depending on a stable, small interface is cheap. Depending on another class's concrete types, field layout or call order is expensive, because those change often.</p>
+<h3 id="see-a-change-ripple-through-tight-and-loose-designs">See a change ripple through tight and loose designs</h3>
+<p>Pick a change request. The visualizer runs a breadth-first search over the real dependency graph: a module must change if it uses the changed module's details (its concrete types appear in the module's code or signatures). If the changed module exposes those types in <em>its own</em> API, the ripple continues to <em>its</em> users. The search stops at an edge where the user only knows an interface that did not change.</p>
+<div class="viz" data-viz="design-principles-ripple"></div>
+
+<p>Compare the four change requests. Ports and adapters (the core owns small interfaces, infrastructure implements them) win big for vendor and storage changes. They do almost nothing for "add a tax rule", because that change was inside one module in both designs. That is the honest trade-off: <strong>indirection pays only where change actually arrives</strong>.</p>
+<h3 id="measure-cohesion-lcom4">Measure cohesion: LCOM4</h3>
+<p>LCOM4 (Lack of Cohesion of Methods, version 4) counts the connected groups in a class. Two methods are connected if they use the same field or one calls the other. LCOM4 = 1 means one cohesive class. LCOM4 = 2 or more means the class is several classes sharing a name. Edit the class description and watch the groups merge with union-find.</p>
+<div class="viz" data-viz="design-principles-cohesion"></div>
+
+<p>Try changing <code>renderPdf</code> to <code>renderPdf:fonts</code>: LCOM4 rises to 3, because PDF rendering no longer shares any data with email. Try making <code>emailReceipt</code> read <code>items</code>: everything collapses into one group. That is the honest result too. If email really needs the cart, the split is less obvious, and you might extract a <code>Receipt</code> value instead.</p>
+<h3 id="measure-coupling-instability-and-the-main-sequence">Measure coupling: instability and the main sequence</h3>
+<p>Robert C. Martin's package metrics turn coupling into numbers. For each package, <strong>Ca</strong> (afferent) counts the packages that depend on it, and <strong>Ce</strong> (efferent) counts the packages it depends on.</p>
+<ul>
+<li><strong>Instability</strong> <code>I = Ce / (Ca + Ce)</code>. 0 means maximally stable (many depend on it, so it is hard to change). 1 means maximally unstable (free to change).</li>
+<li><strong>Abstractness</strong> <code>A = abstract types / all types</code>.</li>
+<li><strong>Distance from the main sequence</strong> <code>D = |A + I − 1|</code>. Stable packages should be abstract (interfaces that others implement). Unstable packages can be concrete.</li>
+</ul>
+<div class="viz" data-viz="design-principles-coupling"></div>
+
+<p>The two warnings in the default example are both common in real code. <code>Domain</code> depends on <code>Infra</code>, which is <em>less</em> stable than <code>Domain</code>: a <strong>Stable Dependencies Principle</strong> violation, fixed by dependency inversion (the D in SOLID). <code>Util</code> is maximally stable and completely concrete, so it sits in the <strong>zone of pain</strong>: everything depends on it, and any change ripples everywhere. That is fine for truly stable code like <code>string</code> helpers, and a problem for a <code>Util</code> package that keeps growing.</p>
+<div class="tip">
+<p><strong>Tip: get these numbers for your own code</strong>
+NDepend and Visual Studio code metrics (.NET), JDepend and ArchUnit (Java), <code>go list -deps</code> with <code>goda</code> (Go), <code>import-linter</code> and <code>pydeps</code> (Python), and <code>dependency-cruiser</code> or <code>madge</code> (TypeScript) all compute dependency graphs, and most can fail a build when a forbidden dependency appears. Use them to guard boundaries, not to chase a score.</p>
+</div>
+<h2 id="solid-one-letter-at-a-time">SOLID, one letter at a time</h2>
+<p>SOLID is five principles for object-oriented and modular code, collected by Robert C. Martin in the early 2000s. They apply just as well to Go packages, Python modules and TypeScript files as to C# and Java classes.</p>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>S · SINGLE RESPONSIBILITY</small><strong>One reason to change</strong><p>A module answers to one actor. Split by who asks for changes.</p></div>
+<div class="flow-step"><small>O · OPEN/CLOSED</small><strong>Extend without editing</strong><p>New behaviour arrives as new code behind a stable interface.</p></div>
+<div class="flow-step"><small>L · LISKOV SUBSTITUTION</small><strong>Subtypes keep promises</strong><p>Any implementation must pass the base contract's tests.</p></div>
+<div class="flow-step"><small>I · INTERFACE SEGREGATION</small><strong>Small, client-owned interfaces</strong><p>No client depends on methods it does not call.</p></div>
+<div class="flow-step"><small>D · DEPENDENCY INVERSION</small><strong>Point arrows at policy</strong><p>Core code owns abstractions. Details implement them.</p></div>
+</div>
+
+<h3 id="s-single-responsibility-principle">S: Single Responsibility Principle</h3>
+<p>"A module should be responsible to one, and only one, actor." The common phrasing "a class should do one thing" is misleading, because everything can be described as one thing ("it handles invoices"). The useful test is: <strong>who will ask for this code to change?</strong> If Finance, the brand team and the DBA all edit <code>Invoice</code>, their changes collide, and a tax fix can break PDF layout.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 290" width="860" role="img" aria-label="Single responsibility: before, three actors change one Invoice class; after, each actor owns one class">
+<defs><marker id="design-principles-srp-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="design-principles-srp-arb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker><marker id="design-principles-srp-ard" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker><marker id="design-principles-srp-arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker><marker id="design-principles-srp-ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="design-principles-srp-tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" class="edge"/></marker><marker id="design-principles-srp-trp" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" class="box path"/></marker></defs>
+<text x="20" y="22" class="title">Before: one class, three reasons to change</text>
+<text x="20" y="38" class="small muted">Every request lands in the same file.</text>
+<text x="450" y="22" class="title">After: one class per actor</text>
+<text x="450" y="38" class="small muted">A tax change cannot break the PDF layout.</text>
+<line x1="430" y1="10" x2="430" y2="280" class="edge dash"/>
+<rect class="box visit" x="25" y="56" width="120" height="32" rx="6"/>
+<text x="85" y="74" text-anchor="middle" class="title" style="font-size:13px">Finance (tax)</text>
+<rect class="box visit" x="455" y="56" width="120" height="32" rx="6"/>
+<text x="515" y="74" text-anchor="middle" class="title" style="font-size:13px">Finance (tax)</text>
+<rect class="box visit" x="160" y="56" width="120" height="32" rx="6"/>
+<text x="220" y="74" text-anchor="middle" class="title" style="font-size:13px">Brand (layout)</text>
+<rect class="box visit" x="590" y="56" width="120" height="32" rx="6"/>
+<text x="650" y="74" text-anchor="middle" class="title" style="font-size:13px">Brand (layout)</text>
+<rect class="box visit" x="295" y="56" width="120" height="32" rx="6"/>
+<text x="355" y="74" text-anchor="middle" class="title" style="font-size:13px">DBA (schema)</text>
+<rect class="box visit" x="725" y="56" width="120" height="32" rx="6"/>
+<text x="785" y="74" text-anchor="middle" class="title" style="font-size:13px">DBA (schema)</text>
+<rect class="box bad" x="95" y="140" width="240" height="110" rx="6"/>
+<text x="215" y="158" text-anchor="middle" class="title" style="font-size:13px">Invoice</text>
+<text x="215" y="175" text-anchor="middle" class="small mono">calculateTotal()</text>
+<text x="215" y="190" text-anchor="middle" class="small mono">renderPdf()</text>
+<text x="215" y="205" text-anchor="middle" class="small mono">saveToSql()</text>
+<text x="215" y="220" text-anchor="middle" class="small mono">emailCustomer()</text>
+<path class="edge bad" d="M85 88 L155 140" marker-end="url(#design-principles-srp-arb)"/>
+<path class="edge bad" d="M220 88 L215 140" marker-end="url(#design-principles-srp-arb)"/>
+<path class="edge bad" d="M355 88 L275 140" marker-end="url(#design-principles-srp-arb)"/>
+<rect class="box done" x="455" y="136" width="120" height="52" rx="6"/>
+<text x="515" y="154" text-anchor="middle" class="title" style="font-size:13px">InvoiceCalc</text>
+<text x="515" y="171" text-anchor="middle" class="small mono">Total()</text>
+<rect class="box done" x="590" y="136" width="120" height="52" rx="6"/>
+<text x="650" y="154" text-anchor="middle" class="title" style="font-size:13px">InvoicePdf</text>
+<text x="650" y="171" text-anchor="middle" class="small mono">Render()</text>
+<rect class="box done" x="725" y="136" width="120" height="52" rx="6"/>
+<text x="785" y="154" text-anchor="middle" class="title" style="font-size:13px">InvoiceRepo</text>
+<text x="785" y="171" text-anchor="middle" class="small mono">Save()</text>
+<path class="edge done" d="M515 88 L515 136" marker-end="url(#design-principles-srp-ard)"/>
+<path class="edge done" d="M650 88 L650 136" marker-end="url(#design-principles-srp-ard)"/>
+<path class="edge done" d="M785 88 L785 136" marker-end="url(#design-principles-srp-ard)"/>
+<rect class="box " x="590" y="222" width="120" height="32" rx="6"/>
+<text x="650" y="240" text-anchor="middle" class="title" style="font-size:13px">Invoice (data)</text>
+<path class="edge dash" d="M515 188 L614 222" marker-end="url(#design-principles-srp-ar)"/>
+<path class="edge dash" d="M650 188 L650 222" marker-end="url(#design-principles-srp-ar)"/>
+<path class="edge dash" d="M785 188 L686 222" marker-end="url(#design-principles-srp-ar)"/>
+<text x="215" y="274" text-anchor="middle" class="small muted">3 actors → 1 file: merge conflicts, broad retests</text>
+<text x="650" y="278" text-anchor="middle" class="small muted">dashed = uses</text>
+</svg>
+<figcaption>SRP is about <strong>people and reasons to change</strong>, not about methods. Group code by the actor who asks for changes to it.</figcaption>
+</figure>
+
+<p>Before: one class that answers to three actors.</p>
+<pre><code class="language-csharp">public class Invoice
+{
+    public decimal CalculateTotal() { /* tax rules: Finance */ }
+    public byte[] RenderPdf()       { /* layout: brand team */ }
+    public void SaveToSql()         { /* schema: DBA */ }
+    public void EmailCustomer()     { /* SMTP settings: ops */ }
+}
+</code></pre>
+<p>After: one unit per reason to change, sharing a plain data type.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">public sealed record Invoice(string Country, IReadOnlyList&lt;Line&gt; Lines);
+
+// Finance changes this.
+public sealed class InvoiceCalculator(ITaxPolicy tax)
+{
+    public decimal Total(Invoice inv) =&gt;
+        inv.Lines.Sum(l =&gt; l.Price * l.Qty) * (1 + tax.RateFor(inv.Country));
+}
+
+// The brand team changes this (QuestPDF, for example).
+public sealed class InvoicePdf
+{
+    public byte[] Render(Invoice inv, decimal total) =&gt;
+        Document.Create(c =&gt; c.Page(p =&gt; p.Content().Text($&quot;Total {total:C}&quot;)))
+                .GeneratePdf();
+}
+
+// The DBA changes this (EF Core).
+public sealed class InvoiceRepository(AppDbContext db)
+{
+    public Task SaveAsync(Invoice inv, CancellationToken ct)
+    {
+        db.Invoices.Add(inv);
+        return db.SaveChangesAsync(ct);
+    }
+}
+</code></pre>
+<pre><code class="language-java">public record Invoice(String country, List&lt;Line&gt; lines) {}
+
+@Service // Finance changes this.
+public class InvoiceCalculator {
+    private final TaxPolicy tax;
+    public InvoiceCalculator(TaxPolicy tax) { this.tax = tax; }
+
+    public BigDecimal total(Invoice inv) {
+        BigDecimal net = inv.lines().stream()
+            .map(l -&gt; l.price().multiply(BigDecimal.valueOf(l.qty())))
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return net.multiply(BigDecimal.ONE.add(tax.rateFor(inv.country())));
+    }
+}
+
+@Component // The brand team changes this (OpenPDF, iText...).
+public class InvoicePdf {
+    public byte[] render(Invoice inv, BigDecimal total) { /* layout */ return new byte[0]; }
+}
+
+// The DBA changes this (Spring Data JPA).
+public interface InvoiceRepository extends JpaRepository&lt;InvoiceEntity, Long&gt; {}
+</code></pre>
+<pre><code class="language-python">from dataclasses import dataclass
+from decimal import Decimal
+
+@dataclass(frozen=True)
+class Invoice:
+    country: str
+    lines: tuple[Line, ...]
+
+# Finance changes this module: pricing.py
+def invoice_total(inv: Invoice, tax: TaxPolicy) -&gt; Decimal:
+    net = sum((l.price * l.qty for l in inv.lines), Decimal(0))
+    return net * (1 + tax.rate_for(inv.country))
+
+# The brand team changes this module: invoice_pdf.py (ReportLab, WeasyPrint...)
+def render_pdf(inv: Invoice, total: Decimal) -&gt; bytes: ...
+
+# The DBA changes this module: invoice_repo.py (SQLAlchemy)
+class InvoiceRepository:
+    def __init__(self, session: Session) -&gt; None:
+        self._session = session
+
+    def save(self, inv: Invoice) -&gt; None:
+        self._session.add(InvoiceRow.from_domain(inv))
+</code></pre>
+<pre><code class="language-go">// package invoice: plain data, no behaviour that belongs to other actors.
+type Invoice struct {
+    Country string
+    Lines   []Line
+}
+
+// package pricing: Finance changes this.
+func Total(inv invoice.Invoice, tax TaxPolicy) int64 {
+    var net int64
+    for _, l := range inv.Lines {
+        net += l.PriceCents * int64(l.Qty)
+    }
+    return net + net*tax.RateBasisPoints(inv.Country)/10_000
+}
+
+// package invoicepdf: the brand team changes this.
+func Render(inv invoice.Invoice, totalCents int64) ([]byte, error) { /* ... */ }
+
+// package postgres: the DBA changes this (pgx).
+func (r *InvoiceRepo) Save(ctx context.Context, inv invoice.Invoice) error {
+    _, err := r.pool.Exec(ctx, `INSERT INTO invoices (country) VALUES ($1)`, inv.Country)
+    return err
+}
+</code></pre>
+<pre><code class="language-typescript">export interface Invoice { readonly country: string; readonly lines: readonly Line[] }
+
+// pricing.ts: Finance changes this.
+export function invoiceTotal(inv: Invoice, tax: TaxPolicy): number {
+  const net = inv.lines.reduce((s, l) =&gt; s + l.priceCents * l.qty, 0);
+  return Math.round(net * (1 + tax.rateFor(inv.country)));
+}
+
+// invoice-pdf.ts: the brand team changes this (pdfkit, Puppeteer...).
+export async function renderPdf(inv: Invoice, totalCents: number): Promise&lt;Buffer&gt; { /* ... */ }
+
+// invoice-repo.ts: the DBA changes this (Prisma).
+export class InvoiceRepository {
+  constructor(private readonly db: PrismaClient) {}
+  save(inv: Invoice) { return this.db.invoice.create({ data: toRow(inv) }); }
+}
+</code></pre>
+</div>
+<div class="compare">
+<div class="warn">
+<h4 id="over-applied-as-one-method-per-class">Over-applied as: one method per class</h4>
+<p><code>InvoiceTotalCalculator</code>, <code>InvoiceTaxApplier</code>, <code>InvoiceLineSummer</code>, each with an interface. The code that changes together (the pricing rules) is now spread over six files, so cohesion drops. That is destructive decoupling.</p>
+</div>
+<div class="good">
+<h4 id="break-it-when">Break it when</h4>
+<p>The "actors" are really one person or team, and the class is small. A 60-line class that formats <em>and</em> saves a CSV export for one internal tool is fine. Split when two people start colliding in it, or when one half needs testing without the other.</p>
+</div>
+</div>
+<h3 id="o-openclosed-principle">O: Open/Closed Principle</h3>
+<p>"Software entities should be open for extension but closed for modification." In practice: when the <strong>kind</strong> of change you get is "one more variant" (a new discount, a new payment method, a new file format), arrange the code so a new variant is <strong>new code</strong>, not an edit to a <code>switch</code> that already works and is already tested.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 290" width="860" role="img" aria-label="Open/closed: before, every new discount edits a switch; after, a new rule is a new class behind an interface">
+<defs><marker id="design-principles-ocp-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="design-principles-ocp-arb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker><marker id="design-principles-ocp-ard" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker><marker id="design-principles-ocp-arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker><marker id="design-principles-ocp-ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="design-principles-ocp-tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" class="edge"/></marker><marker id="design-principles-ocp-trp" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" class="box path"/></marker></defs>
+<text x="20" y="22" class="title">Before: a switch you must edit</text>
+<text x="20" y="38" class="small muted">A new customer type edits and retests this class.</text>
+<text x="450" y="22" class="title">After: open for extension, closed for edits</text>
+<text x="450" y="38" class="small muted">A new rule is a new class plus one registration line.</text>
+<line x1="430" y1="10" x2="430" y2="280" class="edge dash"/>
+<rect class="box " x="25" y="70" width="110" height="34" rx="6"/>
+<text x="80" y="88" text-anchor="middle" class="title" style="font-size:13px">Checkout</text>
+<rect class="box bad" x="175" y="56" width="230" height="120" rx="6"/>
+<text x="185" y="74" class="title" style="font-size:13px">PriceCalculator</text>
+<text x="185" y="91" class="small mono">switch (customer.Type)</text>
+<text x="185" y="106" class="small mono">  case Regular: …</text>
+<text x="185" y="121" class="small mono">  case Gold: …</text>
+<text x="185" y="136" class="small mono">  case Staff: …</text>
+<text x="185" y="151" class="small mono fill-bad">  case Student: … ← edit</text>
+<path class="edge " d="M135 87 L175 78" marker-end="url(#design-principles-ocp-ar)"/>
+<text x="215" y="210" text-anchor="middle" class="small muted">Each rule is one more case, branch and test in the same file</text>
+<rect class="box " x="455" y="70" width="110" height="34" rx="6"/>
+<text x="510" y="88" text-anchor="middle" class="title" style="font-size:13px">Checkout</text>
+<rect class="box done" x="625" y="56" width="210" height="48" rx="6"/>
+<text x="730" y="74" text-anchor="middle" class="title" style="font-size:13px">PriceCalculator</text>
+<text x="730" y="91" text-anchor="middle" class="small mono">rules.Aggregate(…)</text>
+<rect class="box path" x="625" y="130" width="210" height="48" rx="6"/>
+<text x="730" y="148" text-anchor="middle" class="title" style="font-size:13px">IDiscountRule</text>
+<text x="730" y="165" text-anchor="middle" class="small mono">Applies() · Apply()</text>
+<path class="edge " d="M565 87 L625 70" marker-end="url(#design-principles-ocp-ar)"/>
+<path class="edge " d="M730 104 L730 130" marker-end="url(#design-principles-ocp-ar)"/>
+<rect class="box " x="455" y="216" width="88" height="32" rx="6"/>
+<text x="499" y="234" text-anchor="middle" class="title" style="font-size:13px">Regular</text>
+<path class="edge path dash" d="M499 216 L650 178" marker-end="url(#design-principles-ocp-trp)"/>
+<rect class="box " x="552" y="216" width="88" height="32" rx="6"/>
+<text x="596" y="234" text-anchor="middle" class="title" style="font-size:13px">Gold</text>
+<path class="edge path dash" d="M596 216 L703 178" marker-end="url(#design-principles-ocp-trp)"/>
+<rect class="box " x="649" y="216" width="88" height="32" rx="6"/>
+<text x="693" y="234" text-anchor="middle" class="title" style="font-size:13px">Staff</text>
+<path class="edge path dash" d="M693 216 L755 178" marker-end="url(#design-principles-ocp-trp)"/>
+<rect class="box active" x="746" y="216" width="88" height="32" rx="6"/>
+<text x="790" y="234" text-anchor="middle" class="title" style="font-size:13px">Student</text>
+<path class="edge path dash" d="M790 216 L808 178" marker-end="url(#design-principles-ocp-trp)"/>
+<text x="790" y="270" text-anchor="middle" class="small muted">new: no edits above</text>
+</svg>
+<figcaption>Hollow triangle = implements. The calculator depends on the rule <em>interface</em>, so new behaviour arrives as new code instead of edits to tested code.</figcaption>
+</figure>
+
+<p>Before: each new customer type edits the calculator.</p>
+<pre><code class="language-csharp">public decimal Price(Customer c, decimal list) =&gt; c.Type switch
+{
+    CustomerType.Regular =&gt; list,
+    CustomerType.Gold    =&gt; list * 0.90m,
+    CustomerType.Staff   =&gt; list * 0.70m,
+    // Student? Edit here, retest everything above.
+    _ =&gt; throw new ArgumentOutOfRangeException(nameof(c))
+};
+</code></pre>
+<p>After: rules are plug-ins found by the container or a list.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">public interface IDiscountRule
+{
+    bool Applies(Customer c);
+    decimal Apply(decimal price);
+}
+
+public sealed class StudentRule : IDiscountRule // new file, nothing else edited
+{
+    public bool Applies(Customer c) =&gt; c.IsStudent;
+    public decimal Apply(decimal price) =&gt; price * 0.85m;
+}
+
+public sealed class PriceCalculator(IEnumerable&lt;IDiscountRule&gt; rules)
+{
+    public decimal Price(Customer c, decimal list) =&gt;
+        rules.Where(r =&gt; r.Applies(c)).Aggregate(list, (p, r) =&gt; r.Apply(p));
+}
+
+// Program.cs (Microsoft.Extensions.DependencyInjection)
+builder.Services.AddSingleton&lt;IDiscountRule, GoldRule&gt;();
+builder.Services.AddSingleton&lt;IDiscountRule, StudentRule&gt;();
+builder.Services.AddSingleton&lt;PriceCalculator&gt;();
+</code></pre>
+<pre><code class="language-java">public interface DiscountRule {
+    boolean applies(Customer c);
+    BigDecimal apply(BigDecimal price);
+}
+
+@Component // Spring finds it; nothing else is edited.
+class StudentRule implements DiscountRule {
+    public boolean applies(Customer c) { return c.isStudent(); }
+    public BigDecimal apply(BigDecimal p) { return p.multiply(new BigDecimal(&quot;0.85&quot;)); }
+}
+
+@Service
+class PriceCalculator {
+    private final List&lt;DiscountRule&gt; rules; // Spring injects every DiscountRule bean
+    PriceCalculator(List&lt;DiscountRule&gt; rules) { this.rules = rules; }
+
+    BigDecimal price(Customer c, BigDecimal list) {
+        BigDecimal p = list;
+        for (DiscountRule r : rules) if (r.applies(c)) p = r.apply(p);
+        return p;
+    }
+}
+</code></pre>
+<pre><code class="language-python">from typing import Protocol
+
+class DiscountRule(Protocol):
+    def applies(self, c: Customer) -&gt; bool: ...
+    def apply(self, price: Decimal) -&gt; Decimal: ...
+
+class StudentRule:  # satisfies the Protocol structurally; no base class needed
+    def applies(self, c: Customer) -&gt; bool:
+        return c.is_student
+
+    def apply(self, price: Decimal) -&gt; Decimal:
+        return price * Decimal(&quot;0.85&quot;)
+
+def price(c: Customer, list_price: Decimal, rules: Iterable[DiscountRule]) -&gt; Decimal:
+    p = list_price
+    for r in rules:
+        if r.applies(c):
+            p = r.apply(p)
+    return p
+
+RULES: list[DiscountRule] = [GoldRule(), StaffRule(), StudentRule()]
+</code></pre>
+<pre><code class="language-go">type DiscountRule interface {
+    Applies(c Customer) bool
+    Apply(priceCents int64) int64
+}
+
+type StudentRule struct{}
+
+func (StudentRule) Applies(c Customer) bool { return c.IsStudent }
+func (StudentRule) Apply(p int64) int64     { return p * 85 / 100 }
+
+type Calculator struct{ Rules []DiscountRule }
+
+func (k Calculator) Price(c Customer, list int64) int64 {
+    p := list
+    for _, r := range k.Rules {
+        if r.Applies(c) {
+            p = r.Apply(p)
+        }
+    }
+    return p
+}
+
+// main.go: pricing.Calculator{Rules: []pricing.DiscountRule{GoldRule{}, StudentRule{}}}
+</code></pre>
+<pre><code class="language-typescript">export interface DiscountRule {
+  applies(c: Customer): boolean;
+  apply(priceCents: number): number;
+}
+
+export const studentRule: DiscountRule = {
+  applies: (c) =&gt; c.isStudent,
+  apply: (p) =&gt; Math.round(p * 0.85),
+};
+
+export function price(c: Customer, list: number, rules: readonly DiscountRule[]): number {
+  return rules.filter((r) =&gt; r.applies(c)).reduce((p, r) =&gt; r.apply(p), list);
+}
+
+// composition root
+export const rules: DiscountRule[] = [goldRule, staffRule, studentRule];
+</code></pre>
+</div>
+<div class="compare">
+<div class="warn">
+<h4 id="over-applied-as-plug-in-points-everywhere">Over-applied as: plug-in points everywhere</h4>
+<p>A strategy interface, a factory and a registry for a <code>switch</code> with three cases that has not changed in two years. This is <strong>speculative generality</strong>: you pay for flexibility nobody uses, and readers must chase indirection to find the actual rule.</p>
+</div>
+<div class="good">
+<h4 id="break-it-when_1">Break it when</h4>
+<p>The set of variants is <strong>closed</strong> and known (the four suits of a card deck, the HTTP methods you support). A <code>switch</code> over a sealed type or a discriminated union, with the compiler checking exhaustiveness (C# <code>switch</code> expressions with sealed records, Java <code>sealed</code> + pattern matching, TypeScript <code>never</code> checks), is simpler and safer. When you add a case, the compiler finds every place to update.</p>
+</div>
+</div>
+<h3 id="l-liskov-substitution-principle">L: Liskov Substitution Principle</h3>
+<p>"If S is a subtype of T, then objects of type T may be replaced with objects of type S without breaking the program." Barbara Liskov's point is about <strong>behaviour</strong>: a subtype must accept at least what the base accepts (no stronger preconditions), promise at least what the base promises (no weaker postconditions), and keep the base's invariants. Type checkers check signatures. Only tests check promises.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 270" width="860" role="img" aria-label="Liskov substitution: before, Square extends a mutable Rectangle and breaks callers; after, both implement an immutable Shape">
+<defs><marker id="design-principles-lsp-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="design-principles-lsp-arb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker><marker id="design-principles-lsp-ard" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker><marker id="design-principles-lsp-arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker><marker id="design-principles-lsp-ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="design-principles-lsp-tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" class="edge"/></marker><marker id="design-principles-lsp-trp" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" class="box path"/></marker></defs>
+<text x="20" y="22" class="title">Before: Square extends Rectangle</text>
+<text x="20" y="38" class="small muted">"A square is a rectangle" in maths, not in code.</text>
+<text x="450" y="22" class="title">After: siblings behind a smaller contract</text>
+<text x="450" y="38" class="small muted">Each type keeps the promises it actually makes.</text>
+<line x1="430" y1="10" x2="430" y2="260" class="edge dash"/>
+<rect class="box " x="25" y="64" width="150" height="48" rx="6"/>
+<text x="100" y="82" text-anchor="middle" class="title" style="font-size:13px">resize(Rectangle r)</text>
+<text x="100" y="99" text-anchor="middle" class="small mono">r.setWidth(5)</text>
+<rect class="box visit" x="240" y="64" width="165" height="48" rx="6"/>
+<text x="322" y="82" text-anchor="middle" class="title" style="font-size:13px">Rectangle</text>
+<text x="322" y="99" text-anchor="middle" class="small mono">setWidth · setHeight</text>
+<rect class="box bad" x="240" y="176" width="165" height="48" rx="6"/>
+<text x="322" y="194" text-anchor="middle" class="title" style="font-size:13px">Square</text>
+<text x="322" y="211" text-anchor="middle" class="small mono">setWidth sets both!</text>
+<path class="edge " d="M175 88 L240 88" marker-end="url(#design-principles-lsp-ar)"/>
+<path class="edge " d="M322 176 L322 112" marker-end="url(#design-principles-lsp-tri)"/>
+<path class="edge bad dash" d="M100 112 Q100 200 240 200" marker-end="url(#design-principles-lsp-arb)"/>
+<rect class="dp-lbl-bg" x="125" y="167" width="93" height="15" rx="3"/>
+<text x="172" y="178" text-anchor="middle" class="small">area 9, not 15</text>
+<rect class="box " x="455" y="64" width="130" height="48" rx="6"/>
+<text x="520" y="82" text-anchor="middle" class="title" style="font-size:13px">report(Shape[])</text>
+<text x="520" y="99" text-anchor="middle" class="small mono">s.Area()</text>
+<rect class="box path" x="640" y="64" width="170" height="48" rx="6"/>
+<text x="725" y="82" text-anchor="middle" class="title" style="font-size:13px">Shape</text>
+<text x="725" y="99" text-anchor="middle" class="small mono">Area()</text>
+<rect class="box visit" x="560" y="176" width="130" height="48" rx="6"/>
+<text x="625" y="194" text-anchor="middle" class="title" style="font-size:13px">Rectangle</text>
+<text x="625" y="211" text-anchor="middle" class="small mono">WithWidth(w)</text>
+<rect class="box done" x="710" y="176" width="130" height="48" rx="6"/>
+<text x="775" y="194" text-anchor="middle" class="title" style="font-size:13px">Square</text>
+<text x="775" y="211" text-anchor="middle" class="small mono">WithSide(s)</text>
+<path class="edge " d="M585 88 L640 88" marker-end="url(#design-principles-lsp-ar)"/>
+<path class="edge path dash" d="M625 176 L691 112" marker-end="url(#design-principles-lsp-trp)"/>
+<path class="edge path dash" d="M775 176 L759 112" marker-end="url(#design-principles-lsp-trp)"/>
+<text x="215" y="255" text-anchor="middle" class="small muted">Compiles, type-checks, fails at run time</text>
+<text x="650" y="255" text-anchor="middle" class="small muted">Immutable values: no setter can surprise a caller</text>
+</svg>
+<figcaption>LSP is a rule about <strong>behaviour</strong>: every subtype must pass the base type's contract tests. If it cannot, it is not a subtype, whatever the domain vocabulary says.</figcaption>
+</figure>
+
+<p>The classic trap: in geometry a square <em>is</em> a rectangle, so <code>Square extends Rectangle</code> looks right. Step through what happens when a function written against Rectangle's contract receives a Square, then switch the design to two implementations of a smaller <code>Shape</code> contract.</p>
+<div class="viz" data-viz="design-principles-lsp"></div>
+
+<p>The fix is to stop promising what some subtypes cannot deliver. Mutable setters are the problem: an immutable <code>Square</code> and an immutable <code>Rectangle</code> can both honestly implement <code>Area()</code>. Then <strong>enforce</strong> substitutability by running one contract test suite against every implementation. That is the practical form of LSP, and it is how you keep an in-memory fake honest against the real database repository.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// xUnit: one abstract contract, one subclass per implementation.
+public abstract class OrderRepositoryContract
+{
+    protected abstract IOrderRepository Create();
+
+    [Fact]
+    public async Task Saved_order_can_be_loaded()
+    {
+        var repo = Create();
+        var order = new Order(OrderId.New(), total: 42m);
+        await repo.SaveAsync(order);
+        Assert.Equal(order, await repo.GetAsync(order.Id));
+    }
+}
+
+public sealed class InMemoryRepoTests : OrderRepositoryContract
+{
+    protected override IOrderRepository Create() =&gt; new InMemoryOrderRepository();
+}
+
+public sealed class SqlRepoTests(SqlFixture db) : OrderRepositoryContract, IClassFixture&lt;SqlFixture&gt;
+{
+    protected override IOrderRepository Create() =&gt; new SqlOrderRepository(db.Context);
+}
+</code></pre>
+<pre><code class="language-java">// JUnit 5: the contract is an abstract test class.
+abstract class OrderRepositoryContract {
+    protected abstract OrderRepository create();
+
+    @Test
+    void savedOrderCanBeLoaded() {
+        OrderRepository repo = create();
+        Order order = new Order(OrderId.next(), new BigDecimal(&quot;42&quot;));
+        repo.save(order);
+        assertEquals(Optional.of(order), repo.findById(order.id()));
+    }
+}
+
+class InMemoryRepoTest extends OrderRepositoryContract {
+    protected OrderRepository create() { return new InMemoryOrderRepository(); }
+}
+
+@Testcontainers
+class JdbcRepoTest extends OrderRepositoryContract {
+    @Container static PostgreSQLContainer&lt;?&gt; pg = new PostgreSQLContainer&lt;&gt;(&quot;postgres:16&quot;);
+    protected OrderRepository create() { return new JdbcOrderRepository(dataSource(pg)); }
+}
+</code></pre>
+<pre><code class="language-python"># pytest: parametrize one fixture over every implementation.
+import pytest
+
+@pytest.fixture(params=[&quot;memory&quot;, &quot;sql&quot;])
+def repo(request, sql_session):
+    if request.param == &quot;memory&quot;:
+        return InMemoryOrderRepository()
+    return SqlOrderRepository(sql_session)
+
+def test_saved_order_can_be_loaded(repo: OrderRepository):
+    order = Order(id=new_id(), total=Decimal(&quot;42&quot;))
+    repo.save(order)
+    assert repo.get(order.id) == order
+</code></pre>
+<pre><code class="language-go">// One contract function, called from each implementation's test.
+func RepositoryContract(t *testing.T, newRepo func(t *testing.T) orders.Repository) {
+    t.Run(&quot;saved order can be loaded&quot;, func(t *testing.T) {
+        repo := newRepo(t)
+        o := orders.Order{ID: orders.NewID(), TotalCents: 4200}
+        if err := repo.Save(context.Background(), o); err != nil {
+            t.Fatal(err)
+        }
+        got, err := repo.Get(context.Background(), o.ID)
+        if err != nil || got != o {
+            t.Fatalf(&quot;got %v, %v; want %v&quot;, got, err, o)
+        }
+    })
+}
+
+func TestMemoryRepo(t *testing.T) {
+    RepositoryContract(t, func(*testing.T) orders.Repository { return memory.NewRepo() })
+}
+</code></pre>
+<pre><code class="language-typescript">// Vitest (or Jest): describe.each runs the same suite per implementation.
+import { describe, it, expect } from &quot;vitest&quot;;
+
+const impls: [string, () =&gt; Promise&lt;OrderRepository&gt;][] = [
+  [&quot;in-memory&quot;, async () =&gt; new InMemoryOrderRepository()],
+  [&quot;postgres&quot;, async () =&gt; new PgOrderRepository(await testPool())],
+];
+
+describe.each(impls)(&quot;OrderRepository contract: %s&quot;, (_name, create) =&gt; {
+  it(&quot;loads a saved order&quot;, async () =&gt; {
+    const repo = await create();
+    const order = { id: newId(), totalCents: 4200 };
+    await repo.save(order);
+    expect(await repo.get(order.id)).toEqual(order);
+  });
+});
+</code></pre>
+</div>
+<div class="compare">
+<div class="warn">
+<h4 id="over-applied-as-banning-all-inheritance">Over-applied as: banning all inheritance</h4>
+<p>LSP does not say "never subclass". Framework base classes designed for extension (<code>ControllerBase</code>, <code>HttpServlet</code>, <code>unittest.TestCase</code>, <code>Exception</code>) document what you may override, and they are fine to extend.</p>
+</div>
+<div class="good">
+<h4 id="bend-it-when">Bend it when</h4>
+<p>A subtype deliberately refuses part of a contract that the base marks as optional, such as a read-only collection that throws on <code>Add</code> while <code>IsReadOnly</code> returns true. It is legal because the contract said so. If you find yourself writing that, it is usually a sign the interface should be split (ISP).</p>
+</div>
+</div>
+<h3 id="i-interface-segregation-principle">I: Interface Segregation Principle</h3>
+<p>"Clients should not be forced to depend on methods they do not use." A fat interface couples every client to every method. When <code>Fax()</code> changes signature, a receipt printer that never faxes still recompiles, and implementers that cannot fax must stub it with an exception, which breaks LSP.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 295" width="860" role="img" aria-label="Interface segregation: before, one fat IMachine interface forces stubs; after, role interfaces per client need">
+<defs><marker id="design-principles-isp-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="design-principles-isp-arb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker><marker id="design-principles-isp-ard" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker><marker id="design-principles-isp-arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker><marker id="design-principles-isp-ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="design-principles-isp-tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" class="edge"/></marker><marker id="design-principles-isp-trp" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" class="box path"/></marker></defs>
+<text x="20" y="22" class="title">Before: one fat interface</text>
+<text x="20" y="38" class="small muted">Implementers stub what they cannot do.</text>
+<text x="450" y="22" class="title">After: role interfaces</text>
+<text x="450" y="38" class="small muted">Each client depends only on the methods it calls.</text>
+<line x1="430" y1="10" x2="430" y2="285" class="edge dash"/>
+<rect class="box bad" x="120" y="52" width="190" height="98" rx="6"/>
+<text x="215" y="70" text-anchor="middle" class="title" style="font-size:13px">IMachine</text>
+<text x="215" y="87" text-anchor="middle" class="small mono">Print()</text>
+<text x="215" y="102" text-anchor="middle" class="small mono">Scan()</text>
+<text x="215" y="117" text-anchor="middle" class="small mono">Fax()</text>
+<text x="215" y="132" text-anchor="middle" class="small mono">Staple()</text>
+<rect class="box bad" x="25" y="204" width="175" height="48" rx="6"/>
+<text x="112" y="222" text-anchor="middle" class="title" style="font-size:13px">SimplePrinter</text>
+<text x="112" y="239" text-anchor="middle" class="small mono">3 × NotSupported</text>
+<rect class="box " x="230" y="204" width="175" height="48" rx="6"/>
+<text x="318" y="222" text-anchor="middle" class="title" style="font-size:13px">Photocopier</text>
+<text x="318" y="239" text-anchor="middle" class="small mono">implements all 4</text>
+<path class="edge path dash" d="M112 204 L168 150" marker-end="url(#design-principles-isp-trp)"/>
+<path class="edge path dash" d="M318 204 L262 150" marker-end="url(#design-principles-isp-trp)"/>
+<text x="215" y="278" text-anchor="middle" class="small muted">Adding Staple() recompiles and redeploys every user</text>
+<rect class="box " x="455" y="56" width="150" height="30" rx="6"/>
+<text x="530" y="74" text-anchor="middle" class="title" style="font-size:13px">ReceiptService</text>
+<rect class="box path" x="455" y="120" width="115" height="34" rx="6"/>
+<text x="512" y="138" text-anchor="middle" class="title" style="font-size:13px">IPrinter</text>
+<rect class="box path" x="585" y="120" width="115" height="34" rx="6"/>
+<text x="642" y="138" text-anchor="middle" class="title" style="font-size:13px">IScanner</text>
+<rect class="box path" x="715" y="120" width="115" height="34" rx="6"/>
+<text x="772" y="138" text-anchor="middle" class="title" style="font-size:13px">IFax</text>
+<path class="edge " d="M508 86 L507 120" marker-end="url(#design-principles-isp-ar)"/>
+<text x="615" y="76" class="small muted">client: uses Print() only</text>
+<rect class="box done" x="455" y="204" width="150" height="48" rx="6"/>
+<text x="530" y="222" text-anchor="middle" class="title" style="font-size:13px">SimplePrinter</text>
+<text x="530" y="239" text-anchor="middle" class="small mono">Print()</text>
+<rect class="box done" x="690" y="204" width="150" height="48" rx="6"/>
+<text x="765" y="222" text-anchor="middle" class="title" style="font-size:13px">Photocopier</text>
+<text x="765" y="239" text-anchor="middle" class="small mono">all three</text>
+<path class="edge path dash" d="M500 204 L501 154" marker-end="url(#design-principles-isp-trp)"/>
+<path class="edge path dash" d="M720 204 L541 154" marker-end="url(#design-principles-isp-trp)"/>
+<path class="edge path dash" d="M765 204 L642 154" marker-end="url(#design-principles-isp-trp)"/>
+<path class="edge path dash" d="M810 204 L772 154" marker-end="url(#design-principles-isp-trp)"/>
+<text x="650" y="278" text-anchor="middle" class="small muted">Adding Staple() touches only the types that staple</text>
+</svg>
+<figcaption>Interfaces belong to their <strong>clients</strong>. Split by the roles callers need, not by the capabilities an implementation happens to have.</figcaption>
+</figure>
+
+<p>Before:</p>
+<pre><code class="language-csharp">public interface IMachine { void Print(Doc d); Doc Scan(); void Fax(Doc d); void Staple(Doc d); }
+
+public sealed class SimplePrinter : IMachine
+{
+    public void Print(Doc d) { /* ... */ }
+    public Doc Scan() =&gt; throw new NotSupportedException();   // forced by the interface
+    public void Fax(Doc d) =&gt; throw new NotSupportedException();
+    public void Staple(Doc d) =&gt; throw new NotSupportedException();
+}
+</code></pre>
+<p>After: role interfaces, each shaped by what a client calls. Note how Go and TypeScript let the <strong>client</strong> declare the interface it needs, after the fact.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">public interface IPrinter { void Print(Doc d); }
+public interface IScanner { Doc Scan(); }
+public interface IFax     { void Fax(Doc d); }
+
+public sealed class SimplePrinter : IPrinter { public void Print(Doc d) { /* ... */ } }
+
+public sealed class Photocopier : IPrinter, IScanner, IFax
+{
+    public void Print(Doc d) { /* ... */ }
+    public Doc Scan() { /* ... */ return new Doc(); }
+    public void Fax(Doc d) { /* ... */ }
+}
+
+public sealed class ReceiptService(IPrinter printer) // knows nothing about scanning
+{
+    public void Issue(Order o) =&gt; printer.Print(Receipt.For(o));
+}
+</code></pre>
+<pre><code class="language-java">public interface Printer { void print(Doc d); }
+public interface Scanner { Doc scan(); }
+public interface Fax     { void fax(Doc d); }
+
+public final class SimplePrinter implements Printer {
+    public void print(Doc d) { /* ... */ }
+}
+
+public final class Photocopier implements Printer, Scanner, Fax {
+    public void print(Doc d) { /* ... */ }
+    public Doc scan() { return new Doc(); }
+    public void fax(Doc d) { /* ... */ }
+}
+
+@Service
+public class ReceiptService {
+    private final Printer printer;
+    public ReceiptService(Printer printer) { this.printer = printer; }
+    public void issue(Order o) { printer.print(Receipt.forOrder(o)); }
+}
+</code></pre>
+<pre><code class="language-python">from typing import Protocol
+
+class Printer(Protocol):
+    def print(self, doc: Doc) -&gt; None: ...
+
+class Scanner(Protocol):
+    def scan(self) -&gt; Doc: ...
+
+class Photocopier:  # satisfies Printer and Scanner structurally
+    def print(self, doc: Doc) -&gt; None: ...
+    def scan(self) -&gt; Doc: ...
+    def fax(self, doc: Doc) -&gt; None: ...
+
+def issue_receipt(order: Order, printer: Printer) -&gt; None:
+    printer.print(Receipt.for_order(order))  # mypy/pyright accept any object with print()
+</code></pre>
+<pre><code class="language-go">// package receipts: the consumer owns the one-method interface it needs.
+type Printer interface {
+    Print(d Doc) error
+}
+
+type Service struct{ printer Printer }
+
+func (s Service) Issue(o Order) error { return s.printer.Print(ReceiptFor(o)) }
+
+// package devices: Photocopier never mentions receipts.Printer.
+// It satisfies it implicitly, as *os.File satisfies io.Writer.
+type Photocopier struct{ /* ... */ }
+
+func (p *Photocopier) Print(d Doc) error  { /* ... */ return nil }
+func (p *Photocopier) Scan() (Doc, error) { /* ... */ return Doc{}, nil }
+func (p *Photocopier) Fax(d Doc) error    { /* ... */ return nil }
+</code></pre>
+<pre><code class="language-typescript">export interface Printer { print(d: Doc): void }
+export interface Scanner { scan(): Doc }
+
+export class Photocopier implements Printer, Scanner {
+  print(d: Doc) { /* ... */ }
+  scan(): Doc { return new Doc(); }
+  fax(d: Doc) { /* ... */ }
+}
+
+// Structural typing: accept exactly what you use, even from a fat type.
+export function issueReceipt(order: Order, printer: Pick&lt;Photocopier, &quot;print&quot;&gt;) {
+  printer.print(Receipt.for(order));
+}
+</code></pre>
+</div>
+<div class="compare">
+<div class="warn">
+<h4 id="over-applied-as-interface-explosion">Over-applied as: interface explosion</h4>
+<p>One interface per method, per class, "for testability": <code>IOrderReader</code>, <code>IOrderWriter</code>, <code>IOrderDeleter</code>, <code>IOrderCounter</code>, each with exactly one implementation and one caller. Navigation becomes "Go to implementation" five times. Split when <strong>different clients</strong> really use different subsets, not by default.</p>
+</div>
+<div class="good">
+<h4 id="break-it-when_2">Break it when</h4>
+<p>The interface describes one cohesive concept that callers use as a whole, like <code>IDbConnection</code>, <code>java.util.List</code> or <code>io.ReadWriteCloser</code> (which is itself composed of small interfaces). Wide is fine if it is cohesive.</p>
+</div>
+</div>
+<h3 id="d-dependency-inversion-principle">D: Dependency Inversion Principle</h3>
+<p>"High-level modules should not depend on low-level modules. Both should depend on abstractions. Abstractions should not depend on details." The key word is <strong>inversion</strong>: in the naive design, source-code dependencies follow the call direction, so business rules import the database. After inversion, the business layer <em>owns</em> the interface (<code>IOrderRepository</code>), and the database adapter imports the business layer to implement it. The call still goes down; the <strong>source-code arrow points up</strong>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 320" width="860" role="img" aria-label="Dependency inversion: before, OrderService depends on SQL; after, the core owns an interface that infrastructure implements">
+<defs><marker id="design-principles-dip-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="design-principles-dip-arb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker><marker id="design-principles-dip-ard" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker><marker id="design-principles-dip-arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker><marker id="design-principles-dip-ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="design-principles-dip-tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" class="edge"/></marker><marker id="design-principles-dip-trp" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" class="box path"/></marker></defs>
+<text x="20" y="22" class="title">Before: policy depends on detail</text>
+<text x="20" y="38" class="small muted">Arrows follow the call direction, all the way down.</text>
+<text x="450" y="22" class="title">After: details depend on policy</text>
+<text x="450" y="38" class="small muted">The source-code arrow points into the core.</text>
+<line x1="430" y1="10" x2="430" y2="310" class="edge dash"/>
+<rect class="box " x="110" y="60" width="210" height="48" rx="6"/>
+<text x="215" y="78" text-anchor="middle" class="title" style="font-size:13px">OrderService</text>
+<text x="215" y="95" text-anchor="middle" class="small muted">business rules</text>
+<rect class="box " x="110" y="144" width="210" height="48" rx="6"/>
+<text x="215" y="162" text-anchor="middle" class="title" style="font-size:13px">SqlOrderRepository</text>
+<text x="215" y="179" text-anchor="middle" class="small muted">SQL, mapping</text>
+<rect class="box bad" x="110" y="228" width="210" height="40" rx="6"/>
+<text x="215" y="246" text-anchor="middle" class="title" style="font-size:13px">EF Core / JDBC / driver</text>
+<path class="edge bad" d="M215 108 L215 144" marker-end="url(#design-principles-dip-arb)"/>
+<path class="edge bad" d="M215 192 L215 228" marker-end="url(#design-principles-dip-arb)"/>
+<text x="215" y="296" text-anchor="middle" class="small muted">Swap the database → rebuild and retest the rules</text>
+<rect class="edge dash" x="450" y="50" width="200" height="190" rx="10"/>
+<text x="462" y="68" class="small muted">core (domain + use cases)</text>
+<rect class="edge dash" x="670" y="50" width="180" height="190" rx="10"/>
+<text x="682" y="68" class="small muted">infrastructure</text>
+<rect class="box done" x="465" y="80" width="170" height="48" rx="6"/>
+<text x="550" y="98" text-anchor="middle" class="title" style="font-size:13px">OrderService</text>
+<text x="550" y="115" text-anchor="middle" class="small muted">needs IOrderRepository</text>
+<rect class="box path" x="465" y="170" width="170" height="48" rx="6"/>
+<text x="550" y="188" text-anchor="middle" class="title" style="font-size:13px">IOrderRepository</text>
+<text x="550" y="205" text-anchor="middle" class="small muted">owned by the core</text>
+<rect class="box " x="685" y="80" width="150" height="48" rx="6"/>
+<text x="760" y="98" text-anchor="middle" class="title" style="font-size:13px">EF Core / JDBC</text>
+<text x="760" y="115" text-anchor="middle" class="small muted">driver</text>
+<rect class="box " x="685" y="170" width="150" height="48" rx="6"/>
+<text x="760" y="188" text-anchor="middle" class="title" style="font-size:13px">SqlOrderRepo</text>
+<text x="760" y="205" text-anchor="middle" class="small muted">implements it</text>
+<path class="edge " d="M550 128 L550 170" marker-end="url(#design-principles-dip-ar)"/>
+<path class="edge path dash" d="M685 194 L635 194" marker-end="url(#design-principles-dip-trp)"/>
+<path class="edge " d="M760 170 L760 128" marker-end="url(#design-principles-dip-ar)"/>
+<rect class="box accent" x="560" y="262" width="190" height="40" rx="6"/>
+<text x="655" y="280" text-anchor="middle" class="title" style="font-size:13px">Main / composition root</text>
+<path class="edge accent dash" d="M608 262 L595 240" marker-end="url(#design-principles-dip-ara)"/>
+<path class="edge accent dash" d="M702 262 L713 240" marker-end="url(#design-principles-dip-ara)"/>
+</svg>
+<figcaption>Dependency <em>inversion</em> is about who owns the interface. Dependency <em>injection</em> is just how Main passes the implementation in. See <a href="di-fundamentals.html">DI fundamentals</a>.</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-csharp">// Domain project: no reference to EF Core.
+public interface IOrderRepository
+{
+    Task&lt;Order?&gt; GetAsync(OrderId id, CancellationToken ct);
+    Task SaveAsync(Order order, CancellationToken ct);
+}
+
+public sealed class PlaceOrder(IOrderRepository orders, TimeProvider clock)
+{
+    public async Task&lt;OrderId&gt; Handle(Cart cart, CancellationToken ct)
+    {
+        var order = Order.From(cart, clock.GetUtcNow());
+        await orders.SaveAsync(order, ct);
+        return order.Id;
+    }
+}
+
+// Infrastructure project: references Domain and EF Core.
+public sealed class EfOrderRepository(ShopDbContext db) : IOrderRepository { /* ... */ }
+
+// Program.cs: the composition root picks the detail.
+builder.Services.AddScoped&lt;IOrderRepository, EfOrderRepository&gt;();
+builder.Services.AddSingleton(TimeProvider.System);
+builder.Services.AddScoped&lt;PlaceOrder&gt;();
+</code></pre>
+<pre><code class="language-java">// package com.shop.orders (domain): no JDBC imports.
+public interface OrderRepository {
+    Optional&lt;Order&gt; findById(OrderId id);
+    void save(Order order);
+}
+
+@Service
+public class PlaceOrder {
+    private final OrderRepository orders;
+    private final Clock clock;
+    public PlaceOrder(OrderRepository orders, Clock clock) { this.orders = orders; this.clock = clock; }
+
+    public OrderId handle(Cart cart) {
+        Order order = Order.from(cart, clock.instant());
+        orders.save(order);
+        return order.id();
+    }
+}
+
+// package com.shop.infra.jdbc: depends on the domain, not the other way round.
+@Repository
+class JdbcOrderRepository implements OrderRepository { /* JdbcTemplate ... */ }
+</code></pre>
+<pre><code class="language-python"># orders/ports.py (domain): no SQLAlchemy import.
+class OrderRepository(Protocol):
+    def get(self, order_id: OrderId) -&gt; Order | None: ...
+    def save(self, order: Order) -&gt; None: ...
+
+class PlaceOrder:
+    def __init__(self, orders: OrderRepository, now: Callable[[], datetime]) -&gt; None:
+        self._orders, self._now = orders, now
+
+    def handle(self, cart: Cart) -&gt; OrderId:
+        order = Order.from_cart(cart, self._now())
+        self._orders.save(order)
+        return order.id
+
+# infra/sql_orders.py implements the Protocol with SQLAlchemy.
+# app.py (FastAPI) wires it:
+def get_place_order(session: Session = Depends(get_session)) -&gt; PlaceOrder:
+    return PlaceOrder(SqlOrderRepository(session), lambda: datetime.now(UTC))
+</code></pre>
+<pre><code class="language-go">// package orders (domain): declares what it needs.
+type Repository interface {
+    Get(ctx context.Context, id ID) (Order, error)
+    Save(ctx context.Context, o Order) error
+}
+
+type PlaceOrder struct {
+    Orders Repository
+    Now    func() time.Time
+}
+
+func (p PlaceOrder) Handle(ctx context.Context, c Cart) (ID, error) {
+    o := FromCart(c, p.Now())
+    return o.ID, p.Orders.Save(ctx, o)
+}
+
+// package postgres imports orders and implements orders.Repository.
+// main.go is the only place that knows both:
+// uc := orders.PlaceOrder{Orders: postgres.NewOrderRepo(pool), Now: time.Now}
+</code></pre>
+<pre><code class="language-typescript">// orders/ports.ts (domain): no 'pg' import.
+export interface OrderRepository {
+  get(id: OrderId): Promise&lt;Order | undefined&gt;;
+  save(order: Order): Promise&lt;void&gt;;
+}
+
+export class PlaceOrder {
+  constructor(private readonly orders: OrderRepository, private readonly now: () =&gt; Date) {}
+
+  async handle(cart: Cart): Promise&lt;OrderId&gt; {
+    const order = orderFromCart(cart, this.now());
+    await this.orders.save(order);
+    return order.id;
+  }
+}
+
+// main.ts: the composition root (or a NestJS module's providers array).
+const placeOrder = new PlaceOrder(new PgOrderRepository(pool), () =&gt; new Date());
+</code></pre>
+</div>
+<div class="compare">
+<div class="warn">
+<h4 id="over-applied-as-an-interface-for-every-class">Over-applied as: an interface for every class</h4>
+<p><code>IOrderValidator</code>, <code>IMoneyFormatter</code>, <code>IStringHelper</code>, each with one implementation that will never be swapped and is pure, fast and deterministic. You do not need to invert a dependency on code that has no I/O and no volatility. Test it directly.</p>
+</div>
+<div class="good">
+<h4 id="apply-it-at-the-boundaries">Apply it at the boundaries</h4>
+<p>Invert dependencies on things that are <strong>slow, non-deterministic, external or likely to change</strong>: databases, HTTP APIs, message brokers, the file system, the clock, randomness, and third-party SDKs. That is where the ripple visualizer showed the payoff. Inside the core, call concrete classes directly.</p>
+</div>
+</div>
+<h2 id="dry-wet-and-the-rule-of-three">DRY, WET and the rule of three</h2>
+<p><strong>DRY</strong> ("Don't Repeat Yourself", from <em>The Pragmatic Programmer</em>) says: <em>every piece of knowledge must have a single, unambiguous, authoritative representation</em>. It is about <strong>knowledge</strong>, not about text. Two functions that look alike but encode different business rules are not duplication. They are a coincidence, and merging them couples two things that will change for different reasons.</p>
+<p><strong>WET</strong> ("Write Everything Twice") and the <strong>rule of three</strong> are the counterweight. Tolerate the second copy. When the third one appears, you have enough examples to see what really varies, so extract then.</p>
+<p>Step through what happens when an abstraction is extracted and then requirements diverge. Every caller-specific need becomes a parameter and an <code>if</code> inside the shared function, and the number of possible paths doubles each time. Add more requirements, or more callers, and watch the branches multiply.</p>
+<div class="viz" data-viz="design-principles-wrong-abstraction"></div>
+
+<p>Sandi Metz's summary is the most useful rule here: <strong>duplication is far cheaper than the wrong abstraction</strong>. When a shared function has grown flags, the fix is not another flag. Inline it back into each caller, delete what that caller does not use, and look again for what is truly shared.</p>
+<div class="compare">
+<div class="good">
+<h4 id="real-duplication-merge-it">Real duplication (merge it)</h4>
+<p>The VAT rate is hard-coded in the checkout, the invoice and the refund service. That is <strong>one fact</strong> in three places, and when it changes, missing one is a bug. Give it one home (config, a <code>TaxPolicy</code>, a shared constant).</p>
+</div>
+<div class="bad">
+<h4 id="coincidental-duplication-leave-it">Coincidental duplication (leave it)</h4>
+<p><code>MaxUsernameLength = 32</code> and <code>MaxSkuLength = 32</code>. Same number, different knowledge, different owners. Sharing one constant means a SKU change silently changes usernames.</p>
+</div>
+<div class="warn">
+<h4 id="knowledge-duplicated-across-layers">Knowledge duplicated across layers</h4>
+<p>The same validation rule in the React form, the API and the database constraint. Some repetition is intended (defence in depth). Generate it from one source (OpenAPI or JSON Schema, Zod, FluentValidation rules shared with the client) where the tools allow.</p>
+</div>
+</div>
+<h2 id="kiss-keep-it-simple">KISS: keep it simple</h2>
+<p>"Keep it simple" is not "write less code". It means <strong>minimise the number of concepts a reader must hold</strong> to understand the code. A plain loop beats a clever reduce-with-tuple-accumulator. A <code>switch</code> beats a strategy registry when there are three cases. A function beats a class with one method and a constructor that stores its argument.</p>
+<div class="compare">
+<div class="bad">
+<h4 id="clever">Clever</h4>
+<p>A generic <code>IPipeline&lt;TIn, TOut&gt;</code> with reflection-discovered steps, built to process one CSV file type. Correct, tested and impossible to debug at 3 a.m., because the call stack is 40 frames of framework code.</p>
+</div>
+<div class="good">
+<h4 id="simple">Simple</h4>
+<p><code>ReadRows() → Validate() → Save()</code>: three functions called in order from one method. When a second file type arrives, you will know what varies, and you can add the abstraction then.</p>
+</div>
+<div class="warn">
+<h4 id="simple-is-not-easy">Simple is not easy</h4>
+<p>Simple code can take longer to write: you must understand the problem well enough to remove the incidental parts. "Simple" also does not mean "naive". A correct retry with backoff and jitter is simple; a hand-rolled one with a bug is merely short.</p>
+</div>
+</div>
+<h2 id="yagni-you-arent-gonna-need-it">YAGNI: you aren't gonna need it</h2>
+<p>From Extreme Programming: <strong>do not build capability for a requirement you do not have yet.</strong> The argument is not that the future feature is unlikely. It is that building it now has four costs, and three of them are paid even if you guessed right.</p>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>COST OF BUILD</small><strong>Time spent now</strong><p>Effort that did not go into a feature users are asking for today.</p></div>
+<div class="flow-step"><small>COST OF DELAY</small><strong>Value shipped later</strong><p>The current feature reaches users later because of the extra work.</p></div>
+<div class="flow-step"><small>COST OF CARRY</small><strong>Complexity you maintain</strong><p>Every reader, test and refactor pays for the unused code until it is deleted.</p></div>
+<div class="flow-step"><small>COST OF REPAIR</small><strong>The guess was wrong</strong><p>When the real requirement arrives it differs, and the speculative design is in the way.</p></div>
+</div>
+
+<p>YAGNI applies to <strong>features and flexibility</strong>, not to practices that keep code changeable: tests, clear names, small functions, and refactoring. Those make the future change cheap, which is exactly why you can afford to wait for it. It also does not apply to decisions that are expensive to reverse later, like public API shapes, data formats on disk, security and the ability to observe production. Spend thought on those up front.</p>
+<h2 id="law-of-demeter-talk-to-friends-not-strangers">Law of Demeter: talk to friends, not strangers</h2>
+<p>A method should only call methods on: itself, its parameters, objects it creates, and its own fields. Each <code>.</code> that reaches <em>through</em> an object into its internals couples the caller to one more class's shape. Then a change to <code>Address</code> breaks <code>CheckoutPage</code>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 280" width="860" role="img" aria-label="Law of Demeter: before, CheckoutPage walks order, customer and address; after, it asks order for the shipping city">
+<defs><marker id="design-principles-lod-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="design-principles-lod-arb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker><marker id="design-principles-lod-ard" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker><marker id="design-principles-lod-arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker><marker id="design-principles-lod-ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="design-principles-lod-tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" class="edge"/></marker><marker id="design-principles-lod-trp" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" class="box path"/></marker></defs>
+<text x="20" y="22" class="title">Before: a train wreck</text>
+<text x="200" y="22" class="small mono">order.Customer.Address.City</text>
+<rect class="box bad" x="20" y="96" width="140" height="34" rx="6"/>
+<text x="90" y="114" text-anchor="middle" class="title" style="font-size:13px">CheckoutPage</text>
+<rect class="box " x="220" y="96" width="140" height="34" rx="6"/>
+<text x="290" y="114" text-anchor="middle" class="title" style="font-size:13px">Order</text>
+<rect class="box " x="400" y="96" width="140" height="34" rx="6"/>
+<text x="470" y="114" text-anchor="middle" class="title" style="font-size:13px">Customer</text>
+<rect class="box " x="580" y="96" width="140" height="34" rx="6"/>
+<text x="650" y="114" text-anchor="middle" class="title" style="font-size:13px">Address</text>
+<rect class="box " x="760" y="96" width="80" height="34" rx="6"/>
+<text x="800" y="114" text-anchor="middle" class="title" style="font-size:13px">City</text>
+<path class="edge " d="M160 113 L220 113" marker-end="url(#design-principles-lod-ar)"/>
+<path class="edge " d="M360 113 L400 113" marker-end="url(#design-principles-lod-ar)"/>
+<path class="edge " d="M540 113 L580 113" marker-end="url(#design-principles-lod-ar)"/>
+<path class="edge " d="M720 113 L760 113" marker-end="url(#design-principles-lod-ar)"/>
+<path class="edge bad dash" d="M69 96 Q270 56 470 96" marker-end="url(#design-principles-lod-arb)"/>
+<path class="edge bad dash" d="M104 96 Q377 34 650 96" marker-end="url(#design-principles-lod-arb)"/>
+<path class="edge bad dash" d="M139 96 Q470 12 800 96" marker-end="url(#design-principles-lod-arb)"/>
+<text x="470" y="148" text-anchor="middle" class="small muted">CheckoutPage now knows the shape of three classes it never asked for.</text>
+<line x1="20" y1="164" x2="840" y2="164" class="edge dash"/>
+<text x="20" y="190" class="title">After: tell, don't ask</text>
+<text x="200" y="190" class="small mono">order.ShippingCity()</text>
+<rect class="box done" x="20" y="214" width="140" height="34" rx="6"/>
+<text x="90" y="232" text-anchor="middle" class="title" style="font-size:13px">CheckoutPage</text>
+<rect class="box done" x="220" y="214" width="140" height="34" rx="6"/>
+<text x="290" y="232" text-anchor="middle" class="title" style="font-size:13px">Order</text>
+<rect class="box " x="400" y="214" width="140" height="34" rx="6"/>
+<text x="470" y="232" text-anchor="middle" class="title" style="font-size:13px">Customer</text>
+<rect class="box " x="580" y="214" width="140" height="34" rx="6"/>
+<text x="650" y="232" text-anchor="middle" class="title" style="font-size:13px">Address</text>
+<path class="edge done" d="M160 231 L220 231" marker-end="url(#design-principles-lod-ard)"/>
+<path class="edge dash" d="M360 231 L400 231" marker-end="url(#design-principles-lod-ar)"/>
+<path class="edge dash" d="M540 231 L580 231" marker-end="url(#design-principles-lod-ar)"/>
+<text x="580" y="272" text-anchor="middle" class="small muted">Only Order knows how customers and addresses fit together.</text>
+</svg>
+<figcaption>Talk to your immediate friends: your own fields, your parameters, objects you create. Each extra dot is one more class whose shape you are coupled to.</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-csharp">// Before: CheckoutPage knows Order → Customer → Address.
+var city = order.Customer.Address.City;
+
+// After: tell Order what you need; it hides its structure.
+public sealed class Order
+{
+    private readonly Customer _customer;
+    public string ShippingCity =&gt; _customer.ShippingAddress.City;
+}
+var city = order.ShippingCity;
+</code></pre>
+<pre><code class="language-java">// Before
+String city = order.getCustomer().getAddress().getCity();
+
+// After
+public final class Order {
+    private final Customer customer;
+    public String shippingCity() { return customer.shippingAddress().city(); }
+}
+String city = order.shippingCity();
+</code></pre>
+<pre><code class="language-python"># Before
+city = order.customer.address.city
+
+# After
+class Order:
+    @property
+    def shipping_city(self) -&gt; str:
+        return self._customer.shipping_address.city
+
+city = order.shipping_city
+</code></pre>
+<pre><code class="language-go">// Before
+city := order.Customer.Address.City
+
+// After
+func (o *Order) ShippingCity() string { return o.customer.shippingAddress.City }
+
+city := order.ShippingCity()
+</code></pre>
+<pre><code class="language-typescript">// Before
+const city = order.customer.address.city;
+
+// After
+class Order {
+  constructor(private readonly customer: Customer) {}
+  get shippingCity(): string { return this.customer.shippingAddress.city; }
+}
+const city = order.shippingCity;
+</code></pre>
+</div>
+<div class="compare">
+<div class="warn">
+<h4 id="over-applied-as-wrapper-methods-everywhere">Over-applied as: wrapper methods everywhere</h4>
+<p>Adding <code>Order.GetCustomerAddressCityUppercased()</code> for every caller's need turns <code>Order</code> into a God class. If many callers need customer data, pass them the <code>Customer</code>, not the <code>Order</code>.</p>
+</div>
+<div class="good">
+<h4 id="not-a-violation">Not a violation</h4>
+<p>Fluent APIs and pipelines return the <strong>same kind</strong> of object at each step: LINQ, Java streams, builders, <code>strings.NewReplacer(...).Replace(...)</code>, Promise chains. Plain data (DTOs, records, JSON) is also fine to navigate. Demeter is about reaching into <strong>objects with behaviour</strong> and their private structure.</p>
+</div>
+</div>
+<h2 id="composition-over-inheritance">Composition over inheritance</h2>
+<p>Inheritance does two things at once: it makes <code>Child</code> a <strong>subtype</strong> of <code>Parent</code> (substitutable, LSP), and it lets <code>Child</code> <strong>reuse</strong> <code>Parent</code>'s implementation. The second part is the dangerous one. The subclass becomes coupled to the parent's <em>internals</em>: which methods call which other methods, in what order. Those are implementation details the parent's author is free to change. This is the <strong>fragile base class</strong> problem.</p>
+<p>The visualizer replays the example from <em>Effective Java</em> (Item 18). A <code>CountingSet</code> extends a library <code>HashSet</code> and overrides both <code>add</code> and <code>addAll</code> to count insertions. With library v1, <code>addAll</code> internally calls <code>add</code> once per item, so virtual dispatch sends each call back into your override, and every item is counted twice. With v2, the library inserts directly and the same subclass is correct. Switch to composition and the answer is right on both versions.</p>
+<div class="viz" data-viz="design-principles-fragile-base"></div>
+
+<p>The trap has a second edge. If you "fix" the v1 bug by <em>not</em> overriding <code>addAll</code>, your class now relies on the self-call, and upgrading to v2 makes it silently <strong>under</strong>count. Either way, your correctness depends on an undocumented detail. Composition removes the dependency: you hold a set and forward to it, so the set's internal calls never reach your code.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 300" width="860" role="img" aria-label="Composition over inheritance: before, an inheritance tree explodes with combinations; after, a class composes small behaviours">
+<defs><marker id="design-principles-comp-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="design-principles-comp-arb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker><marker id="design-principles-comp-ard" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker><marker id="design-principles-comp-arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker><marker id="design-principles-comp-ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="design-principles-comp-tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" class="edge"/></marker><marker id="design-principles-comp-trp" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" class="box path"/></marker></defs>
+<text x="20" y="22" class="title">Before: one subclass per combination</text>
+<text x="20" y="38" class="small muted">n traits → up to 2ⁿ classes, and diamonds.</text>
+<text x="450" y="22" class="title">After: compose behaviours</text>
+<text x="450" y="38" class="small muted">Each object picks parts; parts vary on their own.</text>
+<line x1="430" y1="10" x2="430" y2="290" class="edge dash"/>
+<rect class="box " x="150" y="56" width="130" height="34" rx="6"/>
+<text x="215" y="74" text-anchor="middle" class="title" style="font-size:13px">Notifier</text>
+<rect class="box " x="30" y="130" width="120" height="34" rx="6"/>
+<text x="90" y="148" text-anchor="middle" class="title" style="font-size:13px">EmailNotifier</text>
+<rect class="box " x="280" y="130" width="120" height="34" rx="6"/>
+<text x="340" y="148" text-anchor="middle" class="title" style="font-size:13px">SmsNotifier</text>
+<rect class="box bad" x="30" y="204" width="175" height="34" rx="6"/>
+<text x="118" y="222" text-anchor="middle" class="title" style="font-size:13px">RetryingEmailNotifier</text>
+<rect class="box bad" x="225" y="204" width="175" height="34" rx="6"/>
+<text x="312" y="222" text-anchor="middle" class="title" style="font-size:13px">LoggingRetryingSms…</text>
+<path class="edge " d="M90 130 L189 90" marker-end="url(#design-principles-comp-tri)"/>
+<path class="edge " d="M340 130 L241 90" marker-end="url(#design-principles-comp-tri)"/>
+<path class="edge " d="M118 204 L90 164" marker-end="url(#design-principles-comp-tri)"/>
+<path class="edge " d="M312 204 L340 164" marker-end="url(#design-principles-comp-tri)"/>
+<text x="215" y="266" text-anchor="middle" class="small muted">+ Retrying, Logging, Batching … = 2 × 2³ = 16 classes</text>
+<text x="215" y="284" text-anchor="middle" class="small muted">and each subclass depends on its parent's internals</text>
+<rect class="box path" x="455" y="56" width="150" height="34" rx="6"/>
+<text x="530" y="74" text-anchor="middle" class="title" style="font-size:13px">INotifier</text>
+<rect class="box done" x="455" y="130" width="110" height="34" rx="6"/>
+<text x="510" y="148" text-anchor="middle" class="title" style="font-size:13px">Email</text>
+<rect class="box done" x="575" y="130" width="110" height="34" rx="6"/>
+<text x="630" y="148" text-anchor="middle" class="title" style="font-size:13px">Sms</text>
+<rect class="box active" x="700" y="56" width="140" height="48" rx="6"/>
+<text x="770" y="74" text-anchor="middle" class="title" style="font-size:13px">Retrying</text>
+<text x="770" y="91" text-anchor="middle" class="small muted">wraps INotifier</text>
+<rect class="box active" x="700" y="130" width="140" height="48" rx="6"/>
+<text x="770" y="148" text-anchor="middle" class="title" style="font-size:13px">Logging</text>
+<text x="770" y="165" text-anchor="middle" class="small muted">wraps INotifier</text>
+<path class="edge path dash" d="M510 130 L500 90" marker-end="url(#design-principles-comp-trp)"/>
+<path class="edge path dash" d="M630 130 L575 90" marker-end="url(#design-principles-comp-trp)"/>
+<path class="edge path dash" d="M700 80 L605 73" marker-end="url(#design-principles-comp-trp)"/>
+<path class="edge path dash" d="M700 144 L605 83" marker-end="url(#design-principles-comp-trp)"/>
+<rect class="box" x="455" y="214" width="385" height="34" rx="6"/>
+<text x="647" y="236" text-anchor="middle" class="small mono">new Logging(new Retrying(new Sms(), 3))</text>
+<text x="647" y="274" text-anchor="middle" class="small muted">2 + 2 classes cover every combination</text>
+</svg>
+<figcaption>Inheritance shares <em>implementation</em> and fixes the combination at compile time. Composition shares an <em>interface</em> and lets you assemble combinations at run time (the Decorator pattern).</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-csharp">// C# methods are non-virtual by default, so HashSet&lt;T&gt;.Add cannot even be overridden.
+// Composition is the natural shape:
+public sealed class CountingSet&lt;T&gt;
+{
+    private readonly HashSet&lt;T&gt; _items = new();
+    public int Added { get; private set; }
+    public int Count =&gt; _items.Count;
+
+    public bool Add(T item) { Added++; return _items.Add(item); }
+
+    public void AddRange(IEnumerable&lt;T&gt; items)
+    {
+        foreach (var item in items) Add(item);
+    }
+
+    public bool Contains(T item) =&gt; _items.Contains(item);
+}
+</code></pre>
+<pre><code class="language-java">// Guava's ForwardingSet: every call goes to delegate(), whose own
+// internal self-calls stay inside the delegate.
+public final class CountingSet&lt;E&gt; extends ForwardingSet&lt;E&gt; {
+    private final Set&lt;E&gt; delegate = new HashSet&lt;&gt;();
+    private int added;
+
+    @Override protected Set&lt;E&gt; delegate() { return delegate; }
+
+    @Override public boolean add(E e) {
+        added++;
+        return delegate.add(e);
+    }
+
+    @Override public boolean addAll(Collection&lt;? extends E&gt; c) {
+        added += c.size();
+        return delegate.addAll(c); // HashSet.addAll calls HashSet.add, not ours
+    }
+
+    public int added() { return added; }
+}
+</code></pre>
+<pre><code class="language-python"># Subclassing built-ins has the same trap in reverse: dict.update() does NOT
+# call your overridden __setitem__. Wrap instead of inheriting.
+class CountingSet(Generic[T]):
+    def __init__(self) -&gt; None:
+        self._items: set[T] = set()
+        self.added = 0
+
+    def add(self, item: T) -&gt; None:
+        self.added += 1
+        self._items.add(item)
+
+    def update(self, items: Iterable[T]) -&gt; None:
+        for item in items:
+            self.add(item)
+
+    def __len__(self) -&gt; int:
+        return len(self._items)
+
+    def __contains__(self, item: object) -&gt; bool:
+        return item in self._items
+</code></pre>
+<pre><code class="language-go">// Go has no inheritance. Embedding promotes methods, but the embedded value's
+// methods never dispatch back to the outer type, so this bug cannot happen.
+type CountingSet[T comparable] struct {
+    items map[T]struct{}
+    added int
+}
+
+func NewCountingSet[T comparable]() *CountingSet[T] {
+    return &amp;CountingSet[T]{items: make(map[T]struct{})}
+}
+
+func (s *CountingSet[T]) Add(x T) {
+    s.added++
+    s.items[x] = struct{}{}
+}
+
+func (s *CountingSet[T]) AddAll(xs ...T) {
+    for _, x := range xs {
+        s.Add(x)
+    }
+}
+
+func (s *CountingSet[T]) Len() int { return len(s.items) }
+</code></pre>
+<pre><code class="language-typescript">export class CountingSet&lt;T&gt; {
+  readonly #items = new Set&lt;T&gt;();
+  #added = 0;
+
+  add(item: T): this {
+    this.#added++;
+    this.#items.add(item);
+    return this;
+  }
+
+  addAll(items: Iterable&lt;T&gt;): this {
+    for (const item of items) this.add(item);
+    return this;
+  }
+
+  get added(): number { return this.#added; }
+  get size(): number { return this.#items.size; }
+  has(item: T): boolean { return this.#items.has(item); }
+}
+</code></pre>
+</div>
+<div class="compare">
+<div class="good">
+<h4 id="inheritance-is-right-when">Inheritance is right when</h4>
+<p>There is a true <strong>is-a</strong> relationship that passes LSP, and the base class was <strong>designed and documented for extension</strong>: template-method hooks in frameworks, <code>Exception</code> hierarchies, sealed hierarchies of data types (<code>sealed record Shape</code>, <code>sealed interface</code> in Java). You own both sides, or the base documents its self-use.</p>
+</div>
+<div class="bad">
+<h4 id="inheritance-is-wrong-when">Inheritance is wrong when</h4>
+<p>You only want to <strong>reuse code</strong> ("it already has the methods I need"), the base is a concrete class from another team or library, or you are building combinations of behaviours (logging + retry + caching), which explode into 2ⁿ subclasses.</p>
+</div>
+<div class="warn">
+<h4 id="defaults-that-help">Defaults that help</h4>
+<p>Mark classes <code>sealed</code> (C#) or <code>final</code> (Java, and Kotlin's default) unless they are designed for extension. Prefer interfaces with default methods or mixins only for small, stable behaviour. In Go, Rust and TypeScript-with-functions, composition is already the default.</p>
+</div>
+</div>
+<h2 id="separation-of-concerns">Separation of concerns</h2>
+<p>Separation of concerns (Dijkstra's term) is the parent of most other principles: give each <strong>kind of knowledge</strong> its own place. HTTP details, workflow, business rules, storage and cross-cutting policies (auth, logging, retries) change for different reasons, at different speeds, and are tested in different ways. When they share a function, every change to one risks the others.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 300" width="860" role="img" aria-label="Separation of concerns: before, one handler mixes six concerns; after, each concern sits in its own layer with cross-cutting concerns in middleware">
+<defs><marker id="design-principles-soc-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="design-principles-soc-arb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker><marker id="design-principles-soc-ard" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker><marker id="design-principles-soc-arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker><marker id="design-principles-soc-ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="design-principles-soc-tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" class="edge"/></marker><marker id="design-principles-soc-trp" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" class="box path"/></marker></defs>
+<text x="20" y="22" class="title">Before: one handler does everything</text>
+<text x="20" y="38" class="small muted">200 lines, six concerns, untestable without HTTP and SQL.</text>
+<text x="450" y="22" class="title">After: one concern per place</text>
+<text x="450" y="38" class="small muted">Each layer can be read, tested and replaced alone.</text>
+<line x1="430" y1="10" x2="430" y2="290" class="edge dash"/>
+<rect class="box" x="80" y="52" width="270" height="200" rx="8" style="fill:none"/>
+<text x="215" y="70" text-anchor="middle" class="title">POST /orders handler</text>
+<rect class="box visit" x="92" y="80" width="246" height="23" rx="4"/>
+<text x="215" y="96" text-anchor="middle" class="small">parse JSON, read headers</text>
+<rect class="box bad" x="92" y="107" width="246" height="23" rx="4"/>
+<text x="215" y="123" text-anchor="middle" class="small">check auth token</text>
+<rect class="box active" x="92" y="134" width="246" height="23" rx="4"/>
+<text x="215" y="150" text-anchor="middle" class="small">validate input</text>
+<rect class="box done" x="92" y="161" width="246" height="23" rx="4"/>
+<text x="215" y="177" text-anchor="middle" class="small">apply pricing rules</text>
+<rect class="box path" x="92" y="188" width="246" height="23" rx="4"/>
+<text x="215" y="204" text-anchor="middle" class="small">INSERT INTO orders …</text>
+<rect class="box " x="92" y="215" width="246" height="23" rx="4"/>
+<text x="215" y="231" text-anchor="middle" class="small">send email, write log</text>
+<text x="215" y="278" text-anchor="middle" class="small muted">A pricing change risks breaking auth or SQL</text>
+<rect class="box visit" x="455" y="52" width="250" height="44" rx="6"/>
+<text x="580" y="70" text-anchor="middle" class="title" style="font-size:13px">Transport</text>
+<text x="580" y="87" text-anchor="middle" class="small muted">controller: HTTP ↔ DTO</text>
+<rect class="box active" x="455" y="108" width="250" height="44" rx="6"/>
+<text x="580" y="126" text-anchor="middle" class="title" style="font-size:13px">Application</text>
+<text x="580" y="143" text-anchor="middle" class="small muted">use case: PlaceOrder</text>
+<rect class="box done" x="455" y="164" width="250" height="44" rx="6"/>
+<text x="580" y="182" text-anchor="middle" class="title" style="font-size:13px">Domain</text>
+<text x="580" y="199" text-anchor="middle" class="small muted">pricing rules, entities</text>
+<rect class="box path" x="455" y="220" width="250" height="44" rx="6"/>
+<text x="580" y="238" text-anchor="middle" class="title" style="font-size:13px">Infrastructure</text>
+<text x="580" y="255" text-anchor="middle" class="small muted">SQL repo, email adapter</text>
+<path class="edge " d="M580 96 L580 108" marker-end="url(#design-principles-soc-ar)"/>
+<path class="edge " d="M580 152 L580 164" marker-end="url(#design-principles-soc-ar)"/>
+<path class="edge path dash" d="M705 242 Q745 236 705 186" marker-end="url(#design-principles-soc-trp)"/>
+<rect class="box accent" x="725" y="52" width="115" height="100" rx="8"/>
+<text x="782" y="72" text-anchor="middle" class="title">Middleware</text>
+<text x="782" y="90" text-anchor="middle" class="small">auth</text>
+<text x="782" y="105" text-anchor="middle" class="small">logging</text>
+<text x="782" y="120" text-anchor="middle" class="small">errors</text>
+<text x="782" y="135" text-anchor="middle" class="small">tracing</text>
+<text x="782" y="172" text-anchor="middle" class="small muted">cross-cutting</text>
+<text x="782" y="186" text-anchor="middle" class="small muted">concerns</text>
+</svg>
+<figcaption>Separate by <strong>kind of knowledge</strong>: HTTP, workflow, business rules, storage. Concerns that touch every request (auth, logging, errors) go into <a href="request-pipeline.html">the request pipeline</a>, not into every handler.</figcaption>
+</figure>
+
+<p>The concrete moves:</p>
+<ul>
+<li><strong>Transport</strong> (controllers, minimal API handlers, Spring <code>@RestController</code>, FastAPI routes, Express or Nest handlers) only translates HTTP to a command and the result back to HTTP.</li>
+<li><strong>Application</strong> (use cases) orchestrates: load, call domain logic, save, publish. It contains no SQL and no HTTP.</li>
+<li><strong>Domain</strong> holds the rules and can be unit tested with no infrastructure at all.</li>
+<li><strong>Infrastructure</strong> implements the ports: repositories, message publishers, email gateways.</li>
+<li><strong>Cross-cutting concerns</strong> run once in the <a href="request-pipeline.html">request pipeline</a> or as decorators, not copied into every handler.</li>
+</ul>
+<div class="compare">
+<div class="good">
+<h4 id="layers-by-concern">Layers by concern</h4>
+<p>Each layer is easy to read and test alone. Works well when the domain logic is rich and long-lived. See <a href="application-architecture.html">Application architecture</a> for clean, hexagonal and onion variants.</p>
+</div>
+<div class="warn">
+<h4 id="vertical-slices">Vertical slices</h4>
+<p>Group by <strong>feature</strong> first (<code>PlaceOrder/</code> with its endpoint, handler, validator and query), then separate concerns inside the slice. This keeps code that changes together close, and avoids touching five layer folders for one feature.</p>
+</div>
+<div class="bad">
+<h4 id="over-applied-as-pass-through-layers">Over-applied as: pass-through layers</h4>
+<p>Controller → Service → Manager → Provider → Repository, where four of the five methods are one line that forwards the call. Every feature edits five files, and none of the layers holds a decision. Collapse layers that do not own a concern.</p>
+</div>
+</div>
+<h2 id="when-to-apply-a-principle-and-when-to-break-it">When to apply a principle, and when to break it</h2>
+<p>Principles are tools for one goal: <strong>cheap, safe change</strong>. Each one has a cost (more types, more indirection, more files to read). Apply it when you can name the change it makes cheaper.</p>
+<table>
+<thead>
+<tr>
+<th>Principle</th>
+<th>Apply it when</th>
+<th>Over-applied as</th>
+<th>Break it when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SRP</strong></td>
+<td>Different people or reasons edit one module</td>
+<td>One method per class; cohesion drops</td>
+<td>Small code with one owner and one use</td>
+</tr>
+<tr>
+<td><strong>OCP</strong></td>
+<td>Variants keep arriving (rules, providers, formats)</td>
+<td>Plug-in points for things that never vary</td>
+<td>The set of cases is closed: use an exhaustive <code>switch</code></td>
+</tr>
+<tr>
+<td><strong>LSP</strong></td>
+<td>You define a subtype or implement an interface</td>
+<td>Banning all inheritance</td>
+<td>Contract explicitly marks the behaviour optional</td>
+</tr>
+<tr>
+<td><strong>ISP</strong></td>
+<td>Different clients use different subsets of an interface</td>
+<td>One interface per method (interface explosion)</td>
+<td>The interface is one cohesive concept</td>
+</tr>
+<tr>
+<td><strong>DIP</strong></td>
+<td>The dependency is I/O, external, slow or volatile</td>
+<td>An <code>I</code>-interface for every class</td>
+<td>Pure, stable, in-process code: call it directly</td>
+</tr>
+<tr>
+<td><strong>DRY</strong></td>
+<td>The same <strong>fact</strong> lives in several places</td>
+<td>Merging code that only looks alike</td>
+<td>Fewer than three examples, or different owners</td>
+</tr>
+<tr>
+<td><strong>KISS</strong></td>
+<td>Always the default</td>
+<td>"Simple" as an excuse to skip error handling</td>
+<td>The problem really has that complexity</td>
+</tr>
+<tr>
+<td><strong>YAGNI</strong></td>
+<td>Building for a requirement you do not have</td>
+<td>Skipping tests, refactoring or security</td>
+<td>The decision is expensive to reverse (public API, data format)</td>
+</tr>
+<tr>
+<td><strong>Demeter</strong></td>
+<td>Callers dig through objects with behaviour</td>
+<td>Wrapper methods for every caller need</td>
+<td>Fluent APIs, builders, plain data objects</td>
+</tr>
+<tr>
+<td><strong>Composition</strong></td>
+<td>Reusing behaviour, combining features</td>
+<td>Forwarding boilerplate for a true, designed is-a</td>
+<td>A documented, designed-for-extension base</td>
+</tr>
+<tr>
+<td><strong>SoC</strong></td>
+<td>Rules mixed with HTTP, SQL or logging</td>
+<td>Pass-through layers with no decisions</td>
+<td>Tiny scripts and prototypes</td>
+</tr>
+</tbody>
+</table>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · NAME THE CHANGE</small><strong>What will actually change?</strong><p>A vendor, a rule, a storage engine, a layout. If you cannot name one, stop here.</p></div>
+<div class="flow-step"><small>2 · TRACE THE RIPPLE</small><strong>How many files move today?</strong><p>Count them, as the ripple visualizer does. One or two is fine.</p></div>
+<div class="flow-step"><small>3 · PICK THE SMALLEST FIX</small><strong>Move, split or invert</strong><p>Move code to its owner, split by actor, or put an interface at the boundary.</p></div>
+<div class="flow-step"><small>4 · CHECK THE COST</small><strong>Did reading get harder?</strong><p>New types and indirection must pay for themselves in cheaper changes.</p></div>
+</div>
+
+<h2 id="pitfalls">Pitfalls</h2>
+<div class="pitfall">
+<p><strong>Pitfall: interfaces with exactly one implementation, everywhere</strong>
+The codebase has <code>IUserService</code>/<code>UserService</code>, <code>IUserManager</code>/<code>UserManager</code>, <code>IUserHelper</code>/<code>UserHelper</code>. The interfaces are copies of the classes ("header interfaces"), owned by the implementer, and never swapped. <strong>Fix:</strong> delete the interfaces for pure in-process code and test it directly. Keep interfaces at I/O boundaries, shaped by and owned by the consumer. Modern mocking (and fakes) do not need an interface per class.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: DRY by appearance</strong>
+Two validators look the same, so they are merged into <code>ValidateCode(string code, bool isSku, bool allowLower)</code>. Six months later it has four flags. <strong>Fix:</strong> inline it back into each caller (as in the wrong-abstraction visualizer), delete unused branches, and extract only what is genuinely the same knowledge.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: inheriting for reuse</strong>
+<code>AdminController : UserController</code> to reuse three helper methods. Now admin routes inherit user routes and filters, and a change to <code>UserController</code> breaks the admin UI. <strong>Fix:</strong> move the helpers into a service both controllers use, and mark controllers <code>sealed</code>/<code>final</code>.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: a domain that imports infrastructure</strong>
+<code>Order.Save()</code> calls <code>DbContext</code>, or a domain entity has <code>[Table]</code>, <code>@Entity</code> or SQLAlchemy columns plus business rules that need a database to test. <strong>Fix:</strong> invert the dependency. The domain declares <code>IOrderRepository</code>, infrastructure implements it, and an architecture test (ArchUnit, NetArchTest, <code>import-linter</code>, <code>dependency-cruiser</code>) fails the build if the arrow points the wrong way.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: principles as a review weapon</strong>
+"This violates SRP" with no change in mind, leading to a refactor that adds four files and helps nobody. <strong>Fix:</strong> in reviews, name the concrete change that the structure makes expensive, and the ripple it would cause. If you cannot, it is a preference, not a defect.</p>
+</div>
+<h2 id="checklist">Checklist</h2>
+<ul>
+<li>[ ] For each module I can say <strong>who</strong> asks for it to change (one actor or reason).</li>
+<li>[ ] Business rules can be unit tested without a database, network, file system or real clock.</li>
+<li>[ ] Dependencies on I/O, vendors and frameworks go through small interfaces <strong>owned by the core</strong>; nothing in the domain imports infrastructure.</li>
+<li>[ ] Interfaces are shaped by their clients. No implementation throws <code>NotSupported</code> for part of its interface.</li>
+<li>[ ] Every interface with more than one implementation has a contract test suite run against all of them.</li>
+<li>[ ] No shared helper takes boolean "mode" flags that only one caller uses.</li>
+<li>[ ] Variants that keep arriving plug in as new code. Closed sets use exhaustive <code>switch</code>/pattern matching.</li>
+<li>[ ] Inheritance only where the base is designed for extension. Everything else is <code>sealed</code>/<code>final</code> and reuses by composition.</li>
+<li>[ ] Callers do not reach through two or more objects with behaviour (<code>a.B.C.D()</code>).</li>
+<li>[ ] Cross-cutting concerns (auth, logging, retries, errors) live in the pipeline or decorators, once.</li>
+<li>[ ] Every interface, layer and extension point pays for itself with a change that actually happened or is scheduled.</li>
+<li>[ ] Module boundaries are guarded by an automated dependency rule.</li>
+</ul>
+<h2 id="quiz">Quiz</h2>
+<details class="quiz">
+<summary>A class has methods <code>CalculatePayroll()</code>, <code>ReportHours()</code> and <code>Save()</code>. Accounting owns payroll, operations owns the hours report, and the DBAs own storage. Which principle is at risk, and how do you split it?</summary>
+<p>SRP: the class answers to three actors. If payroll and hours share a private helper (say <code>RegularHours()</code>), a change for accounting silently alters the operations report. Split into <code>PayCalculator</code>, <code>HourReporter</code> and <code>EmployeeRepository</code> over a shared <code>EmployeeData</code> record, and give each actor's logic its own copy of anything they may change independently.</p>
+</details>
+<details class="quiz">
+<summary><code>ReadOnlyRepository</code> extends <code>Repository</code> and throws on <code>Save()</code>. Is that an LSP violation?</summary>
+<p>Yes, unless <code>Repository</code>'s contract explicitly says <code>Save</code> may be unsupported (and offers a way to check). Callers written against <code>Repository</code> expect <code>Save</code> to work. Better: split into <code>IReadRepository</code> and <code>IWriteRepository</code> (ISP), and let the read-only type implement only the first.</p>
+</details>
+<details class="quiz">
+<summary>You have a <code>switch</code> over three shipping providers. Product says "we might add more one day". Do you introduce a strategy interface now?</summary>
+<p>Probably not (YAGNI, KISS). A <code>switch</code> over a closed enum with compiler exhaustiveness checking is clear, and turning it into a strategy later is a mechanical refactor. Introduce the interface when a fourth provider actually arrives, or immediately if providers are added by another team or loaded as plug-ins.</p>
+</details>
+<details class="quiz">
+<summary>Two services both format a date as <code>yyyy-MM-dd</code>. One is the invoice PDF; the other is an ISO-8601 API field. Should they share a helper?</summary>
+<p>They encode different knowledge. The API format is fixed by a standard and must never change. The PDF format belongs to the brand team and may become "3 March 2026" next year. Use the platform's ISO formatter in the API, and a separate, owned formatter for the PDF. Merging them couples a contract to a style choice.</p>
+</details>
+<details class="quiz">
+<summary>In the coupling visualizer, <code>Util</code> has I = 0 and A = 0. Is that always a problem?</summary>
+<p>No. It is in the "zone of pain" because changes ripple everywhere, but that only hurts if it <strong>changes</strong>. A truly stable, concrete package (string helpers, <code>System.Math</code>, the standard library) is fine there. The warning is for packages that are both heavily depended on and still evolving. Keep them small, or move the volatile parts out behind interfaces.</p>
+</details>
+<details class="quiz">
+<summary>Your <code>LoggingList</code> extends <code>ArrayList</code> and overrides <code>add</code> to log. After a JDK upgrade, items added via <code>addAll</code> are no longer logged. What happened, and what is the fix?</summary>
+<p>The fragile base class problem: your override relied on <code>ArrayList.addAll</code> calling <code>add</code>, an undocumented internal detail that changed. Fix with composition: wrap a <code>List</code> (for example with Guava's <code>ForwardingList</code>, overriding both <code>add</code> and <code>addAll</code> explicitly), so the delegate's internal calls never reach your code.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Goal</strong>Cheap, safe change. Every principle is a way to keep the ripple of a likely change small.</div>
+<div><strong>Cohesion</strong>Things that change together live together. LCOM4 = 1 is one class; more means split.</div>
+<div><strong>Coupling</strong>Depend on small, stable interfaces. I = Ce / (Ca + Ce). Point dependencies toward stability.</div>
+<div><strong>S</strong>One actor, one reason to change. Not "one method".</div>
+<div><strong>O</strong>New variants as new code behind an interface. Closed sets: exhaustive switch.</div>
+<div><strong>L</strong>Subtypes keep the base's promises. Enforce with one contract test suite for all implementations.</div>
+<div><strong>I</strong>Client-owned, role-shaped interfaces. Not one interface per method.</div>
+<div><strong>D</strong>The core owns the interface; infrastructure implements it; Main wires it. Only at I/O and volatile boundaries.</div>
+<div><strong>DRY</strong>One fact, one place. Duplication is cheaper than the wrong abstraction. Rule of three.</div>
+<div><strong>KISS / YAGNI</strong>Fewest concepts that solve today's problem. Build flexibility when the change arrives, except for hard-to-reverse decisions.</div>
+<div><strong>Demeter</strong>Talk to your fields, parameters and objects you create. Fluent APIs and plain data are fine.</div>
+<div><strong>Composition</strong>Reuse by holding, not by extending. Seal classes not designed for extension.</div>
+<div><strong>SoC</strong>HTTP, workflow, rules, storage, cross-cutting: one place each. No pass-through layers.</div>
+</div>
+<h2 id="related-topics-and-further-reading">Related topics and further reading</h2>
+<p>Next: <a href="di-fundamentals.html">DI fundamentals</a> shows how a composition root wires the inverted dependencies from this page. <a href="structural-patterns.html">Structural patterns</a> and <a href="behavioral-patterns.html">Behavioral patterns</a> are the named designs (Adapter, Decorator, Strategy) that implement these principles, and <a href="anti-patterns.html">Anti-patterns</a> catalogues what happens when they are ignored or over-applied. <a href="clean-code.html">Clean code</a> works at the level below, and <a href="application-architecture.html">Application architecture</a> at the level above.</p>
+<ul>
+<li><a href="https://learn.microsoft.com/dotnet/architecture/modern-web-apps-azure/architectural-principles">Microsoft Learn: Architectural principles</a> (separation of concerns, dependency inversion, explicit dependencies, single responsibility)</li>
+<li><a href="https://learn.microsoft.com/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures">Microsoft Learn: Common web application architectures</a> (clean architecture and its dependency rule)</li>
+<li><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/sealed">C# reference: <code>sealed</code></a> and <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/virtual"><code>virtual</code></a></li>
+<li><a href="https://docs.oracle.com/javase/tutorial/java/IandI/index.html">The Java Tutorials: Interfaces and Inheritance</a> and <a href="https://openjdk.org/jeps/409">sealed classes (JEP 409)</a></li>
+<li><a href="https://go.dev/doc/effective_go#interfaces">Effective Go: Interfaces</a> and <a href="https://go.dev/doc/effective_go#embedding">Embedding</a></li>
+<li><a href="https://docs.python.org/3/library/typing.html#typing.Protocol">Python <code>typing.Protocol</code></a> and <a href="https://peps.python.org/pep-0544/">PEP 544: structural subtyping</a></li>
+<li><a href="https://www.typescriptlang.org/docs/handbook/type-compatibility.html">TypeScript Handbook: Type compatibility</a></li>
+<li><a href="https://www.archunit.org/userguide/html/000_Index.html">ArchUnit user guide</a> for enforcing dependency rules in tests</li>
+</ul><nav class="pager" aria-label="Next and previous topics"><span></span><a class="next" href="language-mental-models.html"><small>NEXT &rarr;</small>Cross-Language Mental Models</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-every-change-touches-everything">The problem: every change touches everything</a></li>
+<li><a href="#the-mental-model-coupling-cohesion-and-the-cost-of-change">The mental model: coupling, cohesion and the cost of change</a><ul>
+<li><a href="#see-a-change-ripple-through-tight-and-loose-designs">See a change ripple through tight and loose designs</a></li>
+<li><a href="#measure-cohesion-lcom4">Measure cohesion: LCOM4</a></li>
+<li><a href="#measure-coupling-instability-and-the-main-sequence">Measure coupling: instability and the main sequence</a></li>
+</ul>
+</li>
+<li><a href="#solid-one-letter-at-a-time">SOLID, one letter at a time</a><ul>
+<li><a href="#s-single-responsibility-principle">S: Single Responsibility Principle</a></li>
+<li><a href="#o-openclosed-principle">O: Open/Closed Principle</a></li>
+<li><a href="#l-liskov-substitution-principle">L: Liskov Substitution Principle</a></li>
+<li><a href="#i-interface-segregation-principle">I: Interface Segregation Principle</a></li>
+<li><a href="#d-dependency-inversion-principle">D: Dependency Inversion Principle</a></li>
+</ul>
+</li>
+<li><a href="#dry-wet-and-the-rule-of-three">DRY, WET and the rule of three</a></li>
+<li><a href="#kiss-keep-it-simple">KISS: keep it simple</a></li>
+<li><a href="#yagni-you-arent-gonna-need-it">YAGNI: you aren't gonna need it</a></li>
+<li><a href="#law-of-demeter-talk-to-friends-not-strangers">Law of Demeter: talk to friends, not strangers</a></li>
+<li><a href="#composition-over-inheritance">Composition over inheritance</a></li>
+<li><a href="#separation-of-concerns">Separation of concerns</a></li>
+<li><a href="#when-to-apply-a-principle-and-when-to-break-it">When to apply a principle, and when to break it</a></li>
+<li><a href="#pitfalls">Pitfalls</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#quiz">Quiz</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#related-topics-and-further-reading">Related topics and further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

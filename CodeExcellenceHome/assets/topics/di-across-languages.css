@@ -1,0 +1,171 @@
+/* Topic styles for "DI Across Languages & Frameworks" (prefix dal-). Colours come only from site variables. */
+.viz [class^="dal-"], .viz [class*=" dal-"] { overflow-wrap: normal; }
+.dal-mute { color: var(--muted); }
+
+/* wide visualizers: stage gets the full width, code + vars sit underneath side by side */
+.viz.dal-wide .viz-body.with-code { grid-template-columns: minmax(0, 1fr); }
+.viz.dal-wide .viz-side { border-left: 0; border-top: 1px solid var(--line); flex-direction: row; }
+.viz.dal-wide .viz-code { flex: 2.3 1 0; min-width: 0; }
+.viz.dal-wide .viz-vars { flex: 1 1 0; border-top: 0; border-left: 1px solid var(--line); align-content: start; }
+@media (max-width: 900px) { .viz.dal-wide .viz-side { flex-direction: column; } .viz.dal-wide .viz-vars { border-left: 0; border-top: 1px solid var(--line); } }
+
+/* ---- box graph (SVG) ---- */
+svg.dal-g { max-width: 100%; height: auto; overflow: visible; font: 600 12.5px "Cascadia Code", Consolas, monospace; }
+svg.dal-g .e { stroke: var(--v-dim); stroke-width: 2; fill: none; transition: stroke .2s; }
+svg.dal-g .e.active { stroke: var(--v-active); stroke-width: 3; }
+svg.dal-g .e.path { stroke: var(--v-path); stroke-width: 2.6; stroke-dasharray: 6 4; }
+svg.dal-g .e.bad { stroke: var(--v-bad); stroke-width: 2.6; }
+svg.dal-g .ah { fill: var(--v-dim); }
+svg.dal-g .ah.active { fill: var(--v-active); } svg.dal-g .ah.path { fill: var(--v-path); } svg.dal-g .ah.bad { fill: var(--v-bad); }
+svg.dal-g .el { fill: var(--muted); font-size: 10.5px; paint-order: stroke; stroke: var(--surface); stroke-width: 4px; }
+svg.dal-g .bn rect { fill: var(--v-node); stroke: var(--muted); stroke-width: 1.8; transition: fill .2s, stroke .2s; }
+svg.dal-g .bn .t { fill: var(--text); font-weight: 700; }
+svg.dal-g .bn .s { fill: var(--muted); font: 600 10.5px system-ui, sans-serif; }
+svg.dal-g .bn .tg { fill: var(--accent); font: 700 10px system-ui, sans-serif; letter-spacing: .6px; }
+svg.dal-g .bn.dim { opacity: .45; } svg.dal-g .bn.dim rect { stroke-dasharray: 5 4; }
+svg.dal-g .bn.active rect { fill: var(--v-active-soft); stroke: var(--v-active); stroke-width: 3; }
+svg.dal-g .bn.done rect { fill: var(--v-done-soft); stroke: var(--v-done); stroke-width: 2.4; }
+svg.dal-g .bn.path rect { fill: var(--v-path-soft); stroke: var(--v-path); stroke-width: 2.4; }
+svg.dal-g .bn.visit rect { fill: var(--v-visit-soft); stroke: var(--v-visit); stroke-width: 2.4; }
+svg.dal-g .bn.bad rect { fill: var(--v-bad-soft); stroke: var(--v-bad); stroke-width: 3; }
+
+/* ---- 1. surface matrix ---- */
+.dal-surface { display: grid; grid-template-columns: minmax(170px, 1.4fr) repeat(5, minmax(70px, 1fr)); width: 100%; max-width: 980px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); font-size: 12.5px; }
+.dal-sr { display: contents; }
+.dal-sr > span { padding: 4px 9px; border-top: 1px solid var(--line); min-width: 0; display: flex; align-items: center; justify-content: center; transition: background .2s; }
+.dal-sr > span + span { border-left: 1px dashed var(--line); }
+.dal-sr > .dal-sn { justify-content: flex-start; flex-direction: column; align-items: flex-start; gap: 0; }
+.dal-sn small { font-size: 10.5px; color: var(--muted); }
+.dal-sh > span { border-top: 0; background: var(--bg); color: var(--muted); font: 700 10px system-ui, sans-serif; letter-spacing: .7px; text-transform: uppercase; text-align: center; }
+.dal-sh > span.cur { color: var(--accent); box-shadow: inset 0 -3px 0 var(--accent); }
+.dal-sc.cur { background: color-mix(in srgb, var(--accent-soft) 55%, transparent); }
+.dal-sr.hit > span { background: var(--v-active-soft); }
+.dal-dot { display: inline-block; width: 16px; height: 16px; border-radius: 50%; border: 2.5px solid var(--muted); background: var(--v-node); }
+.dal-dot.done { border-color: var(--v-done); background: var(--v-done); }
+.dal-dot.active { border-color: var(--v-active); background: var(--v-active); }
+.dal-dot.bad { border-color: var(--v-bad); background: var(--v-bad); }
+.dal-dot.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.dal-msgs { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px; width: 100%; max-width: 980px; }
+.dal-msg { padding: 7px 11px; border: 1.5px solid var(--line); border-left-width: 5px; border-radius: 8px; background: var(--surface); display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.dal-msg b { font-size: 12.5px; }
+.dal-msg pre { margin: 0; padding: 0; background: none; border: 0; font: 11.5px/1.45 "Cascadia Code", Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--text); }
+.dal-msg small { font-size: 11.5px; color: var(--muted); line-height: 1.45; }
+.dal-msg.done { border-left-color: var(--v-done); } .dal-msg.active { border-left-color: var(--v-active); }
+.dal-msg.bad { border-left-color: var(--v-bad); background: var(--v-bad-soft); } .dal-msg.path { border-left-color: var(--v-path); }
+
+/* ---- 2. registrations ---- */
+.dal-regs-w { width: 100%; max-width: 900px; align-items: stretch; }
+.dal-regs { display: flex; flex-direction: column; gap: 3px; }
+.dal-reg { display: grid; grid-template-columns: 96px minmax(0, 1fr); align-items: center; gap: 8px; padding: 3px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); transition: background .2s; }
+.dal-reg code { font-size: 11.5px; background: none; padding: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.dal-reg.cur { background: var(--v-active-soft); border-color: var(--v-active); }
+.dal-lf { font: 700 9.5px system-ui, sans-serif; letter-spacing: .6px; text-transform: uppercase; text-align: center; padding: 2px 4px; border-radius: 4px; border: 1.5px solid var(--muted); color: var(--muted); }
+.dal-lf.app { border-color: var(--v-path); color: var(--v-path); }
+.dal-lf.request { border-color: var(--v-visit); color: var(--v-visit); }
+
+/* ---- 3. codegen ---- */
+.dal-cg { display: grid; grid-template-columns: minmax(260px, 1fr) minmax(320px, 1.3fr); gap: 18px; width: 100%; max-width: 1040px; align-items: start; }
+@media (max-width: 860px) { .dal-cg { grid-template-columns: minmax(0, 1fr); } }
+.dal-cg .v-labeled { align-items: stretch; min-width: 0; }
+.dal-provs { display: flex; flex-direction: column; gap: 4px; }
+.dal-prov { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2px 10px; padding: 4px 9px; border: 1.6px solid var(--line); border-radius: 7px; background: var(--v-node); font: 600 11.5px "Cascadia Code", Consolas, monospace; transition: background .2s, border-color .2s; }
+.dal-prov code { background: none; padding: 0; font-size: 11.5px; }
+.dal-prov span { color: var(--muted); } .dal-prov span b { color: var(--text); }
+.dal-prov.dim { opacity: .6; border-style: dashed; }
+.dal-prov.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.dal-prov.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.dal-prov.bad { border-color: var(--v-bad); background: var(--v-bad-soft); opacity: 1; }
+.dal-chain { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; font-size: 11px; color: var(--muted); }
+.dal-chain code { font-size: 11px; }
+.dal-gen { padding: 10px 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--code); font: 12px/1.6 "Cascadia Code", Consolas, monospace; white-space: pre; overflow-x: auto; tab-size: 4; min-height: 120px; }
+.dal-gen > div.new { background: var(--v-done-soft); box-shadow: inset 3px 0 0 var(--v-done); }
+.dal-err { width: 100%; max-width: 1040px; margin: 0; padding: 9px 13px; border: 1.5px solid var(--v-bad); border-radius: 9px; background: var(--v-bad-soft); color: var(--text); font: 12px/1.5 "Cascadia Code", Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* ---- 4. sequence diagram ---- */
+.dal-seq { display: flex; flex-direction: column; width: 100%; max-width: 980px; }
+.dal-seqrow { display: grid; min-height: 34px; }
+.dal-seqrow > i { justify-self: center; width: 2px; background: var(--line); }
+.dal-seqrow.head { min-height: 0; gap: 6px; margin-bottom: 2px; }
+.dal-lh { padding: 6px 4px; border: 1.6px solid var(--muted); border-radius: 8px; background: var(--v-node); text-align: center; font: 700 11.5px "Cascadia Code", Consolas, monospace; }
+.dal-lh.proxy { border-color: var(--v-path); background: var(--v-path-soft); border-style: dashed; }
+.dal-lh.db { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.dal-arrow { --n: 1; position: relative; align-self: center; margin-inline: calc(50% / var(--n)); padding: 2px 6px 10px; text-align: center; z-index: 1; }
+.dal-arrow span { position: relative; display: inline-block; padding: 1px 6px; border-radius: 4px; background: var(--surface); font: 600 11px "Cascadia Code", Consolas, monospace; white-space: nowrap; }
+.dal-arrow::before { content: ""; position: absolute; left: 0; right: 0; bottom: 4px; border-top: 2px solid var(--muted); }
+.dal-arrow::after { content: ""; position: absolute; right: -2px; bottom: 0; border-left: 10px solid var(--muted); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+.dal-arrow.rev::after { right: auto; left: -2px; border-left: 0; border-right: 10px solid var(--muted); }
+.dal-arrow.self { margin-inline: 6%; padding: 4px 6px; border: 2px dashed var(--muted); border-radius: 8px; background: var(--surface); }
+.dal-arrow.self::before, .dal-arrow.self::after { display: none; }
+.dal-arrow.path::before { border-top-color: var(--v-path); } .dal-arrow.path::after { border-left-color: var(--v-path); }
+.dal-arrow.done::before { border-top-color: var(--v-done); } .dal-arrow.done::after { border-left-color: var(--v-done); }
+.dal-arrow.warn::before { border-top-color: var(--v-active); border-top-style: dashed; } .dal-arrow.warn::after { border-left-color: var(--v-active); }
+.dal-arrow.bad::before { border-top-color: var(--v-bad); } .dal-arrow.bad::after { border-left-color: var(--v-bad); }
+.dal-arrow.self.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.dal-arrow.self.bad span { background: transparent; }
+.dal-arrow.cur span { box-shadow: 0 0 0 2px var(--accent); }
+.dal-db { display: flex; flex-wrap: wrap; gap: 10px 26px; justify-content: center; padding: 8px 14px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); }
+.dal-db > div { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; min-width: 90px; }
+.dal-db code { font-size: 11.5px; } .dal-db code.unc { opacity: .7; border: 1px dashed var(--muted); }
+.dal-outcome { width: 100%; max-width: 900px; padding: 8px 13px; border: 1.5px solid var(--line); border-left-width: 6px; border-radius: 9px; background: var(--surface); font-weight: 650; font-size: 13px; overflow-wrap: anywhere; }
+.dal-outcome.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.dal-outcome.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.dal-outcome.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+
+/* ---- 5. Fx ---- */
+.dal-fx { display: grid; grid-template-columns: minmax(180px, .9fr) minmax(250px, 1.2fr) minmax(220px, 1fr); gap: 16px; width: 100%; max-width: 1060px; align-items: start; }
+@media (max-width: 900px) { .dal-fx { grid-template-columns: minmax(0, 1fr); } }
+.dal-fx .v-labeled { align-items: stretch; min-width: 0; }
+.dal-fxps, .dal-hooks, .dal-log { display: flex; flex-direction: column; gap: 4px; }
+.dal-fxp { display: flex; justify-content: space-between; gap: 8px; padding: 4px 9px; border: 1.6px solid var(--line); border-radius: 7px; background: var(--v-node); transition: background .2s; }
+.dal-fxp code { background: none; padding: 0; font-size: 11.5px; font-weight: 700; }
+.dal-fxp small { font: 11px "Cascadia Code", Consolas, monospace; color: var(--muted); }
+.dal-fxp.dim { opacity: .55; border-style: dashed; }
+.dal-fxp.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.dal-fxp.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.dal-fxp.cur, .dal-hook.cur { box-shadow: 0 0 0 2px var(--accent); }
+.dal-hook { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 1px 8px; align-items: baseline; padding: 5px 9px; border: 1.6px solid var(--line); border-radius: 7px; background: var(--v-node); }
+.dal-hook code { background: none; padding: 0; font-size: 11.5px; font-weight: 700; }
+.dal-hook small { grid-column: 2 / -1; font-size: 11px; color: var(--muted); line-height: 1.4; }
+.dal-hook em { font: 700 9.5px system-ui, sans-serif; letter-spacing: .6px; text-transform: uppercase; font-style: normal; color: var(--muted); }
+.dal-hook.done { border-color: var(--v-done); background: var(--v-done-soft); } .dal-hook.done em { color: var(--v-done); }
+.dal-hook.bad { border-color: var(--v-bad); background: var(--v-bad-soft); } .dal-hook.bad em { color: var(--v-bad); }
+.dal-hook.path { border-color: var(--v-path); background: var(--v-path-soft); } .dal-hook.path em { color: var(--v-path); }
+.dal-log > div { padding: 3px 8px; border-left: 3px solid var(--line); font: 11.5px "Cascadia Code", Consolas, monospace; color: var(--muted); }
+.dal-log > div.cur { border-left-color: var(--v-active); color: var(--text); background: var(--v-active-soft); }
+
+/* ---- 6. FastAPI ---- */
+.dal-fa-bottom { display: flex; flex-wrap: wrap; gap: 16px; width: 100%; max-width: 980px; align-items: flex-start; justify-content: center; }
+.dal-felog { flex: 1 1 420px; align-items: stretch; min-width: 0; }
+.dal-fes { display: flex; flex-direction: column; gap: 3px; }
+.dal-fe { display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: 8px; padding: 3px 8px; border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 6px; background: var(--surface); font: 11.5px "Cascadia Code", Consolas, monospace; }
+.dal-fe em { font: 700 9.5px system-ui, sans-serif; letter-spacing: .6px; text-transform: uppercase; font-style: normal; color: var(--muted); align-self: center; }
+.dal-fe.setup { border-left-color: var(--v-visit); } .dal-fe.endpoint { border-left-color: var(--v-active); }
+.dal-fe.response { border-left-color: var(--v-done); } .dal-fe.teardown { border-left-color: var(--v-path); }
+.dal-fe.cur { box-shadow: 0 0 0 2px var(--accent); }
+.dal-client { flex: 0 1 220px; display: flex; flex-direction: column; gap: 4px; padding: 10px 14px; border: 2px solid var(--line); border-radius: 10px; background: var(--surface); }
+.dal-client b { font-size: 15px; }
+.dal-client.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.dal-client.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.dal-client.active { border-color: var(--v-active); background: var(--v-active-soft); }
+
+/* ---- 7. TypeScript metadata ---- */
+.dal-ts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; width: 100%; max-width: 1040px; }
+@media (max-width: 860px) { .dal-ts { grid-template-columns: minmax(0, 1fr); } }
+.dal-ts-p { align-items: stretch; min-width: 0; }
+.dal-ts-code { margin: 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--code); font: 12px/1.55 "Cascadia Code", Consolas, monospace; white-space: pre; overflow-x: auto; min-height: 150px; color: var(--text); }
+.dal-ts-p.bad .dal-ts-code { border-color: var(--v-bad); background: var(--v-bad-soft); }
+
+/* ---- 8. decision walker ---- */
+.dal-qs { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
+.dal-q { display: flex; flex-direction: column; gap: 2px; padding: 7px 12px; border: 1.8px solid var(--line); border-radius: 9px; background: var(--v-node); max-width: 230px; }
+.dal-q small { font-size: 11px; color: var(--muted); }
+.dal-q b { font-size: 12.5px; }
+.dal-q.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.dal-q.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.dal-q.skip { opacity: .5; border-style: dashed; }
+.dal-qa { color: var(--muted); font-weight: 700; }
+.dal-rec { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 12px; width: 100%; max-width: 1000px; padding: 12px 14px; border: 2px solid var(--v-path); border-radius: 11px; background: var(--v-path-soft); }
+@media (max-width: 860px) { .dal-rec { grid-template-columns: minmax(0, 1fr); } }
+.dal-rec > div { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.dal-rec p { margin: 0; font-size: 13px; line-height: 1.5; }
+.dal-rec > div:first-child p { font-weight: 650; }

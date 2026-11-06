@@ -1,0 +1,1865 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Error Handling Strategies | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/error-handling.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/error-handling.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track" open><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html" aria-current="page">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Error Handling Strategies</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">FOUNDATIONS OF CRAFT</p><h1>Error Handling Strategies</h1><p class="lede">Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash.</p><div class="meta"><span class="level level-intermediate">Intermediate → Advanced</span><span>~45 min study</span><span>Builds on: <a href="language-mental-models.html">Cross-Language Mental Models</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="error-handling" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-the-error-happened-then-it-disappeared">The problem: the error happened, then it disappeared</h2>
+<p>Most outages are not caused by the first error. They are caused by what the code did <strong>next</strong>: it swallowed the
+error, logged it four times without the cause, retried it until the database fell over, or turned "the user typed
+a bad email" into a 500. Error handling is the part of the program that only runs when things are already going
+wrong, so it is the part that is least tested and most likely to make things worse.</p>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>The code that shipped</th>
+<th>What happened</th>
+<th>The missing idea</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C#</td>
+<td><code>catch (Exception) { return new List&lt;Order&gt;(); }</code> in a repository</td>
+<td>The database was down for 40 minutes. The API returned <code>200 []</code> and customers saw "You have no orders". No alert fired.</td>
+<td><a href="#wrap-with-context-dont-swallow">Wrap, don't swallow</a></td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>catch (IOException e) { throw new RuntimeException("failed"); }</code></td>
+<td>The cause was dropped. The log said <code>failed</code> with a stack trace that ended in the <code>catch</code> block. Finding the real file took a day.</td>
+<td><a href="#wrap-with-context-dont-swallow">Keep the cause</a></td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>except: pass</code> around a loop body</td>
+<td>It also caught <code>KeyboardInterrupt</code>, so Ctrl+C could not stop the job. It also hid a <code>TypeError</code> that skipped every row.</td>
+<td><a href="#python-eafp-and-the-exception-hierarchy">Catch narrowly</a></td>
+</tr>
+<tr>
+<td>Go</td>
+<td><code>go func() { _ = publish(evt) }()</code></td>
+<td>The broker rejected every event for a week. The error was assigned to <code>_</code>.</td>
+<td><a href="#async-errors-where-does-the-exception-go">Async errors</a></td>
+</tr>
+<tr>
+<td>TypeScript</td>
+<td><code>sendEmail(user);</code> without <code>await</code></td>
+<td>The promise rejected; Node 15+ treated the unhandled rejection as fatal and restarted the server mid-traffic.</td>
+<td><a href="#async-errors-where-does-the-exception-go">Async errors</a></td>
+</tr>
+</tbody>
+</table>
+<p>All five have the same shape: <strong>the error was produced correctly, but its journey to code that could act on it
+was broken</strong>. This page is about designing that journey across C#, Java, Python, Go and TypeScript: which channel
+carries the error, where it is caught, what context is added, what is cleaned up, what is logged, and when the right
+move is to let the process die.</p>
+<div class="rule">
+<p><strong>Rule.</strong> Classify every failure before you handle it. Bugs fail fast. Expected outcomes are values in the return type. Environmental failures propagate with context added at each layer, are retried in at most one place, and are translated, logged and reported <strong>once</strong> at a boundary. Cleanup always runs. Never swallow an error you cannot fully handle.</p>
+</div>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 300" width="880" role="img" aria-label="Four kinds of failure: bugs, expected outcomes, environmental failures and fatal conditions, each with its handling strategy">
+<text x="20" y="26" class="title">Four kinds of failure, four different responses</text>
+<rect class="box bad" x="20" y="44" width="200" height="236" rx="12"/>
+<text x="36" y="70" class="title">Bugs</text>
+<text x="36" y="94" class="small mono">null dereference</text>
+<text x="36" y="112" class="small mono">index out of range</text>
+<text x="36" y="130" class="small mono">broken invariant</text>
+<text x="36" y="148" class="small mono">wrong argument</text>
+<text x="36" y="180" class="small">Nobody can handle it.</text>
+<text x="36" y="198" class="small">Retrying gives the same bug.</text>
+<text x="36" y="232" class="small">Fail fast, report once,</text>
+<text x="36" y="250" class="small">fix the code.</text>
+<rect class="box done" x="240" y="44" width="200" height="236" rx="12"/>
+<text x="256" y="70" class="title">Expected outcomes</text>
+<text x="256" y="94" class="small mono">user not found</text>
+<text x="256" y="112" class="small mono">insufficient funds</text>
+<text x="256" y="130" class="small mono">invalid email</text>
+<text x="256" y="148" class="small mono">optional file absent</text>
+<text x="256" y="180" class="small">The caller must decide.</text>
+<text x="256" y="198" class="small">It is part of the contract.</text>
+<text x="256" y="232" class="small">Return it: Option, Result,</text>
+<text x="256" y="250" class="small">(T, error), Try-pattern.</text>
+<rect class="box path" x="460" y="44" width="200" height="236" rx="12"/>
+<text x="476" y="70" class="title">Environmental</text>
+<text x="476" y="94" class="small mono">timeout, 503, reset</text>
+<text x="476" y="112" class="small mono">disk full</text>
+<text x="476" y="130" class="small mono">deadlock victim</text>
+<text x="476" y="148" class="small mono">permission denied</text>
+<text x="476" y="180" class="small">Not the caller's fault.</text>
+<text x="476" y="198" class="small">Sometimes transient.</text>
+<text x="476" y="232" class="small">Propagate with context,</text>
+<text x="476" y="250" class="small">retry once, map at a boundary.</text>
+<rect class="box accent" x="680" y="44" width="180" height="236" rx="12"/>
+<text x="696" y="70" class="title">Fatal</text>
+<text x="696" y="94" class="small mono">out of memory</text>
+<text x="696" y="112" class="small mono">stack overflow</text>
+<text x="696" y="130" class="small mono">corrupted state</text>
+<text x="696" y="148" class="small mono">missing config</text>
+<text x="696" y="180" class="small">The process can't be</text>
+<text x="696" y="198" class="small">trusted to continue.</text>
+<text x="696" y="232" class="small">Crash, let the supervisor</text>
+<text x="696" y="250" class="small">restart a clean process.</text>
+</svg>
+<figcaption>The same <code>catch</code> keyword is the wrong tool for three of the four columns. Classify first: who can act on this failure, and would trying again change anything?</figcaption>
+</figure>
+
+<p>The columns are not about the <em>type</em> of the error, they are about <strong>who can do something about it</strong>. A
+<code>FileNotFoundException</code> is an expected outcome when the file is an optional user setting, an environmental
+failure when it is a mounted secret that should be there, and a bug when the path was built with the wrong
+variable. The same exception type lands in different columns depending on the call site, which is why the
+decision belongs to the code that knows the context, not to a global rule like "always catch IOException".</p>
+<h2 id="three-channels-for-failure-exceptions-error-values-result">Three channels for failure: exceptions, error values, Result</h2>
+<p>Every language gives a function two ways to finish: return normally, or fail. They differ in <strong>how the failure
+travels back</strong> to the caller.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 330" width="880" role="img" aria-label="Three failure channels: exceptions jump over frames, Go error values travel back through every return, Result types travel in the return type">
+<text x="20" y="22" class="title">How a failure travels from the repository to the HTTP handler</text>
+<text x="20" y="88" class="small muted">EXCEPTIONS</text>
+<text x="20" y="104" class="small muted">C#, Java, Python, TS</text>
+<rect class="box" x="170" y="74" width="120" height="36" rx="8"/><text x="230" y="97" text-anchor="middle" class="small">handler</text>
+<rect class="box" x="340" y="74" width="120" height="36" rx="8"/><text x="400" y="97" text-anchor="middle" class="small">service</text>
+<rect class="box bad" x="510" y="74" width="120" height="36" rx="8"/><text x="570" y="97" text-anchor="middle" class="small">repository</text>
+<line class="edge" x1="290" y1="92" x2="340" y2="92"/><line class="edge" x1="460" y1="92" x2="510" y2="92"/>
+<path class="edge bad" d="M570 74 C 540 36, 260 36, 230 74" fill="none"/>
+<text x="400" y="40" text-anchor="middle" class="small">throw: skips every frame without a matching catch</text>
+<text x="650" y="88" class="small">invisible in signatures</text>
+<text x="650" y="104" class="small">(except Java checked)</text>
+<text x="20" y="178" class="small muted">ERROR VALUES</text>
+<text x="20" y="194" class="small muted">Go</text>
+<rect class="box" x="170" y="164" width="120" height="36" rx="8"/><text x="230" y="187" text-anchor="middle" class="small">handler</text>
+<rect class="box" x="340" y="164" width="120" height="36" rx="8"/><text x="400" y="187" text-anchor="middle" class="small">service</text>
+<rect class="box bad" x="510" y="164" width="120" height="36" rx="8"/><text x="570" y="187" text-anchor="middle" class="small">repository</text>
+<line class="edge bad" x1="510" y1="182" x2="460" y2="182"/><line class="edge bad" x1="340" y1="182" x2="290" y2="182"/>
+<text x="485" y="222" text-anchor="middle" class="small mono">return nil, err</text>
+<text x="315" y="222" text-anchor="middle" class="small mono">if err != nil { wrap }</text>
+<text x="650" y="178" class="small">every frame sees it,</text>
+<text x="650" y="194" class="small">every frame can add context</text>
+<text x="20" y="268" class="small muted">RESULT TYPES</text>
+<text x="20" y="284" class="small muted">TS unions, C#/Java libs</text>
+<rect class="box" x="170" y="254" width="120" height="36" rx="8"/><text x="230" y="277" text-anchor="middle" class="small">handler</text>
+<rect class="box" x="340" y="254" width="120" height="36" rx="8"/><text x="400" y="277" text-anchor="middle" class="small">service</text>
+<rect class="box done" x="510" y="254" width="120" height="36" rx="8"/><text x="570" y="277" text-anchor="middle" class="small">repository</text>
+<line class="edge done" x1="510" y1="272" x2="460" y2="272"/><line class="edge done" x1="340" y1="272" x2="290" y2="272"/>
+<text x="400" y="314" text-anchor="middle" class="small mono">Result&lt;Order, NotFound | Conflict&gt;</text>
+<text x="650" y="268" class="small">in the signature; the</text>
+<text x="650" y="284" class="small">compiler forces a match</text>
+</svg>
+<figcaption>Exceptions are cheap to write and expensive to reason about: any line may leave the function. Error values and Results are the opposite: verbose, but every exit is visible in the code and the signature.</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>C#</th>
+<th>Java</th>
+<th>Python</th>
+<th>Go</th>
+<th>TypeScript</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main failure channel</td>
+<td>exceptions (all unchecked)</td>
+<td>exceptions: checked and unchecked</td>
+<td>exceptions</td>
+<td><code>error</code> as the last return value</td>
+<td>exceptions (anything can be thrown)</td>
+</tr>
+<tr>
+<td>Expected outcomes</td>
+<td><code>bool TryX(out T)</code>, <code>T?</code>, Result libraries</td>
+<td><code>Optional&lt;T&gt;</code>, checked exceptions</td>
+<td><code>None</code>, exceptions (EAFP)</td>
+<td><code>(T, error)</code>, sentinel errors</td>
+<td>union return types, <code>undefined</code></td>
+</tr>
+<tr>
+<td>Compiler forces handling?</td>
+<td>no</td>
+<td>only for checked exceptions</td>
+<td>no (type checkers don't track raises)</td>
+<td>no; linters (<code>errcheck</code>) flag ignored errors</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Cost of a failure</td>
+<td>high: stack capture, two-pass unwind</td>
+<td>high: stack capture</td>
+<td>moderate; <code>try</code> itself is free since 3.11</td>
+<td>an ordinary return</td>
+<td>moderate: stack captured when the <code>Error</code> is created</td>
+</tr>
+<tr>
+<td>Adds context with</td>
+<td><code>throw new X("msg", inner)</code></td>
+<td><code>new X("msg", cause)</code></td>
+<td><code>raise X(...) from e</code>, <code>add_note</code></td>
+<td><code>fmt.Errorf("...: %w", err)</code></td>
+<td><code>new Error("msg", { cause })</code></td>
+</tr>
+<tr>
+<td>Cleanup</td>
+<td><code>finally</code>, <code>using</code></td>
+<td><code>finally</code>, try-with-resources</td>
+<td><code>finally</code>, <code>with</code></td>
+<td><code>defer</code></td>
+<td><code>finally</code>, <code>using</code> (TS 5.2+)</td>
+</tr>
+<tr>
+<td>Fatal</td>
+<td><code>Environment.FailFast</code>; stack overflow can't be caught</td>
+<td><code>Error</code> subclasses (<code>OutOfMemoryError</code>)</td>
+<td><code>SystemExit</code>, <code>KeyboardInterrupt</code> (<code>BaseException</code>)</td>
+<td><code>panic</code>, <code>log.Fatal</code>, <code>os.Exit</code></td>
+<td><code>process.exit</code>, an uncaught exception</td>
+</tr>
+</tbody>
+</table>
+<p>Here is one function, "read the port number from a config file", in each language's <strong>idiomatic</strong> style. It has
+three failure modes in three different columns: the file is missing (expected here: there is a default), the
+content is not a number, and the number is out of range (both are configuration bugs: fail at startup).</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">public static int ReadPort(string path)
+{
+    string text = File.ReadAllText(path).Trim();      // throws FileNotFoundException, IOException...
+    if (!int.TryParse(text, out var port))              // Try-pattern: expected failure without an exception
+        throw new FormatException($&quot;'{path}' does not contain a number: '{text}'&quot;);
+    if (port is &lt; 1 or &gt; 65535)
+        throw new ArgumentOutOfRangeException(nameof(path), port, &quot;port must be 1-65535&quot;);
+    return port;
+}
+
+int port;
+try { port = ReadPort(&quot;port.txt&quot;); }
+catch (FileNotFoundException) { port = 8080; }        // the one failure this caller can fully handle
+// FormatException and ArgumentOutOfRangeException propagate: a bad deployment must fail at startup.
+</code></pre>
+<pre><code class="language-java">static int readPort(Path path) throws IOException {    // checked: callers must catch or declare it
+    String text = Files.readString(path).strip();
+    int port;
+    try {
+        port = Integer.parseInt(text);
+    } catch (NumberFormatException e) {                  // unchecked
+        throw new IllegalArgumentException(&quot;'&quot; + path + &quot;' does not contain a number: '&quot; + text + &quot;'&quot;, e);
+    }
+    if (port &lt; 1 || port &gt; 65535) throw new IllegalArgumentException(&quot;port must be 1-65535, got &quot; + port);
+    return port;
+}
+
+int port;
+try { port = readPort(Path.of(&quot;port.txt&quot;)); }
+catch (NoSuchFileException e) { port = 8080; }        // other IOExceptions still propagate (declared)
+</code></pre>
+<pre><code class="language-python">from pathlib import Path
+
+def read_port(path: str) -&gt; int:
+    text = Path(path).read_text().strip()               # FileNotFoundError is an OSError
+    try:
+        port = int(text)
+    except ValueError as e:
+        raise ValueError(f&quot;{path!r} does not contain a number: {text!r}&quot;) from e
+    if not 1 &lt;= port &lt;= 65535:
+        raise ValueError(f&quot;port must be 1-65535, got {port}&quot;)
+    return port
+
+try:
+    port = read_port(&quot;port.txt&quot;)
+except FileNotFoundError:                               # EAFP: try it, handle the expected failure
+    port = 8080
+</code></pre>
+<pre><code class="language-go">var ErrPortRange = errors.New(&quot;port out of range&quot;)
+
+func ReadPort(path string) (int, error) {
+    b, err := os.ReadFile(path)
+    if err != nil {
+        return 0, fmt.Errorf(&quot;read port file: %w&quot;, err) // %w keeps fs.ErrNotExist reachable
+    }
+    text := strings.TrimSpace(string(b))
+    port, err := strconv.Atoi(text)
+    if err != nil {
+        return 0, fmt.Errorf(&quot;%q does not contain a number: %w&quot;, path, err)
+    }
+    if port &lt; 1 || port &gt; 65535 {
+        return 0, fmt.Errorf(&quot;%w: got %d&quot;, ErrPortRange, port)
+    }
+    return port, nil
+}
+
+port, err := ReadPort(&quot;port.txt&quot;)
+if errors.Is(err, fs.ErrNotExist) {
+    port, err = 8080, nil
+}
+if err != nil {
+    log.Fatalf(&quot;config: %v&quot;, err) // startup: fail fast with the whole chain in one line
+}
+</code></pre>
+<pre><code class="language-typescript">import { readFileSync } from &quot;node:fs&quot;;
+
+type PortError =
+  | { kind: &quot;missing&quot;; path: string }
+  | { kind: &quot;notANumber&quot;; text: string }
+  | { kind: &quot;outOfRange&quot;; port: number };
+type Result&lt;T, E&gt; = { ok: true; value: T } | { ok: false; error: E };
+
+function readPort(path: string): Result&lt;number, PortError&gt; {
+  let text: string;
+  try {
+    text = readFileSync(path, &quot;utf8&quot;).trim();
+  } catch (e) {
+    if ((e as NodeJS.ErrnoException).code === &quot;ENOENT&quot;) return { ok: false, error: { kind: &quot;missing&quot;, path } };
+    throw e;                                          // EACCES, EISDIR...: not ours to decide
+  }
+  const port = Number(text);
+  if (!Number.isInteger(port)) return { ok: false, error: { kind: &quot;notANumber&quot;, text } };
+  if (port &lt; 1 || port &gt; 65535) return { ok: false, error: { kind: &quot;outOfRange&quot;, port } };
+  return { ok: true, value: port };
+}
+
+function fail(e: PortError): never { throw new Error(`bad port config: ${JSON.stringify(e)}`); }
+const r = readPort(&quot;port.txt&quot;);
+const port = r.ok ? r.value : r.error.kind === &quot;missing&quot; ? 8080 : fail(r.error);
+</code></pre>
+</div>
+<p>Notice what each version makes <strong>visible</strong>. In Go, every failure point is a line you can read. In the TypeScript
+Result version, the three expected failures are in the signature and the caller <em>must</em> narrow <code>r.ok</code> to get the
+number, while truly unexpected I/O errors still throw. In C#, Java and Python, the signature says nothing about
+<code>FormatException</code> or <code>ValueError</code>: you learn about them from documentation, tests or production.</p>
+<div class="insight">
+<p><strong>Option is not Result</strong>
+<code>Option</code>/<code>Maybe</code> (<code>T?</code>, <code>Optional&lt;T&gt;</code>, <code>T | None</code>, <code>T | undefined</code>) says "there may be no value" and nothing about
+why. Use it when absence is the <em>only</em> failure and it is normal: a lookup that finds nothing. Use <code>Result</code> (or
+<code>(T, error)</code>) when the caller needs to know <strong>which</strong> failure happened, so it can respond differently to each.
+<a href="functional-patterns.html#optionmaybe-and-resulteither">Functional Patterns</a> covers composing both with <code>map</code> and
+<code>bind</code>; this page covers when to choose them over exceptions.</p>
+</div>
+<h3 id="java-checked-vs-unchecked-exceptions">Java: checked vs unchecked exceptions</h3>
+<p>Java is the only mainstream language where the compiler tracks exceptions. Everything under <code>Exception</code> except
+<code>RuntimeException</code> is <strong>checked</strong>: a method that can throw it must declare <code>throws</code>, and every caller must catch it
+or declare it too.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 210" width="880" role="img" aria-label="Java Throwable hierarchy: Error, checked Exception, unchecked RuntimeException">
+<text x="20" y="24" class="title">Java's Throwable tree: what the compiler checks</text>
+<rect class="box" x="370" y="38" width="140" height="34" rx="8"/><text x="440" y="60" text-anchor="middle" class="small mono">Throwable</text>
+<line class="edge" x1="410" y1="72" x2="170" y2="104"/><line class="edge" x1="470" y1="72" x2="620" y2="104"/>
+<rect class="box accent" x="90" y="104" width="160" height="34" rx="8"/><text x="170" y="126" text-anchor="middle" class="small mono">Error</text>
+<text x="170" y="156" text-anchor="middle" class="small">OutOfMemoryError,</text>
+<text x="170" y="172" text-anchor="middle" class="small">StackOverflowError</text>
+<text x="170" y="194" text-anchor="middle" class="small muted">don't catch: the JVM is in trouble</text>
+<rect class="box path" x="540" y="104" width="160" height="34" rx="8"/><text x="620" y="126" text-anchor="middle" class="small mono">Exception</text>
+<text x="520" y="160" text-anchor="middle" class="small">checked: IOException,</text>
+<text x="520" y="176" text-anchor="middle" class="small">SQLException, TimeoutException</text>
+<text x="520" y="194" text-anchor="middle" class="small muted">must be declared or caught</text>
+<line class="edge" x1="660" y1="138" x2="760" y2="150"/>
+<rect class="box done" x="690" y="150" width="170" height="34" rx="8"/><text x="775" y="172" text-anchor="middle" class="small mono">RuntimeException</text>
+<text x="775" y="202" text-anchor="middle" class="small muted">unchecked: bugs, most libraries</text>
+</svg>
+<figcaption>Checked exceptions put environmental failures in the signature. Unchecked ones are for bugs and for anything a caller cannot reasonably recover from.</figcaption>
+</figure>
+
+<p>The idea is sound: an environmental failure like <code>IOException</code> is part of the contract, so make it visible. In
+practice checked exceptions leak implementation details through every layer (<code>throws SQLException</code> on a service
+method tells callers you use JDBC) and fight lambdas, because <code>Function&lt;T, R&gt;</code> cannot throw checked exceptions. So
+modern Java code tends to:</p>
+<ul>
+<li>Use <strong>unchecked</strong> exceptions for anything the immediate caller can't handle (Spring translates every
+  <code>SQLException</code> into an unchecked <code>DataAccessException</code> hierarchy for exactly this reason).</li>
+<li>Wrap checked exceptions at the layer that knows what they mean: <code>throw new UncheckedIOException(e)</code> inside a
+  stream, or <code>throw new OrderStoreException("load order " + id, e)</code> at the repository boundary.</li>
+<li>Keep checked exceptions for <strong>library APIs</strong> where the failure really is the caller's to handle and the caller is
+  close by (<code>Files.readString</code>, <code>HttpClient.send</code>).</li>
+<li>Never catch <code>Throwable</code> or <code>Error</code> in business code. Catching <code>Exception</code> is only for boundaries.</li>
+</ul>
+<pre><code class="language-java">// A lambda can't throw IOException, so wrap it with context and keep the cause.
+List&lt;String&gt; contents = paths.stream()
+    .map(p -&gt; {
+        try { return Files.readString(p); }
+        catch (IOException e) { throw new UncheckedIOException(&quot;read &quot; + p, e); }
+    })
+    .toList();
+</code></pre>
+<h3 id="python-eafp-and-the-exception-hierarchy">Python: EAFP and the exception hierarchy</h3>
+<p>Python's culture is <strong>EAFP</strong>, "easier to ask forgiveness than permission": try the operation and handle the
+exception, instead of checking first (<strong>LBYL</strong>, "look before you leap"). This is not just style. Checking first is a
+race: the file can be deleted between <code>exists()</code> and <code>open()</code>. Exceptions are also cheap in CPython, and since 3.11
+a <code>try</code> block that doesn't raise costs nothing.</p>
+<div class="code-tabs" data-labels="LBYL (racy),EAFP (idiomatic)">
+<pre><code class="language-python">import os
+
+if os.path.exists(path):          # another process can delete it right here
+    with open(path) as f:         # ...and this still raises FileNotFoundError
+        data = f.read()
+else:
+    data = DEFAULT
+</code></pre>
+<pre><code class="language-python">try:
+    with open(path) as f:
+        data = f.read()
+except FileNotFoundError:         # exactly the expected failure, nothing broader
+    data = DEFAULT
+</code></pre>
+</div>
+<p>The rules that make EAFP safe:</p>
+<ul>
+<li><strong>Catch the narrowest class</strong> that means what you expect. <code>except Exception</code> in the middle of business code
+  hides <code>TypeError</code> and <code>AttributeError</code>, which are bugs.</li>
+<li><strong>Never use a bare <code>except:</code></strong> (or <code>except BaseException</code>) unless you re-raise. It catches <code>KeyboardInterrupt</code>
+  and <code>SystemExit</code>, which live outside <code>Exception</code> precisely so that ordinary handlers don't stop Ctrl+C.</li>
+<li><strong>Keep the <code>try</code> body small.</strong> Put the code that should run only on success in <code>else:</code>, so an exception from
+  it isn't mistaken for the one you meant to catch.</li>
+<li><strong>Chain</strong> with <code>raise NewError(...) from e</code>; use <code>from None</code> only when the original is noise. Python 3.11 added
+  <code>e.add_note("while loading order 42")</code> to add context without changing the type, and <code>ExceptionGroup</code> with
+  <code>except*</code> for several errors at once.</li>
+</ul>
+<h3 id="go-errors-are-values">Go: errors are values</h3>
+<p>Go has no exceptions for ordinary failures. A function that can fail returns <code>error</code> as its <strong>last</strong> result, and
+the caller checks it on the next line. <code>error</code> is a one-method interface (<code>Error() string</code>), so an error can be a
+constant, a struct with fields, or a wrapper around another error.</p>
+<pre><code class="language-go">// 1. Sentinel errors: a fixed value callers compare against with errors.Is.
+var ErrNotFound = errors.New(&quot;not found&quot;)
+
+// 2. Error types: carry data; callers extract them with errors.As.
+type ConflictError struct {
+    ID      string
+    Version int
+}
+
+func (e *ConflictError) Error() string { return fmt.Sprintf(&quot;order %s: version %d is stale&quot;, e.ID, e.Version) }
+
+func (r *Repo) Load(ctx context.Context, id string) (*Order, error) {
+    row := r.db.QueryRowContext(ctx, &quot;select ... where id = $1&quot;, id)
+    var o Order
+    if err := row.Scan(&amp;o.ID, &amp;o.Total); err != nil {
+        if errors.Is(err, sql.ErrNoRows) {
+            return nil, fmt.Errorf(&quot;load order %s: %w&quot;, id, ErrNotFound) // translate, keep it matchable
+        }
+        return nil, fmt.Errorf(&quot;load order %s: %w&quot;, id, err) // 3. wrap with %w: context + cause
+    }
+    return &amp;o, nil
+}
+
+// Caller: inspect the chain, never the message text.
+o, err := repo.Load(ctx, id)
+var conflict *ConflictError
+switch {
+case errors.Is(err, ErrNotFound):
+    http.Error(w, &quot;no such order&quot;, http.StatusNotFound)
+case errors.As(err, &amp;conflict):
+    http.Error(w, conflict.Error(), http.StatusConflict)
+case err != nil:
+    return fmt.Errorf(&quot;show order: %w&quot;, err)
+}
+</code></pre>
+<p>The rules: wrap with <code>%w</code> (not <code>%v</code>, which flattens the cause into text) and add <em>what you were doing</em>, not "error
+occurred". Compare with <code>errors.Is</code>/<code>errors.As</code>, never <code>==</code> or <code>strings.Contains(err.Error(), ...)</code>, because
+wrapping breaks both. Go 1.20 added <code>errors.Join</code> and multiple <code>%w</code> verbs for several causes. Either <strong>handle</strong>
+an error or <strong>return</strong> it; doing both (log and return) is how one failure becomes five log lines. <code>panic</code> is
+reserved for bugs and impossible states; see <a href="#panics-fatal-errors-and-crash-only-design">Panics and fatal errors</a>.</p>
+<h3 id="c-exception-filters-and-rethrowing-correctly">C#: exception filters and rethrowing correctly</h3>
+<p>C# exceptions are all unchecked. Two features matter more than they look:</p>
+<ul>
+<li><strong>Exception filters</strong> (<code>catch (X e) when (condition)</code>) are evaluated <strong>before</strong> the stack unwinds. If the filter
+  is false, the exception keeps searching for a handler as if that <code>catch</code> didn't exist, and no <code>finally</code> has run
+  yet. A crash dump or debugger still shows the original throwing frame. Compare that to "catch, check, <code>throw;</code>",
+  which unwinds first and then throws again.</li>
+<li><strong><code>throw;</code> vs <code>throw e;</code></strong>: <code>throw;</code> rethrows the current exception with its original stack trace; <code>throw e;</code>
+  resets the trace to the current line, destroying the most useful piece of evidence. To rethrow later (for
+  example on another thread), use <code>ExceptionDispatchInfo.Capture(e).Throw()</code>.</li>
+</ul>
+<pre><code class="language-csharp">try
+{
+    return await http.GetFromJsonAsync&lt;Order&gt;($&quot;orders/{id}&quot;, ct);
+}
+catch (HttpRequestException e) when (e.StatusCode == HttpStatusCode.NotFound)
+{
+    return null;                                         // expected: absence
+}
+catch (HttpRequestException e) when (e.StatusCode is &gt;= HttpStatusCode.InternalServerError)
+{
+    throw new OrderServiceUnavailableException($&quot;GET orders/{id}&quot;, e);   // context + cause
+}
+catch (OperationCanceledException) when (ct.IsCancellationRequested)
+{
+    throw;                                               // the caller cancelled: not an error, don't wrap
+}
+</code></pre>
+<h3 id="typescript-anything-can-be-thrown">TypeScript: anything can be thrown</h3>
+<p>JavaScript lets you <code>throw</code> any value: a string, <code>undefined</code>, an object without a stack. So in TypeScript the
+catch variable is <code>unknown</code> (with <code>strict</code>, via <code>useUnknownInCatchVariables</code>), and you must narrow it before using
+it. ES2022 added <code>cause</code>, which finally gives JavaScript standard error chaining.</p>
+<pre><code class="language-typescript">class OrderNotFoundError extends Error {
+  override name = &quot;OrderNotFoundError&quot;;
+  constructor(readonly orderId: string, options?: ErrorOptions) {
+    super(`order ${orderId} not found`, options);
+  }
+}
+
+async function loadOrder(id: string): Promise&lt;Order&gt; {
+  try {
+    return await db.orders.findOrThrow(id);
+  } catch (e: unknown) {
+    if (e instanceof RecordNotFound) throw new OrderNotFoundError(id, { cause: e });
+    throw new Error(`load order ${id}`, { cause: e });   // context, original kept as .cause
+  }
+}
+
+function toError(e: unknown): Error {                   // for code that receives arbitrary throws
+  return e instanceof Error ? e : new Error(`non-Error thrown: ${String(e)}`);
+}
+</code></pre>
+<p>Only throw <code>Error</code> subclasses, so there is always a stack. Set <code>name</code>, because <code>instanceof</code> fails across realms
+(iframes, some test runners, duplicated packages) and <code>name</code> is the fallback. For expected outcomes, many TypeScript
+codebases return discriminated unions (<code>{ ok: true, value } | { ok: false, error }</code>) instead of throwing, because
+the compiler then forces the caller to look at the failure. That's the same trade-off as Go, with exhaustive
+<code>switch</code> checks on <code>error.kind</code> as a bonus.</p>
+<h2 id="what-happens-when-you-throw-stack-unwinding">What happens when you throw: stack unwinding</h2>
+<p>When an exception is thrown, the runtime walks <strong>up</strong> the call stack looking for a handler whose type (and filter)
+matches. Every frame it leaves is <strong>unwound</strong>: its <code>finally</code> blocks run, its <code>using</code>/<code>with</code>/try-with-resources
+resources are disposed, and its local variables go out of scope. If no handler matches, the exception is
+<em>unhandled</em> and the process (or thread, or request) dies.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 250" width="880" role="img" aria-label="One-pass unwinding in Java, Python and JavaScript versus two-pass unwinding in .NET with filters evaluated first">
+<text x="20" y="24" class="title">One pass vs two passes</text>
+<text x="20" y="54" class="small muted">JAVA, PYTHON, JS</text>
+<rect class="box" x="20" y="64" width="400" height="160" rx="12"/>
+<rect class="box bad" x="40" y="80" width="150" height="30" rx="6"/><text x="115" y="100" text-anchor="middle" class="small mono">step(): throws</text>
+<rect class="box visit" x="40" y="122" width="150" height="30" rx="6"/><text x="115" y="142" text-anchor="middle" class="small mono">handle(): finally</text>
+<rect class="box done" x="40" y="164" width="150" height="30" rx="6"/><text x="115" y="184" text-anchor="middle" class="small mono">main(): catch</text>
+<line class="edge bad" x1="115" y1="110" x2="115" y2="122"/><line class="edge bad" x1="115" y1="152" x2="115" y2="164"/>
+<text x="210" y="100" class="small">walk up one frame at a time</text>
+<text x="210" y="142" class="small">no match: run its finally,</text>
+<text x="210" y="158" class="small">dispose, then keep going</text>
+<text x="210" y="184" class="small">match: run the catch body</text>
+<text x="40" y="214" class="small muted">a guard inside catch runs after every finally</text>
+<text x="460" y="54" class="small muted">.NET (C#)</text>
+<rect class="box" x="460" y="64" width="400" height="160" rx="12"/>
+<text x="480" y="90" class="small"><tspan class="mono">pass 1</tspan>: search only. Evaluate type</text>
+<text x="480" y="106" class="small">checks and when-filters, top to bottom.</text>
+<text x="480" y="122" class="small">Nothing is unwound yet.</text>
+<line class="edge accent" x1="480" y1="134" x2="840" y2="134"/>
+<text x="480" y="156" class="small"><tspan class="mono">pass 2</tspan>: if a handler was found,</text>
+<text x="480" y="172" class="small">unwind to it, running finally and Dispose.</text>
+<text x="480" y="198" class="small">No handler at all: the process crashes and</text>
+<text x="480" y="214" class="small">finally blocks are not guaranteed to run.</text>
+</svg>
+<figcaption>In .NET, a <code>when</code> filter sees the stack exactly as it was at the throw. That is why filters are the right place for "only handle this if…" decisions, and why logging inside a filter captures the full context.</figcaption>
+</figure>
+
+<p>Pick a language and a failure, then step through. Watch three things: the order of the console lines, when the
+file is closed relative to the handler, and what happens when nothing handles the exception.</p>
+<div class="viz" data-viz="error-handling-unwind"></div>
+
+<p>What to take from the simulation:</p>
+<ul>
+<li><strong><code>finally</code> runs on every exit</strong>: normal completion, <code>return</code>, and exceptions passing through. It is for
+  cleanup only. A <code>return</code> inside <code>finally</code> silently discards an in-flight exception in Java, Python and
+  JavaScript (C# forbids it with error CS0157; Python 3.14 warns, per PEP 765). Never return from <code>finally</code>.</li>
+<li><strong>The resource is closed before the outer handler runs.</strong> By the time <code>main</code> catches the <code>IOException</code>, the
+  file opened in <code>handle</code> is already closed. Handlers can't inspect resources from frames that were unwound.</li>
+<li><strong>Inner handlers that don't match are invisible.</strong> <code>handle</code> catches only <code>NotFound</code>; for an <code>IOException</code> its
+  <code>catch</code> is skipped, but its <code>finally</code> still runs.</li>
+<li><strong>Go has no unwinding for errors</strong>, only for panics. A returned <code>error</code> is a value; deferred calls run because
+  the function returns, not because of the error. A <code>panic</code> unwinds the goroutine, running defers in LIFO
+  order, until a deferred <code>recover()</code> stops it, or the program dies.</li>
+</ul>
+<h2 id="cleanup-that-always-runs">Cleanup that always runs</h2>
+<p>Files, sockets, locks, transactions and database connections must be released <strong>whatever</strong> happens. Each language
+has a construct that ties release to scope, so the release runs on success, on early <code>return</code> and on exceptions.
+<a href="memory-and-gc.html#deterministic-cleanup-dispose-close-defer">Memory and GC</a> explains why the garbage collector
+can't do this for you. This section covers the error-handling half: <strong>what happens when cleanup itself fails</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Construct</th>
+<th>Release order</th>
+<th>Cleanup throws while another error is in flight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C#</td>
+<td><code>using</code>, <code>await using</code>, <code>finally</code></td>
+<td>reverse of declaration</td>
+<td>the <code>Dispose</code> exception <strong>replaces</strong> the original, which is lost</td>
+</tr>
+<tr>
+<td>Java</td>
+<td>try-with-resources</td>
+<td>reverse of declaration</td>
+<td>the close exception is <strong>added as suppressed</strong> to the original (<code>getSuppressed()</code>)</td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>with</code>, <code>contextlib.ExitStack</code></td>
+<td>reverse of entry</td>
+<td>the new exception propagates, with the original kept as <code>__context__</code></td>
+</tr>
+<tr>
+<td>Go</td>
+<td><code>defer</code></td>
+<td>LIFO</td>
+<td>whatever you do with <code>Close()</code>'s return value; <code>defer f.Close()</code> drops it</td>
+</tr>
+<tr>
+<td>TypeScript</td>
+<td><code>using</code>, <code>await using</code> (TS 5.2+), <code>finally</code></td>
+<td>reverse of declaration</td>
+<td>a <code>SuppressedError</code> with <code>.error</code> (new) and <code>.suppressed</code> (original); plain <code>finally</code> replaces</td>
+</tr>
+</tbody>
+</table>
+<p>Choose a language and a failure combination. The resources are opened A then B, so they close B then A. Watch the
+"lost forever" list: that is evidence you will not have during the incident.</p>
+<div class="viz" data-viz="error-handling-cleanup"></div>
+
+<p>The same two-resource copy in each language. Note which close error each version keeps.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">public static async Task CopyAsync(string from, string to, CancellationToken ct)
+{
+    await using var src = File.OpenRead(from);     // disposed second
+    await using var dst = File.Create(to);         // disposed first (LIFO)
+    await src.CopyToAsync(dst, ct);
+    await dst.FlushAsync(ct);                      // flush explicitly: surface write errors here,
+}                                                  // not from DisposeAsync where they could mask another
+</code></pre>
+<pre><code class="language-java">static void copy(Path from, Path to) throws IOException {
+    try (var in = Files.newInputStream(from);
+         var out = Files.newOutputStream(to)) {    // closed in reverse: out, then in
+        in.transferTo(out);
+    } catch (IOException e) {
+        for (Throwable s : e.getSuppressed())      // close() failures ride along here
+            log.warn(&quot;also failed while closing&quot;, s);
+        throw e;
+    }
+}
+</code></pre>
+<pre><code class="language-python">import shutil
+from contextlib import ExitStack
+
+def copy(src: str, dst: str) -&gt; None:
+    with open(src, &quot;rb&quot;) as fin, open(dst, &quot;wb&quot;) as fout:   # exits fout, then fin
+        shutil.copyfileobj(fin, fout)
+
+def concat(paths: list[str], dst: str) -&gt; None:
+    with ExitStack() as stack:                              # a runtime-sized set of resources
+        out = stack.enter_context(open(dst, &quot;wb&quot;))
+        for p in paths:
+            shutil.copyfileobj(stack.enter_context(open(p, &quot;rb&quot;)), out)
+</code></pre>
+<pre><code class="language-go">func Copy(dst, src string) (err error) {
+    in, err := os.Open(src)
+    if err != nil {
+        return fmt.Errorf(&quot;open source: %w&quot;, err)
+    }
+    defer in.Close() // read-only: a Close error here tells us nothing
+
+    out, err := os.Create(dst)
+    if err != nil {
+        return fmt.Errorf(&quot;create destination: %w&quot;, err)
+    }
+    defer func() {
+        // Close flushes: for a file you wrote, its error means data loss. Join it, don't drop it.
+        err = errors.Join(err, out.Close())
+    }()
+
+    if _, err = io.Copy(out, in); err != nil {
+        return fmt.Errorf(&quot;copy: %w&quot;, err)
+    }
+    return nil
+}
+</code></pre>
+<pre><code class="language-typescript">import { open } from &quot;node:fs/promises&quot;;
+
+// TS 5.2+ with lib &quot;esnext.disposable&quot;; Node 20+ FileHandle implements Symbol.asyncDispose.
+async function copy(from: string, to: string): Promise&lt;void&gt; {
+  await using src = await open(from, &quot;r&quot;);     // disposed second
+  await using dst = await open(to, &quot;w&quot;);       // disposed first
+  await dst.writeFile(await src.readFile());
+}
+
+// The pre-5.2 equivalent: nested try/finally, and a close() error replaces the original.
+async function copyClassic(from: string, to: string): Promise&lt;void&gt; {
+  const src = await open(from, &quot;r&quot;);
+  try {
+    const dst = await open(to, &quot;w&quot;);
+    try { await dst.writeFile(await src.readFile()); }
+    finally { await dst.close(); }
+  } finally {
+    await src.close();
+  }
+}
+</code></pre>
+</div>
+<div class="tip">
+<p><strong>Make the important failure happen before cleanup</strong>
+For writable resources, call <code>Flush()</code>/<code>Commit()</code>/<code>Sync()</code> explicitly as the last step of the <code>try</code> body. Then a
+write failure surfaces as a normal exception with nothing else in flight, and <code>Dispose</code>/<code>close</code> has nothing left
+to fail on. This sidesteps the C# "dispose replaces the original" problem, and it's what <code>tx.Commit()</code> before the
+end of a <code>using</code> block already does for transactions.</p>
+</div>
+<h2 id="wrap-with-context-dont-swallow">Wrap with context, don't swallow</h2>
+<p>An error that reaches the top of a request should answer three questions: <strong>what were we trying to do</strong> (the
+operation and its identifiers), <strong>what went wrong at the bottom</strong> (the root cause, with its original type and stack
+trace), and <strong>how it got there</strong> (each layer's contribution). Each layer adds one line of context and passes the
+cause along. Russian dolls: the outer error says "place order 42", inside it "load customer 7", inside that the
+<code>SqlException</code>.</p>
+<p>Pick a language and a strategy for every layer, then watch what the boundary can still decide. It needs the root
+cause to choose between 404 and 500, and it needs the chain to give the on-call engineer a useful log line.</p>
+<div class="viz" data-viz="error-handling-chain"></div>
+
+<div class="code-tabs">
+<pre><code class="language-csharp">// Repository: translate the driver's error into the domain's, keep it as InnerException.
+catch (SqlException e) when (e.Number == 1205)   // deadlock victim
+{
+    throw new OrderStoreBusyException($&quot;load order {id}&quot;, e);
+}
+
+// Service: add what you were doing only if it adds meaning; otherwise let it pass untouched.
+catch (OrderStoreBusyException e)
+{
+    throw new CheckoutFailedException($&quot;checkout for cart {cartId}&quot;, e);
+}
+
+// Boundary: decide on the type, log the whole chain once. ToString() prints every InnerException.
+catch (Exception e) when (e.GetBaseException() is SqlException { Number: 1205 })
+{
+    logger.LogWarning(e, &quot;Deadlock during {Path}&quot;, ctx.Request.Path);
+    return Results.Problem(statusCode: 503);
+}
+</code></pre>
+<pre><code class="language-java">// Repository
+} catch (SQLException e) {
+    throw new OrderStoreException(&quot;load order &quot; + id, e);      // the cause is the 2nd argument
+}
+
+// Boundary: walk the chain instead of parsing messages.
+static Throwable rootCause(Throwable t) {
+    while (t.getCause() != null &amp;&amp; t.getCause() != t) t = t.getCause();
+    return t;
+}
+// log.error(&quot;checkout failed&quot;, e) prints every &quot;Caused by:&quot; section with its stack trace.
+</code></pre>
+<pre><code class="language-python">class OrderStoreError(Exception): ...
+
+def load_order(order_id: int) -&gt; Order:
+    try:
+        return db.fetch_order(order_id)
+    except sqlite3.OperationalError as e:
+        raise OrderStoreError(f&quot;load order {order_id}&quot;) from e   # sets __cause__
+
+# Boundary: logging.exception prints both tracebacks joined by
+# &quot;The above exception was the direct cause of the following exception:&quot;
+def root_cause(e: BaseException) -&gt; BaseException:
+    while e.__cause__ is not None:
+        e = e.__cause__
+    return e
+</code></pre>
+<pre><code class="language-go">// Repository
+if err != nil {
+    return nil, fmt.Errorf(&quot;load order %d: %w&quot;, id, err)
+}
+
+// Service
+if err != nil {
+    return fmt.Errorf(&quot;checkout cart %s: %w&quot;, cartID, err)
+}
+
+// Boundary: err.Error() reads as one sentence from outside in:
+//   checkout cart c-9: load order 42: dial tcp 10.0.0.5:5432: connect: connection refused
+// and errors.Is / errors.As still see every wrapped error.
+var netErr net.Error
+if errors.As(err, &amp;netErr) &amp;&amp; netErr.Timeout() { /* 503 */ }
+</code></pre>
+<pre><code class="language-typescript">// Repository
+} catch (e) {
+  throw new OrderStoreError(`load order ${id}`, { cause: e });
+}
+
+// Boundary
+function* chain(e: unknown): Generator&lt;unknown&gt; {
+  for (let cur: unknown = e; cur !== undefined; cur = cur instanceof Error ? cur.cause : undefined) yield cur;
+}
+const root = [...chain(err)].at(-1);
+// Node's util.inspect (console.error, most loggers) prints nested causes: &quot;[cause]: Error: ...&quot;.
+</code></pre>
+</div>
+<div class="compare">
+<div class="good">
+<h4 id="do">Do</h4>
+<ul>
+<li>Add <strong>what you were doing</strong> and the identifiers involved: <code>"load order 42"</code>, <code>"GET /v1/rates"</code>.</li>
+<li>Keep the original as the <strong>cause</strong> (<code>inner</code>, <code>cause</code>, <code>from e</code>, <code>%w</code>, <code>{ cause }</code>).</li>
+<li><strong>Translate</strong> at layer boundaries: the domain shouldn't leak <code>SqlException</code> to callers that can't import it.</li>
+<li>Decide by <strong>type or sentinel</strong> (<code>errors.Is</code>, <code>instanceof</code>, <code>when</code>), never by message text.</li>
+</ul>
+</div>
+<div class="warn">
+<h4 id="careful">Careful</h4>
+<ul>
+<li><strong>Rethrow unchanged</strong> (<code>throw;</code>, <code>raise</code>, <code>return err</code>) when your layer has nothing to add. Not every frame needs a wrap.</li>
+<li><strong>Don't put secrets or personal data</strong> in messages: they end up in logs, traces and sometimes HTTP responses.</li>
+<li><strong>Don't repeat</strong> the inner message in the outer one; the chain already prints it.</li>
+<li><strong>Translating can hide a type</strong> callers matched on. Keep it reachable (<code>%w</code>, cause) or translate deliberately.</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="dont">Don't</h4>
+<ul>
+<li><strong>Drop the cause</strong>: <code>throw new X("failed")</code> inside a <code>catch</code>.</li>
+<li><strong>Swallow</strong>: <code>catch { }</code>, <code>except: pass</code>, <code>_ = err</code>, an empty <code>.catch(() =&gt; {})</code>.</li>
+<li><strong>Return a fake success</strong>: <code>[]</code>, <code>0</code>, <code>null</code>, <code>200 OK</code> for "I couldn't find out".</li>
+<li><strong>Reset the stack</strong>: <code>throw e;</code> in C#, <code>%v</code> instead of <code>%w</code> in Go, <code>raise X(str(e))</code> in Python.</li>
+</ul>
+</div>
+</div>
+<h2 id="where-to-catch-error-boundaries">Where to catch: error boundaries</h2>
+<p>Most code should <strong>not</strong> catch at all. A <code>catch</code> belongs only where the code can do one of four things:
+<strong>recover</strong> (use a default, try another source), <strong>translate</strong> (turn a driver error into a domain error with
+context), <strong>retry</strong> (at one chosen layer), or <strong>report</strong> (at a boundary). Everywhere else, let it propagate.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 330" width="880" role="img" aria-label="Request layers with the job of a catch at each layer, and a list of other boundaries">
+<text x="20" y="24" class="title">Who catches what in a request</text>
+<rect class="box done" x="20" y="40" width="200" height="36" rx="8"/><text x="120" y="63" text-anchor="middle" class="small mono">Host / main()</text>
+<rect class="box done" x="20" y="86" width="200" height="36" rx="8"/><text x="120" y="109" text-anchor="middle" class="small mono">Exception middleware</text>
+<rect class="box" x="20" y="132" width="200" height="36" rx="8"/><text x="120" y="155" text-anchor="middle" class="small mono">Controller / handler</text>
+<rect class="box" x="20" y="178" width="200" height="36" rx="8"/><text x="120" y="201" text-anchor="middle" class="small mono">Service / use case</text>
+<rect class="box path" x="20" y="224" width="200" height="36" rx="8"/><text x="120" y="247" text-anchor="middle" class="small mono">Repository / client</text>
+<rect class="box bad" x="20" y="270" width="200" height="36" rx="8"/><text x="120" y="293" text-anchor="middle" class="small mono">Driver / SDK</text>
+<text x="240" y="63" class="small"><tspan class="mono">catch all</tspan>: log fatal, flush telemetry, exit non-zero</text>
+<text x="240" y="109" class="small"><tspan class="mono">catch all</tspan>: map type to status, log ONCE, problem details</text>
+<text x="240" y="155" class="small">usually nothing: return the domain result's HTTP shape</text>
+<text x="240" y="201" class="small">catch only to recover (fallback) or compensate (undo)</text>
+<text x="240" y="247" class="small">translate to domain errors + context; retry here</text>
+<text x="240" y="293" class="small">throws / returns the raw failure</text>
+<rect class="box accent" x="640" y="40" width="220" height="266" rx="12"/>
+<text x="656" y="64" class="title">Other boundaries</text>
+<text x="656" y="90" class="small">each needs its own catch-all</text>
+<text x="656" y="118" class="small mono">queue message handler</text>
+<text x="656" y="138" class="small muted">  retry, then dead-letter</text>
+<text x="656" y="164" class="small mono">background job iteration</text>
+<text x="656" y="184" class="small muted">  log, keep the loop alive</text>
+<text x="656" y="210" class="small mono">thread / goroutine entry</text>
+<text x="656" y="230" class="small muted">  else it kills the process</text>
+<text x="656" y="256" class="small mono">UI event handler</text>
+<text x="656" y="276" class="small muted">  show a message, keep the app</text>
+</svg>
+<figcaption>Green layers catch everything; the path layer translates. The middle layers mostly stay out of the way. A boundary is any place where one unit of work ends and the next must not be affected by its failure.</figcaption>
+</figure>
+
+<p>A boundary turns "something failed" into a <strong>response for its world</strong>: an HTTP status and problem details for an
+API, a dead-letter for a queue message, a non-zero exit code for a CLI, a toast for a UI. It is also the one place
+that logs the error with full context. Each framework has a built-in hook for it; use it instead of
+<code>try</code>/<code>catch</code> in every controller action.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// ASP.NET Core 8+: map known exceptions; let the middleware handle (and log) the rest.
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler&lt;DomainExceptionHandler&gt;();
+var app = builder.Build();
+app.UseExceptionHandler();
+
+sealed class DomainExceptionHandler(IProblemDetailsService problems) : IExceptionHandler
+{
+    public async ValueTask&lt;bool&gt; TryHandleAsync(HttpContext ctx, Exception e, CancellationToken ct)
+    {
+        (int Status, string Title)? map = e switch
+        {
+            OrderNotFoundException =&gt; (404, &quot;Order not found&quot;),
+            ConcurrencyConflictException =&gt; (409, &quot;The order was changed by someone else&quot;),
+            _ =&gt; null,
+        };
+        if (map is null) return false;      // unknown: the middleware writes a 500 problem and logs it
+        ctx.Response.StatusCode = map.Value.Status;
+        return await problems.TryWriteAsync(new()
+        {
+            HttpContext = ctx,
+            Exception = e,
+            ProblemDetails = { Status = map.Value.Status, Title = map.Value.Title },
+        });
+    }
+}
+</code></pre>
+<pre><code class="language-java">// Spring Boot 3: one advice for the whole API, returning RFC 9457 ProblemDetail.
+@RestControllerAdvice
+class ApiErrors {
+    private static final Logger log = LoggerFactory.getLogger(ApiErrors.class);
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    ProblemDetail notFound(OrderNotFoundException e) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());   // expected: no ERROR log
+    }
+
+    @ExceptionHandler(Exception.class)
+    ProblemDetail unexpected(Exception e, HttpServletRequest req) {
+        log.error(&quot;Unhandled exception for {} {}&quot;, req.getMethod(), req.getRequestURI(), e);  // once, with the chain
+        return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, &quot;An unexpected error occurred&quot;);
+    }
+}
+</code></pre>
+<pre><code class="language-python"># FastAPI / Starlette
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+
+app = FastAPI()
+PROBLEM = &quot;application/problem+json&quot;
+
+@app.exception_handler(OrderNotFound)
+async def not_found(request: Request, exc: OrderNotFound) -&gt; JSONResponse:
+    return JSONResponse({&quot;title&quot;: &quot;Order not found&quot;, &quot;status&quot;: 404, &quot;detail&quot;: str(exc)},
+                        status_code=404, media_type=PROBLEM)
+
+@app.exception_handler(Exception)
+async def unexpected(request: Request, exc: Exception) -&gt; JSONResponse:
+    # Starlette's ServerErrorMiddleware re-raises after sending this response, so the
+    # server (uvicorn) logs the traceback. Don't log it here as well.
+    return JSONResponse({&quot;title&quot;: &quot;An unexpected error occurred&quot;, &quot;status&quot;: 500},
+                        status_code=500, media_type=PROBLEM)
+</code></pre>
+<pre><code class="language-go">// net/http: handlers return errors; one adapter maps and logs them.
+type appHandler func(http.ResponseWriter, *http.Request) error
+
+func (h appHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+    defer func() {
+        if v := recover(); v != nil {
+            if v == http.ErrAbortHandler {
+                panic(v) // the documented way to abort a response; let net/http handle it
+            }
+            slog.ErrorContext(r.Context(), &quot;panic&quot;, &quot;path&quot;, r.URL.Path, &quot;panic&quot;, v, &quot;stack&quot;, string(debug.Stack()))
+            writeProblem(w, http.StatusInternalServerError, &quot;An unexpected error occurred&quot;)
+        }
+    }()
+    err := h(w, r)
+    switch {
+    case err == nil:
+    case errors.Is(err, ErrNotFound):
+        writeProblem(w, http.StatusNotFound, &quot;Order not found&quot;)
+    default:
+        slog.ErrorContext(r.Context(), &quot;request failed&quot;, &quot;method&quot;, r.Method, &quot;path&quot;, r.URL.Path, &quot;err&quot;, err)
+        writeProblem(w, http.StatusInternalServerError, &quot;An unexpected error occurred&quot;)
+    }
+}
+</code></pre>
+<pre><code class="language-typescript">// Express: error middleware has four parameters. Express 5 forwards rejected promises
+// from async handlers here; Express 4 needs a wrapper or express-async-errors.
+app.use((err: unknown, req: Request, res: Response, next: NextFunction) =&gt; {
+  if (res.headersSent) return next(err);           // too late to change the status
+  if (err instanceof OrderNotFoundError) {
+    return res.status(404).type(&quot;application/problem+json&quot;)
+      .json({ title: &quot;Order not found&quot;, status: 404, detail: err.message });
+  }
+  logger.error({ err, method: req.method, path: req.path }, &quot;Unhandled error&quot;);
+  res.status(500).type(&quot;application/problem+json&quot;)
+    .json({ title: &quot;An unexpected error occurred&quot;, status: 500 });
+});
+</code></pre>
+</div>
+<h3 id="log-once-where-the-error-is-handled">Log once, where the error is handled</h3>
+<p>The most common error-handling anti-pattern in real codebases is <strong>log and rethrow</strong>: every layer catches,
+logs, and throws again "just in case". One failure becomes five log entries, each with a partial stack trace, the
+alert counts five errors, and the one entry with the real context is buried. The rule: <strong>log where you handle</strong>
+(decide what to do), and nowhere else. Intermediate layers add context to the error itself, not to the log.</p>
+<p>Compare the three strategies below, then raise the failure rate: log volume is a cost (ingestion is billed per
+GB) and a signal problem (alerts on noisy logs get muted).</p>
+<div class="viz" data-viz="error-handling-boundary"></div>
+
+<p>A good error log entry, written once at the boundary, has:</p>
+<ul>
+<li><strong>A message about the operation</strong>, not the error: <code>"checkout failed for cart {CartId}"</code>. The exception
+  already says what went wrong.</li>
+<li><strong>The exception object</strong>, not <code>e.Message</code>: logging frameworks print the type, the whole cause chain and every
+  stack trace (<code>LogError(e, ...)</code>, <code>log.error("...", e)</code>, <code>log.exception(...)</code>, <code>slog</code> with <code>"err", err</code>,
+  pino's <code>{ err }</code>).</li>
+<li><strong>Correlation</strong>: the trace or request ID, so this line joins the distributed trace (see
+  <a href="observability.html">Observability</a>).</li>
+<li><strong>Structured fields</strong> for the route, tenant and entity IDs, never passwords, tokens or full request bodies.</li>
+<li><strong>The right level</strong>: <code>Error</code> means "someone should look", so an expected 404 is <code>Information</code> or nothing, a
+  handled and retried timeout is <code>Warning</code>, and an unhandled bug is <code>Error</code>.</li>
+</ul>
+<h2 id="retry-or-fail-fast">Retry or fail fast?</h2>
+<p>Some failures go away if you ask again: a dropped connection, a <code>503</code> during a deploy, a deadlock victim, a <code>429</code>
+from a rate limiter. Most don't: a <code>400</code>, a <code>404</code>, a constraint violation or a bug gives the same answer every time,
+so retrying only adds latency and load. The skill is <strong>classifying</strong> the failure, then retrying the transient ones
+with backoff and jitter, in <strong>one</strong> layer, under a deadline.</p>
+<p>Edit the sequence of server answers (the last one repeats), the attempt budget and the number of layers that
+retry. Try <code>503 503 503 503 503</code> with 3 layers, then <code>404</code>, then <code>429 200</code>.</p>
+<div class="viz" data-viz="error-handling-retry"></div>
+
+<table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>Transient?</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>connection reset, DNS blip, <code>502</code>, <code>503</code>, <code>504</code></td>
+<td>yes</td>
+<td>retry with exponential backoff and full jitter</td>
+</tr>
+<tr>
+<td><code>429 Too Many Requests</code></td>
+<td>yes</td>
+<td>wait for <code>Retry-After</code> exactly; don't add to the overload</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>maybe</td>
+<td>retry only if the operation is <strong>idempotent</strong>: the first attempt may have succeeded</td>
+</tr>
+<tr>
+<td><code>500 Internal Server Error</code></td>
+<td>maybe</td>
+<td>the server has a bug or a dependency failed; retry once at most, only if idempotent</td>
+</tr>
+<tr>
+<td>deadlock victim, serialization failure</td>
+<td>yes</td>
+<td>retry the <strong>whole transaction</strong>, not the last statement</td>
+</tr>
+<tr>
+<td>optimistic concurrency conflict (<code>409</code>, stale version)</td>
+<td>yes, after re-reading</td>
+<td>reload, re-apply the change, save again</td>
+</tr>
+<tr>
+<td><code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>422</code>, validation, constraint violation</td>
+<td>no</td>
+<td>fail fast: return the error to the caller</td>
+</tr>
+<tr>
+<td><code>NullReferenceException</code>, <code>KeyError</code>, nil dereference</td>
+<td>no (a bug)</td>
+<td>fail fast, fix the code</td>
+</tr>
+</tbody>
+</table>
+<p>The rules that keep retries from making an incident worse:</p>
+<ul>
+<li><strong>Retry in one layer only</strong>, as close to the failing call as possible (the HTTP client pipeline or the SDK). The
+  simulation's "layers that retry" input shows why: 3 layers × 5 attempts = 125 calls per user click against a
+  dependency that is already struggling.</li>
+<li><strong>Back off exponentially with jitter.</strong> Without jitter, every client that failed at the same moment retries at
+  the same moment, in synchronized waves.</li>
+<li><strong>Bound it by time, not just by count.</strong> Pass a deadline or cancellation token, and give up when it expires.</li>
+<li><strong>Make writes idempotent</strong> before you retry them: idempotency keys, upserts, "insert if not exists".</li>
+<li><strong>Stop retrying a dependency that is down.</strong> That is the circuit breaker's job. See
+  <a href="resilience.html#retries-only-the-right-failures-only-with-jitter">Resilience</a> and
+  <a href="resilience.html#timeouts-the-strategy-everything-else-depends-on">timeouts</a>.</li>
+</ul>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Microsoft.Extensions.Http.Resilience: retries transient HTTP failures (5xx, 408, 429, HttpRequestException)
+// with exponential backoff and jitter, honours Retry-After, and adds a circuit breaker and timeouts.
+builder.Services.AddHttpClient&lt;RatesClient&gt;(c =&gt; c.BaseAddress = new(&quot;https://rates.example.com&quot;))
+    .AddStandardResilienceHandler(o =&gt;
+    {
+        o.Retry.MaxRetryAttempts = 3;
+        o.Retry.Delay = TimeSpan.FromMilliseconds(200);
+        o.Retry.DisableForUnsafeHttpMethods();          // never retry POST/PATCH/DELETE blindly
+        o.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(10);
+    });
+</code></pre>
+<pre><code class="language-java">// Resilience4j
+RetryConfig config = RetryConfig.custom()
+    .maxAttempts(4)
+    .intervalFunction(IntervalFunction.ofExponentialRandomBackoff(Duration.ofMillis(200), 2.0))
+    .retryOnException(e -&gt; e instanceof TransientHttpException)    // classify: never retry 4xx
+    .build();
+Retry retry = Retry.of(&quot;rates&quot;, config);
+Supplier&lt;Rates&gt; getRates = Retry.decorateSupplier(retry, ratesClient::latest);
+Rates rates = getRates.get();
+</code></pre>
+<pre><code class="language-python"># tenacity
+import httpx
+from tenacity import retry, retry_if_exception, stop_after_attempt, wait_random_exponential
+
+def is_transient(e: BaseException) -&gt; bool:
+    if isinstance(e, httpx.TransportError):              # timeouts, connection errors
+        return True
+    return isinstance(e, httpx.HTTPStatusError) and e.response.status_code in {408, 429, 502, 503, 504}
+
+@retry(retry=retry_if_exception(is_transient), stop=stop_after_attempt(4),
+       wait=wait_random_exponential(multiplier=0.2, max=5), reraise=True)
+def latest_rates() -&gt; dict:
+    r = httpx.get(&quot;https://rates.example.com/v1/latest&quot;, timeout=2.0)
+    r.raise_for_status()
+    return r.json()
+</code></pre>
+<pre><code class="language-go">// No standard library helper; the loop is short enough to own.
+func WithRetry(ctx context.Context, maxAttempts int, base time.Duration, op func(context.Context) error) error {
+    var err error
+    for attempt := 1; attempt &lt;= maxAttempts; attempt++ {
+        if err = op(ctx); err == nil || !IsTransient(err) {
+            return err
+        }
+        if attempt == maxAttempts {
+            break
+        }
+        backoff := base &lt;&lt; (attempt - 1)                          // base * 2^(attempt-1)
+        sleep := time.Duration(rand.Int64N(int64(backoff) + 1))   // full jitter, math/rand/v2
+        select {
+        case &lt;-time.After(sleep):
+        case &lt;-ctx.Done():
+            return errors.Join(err, ctx.Err())
+        }
+    }
+    return fmt.Errorf(&quot;gave up after %d attempts: %w&quot;, maxAttempts, err)
+}
+
+func IsTransient(err error) bool {
+    var ne net.Error
+    var he *HTTPStatusError
+    return (errors.As(err, &amp;ne) &amp;&amp; ne.Timeout()) ||
+        (errors.As(err, &amp;he) &amp;&amp; (he.Code == 429 || (he.Code &gt;= 502 &amp;&amp; he.Code &lt;= 504)))
+}
+</code></pre>
+<pre><code class="language-typescript">import { setTimeout as sleep } from &quot;node:timers/promises&quot;;
+
+async function withRetry&lt;T&gt;(op: (signal: AbortSignal) =&gt; Promise&lt;T&gt;, signal: AbortSignal,
+                            maxAttempts = 4, baseMs = 200): Promise&lt;T&gt; {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return await op(signal);
+    } catch (e) {
+      if (!isTransient(e) || attempt &gt;= maxAttempts) throw e;
+      await sleep(Math.random() * baseMs * 2 ** (attempt - 1), undefined, { signal });  // full jitter
+    }
+  }
+}
+
+function isTransient(e: unknown): boolean {
+  if (e instanceof HttpError) return [408, 429, 502, 503, 504].includes(e.status);
+  return e instanceof Error &amp;&amp; (e.name === &quot;TimeoutError&quot;                 // AbortSignal.timeout()
+    || (e instanceof TypeError &amp;&amp; e.message === &quot;fetch failed&quot;));         // Node fetch: network failure
+}
+</code></pre>
+</div>
+<p><strong>Fail fast</strong> is the other half. For bugs and bad configuration, the earliest failure is the cheapest one:</p>
+<ul>
+<li><strong>Validate configuration at startup</strong> and refuse to start (<code>ValidateOnStart()</code> in .NET options, <code>@Validated</code>
+  <code>@ConfigurationProperties</code> in Spring, a Pydantic <code>BaseSettings</code>, a <code>Load()</code> that returns an error in Go, a zod
+  schema over <code>process.env</code>). A missing connection string should fail the deploy, not the first request at 3 a.m.</li>
+<li><strong>Guard arguments at public entry points</strong>: <code>ArgumentNullException.ThrowIfNull(x)</code>,
+  <code>Objects.requireNonNull(x, "x")</code>, <code>if x is None: raise TypeError</code>, <code>if x == nil { return errNilX }</code>. A bad argument
+  is a bug in the caller; the stack trace should point at the call, not at a <code>null</code> three layers deeper.</li>
+<li><strong>Assert invariants</strong> that "can't happen", and crash with a clear message when they do (C# <code>UnreachableException</code>,
+  Java <code>IllegalStateException</code>/<code>AssertionError</code>, Python <code>assert_never</code>, Go <code>panic</code>, TS <code>never</code> checks).</li>
+</ul>
+<h2 id="validation-errors-are-not-exceptions">Validation errors are not exceptions</h2>
+<p>"The email is malformed" is not exceptional: it is one of the most common things an API does. It has a different
+audience from a crash (the user, not the on-call engineer), a different status code (<code>400</code>/<code>422</code>, not <code>500</code>), a
+different log level (usually none), and a different shape: the user wants <strong>every</strong> problem at once, not the first
+one. So validation should <strong>collect</strong> failures into a value and return it, and the boundary turns it into a
+problem details response.</p>
+<p>Type in a sign-up request. Switch between collecting all errors and throwing on the first, and take the database
+down to see how an environmental failure is reported differently from a validation failure.</p>
+<div class="viz" data-viz="error-handling-validation"></div>
+
+<p>Four kinds of "no" an API gives, and how each one should look on the wire:</p>
+<table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>Example</th>
+<th>Status</th>
+<th>Body</th>
+<th>Log level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Malformed request</td>
+<td>invalid JSON, wrong types</td>
+<td><code>400</code></td>
+<td>problem details</td>
+<td>none or Debug</td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>email format, age below 18</td>
+<td><code>400</code> (FastAPI: <code>422</code>)</td>
+<td>problem details with an <code>errors</code> map per field</td>
+<td>none</td>
+</tr>
+<tr>
+<td>Business rule or state</td>
+<td>insufficient funds, order already shipped</td>
+<td><code>409</code> or <code>422</code></td>
+<td>problem details with a specific <code>type</code> URI</td>
+<td>Information</td>
+</tr>
+<tr>
+<td>Not found / not allowed</td>
+<td>unknown ID, wrong tenant</td>
+<td><code>404</code>, <code>403</code></td>
+<td>problem details</td>
+<td>none or Information</td>
+</tr>
+<tr>
+<td>Rate limited</td>
+<td>too many requests</td>
+<td><code>429</code> + <code>Retry-After</code></td>
+<td>problem details</td>
+<td>Warning (aggregated)</td>
+</tr>
+<tr>
+<td>Dependency down</td>
+<td>database, downstream API</td>
+<td><code>503</code> + <code>Retry-After</code></td>
+<td>generic problem details + <code>traceId</code></td>
+<td>Warning or Error</td>
+</tr>
+<tr>
+<td>Bug</td>
+<td>null dereference</td>
+<td><code>500</code></td>
+<td>generic problem details + <code>traceId</code>, <strong>no</strong> stack trace</td>
+<td>Error</td>
+</tr>
+</tbody>
+</table>
+<p>The error <strong>contract</strong> of an API is as much a part of its interface as the success shape. Use RFC 9457 problem
+details (<code>application/problem+json</code>) for every error, give each kind of business failure a stable <code>type</code> URI that
+clients can switch on, and never leak stack traces, SQL or internal hostnames. <a href="api-design.html#errors-problem-details-rfc-9457">API Design</a>
+covers the format, versioning and documentation. Here is how each framework collects every validation failure:</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// [ApiController] controllers (and minimal APIs with builder.Services.AddValidation() in .NET 10)
+// validate before your code runs and return a 400 ValidationProblemDetails listing every field.
+public sealed record SignUp(
+    [Required, EmailAddress] string Email,
+    [Range(18, 150)] int Age,
+    [Required, MinLength(12), RegularExpression(@&quot;.*\d.*&quot;, ErrorMessage = &quot;Include at least one digit.&quot;)] string Password);
+
+[HttpPost(&quot;/signup&quot;)]
+public IActionResult Register(SignUp req) =&gt; Created($&quot;/users/{req.Email}&quot;, null);   // only runs when valid
+
+// Business rules that need the database go in the service and return a result, not an exception:
+// if (await users.ExistsAsync(req.Email)) return Problem(statusCode: 409, type: &quot;https://errors.example.com/email-taken&quot;);
+</code></pre>
+<pre><code class="language-java">record SignUp(@NotBlank @Email String email,
+              @Min(18) int age,
+              @Size(min = 12) @Pattern(regexp = &quot;.*\\d.*&quot;, message = &quot;include at least one digit&quot;) String password) {}
+
+@PostMapping(&quot;/signup&quot;)
+ResponseEntity&lt;Void&gt; signUp(@Valid @RequestBody SignUp req) { /* only runs when valid */ }
+
+// Bean Validation collects every violation into one MethodArgumentNotValidException; map it once:
+@ExceptionHandler(MethodArgumentNotValidException.class)
+ProblemDetail invalid(MethodArgumentNotValidException e) {
+    var pd = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, &quot;One or more fields are invalid.&quot;);
+    pd.setProperty(&quot;errors&quot;, e.getBindingResult().getFieldErrors().stream()
+        .collect(Collectors.groupingBy(FieldError::getField,
+                 Collectors.mapping(FieldError::getDefaultMessage, Collectors.toList()))));
+    return pd;
+}
+</code></pre>
+<pre><code class="language-python">from pydantic import BaseModel, EmailStr, Field, field_validator
+
+class SignUp(BaseModel):
+    email: EmailStr                         # requires the email-validator package
+    age: int = Field(ge=18)
+    password: str = Field(min_length=12)
+
+    @field_validator(&quot;password&quot;)
+    @classmethod
+    def has_digit(cls, v: str) -&gt; str:
+        if not any(c.isdigit() for c in v):
+            raise ValueError(&quot;include at least one digit&quot;)   # collected, not propagated
+        return v
+
+@app.post(&quot;/signup&quot;, status_code=201)
+async def sign_up(req: SignUp) -&gt; None:     # FastAPI returns 422 with every error in &quot;detail&quot;
+    ...
+</code></pre>
+<pre><code class="language-go">// Validate returns every problem keyed by field; nil means valid.
+func (s SignUp) Validate() map[string][]string {
+    errs := map[string][]string{}
+    add := func(field, msg string) { errs[field] = append(errs[field], msg) }
+    if _, err := mail.ParseAddress(s.Email); err != nil {
+        add(&quot;email&quot;, &quot;must look like name@domain.tld&quot;)
+    }
+    if s.Age &lt; 18 {
+        add(&quot;age&quot;, &quot;must be 18 or older&quot;)
+    }
+    if len(s.Password) &lt; 12 {
+        add(&quot;password&quot;, &quot;use at least 12 characters&quot;)
+    }
+    if !strings.ContainsAny(s.Password, &quot;0123456789&quot;) {
+        add(&quot;password&quot;, &quot;include at least one digit&quot;)
+    }
+    if len(errs) == 0 {
+        return nil
+    }
+    return errs
+}
+
+// In the handler: a value, not an error. No log line.
+if problems := req.Validate(); problems != nil {
+    writeValidationProblem(w, problems) // 400, application/problem+json, {&quot;errors&quot;: problems}
+    return
+}
+</code></pre>
+<pre><code class="language-typescript">import { z } from &quot;zod&quot;;   // zod 3 API
+
+const SignUp = z.object({
+  email: z.string().email(),
+  age: z.number().int().min(18),
+  password: z.string().min(12).regex(/\d/, &quot;include at least one digit&quot;),
+});
+
+app.post(&quot;/signup&quot;, (req, res) =&gt; {
+  const parsed = SignUp.safeParse(req.body);           // never throws; collects every issue
+  if (!parsed.success) {
+    return res.status(400).type(&quot;application/problem+json&quot;).json({
+      title: &quot;One or more validation errors occurred.&quot;, status: 400,
+      errors: parsed.error.flatten().fieldErrors,
+    });
+  }
+  users.add(parsed.data);                              // typed from the schema
+  res.status(201).end();
+});
+</code></pre>
+</div>
+<p>Validation at the boundary is the "parse, don't validate" idea from
+<a href="types-and-immutability.html#parse-dont-validate">Types and Immutability</a>: once the request is parsed into a
+<code>SignUp</code> (or an <code>Email</code> value object), the code behind it never has to ask again, so it can't fail that way again.</p>
+<h2 id="panics-fatal-errors-and-crash-only-design">Panics, fatal errors and crash-only design</h2>
+<p>Some failures mean the process itself can no longer be trusted: memory is exhausted, the stack overflowed, an
+invariant in shared state is broken, or a required secret is missing at startup. Catching these and carrying on
+turns a crash, which is loud, quick and recoverable, into <strong>silent corruption</strong>, which is none of those. The
+better design is <strong>crash-only</strong>: make the process safe to kill at any moment (transactions, idempotent
+consumers, durable queues), let it die on fatal errors, and let a supervisor (Kubernetes, systemd, App Service,
+a process manager) start a clean one. Erlang made this a philosophy: "let it crash".</p>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Fatal mechanism</th>
+<th>Do cleanup handlers run?</th>
+<th>Last-chance hook</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C#</td>
+<td><code>Environment.FailFast(msg)</code>; <code>StackOverflowException</code> can't be caught</td>
+<td>no: writes the event log and a dump, then terminates</td>
+<td><code>AppDomain.CurrentDomain.UnhandledException</code> (log only; can't cancel termination)</td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>Error</code> subclasses (<code>OutOfMemoryError</code>); <code>System.exit</code>; <code>Runtime.halt</code></td>
+<td><code>exit</code>: shutdown hooks yes, <code>finally</code> no; <code>halt</code>: nothing</td>
+<td><code>Thread.setDefaultUncaughtExceptionHandler</code></td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>sys.exit()</code> raises <code>SystemExit</code>; <code>os._exit()</code></td>
+<td><code>sys.exit</code>: yes (<code>finally</code>, <code>with</code>, <code>atexit</code>); <code>os._exit</code>: no</td>
+<td><code>sys.excepthook</code>, <code>threading.excepthook</code>, <code>loop.set_exception_handler</code></td>
+</tr>
+<tr>
+<td>Go</td>
+<td><code>panic</code> (unwinds the goroutine); <code>log.Fatal</code>/<code>os.Exit</code></td>
+<td>panic: defers run; <code>os.Exit</code>/<code>log.Fatal</code>: <strong>defers are skipped</strong></td>
+<td>none for panics in other goroutines: they always kill the process</td>
+</tr>
+<tr>
+<td>TypeScript (Node)</td>
+<td>an uncaught exception; <code>process.exit()</code></td>
+<td><code>process.exit()</code> cuts off pending async work (log flushes)</td>
+<td><code>process.on("uncaughtException")</code>, <code>process.on("unhandledRejection")</code></td>
+</tr>
+</tbody>
+</table>
+<p>Go deserves its own note. <code>panic</code> is for <strong>programmer errors</strong> (nil map write, impossible <code>switch</code> case), never for
+"file not found". A library must not let a panic escape its API: if it uses panics internally (as the <code>regexp</code>
+parser does, per <em>Effective Go</em>), it recovers at the package boundary and returns an <code>error</code>. And <code>recover</code> only
+works in a deferred function <strong>in the same goroutine</strong> as the panic, which is why one panicking goroutine takes down
+a whole server: see the async simulation below.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">AppDomain.CurrentDomain.UnhandledException += (_, e) =&gt;
+{
+    // Runs on the dying thread; the process terminates afterwards whatever you do here.
+    logger.LogCritical((Exception)e.ExceptionObject, &quot;Unhandled exception, terminating&quot;);
+    loggerProvider.Dispose();                       // flush buffered log sinks before the process dies
+};
+
+if (ledger.Debits != ledger.Credits)
+    Environment.FailFast(&quot;Ledger totals diverged; refusing to continue&quot;);   // no finally, no catch, a dump
+</code></pre>
+<pre><code class="language-java">Thread.setDefaultUncaughtExceptionHandler((thread, e) -&gt; {
+    log.error(&quot;Uncaught exception in {}&quot;, thread.getName(), e);
+    if (e instanceof Error) Runtime.getRuntime().halt(70);   // the JVM itself is unhealthy: don't linger
+    // For an ordinary exception only this thread died; the JVM keeps running.
+});
+Runtime.getRuntime().addShutdownHook(new Thread(Telemetry::flush));   // runs on System.exit and SIGTERM
+</code></pre>
+<pre><code class="language-python">import logging
+import sys
+import threading
+
+def last_chance(exc_type, exc, tb) -&gt; None:
+    if issubclass(exc_type, KeyboardInterrupt):
+        sys.__excepthook__(exc_type, exc, tb)                   # Ctrl+C: keep the default behaviour
+        return
+    logging.critical(&quot;Unhandled exception, terminating&quot;, exc_info=(exc_type, exc, tb))
+
+sys.excepthook = last_chance                                    # main thread; the interpreter exits with 1
+threading.excepthook = lambda a: last_chance(a.exc_type, a.exc_value, a.exc_traceback)   # other threads
+</code></pre>
+<pre><code class="language-go">func main() {
+    if err := run(); err != nil { // all real work lives in run(), so its defers run normally
+        slog.Error(&quot;fatal&quot;, &quot;err&quot;, err)
+        os.Exit(1) // os.Exit and log.Fatal skip deferred calls: only call them here, at the very top
+    }
+}
+
+// A package that panics internally converts it at its API boundary.
+func Compile(expr string) (p *Program, err error) {
+    defer func() {
+        if r := recover(); r != nil {
+            err = fmt.Errorf(&quot;compile %q: %v&quot;, expr, r)
+        }
+    }()
+    return compile(expr), nil
+}
+</code></pre>
+<pre><code class="language-typescript">process.on(&quot;uncaughtException&quot;, (err, origin) =&gt; {
+  logger.fatal({ err, origin }, &quot;uncaught exception, shutting down&quot;);
+  server.close(() =&gt; process.exit(1));                 // stop accepting, let in-flight requests finish
+  setTimeout(() =&gt; process.exit(1), 10_000).unref();   // but never hang forever
+});
+process.on(&quot;unhandledRejection&quot;, (reason) =&gt; {
+  throw reason;                                        // route rejections into the handler above
+});
+</code></pre>
+</div>
+<div class="compare">
+<div class="good">
+<h4 id="let-it-crash-when">Let it crash when</h4>
+<ul>
+<li><strong>Startup</strong> configuration or dependencies are wrong: fail the deploy, not the first request.</li>
+<li>An <strong>invariant of shared state</strong> is broken (balances diverged, cache corrupted): continuing spreads the damage.</li>
+<li>The runtime says so: <code>OutOfMemoryError</code>, stack overflow, a panic you didn't expect.</li>
+<li>A worker can be <strong>restarted cleanly</strong> and its unit of work retried (queue redelivery, idempotent handlers).</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="dont-crash-for">Don't crash for</h4>
+<ul>
+<li><strong>One bad request</strong>: the boundary returns 4xx/5xx and the process serves the next one.</li>
+<li><strong>One bad message</strong>: retry it, then dead-letter it; don't take the consumer down for everyone.</li>
+<li><strong>A dependency outage</strong>: degrade, shed load, open a circuit; a crash loop makes recovery slower.</li>
+<li><strong>Code you don't own</strong> throwing on a background thread: contain it at that thread's entry point.</li>
+</ul>
+</div>
+</div>
+<h2 id="async-errors-where-does-the-exception-go">Async errors: where does the exception go?</h2>
+<p>In synchronous code an exception has an obvious destination: the caller. In asynchronous code the caller may have
+<strong>already returned</strong>. The failure is stored in a <code>Task</code>, <code>Future</code>, <code>Promise</code> or channel, and it reaches your code
+only if something <strong>awaits or inspects</strong> that object. If nothing does, each runtime does something different, from
+"nothing at all" to "kill the process". <a href="concurrency-async.html">Concurrency and Async</a> covers the scheduling
+model; this section is only about where the errors go.</p>
+<p>Pick a language and a pattern. Each lane is a task; the bottom lane is the runtime. A failure is "observed" only
+when it reaches code that can act on it.</p>
+<div class="viz" data-viz="error-handling-async"></div>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Not awaited / not joined</th>
+<th>Several fail at once</th>
+<th>Crashes the process</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C#</td>
+<td>stored in the <code>Task</code>; <code>UnobservedTaskException</code> at GC, no crash (since .NET 4.5)</td>
+<td><code>await Task.WhenAll</code> throws the <strong>first</strong>; <code>task.Exception</code> holds all</td>
+<td><code>async void</code> throwing; any exception on a raw <code>Thread</code></td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>CompletableFuture</code>: lost silently; <code>executor.submit</code>: lost in the <code>Future</code></td>
+<td><code>allOf(...).join()</code> throws one <code>CompletionException</code></td>
+<td>nothing by default; an uncaught exception kills only its thread</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>"Task exception was never retrieved" logged at GC</td>
+<td><code>gather</code> raises the first, the rest are dropped; <code>TaskGroup</code> raises an <code>ExceptionGroup</code> with all</td>
+<td>nothing by default; exceptions in threads are printed</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>an <code>error</code> nobody receives is simply gone</td>
+<td><code>errgroup</code> returns the first and cancels the rest; <code>errors.Join</code> keeps all</td>
+<td>a <code>panic</code> in <strong>any</strong> goroutine without its own <code>recover</code></td>
+</tr>
+<tr>
+<td>TypeScript (Node)</td>
+<td><code>unhandledRejection</code>; fatal since Node 15</td>
+<td><code>Promise.all</code> rejects with the first; <code>allSettled</code> reports all</td>
+<td>unhandled rejections (default), uncaught exceptions</td>
+</tr>
+</tbody>
+</table>
+<p>The rules are the same in every language:</p>
+<ol>
+<li><strong>Every task has an owner who awaits it.</strong> If the caller can't wait, hand the work to something with a lifetime
+   and an error policy: a background queue, a hosted service, a supervisor.</li>
+<li><strong>Fire-and-forget still needs a handler</strong>, attached at the moment you start it.</li>
+<li><strong>Prefer structured concurrency</strong> (<code>TaskGroup</code>, <code>errgroup</code>, <code>Task.WhenAll</code> with inspection): child tasks can't
+   outlive the scope, and their failures surface at its end.</li>
+<li><strong>Report all failures, not just the first</strong>, when they are independent. The second failure is often the clue.</li>
+<li><strong>Propagate cancellation</strong>, and don't log <code>OperationCanceledException</code>/<code>CancelledError</code>/<code>context.Canceled</code> as
+   errors when the caller cancelled. See <a href="concurrency-async.html#cancellation-pass-it-all-the-way-down">cancellation</a>.</li>
+</ol>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Fire and forget, done right: give the work to an owner with an error policy.
+await emailQueue.EnqueueAsync(new SendWelcomeEmail(userId), ct);   // a BackgroundService drains and logs
+
+// Several at once: report every failure, not just the first.
+var all = Task.WhenAll(ids.Select(id =&gt; LoadAsync(id, ct)));
+try { await all; }
+catch when (all.Exception is { InnerExceptions.Count: &gt; 1 })
+{
+    throw all.Exception;                       // AggregateException with every failure
+}
+</code></pre>
+<pre><code class="language-java">// Fire and forget, done right: attach the handler when you start it.
+CompletableFuture.runAsync(() -&gt; sendWelcome(userId), pool)
+    .whenComplete((v, e) -&gt; { if (e != null) log.error(&quot;welcome email failed for {}&quot;, userId, e); });
+
+// Several at once: wait for all, then collect every failure (exceptionNow: Java 19+).
+List&lt;CompletableFuture&lt;Order&gt;&gt; fs = ids.stream()
+    .map(id -&gt; CompletableFuture.supplyAsync(() -&gt; load(id), pool)).toList();
+CompletableFuture.allOf(fs.toArray(CompletableFuture[]::new)).exceptionally(e -&gt; null).join();
+List&lt;Throwable&gt; failures = fs.stream()
+    .filter(CompletableFuture::isCompletedExceptionally).map(CompletableFuture::exceptionNow).toList();
+</code></pre>
+<pre><code class="language-python">import asyncio
+import logging
+
+log = logging.getLogger(__name__)
+_background: set[asyncio.Task] = set()
+
+def fire_and_forget(coro) -&gt; None:
+    task = asyncio.create_task(coro)
+    _background.add(task)                     # the loop keeps only a weak reference
+    task.add_done_callback(_on_done)
+
+def _on_done(task: asyncio.Task) -&gt; None:
+    _background.discard(task)
+    if not task.cancelled() and (e := task.exception()) is not None:
+        log.error(&quot;background task failed&quot;, exc_info=e)
+
+async def load_all(ids: list[int]) -&gt; list:
+    async with asyncio.TaskGroup() as tg:     # 3.11+: a failure cancels siblings; all errors in one group
+        tasks = [tg.create_task(load(i)) for i in ids]
+    return [t.result() for t in tasks]
+</code></pre>
+<pre><code class="language-go">// Fire and forget, done right: the goroutine owns its error and its panics.
+go func() {
+    defer func() {
+        if r := recover(); r != nil {
+            slog.Error(&quot;welcome email panicked&quot;, &quot;panic&quot;, r, &quot;stack&quot;, string(debug.Stack()))
+        }
+    }()
+    if err := sendWelcome(context.WithoutCancel(ctx), userID); err != nil {
+        slog.Error(&quot;welcome email failed&quot;, &quot;user&quot;, userID, &quot;err&quot;, err)
+    }
+}()
+
+// Several at once: the first error cancels the rest.
+g, ctx := errgroup.WithContext(ctx)
+for _, id := range ids {
+    g.Go(func() error { return load(ctx, id) }) // Go 1.22+: id is per-iteration
+}
+if err := g.Wait(); err != nil {
+    return fmt.Errorf(&quot;load orders: %w&quot;, err)
+}
+</code></pre>
+<pre><code class="language-typescript">// Fire and forget, done right: the handler is part of the same expression.
+void sendWelcome(user).catch((err) =&gt; logger.error({ err, userId: user.id }, &quot;welcome email failed&quot;));
+
+// Several at once: wait for all, report every failure.
+const results = await Promise.allSettled(ids.map((id) =&gt; load(id)));
+const failures = results.flatMap((r) =&gt; (r.status === &quot;rejected&quot; ? [r.reason] : []));
+if (failures.length) throw new AggregateError(failures, `${failures.length} of ${ids.length} loads failed`);
+// Lint with @typescript-eslint/no-floating-promises so a missing await fails the build.
+</code></pre>
+</div>
+<h2 id="throw-return-an-error-or-return-a-result">Throw, return an error, or return a Result?</h2>
+<p>Every section above comes down to one decision you make for each failure a function can produce. Four
+questions settle it, in this order:</p>
+<ol>
+<li><strong>Is it a bug?</strong> A null argument, an index out of range or an impossible state means the code is wrong, and no
+   caller can handle that. Throw (or panic in Go) and fix the code.</li>
+<li><strong>Can the process continue safely?</strong> If not, crash: see <a href="#panics-fatal-errors-and-crash-only-design">panics</a>.</li>
+<li><strong>Is it an expected outcome the caller must decide about?</strong> "Insufficient funds" or "slug already taken" belongs
+   in the signature: a <code>Result</code>, a Go <code>error</code>, or at least a documented <code>TryX</code> method. If the caller usually can't do
+   anything except pass it up (a disk is full, the database is down), it is an <strong>environmental</strong> failure: throw in
+   C#/Java/Python/TS, return a wrapped <code>error</code> in Go, and let a <a href="#where-to-catch-error-boundaries">boundary</a> handle it.</li>
+<li><strong>Is "not found" just absence?</strong> Then return <code>null</code>/<code>Optional</code>/<code>None</code>/<code>(v, ok)</code>/<code>undefined</code>, not an error.</li>
+</ol>
+<p>Pick a situation and step through the questions; the table at the bottom shows the idiom in each language.</p>
+<div class="viz" data-viz="error-handling-decide"></div>
+
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · BUG?</small><strong>Throw / panic</strong><p>Guard clauses: <code>ArgumentNullException</code>, <code>IllegalArgumentException</code>, <code>ValueError</code>, <code>panic</code>, <code>TypeError</code>. Don't catch; fix.</p></div>
+<div class="flow-step"><small>2 · UNSAFE?</small><strong>Crash</strong><p><code>FailFast</code>, <code>halt</code>, <code>os.Exit(1)</code> at the top. The supervisor restarts a clean process.</p></div>
+<div class="flow-step"><small>3 · EXPECTED?</small><strong>In the signature</strong><p>Result, Go <code>error</code> sentinel, <code>TryX</code>, checked exception. The caller must branch on it.</p></div>
+<div class="flow-step"><small>3 · ENVIRONMENT?</small><strong>Throw with context</strong><p>Wrap once with what you were doing; one boundary logs, retries or maps it to a status.</p></div>
+<div class="flow-step"><small>4 · ABSENT?</small><strong>Option / null</strong><p>"No row" is an answer, not a failure: <code>T?</code>, <code>Optional</code>, <code>None</code>, <code>(v, ok)</code>, <code>undefined</code>.</p></div>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>Use…</th>
+<th>When</th>
+<th>Don't use it when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Exception</strong> (C#, Java, Python, TS)</td>
+<td>a bug; an environmental failure most callers pass up; a constructor that can't build a valid object</td>
+<td>the failure is a normal outcome in a hot loop (parsing user input: exceptions cost microseconds each) or the caller must always handle it</td>
+</tr>
+<tr>
+<td><strong>Checked exception</strong> (Java)</td>
+<td>a recoverable condition the immediate caller can really act on</td>
+<td>it crosses a lambda, a stream or a layer that can only rethrow it</td>
+</tr>
+<tr>
+<td><strong>Go <code>error</code></strong></td>
+<td>every failure that isn't a bug</td>
+<td>the function can't fail: don't add an <code>error</code> "just in case"</td>
+</tr>
+<tr>
+<td><strong>Result / Either</strong></td>
+<td>domain outcomes the caller must branch on; validation that collects several errors; pipelines of fallible steps</td>
+<td>the language fights it (a deep <code>Result</code> chain in Java with no <code>?</code> operator) or the team won't use it consistently</td>
+</tr>
+<tr>
+<td><strong><code>TryX</code> / <code>(v, ok)</code> / Optional</strong></td>
+<td>one obvious failure mode with no detail needed: parse, lookup, dequeue</td>
+<td>the caller needs to know <em>why</em> it failed</td>
+</tr>
+<tr>
+<td><strong>Crash</strong></td>
+<td>startup misconfiguration, broken invariants, runtime-fatal conditions</td>
+<td>one bad request, message or dependency</td>
+</tr>
+</tbody>
+</table>
+<div class="insight">
+<p><strong>Consistency beats perfection</strong>
+A codebase that throws for environmental failures and returns a <code>Result</code> for domain outcomes, <em>everywhere</em>, is
+easier to work in than one where each team picked the "best" mechanism per module. Write the policy down: which
+exceptions the boundary maps to which status, which domain operations return <code>Result</code>, and where logging happens.</p>
+</div>
+<h2 id="pitfalls-and-war-stories">Pitfalls and war stories</h2>
+<div class="pitfall">
+<p><strong>The catch that ate the outage</strong>
+A Java repository wrapped every call in <code>catch (Exception e) { return Collections.emptyList(); }</code>. When the
+database password rotated, search returned "no results" for six hours: no errors, no alerts, just a dip in sales
+that someone eventually noticed. <strong>Fix:</strong> catch only what you can handle; let the boundary turn the rest into a
+500 that pages someone.</p>
+</div>
+<div class="pitfall">
+<p><strong>The return in finally</strong>
+A Python helper had <code>return default</code> inside <code>finally</code> "to always return something". That <code>return</code> silently
+discarded every exception from the <code>try</code>, including <code>KeyboardInterrupt</code>. C# forbids it (CS0157); Java allows it with a
+lint warning; Python 3.14 warns about it (PEP 765). <strong>Fix:</strong> never <code>return</code>, <code>break</code> or <code>throw</code> out of a <code>finally</code>.</p>
+</div>
+<div class="pitfall">
+<p><strong><code>throw ex</code> erased the crime scene</strong>
+A C# service logged <code>NullReferenceException at OrderController.Post line 41</code>: the line of the <code>throw ex;</code>
+rethrow, not the line that failed eleven frames deeper. <strong>Fix:</strong> <code>throw;</code> to rethrow, or
+<code>throw new OrderException("…", ex)</code> to add context; never <code>throw ex;</code>.</p>
+</div>
+<div class="pitfall">
+<p><strong>The same error, logged five times</strong>
+Each layer did <code>log.error(e); throw e;</code>. One timeout produced five stack traces, five alerts and a dashboard that
+counted five failures. During an incident, nobody could tell how many requests were actually failing. <strong>Fix:</strong>
+add context while propagating; log once at the boundary (try the "log and rethrow" strategy in the boundary simulation).</p>
+</div>
+<div class="pitfall">
+<p><strong>The goroutine that killed the API</strong>
+A Go handler started <code>go audit(r)</code> and the audit code dereferenced a nil field for one rare tenant. The
+<code>recover</code> middleware protected the handler's goroutine, not this one, so the whole server restarted, dropping
+every in-flight request, a dozen times an hour. <strong>Fix:</strong> every <code>go</code> statement gets its own <code>defer recover()</code>,
+or the work goes to a queue.</p>
+</div>
+<div class="pitfall">
+<p><strong>Retrying a payment that had succeeded</strong>
+A client retried <code>POST /charges</code> after a 30-second timeout. The first request had succeeded; it was just slow.
+Customers were charged twice. <strong>Fix:</strong> retry only idempotent operations, or send an idempotency key the server
+deduplicates on; see <a href="resilience.html#retries-only-the-right-failures-only-with-jitter">resilience</a>.</p>
+</div>
+<h2 id="checklist">Checklist</h2>
+<ul>
+<li>[ ] Every catch block either <strong>handles</strong> the error (recover, retry, translate, compensate) or doesn't exist.</li>
+<li>[ ] No empty catch blocks, no <code>catch (Exception)</code> returning a default, no bare <code>except:</code>, no <code>_ = err</code> in Go.</li>
+<li>[ ] Rethrows preserve the original: <code>throw;</code>, <code>throw new X(msg, e)</code>, <code>raise … from e</code>, <code>%w</code>, <code>{ cause }</code>.</li>
+<li>[ ] Wrapping adds <em>what this layer was doing</em> (IDs, file names, operation), not "error occurred".</li>
+<li>[ ] One boundary per entry point (HTTP, message consumer, job, CLI) maps errors to responses and logs <strong>once</strong>.</li>
+<li>[ ] Clients get Problem Details with a stable <code>type</code>, never a stack trace.</li>
+<li>[ ] Validation returns <em>all</em> field errors as 400/422 and never reaches the exception path.</li>
+<li>[ ] Resources are released with <code>using</code>/try-with-resources/<code>with</code>/<code>defer</code>/<code>await using</code>, not manual close calls.</li>
+<li>[ ] Retries happen in one layer only, only for transient errors on idempotent operations, with backoff, jitter and a budget.</li>
+<li>[ ] Every async task is awaited or owned; fire-and-forget attaches a handler; Go goroutines recover their own panics.</li>
+<li>[ ] Cancellation is propagated and not logged as an error.</li>
+<li>[ ] Startup validates configuration and fails fast; <code>os.Exit</code>/<code>FailFast</code> live only at the top.</li>
+<li>[ ] Tests cover the failure paths: the wrapped message, the mapped status, and that cleanup ran.</li>
+</ul>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>A <code>try</code> block returns 1 and its <code>finally</code> block sets the returned variable to 2. What does the method return in C# and Java?</summary>
+<ol>
+<li>The return value is evaluated and stored when the <code>return</code> statement runs; <code>finally</code> runs afterwards and changing
+the local variable doesn't change the stored value. (If <code>finally</code> itself executed <code>return 2</code>, Java and Python would
+return 2 and discard any exception; C# doesn't allow it.)</li>
+</ol>
+</details>
+<details class="quiz">
+<summary>In Go, why does <code>errors.Is(err, fs.ErrNotExist)</code> work through three layers of wrapping but <code>err == fs.ErrNotExist</code> doesn't?</summary>
+<p>Each <code>fmt.Errorf("...: %w", err)</code> creates a new error value that <em>contains</em> the previous one. <code>==</code> compares only the
+outer value. <code>errors.Is</code> follows <code>Unwrap()</code> down the chain (and through <code>errors.Join</code> trees) until it finds a match.
+Wrapping with <code>%v</code> instead of <code>%w</code> breaks the chain: the text survives but <code>errors.Is</code> can't see the cause.</p>
+</details>
+<details class="quiz">
+<summary>A service catches <code>Exception</code>, logs it, and rethrows in the repository, the service and the controller. What's wrong, and what's the fix?</summary>
+<p>Each failure is logged three times, which inflates error counts and alerts and hides how many requests really
+failed. Only the boundary has the full context (request ID, user, route) and knows the final outcome. Inner layers
+should add context by wrapping and let it propagate; the boundary logs once and maps it to a response.</p>
+</details>
+<details class="quiz">
+<summary>Name the two C# patterns that let an async exception escape to nowhere or crash the process.</summary>
+<p>Fire-and-forget (<code>_ = SaveAsync();</code>): the exception is stored in a <code>Task</code> nobody awaits and is only reported to
+<code>TaskScheduler.UnobservedTaskException</code> when it is garbage collected. And <code>async void</code>: there is no <code>Task</code> to store
+it in, so it is rethrown on the synchronization context or thread pool and crashes the process. Use <code>async Task</code>
+and await it, or hand the work to an owner such as a background queue.</p>
+</details>
+<details class="quiz">
+<summary>Should a "username already taken" check throw an exception?</summary>
+<p>No. It is an expected domain outcome the caller must handle (show a message, suggest a name). Return it in the
+signature (a <code>Result</code>, a validation error, a Go sentinel error) and map it to a 409 or 422 at the API boundary.
+Exceptions are for bugs and for environmental failures that most callers just pass up.</p>
+</details>
+<details class="quiz">
+<summary>Why are <code>os.Exit</code> and <code>log.Fatal</code> dangerous deep inside a Go program?</summary>
+<p>They terminate immediately <strong>without running deferred calls</strong>, so files aren't flushed, transactions aren't rolled
+back and locks aren't released. Libraries can't be reused by callers who want to handle the error. Return an <code>error</code>
+and call <code>os.Exit(1)</code> only in <code>main</code> (or a <code>run() error</code> pattern).</p>
+</details>
+<details class="quiz">
+<summary>An HTTP call fails with a 400. Should the client retry it?</summary>
+<p>No. A 400 means the request itself is wrong; it will fail the same way every time. Retry only transient
+failures (timeouts, connection resets, 408, 429, 502, 503, 504) on idempotent operations, with backoff and jitter.
+Fail fast on 4xx (except 408/429) and on bugs.</p>
+</details>
+<details class="quiz">
+<summary>Python's <code>asyncio.gather(a(), b())</code> and both coroutines fail. What do you see, and how does <code>TaskGroup</code> differ?</summary>
+<p><code>gather</code> raises the first exception; the second is stored in its task and at best logged later as "exception was
+never retrieved", and the other tasks keep running. <code>asyncio.TaskGroup</code> (3.11+) cancels the siblings on the
+first failure and raises an <code>ExceptionGroup</code> containing <strong>all</strong> the failures, which you handle with <code>except*</code>.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Channels</strong>Exceptions (C#, Java, Python, TS), error values (Go), Result types (anywhere). Pick per failure kind, consistently.</div>
+<div><strong>Decide</strong>Bug → throw. Unsafe → crash. Expected → in the signature. Environment → throw with context. Absent → Option.</div>
+<div><strong>Rethrow</strong>C# `throw;` · Java `new X(msg, e)` · Python `raise … from e` · Go `%w` · TS `{ cause }`.</div>
+<div><strong>Inspect</strong>C# `catch when` · Java `getCause()` · Python `__cause__` · Go `errors.Is/As` · TS `instanceof` on `unknown`.</div>
+<div><strong>Cleanup</strong>`using` · try-with-resources · `with` · `defer` · `await using`. Never return or throw out of finally.</div>
+<div><strong>Boundary</strong>One per entry point: map to Problem Details, log once with request ID, never leak stack traces.</div>
+<div><strong>Retry</strong>Transient + idempotent only, one layer, exponential backoff with jitter, a budget. Otherwise fail fast.</div>
+<div><strong>Validation</strong>Collect every field error, return 400/422 with `errors`; parse into types so it can't reach the core twice.</div>
+<div><strong>Async</strong>Await or own every task; WhenAll/allSettled/TaskGroup for all errors; recover per goroutine.</div>
+<div><strong>Fatal</strong>Fail fast at startup; FailFast/halt/os.Exit only at the top; let the supervisor restart.</div>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li>C#: <a href="https://learn.microsoft.com/dotnet/csharp/fundamentals/exceptions/">Exceptions and exception handling</a>, <a href="https://learn.microsoft.com/dotnet/standard/exceptions/best-practices-for-exceptions">Best practices for exceptions</a>, <a href="https://learn.microsoft.com/aspnet/core/fundamentals/error-handling">Handle errors in ASP.NET Core</a>, <a href="https://learn.microsoft.com/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap">Exception handling in the TAP</a>, <a href="https://learn.microsoft.com/dotnet/core/resilience/http-resilience">Build resilient HTTP apps</a></li>
+<li>Java: <a href="https://docs.oracle.com/javase/tutorial/essential/exceptions/">Exceptions (Java tutorial)</a>, <a href="https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html">The try-with-resources statement</a>, <a href="https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html#jls-14.20">JLS 14.20: the try statement</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CompletableFuture.html">CompletableFuture</a></li>
+<li>Python: <a href="https://docs.python.org/3/tutorial/errors.html">Errors and exceptions (tutorial)</a>, <a href="https://docs.python.org/3/library/exceptions.html#exception-hierarchy">Built-in exception hierarchy</a>, <a href="https://docs.python.org/3/library/contextlib.html">contextlib</a>, <a href="https://docs.python.org/3/library/asyncio-task.html#task-groups">asyncio TaskGroup</a>, <a href="https://peps.python.org/pep-0654/">PEP 654: exception groups and except*</a></li>
+<li>Go: <a href="https://go.dev/blog/error-handling-and-go">Error handling and Go</a>, <a href="https://go.dev/blog/go1.13-errors">Working with errors in Go 1.13</a>, <a href="https://pkg.go.dev/errors">errors package</a>, <a href="https://go.dev/blog/defer-panic-and-recover">Defer, panic and recover</a>, <a href="https://pkg.go.dev/golang.org/x/sync/errgroup">errgroup</a></li>
+<li>TypeScript / Node: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error/cause">Error cause (MDN)</a>, <a href="https://nodejs.org/api/errors.html">Node.js errors</a>, <a href="https://nodejs.org/api/process.html#event-unhandledrejection">process events: unhandledRejection</a>, <a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-4.html">TypeScript 4.4: unknown in catch</a></li>
+<li>HTTP: <a href="https://www.rfc-editor.org/rfc/rfc9457">RFC 9457: Problem Details for HTTP APIs</a></li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="types-and-immutability.html"><small>&larr; PREVIOUS</small>Types, Immutability &amp; Domain Modelling</a><a class="next" href="creational-patterns.html"><small>NEXT &rarr;</small>Creational Patterns</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-the-error-happened-then-it-disappeared">The problem: the error happened, then it disappeared</a></li>
+<li><a href="#three-channels-for-failure-exceptions-error-values-result">Three channels for failure: exceptions, error values, Result</a><ul>
+<li><a href="#java-checked-vs-unchecked-exceptions">Java: checked vs unchecked exceptions</a></li>
+<li><a href="#python-eafp-and-the-exception-hierarchy">Python: EAFP and the exception hierarchy</a></li>
+<li><a href="#go-errors-are-values">Go: errors are values</a></li>
+<li><a href="#c-exception-filters-and-rethrowing-correctly">C#: exception filters and rethrowing correctly</a></li>
+<li><a href="#typescript-anything-can-be-thrown">TypeScript: anything can be thrown</a></li>
+</ul>
+</li>
+<li><a href="#what-happens-when-you-throw-stack-unwinding">What happens when you throw: stack unwinding</a></li>
+<li><a href="#cleanup-that-always-runs">Cleanup that always runs</a></li>
+<li><a href="#wrap-with-context-dont-swallow">Wrap with context, don't swallow</a></li>
+<li><a href="#where-to-catch-error-boundaries">Where to catch: error boundaries</a><ul>
+<li><a href="#log-once-where-the-error-is-handled">Log once, where the error is handled</a></li>
+</ul>
+</li>
+<li><a href="#retry-or-fail-fast">Retry or fail fast?</a></li>
+<li><a href="#validation-errors-are-not-exceptions">Validation errors are not exceptions</a></li>
+<li><a href="#panics-fatal-errors-and-crash-only-design">Panics, fatal errors and crash-only design</a></li>
+<li><a href="#async-errors-where-does-the-exception-go">Async errors: where does the exception go?</a></li>
+<li><a href="#throw-return-an-error-or-return-a-result">Throw, return an error, or return a Result?</a></li>
+<li><a href="#pitfalls-and-war-stories">Pitfalls and war stories</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

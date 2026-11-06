@@ -1,0 +1,65 @@
+/* State Machines & DP Optimisations: topic-only styles. Colours come from shared CSS variables only. */
+
+/* Wide visualizers: stage on top, code + variables side by side underneath */
+.viz.dpa-wide .viz-body.with-code { grid-template-columns: minmax(0, 1fr); }
+.viz.dpa-wide .viz-side { border-left: 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(200px, 1fr); }
+.viz.dpa-wide .viz-vars { border-top: 0; border-left: 1px solid var(--line); align-content: start; }
+@media (max-width: 720px) {
+  .viz.dpa-wide .viz-side { grid-template-columns: minmax(0, 1fr); }
+  .viz.dpa-wide .viz-vars { border-left: 0; border-top: 1px solid var(--line); }
+}
+
+.dpa-col { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; }
+.dpa-col .v-row { align-items: flex-start; justify-content: center; }
+
+/* SVG pieces drawn by the visualizers */
+svg.dpa-svg { overflow: visible; }
+svg.dg .edge.visit { stroke: var(--v-visit); stroke-width: 2.2; }
+svg.dg .edge.dpa-faint { stroke: var(--line); stroke-width: 1.4; }
+svg.dg .edge.dpa-grid { stroke: var(--line); stroke-width: 1; opacity: .7; }
+svg.dg .dpa-ah { fill: var(--muted); }
+svg.dg .dpa-ah.dpa-faint { fill: var(--line); }
+svg.dg .dpa-ah.active { fill: var(--v-active); } svg.dg .dpa-ah.visit { fill: var(--v-visit); }
+svg.dg .dpa-ah.done { fill: var(--v-done); } svg.dg .dpa-ah.bad { fill: var(--v-bad); }
+svg.dg .dpa-ah.path { fill: var(--v-path); } svg.dg .dpa-ah.accent { fill: var(--accent); }
+svg.dg .dpa-lbl { font-weight: 700; paint-order: stroke; stroke: var(--surface); stroke-width: 4px; }
+svg.dg .dpa-lbl.visit { fill: var(--v-visit); } svg.dg .dpa-lbl.done { fill: var(--v-done); } svg.dg .dpa-lbl.path { fill: var(--v-path); }
+svg.dg .box.dpa-dim { opacity: .45; }
+svg.dg .box.dpa-ghost { fill: none; stroke: var(--line); stroke-dasharray: 3 3; }
+svg.dg .box.dpa-ghostbox { opacity: .35; }
+svg.dg .box.dpa-part { stroke: var(--v-visit); stroke-dasharray: 4 3; fill: var(--surface); }
+svg.dg .dpa-qband { fill: var(--v-visit-soft); stroke: var(--v-visit); stroke-width: 1.2; }
+svg.dg .dpa-plot { fill: var(--surface); stroke: var(--line); }
+svg.dg .dpa-env { fill: none; stroke: var(--v-path); stroke-width: 4; opacity: .55; stroke-linejoin: round; }
+svg.dg .edge.done.dpa-l { stroke-width: 2.2; }
+
+/* State-machine recurrences under the trellis */
+.dpa-recs { display: flex; flex-wrap: wrap; gap: 6px 10px; justify-content: center; font: 600 12px "Cascadia Code", Consolas, monospace; }
+.dpa-recs span { padding: 2px 8px; border-radius: 6px; border: 1.5px solid var(--line); background: var(--surface); color: var(--text); }
+.dpa-recs span.active { border-color: var(--v-active); background: var(--v-active-soft); }
+
+/* Patience piles */
+.dpa-piles { display: flex; gap: 10px; align-items: flex-end; justify-content: center; flex-wrap: wrap; min-height: 60px; }
+.dpa-pile { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 6px 4px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--surface); min-width: 54px; }
+.dpa-pile.visit { border-color: var(--v-visit); border-style: dashed; background: color-mix(in srgb, var(--v-visit-soft) 45%, var(--surface)); }
+.dpa-pile.window { border-color: var(--v-active); background: color-mix(in srgb, var(--v-active-soft) 45%, var(--surface)); }
+.dpa-pcards { display: flex; flex-direction: column-reverse; gap: 2px; align-items: center; }
+.dpa-card { font: 600 12.5px "Cascadia Code", Consolas, monospace; padding: 2px 8px; border-radius: 5px; border: 1.5px solid var(--line); background: var(--v-node); color: var(--muted); }
+.dpa-pcards .dpa-card:last-child { color: var(--text); border-color: var(--v-done); background: var(--v-done-soft); }
+.dpa-card.active, .dpa-pcards .dpa-card.active:last-child { border-color: var(--v-active); background: var(--v-active-soft); color: var(--text); }
+.dpa-card.path, .dpa-pcards .dpa-card.path:last-child { border-color: var(--v-path); background: var(--v-path-soft); color: var(--text); }
+.dpa-ptop { font-size: 10.5px; color: var(--muted); }
+
+/* Knight probability heatmap */
+.prose .viz table.dpa-heatgrid { display: table; border-collapse: separate; border-spacing: 3px; margin: 0 auto; width: auto; border: 0; }
+.prose .viz table.dpa-heatgrid th { min-width: 0; vertical-align: middle; text-align: center; font: 600 11px "Cascadia Code", Consolas, monospace; color: var(--muted); background: none; border: 0; padding: 0 4px; }
+.prose .viz table.dpa-heatgrid td.dpa-heat { width: 50px; min-width: 50px; height: 38px; vertical-align: middle; padding: 0; text-align: center; font: 600 11.5px "Cascadia Code", Consolas, monospace; color: var(--text); background: var(--v-node); border: 1.5px solid var(--line); border-radius: 5px; }
+.prose .viz table.dpa-heatgrid td.dpa-heat.active { border-color: var(--v-active); border-width: 3px; }
+.prose .viz table.dpa-heatgrid td.dpa-heat.dpa-tgt { border-color: var(--v-active); border-style: dashed; }
+.dpa-mass { display: flex; flex-direction: column; align-items: center; gap: 4px; width: min(420px, 100%); }
+.dpa-massbar { display: flex; width: 100%; height: 14px; border-radius: 7px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
+.dpa-on { background: var(--v-visit); }
+.dpa-off { background: var(--v-bad-soft); }
+
+.dpa-xor { font-size: 13px; padding: 6px 12px; border: 1.5px solid var(--accent); border-radius: 8px; background: var(--accent-soft); color: var(--text); }
+.viz-legend .lg-accent::before { border-color: var(--accent); background: var(--accent-soft); }

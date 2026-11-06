@@ -1,0 +1,62 @@
+/* Hashing: bucket tables, chips, key→value maps, bucket grids, groups, runs, stat panels. Variables only. */
+.ha-col { display: flex; flex-direction: column; align-items: center; gap: 12px; max-width: 100%; }
+.ha-calc { max-width: 100%; padding: 6px 12px; border: 1.5px dashed var(--accent); border-radius: 8px; background: var(--accent-soft); color: var(--text); font: 600 13px "Cascadia Code", Consolas, monospace; white-space: pre-wrap; text-align: center; }
+.ha-stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.ha-stat { display: flex; flex-direction: column; align-items: center; min-width: 88px; padding: 5px 12px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--surface); }
+.ha-stat span { font-size: 10.5px; letter-spacing: .4px; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
+.ha-stat b { font: 700 17px "Cascadia Code", Consolas, monospace; color: var(--text); }
+.ha-chip { display: inline-flex; align-items: center; justify-content: center; min-width: 34px; height: 30px; padding: 0 7px; border: 1.5px solid var(--line); border-radius: 7px; background: var(--v-node); color: var(--text); font: 600 13px "Cascadia Code", Consolas, monospace; transition: background .2s, border-color .2s, opacity .2s; }
+.ha-chip.active { background: var(--v-active-soft); border-color: var(--v-active); }
+.ha-chip.visit { background: var(--v-visit-soft); border-color: var(--v-visit); }
+.ha-chip.done { background: var(--v-done-soft); border-color: var(--v-done); }
+.ha-chip.bad { background: var(--v-bad-soft); border-color: var(--v-bad); }
+.ha-chip.seen { opacity: .55; border-style: dashed; }
+.ha-chip.dim { opacity: .35; }
+/* key → value map */
+.ha-map { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; max-width: 520px; min-height: 34px; align-items: center; }
+.ha-kv { display: inline-flex; border: 1.5px solid var(--line); border-radius: 7px; overflow: hidden; font: 600 13px "Cascadia Code", Consolas, monospace; background: var(--surface); transition: border-color .2s; }
+.ha-kv b { padding: 4px 8px; background: var(--v-node); color: var(--text); }
+.ha-kv i { padding: 4px 8px; font-style: normal; color: var(--muted); border-left: 1.5px solid var(--line); }
+.ha-kv.active { border-color: var(--v-active); }
+.ha-kv.active b { background: var(--v-active-soft); }
+.ha-kv.done { border-color: var(--v-done); }
+.ha-kv.done b { background: var(--v-done-soft); }
+.ha-kv.bad { border-color: var(--v-bad); }
+.ha-kv.bad b { background: var(--v-bad-soft); }
+.ha-empty, .ha-null { color: var(--muted); font: 600 13px "Cascadia Code", Consolas, monospace; }
+.ha-empty { font-style: italic; font-family: inherit; }
+/* bucket rows: index | chain */
+.ha-table { display: flex; flex-direction: column; gap: 4px; min-width: 300px; max-width: 520px; }
+.ha-bkt { display: flex; align-items: center; gap: 10px; padding: 3px 8px 3px 3px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--surface); transition: background .2s, border-color .2s; }
+.ha-bkt.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.ha-bkt.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.ha-bi { flex: none; min-width: 30px; padding: 4px 6px; border-radius: 6px; background: var(--v-node); border: 1px solid var(--line); text-align: center; font: 700 12px "Cascadia Code", Consolas, monospace; color: var(--muted); }
+.ha-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.ha-arr { color: var(--muted); font-size: 13px; }
+/* bucket grid (resize demo) */
+.ha-bgrid { display: grid; grid-template-columns: repeat(8, minmax(52px, 1fr)); gap: 5px; max-width: 520px; }
+.ha-bcell { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 3px; min-height: 52px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--surface); transition: background .2s, border-color .2s; }
+.ha-bcell .ha-bi { min-width: 0; width: 100%; padding: 1px 0; font-size: 10.5px; }
+.ha-bcell.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.ha-bcell.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.ha-bkeys { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; }
+.ha-bkeys .ha-chip { min-width: 26px; height: 22px; padding: 0 3px; font-size: 11.5px; border-radius: 5px; }
+.ha-spark { display: flex; align-items: flex-end; gap: 3px; height: 70px; padding: 0 4px; border-bottom: 1.5px solid var(--line); }
+.ha-sbar { position: relative; width: 22px; border-radius: 4px 4px 0 0; background: var(--v-done-soft); border: 1.5px solid var(--v-done); border-bottom: 0; }
+.ha-sbar.bad { background: var(--v-bad-soft); border-color: var(--v-bad); }
+.ha-sbar i { position: absolute; bottom: 100%; left: 0; right: 0; text-align: center; font: 600 10px "Cascadia Code", Consolas, monospace; font-style: normal; color: var(--muted); }
+/* anagram groups */
+.ha-groups { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 530px; }
+.ha-group { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 5px 8px 7px; border: 1.5px solid var(--line); border-radius: 9px; background: var(--surface); transition: background .2s, border-color .2s; }
+.ha-group > b { font: 700 12px "Cascadia Code", Consolas, monospace; color: var(--accent); }
+.ha-group > span { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
+.ha-group.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.ha-group.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+/* consecutive runs on a number line */
+.ha-runs { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px; max-width: 530px; }
+.ha-run { display: inline-flex; gap: 2px; padding: 3px; border: 1.5px solid var(--line); border-radius: 9px; background: var(--surface); }
+.ha-gap { color: var(--muted); font-weight: 700; }
+/* Defensive: keep global .path rules out of the visualizers (DEL slots use the path state). */
+.viz .v-cell.path { display: grid; grid-auto-flow: row; grid-auto-columns: auto; gap: 0; padding: 0 6px; overflow: visible; counter-reset: none; }
+.viz .v-ptr-under { white-space: nowrap; }
+/* Page figures */

@@ -1,0 +1,2277 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Data Access Patterns | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/data-access.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/data-access.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track" open><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html" aria-current="page">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Data Access Patterns</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">DATA &AMP; CACHING</p><h1>Data Access Patterns</h1><p class="lede">ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency.</p><div class="meta"><span class="level level-intermediate">Intermediate → Advanced</span><span>~60 min study</span><span>Builds on: <a href="language-mental-models.html">Cross-Language Mental Models</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="data-access" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-one-innocent-endpoint-six-production-bugs">The problem: one innocent endpoint, six production bugs</h2>
+<p>Here is an endpoint that passes code review in most teams. It lists a customer's orders, it's short, it uses the ORM "properly", and it works perfectly on a laptop with 20 rows.</p>
+<pre><code class="language-csharp">// GET /customers/{id}/orders?page=3
+app.MapGet(&quot;/customers/{id:int}/orders&quot;, async (int id, int page, ShopDb db) =&gt;
+{
+    var orders = await db.Orders                                  // (1) tracked entities
+        .Where(o =&gt; o.CustomerId == id)
+        .OrderByDescending(o =&gt; o.CreatedAt)
+        .Skip((page - 1) * 50).Take(50)                           // (2) OFFSET paging
+        .ToListAsync();
+
+    foreach (var o in orders)
+        o.Total = o.Lines.Sum(l =&gt; l.Qty * l.UnitPrice);          // (3) lazy load: 1 query per order
+
+    return Results.Ok(orders);                                    // (4) entity → JSON: Customer, Lines,
+});                                                               //     Payments... and a cycle
+</code></pre>
+<p>In production, with 40 million orders, the same code produces these symptoms:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>What you see in production</th>
+<th>The cause</th>
+<th>Section</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>p99 latency is 4 s; the database CPU is at 90%</td>
+<td><code>Lines</code> loads lazily: 1 + 50 queries per request, an <strong>N+1</strong></td>
+<td><a href="#loading-related-data-lazy-eager-explicit-and-projection">Loading related data</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Page 2,000 takes 9 s; users see duplicates when paging</td>
+<td><code>OFFSET 99950</code> reads and discards 99,950 rows; new orders shift the pages</td>
+<td><a href="#pagination-offset-vs-keyset">Pagination</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>The query does a full scan of <code>orders</code></td>
+<td>there's no index on <code>(customer_id, created_at)</code></td>
+<td><a href="#indexes-how-the-database-finds-rows">Indexes</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Responses are 2 MB and leak internal columns; occasionally the serializer loops</td>
+<td>it returns entities, not a projection</td>
+<td><a href="#projections-dont-return-entities-from-apis">Projections</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Under load: <code>Timeout expired. The timeout period elapsed prior to obtaining a connection from the pool</code></td>
+<td>each request holds a connection for 51 round trips</td>
+<td><a href="#connection-pooling-borrow-return-wait">Connection pooling</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Two admins edit the same order, and one edit silently disappears</td>
+<td>no concurrency token</td>
+<td><a href="#optimistic-vs-pessimistic-concurrency">Optimistic vs pessimistic</a></td>
+</tr>
+</tbody>
+</table>
+<p>None of these is an ORM bug, and none is fixed by "writing raw SQL instead". Each one comes from not knowing what the code <em>makes the database do</em>. This page teaches you to see that: the round trips, the rows read, the locks held, the connections borrowed. With that model, the choice of tool (Dapper or EF Core, jOOQ or Hibernate, sqlc or GORM) becomes a trade-off rather than a religion.</p>
+<div class="rule">
+<p><strong>The rule of data access</strong></p>
+<p>Know, for every request, <strong>how many round trips</strong> it makes, <strong>how many rows</strong> the database touches to answer it, and <strong>how long</strong> it holds a connection, a transaction and its locks. Every tool on this page is a way to change one of those four numbers. If you can't state them, turn on SQL logging and look before you optimise anything.</p>
+</div>
+<p>The prerequisite is the runtime picture from <a href="language-mental-models.html">language mental models</a> (references, allocation, async). The async I/O part builds on <a href="concurrency-async.html">concurrency and async</a>, and the caching you put in front of a database is covered in <a href="caching.html">caching</a>.</p>
+<h2 id="the-mental-model-every-query-crosses-six-boundaries">The mental model: every query crosses six boundaries</h2>
+<p>A line like <code>db.Orders.Where(...).ToListAsync()</code> looks like a method call on a collection. It's actually a journey through six layers, and each layer has its own cost and its own failure mode.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 390" width="900" role="img" aria-label="A query's path: application code builds an expression; the ORM or mapper translates it to SQL and later maps rows to objects; the driver borrows a connection from the pool; the request crosses the network; the database parses, plans, executes using the buffer pool and disk; rows stream back the same way">
+<defs><marker id="data-access-ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text class="title" x="10" y="26">One query, six layers, and what each one costs</text>
+<rect class="box accent" x="10" y="50" width="130" height="76" rx="8"/><text class="mono" x="75" y="78" text-anchor="middle">Your code</text><text class="small muted" x="75" y="98" text-anchor="middle">LINQ, criteria,</text><text class="small muted" x="75" y="114" text-anchor="middle">query builder</text>
+<rect class="box" x="160" y="50" width="140" height="76" rx="8"/><text class="mono" x="230" y="78" text-anchor="middle">ORM / mapper</text><text class="small muted" x="230" y="98" text-anchor="middle">expression → SQL</text><text class="small muted" x="230" y="114" text-anchor="middle">rows → objects</text>
+<rect class="box visit" x="320" y="50" width="130" height="76" rx="8"/><text class="mono" x="385" y="78" text-anchor="middle">Driver + pool</text><text class="small muted" x="385" y="98" text-anchor="middle">borrow a</text><text class="small muted" x="385" y="114" text-anchor="middle">connection</text>
+<rect class="box active" x="470" y="50" width="110" height="76" rx="8"/><text class="mono" x="525" y="78" text-anchor="middle">Network</text><text class="small muted" x="525" y="98" text-anchor="middle">0.2–2 ms</text><text class="small muted" x="525" y="114" text-anchor="middle">per round trip</text>
+<rect class="box path" x="600" y="50" width="290" height="76" rx="8"/><text class="mono" x="745" y="72" text-anchor="middle">Database engine</text><text class="small muted" x="745" y="92" text-anchor="middle">parse → plan (or reuse a cached plan)</text><text class="small muted" x="745" y="110" text-anchor="middle">→ execute: seek or scan, lock, read pages</text>
+<line class="edge" x1="140" y1="74" x2="158" y2="74" marker-end="url(#data-access-ar1)"/>
+<line class="edge" x1="300" y1="74" x2="318" y2="74" marker-end="url(#data-access-ar1)"/>
+<line class="edge" x1="450" y1="74" x2="468" y2="74" marker-end="url(#data-access-ar1)"/>
+<line class="edge" x1="580" y1="74" x2="598" y2="74" marker-end="url(#data-access-ar1)"/>
+<line class="edge dash" x1="598" y1="106" x2="582" y2="106" marker-end="url(#data-access-ar1)"/>
+<line class="edge dash" x1="468" y1="106" x2="452" y2="106" marker-end="url(#data-access-ar1)"/>
+<line class="edge dash" x1="318" y1="106" x2="302" y2="106" marker-end="url(#data-access-ar1)"/>
+<rect class="box" x="600" y="146" width="140" height="56" rx="8"/><text class="mono" x="670" y="170" text-anchor="middle">Buffer pool</text><text class="small muted" x="670" y="188" text-anchor="middle">pages in RAM: ~µs</text>
+<rect class="box bad" x="750" y="146" width="140" height="56" rx="8"/><text class="mono" x="820" y="170" text-anchor="middle">Disk / SSD</text><text class="small muted" x="820" y="188" text-anchor="middle">page miss: 0.1–10 ms</text>
+<line class="edge" x1="670" y1="126" x2="670" y2="144" marker-end="url(#data-access-ar1)"/>
+<line class="edge" x1="740" y1="174" x2="748" y2="174" marker-end="url(#data-access-ar1)"/>
+<text class="small" x="10" y="160">What goes wrong at each layer:</text>
+<text class="small muted" x="10" y="182">Your code: a loop that issues one query per item (N+1), or a filter that runs in memory after loading everything.</text>
+<text class="small muted" x="10" y="202">ORM: an innocent-looking navigation property loads lazily; a large graph is tracked and diffed on save.</text>
+<text class="small muted" x="10" y="222">Pool: connections held across slow work run out, and every other request waits.</text>
+<text class="small muted" x="10" y="242">Network: 50 round trips at 1 ms each is 50 ms before the database has done any work.</text>
+<text class="small muted" x="10" y="262">Engine: a missing index turns a 3-page seek into a 400,000-page scan; locks make other transactions wait.</text>
+<rect class="box done" x="10" y="286" width="880" height="88" rx="8"/>
+<text class="mono" x="24" y="310">Back-of-envelope latency for one request:</text>
+<text class="mono" x="24" y="334">  round trips × RTT  +  rows touched × per-row cost  +  time waiting (pool, locks)</text>
+<text class="small muted" x="24" y="358">Optimise the term that dominates. For OLTP endpoints it's almost always round trips or rows touched, very rarely the ORM's own CPU.</text>
+</svg>
+<figcaption>The ORM is one box of six. Most "the ORM is slow" incidents are really round trips, rows touched or waiting, which the same SQL written by hand would also suffer.</figcaption>
+</figure>
+
+<div class="insight">
+<p><strong>Why round trips dominate</strong></p>
+<p>An index seek on a warm table takes tens of microseconds inside the database. A round trip inside one data centre takes 0.2 to 1 ms, and across availability zones 1 to 2 ms. So one query that returns 50 rows is usually <em>faster</em> than 50 queries that return one row each, even though they do the "same work". That one fact explains why N+1 hurts, why batching helps, and why chatty repository methods are slow. You'll see it measured in the <a href="#batching-bulk-operations-compiled-queries-and-async-io">batching visualizer</a>.</p>
+</div>
+<h2 id="raw-sql-vs-micro-orm-vs-full-orm">Raw SQL vs micro-ORM vs full ORM</h2>
+<p>Every ecosystem offers the same three rungs. They differ in <strong>who writes the SQL</strong> and <strong>who tracks changes</strong>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 330" width="900" role="img" aria-label="Spectrum from raw driver SQL through query builders and micro-ORMs to full ORMs, with an example per language and the trade-offs: control and predictability on the left, productivity and change tracking on the right">
+<defs><marker id="data-access-ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text class="title" x="10" y="26">The data-access spectrum</text>
+<line class="edge path" x1="20" y1="54" x2="880" y2="54" marker-start="url(#data-access-ar2)" marker-end="url(#data-access-ar2)"/>
+<text class="small" x="40" y="42">you write the SQL</text><text class="small" x="860" y="42" text-anchor="end">the library writes the SQL</text>
+<rect class="box" x="10" y="70" width="200" height="190" rx="8"/>
+<text class="mono" x="110" y="94" text-anchor="middle">Raw driver</text>
+<text class="small muted" x="22" y="118">C#: ADO.NET, Npgsql</text><text class="small muted" x="22" y="138">Java: JDBC</text><text class="small muted" x="22" y="158">Python: DB-API (psycopg)</text><text class="small muted" x="22" y="178">Go: database/sql, pgx</text><text class="small muted" x="22" y="198">TS: node-postgres (pg)</text>
+<text class="small" x="22" y="230">You map every column</text><text class="small" x="22" y="248">by hand.</text>
+<rect class="box visit" x="230" y="70" width="210" height="190" rx="8"/>
+<text class="mono" x="335" y="94" text-anchor="middle">Micro-ORM / mapper</text>
+<text class="small muted" x="242" y="118">C#: Dapper</text><text class="small muted" x="242" y="138">Java: JdbcClient, MyBatis</text><text class="small muted" x="242" y="158">Python: SQLAlchemy Core</text><text class="small muted" x="242" y="178">Go: sqlc (generated)</text><text class="small muted" x="242" y="198">TS: Kysely, Drizzle</text>
+<text class="small" x="242" y="230">Your SQL; rows mapped</text><text class="small" x="242" y="248">to typed objects for you.</text>
+<rect class="box active" x="460" y="70" width="200" height="190" rx="8"/>
+<text class="mono" x="560" y="94" text-anchor="middle">Typed SQL DSL</text>
+<text class="small muted" x="472" y="118">C#: linq2db</text><text class="small muted" x="472" y="138">Java: jOOQ</text><text class="small muted" x="472" y="158">Python: SQLAlchemy Core</text><text class="small muted" x="472" y="178">Go: Jet, Bob</text><text class="small muted" x="472" y="198">TS: Kysely, Drizzle</text>
+<text class="small" x="472" y="230">SQL as code: compiler</text><text class="small" x="472" y="248">checks names and types.</text>
+<rect class="box done" x="680" y="70" width="210" height="190" rx="8"/>
+<text class="mono" x="785" y="94" text-anchor="middle">Full ORM</text>
+<text class="small muted" x="692" y="118">C#: EF Core, NHibernate</text><text class="small muted" x="692" y="138">Java: JPA / Hibernate</text><text class="small muted" x="692" y="158">Python: SQLAlchemy ORM</text><text class="small muted" x="692" y="178">Go: GORM, ent</text><text class="small muted" x="692" y="198">TS: Prisma, TypeORM</text>
+<text class="small" x="692" y="230">Entities, change tracking,</text><text class="small" x="692" y="248">relations, migrations.</text>
+<text class="small" x="10" y="290">More control, fewer surprises, more code to write and keep in sync with the schema.</text>
+<text class="small" x="890" y="312" text-anchor="end">Less code, faster CRUD; hidden queries unless you watch the SQL log.</text>
+</svg>
+<figcaption>Kysely, Drizzle and SQLAlchemy Core sit between "mapper" and "typed DSL": they build SQL from typed code but don't track entities. Prisma is a full ORM without a unit of work (no change tracking).</figcaption>
+</figure>
+
+<p>The real differences, and the ones to weigh when choosing:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Raw driver</th>
+<th>Micro-ORM / typed SQL</th>
+<th>Full ORM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Who writes SQL</td>
+<td>you</td>
+<td>you (or a typed builder)</td>
+<td>the ORM, from LINQ / JPQL / criteria / method calls</td>
+</tr>
+<tr>
+<td>Mapping rows → objects</td>
+<td>by hand</td>
+<td>automatic</td>
+<td>automatic, including relations</td>
+</tr>
+<tr>
+<td>Change tracking + unit of work</td>
+<td>none</td>
+<td>none</td>
+<td>yes (EF Core, Hibernate, SQLAlchemy ORM, TypeORM; not Prisma or GORM)</td>
+</tr>
+<tr>
+<td>Schema migrations</td>
+<td>separate tool</td>
+<td>separate tool (Drizzle Kit is the exception)</td>
+<td>usually built in</td>
+</tr>
+<tr>
+<td>Hidden queries</td>
+<td>none</td>
+<td>none</td>
+<td>lazy loading, cascades, flush order: watch the log</td>
+</tr>
+<tr>
+<td>Performance ceiling</td>
+<td>highest</td>
+<td>about the same as raw</td>
+<td>close for simple reads; tracking and graph materialisation cost CPU and memory</td>
+</tr>
+<tr>
+<td>Refactoring safety</td>
+<td>strings: rename breaks at runtime</td>
+<td>typed builders and sqlc check at compile time</td>
+<td>checked at compile time</td>
+</tr>
+<tr>
+<td>Best at</td>
+<td>hot paths, bulk work, exotic SQL</td>
+<td>read models, reporting, services that think in SQL</td>
+<td>rich domain writes: load an aggregate, change it, save</td>
+</tr>
+</tbody>
+</table>
+<div class="tip">
+<p><strong>The pragmatic default: use both</strong></p>
+<p>Most mature codebases use a full ORM for the <strong>write side</strong> (load an aggregate, apply business rules, save; change tracking and optimistic concurrency come for free) and a micro-ORM or projection query for the <strong>read side</strong> (screens, lists, reports, exports), where you want exactly the columns you need and no tracking. That split is CQRS in its simplest form, and it doesn't need two databases. See <a href="application-architecture.html">application architecture</a> and <a href="domain-driven-design.html">domain-driven design</a>.</p>
+</div>
+<h3 id="the-same-query-sql-first-in-five-stacks">The same query, SQL-first, in five stacks</h3>
+<p>The task: a customer's 20 most recent paid orders, with the order total. Notice how similar these are: the SQL is the contract, and the library only binds parameters and maps columns.</p>
+<div class="code-tabs" data-labels="C# · Dapper,Java · jOOQ,Python · SQLAlchemy Core,Go · sqlc,TypeScript · Kysely">
+<pre><code class="language-csharp">// Dapper: extension methods on DbConnection. You own the SQL; Dapper maps columns to properties by name.
+public sealed record OrderRow(long Id, DateTime CreatedAt, decimal Total);
+
+public async Task&lt;IReadOnlyList&lt;OrderRow&gt;&gt; RecentPaidAsync(long customerId, CancellationToken ct)
+{
+    await using var conn = await _dataSource.OpenConnectionAsync(ct);   // NpgsqlDataSource / SqlConnection: pooled
+    const string sql = &quot;&quot;&quot;
+        SELECT id, created_at AS CreatedAt, total
+        FROM orders
+        WHERE customer_id = @customerId AND status = 'paid'
+        ORDER BY created_at DESC
+        LIMIT 20
+        &quot;&quot;&quot;;
+    var rows = await conn.QueryAsync&lt;OrderRow&gt;(
+        new CommandDefinition(sql, new { customerId }, cancellationToken: ct));   // parameters, never concatenation
+    return rows.AsList();
+}
+</code></pre>
+<pre><code class="language-java">// jOOQ: SQL as a type-safe Java DSL. ORDERS is generated from the live schema, so a renamed column breaks the build.
+import static com.shop.db.Tables.ORDERS;
+
+public List&lt;OrderRow&gt; recentPaid(long customerId) {
+    return dsl.select(ORDERS.ID, ORDERS.CREATED_AT, ORDERS.TOTAL)
+              .from(ORDERS)
+              .where(ORDERS.CUSTOMER_ID.eq(customerId))          // bound as a parameter
+              .and(ORDERS.STATUS.eq(&quot;paid&quot;))
+              .orderBy(ORDERS.CREATED_AT.desc())
+              .limit(20)
+              .fetchInto(OrderRow.class);                       // record OrderRow(long id, OffsetDateTime createdAt, BigDecimal total)
+}
+// Plain JDBC/Spring alternative: jdbcClient.sql(&quot;SELECT ... WHERE customer_id = :id&quot;).param(&quot;id&quot;, customerId).query(OrderRow.class).list();
+</code></pre>
+<pre><code class="language-python"># SQLAlchemy Core: tables and expressions, no entities, no session identity map.
+from sqlalchemy import select
+
+def recent_paid(conn, customer_id: int) -&gt; list[dict]:
+    stmt = (
+        select(orders.c.id, orders.c.created_at, orders.c.total)
+        .where(orders.c.customer_id == customer_id, orders.c.status == &quot;paid&quot;)
+        .order_by(orders.c.created_at.desc())
+        .limit(20)
+    )
+    return [row._asdict() for row in conn.execute(stmt)]   # Row objects are named tuples
+
+# with engine.connect() as conn: recent_paid(conn, 4)
+</code></pre>
+<pre><code class="language-go">// sqlc: you write SQL in a .sql file; sqlc generates a typed Go function at build time.
+//
+// -- name: RecentPaid :many
+// SELECT id, created_at, total FROM orders
+// WHERE customer_id = $1 AND status = 'paid'
+// ORDER BY created_at DESC LIMIT 20;
+
+func (s *Store) RecentPaid(ctx context.Context, customerID int64) ([]db.RecentPaidRow, error) {
+    return s.q.RecentPaid(ctx, customerID) // generated: db.New(pool).RecentPaid(ctx, id)
+}
+
+// Without codegen, database/sql:
+// rows, err := pool.QueryContext(ctx, `SELECT id, created_at, total FROM orders WHERE customer_id = $1 ...`, customerID)
+// defer rows.Close(); for rows.Next() { rows.Scan(&amp;r.ID, &amp;r.CreatedAt, &amp;r.Total) }; return out, rows.Err()
+</code></pre>
+<pre><code class="language-typescript">// Kysely: a type-safe SQL query builder. The DB interface (often generated by kysely-codegen) types every column.
+export async function recentPaid(db: Kysely&lt;DB&gt;, customerId: number) {
+  return db
+    .selectFrom(&quot;orders&quot;)
+    .select([&quot;id&quot;, &quot;created_at&quot;, &quot;total&quot;])
+    .where(&quot;customer_id&quot;, &quot;=&quot;, customerId)
+    .where(&quot;status&quot;, &quot;=&quot;, &quot;paid&quot;)
+    .orderBy(&quot;created_at&quot;, &quot;desc&quot;)
+    .limit(20)
+    .execute(); // Promise&lt;{ id: number; created_at: Date; total: string }[]&gt;
+}
+// Drizzle: db.select({ id: orders.id, ... }).from(orders).where(and(eq(orders.customerId, id), eq(orders.status, &quot;paid&quot;)))
+</code></pre>
+</div>
+<h3 id="the-same-query-through-a-full-orm">The same query through a full ORM</h3>
+<p>Now the ORM version. You write queries against <strong>entities and navigation properties</strong>, and the ORM generates SQL. Look at the comment on each one: it's the SQL you should expect to see in the log.</p>
+<div class="code-tabs" data-labels="C# · EF Core,Java · JPA / Hibernate,Python · SQLAlchemy ORM,Go · GORM,TypeScript · Prisma">
+<pre><code class="language-csharp">// EF Core: LINQ over DbSet&lt;Order&gt;. Select(...) projects, so nothing is tracked and only 3 columns are read.
+public Task&lt;List&lt;OrderRow&gt;&gt; RecentPaidAsync(long customerId, CancellationToken ct) =&gt;
+    _db.Orders
+       .Where(o =&gt; o.CustomerId == customerId &amp;&amp; o.Status == OrderStatus.Paid)
+       .OrderByDescending(o =&gt; o.CreatedAt)
+       .Take(20)
+       .Select(o =&gt; new OrderRow(o.Id, o.CreatedAt, o.Total))
+       .ToListAsync(ct);
+// SQL: SELECT o.id, o.created_at, o.total FROM orders AS o
+//      WHERE o.customer_id = @customerId AND o.status = 'paid' ORDER BY o.created_at DESC LIMIT @p
+</code></pre>
+<pre><code class="language-java">// Spring Data JPA: a derived query or JPQL. Constructor projection avoids loading managed entities.
+public interface OrderRepository extends JpaRepository&lt;Order, Long&gt; {
+    @Query(&quot;&quot;&quot;
+        select new com.shop.OrderRow(o.id, o.createdAt, o.total)
+        from Order o
+        where o.customer.id = :customerId and o.status = com.shop.OrderStatus.PAID
+        order by o.createdAt desc
+        &quot;&quot;&quot;)
+    List&lt;OrderRow&gt; recentPaid(@Param(&quot;customerId&quot;) long customerId, Pageable page);   // PageRequest.of(0, 20)
+}
+// Hibernate SQL: select o.id, o.created_at, o.total from orders o where o.customer_id=? and o.status=? order by ... fetch first ? rows only
+</code></pre>
+<pre><code class="language-python"># SQLAlchemy 2.0 ORM: select() over mapped classes, executed through a Session.
+from sqlalchemy import select
+
+def recent_paid(session, customer_id: int):
+    stmt = (
+        select(Order.id, Order.created_at, Order.total)      # columns → Row tuples; select(Order) → tracked entities
+        .where(Order.customer_id == customer_id, Order.status == &quot;paid&quot;)
+        .order_by(Order.created_at.desc())
+        .limit(20)
+    )
+    return session.execute(stmt).all()
+</code></pre>
+<pre><code class="language-go">// GORM: method chaining on a model. It's an ORM for mapping and associations, but it has no unit of work:
+// nothing is tracked, and you call Save/Updates explicitly.
+type OrderRow struct {
+    ID        int64
+    CreatedAt time.Time
+    Total     decimal.Decimal
+}
+
+func (s *Store) RecentPaid(ctx context.Context, customerID int64) ([]OrderRow, error) {
+    var out []OrderRow
+    err := s.db.WithContext(ctx).
+        Model(&amp;Order{}).
+        Select(&quot;id&quot;, &quot;created_at&quot;, &quot;total&quot;).
+        Where(&quot;customer_id = ? AND status = ?&quot;, customerID, &quot;paid&quot;). // ? placeholders are bound, not concatenated
+        Order(&quot;created_at DESC&quot;).
+        Limit(20).
+        Scan(&amp;out).Error
+    return out, err
+}
+</code></pre>
+<pre><code class="language-typescript">// Prisma: a generated, fully typed client. `select` picks columns; there's no change tracking.
+export function recentPaid(prisma: PrismaClient, customerId: number) {
+  return prisma.order.findMany({
+    where: { customerId, status: &quot;PAID&quot; },
+    orderBy: { createdAt: &quot;desc&quot; },
+    take: 20,
+    select: { id: true, createdAt: true, total: true },
+  });
+}
+// TypeORM: dataSource.getRepository(Order).find({ where: { customer: { id }, status: &quot;paid&quot; },
+//          order: { createdAt: &quot;DESC&quot; }, take: 20, select: { id: true, createdAt: true, total: true } })
+</code></pre>
+</div>
+<p>How the ecosystems differ, and why:</p>
+<ul>
+<li><strong>.NET</strong> has LINQ in the language, so EF Core can translate ordinary C# expressions into SQL. That's uniquely powerful, and it's also why "this LINQ can't be translated" exceptions exist. Dapper is the near-universal escape hatch, and the two share one <code>DbConnection</code>.</li>
+<li><strong>Java</strong> has no language-integrated query, so JPA invented JPQL (strings) and the Criteria API (verbose). jOOQ fills the "typed SQL" gap with generated classes. Hibernate is the JPA implementation behind Spring Data.</li>
+<li><strong>Python</strong>'s SQLAlchemy is unusual: Core and ORM are one library, and you can mix them in a single session. Django's ORM is the other giant, active-record style.</li>
+<li><strong>Go</strong> culture distrusts magic: <code>database/sql</code> plus sqlc (SQL-first codegen) is the mainstream; GORM and ent exist but many teams avoid reflection-heavy ORMs on hot paths.</li>
+<li><strong>TypeScript</strong> splits into codegen (Prisma, generating a client from <code>schema.prisma</code>) and type inference (Drizzle and Kysely, which compute result types from your query with no build step).</li>
+</ul>
+<div class="recognize">
+<p><strong>Choosing a rung</strong></p>
+<ul>
+<li><strong>Full ORM</strong> when the service is mostly CRUD over a rich model, writes go through aggregates with invariants, and the team will actually read the SQL log.</li>
+<li><strong>Micro-ORM / typed SQL</strong> for read-heavy services, reporting, complex SQL (window functions, CTEs, <code>LATERAL</code>), and teams fluent in SQL.</li>
+<li><strong>Raw driver</strong> for bulk loads (<code>COPY</code>, <code>SqlBulkCopy</code>), streaming huge result sets, and the few hottest queries after profiling.</li>
+<li><strong>Never</strong> because of a benchmark of the mapper alone: the database and the round trips dominate, as the <a href="#the-mental-model-every-query-crosses-six-boundaries">mental model</a> shows.</li>
+</ul>
+</div>
+<h2 id="connection-pooling-borrow-return-wait">Connection pooling: borrow, return, wait</h2>
+<p>Opening a database connection is expensive: a TCP handshake, a TLS handshake, authentication, and on PostgreSQL a whole new server <strong>process</strong> (several MB of RAM). That's 5 to 50 ms, more than most queries. So every driver keeps a <strong>pool</strong>: a small set of open connections that requests borrow and give back.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 300" width="900" role="img" aria-label="Connection pool lifecycle: requests call Open, which borrows an idle connection if one exists, opens a new physical connection if the pool is below its maximum, or waits in a queue until a connection is returned or the acquire timeout fires; Dispose or Close returns the connection to the pool rather than closing it">
+<defs><marker id="data-access-ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text class="title" x="10" y="26">What "open a connection" really does with a pool</text>
+<rect class="box accent" x="10" y="120" width="140" height="56" rx="8"/><text class="mono" x="80" y="144" text-anchor="middle">conn.Open()</text><text class="small muted" x="80" y="163" text-anchor="middle">borrow</text>
+<rect class="box done" x="230" y="50" width="200" height="56" rx="8"/><text class="mono" x="330" y="74" text-anchor="middle">idle conn available</text><text class="small muted" x="330" y="93" text-anchor="middle">hand it over: ~µs</text>
+<rect class="box visit" x="230" y="120" width="200" height="56" rx="8"/><text class="mono" x="330" y="144" text-anchor="middle">below max size</text><text class="small muted" x="330" y="163" text-anchor="middle">open a new one: 5–50 ms</text>
+<rect class="box active" x="230" y="190" width="200" height="56" rx="8"/><text class="mono" x="330" y="214" text-anchor="middle">pool exhausted</text><text class="small muted" x="330" y="233" text-anchor="middle">queue and wait</text>
+<rect class="box path" x="520" y="85" width="170" height="56" rx="8"/><text class="mono" x="605" y="109" text-anchor="middle">run queries</text><text class="small muted" x="605" y="128" text-anchor="middle">hold it briefly</text>
+<rect class="box bad" x="520" y="200" width="170" height="56" rx="8"/><text class="mono" x="605" y="224" text-anchor="middle">acquire timeout</text><text class="small muted" x="605" y="243" text-anchor="middle">exception, 500/503</text>
+<rect class="box done" x="740" y="85" width="150" height="56" rx="8"/><text class="mono" x="815" y="109" text-anchor="middle">Dispose()</text><text class="small muted" x="815" y="128" text-anchor="middle">return, not close</text>
+<line class="edge" x1="150" y1="140" x2="228" y2="80" marker-end="url(#data-access-ar3)"/>
+<line class="edge" x1="150" y1="148" x2="228" y2="148" marker-end="url(#data-access-ar3)"/>
+<line class="edge" x1="150" y1="156" x2="228" y2="214" marker-end="url(#data-access-ar3)"/>
+<line class="edge" x1="430" y1="80" x2="518" y2="106" marker-end="url(#data-access-ar3)"/>
+<line class="edge" x1="430" y1="148" x2="518" y2="120" marker-end="url(#data-access-ar3)"/>
+<line class="edge dash" x1="430" y1="212" x2="518" y2="128" marker-end="url(#data-access-ar3)"/><text class="small muted" x="440" y="186">another request returns one</text>
+<line class="edge dash" x1="430" y1="230" x2="518" y2="230" marker-end="url(#data-access-ar3)"/><text class="small muted" x="474" y="272" text-anchor="middle">nobody returns one in time</text>
+<line class="edge" x1="690" y1="113" x2="738" y2="113" marker-end="url(#data-access-ar3)"/>
+<path class="edge dash" d="M815,85 C815,40 330,30 330,48" fill="none" marker-end="url(#data-access-ar3)"/><text class="small muted" x="610" y="26" text-anchor="middle">back to idle</text>
+</svg>
+<figcaption>Close/Dispose on a pooled connection resets it and returns it to the pool. "Always dispose" isn't tidiness; it's what keeps the pool alive.</figcaption>
+</figure>
+
+<p>Run the pool yourself. Requests arrive at different times and hold their connection for different lengths of time. Watch which ones reuse an idle connection (cheap), which pay to open one, which wait, and which time out. Then set "request that forgets Dispose" to a request number and watch a leak slowly kill the pool.</p>
+<div class="viz dax-wide" data-viz="data-access-pool"></div>
+
+<p>Three things the visualizer makes obvious:</p>
+<ol>
+<li><strong>Pool exhaustion is a latency problem before it's an error.</strong> Requests wait long before they time out, so the first symptom is p99 latency, not exceptions.</li>
+<li><strong>Hold time, not request count, is what matters.</strong> A request that holds a connection across a slow HTTP call, or across 51 lazy loads, occupies a slot for the whole time. Fix the hold time and the same pool serves several times more traffic.</li>
+<li><strong>A leak is permanent.</strong> A connection that's never returned is gone until the process restarts. A few leaks per hour turn into an outage overnight.</li>
+</ol>
+<h3 id="sizing-smaller-than-you-think">Sizing: smaller than you think</h3>
+<p>It's tempting to set <code>Max Pool Size=1000</code>. Don't. The database has a fixed number of CPU cores and disks; past a point, more concurrent queries just context-switch and fight over locks and memory. A widely used starting formula (from the PostgreSQL wiki, popularised by HikariCP) is:</p>
+<pre><code class="language-text">connections per database ≈ (CPU cores × 2) + effective spindles      e.g. 8 cores, SSD → about 17–20 in total
+total across the fleet  = pool max × app instances                   10 pods × 100 = 1,000 → Postgres falls over
+</code></pre>
+<p>The second line is the one that bites. Pools are <strong>per process</strong>, so autoscaling to 40 pods multiplies your connection count by 40. PostgreSQL's <code>max_connections</code> defaults to 100. When the sum exceeds what the database can take, put a server-side pooler in between: <strong>PgBouncer</strong> (transaction pooling), RDS Proxy, Azure's built-in PgBouncer, or the pooler in Supabase/Neon. Serverless functions almost always need one, because every cold start creates a new pool.</p>
+<p>How each ecosystem configures its pool:</p>
+<div class="code-tabs" data-labels="C# · ADO.NET / Npgsql,Java · HikariCP,Python · SQLAlchemy,Go · database/sql,TypeScript · pg / Prisma">
+<pre><code class="language-csharp">// The pool lives in the driver, keyed by connection string. EF Core and Dapper both use it automatically.
+// SQL Server: &quot;Server=...;Database=shop;Max Pool Size=100;Min Pool Size=0;Connect Timeout=15&quot;
+// Npgsql: build one NpgsqlDataSource per database and register it as a singleton.
+var dataSource = new NpgsqlDataSourceBuilder(
+        &quot;Host=db;Database=shop;Maximum Pool Size=20;Timeout=15;Connection Idle Lifetime=300&quot;)
+    .Build();
+builder.Services.AddSingleton(dataSource);
+builder.Services.AddDbContextPool&lt;ShopDb&gt;(o =&gt; o.UseNpgsql(dataSource));   // also pools DbContext objects
+
+// Use: borrow late, return early, ALWAYS via using/await using.
+await using (var conn = await dataSource.OpenConnectionAsync(ct))
+{
+    // queries here
+}   // returned to the pool here, even if an exception is thrown
+</code></pre>
+<pre><code class="language-java">// HikariCP is Spring Boot's default pool (spring.datasource.hikari.*).
+HikariConfig cfg = new HikariConfig();
+cfg.setJdbcUrl(&quot;jdbc:postgresql://db:5432/shop&quot;);
+cfg.setMaximumPoolSize(20);
+cfg.setConnectionTimeout(5_000);        // ms to wait for a connection before SQLException
+cfg.setMaxLifetime(1_800_000);          // recycle before the DB or a firewall kills idle connections
+cfg.setLeakDetectionThreshold(10_000);  // log a stack trace if a connection is held &gt; 10 s
+HikariDataSource ds = new HikariDataSource(cfg);
+
+try (Connection c = ds.getConnection();                       // try-with-resources returns it
+     PreparedStatement ps = c.prepareStatement(&quot;SELECT 1&quot;)) {
+    ps.executeQuery();
+}
+</code></pre>
+<pre><code class="language-python"># SQLAlchemy keeps a QueuePool per Engine. Create ONE engine per database per process.
+from sqlalchemy import create_engine
+
+engine = create_engine(
+    &quot;postgresql+psycopg://app@db/shop&quot;,
+    pool_size=10,          # connections kept open
+    max_overflow=5,        # extra connections allowed under burst (closed when returned)
+    pool_timeout=5,        # seconds to wait before TimeoutError
+    pool_recycle=1800,     # recycle connections older than this
+    pool_pre_ping=True,    # test a connection before handing it out (survives DB restarts)
+)
+with engine.connect() as conn:   # borrowed here...
+    conn.exec_driver_sql(&quot;SELECT 1&quot;)
+# ...returned here
+</code></pre>
+<pre><code class="language-go">// *sql.DB IS a pool. Open it once, share it, never Close it per request.
+db, err := sql.Open(&quot;pgx&quot;, &quot;postgres://app@db/shop&quot;)
+if err != nil { log.Fatal(err) }
+db.SetMaxOpenConns(20)                   // default is UNLIMITED: always set this
+db.SetMaxIdleConns(20)                   // default is 2: too low, causes churn under load
+db.SetConnMaxLifetime(30 * time.Minute)
+db.SetConnMaxIdleTime(5 * time.Minute)
+
+// Acquire timeout comes from the context:
+ctx, cancel := context.WithTimeout(r.Context(), 2*time.Second)
+defer cancel()
+rows, err := db.QueryContext(ctx, &quot;SELECT id FROM orders WHERE customer_id = $1&quot;, id)
+if err != nil { return err }
+defer rows.Close()                       // forgetting this leaks the connection
+</code></pre>
+<pre><code class="language-typescript">// node-postgres: one Pool per process; pool.query() borrows and releases for you.
+import { Pool } from &quot;pg&quot;;
+export const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  max: 20,
+  connectionTimeoutMillis: 5_000,  // wait for a connection, then reject
+  idleTimeoutMillis: 30_000,
+});
+
+const client = await pool.connect();      // explicit checkout: needed for transactions
+try {
+  await client.query(&quot;SELECT 1&quot;);
+} finally {
+  client.release();                      // forgetting this is the classic Node pool leak
+}
+// Prisma: ?connection_limit=20&amp;pool_timeout=5 on the URL. In serverless, use a pooler (PgBouncer, Prisma Accelerate).
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Pool pitfalls</strong></p>
+<ul>
+<li><strong>Sync-over-async.</strong> In .NET, <code>.Result</code> and <code>.Wait()</code> on async database calls block thread-pool threads; under load the pool <em>and</em> the thread pool starve together. Go async all the way, as in <a href="concurrency-async.html">concurrency and async</a>.</li>
+<li><strong>One pool per request.</strong> Creating an <code>Engine</code>, <code>sql.DB</code>, <code>HikariDataSource</code>, <code>Pool</code> or <code>PrismaClient</code> per request or per function call opens fresh connections every time. Make it a singleton.</li>
+<li><strong>Holding a connection across remote calls.</strong> Calling a payment API inside a transaction holds a connection <em>and</em> locks for the length of that call. Do remote calls before or after; see <a href="outbound-pipelines.html">outbound pipelines</a> and <a href="resilience.html">resilience</a>.</li>
+<li><strong>Different connection strings per tenant.</strong> ADO.NET keys pools by exact connection string; 500 tenants means 500 pools. Use one pool and set the tenant per session, or use a pooler.</li>
+</ul>
+</div>
+<h2 id="transactions-and-isolation-levels">Transactions and isolation levels</h2>
+<p>A <strong>transaction</strong> groups statements so they succeed or fail together (<strong>atomicity</strong>), move the database from one valid state to another (<strong>consistency</strong>), survive crashes once committed (<strong>durability</strong>), and don't see each other's half-finished work (<strong>isolation</strong>). The first three are mostly free. Isolation is a dial, and its default setting surprises nearly everyone.</p>
+<p>Full isolation ("as if transactions ran one after another", called <strong>serializable</strong>) costs throughput, so databases default to weaker levels that allow specific <strong>anomalies</strong>. Here they are, as two interleaved transactions:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 360" width="900" role="img" aria-label="Four anomalies shown as two transactions T1 and T2 interleaved over time: dirty read, where T1 reads T2's uncommitted write that is later rolled back; non-repeatable read, where T1 reads a row twice and gets different values because T2 committed an update in between; phantom, where T1 counts rows twice and T2 inserted a matching row in between; and write skew, where both read the same rule, each updates a different row, and together they break the rule">
+<text class="title" x="10" y="26">The four anomalies, each in two transactions</text>
+<rect class="box" x="10" y="44" width="430" height="140" rx="8"/>
+<text class="mono" x="24" y="66">Dirty read</text><text class="small muted" x="430" y="66" text-anchor="end">allowed by READ UNCOMMITTED</text>
+<text class="small" x="24" y="92">T2: UPDATE accounts SET balance = 0 WHERE id = 1</text>
+<text class="small" x="24" y="114">T1: SELECT balance … → 0</text><rect class="box bad" x="200" y="100" width="150" height="20" rx="4"/><text class="small" x="275" y="114" text-anchor="middle">uncommitted value</text>
+<text class="small" x="24" y="136">T2: ROLLBACK</text>
+<text class="small muted" x="24" y="164">T1 acted on a value that never existed.</text>
+<rect class="box" x="460" y="44" width="430" height="140" rx="8"/>
+<text class="mono" x="474" y="66">Non-repeatable read</text><text class="small muted" x="880" y="66" text-anchor="end">allowed by READ COMMITTED</text>
+<text class="small" x="474" y="92">T1: SELECT price FROM products WHERE id = 7 → 10</text>
+<text class="small" x="474" y="114">T2: UPDATE products SET price = 12 …; COMMIT</text>
+<text class="small" x="474" y="136">T1: SELECT price … WHERE id = 7 → 12</text>
+<text class="small muted" x="474" y="164">Same row, same transaction, two answers.</text>
+<rect class="box" x="10" y="200" width="430" height="140" rx="8"/>
+<text class="mono" x="24" y="222">Phantom</text><text class="small muted" x="430" y="222" text-anchor="end">allowed by REPEATABLE READ (SQL standard)</text>
+<text class="small" x="24" y="248">T1: SELECT count(*) FROM shifts WHERE day = 'Mon' → 2</text>
+<text class="small" x="24" y="270">T2: INSERT INTO shifts (day, …) VALUES ('Mon', …); COMMIT</text>
+<text class="small" x="24" y="292">T1: SELECT count(*) … → 3</text>
+<text class="small muted" x="24" y="320">Existing rows were stable; a new row appeared.</text>
+<rect class="box" x="460" y="200" width="430" height="140" rx="8"/>
+<text class="mono" x="474" y="222">Write skew</text><text class="small muted" x="880" y="222" text-anchor="end">allowed by SNAPSHOT</text>
+<text class="small" x="474" y="248">Rule: at least one doctor on call. Alice and Bob are.</text>
+<text class="small" x="474" y="270">T1: count on call → 2, so Alice goes off call</text>
+<text class="small" x="474" y="292">T2: count on call → 2, so Bob goes off call</text>
+<text class="small muted" x="474" y="320">Different rows, no conflict detected, rule broken.</text>
+</svg>
+<figcaption>Lost update, where two read-modify-write cycles overwrite each other, is the fifth classic. It's the one you hit most in web apps, and the next section is about it.</figcaption>
+</figure>
+
+<p>Now play the scenarios under each level. Each step is one statement; the table shows what each transaction sees, which statements block, and whether the database lets the anomaly through, blocks it, or aborts a transaction so you can retry.</p>
+<div class="viz dax-wide" data-viz="data-access-isolation"></div>
+
+<p>The summary the visualizer builds, as a table (behaviour of PostgreSQL-style MVCC; lock-based engines block where MVCC aborts):</p>
+<table>
+<thead>
+<tr>
+<th>Anomaly</th>
+<th>READ UNCOMMITTED</th>
+<th>READ COMMITTED</th>
+<th>REPEATABLE READ</th>
+<th>SNAPSHOT</th>
+<th>SERIALIZABLE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dirty read</td>
+<td>possible</td>
+<td>prevented</td>
+<td>prevented</td>
+<td>prevented</td>
+<td>prevented</td>
+</tr>
+<tr>
+<td>Non-repeatable read</td>
+<td>possible</td>
+<td><strong>possible</strong></td>
+<td>prevented</td>
+<td>prevented</td>
+<td>prevented</td>
+</tr>
+<tr>
+<td>Phantom</td>
+<td>possible</td>
+<td>possible</td>
+<td>possible in the standard; prevented by Postgres and InnoDB snapshots</td>
+<td>prevented</td>
+<td>prevented</td>
+</tr>
+<tr>
+<td>Lost update (read-modify-write)</td>
+<td>possible</td>
+<td><strong>possible</strong></td>
+<td>aborted: retry</td>
+<td>aborted: retry</td>
+<td>aborted: retry</td>
+</tr>
+<tr>
+<td>Write skew</td>
+<td>possible</td>
+<td>possible</td>
+<td>possible in Postgres; blocked in lock-based engines</td>
+<td><strong>possible</strong></td>
+<td>aborted: retry</td>
+</tr>
+</tbody>
+</table>
+<p>What the major databases actually default to:</p>
+<table>
+<thead>
+<tr>
+<th>Database</th>
+<th>Default</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PostgreSQL</td>
+<td>READ COMMITTED</td>
+<td>REPEATABLE READ is snapshot isolation; SERIALIZABLE is SSI (aborts with SQLSTATE <code>40001</code>)</td>
+</tr>
+<tr>
+<td>SQL Server</td>
+<td>READ COMMITTED (locking)</td>
+<td>turn on <code>READ_COMMITTED_SNAPSHOT</code> so readers don't block writers; <code>SNAPSHOT</code> must be enabled per database</td>
+</tr>
+<tr>
+<td>Azure SQL Database</td>
+<td>READ COMMITTED <strong>snapshot</strong></td>
+<td>RCSI is on by default</td>
+</tr>
+<tr>
+<td>MySQL InnoDB</td>
+<td>REPEATABLE READ</td>
+<td>consistent snapshot for reads, but <code>UPDATE</code> and locking reads see the latest committed row</td>
+</tr>
+<tr>
+<td>Oracle</td>
+<td>READ COMMITTED</td>
+<td>its SERIALIZABLE is snapshot isolation</td>
+</tr>
+</tbody>
+</table>
+<div class="rule">
+<p><strong>READ COMMITTED does not protect read-modify-write</strong></p>
+<p><code>SELECT stock</code> then <code>UPDATE … SET stock = @newValue</code> in the default level loses updates under concurrency. Fix it with one of: an <strong>atomic update</strong> (<code>SET stock = stock - 1 WHERE stock &gt;= 1</code>), an <strong>optimistic</strong> version check, a <strong>pessimistic</strong> <code>SELECT … FOR UPDATE</code>, or a higher isolation level <strong>plus a retry loop</strong>. Raising the level without the retry loop just turns lost updates into errors.</p>
+</div>
+<p>Transactions in each stack, with the retry loop that SERIALIZABLE and SNAPSHOT require:</p>
+<div class="code-tabs" data-labels="C# · EF Core,Java · Spring,Python · SQLAlchemy,Go · pgx,TypeScript · Prisma">
+<pre><code class="language-csharp">// EF Core: SaveChanges is already a transaction. For multi-step work, use an explicit transaction
+// inside the execution strategy, so transient failures retry the WHOLE unit, not one statement.
+var strategy = db.Database.CreateExecutionStrategy();
+await strategy.ExecuteAsync(async () =&gt;
+{
+    await using var tx = await db.Database.BeginTransactionAsync(IsolationLevel.Serializable, ct);
+    var onCall = await db.Doctors.CountAsync(d =&gt; d.ShiftId == shiftId &amp;&amp; d.OnCall, ct);
+    if (onCall &lt; 2) throw new DomainException(&quot;At least one doctor must stay on call.&quot;);
+    var me = await db.Doctors.SingleAsync(d =&gt; d.Id == doctorId, ct);
+    me.OnCall = false;
+    await db.SaveChangesAsync(ct);
+    await tx.CommitAsync(ct);
+});
+// Configure retries: o.UseNpgsql(cs, x =&gt; x.EnableRetryOnFailure()) (Npgsql treats 40001 as transient).
+// SQL Server serialization failures surface as deadlocks (1205), which SqlServerRetryingExecutionStrategy retries.
+</code></pre>
+<pre><code class="language-java">// Spring: declarative transactions. The method runs in one transaction; an exception rolls it back.
+@Transactional(isolation = Isolation.SERIALIZABLE)
+@Retryable(retryFor = ConcurrencyFailureException.class,  // spring-retry; Spring maps 40001 and deadlocks to subclasses
+           maxAttempts = 3, backoff = @Backoff(delay = 20, multiplier = 2, random = true))
+public void goOffCall(long doctorId, long shiftId) {
+    long onCall = doctors.countByShiftIdAndOnCallTrue(shiftId);
+    if (onCall &lt; 2) throw new DomainException(&quot;At least one doctor must stay on call.&quot;);
+    doctors.findById(doctorId).orElseThrow().setOnCall(false);   // dirty checking writes it at commit
+}
+// Pitfall: @Transactional works through a proxy. Calling this method from the same class bypasses the proxy:
+// no transaction, no retry. The retry must wrap the transaction (retry outside, transaction inside).
+</code></pre>
+<pre><code class="language-python"># SQLAlchemy: session.begin() commits on success and rolls back on exception.
+from sqlalchemy import func, select
+from sqlalchemy.exc import OperationalError
+
+def go_off_call(Session, doctor_id: int, shift_id: int, attempts: int = 3) -&gt; None:
+    for attempt in range(attempts):
+        try:
+            with Session() as s, s.begin():
+                s.connection(execution_options={&quot;isolation_level&quot;: &quot;SERIALIZABLE&quot;})
+                on_call = s.scalar(select(func.count()).select_from(Doctor)
+                                   .where(Doctor.shift_id == shift_id, Doctor.on_call))
+                if on_call &lt; 2:
+                    raise ValueError(&quot;At least one doctor must stay on call.&quot;)
+                s.get(Doctor, doctor_id).on_call = False
+            return
+        except OperationalError as e:            # psycopg raises SerializationFailure (SQLSTATE 40001)
+            if getattr(e.orig, &quot;sqlstate&quot;, None) != &quot;40001&quot; or attempt == attempts - 1:
+                raise
+</code></pre>
+<pre><code class="language-go">// pgx: BeginTx with options. pgx.BeginTxFunc commits if fn returns nil and rolls back otherwise.
+func GoOffCall(ctx context.Context, pool *pgxpool.Pool, doctorID, shiftID int64) error {
+    for attempt := 0; ; attempt++ {
+        err := pgx.BeginTxFunc(ctx, pool, pgx.TxOptions{IsoLevel: pgx.Serializable}, func(tx pgx.Tx) error {
+            var onCall int
+            if err := tx.QueryRow(ctx,
+                `SELECT count(*) FROM doctors WHERE shift_id = $1 AND on_call`, shiftID).Scan(&amp;onCall); err != nil {
+                return err
+            }
+            if onCall &lt; 2 {
+                return ErrLastDoctor
+            }
+            _, err := tx.Exec(ctx, `UPDATE doctors SET on_call = false WHERE id = $1`, doctorID)
+            return err
+        })
+        var pgErr *pgconn.PgError
+        if errors.As(err, &amp;pgErr) &amp;&amp; pgErr.Code == &quot;40001&quot; &amp;&amp; attempt &lt; 2 {
+            continue // serialization failure: run the whole transaction again
+        }
+        return err
+    }
+}
+</code></pre>
+<pre><code class="language-typescript">// Prisma: interactive transaction with an isolation level. Retry on P2034 (write conflict / deadlock).
+async function goOffCall(prisma: PrismaClient, doctorId: number, shiftId: number) {
+  for (let attempt = 0; ; attempt++) {
+    try {
+      return await prisma.$transaction(async (tx) =&gt; {
+        const onCall = await tx.doctor.count({ where: { shiftId, onCall: true } });
+        if (onCall &lt; 2) throw new Error(&quot;At least one doctor must stay on call.&quot;);
+        await tx.doctor.update({ where: { id: doctorId }, data: { onCall: false } });
+      }, { isolationLevel: Prisma.TransactionIsolationLevel.Serializable, timeout: 5_000 });
+    } catch (e) {
+      const retryable = e instanceof Prisma.PrismaClientKnownRequestError &amp;&amp; e.code === &quot;P2034&quot;;
+      if (!retryable || attempt === 2) throw e;
+    }
+  }
+}
+// Kysely: db.transaction().setIsolationLevel(&quot;serializable&quot;).execute(async (trx) =&gt; { ... })
+</code></pre>
+</div>
+<div class="tip">
+<p><strong>Keep transactions short</strong></p>
+<p>A transaction holds locks (or, under MVCC, holds back cleanup of old row versions) for as long as it's open. Never wait for user input, an HTTP call or a message broker inside one. Read what you need, compute, then open the transaction for the writes only. When the work genuinely spans services, a database transaction is the wrong tool: use the outbox and sagas from <a href="distributed-architecture.html">distributed architecture</a>.</p>
+</div>
+<h2 id="optimistic-vs-pessimistic-concurrency">Optimistic vs pessimistic concurrency</h2>
+<p>The most common concurrency bug in business software isn't a race between two threads in one process. It's two <strong>people</strong>. Alice opens order 42 at 10:00, Bob opens it at 10:01, Bob saves at 10:03, Alice saves at 10:05, and Bob's change is gone. No isolation level helps, because the edits happen in separate HTTP requests and separate transactions, minutes apart.</p>
+<p>There are two families of fixes:</p>
+<ul>
+<li><strong>Optimistic concurrency</strong>: assume conflicts are rare. Every row carries a <strong>version</strong> (a counter, a timestamp or SQL Server's <code>rowversion</code>). The update says <code>UPDATE … WHERE id = 42 AND version = 7</code>. If someone else saved first, the version is now 8, zero rows match, and the second writer gets a conflict to resolve. No locks are held while people think.</li>
+<li><strong>Pessimistic concurrency</strong>: assume conflicts are likely. Lock the row when you read it (<code>SELECT … FOR UPDATE</code>, or <code>WITH (UPDLOCK, ROWLOCK)</code> on SQL Server) so others wait. This works only <em>within one transaction</em>, so it fits short server-side operations, not human edits.</li>
+</ul>
+<p>Run the three strategies on the same timeline:</p>
+<div class="viz dax-wide" data-viz="data-access-occ"></div>
+
+<div class="compare">
+<div class="good">
+<h4 id="optimistic-version-check">Optimistic (version check)</h4>
+<ul>
+<li>No locks held between read and write: scales well, nothing to deadlock.</li>
+<li>Works across HTTP requests: send the version to the client as an <strong>ETag</strong> and require <code>If-Match</code> on <code>PUT</code>/<code>PATCH</code>. A mismatch is <code>412 Precondition Failed</code>. See <a href="api-design.html#etags-and-conditional-requests-no-more-lost-updates">ETags and conditional requests</a>.</li>
+<li>The loser must re-read and retry or merge. Good when conflicts are rare.</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="pessimistic-row-lock">Pessimistic (row lock)</h4>
+<ul>
+<li>The second writer waits instead of failing, so no work is thrown away.</li>
+<li>Lock only inside one short transaction. Holding a lock across user think time blocks everyone.</li>
+<li>Risk of deadlocks (lock rows in a consistent order) and lock waits (set <code>lock_timeout</code> or use <code>NOWAIT</code> / <code>SKIP LOCKED</code>).</li>
+<li>Good for hot rows under heavy contention: counters, seat allocation, job queues (<code>FOR UPDATE SKIP LOCKED</code>).</li>
+</ul>
+</div>
+</div>
+<div class="code-tabs" data-labels="C# · EF Core,Java · JPA,Python · SQLAlchemy,Go · database/sql,TypeScript · Prisma">
+<pre><code class="language-csharp">// SQL Server: a rowversion column, bumped automatically by the database on every update.
+public class Order
+{
+    public long Id { get; set; }
+    public string Status { get; set; } = &quot;&quot;;
+    [Timestamp] public byte[] RowVersion { get; set; } = [];   // PostgreSQL: map xmin with .IsRowVersion()
+}
+
+// PUT /orders/42  with  If-Match: &quot;&lt;base64 rowversion&gt;&quot;
+order.Status = dto.Status;
+db.Entry(order).Property(o =&gt; o.RowVersion).OriginalValue = Convert.FromBase64String(ifMatch);
+try { await db.SaveChangesAsync(ct); }                       // UPDATE ... WHERE Id = @id AND RowVersion = @orig
+catch (DbUpdateConcurrencyException) { return Results.StatusCode(412); }
+
+// Pessimistic, inside a short transaction:
+var seat = (await db.Seats.FromSql($&quot;SELECT * FROM seats WHERE id = {seatId} FOR UPDATE&quot;).ToListAsync(ct)).Single();
+</code></pre>
+<pre><code class="language-java">// JPA: @Version. Hibernate adds &quot;and version=?&quot; to every UPDATE and increments the column.
+@Entity
+public class Order {
+    @Id Long id;
+    String status;
+    @Version long version;
+}
+
+// A stale version throws OptimisticLockException (Spring: ObjectOptimisticLockingFailureException) → 412/409.
+
+// Pessimistic: SELECT ... FOR UPDATE, with a lock timeout so you never wait forever.
+@Lock(LockModeType.PESSIMISTIC_WRITE)
+@QueryHints(@QueryHint(name = &quot;jakarta.persistence.lock.timeout&quot;, value = &quot;2000&quot;))
+@Query(&quot;select s from Seat s where s.id = :id&quot;)
+Seat lockSeat(@Param(&quot;id&quot;) long id);
+</code></pre>
+<pre><code class="language-python"># SQLAlchemy: version_id_col adds &quot;AND version = :old&quot; to UPDATEs; a mismatch raises StaleDataError.
+from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm.exc import StaleDataError
+
+class Order(Base):
+    __tablename__ = &quot;orders&quot;
+    id: Mapped[int] = mapped_column(primary_key=True)
+    status: Mapped[str]
+    version: Mapped[int] = mapped_column(nullable=False)
+    __mapper_args__ = {&quot;version_id_col&quot;: version}
+
+# Pessimistic: session.scalars(select(Seat).where(Seat.id == seat_id).with_for_update(nowait=True)).one()
+</code></pre>
+<pre><code class="language-go">// No ORM: the version check is one WHERE clause, and RowsAffected tells you who won.
+func UpdateStatus(ctx context.Context, db *sql.DB, id int64, status string, version int64) error {
+    res, err := db.ExecContext(ctx,
+        `UPDATE orders SET status = $1, version = version + 1 WHERE id = $2 AND version = $3`,
+        status, id, version)
+    if err != nil {
+        return err
+    }
+    if n, _ := res.RowsAffected(); n == 0 {
+        return ErrConflict // someone else saved first (or the row is gone): HTTP 412
+    }
+    return nil
+}
+// Pessimistic: inside tx, `SELECT ... FROM seats WHERE id = $1 FOR UPDATE` (add NOWAIT or SET lock_timeout).
+</code></pre>
+<pre><code class="language-typescript">// Prisma has no built-in version attribute; use updateMany with the version in the filter.
+const { count } = await prisma.order.updateMany({
+  where: { id, version },                          // matches only if nobody saved in between
+  data: { status, version: { increment: 1 } },
+});
+if (count === 0) throw new ConflictError();        // → 412 Precondition Failed
+
+// TypeORM has @VersionColumn; for pessimistic locks: .setLock(&quot;pessimistic_write&quot;) on a query builder.
+// Raw pessimistic lock in Prisma: tx.$queryRaw`SELECT * FROM seats WHERE id = ${seatId} FOR UPDATE`
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Often the best lock is no lock: make the update atomic</strong></p>
+<p><code>UPDATE products SET stock = stock - @qty WHERE id = @id AND stock &gt;= @qty</code> checks and changes in one statement, under the row lock the database takes anyway. Zero rows affected means "not enough stock". It needs no version column, no <code>FOR UPDATE</code> and no retry loop, and it's correct under every isolation level. Use it whenever the new value can be computed from the old one inside SQL. EF Core's <code>ExecuteUpdateAsync</code>, JPA bulk <code>update</code> queries and Prisma's <code>{ decrement: qty }</code> all generate this form.</p>
+</div>
+<h2 id="change-tracking-and-the-unit-of-work">Change tracking and the unit of work</h2>
+<p>A full ORM's signature feature is that you don't write <code>UPDATE</code> statements. You load objects, change their properties, and call <code>SaveChanges()</code> / <code>commit()</code> / <code>flush()</code>. The ORM works out what changed and writes it, in one transaction. Three mechanisms make that work:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 300" width="900" role="img" aria-label="Unit of work: the context holds an identity map from primary key to entity instance, and a snapshot of each entity's original values; on save it compares current values with snapshots, generates INSERT, UPDATE and DELETE statements for what changed, and runs them in one transaction">
+<defs><marker id="data-access-ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text class="title" x="10" y="26">Inside a DbContext / EntityManager / Session</text>
+<rect class="box" x="10" y="44" width="560" height="180" rx="10"/>
+<text class="small muted" x="24" y="64">one per request (scoped), never shared between threads</text>
+<rect class="box visit" x="24" y="76" width="170" height="134" rx="8"/><text class="mono" x="109" y="98" text-anchor="middle">Identity map</text>
+<text class="small" x="38" y="124">Product#1 → obj A</text><text class="small" x="38" y="146">Product#2 → obj B</text><text class="small" x="38" y="168">Order#9 → obj C</text>
+<text class="small muted" x="38" y="194">same key, same object</text>
+<rect class="box path" x="208" y="76" width="170" height="134" rx="8"/><text class="mono" x="293" y="98" text-anchor="middle">Snapshots</text>
+<text class="small" x="222" y="124">#1 price = 10</text><text class="small" x="222" y="146">#2 name = "Mug"</text><text class="small" x="222" y="168">#9 status = "new"</text>
+<text class="small muted" x="222" y="194">values as loaded</text>
+<rect class="box active" x="392" y="76" width="166" height="134" rx="8"/><text class="mono" x="475" y="98" text-anchor="middle">Entity states</text>
+<text class="small" x="406" y="124">#1 Modified</text><text class="small" x="406" y="146">#2 Unchanged</text><text class="small" x="406" y="168">#9 Deleted</text><text class="small" x="406" y="190">new: Added</text>
+<rect class="box done" x="640" y="44" width="250" height="180" rx="10"/>
+<text class="mono" x="765" y="68" text-anchor="middle">SaveChanges()</text>
+<text class="small" x="654" y="96">1. DetectChanges: diff each</text><text class="small" x="672" y="114">tracked object vs snapshot</text>
+<text class="small" x="654" y="138">2. Order: INSERT parents first,</text><text class="small" x="672" y="156">DELETE children first</text>
+<text class="small" x="654" y="180">3. BEGIN, batch the SQL, COMMIT</text>
+<text class="small" x="654" y="204">4. New snapshots = current values</text>
+<line class="edge" x1="570" y1="134" x2="638" y2="134" marker-end="url(#data-access-ar4)"/>
+<text class="small muted" x="10" y="252">Identity map: loading the same row twice in one context gives you the same object, and the second load may not hit the database at all (Find/get).</text>
+<text class="small muted" x="10" y="274">Snapshots cost memory and CPU proportional to tracked rows. That's why read-only queries should turn tracking off.</text>
+</svg>
+<figcaption>EF Core calls it the change tracker; JPA calls it the persistence context with dirty checking; SQLAlchemy calls it the Session with its identity map and flush. Same pattern: Martin Fowler's Unit of Work.</figcaption>
+</figure>
+
+<p>Type operations and watch what the context does: which <code>find</code> hits the database and which is served from the identity map, how each <code>set</code> changes an entity's state, and what SQL comes out of <code>save</code>. Switch to <em>AsNoTracking</em> to see why setting a property on an untracked object writes nothing.</p>
+<div class="viz dax-wide" data-viz="data-access-uow"></div>
+
+<p>Things to take from it:</p>
+<ul>
+<li><strong><code>set</code> writes nothing.</strong> The <code>UPDATE</code> happens at <code>save</code>, and only for columns that changed. Setting a property to its current value produces no SQL.</li>
+<li><strong>Order matters.</strong> The ORM sorts statements by foreign-key dependencies, not by the order you made changes.</li>
+<li><strong>No tracking, no save.</strong> Objects from <code>AsNoTracking()</code>, a projection or a different context are just objects. To update them you <code>Attach</code>/<code>Update</code> (EF), <code>merge</code> (JPA) or <code>session.merge</code> (SQLAlchemy). <code>Update</code> marks <strong>every</strong> column modified, which overwrites concurrent changes to columns you never touched.</li>
+<li><strong>The context is a cache with a lifetime.</strong> A long-lived context grows without bound and serves stale data. Make it per request (scoped), per unit of work, never a singleton.</li>
+</ul>
+<p>How the ecosystems differ:</p>
+<div class="code-tabs" data-labels="C# · EF Core,Java · JPA / Hibernate,Python · SQLAlchemy,Go · no UoW,TypeScript · TypeORM / Prisma">
+<pre><code class="language-csharp">// Tracked by default. One SaveChanges = one transaction with batched statements.
+var product = await db.Products.FindAsync([1], ct);   // identity map first, then the DB
+product!.Price = 12m;                                  // Modified (detected at SaveChanges)
+db.Products.Add(new Product { Name = &quot;Lamp&quot;, Price = 30m });
+await db.SaveChangesAsync(ct);                         // UPDATE products SET price=@p0 WHERE id=@p1; INSERT ...
+
+// Read-only paths: no snapshots, no identity map.
+var list = await db.Products.AsNoTracking().Where(p =&gt; p.Price &lt; 20).ToListAsync(ct);
+// Or make it the default for a read-model context:
+// optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+
+// Set-based updates skip the change tracker entirely (EF Core 7+):
+await db.Products.Where(p =&gt; p.Discontinued).ExecuteUpdateAsync(s =&gt; s.SetProperty(p =&gt; p.Price, 0m), ct);
+</code></pre>
+<pre><code class="language-java">// The persistence context tracks managed entities; dirty checking runs at flush (before commit or a query).
+@Transactional
+public void reprice(long id) {
+    Product p = em.find(Product.class, id);     // managed
+    p.setPrice(new BigDecimal(&quot;12&quot;));           // no save() call needed: flushed at commit
+    em.persist(new Product(&quot;Lamp&quot;, new BigDecimal(&quot;30&quot;)));
+}
+
+// Read-only: Spring's @Transactional(readOnly = true) lets Hibernate skip snapshots and dirty checking.
+@Transactional(readOnly = true)
+public List&lt;ProductRow&gt; cheap() {
+    return em.createQuery(&quot;select new com.shop.ProductRow(p.id, p.name) from Product p where p.price &lt; 20&quot;,
+                          ProductRow.class).getResultList();
+}
+// Bulk: em.createQuery(&quot;update Product p set p.price = 0 where p.discontinued = true&quot;).executeUpdate();
+</code></pre>
+<pre><code class="language-python"># The Session is the unit of work: identity map + dirty tracking + flush.
+from sqlalchemy import update
+
+with Session(engine) as s, s.begin():          # commits at the end of the block
+    p = s.get(Product, 1)                       # identity map first
+    p.price = 12                                # dirty
+    s.add(Product(name=&quot;Lamp&quot;, price=30))       # pending
+# flush + COMMIT: UPDATE products SET price=? WHERE id=?; INSERT INTO products ...
+
+# Bulk, bypassing the unit of work:
+with Session(engine) as s, s.begin():
+    s.execute(update(Product).where(Product.discontinued).values(price=0))
+</code></pre>
+<pre><code class="language-go">// Go's mainstream tools (database/sql, sqlc, pgx) have no unit of work. You write each statement and
+// group them in a transaction yourself. Explicit, predictable, and more code.
+err := pgx.BeginFunc(ctx, pool, func(tx pgx.Tx) error {
+    if _, err := tx.Exec(ctx, `UPDATE products SET price = $1 WHERE id = $2`, 12, 1); err != nil {
+        return err
+    }
+    _, err := tx.Exec(ctx, `INSERT INTO products (name, price) VALUES ($1, $2)`, &quot;Lamp&quot;, 30)
+    return err
+})
+// GORM: db.Save(&amp;p) writes ALL columns; db.Model(&amp;p).Updates(map[string]any{&quot;price&quot;: 12}) writes some.
+// It doesn't diff against a snapshot, so &quot;which columns changed&quot; is your responsibility.
+</code></pre>
+<pre><code class="language-typescript">// TypeORM (and MikroORM) have a unit of work: save() diffs the entity against what was loaded.
+await dataSource.transaction(async (m) =&gt; {
+  const p = await m.findOneByOrFail(Product, { id: 1 });
+  p.price = 12;
+  await m.save(p);                                      // UPDATE only if changed
+  await m.save(m.create(Product, { name: &quot;Lamp&quot;, price: 30 }));
+});
+
+// Prisma: no tracking, no unit of work. Every write is an explicit call; group them in $transaction.
+await prisma.$transaction([
+  prisma.product.update({ where: { id: 1 }, data: { price: 12 } }),
+  prisma.product.create({ data: { name: &quot;Lamp&quot;, price: 30 } }),
+]);
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Unit-of-work pitfalls</strong></p>
+<ul>
+<li><strong>A singleton DbContext / EntityManager / Session.</strong> Not thread-safe, grows forever, and serves stale data. In EF Core you'll see "A second operation was started on this context instance before a previous operation completed".</li>
+<li><strong>Tracking queries for read-only screens.</strong> Loading 10,000 tracked rows to render a grid allocates snapshots and runs change detection for nothing. Use no-tracking or projections, and see <a href="memory-and-gc.html">memory and GC</a> for why those allocations hurt.</li>
+<li><strong><code>SaveChanges</code> in a loop.</strong> One transaction and one round trip per item. Make the changes, then save once (or in chunks for huge sets).</li>
+<li><strong>Calling <code>Update(entity)</code> on a DTO-built object.</strong> It overwrites every column, including ones other users changed. Load, apply the DTO's changed fields, save; or use a concurrency token.</li>
+</ul>
+</div>
+<h2 id="loading-related-data-lazy-eager-explicit-and-projection">Loading related data: lazy, eager, explicit and projection</h2>
+<p>An order has lines and payments. When you load orders, when do the lines come? There are four answers, and the wrong one is the single most common cause of slow ORM code: the <strong>N+1 query</strong>, which <a href="anti-patterns.html#leaky-abstractions">anti-patterns</a> shows step by step. Here we compare all four strategies on the same data, counting queries, rows and duplicated bytes.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 270" width="900" role="img" aria-label="Four loading strategies for 3 orders with lines and payments: lazy loading issues one query for orders and then one per order per relation; a single JOIN returns the cartesian product of lines and payments with order columns repeated; split queries run one query per table; a projection returns only the needed columns in one query">
+<text class="title" x="10" y="26">Loading 3 orders, each with 2 lines and 2 payments</text>
+<rect class="box bad" x="10" y="44" width="210" height="200" rx="8"/><text class="mono" x="115" y="68" text-anchor="middle">Lazy (N+1)</text>
+<text class="small" x="24" y="94">SELECT orders</text><text class="small" x="24" y="114">SELECT lines WHERE order=1</text><text class="small" x="24" y="134">SELECT pays WHERE order=1</text><text class="small" x="24" y="154">… × 3 orders</text>
+<text class="small" x="24" y="190">queries: 1 + 2N = 7</text><text class="small muted" x="24" y="210">grows with N</text><text class="small muted" x="24" y="230">default in JPA @OneToMany</text>
+<rect class="box active" x="234" y="44" width="210" height="200" rx="8"/><text class="mono" x="339" y="68" text-anchor="middle">One JOIN</text>
+<text class="small" x="248" y="94">SELECT … FROM orders</text><text class="small" x="248" y="114">JOIN lines JOIN payments</text>
+<text class="small" x="248" y="150">queries: 1</text><text class="small" x="248" y="170">rows: N × L × P = 12</text><text class="small muted" x="248" y="190">order columns repeated 4×;</text><text class="small muted" x="248" y="210">the cartesian explosion</text>
+<rect class="box visit" x="458" y="44" width="210" height="200" rx="8"/><text class="mono" x="563" y="68" text-anchor="middle">Split queries</text>
+<text class="small" x="472" y="94">SELECT orders</text><text class="small" x="472" y="114">SELECT lines WHERE order IN</text><text class="small" x="472" y="134">SELECT pays WHERE order IN</text>
+<text class="small" x="472" y="170">queries: 3, fixed</text><text class="small" x="472" y="190">rows: N + NL + NP = 15</text><text class="small muted" x="472" y="210">no duplication; not one</text><text class="small muted" x="472" y="230">consistent snapshot</text>
+<rect class="box done" x="682" y="44" width="208" height="200" rx="8"/><text class="mono" x="786" y="68" text-anchor="middle">Projection</text>
+<text class="small" x="696" y="94">SELECT id, total,</text><text class="small" x="696" y="114">(SELECT count(*) …)</text><text class="small" x="696" y="134">FROM orders</text>
+<text class="small" x="696" y="170">queries: 1</text><text class="small" x="696" y="190">rows: N = 3</text><text class="small muted" x="696" y="210">only the columns the</text><text class="small muted" x="696" y="230">screen needs</text>
+</svg>
+<figcaption>JOIN rows multiply when you include two collections (lines × payments). Split queries add rows instead. The projection does neither, because it asks only for what the response needs.</figcaption>
+</figure>
+
+<div class="viz dax-wide" data-viz="data-access-loading"></div>
+
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>EF Core</th>
+<th>JPA / Hibernate</th>
+<th>SQLAlchemy</th>
+<th>Go</th>
+<th>TypeScript</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lazy</td>
+<td>proxies package, <code>virtual</code> navs (off by default)</td>
+<td><code>FetchType.LAZY</code> (default for collections)</td>
+<td><code>lazy="select"</code> (default)</td>
+<td>not offered by sqlc; GORM has none</td>
+<td>TypeORM lazy relations (<code>Promise&lt;T&gt;</code>)</td>
+</tr>
+<tr>
+<td>Eager, one JOIN</td>
+<td><code>Include(o =&gt; o.Lines)</code></td>
+<td><code>join fetch</code>, <code>@EntityGraph</code></td>
+<td><code>joinedload(Order.lines)</code></td>
+<td>a hand-written JOIN</td>
+<td>Drizzle <code>with:</code> (one query with JSON aggregation); TypeORM <code>relations</code></td>
+</tr>
+<tr>
+<td>Eager, split</td>
+<td><code>.AsSplitQuery()</code></td>
+<td><code>@BatchSize</code>, <code>@Fetch(SUBSELECT)</code></td>
+<td><code>selectinload(Order.lines)</code></td>
+<td>GORM <code>Preload("Lines")</code>; sqlc <code>= ANY($1)</code></td>
+<td>Prisma <code>include</code> (separate queries by default)</td>
+</tr>
+<tr>
+<td>Explicit</td>
+<td><code>Entry(o).Collection(x =&gt; x.Lines).LoadAsync()</code></td>
+<td><code>Hibernate.initialize(o.getLines())</code></td>
+<td><code>session.refresh(o, ["lines"])</code></td>
+<td>another query</td>
+<td>another query</td>
+</tr>
+<tr>
+<td>Projection</td>
+<td><code>.Select(o =&gt; new Dto(...))</code></td>
+<td>constructor expression / interface projection</td>
+<td><code>select(Order.id, ...)</code></td>
+<td>the SELECT list</td>
+<td><code>select:</code> / Kysely <code>.select()</code></td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs" data-labels="C# · EF Core,Java · JPA,Python · SQLAlchemy,Go · sqlc,TypeScript · Prisma / Drizzle">
+<pre><code class="language-csharp">// Two collections: split queries avoid lines × payments duplication.
+var orders = await db.Orders
+    .Where(o =&gt; o.CustomerId == customerId)
+    .Include(o =&gt; o.Lines)
+    .Include(o =&gt; o.Payments)
+    .AsSplitQuery()            // 3 queries; without it: 1 query, N×L×P rows (EF warns about this)
+    .AsNoTracking()
+    .ToListAsync(ct);
+</code></pre>
+<pre><code class="language-java">// Fetch the graph in the query. Fetching two List collections in one JPQL query throws
+// MultipleBagFetchException; fetch one and batch the other.
+@EntityGraph(attributePaths = &quot;lines&quot;)
+List&lt;Order&gt; findByCustomerId(long customerId);
+
+@Entity class Order {
+    @OneToMany(mappedBy = &quot;order&quot;) List&lt;OrderLine&gt; lines;
+    @OneToMany(mappedBy = &quot;order&quot;) @BatchSize(size = 100) List&lt;Payment&gt; payments;  // WHERE order_id IN (...)
+}
+// Global alternative: hibernate.default_batch_fetch_size=100
+</code></pre>
+<pre><code class="language-python"># selectinload: one extra SELECT ... WHERE order_id IN (...) per relationship. The usual best choice for collections.
+from sqlalchemy.orm import joinedload, raiseload, selectinload
+
+stmt = (
+    select(Order)
+    .where(Order.customer_id == customer_id)
+    .options(selectinload(Order.lines), selectinload(Order.payments), raiseload(&quot;*&quot;))
+)
+orders = session.scalars(stmt).all()
+# raiseload(&quot;*&quot;) turns any accidental lazy load into an exception: N+1 can't sneak in later.
+# joinedload(Order.customer) is fine for many-to-one: it adds columns, not rows.
+</code></pre>
+<pre><code class="language-go">// No ORM: write the &quot;split query&quot; yourself. Two queries, no N+1, no duplication.
+orders, err := q.OrdersByCustomer(ctx, customerID)  // -- name: OrdersByCustomer :many
+if err != nil { return nil, err }
+ids := make([]int64, len(orders))
+for i, o := range orders { ids[i] = o.ID }
+lines, err := q.LinesForOrders(ctx, ids)            // SELECT ... FROM order_lines WHERE order_id = ANY($1::bigint[])
+if err != nil { return nil, err }
+byOrder := map[int64][]db.OrderLine{}
+for _, l := range lines { byOrder[l.OrderID] = append(byOrder[l.OrderID], l) }
+// GORM equivalent: db.Preload(&quot;Lines&quot;).Preload(&quot;Payments&quot;).Where(&quot;customer_id = ?&quot;, id).Find(&amp;orders)
+</code></pre>
+<pre><code class="language-typescript">// Prisma: include runs one query per relation and stitches results (or one JOIN with relationLoadStrategy: &quot;join&quot;).
+const orders = await prisma.order.findMany({
+  where: { customerId },
+  include: { lines: true, payments: true },
+});
+
+// Drizzle relational queries: one SQL statement using JSON aggregation, no row multiplication.
+const orders2 = await db.query.orders.findMany({
+  where: eq(schema.orders.customerId, customerId),
+  with: { lines: true, payments: true },
+});
+</code></pre>
+</div>
+<div class="rule">
+<p><strong>Make lazy loading impossible on the request path</strong></p>
+<p>Lazy loading is convenient in a console app and dangerous in a web API: it fires queries from a <code>foreach</code>, from a serializer, from a view, anywhere a navigation property is touched. Turn it off (EF Core: don't install the proxies; SQLAlchemy: <code>raiseload</code>; Hibernate: <code>spring.jpa.open-in-view=false</code> so it throws outside the transaction instead of silently querying), load deliberately with eager loading or projections, and log or count SQL statements per request in tests.</p>
+</div>
+<h2 id="projections-dont-return-entities-from-apis">Projections: don't return entities from APIs</h2>
+<p>The bug list at the top of the page had "returns entities" as item 4. Returning an entity directly from an endpoint (<code>return Ok(order)</code>) couples four things that should be independent, and each coupling eventually breaks something:</p>
+<div class="compare">
+<div class="bad">
+<h4 id="returning-the-entity">Returning the entity</h4>
+<ul>
+<li><strong>The schema becomes the API.</strong> Renaming a column breaks mobile clients; adding <code>PasswordHash</code> or <code>InternalNotes</code> leaks it.</li>
+<li><strong>The serializer walks the graph.</strong> It touches navigation properties: lazy loads fire (N+1 in the serializer), or <code>Order.Customer.Orders[0].Customer...</code> loops.</li>
+<li><strong>You read every column.</strong> <code>SELECT *</code> including the 40 KB <code>notes</code> column the screen doesn't show.</li>
+<li><strong>Mass assignment on the way in.</strong> Binding a request body to an entity lets a client set <code>IsAdmin</code> or <code>Price</code>. See <a href="api-security.html">API security</a>.</li>
+<li>Entities are tracked: extra memory for objects that are serialized and dropped.</li>
+</ul>
+</div>
+<div class="good">
+<h4 id="projecting-to-a-dto-read-model">Projecting to a DTO / read model</h4>
+<ul>
+<li>The response contract is a deliberate type, versioned with the API (<a href="api-design.html">API design</a>).</li>
+<li>The query asks for exactly those columns, so it can be served by a covering index (see below).</li>
+<li>No tracking, no proxies, no cycles, no lazy loads.</li>
+<li>Input DTOs list exactly the fields a client may set.</li>
+<li>The mapping is in one visible place, instead of hidden in serializer settings.</li>
+</ul>
+</div>
+</div>
+<div class="code-tabs" data-labels="C# · EF Core,Java · Spring Data,Python · SQLAlchemy,Go · sqlc,TypeScript · Prisma">
+<pre><code class="language-csharp">public sealed record OrderSummary(long Id, DateTime CreatedAt, string Status, decimal Total, int LineCount, string CustomerName);
+
+var page = await db.Orders
+    .Where(o =&gt; o.CustomerId == customerId)
+    .OrderByDescending(o =&gt; o.CreatedAt).ThenByDescending(o =&gt; o.Id)
+    .Select(o =&gt; new OrderSummary(o.Id, o.CreatedAt, o.Status, o.Total,
+                                  o.Lines.Count(),            // translated to a correlated COUNT subquery
+                                  o.Customer.Name))           // translated to a JOIN: no Include needed
+    .Take(50)
+    .ToListAsync(ct);
+</code></pre>
+<pre><code class="language-java">// Interface-based projection: Spring Data selects only these columns and builds a proxy per row.
+public interface OrderSummary {
+    long getId();
+    Instant getCreatedAt();
+    String getStatus();
+    BigDecimal getTotal();
+    @Value(&quot;#{target.customer.name}&quot;) String getCustomerName();  // SpEL &quot;open&quot; projection: loads the entity; prefer
+}                                                                // a constructor expression in JPQL for hot paths
+List&lt;OrderSummary&gt; findTop50ByCustomerIdOrderByCreatedAtDesc(long customerId);
+</code></pre>
+<pre><code class="language-python">from dataclasses import dataclass
+from sqlalchemy import func, select
+
+@dataclass(frozen=True)
+class OrderSummary:
+    id: int
+    status: str
+    total: float
+    line_count: int
+
+line_count = (select(func.count(OrderLine.id))
+              .where(OrderLine.order_id == Order.id)
+              .scalar_subquery())
+stmt = (select(Order.id, Order.status, Order.total, line_count.label(&quot;line_count&quot;))
+        .where(Order.customer_id == customer_id)
+        .order_by(Order.created_at.desc(), Order.id.desc())
+        .limit(50))
+page = [OrderSummary(**row._mapping) for row in session.execute(stmt)]
+</code></pre>
+<pre><code class="language-go">// With sqlc the SELECT list IS the projection; the generated row struct is the DTO.
+//
+// -- name: OrderSummaries :many
+// SELECT o.id, o.created_at, o.status, o.total, c.name AS customer_name,
+//        (SELECT count(*) FROM order_lines l WHERE l.order_id = o.id) AS line_count
+// FROM orders o JOIN customers c ON c.id = o.customer_id
+// WHERE o.customer_id = $1
+// ORDER BY o.created_at DESC, o.id DESC
+// LIMIT 50;
+rows, err := q.OrderSummaries(ctx, customerID) // []db.OrderSummariesRow, JSON-tagged via sqlc.yaml
+</code></pre>
+<pre><code class="language-typescript">// select + _count: Prisma infers the exact result type from the select shape.
+const page = await prisma.order.findMany({
+  where: { customerId },
+  orderBy: [{ createdAt: &quot;desc&quot; }, { id: &quot;desc&quot; }],
+  take: 50,
+  select: {
+    id: true, createdAt: true, status: true, total: true,
+    customer: { select: { name: true } },
+    _count: { select: { lines: true } },
+  },
+});
+</code></pre>
+</div>
+<h2 id="pagination-offset-vs-keyset">Pagination: offset vs keyset</h2>
+<p><code>OFFSET</code> is how everyone starts: <code>ORDER BY created_at DESC OFFSET 100000 LIMIT 50</code>. It has two problems that grow with the data. The database can't jump to row 100,000; it <strong>reads and discards</strong> 100,000 rows to find the start. And if a row is inserted while someone is paging, everything shifts by one, so they see a <strong>duplicate</strong>, or a deletion makes them <strong>skip</strong> a row.</p>
+<p><strong>Keyset pagination</strong> (also called seek or cursor pagination) remembers where the last page ended and asks for "the next 50 after this one": <code>WHERE (created_at, id) &lt; (@lastCreatedAt, @lastId) ORDER BY created_at DESC, id DESC LIMIT 50</code>. With an index on <code>(created_at, id)</code> that's a seek straight to the right spot, the same cost for page 1 as for page 20,000, and insertions don't shift anything.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 250" width="900" role="img" aria-label="Offset pagination for page 3 of size 4 reads rows 1 to 12 and returns 9 to 12, discarding 8; keyset pagination for the same page seeks to the position after the last key of page 2 and reads only 4 rows">
+<text class="title" x="10" y="26">Page 3, page size 4: what each approach reads</text>
+<text class="mono" x="10" y="66">OFFSET 8 LIMIT 4</text>
+<rect class="box bad" x="200" y="48" width="40" height="28" rx="4"/><rect class="box bad" x="244" y="48" width="40" height="28" rx="4"/><rect class="box bad" x="288" y="48" width="40" height="28" rx="4"/><rect class="box bad" x="332" y="48" width="40" height="28" rx="4"/><rect class="box bad" x="376" y="48" width="40" height="28" rx="4"/><rect class="box bad" x="420" y="48" width="40" height="28" rx="4"/><rect class="box bad" x="464" y="48" width="40" height="28" rx="4"/><rect class="box bad" x="508" y="48" width="40" height="28" rx="4"/>
+<rect class="box done" x="552" y="48" width="40" height="28" rx="4"/><rect class="box done" x="596" y="48" width="40" height="28" rx="4"/><rect class="box done" x="640" y="48" width="40" height="28" rx="4"/><rect class="box done" x="684" y="48" width="40" height="28" rx="4"/>
+<rect class="box" x="728" y="48" width="40" height="28" rx="4"/><rect class="box" x="772" y="48" width="40" height="28" rx="4"/><rect class="box" x="816" y="48" width="40" height="28" rx="4"/>
+<text class="small muted" x="200" y="96">8 rows read and thrown away; at page 2,000 it's 7,996</text><text class="small" x="552" y="96">4 returned</text>
+<text class="mono" x="10" y="146">WHERE id &lt; 9 LIMIT 4</text>
+<rect class="box" x="200" y="128" width="40" height="28" rx="4"/><rect class="box" x="244" y="128" width="40" height="28" rx="4"/><rect class="box" x="288" y="128" width="40" height="28" rx="4"/><rect class="box" x="332" y="128" width="40" height="28" rx="4"/><rect class="box" x="376" y="128" width="40" height="28" rx="4"/><rect class="box" x="420" y="128" width="40" height="28" rx="4"/><rect class="box" x="464" y="128" width="40" height="28" rx="4"/><rect class="box path" x="508" y="128" width="40" height="28" rx="4"/>
+<rect class="box done" x="552" y="128" width="40" height="28" rx="4"/><rect class="box done" x="596" y="128" width="40" height="28" rx="4"/><rect class="box done" x="640" y="128" width="40" height="28" rx="4"/><rect class="box done" x="684" y="128" width="40" height="28" rx="4"/>
+<rect class="box" x="728" y="128" width="40" height="28" rx="4"/><rect class="box" x="772" y="128" width="40" height="28" rx="4"/><rect class="box" x="816" y="128" width="40" height="28" rx="4"/>
+<text class="small" x="528" y="176" text-anchor="middle">cursor: last key of page 2</text><text class="small muted" x="200" y="176">never read</text>
+<text class="small muted" x="10" y="216">Offset cost grows linearly with the page number; keyset cost is one index seek plus the page itself. The trade-off: keyset can't jump to "page 37",</text>
+<text class="small muted" x="10" y="236">only next and previous. That's exactly what infinite scroll, feeds, exports and API cursors need.</text>
+</svg>
+<figcaption>Rows are shown newest first. The cursor is an opaque token that encodes the last row's sort key and its id as a tie-breaker.</figcaption>
+</figure>
+
+<p>Page through a table both ways. Set "new rows inserted after page 1" to see the duplicates offset produces, and raise the page count to see rows-read grow for offset while keyset stays flat.</p>
+<div class="viz dax-wide" data-viz="data-access-paging"></div>
+
+<p>Rules for keyset pagination that actually work:</p>
+<ul>
+<li><strong>The sort must be unique.</strong> <code>ORDER BY created_at</code> alone ties when two rows share a timestamp, and rows at the page boundary get skipped. Add the primary key as the last sort column, and compare as a <strong>row value</strong>: <code>(created_at, id) &lt; (@c, @i)</code>. SQL Server lacks row-value comparison, so expand it: <code>created_at &lt; @c OR (created_at = @c AND id &lt; @i)</code>.</li>
+<li><strong>Index the sort exactly.</strong> <code>CREATE INDEX ON orders (customer_id, created_at DESC, id DESC)</code> for <code>WHERE customer_id = @x ORDER BY created_at DESC, id DESC</code>.</li>
+<li><strong>Make the cursor opaque.</strong> Base64-encode <code>{createdAt, id}</code> (and sign it if clients mustn't forge it). The API contract is "pass back <code>next</code>", per <a href="api-design.html#pagination-offset-drifts-cursors-dont">API design pagination</a>.</li>
+<li><strong>Offset is fine</strong> for small tables, admin screens and the first few pages of search results. Total counts (<code>COUNT(*)</code>) are expensive on big tables too: show "more" instead of "page 1 of 8,412", or estimate.</li>
+</ul>
+<div class="code-tabs" data-labels="C# · EF Core,Java · jOOQ,Python · SQLAlchemy,Go · pgx,TypeScript · Kysely">
+<pre><code class="language-csharp">public sealed record Cursor(DateTime CreatedAt, long Id);
+
+public async Task&lt;(List&lt;OrderSummary&gt; Items, Cursor? Next)&gt; PageAsync(long customerId, Cursor? after, int size, CancellationToken ct)
+{
+    var q = db.Orders.AsNoTracking().Where(o =&gt; o.CustomerId == customerId);
+    if (after is not null)
+        q = q.Where(o =&gt; o.CreatedAt &lt; after.CreatedAt
+                      || (o.CreatedAt == after.CreatedAt &amp;&amp; o.Id &lt; after.Id));   // SQL Server-friendly form
+    var items = await q.OrderByDescending(o =&gt; o.CreatedAt).ThenByDescending(o =&gt; o.Id)
+                       .Take(size + 1)                                          // one extra row: is there a next page?
+                       .Select(o =&gt; new OrderSummary(o.Id, o.CreatedAt, o.Status, o.Total))
+                       .ToListAsync(ct);
+    var hasMore = items.Count &gt; size;
+    if (hasMore) items.RemoveAt(size);
+    return (items, hasMore ? new Cursor(items[^1].CreatedAt, items[^1].Id) : null);
+}
+// On PostgreSQL, EF.Functions.LessThan(ValueTuple.Create(o.CreatedAt, o.Id), ValueTuple.Create(c, i)) emits a row comparison.
+</code></pre>
+<pre><code class="language-java">// jOOQ has first-class keyset support: seek() generates the row-value predicate (or the expanded form).
+List&lt;OrderSummaryRecord&gt; page = dsl
+    .select(ORDERS.ID, ORDERS.CREATED_AT, ORDERS.STATUS, ORDERS.TOTAL)
+    .from(ORDERS)
+    .where(ORDERS.CUSTOMER_ID.eq(customerId))
+    .orderBy(ORDERS.CREATED_AT.desc(), ORDERS.ID.desc())
+    .seek(lastCreatedAt, lastId)            // omit .seek(...) for the first page
+    .limit(size)
+    .fetchInto(OrderSummaryRecord.class);
+// Spring Data 3.1+: Window&lt;Order&gt; findFirst50ByCustomerIdOrderByCreatedAtDescIdDesc(long id, ScrollPosition pos);
+// call with ScrollPosition.keyset(), then window.positionAt(window.size() - 1) for the next page.
+</code></pre>
+<pre><code class="language-python">from sqlalchemy import select, tuple_
+
+def page(session, customer_id: int, after: tuple | None, size: int):
+    stmt = (select(Order.id, Order.created_at, Order.status, Order.total)
+            .where(Order.customer_id == customer_id)
+            .order_by(Order.created_at.desc(), Order.id.desc())
+            .limit(size + 1))
+    if after:
+        stmt = stmt.where(tuple_(Order.created_at, Order.id) &lt; tuple_(*after))   # row-value comparison
+    rows = session.execute(stmt).all()
+    has_more = len(rows) &gt; size
+    rows = rows[:size]
+    nxt = (rows[-1].created_at, rows[-1].id) if has_more else None
+    return rows, nxt
+</code></pre>
+<pre><code class="language-go">func Page(ctx context.Context, pool *pgxpool.Pool, customerID int64, after *Cursor, size int) ([]OrderSummary, *Cursor, error) {
+    sql := `SELECT id, created_at, status, total FROM orders
+            WHERE customer_id = $1 AND ($2::timestamptz IS NULL OR (created_at, id) &lt; ($2, $3))
+            ORDER BY created_at DESC, id DESC LIMIT $4`
+    var c *time.Time
+    var id int64
+    if after != nil {
+        c, id = &amp;after.CreatedAt, after.ID
+    }
+    rows, err := pool.Query(ctx, sql, customerID, c, id, size+1)
+    if err != nil {
+        return nil, nil, err
+    }
+    items, err := pgx.CollectRows(rows, pgx.RowToStructByName[OrderSummary])
+    if err != nil || len(items) &lt;= size {
+        return items, nil, err
+    }
+    items = items[:size]
+    last := items[size-1]
+    return items, &amp;Cursor{CreatedAt: last.CreatedAt, ID: last.ID}, nil
+}
+</code></pre>
+<pre><code class="language-typescript">export async function page(db: Kysely&lt;DB&gt;, customerId: number, after: { createdAt: Date; id: number } | null, size: number) {
+  let q = db.selectFrom(&quot;orders&quot;)
+    .select([&quot;id&quot;, &quot;created_at&quot;, &quot;status&quot;, &quot;total&quot;])
+    .where(&quot;customer_id&quot;, &quot;=&quot;, customerId)
+    .orderBy(&quot;created_at&quot;, &quot;desc&quot;).orderBy(&quot;id&quot;, &quot;desc&quot;)
+    .limit(size + 1);
+  if (after) {
+    q = q.where(({ eb, refTuple, tuple }) =&gt;
+      eb(refTuple(&quot;created_at&quot;, &quot;id&quot;), &quot;&lt;&quot;, tuple(after.createdAt, after.id)));
+  }
+  const rows = await q.execute();
+  const hasMore = rows.length &gt; size;
+  const items = rows.slice(0, size);
+  const last = items[items.length - 1];
+  return { items, next: hasMore ? { createdAt: last.created_at, id: last.id } : null };
+}
+// Prisma: findMany({ cursor: { id }, skip: 1, take: size, orderBy: [{ createdAt: &quot;desc&quot; }, { id: &quot;desc&quot; }] })
+</code></pre>
+</div>
+<h2 id="indexes-how-the-database-finds-rows">Indexes: how the database finds rows</h2>
+<p>Without an index, finding <code>WHERE email = 'ada@x.io'</code> means reading every row of the table: a <strong>scan</strong>. With an index it's a <strong>seek</strong>: a handful of page reads, however big the table. Almost every relational database (and MongoDB, and most others) uses the same structure for its default index: the <strong>B+tree</strong>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 290" width="900" role="img" aria-label="A B+tree: a root page with separator keys 40 and 80; three internal pages; leaf pages holding sorted keys with pointers to rows, linked left to right so range scans can walk along the leaves">
+<defs><marker id="data-access-ar5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text class="title" x="10" y="26">A B+tree index on orders(id)</text>
+<rect class="box accent" x="370" y="44" width="160" height="36" rx="6"/><text class="mono" x="450" y="67" text-anchor="middle">40 | 80</text>
+<rect class="box" x="110" y="120" width="160" height="36" rx="6"/><text class="mono" x="190" y="143" text-anchor="middle">10 | 20 | 30</text>
+<rect class="box active" x="370" y="120" width="160" height="36" rx="6"/><text class="mono" x="450" y="143" text-anchor="middle">50 | 60 | 70</text>
+<rect class="box" x="630" y="120" width="160" height="36" rx="6"/><text class="mono" x="710" y="143" text-anchor="middle">90 | 100</text>
+<line class="edge" x1="400" y1="80" x2="190" y2="118"/><line class="edge path" x1="450" y1="80" x2="450" y2="118" marker-end="url(#data-access-ar5)"/><line class="edge" x1="500" y1="80" x2="710" y2="118"/>
+<rect class="box" x="10" y="200" width="100" height="34" rx="6"/><text class="mono" x="60" y="222" text-anchor="middle">…</text>
+<rect class="box" x="130" y="200" width="120" height="34" rx="6"/><text class="mono" x="190" y="222" text-anchor="middle">41 44 47</text>
+<rect class="box" x="270" y="200" width="120" height="34" rx="6"/><text class="mono" x="330" y="222" text-anchor="middle">50 52 55</text>
+<rect class="box done" x="410" y="200" width="120" height="34" rx="6"/><text class="mono" x="470" y="222" text-anchor="middle">60 63 66</text>
+<rect class="box" x="550" y="200" width="120" height="34" rx="6"/><text class="mono" x="610" y="222" text-anchor="middle">70 74 78</text>
+<rect class="box" x="690" y="200" width="100" height="34" rx="6"/><text class="mono" x="740" y="222" text-anchor="middle">…</text>
+<line class="edge path" x1="460" y1="156" x2="470" y2="198" marker-end="url(#data-access-ar5)"/><line class="edge" x1="410" y1="156" x2="200" y2="198"/><line class="edge" x1="430" y1="156" x2="330" y2="198"/><line class="edge" x1="500" y1="156" x2="610" y2="198"/>
+<line class="edge dash" x1="110" y1="217" x2="128" y2="217" marker-end="url(#data-access-ar5)"/><line class="edge dash" x1="250" y1="217" x2="268" y2="217" marker-end="url(#data-access-ar5)"/><line class="edge dash" x1="390" y1="217" x2="408" y2="217" marker-end="url(#data-access-ar5)"/><line class="edge dash" x1="530" y1="217" x2="548" y2="217" marker-end="url(#data-access-ar5)"/><line class="edge dash" x1="670" y1="217" x2="688" y2="217" marker-end="url(#data-access-ar5)"/>
+<text class="small" x="570" y="56">find 63: root says 40 ≤ 63 &lt; 80, go middle;</text><text class="small" x="570" y="72">middle says 60 ≤ 63 &lt; 70; leaf has 63. 3 pages read.</text>
+<text class="small muted" x="10" y="264">Real pages hold hundreds of keys, so the tree is shallow: 3–4 levels cover hundreds of millions of rows. Leaves are linked, so a range like</text>
+<text class="small muted" x="10" y="282">BETWEEN 52 AND 74 seeks to 52 once and then walks right along the leaves. That's why ranges and ORDER BY can use the same index.</text>
+</svg>
+<figcaption>The leaf level is the whole index in sorted order. A clustered index (SQL Server, InnoDB primary key) stores the full row in its leaves; a non-clustered index stores the key plus a pointer to the row.</figcaption>
+</figure>
+
+<p>Build one and query it. Compare the pages a seek touches with a full scan, then try a range (<code>lo-hi</code>) and watch the walk along the linked leaves.</p>
+<div class="viz dax-wide" data-viz="data-access-btree"></div>
+
+<h3 id="composite-indexes-and-the-leftmost-prefix">Composite indexes and the leftmost prefix</h3>
+<p>An index on several columns, <code>(customer_id, status)</code>, is sorted like a phone book: by the first column, then by the second <strong>within</strong> each value of the first. That one fact predicts which queries it helps:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 250" width="900" role="img" aria-label="A composite index on customer_id then status, shown as sorted entries grouped by customer: a query on customer_id and status seeks to one contiguous range; a query on customer_id alone seeks to a larger contiguous range; a query on status alone finds matches scattered across every customer group and must scan">
+<text class="title" x="10" y="26">Index (customer_id, status): sorted like a phone book (last name, first name)</text>
+<rect class="box" x="10" y="44" width="200" height="30" rx="5"/><text class="mono" x="110" y="64" text-anchor="middle">3 · new  3 · paid</text>
+<rect class="box path" x="220" y="44" width="300" height="30" rx="5"/><text class="mono" x="370" y="64" text-anchor="middle">4 · new  4 · paid  4 · paid  4 · ship</text>
+<rect class="box" x="530" y="44" width="200" height="30" rx="5"/><text class="mono" x="630" y="64" text-anchor="middle">5 · paid  5 · ship</text>
+<rect class="box" x="740" y="44" width="150" height="30" rx="5"/><text class="mono" x="815" y="64" text-anchor="middle">6 · new …</text>
+<rect class="box done" x="10" y="92" width="880" height="40" rx="6"/><text class="mono" x="24" y="117">customer_id = 4 AND status = 'paid'</text><text class="small" x="876" y="117" text-anchor="end">seek: one contiguous run (4·paid, 4·paid)</text>
+<rect class="box done" x="10" y="140" width="880" height="40" rx="6"/><text class="mono" x="24" y="165">customer_id = 4</text><text class="small" x="876" y="165" text-anchor="end">seek: the leftmost column alone is a prefix, so all of customer 4</text>
+<rect class="box bad" x="10" y="188" width="880" height="40" rx="6"/><text class="mono" x="24" y="213">status = 'paid'</text><text class="small" x="876" y="213" text-anchor="end">no prefix: 'paid' appears inside every customer group → scan (or skip scan)</text>
+</svg>
+<figcaption>Equality columns first, then the range or sort column. An index on (a, b, c) serves a; a+b; a+b+c; a with ORDER BY b; but not b alone or c alone.</figcaption>
+</figure>
+
+<p>The visualizer below has 36 orders and six candidate indexes. Pick an index and a query, and it shows the seek range, the entries it reads, the <strong>key lookups</strong> back to the table for columns the index doesn't have, and the plan in SQL Server terms. Try <code>WHERE customer_id = 4 ORDER BY created_at DESC LIMIT 2</code> with <code>(customer_id)</code> and then with <code>(customer_id, created_at)</code>: the second one needs no sort and stops after two entries.</p>
+<div class="viz dax-wide" data-viz="data-access-composite"></div>
+
+<p>The rules that fall out of it:</p>
+<ol>
+<li><strong>Leftmost prefix.</strong> A composite index helps only queries that constrain its first column (and then the next, and so on). The order of columns in the index matters; the order in your <code>WHERE</code> clause doesn't.</li>
+<li><strong>Equality first, range last.</strong> In <code>(customer_id, created_at)</code>, <code>customer_id = 4 AND created_at &gt; X</code> is one contiguous range. In <code>(created_at, customer_id)</code> the same query reads every customer's rows in the date range and filters.</li>
+<li><strong>The index can deliver the order.</strong> If the index order matches <code>ORDER BY</code>, the database reads entries in order and stops at <code>LIMIT</code>. No sort, no reading everything first. This is what makes keyset pagination fast.</li>
+<li><strong>Covering indexes skip the table.</strong> If every column the query needs is in the index, there's no lookup per row. SQL Server and PostgreSQL 11+ let you add non-key columns with <code>INCLUDE (status, total)</code>: they ride along in the leaves without affecting the sort.</li>
+<li><strong>Selectivity matters.</strong> An index on <code>is_deleted</code> (99% false) is rarely useful by itself; a seek that matches 30% of the table plus a lookup per row is slower than a scan, and the planner knows it. Partial (filtered) indexes help here: <code>CREATE INDEX … WHERE status = 'pending'</code>.</li>
+</ol>
+<div class="pitfall">
+<p><strong>Queries that can't use the index you have (not "sargable")</strong></p>
+<ul>
+<li><strong>A function on the column</strong>: <code>WHERE YEAR(created_at) = 2025</code> or <code>WHERE lower(email) = @e</code>. Rewrite as a range (<code>created_at &gt;= '2025-01-01' AND created_at &lt; '2026-01-01'</code>), or index the expression (<code>CREATE INDEX ON users (lower(email))</code>).</li>
+<li><strong>A leading wildcard</strong>: <code>LIKE '%smith'</code>. Use full-text search or a trigram index (<code>pg_trgm</code>).</li>
+<li><strong>An implicit conversion</strong>: comparing an <code>nvarchar</code> parameter to a <code>varchar</code> column in SQL Server converts every row. Match parameter types to column types (EF Core: <code>HasColumnType</code>/<code>IsUnicode(false)</code>; JDBC: <code>sendStringParametersAsUnicode=false</code>).</li>
+<li><strong><code>OR</code> across different columns</strong>: often becomes a scan; a <code>UNION ALL</code> of two seeks can be far faster.</li>
+<li><strong>Too many indexes.</strong> Each one is updated on every <code>INSERT</code>, on <code>UPDATE</code> of its columns, and on <code>DELETE</code>. Five unused indexes can halve write throughput. Check <code>pg_stat_user_indexes</code> or <code>sys.dm_db_index_usage_stats</code> for indexes that are never read.</li>
+</ul>
+</div>
+<h3 id="reading-an-explain-plan">Reading an EXPLAIN plan</h3>
+<p>You don't guess whether an index is used; you ask. Every database explains its plan. Read it <strong>inside out</strong> (the most indented node runs first) and look for four things: the <strong>access method</strong> (seek vs scan), <strong>estimated vs actual rows</strong> (a big gap means stale statistics or a non-sargable predicate), <strong>loops</strong> (a nested loop that runs 10,000 times), and <strong>sorts or hashes that spill</strong> to disk.</p>
+<div class="code-tabs" data-labels="PostgreSQL,SQL Server,MySQL">
+<pre><code class="language-text">EXPLAIN (ANALYZE, BUFFERS)
+SELECT id, total FROM orders WHERE customer_id = 4 AND status = 'paid' ORDER BY created_at DESC LIMIT 20;
+
+-- Before: no useful index
+Limit  (actual time=812.4..812.4 rows=20 loops=1)
+  -&gt;  Sort  (actual time=812.4..812.4 rows=20)  Sort Method: top-N heapsort
+        -&gt;  Seq Scan on orders  (actual time=0.03..811.9 rows=96 loops=1)          ← read every row
+              Filter: ((customer_id = 4) AND (status = 'paid'))
+              Rows Removed by Filter: 39999904                                     ← 40M rows to find 96
+              Buffers: shared hit=12034 read=401221
+
+-- After: CREATE INDEX ON orders (customer_id, status, created_at DESC) INCLUDE (total);
+Limit  (actual time=0.04..0.06 rows=20 loops=1)
+  -&gt;  Index Only Scan using orders_customer_id_status_created_at_idx on orders     ← seek, no table access, no sort
+        Index Cond: ((customer_id = 4) AND (status = 'paid'))
+        Heap Fetches: 0
+        Buffers: shared hit=4
+</code></pre>
+<pre><code class="language-text">SET STATISTICS IO, TIME ON;   -- or &quot;Include Actual Execution Plan&quot; (Ctrl+M) in SSMS / Azure Data Studio
+
+-- Before
+|--Top(TOP EXPRESSION:(20))
+     |--Sort(ORDER BY:([created_at] DESC))
+          |--Clustered Index Scan(OBJECT:([orders].[PK_orders]),                    ← whole table
+                 WHERE:([customer_id]=(4) AND [status]='paid'))
+Table 'orders'. Scan count 1, logical reads 401887
+
+-- After: CREATE INDEX IX_orders_cust_status_created ON orders (customer_id, status, created_at DESC) INCLUDE (total);
+|--Top(TOP EXPRESSION:(20))
+     |--Index Seek(OBJECT:([orders].[IX_orders_cust_status_created]),
+            SEEK:([customer_id]=(4) AND [status]='paid') ORDERED FORWARD)             ← no Key Lookup: covering
+Table 'orders'. Scan count 1, logical reads 3
+</code></pre>
+<pre><code class="language-text">EXPLAIN ANALYZE SELECT id, total FROM orders WHERE customer_id = 4 AND status = 'paid' ORDER BY created_at DESC LIMIT 20;
+
+-- Before
+-&gt; Limit: 20 row(s)  (actual time=640..640 rows=20 loops=1)
+    -&gt; Sort: orders.created_at DESC, limit input to 20 row(s) per chunk
+        -&gt; Filter: ((orders.customer_id = 4) and (orders.status = 'paid'))
+            -&gt; Table scan on orders  (actual time=0.05..612 rows=40000000 loops=1)
+
+-- After (MySQL 8 supports descending index parts)
+-&gt; Limit: 20 row(s)  (actual time=0.03..0.04 rows=20 loops=1)
+    -&gt; Covering index lookup on orders using ix_cust_status_created (customer_id=4, status='paid')
+</code></pre>
+</div>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>PostgreSQL</th>
+<th>SQL Server</th>
+<th>Good or bad?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read the whole table</td>
+<td><code>Seq Scan</code></td>
+<td><code>Clustered Index Scan</code> / <code>Table Scan</code></td>
+<td>fine for small tables or when most rows match; bad when a few rows match</td>
+</tr>
+<tr>
+<td>Seek, then fetch rows</td>
+<td><code>Index Scan</code></td>
+<td><code>Index Seek</code> + <code>Key Lookup</code></td>
+<td>good for few rows; each lookup is a random read, so it degrades as rows grow</td>
+</tr>
+<tr>
+<td>Seek, index has everything</td>
+<td><code>Index Only Scan</code></td>
+<td><code>Index Seek</code> (covering)</td>
+<td>best</td>
+</tr>
+<tr>
+<td>Many index hits, sorted by page</td>
+<td><code>Bitmap Index Scan</code> + <code>Bitmap Heap Scan</code></td>
+<td>(no direct equivalent)</td>
+<td>good for medium selectivity</td>
+</tr>
+<tr>
+<td>Join, small outer side</td>
+<td><code>Nested Loop</code></td>
+<td><code>Nested Loops</code></td>
+<td>good if the inner side is a seek; terrible if it's a scan per row</td>
+</tr>
+<tr>
+<td>Join, big inputs</td>
+<td><code>Hash Join</code> / <code>Merge Join</code></td>
+<td><code>Hash Match</code> / <code>Merge Join</code></td>
+<td>fine; watch for spills to disk (<code>Batches: 8</code>, tempdb warnings)</td>
+</tr>
+<tr>
+<td>Sort</td>
+<td><code>Sort</code> (<code>external merge</code> = spilled)</td>
+<td><code>Sort</code> (spill warning)</td>
+<td>avoidable with an index in the right order</td>
+</tr>
+</tbody>
+</table>
+<div class="tip">
+<p><strong>Getting the SQL to explain</strong></p>
+<p>You can't explain a query you haven't seen. Turn on SQL logging in development: EF Core <code>LogTo(Console.WriteLine)</code> or <code>ToQueryString()</code>, Hibernate <code>spring.jpa.show-sql</code> plus <code>logging.level.org.hibernate.orm.jdbc.bind=trace</code>, SQLAlchemy <code>echo=True</code>, GORM <code>db.Debug()</code>, Prisma <code>log: ["query"]</code>. In production use <code>pg_stat_statements</code> or Query Store to find the queries that cost the most in total (calls × mean time), which are rarely the ones you'd guess. Traces with database spans are covered in <a href="observability.html">observability</a>.</p>
+</div>
+<h2 id="migrations-changing-the-schema-without-downtime">Migrations: changing the schema without downtime</h2>
+<p>Schema changes are code changes, so they live in version control and run in order: <strong>migrations</strong>. Every ecosystem has a tool: EF Core Migrations, Flyway or Liquibase (Java), Alembic (Python), golang-migrate, Atlas or goose (Go), and Prisma Migrate or Drizzle Kit (TypeScript). The hard part isn't the tool. It's that during a rolling deploy, <strong>old and new versions of your app run at the same time against one database</strong>, so every schema change must work with both.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 300" width="900" role="img" aria-label="Expand and contract: renaming column name to full_name takes several deploys: expand adds full_name; dual-write code writes both; backfill copies old rows; switch reads to full_name; stop writing name; contract drops name. At every step both the running old and new app versions work">
+<defs><marker id="data-access-ar6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text class="title" x="10" y="26">Expand / contract: rename name → full_name in six safe steps</text>
+<rect class="box visit" x="10" y="50" width="135" height="110" rx="8"/><text class="mono" x="77" y="74" text-anchor="middle">1 Expand</text><text class="small" x="22" y="100">ADD COLUMN</text><text class="small" x="22" y="118">full_name NULL</text><text class="small muted" x="22" y="146">old app ignores it</text>
+<rect class="box active" x="158" y="50" width="135" height="110" rx="8"/><text class="mono" x="225" y="74" text-anchor="middle">2 Dual-write</text><text class="small" x="170" y="100">app v2 writes</text><text class="small" x="170" y="118">name AND full_name</text><text class="small muted" x="170" y="146">still reads name</text>
+<rect class="box path" x="306" y="50" width="135" height="110" rx="8"/><text class="mono" x="373" y="74" text-anchor="middle">3 Backfill</text><text class="small" x="318" y="100">copy old rows</text><text class="small" x="318" y="118">in small batches</text><text class="small muted" x="318" y="146">no table-wide lock</text>
+<rect class="box active" x="454" y="50" width="135" height="110" rx="8"/><text class="mono" x="521" y="74" text-anchor="middle">4 Switch reads</text><text class="small" x="466" y="100">app v3 reads</text><text class="small" x="466" y="118">full_name</text><text class="small muted" x="466" y="146">still writes both</text>
+<rect class="box active" x="602" y="50" width="135" height="110" rx="8"/><text class="mono" x="669" y="74" text-anchor="middle">5 Stop old</text><text class="small" x="614" y="100">app v4 writes</text><text class="small" x="614" y="118">full_name only</text><text class="small muted" x="614" y="146">no reader of name left</text>
+<rect class="box done" x="750" y="50" width="140" height="110" rx="8"/><text class="mono" x="820" y="74" text-anchor="middle">6 Contract</text><text class="small" x="762" y="100">DROP COLUMN name</text><text class="small" x="762" y="118">(+ NOT NULL)</text><text class="small muted" x="762" y="146">after v3 is gone</text>
+<line class="edge" x1="145" y1="105" x2="156" y2="105" marker-end="url(#data-access-ar6)"/><line class="edge" x1="293" y1="105" x2="304" y2="105" marker-end="url(#data-access-ar6)"/><line class="edge" x1="441" y1="105" x2="452" y2="105" marker-end="url(#data-access-ar6)"/><line class="edge" x1="589" y1="105" x2="600" y2="105" marker-end="url(#data-access-ar6)"/><line class="edge" x1="737" y1="105" x2="748" y2="105" marker-end="url(#data-access-ar6)"/>
+<rect class="box bad" x="10" y="190" width="880" height="90" rx="8"/>
+<text class="mono" x="24" y="214">The big-bang alternative: one migration renames the column, then the new app deploys.</text>
+<text class="small" x="24" y="240">Between the migration and the last old instance shutting down (seconds to minutes), every old instance's query says "name" and fails:</text>
+<text class="small" x="24" y="260">column "name" does not exist. Run it the other way round and the new instances fail instead. Either way: errors during every deploy.</text>
+</svg>
+<figcaption>Each numbered step is its own deploy (2–5 can sometimes be combined with a database view or trigger). Expand is always backward-compatible; contract happens only when no running code depends on the old shape.</figcaption>
+</figure>
+
+<p>Run a rolling deploy with 2 to 4 instances and pick a strategy. The visualizer tracks the schema, which instance runs which version, and which requests fail or write data that's lost.</p>
+<div class="viz dax-wide" data-viz="data-access-migrate"></div>
+
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Safe pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add a nullable column, or with a constant default</td>
+<td>safe in one step (PostgreSQL 11+ and SQL Server don't rewrite the table for a constant default)</td>
+</tr>
+<tr>
+<td>Add a NOT NULL column</td>
+<td>add nullable → backfill → add the constraint (<code>NOT VALID</code> then <code>VALIDATE CONSTRAINT</code> on PostgreSQL)</td>
+</tr>
+<tr>
+<td>Rename a column or table</td>
+<td>expand/contract, as above. Never a plain rename on a live system</td>
+</tr>
+<tr>
+<td>Drop a column</td>
+<td>first deploy code that doesn't read it (EF Core: remove the property; JPA: remove the field), then drop</td>
+</tr>
+<tr>
+<td>Change a column's type</td>
+<td>new column + dual write + backfill + switch + drop</td>
+</tr>
+<tr>
+<td>Add an index on a big table</td>
+<td>PostgreSQL <code>CREATE INDEX CONCURRENTLY</code>; SQL Server <code>WITH (ONLINE = ON)</code>; MySQL <code>ALGORITHM=INPLACE, LOCK=NONE</code></td>
+</tr>
+<tr>
+<td>Add a foreign key</td>
+<td>PostgreSQL <code>NOT VALID</code>, then <code>VALIDATE CONSTRAINT</code> (doesn't block writes)</td>
+</tr>
+<tr>
+<td>Backfill millions of rows</td>
+<td>batches of 1,000–10,000 by key range, committed separately, with a pause; never one giant <code>UPDATE</code></td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs" data-labels="C# · EF Core,Java · Flyway,Python · Alembic,Go · golang-migrate,TypeScript · Prisma">
+<pre><code class="language-csharp">// dotnet ef migrations add AddFullName   →   review the generated code, then:
+public partial class AddFullName : Migration
+{
+    protected override void Up(MigrationBuilder mb)
+    {
+        mb.AddColumn&lt;string&gt;(&quot;full_name&quot;, &quot;customers&quot;, nullable: true);   // expand only
+    }
+    protected override void Down(MigrationBuilder mb) =&gt; mb.DropColumn(&quot;full_name&quot;, &quot;customers&quot;);
+}
+// Production: generate an idempotent script and review it:  dotnet ef migrations script --idempotent
+// or a migration bundle: dotnet ef migrations bundle. Don't call Database.Migrate() at startup on N instances.
+</code></pre>
+<pre><code class="language-sql">-- Flyway: versioned SQL files, applied in order and recorded in flyway_schema_history.
+-- V7__expand_add_full_name.sql
+ALTER TABLE customers ADD COLUMN full_name text;
+
+-- V8__backfill_full_name.sql   (or a batched job; Flyway runs this in one transaction)
+UPDATE customers SET full_name = name WHERE full_name IS NULL AND id BETWEEN 1 AND 100000;
+
+-- V9__contract_drop_name.sql   ships in a LATER release, after no running code reads &quot;name&quot;
+ALTER TABLE customers DROP COLUMN name;
+</code></pre>
+<pre><code class="language-python"># alembic revision -m &quot;expand: add full_name&quot;   →   alembic upgrade head
+from alembic import op
+import sqlalchemy as sa
+
+revision, down_revision = &quot;a1b2c3&quot;, &quot;9f8e7d&quot;
+
+def upgrade() -&gt; None:
+    op.add_column(&quot;customers&quot;, sa.Column(&quot;full_name&quot;, sa.Text(), nullable=True))
+    with op.get_context().autocommit_block():          # CONCURRENTLY can't run inside a transaction
+        op.create_index(&quot;ix_customers_full_name&quot;, &quot;customers&quot;, [&quot;full_name&quot;],
+                        postgresql_concurrently=True)
+
+def downgrade() -&gt; None:
+    with op.get_context().autocommit_block():
+        op.drop_index(&quot;ix_customers_full_name&quot;, table_name=&quot;customers&quot;, postgresql_concurrently=True)
+    op.drop_column(&quot;customers&quot;, &quot;full_name&quot;)
+</code></pre>
+<pre><code class="language-go">// golang-migrate: numbered up/down SQL files; run from CI or an init container, not from every replica.
+//   migrations/000007_add_full_name.up.sql    ALTER TABLE customers ADD COLUMN full_name text;
+//   migrations/000007_add_full_name.down.sql  ALTER TABLE customers DROP COLUMN full_name;
+m, err := migrate.New(&quot;file://migrations&quot;, os.Getenv(&quot;DATABASE_URL&quot;))
+if err != nil { log.Fatal(err) }
+if err := m.Up(); err != nil &amp;&amp; !errors.Is(err, migrate.ErrNoChange) {
+    log.Fatal(err) // a failed migration leaves the version &quot;dirty&quot;: fix and force, never ignore
+}
+// Atlas alternative: declare the desired schema; `atlas migrate diff` plans it and lints for destructive changes.
+</code></pre>
+<pre><code class="language-typescript">// schema.prisma: add the new field as optional (expand)
+// model Customer {
+//   id        Int     @id @default(autoincrement())
+//   name      String
+//   fullName  String? @map(&quot;full_name&quot;)
+// }
+// npx prisma migrate dev --name expand_full_name    (development: creates the SQL migration)
+// npx prisma migrate deploy                         (CI/CD: applies pending migrations)
+//
+// Prisma's own rename shortcut (@map on the same field) changes only the client; it doesn't rename the column.
+// A field rename in schema.prisma WITHOUT @map generates DROP + ADD: data loss. Always read the generated SQL.
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Migration pitfalls</strong></p>
+<ul>
+<li><strong>Migrating on startup.</strong> Ten pods starting at once race to apply the same migration, and a slow migration fails health checks. Run migrations as a separate deploy step (a job, an init container or a pipeline stage), once.</li>
+<li><strong>Locks you didn't expect.</strong> <code>ALTER TABLE</code> takes an exclusive lock; if a long-running query holds a conflicting lock, the <code>ALTER</code> waits, and every new query queues <em>behind the ALTER</em>. Set <code>lock_timeout</code> (e.g. 5 s) and retry, rather than taking the site down.</li>
+<li><strong>Auto-generated destructive diffs.</strong> ORMs sometimes generate drop-and-recreate for a rename. Review every generated migration as you'd review code.</li>
+<li><strong>Down migrations that can't work.</strong> Once data is written to the new shape, "down" usually loses it. Prefer roll-forward fixes, and keep every step backward-compatible so the app can roll back without touching the schema.</li>
+</ul>
+</div>
+<h2 id="the-repository-pattern-debate">The repository pattern debate</h2>
+<p>"Should I wrap my ORM in repositories?" starts more arguments than any other data-access question. Both sides are right about something, so it's worth being precise.</p>
+<p>A <strong>repository</strong> (from Domain-Driven Design) is a collection-like interface for <strong>aggregates</strong>: <code>orders.Get(id)</code>, <code>orders.Add(order)</code>. It hides how persistence works, so the domain model doesn't depend on the database. A <strong>generic repository</strong> is <code>IRepository&lt;T&gt;</code> with <code>GetAll()</code>, <code>GetById()</code>, <code>Add()</code>, <code>Update()</code>, <code>Delete()</code> for every table.</p>
+<div class="compare">
+<div class="good">
+<h4 id="when-a-repository-helps">When a repository helps</h4>
+<ul>
+<li><strong>The domain is rich</strong> and you want aggregates to be loaded and saved whole, with their invariants. <code>IOrderRepository.GetWithLinesAsync(id)</code> states exactly what an order needs. See <a href="domain-driven-design.html">domain-driven design</a>.</li>
+<li><strong>The persistence is genuinely swappable or awkward</strong>: several stores, a legacy stored-procedure API, a document store behind the same interface.</li>
+<li><strong>Raw drivers or micro-ORMs</strong> (Dapper, JDBC, database/sql): you need <em>somewhere</em> to put the SQL, and a repository per aggregate is a good place.</li>
+<li><strong>Named queries</strong>: <code>GetOverdueInvoices(asOf)</code> reads better than a LINQ chain repeated in five handlers.</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="when-its-a-pointless-wrapper">When it's a pointless wrapper</h4>
+<ul>
+<li><strong>A generic <code>IRepository&lt;T&gt;</code> over EF Core.</strong> <code>DbSet&lt;T&gt;</code> <em>already is</em> a repository and <code>DbContext</code> <em>already is</em> a unit of work. The wrapper adds code and removes features: no <code>Include</code>, no projections, no <code>AsNoTracking</code>, no <code>ExecuteUpdate</code>.</li>
+<li><strong><code>IQueryable&lt;T&gt; GetAll()</code></strong> leaks the ORM through the abstraction anyway, so you get the cost of the wrapper and none of the isolation.</li>
+<li><strong>"So we can switch databases."</strong> You won't, and if you do, the SQL dialect, transactions and performance profile all change regardless of the interface.</li>
+<li><strong>"For unit testing."</strong> Mocking a repository tests your mocks. Test queries against a real database (Testcontainers) and mock at a higher level.</li>
+</ul>
+</div>
+</div>
+<div class="code-tabs" data-labels="Pointless wrapper,Useful repository,Read side: no repository">
+<pre><code class="language-csharp">// The generic repository: every method is a one-line pass-through, and the useful features are gone.
+public class Repository&lt;T&gt;(ShopDb db) : IRepository&lt;T&gt; where T : class
+{
+    public Task&lt;T?&gt; GetByIdAsync(long id) =&gt; db.Set&lt;T&gt;().FindAsync(id).AsTask();
+    public Task&lt;List&lt;T&gt;&gt; GetAllAsync() =&gt; db.Set&lt;T&gt;().ToListAsync();            // loads the whole table
+    public void Add(T entity) =&gt; db.Set&lt;T&gt;().Add(entity);
+    public Task SaveAsync() =&gt; db.SaveChangesAsync();                            // each repo saves: no shared UoW
+}
+// Callers end up writing: (await repo.GetAllAsync()).Where(o =&gt; o.CustomerId == id)   ← filters in memory
+</code></pre>
+<pre><code class="language-csharp">// An aggregate repository: few methods, each loading a complete aggregate, named by intent.
+public interface IOrderRepository
+{
+    Task&lt;Order?&gt; GetAsync(OrderId id, CancellationToken ct);   // includes Lines: the aggregate is whole
+    void Add(Order order);
+}
+
+public sealed class OrderRepository(ShopDb db) : IOrderRepository
+{
+    public Task&lt;Order?&gt; GetAsync(OrderId id, CancellationToken ct) =&gt;
+        db.Orders.Include(o =&gt; o.Lines).SingleOrDefaultAsync(o =&gt; o.Id == id, ct);
+    public void Add(Order order) =&gt; db.Orders.Add(order);
+}
+// Saving stays with the unit of work (DbContext.SaveChangesAsync), called once per use case.
+</code></pre>
+<pre><code class="language-csharp">// Queries for screens don't need the domain model or a repository: project straight to the response.
+app.MapGet(&quot;/customers/{id:long}/orders&quot;, (long id, ShopDb db, CancellationToken ct) =&gt;
+    db.Orders.AsNoTracking()
+      .Where(o =&gt; o.CustomerId == id)
+      .OrderByDescending(o =&gt; o.CreatedAt).ThenByDescending(o =&gt; o.Id)
+      .Select(o =&gt; new OrderSummary(o.Id, o.CreatedAt, o.Status, o.Total))
+      .Take(50)
+      .ToListAsync(ct));
+// Or a Dapper query in a &quot;query handler&quot;. This is the read side of CQRS-lite.
+</code></pre>
+</div>
+<p>The same split holds in other languages. Spring Data's <code>JpaRepository</code> is a generated repository, so don't wrap it again; add query methods to it or write a custom fragment. In SQLAlchemy, the <code>Session</code> is the unit of work and a thin repository per aggregate is common in "clean architecture" codebases. In Go, a <code>Store</code> struct with methods wrapping sqlc queries is idiomatic. In TypeScript, Prisma's client is already a typed data mapper; wrap it only to name aggregate operations. The structural ideas behind wrapping (adapter, facade) are in <a href="structural-patterns.html">structural patterns</a>, and where the boundary goes is in <a href="application-architecture.html">application architecture</a>.</p>
+<div class="rule">
+<p><strong>The test for any data-access abstraction</strong></p>
+<p>Does it add a <strong>name</strong> (intent), an <strong>invariant</strong> (always load the aggregate whole) or <strong>isolation</strong> you actually use? Then keep it. Is it a pass-through that hides features of the tool underneath? Delete it, and inject the <code>DbContext</code> / <code>EntityManager</code> / <code>Session</code> / <code>*sql.DB</code> / <code>PrismaClient</code> directly.</p>
+</div>
+<h2 id="batching-bulk-operations-compiled-queries-and-async-io">Batching, bulk operations, compiled queries and async I/O</h2>
+<p>Inserting 10,000 rows is where the "round trips dominate" rule is most visible. Here are the four ways to do it, all writing the same rows:</p>
+<div class="viz dax-wide" data-viz="data-access-batch"></div>
+
+<p>The model behind the bars: every statement pays a <strong>round trip</strong>, every <strong>commit</strong> pays a log flush (an <code>fsync</code>, about 1 ms on many disks), and every row pays a small server cost that no technique avoids. One-at-a-time with autocommit pays all three per row. One transaction removes the per-row commits. Batching removes most round trips. Bulk copy (<code>COPY</code>, <code>SqlBulkCopy</code>) also skips per-statement parsing, which is why it's 10–100× faster again for big loads.</p>
+<div class="code-tabs" data-labels="C# · EF Core / SqlBulkCopy,Java · JDBC batch,Python · executemany / COPY,Go · pgx,TypeScript · Prisma / pg">
+<pre><code class="language-csharp">// EF Core batches SaveChanges automatically (default max batch size: 42 statements on SQL Server, 1000 on Npgsql).
+db.Products.AddRange(rows);
+await db.SaveChangesAsync(ct);                       // one transaction, few round trips
+
+// Set-based: one statement, no entities loaded (EF Core 7+).
+await db.Products.Where(p =&gt; p.CategoryId == 3).ExecuteDeleteAsync(ct);
+
+// Bulk load into SQL Server: the TDS bulk protocol.
+using var bulk = new SqlBulkCopy(connection) { DestinationTableName = &quot;products&quot;, BatchSize = 5_000 };
+await bulk.WriteToServerAsync(dataTable, ct);
+// PostgreSQL: Npgsql's BeginBinaryImportAsync(&quot;COPY products (name, price) FROM STDIN (FORMAT BINARY)&quot;)
+</code></pre>
+<pre><code class="language-java">// JDBC batching: one round trip per executeBatch(). For MySQL add rewriteBatchedStatements=true;
+// for PostgreSQL, reWriteBatchedInserts=true turns them into multi-row INSERTs.
+try (Connection c = ds.getConnection();
+     PreparedStatement ps = c.prepareStatement(&quot;INSERT INTO products (name, price) VALUES (?, ?)&quot;)) {
+    c.setAutoCommit(false);
+    int n = 0;
+    for (Product p : rows) {
+        ps.setString(1, p.name());
+        ps.setBigDecimal(2, p.price());
+        ps.addBatch();
+        if (++n % 1_000 == 0) ps.executeBatch();
+    }
+    ps.executeBatch();
+    c.commit();
+}
+// Hibernate: hibernate.jdbc.batch_size=50 and hibernate.order_inserts=true. IDENTITY ids disable insert
+// batching (Hibernate needs each generated id back immediately): use a SEQUENCE with pooled allocation.
+</code></pre>
+<pre><code class="language-python"># psycopg 3: executemany pipelines the statements; COPY is the fastest path into PostgreSQL.
+with psycopg.connect(dsn) as conn:                 # one transaction, committed on exit
+    with conn.cursor() as cur:
+        cur.executemany(&quot;INSERT INTO products (name, price) VALUES (%s, %s)&quot;, rows)
+
+    with conn.cursor() as cur, cur.copy(&quot;COPY products (name, price) FROM STDIN&quot;) as copy:
+        for row in rows:
+            copy.write_row(row)
+
+# SQLAlchemy 2.0: session.execute(insert(Product), [{&quot;name&quot;: n, &quot;price&quot;: p} for n, p in rows])
+# uses &quot;insertmanyvalues&quot; batching, including RETURNING, without per-row ORM overhead.
+</code></pre>
+<pre><code class="language-go">// pgx: CopyFrom streams rows with the COPY protocol; SendBatch pipelines arbitrary statements.
+_, err := pool.CopyFrom(ctx,
+    pgx.Identifier{&quot;products&quot;}, []string{&quot;name&quot;, &quot;price&quot;},
+    pgx.CopyFromSlice(len(rows), func(i int) ([]any, error) {
+        return []any{rows[i].Name, rows[i].Price}, nil
+    }))
+if err != nil {
+    return err
+}
+
+batch := &amp;pgx.Batch{}
+for _, r := range rows {
+    batch.Queue(`UPDATE products SET price = $1 WHERE id = $2`, r.Price, r.ID)
+}
+err = pool.SendBatch(ctx, batch).Close() // one round trip for the whole batch
+</code></pre>
+<pre><code class="language-typescript">// Prisma: createMany is one multi-row INSERT (chunk very large arrays yourself).
+await prisma.product.createMany({ data: rows, skipDuplicates: true });
+
+// node-postgres: one statement with arrays, unnested server-side; 2 parameters, any number of rows.
+await pool.query(
+  `INSERT INTO products (name, price)
+   SELECT * FROM unnest($1::text[], $2::numeric[])`,
+  [rows.map((r) =&gt; r.name), rows.map((r) =&gt; r.price)],
+);
+// Bulk COPY: the pg-copy-streams package.
+</code></pre>
+</div>
+<h3 id="compiled-queries-and-prepared-statements">Compiled queries and prepared statements</h3>
+<p>Before a query runs, two translations happen: the <strong>ORM</strong> turns your expression into SQL, and the <strong>database</strong> turns SQL into a plan. Both are cached, and both caches can be defeated.</p>
+<ul>
+<li><strong>Database plan cache.</strong> Parameterized SQL (<code>WHERE id = @id</code>) is one cache entry reused for every id. SQL built by concatenation (<code>WHERE id = 42</code>, <code>WHERE id = 43</code>, …) is a new statement each time: a parse and plan per call, a polluted cache, and SQL injection (below). Drivers can also use <strong>server-side prepared statements</strong>: Npgsql auto-prepares with <code>Max Auto Prepare</code>, pgx prepares by default, and JDBC prepares after <code>prepareThreshold</code> executions.</li>
+<li><strong>ORM query cache.</strong> EF Core caches the translation of each LINQ shape. Shapes that vary (an <code>IN</code> list with a different number of items, dynamically built expressions) produce new entries. For a hot query, <code>EF.CompileAsyncQuery</code> skips the cache lookup entirely:</li>
+</ul>
+<pre><code class="language-csharp">private static readonly Func&lt;ShopDb, long, IAsyncEnumerable&lt;OrderSummary&gt;&gt; RecentOrders =
+    EF.CompileAsyncQuery((ShopDb db, long customerId) =&gt;
+        db.Orders.Where(o =&gt; o.CustomerId == customerId)
+                 .OrderByDescending(o =&gt; o.CreatedAt)
+                 .Take(20)
+                 .Select(o =&gt; new OrderSummary(o.Id, o.CreatedAt, o.Status, o.Total)));
+
+await foreach (var row in RecentOrders(db, customerId)) { /* ... */ }
+</code></pre>
+<p>Measure before you reach for compiled queries: they typically save tens of microseconds per call, which matters at thousands of calls per second and not at all for a query that waits 5 ms on I/O. That's a recurring theme in <a href="performance-patterns.html">performance patterns</a>.</p>
+<h3 id="async-io">Async I/O</h3>
+<p>A database call spends nearly all its time <strong>waiting</strong> for the network and the disk. With synchronous I/O, the calling thread sits blocked for that time. With async I/O, the thread goes back to the pool and serves other requests, so a server handles many more concurrent requests with the same threads. How each runtime does it, and the traps (sync-over-async, <code>async void</code>, unbounded fan-out), are in <a href="concurrency-async.html">concurrency and async</a>. For data access specifically:</p>
+<ul>
+<li><strong>Use the async API end to end</strong>: <code>ToListAsync</code>/<code>SaveChangesAsync</code>, <code>asyncpg</code> or SQLAlchemy's <code>AsyncSession</code>, <code>pgx</code> (Go's goroutines make blocking calls cheap anyway), Prisma (always async). In Java, JDBC is blocking; virtual threads (Java 21+) make that cheap without rewriting to R2DBC.</li>
+<li><strong>Pass cancellation through</strong>: <code>CancellationToken</code>, <code>context.Context</code>, <code>AbortSignal</code>. When the client disconnects or the deadline passes, the query should be cancelled, not finish for nobody.</li>
+<li><strong>One context, one operation at a time.</strong> A <code>DbContext</code>, a SQLAlchemy <code>AsyncSession</code> and a single connection can't run two queries concurrently. To run queries in parallel, use separate contexts and connections, and remember each one borrows from the pool.</li>
+<li><strong>Async doesn't make a query faster.</strong> It makes waiting cheaper. A slow query is still slow; fix it with the index section above.</li>
+</ul>
+<h2 id="read-replicas-and-replication-lag">Read replicas and replication lag</h2>
+<p>When reads outgrow one server, the usual next step is <strong>read replicas</strong>: copies of the primary that receive its changes through replication and serve read-only queries. Writes still go to the primary. Replication is almost always <strong>asynchronous</strong>, so a replica is behind the primary by some <strong>lag</strong>: usually milliseconds, sometimes seconds, and minutes during a big batch job or a network hiccup.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 260" width="900" role="img" aria-label="Read replicas: the application sends writes to the primary and reads to replicas; the primary streams its write-ahead log to the replicas asynchronously, so a read right after a write may hit a replica that hasn't applied the write yet and return stale data">
+<defs><marker id="data-access-ar7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text class="title" x="10" y="26">Primary + replicas: scale reads, accept lag</text>
+<rect class="box accent" x="10" y="100" width="150" height="60" rx="8"/><text class="mono" x="85" y="126" text-anchor="middle">App</text><text class="small muted" x="85" y="146" text-anchor="middle">routes by intent</text>
+<rect class="box path" x="330" y="40" width="190" height="60" rx="8"/><text class="mono" x="425" y="66" text-anchor="middle">Primary</text><text class="small muted" x="425" y="86" text-anchor="middle">all writes, some reads</text>
+<rect class="box visit" x="330" y="150" width="190" height="44" rx="8"/><text class="mono" x="425" y="177" text-anchor="middle">Replica 1</text>
+<rect class="box visit" x="330" y="204" width="190" height="44" rx="8"/><text class="mono" x="425" y="231" text-anchor="middle">Replica 2</text>
+<line class="edge path" x1="160" y1="116" x2="328" y2="74" marker-end="url(#data-access-ar7)"/><text class="small" x="230" y="84">writes</text>
+<line class="edge" x1="160" y1="140" x2="328" y2="172" marker-end="url(#data-access-ar7)"/><line class="edge" x1="160" y1="148" x2="328" y2="224" marker-end="url(#data-access-ar7)"/><text class="small" x="215" y="200">reads</text>
+<path class="edge dash" d="M520,80 C600,80 600,172 522,172" fill="none" marker-end="url(#data-access-ar7)"/><path class="edge dash" d="M520,90 C640,90 640,226 522,226" fill="none" marker-end="url(#data-access-ar7)"/>
+<text class="small" x="650" y="130">log shipped asynchronously:</text><text class="small" x="650" y="150">replica = primary minus lag</text>
+<rect class="box bad" x="650" y="170" width="240" height="78" rx="8"/><text class="small" x="664" y="194">User saves profile (primary),</text><text class="small" x="664" y="214">page reloads (replica, 300 ms</text><text class="small" x="664" y="234">behind): the old name. "Bug!"</text>
+</svg>
+<figcaption>Replicas trade freshness for capacity. The question isn't whether reads can be stale; it's which reads can tolerate it, and how you route the ones that can't.</figcaption>
+</figure>
+
+<p>Write a script of writes and reads, set the lag, and compare routing strategies. "Read your writes" is the guarantee users notice: after <em>I</em> change something, <em>I</em> see the change.</p>
+<div class="viz dax-wide" data-viz="data-access-replica"></div>
+
+<p>The strategies, from simplest to most precise:</p>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>How</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All reads to the primary</td>
+<td>no replicas</td>
+<td>simple and fresh; doesn't scale reads</td>
+</tr>
+<tr>
+<td>Replicas for tolerant reads only</td>
+<td>reports, search, dashboards, other users' data</td>
+<td>you must classify every query</td>
+</tr>
+<tr>
+<td><strong>Sticky primary after a write</strong></td>
+<td>after a user writes, route that user's reads to the primary for N seconds (cookie or session flag)</td>
+<td>simple and effective; N must exceed typical lag</td>
+</tr>
+<tr>
+<td><strong>Wait for the position</strong></td>
+<td>remember the write's log position (PostgreSQL LSN, MySQL GTID); a replica serves the read only once it has replayed that far, else go to the primary</td>
+<td>precise; needs driver or proxy support</td>
+</tr>
+<tr>
+<td>Synchronous replication</td>
+<td>the primary waits for a replica to confirm before committing</td>
+<td>every write gets slower; usually for durability, not read scaling</td>
+</tr>
+</tbody>
+</table>
+<p>In code, routing usually means two connection strings and a decision per query: EF Core with two <code>DbContext</code> registrations (or <code>ApplicationIntent=ReadOnly</code> for SQL Server Always On), Spring's <code>AbstractRoutingDataSource</code> keyed on <code>@Transactional(readOnly = true)</code>, SQLAlchemy with two engines and a custom <code>Session.get_bind</code>, Go with two <code>*sql.DB</code> pools, and Prisma's <code>readReplicas</code> extension (<code>prisma.$primary()</code> to force the primary). Caching has exactly the same staleness question, and the same answers, in <a href="caching.html">caching</a>.</p>
+<h3 id="sharding-at-a-glance">Sharding at a glance</h3>
+<p>Replicas scale <strong>reads</strong>. When <strong>writes</strong> or <strong>data size</strong> outgrow one primary, you split the data across several databases by a <strong>shard key</strong>: each shard owns a subset of tenants, customers or ids.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 250" width="900" role="img" aria-label="Sharding: a router hashes the shard key tenant_id to pick one of three shards, each a separate primary with its own replicas; queries that include the shard key go to one shard; queries without it must scatter to all shards and gather results">
+<defs><marker id="data-access-ar8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text class="title" x="10" y="26">Sharding by tenant_id</text>
+<rect class="box accent" x="10" y="90" width="200" height="70" rx="8"/><text class="mono" x="110" y="116" text-anchor="middle">Router</text><text class="small muted" x="110" y="138" text-anchor="middle">hash(tenant_id) mod 3</text>
+<rect class="box done" x="330" y="40" width="190" height="50" rx="8"/><text class="mono" x="425" y="62" text-anchor="middle">Shard A</text><text class="small muted" x="425" y="80" text-anchor="middle">tenants 7, 12, 31 …</text>
+<rect class="box done" x="330" y="100" width="190" height="50" rx="8"/><text class="mono" x="425" y="122" text-anchor="middle">Shard B</text><text class="small muted" x="425" y="140" text-anchor="middle">tenants 3, 18, 40 …</text>
+<rect class="box done" x="330" y="160" width="190" height="50" rx="8"/><text class="mono" x="425" y="182" text-anchor="middle">Shard C</text><text class="small muted" x="425" y="200" text-anchor="middle">tenants 5, 9, 27 …</text>
+<line class="edge path" x1="210" y1="112" x2="328" y2="66" marker-end="url(#data-access-ar8)"/>
+<line class="edge dash" x1="210" y1="125" x2="328" y2="125" marker-end="url(#data-access-ar8)"/>
+<line class="edge dash" x1="210" y1="138" x2="328" y2="184" marker-end="url(#data-access-ar8)"/>
+<rect class="box done" x="560" y="40" width="330" height="60" rx="8"/><text class="small" x="574" y="64">WHERE tenant_id = 7 AND …</text><text class="small muted" x="574" y="86">one shard: as fast as an unsharded DB</text>
+<rect class="box bad" x="560" y="110" width="330" height="60" rx="8"/><text class="small" x="574" y="134">WHERE email = 'ada@x.io' (no shard key)</text><text class="small muted" x="574" y="156">scatter to every shard, gather, merge</text>
+<rect class="box bad" x="560" y="180" width="330" height="60" rx="8"/><text class="small" x="574" y="204">A transaction across tenants 7 and 3</text><text class="small muted" x="574" y="226">two databases: no ACID, use a saga</text>
+</svg>
+<figcaption>The shard key decides everything: pick the key that nearly every query and every transaction already includes (tenant, customer, account). Resharding later is a migration project.</figcaption>
+</figure>
+
+<p>Sharding is the last resort, not the next step. Before it: indexes and query fixes, caching, read replicas, bigger hardware (vertical scaling goes a long way), archiving cold data, and table partitioning (one database, data split by range or hash inside it). When you do need it, managed options (Citus for PostgreSQL, Vitess for MySQL, Azure SQL elastic pools, or a distributed SQL database such as CockroachDB, YugabyteDB or Spanner) do the routing for you. Cross-shard consistency is covered in <a href="distributed-architecture.html">distributed architecture</a>.</p>
+<h2 id="sql-injection-and-parameterization">SQL injection and parameterization</h2>
+<p>SQL injection is decades old and still in the OWASP Top 10, because it's so easy to write. Whenever user input is <strong>concatenated</strong> into SQL text, the input can close the string literal and continue as SQL. The fix is equally old: send the SQL and the values <strong>separately</strong>, as a parameterized query. The database parses the SQL once, with placeholders, and the values can never become code.</p>
+<p>Type into the login box and switch between concatenation and parameters. Watch the tokens the database's parser sees: with concatenation, quotes in the input turn into SQL syntax; with parameters, the whole input is one value.</p>
+<div class="viz dax-wide" data-viz="data-access-injection"></div>
+
+<div class="code-tabs" data-labels="C#,Java,Python,Go,TypeScript">
+<pre><code class="language-csharp">// BAD: string concatenation or interpolation into SQL text
+var sql = $&quot;SELECT * FROM users WHERE name = '{name}'&quot;;
+conn.Query&lt;User&gt;(sql);
+db.Users.FromSqlRaw($&quot;SELECT * FROM users WHERE name = '{name}'&quot;);   // FromSqlRaw + interpolation = injection
+
+// GOOD
+conn.Query&lt;User&gt;(&quot;SELECT * FROM users WHERE name = @name&quot;, new { name });        // Dapper parameter
+db.Users.FromSql($&quot;SELECT * FROM users WHERE name = {name}&quot;);                     // EF Core: FormattableString → parameter
+db.Users.Where(u =&gt; u.Name == name);                                              // LINQ is always parameterized
+</code></pre>
+<pre><code class="language-java">// BAD
+stmt.executeQuery(&quot;SELECT * FROM users WHERE name = '&quot; + name + &quot;'&quot;);
+em.createQuery(&quot;from User u where u.name = '&quot; + name + &quot;'&quot;);                     // JPQL injection is real too
+
+// GOOD
+PreparedStatement ps = conn.prepareStatement(&quot;SELECT * FROM users WHERE name = ?&quot;);
+ps.setString(1, name);
+em.createQuery(&quot;from User u where u.name = :name&quot;, User.class).setParameter(&quot;name&quot;, name);
+dsl.selectFrom(USERS).where(USERS.NAME.eq(name));                                // jOOQ binds values
+</code></pre>
+<pre><code class="language-python"># BAD: f-strings, %, .format() into SQL
+cur.execute(f&quot;SELECT * FROM users WHERE name = '{name}'&quot;)
+session.execute(text(f&quot;SELECT * FROM users WHERE name = '{name}'&quot;))
+
+# GOOD: the driver's placeholders (psycopg: %s; sqlite3: ?) or SQLAlchemy bound parameters
+cur.execute(&quot;SELECT * FROM users WHERE name = %s&quot;, (name,))
+session.execute(text(&quot;SELECT * FROM users WHERE name = :name&quot;), {&quot;name&quot;: name})
+session.scalars(select(User).where(User.name == name))
+</code></pre>
+<pre><code class="language-go">// BAD
+db.QueryContext(ctx, &quot;SELECT * FROM users WHERE name = '&quot;+name+&quot;'&quot;)
+db.QueryContext(ctx, fmt.Sprintf(&quot;SELECT * FROM users WHERE name = '%s'&quot;, name))
+
+// GOOD: placeholders ($1 for PostgreSQL, ? for MySQL/SQLite, @p1 for SQL Server)
+db.QueryContext(ctx, &quot;SELECT * FROM users WHERE name = $1&quot;, name)
+gormDB.Where(&quot;name = ?&quot;, name).Find(&amp;users)   // NOT gormDB.Where(&quot;name = '&quot; + name + &quot;'&quot;)
+</code></pre>
+<pre><code class="language-typescript">// BAD
+await pool.query(`SELECT * FROM users WHERE name = '${name}'`);
+await prisma.$queryRawUnsafe(`SELECT * FROM users WHERE name = '${name}'`);
+
+// GOOD
+await pool.query(&quot;SELECT * FROM users WHERE name = $1&quot;, [name]);
+await prisma.$queryRaw`SELECT * FROM users WHERE name = ${name}`;        // tagged template → parameter
+await db.selectFrom(&quot;users&quot;).selectAll().where(&quot;name&quot;, &quot;=&quot;, name).execute(); // Kysely
+await db.execute(sql`SELECT * FROM users WHERE name = ${name}`);          // Drizzle sql`` tag
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Where injection still sneaks in when "we use an ORM"</strong></p>
+<ul>
+<li><strong>Raw SQL escape hatches</strong> with interpolation: <code>FromSqlRaw</code>, <code>ExecuteSqlRaw</code>, <code>$queryRawUnsafe</code>, <code>text(f"...")</code>, <code>createNativeQuery("..." + x)</code>, GORM <code>Where(fmt.Sprintf(...))</code>. Look for the "Raw" and "Unsafe" names in code review.</li>
+<li><strong>Identifiers can't be parameters.</strong> Column names in <code>ORDER BY</code>, table names and sort directions are SQL, not values. Map user input through an <strong>allowlist</strong>: <code>sort switch { "date" =&gt; "created_at", "total" =&gt; "total", _ =&gt; "created_at" }</code>.</li>
+<li><strong><code>LIKE</code> patterns.</strong> Parameterizing stops injection but <code>%</code> and <code>_</code> in the input are still wildcards; escape them if users shouldn't be able to search for "everything".</li>
+<li><strong><code>IN</code> lists.</strong> Build one placeholder per item (Dapper and EF Core expand lists for you), or pass an array: <code>= ANY($1)</code> on PostgreSQL.</li>
+<li><strong>Stored procedures that build dynamic SQL inside</strong> with string concatenation are just as vulnerable. Use <code>sp_executesql</code> with parameters, or <code>format('%I', …)</code> / <code>quote_ident</code> for identifiers in PL/pgSQL.</li>
+</ul>
+<p>Least privilege is the second line of defence: the app's database user shouldn't be able to <code>DROP TABLE</code>. The broader picture is in <a href="api-security.html">API security</a>.</p>
+</div>
+<h2 id="when-to-pick-nosql">When to pick NoSQL</h2>
+<p>"NoSQL" is four quite different families, each optimised for an access pattern that relational databases handle less well. The honest default for a new business application is still a relational database: it does transactions, ad hoc queries and constraints, and PostgreSQL's <code>jsonb</code> covers much of what people reach for a document store to get. Pick something else when your access pattern clearly matches one of these:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 420" width="900" role="img" aria-label="Decision tree: do you need multi-row transactions and ad hoc queries across entities, then relational; is it lookup by key only at huge scale or as a cache, then key-value; is data read and written as self-contained documents with flexible shape, then document; is it a massive write-heavy time series or event stream queried by partition and time, then wide-column; are queries mostly about relationships many hops deep, then graph; otherwise relational">
+<defs><marker id="data-access-ar9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text class="title" x="10" y="26">Choosing a data store by access pattern</text>
+<rect class="box accent" x="10" y="44" width="440" height="50" rx="8"/><text class="small" x="24" y="66">Need transactions across rows/entities, joins,</text><text class="small" x="24" y="84">ad hoc queries, strong constraints?</text>
+<rect class="box done" x="620" y="44" width="270" height="50" rx="8"/><text class="mono" x="634" y="66">Relational</text><text class="small muted" x="634" y="84">PostgreSQL, SQL Server, MySQL</text>
+<line class="edge path" x1="450" y1="69" x2="618" y2="69" marker-end="url(#data-access-ar9)"/><text class="small" x="534" y="62" text-anchor="middle">yes</text>
+<rect class="box" x="10" y="114" width="440" height="50" rx="8"/><text class="small" x="24" y="136">Only get/put by key, extreme throughput,</text><text class="small" x="24" y="154">or a cache / session store?</text>
+<rect class="box visit" x="620" y="114" width="270" height="50" rx="8"/><text class="mono" x="634" y="136">Key-value</text><text class="small muted" x="634" y="154">Redis, DynamoDB, etcd</text>
+<line class="edge" x1="450" y1="139" x2="618" y2="139" marker-end="url(#data-access-ar9)"/><text class="small" x="534" y="132" text-anchor="middle">yes</text>
+<rect class="box" x="10" y="184" width="440" height="50" rx="8"/><text class="small" x="24" y="206">Self-contained aggregates read and written whole,</text><text class="small" x="24" y="224">shape varies, few cross-document queries?</text>
+<rect class="box visit" x="620" y="184" width="270" height="50" rx="8"/><text class="mono" x="634" y="206">Document</text><text class="small muted" x="634" y="224">MongoDB, Cosmos DB, Couchbase</text>
+<line class="edge" x1="450" y1="209" x2="618" y2="209" marker-end="url(#data-access-ar9)"/><text class="small" x="534" y="202" text-anchor="middle">yes</text>
+<rect class="box" x="10" y="254" width="440" height="50" rx="8"/><text class="small" x="24" y="276">Huge write volume, queried by partition + time range</text><text class="small" x="24" y="294">(telemetry, events, messages)?</text>
+<rect class="box visit" x="620" y="254" width="270" height="50" rx="8"/><text class="mono" x="634" y="276">Wide-column</text><text class="small muted" x="634" y="294">Cassandra, ScyllaDB, Bigtable</text>
+<line class="edge" x1="450" y1="279" x2="618" y2="279" marker-end="url(#data-access-ar9)"/><text class="small" x="534" y="272" text-anchor="middle">yes</text>
+<rect class="box" x="10" y="324" width="440" height="50" rx="8"/><text class="small" x="24" y="346">Questions are about relationships, many hops deep</text><text class="small" x="24" y="364">(fraud rings, recommendations, permissions)?</text>
+<rect class="box visit" x="620" y="324" width="270" height="50" rx="8"/><text class="mono" x="634" y="346">Graph</text><text class="small muted" x="634" y="364">Neo4j, Neptune, Cosmos Gremlin</text>
+<line class="edge" x1="450" y1="349" x2="618" y2="349" marker-end="url(#data-access-ar9)"/><text class="small" x="534" y="342" text-anchor="middle">yes</text>
+<line class="edge dash" x1="230" y1="94" x2="230" y2="112" marker-end="url(#data-access-ar9)"/><line class="edge dash" x1="230" y1="164" x2="230" y2="182" marker-end="url(#data-access-ar9)"/><line class="edge dash" x1="230" y1="234" x2="230" y2="252" marker-end="url(#data-access-ar9)"/><line class="edge dash" x1="230" y1="304" x2="230" y2="322" marker-end="url(#data-access-ar9)"/>
+<text class="small muted" x="244" y="107">no</text><text class="small muted" x="244" y="177">no</text><text class="small muted" x="244" y="247">no</text><text class="small muted" x="244" y="317">no</text>
+<text class="small muted" x="10" y="404">None of these? Relational. Many systems use two: relational as the system of record, plus Redis for caching or a search index for text.</text>
+</svg>
+<figcaption>Ask the questions in order: the first "yes" usually wins. Polyglot persistence is normal, but every extra store adds operations work and a consistency problem between stores.</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Data model</th>
+<th>Great at</th>
+<th>Weak at</th>
+<th>Design rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Relational</td>
+<td>tables, rows, foreign keys</td>
+<td>transactions, joins, ad hoc queries, constraints</td>
+<td>horizontal write scaling (without sharding)</td>
+<td>normalise, then denormalise deliberately for reads</td>
+</tr>
+<tr>
+<td>Key-value</td>
+<td>key → opaque value</td>
+<td>O(1) get/put, caching, counters, sessions, locks</td>
+<td>any query not by key</td>
+<td>design keys for every lookup you'll need</td>
+</tr>
+<tr>
+<td>Document</td>
+<td>JSON documents in collections</td>
+<td>aggregates read whole, flexible schema, partitioned scale</td>
+<td>joins, multi-document transactions (supported but costly)</td>
+<td>model documents around access patterns; embed what's read together</td>
+</tr>
+<tr>
+<td>Wide-column</td>
+<td>partitions of sorted rows</td>
+<td>massive writes, time-ordered reads within a partition</td>
+<td>ad hoc queries, aggregations, updates</td>
+<td>one table per query; the partition key decides scale</td>
+</tr>
+<tr>
+<td>Graph</td>
+<td>nodes and edges with properties</td>
+<td>variable-depth traversals (friends of friends of friends)</td>
+<td>bulk aggregations, simple CRUD at scale</td>
+<td>model the relationships you'll traverse as edges</td>
+</tr>
+</tbody>
+</table>
+<p>The rule that transfers across all of them: in NoSQL you design the schema <strong>from the queries</strong>, because the database won't join or re-index for you later. Modelling aggregates (what's read and written together) is the same skill as in <a href="domain-driven-design.html">domain-driven design</a>.</p>
+<h2 id="data-access-anti-patterns">Data-access anti-patterns</h2>
+<table>
+<thead>
+<tr>
+<th>Anti-pattern</th>
+<th>What it looks like</th>
+<th>Why it hurts</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>N+1 queries</td>
+<td>a query inside a loop, or lazy navigation in a serializer</td>
+<td>1 + N round trips</td>
+<td>eager load, split queries, projection, DataLoader; see <a href="anti-patterns.html">anti-patterns</a></td>
+</tr>
+<tr>
+<td><code>SELECT *</code> / returning entities</td>
+<td><code>return Ok(entity)</code></td>
+<td>extra I/O, leaks columns, no covering index</td>
+<td>project to DTOs</td>
+</tr>
+<tr>
+<td>Filtering in memory</td>
+<td><code>.ToList().Where(...)</code>, <code>GetAll()</code> then filter</td>
+<td>transfers the whole table</td>
+<td>filter in the query (<code>IQueryable</code>, <code>WHERE</code>)</td>
+</tr>
+<tr>
+<td>Chatty unit of work</td>
+<td><code>SaveChanges()</code> inside a loop</td>
+<td>a transaction and round trips per row</td>
+<td>save once; batch; bulk APIs</td>
+</tr>
+<tr>
+<td>Long transactions</td>
+<td>HTTP calls or user input inside a transaction</td>
+<td>locks and connections held; deadlocks</td>
+<td>short transactions; outbox for side effects</td>
+</tr>
+<tr>
+<td>Lost updates</td>
+<td>read, modify in app, write back</td>
+<td>concurrent edits silently overwritten</td>
+<td>atomic <code>UPDATE</code>, version column + ETag, or <code>FOR UPDATE</code></td>
+</tr>
+<tr>
+<td>Offset paging at depth</td>
+<td><code>OFFSET 100000</code></td>
+<td>reads and discards rows; drifting pages</td>
+<td>keyset pagination</td>
+</tr>
+<tr>
+<td>Non-sargable predicates</td>
+<td><code>WHERE YEAR(date) = …</code>, <code>LIKE '%x'</code></td>
+<td>index can't seek</td>
+<td>ranges, expression or trigram indexes</td>
+</tr>
+<tr>
+<td>Missing or redundant indexes</td>
+<td>no index on foreign keys; ten overlapping indexes</td>
+<td>scans; slow writes</td>
+<td>index for real queries; drop unused ones</td>
+</tr>
+<tr>
+<td>Generic repository over an ORM</td>
+<td><code>IRepository&lt;T&gt;.GetAll()</code></td>
+<td>hides features, loads too much</td>
+<td>use the ORM directly, or aggregate repositories</td>
+</tr>
+<tr>
+<td>Connection leaks</td>
+<td>missing <code>using</code> / <code>defer rows.Close()</code> / <code>release()</code></td>
+<td>pool exhaustion</td>
+<td>scoped disposal, leak detection</td>
+</tr>
+<tr>
+<td>String-built SQL</td>
+<td><code>"... WHERE id = " + id</code></td>
+<td>injection, plan cache pollution</td>
+<td>parameters everywhere; allowlists for identifiers</td>
+</tr>
+<tr>
+<td>Migrations that break running code</td>
+<td>rename/drop in one step</td>
+<td>errors during every deploy</td>
+<td>expand / contract</td>
+</tr>
+<tr>
+<td>Reading your own write from a replica</td>
+<td>write to primary, read from replica</td>
+<td>"my change disappeared"</td>
+<td>sticky primary, or wait for the log position</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common-pitfalls">Common pitfalls</h2>
+<div class="pitfall">
+<p><strong>Pitfalls and production war stories</strong></p>
+<ul>
+<li><strong>"It was fast in dev."</strong> Dev has 50 rows; production has 50 million. Test with production-sized data, or at least look at the plan and count rows touched.</li>
+<li><strong>The Black Friday pool outage.</strong> A payment call inside a transaction slowed from 100 ms to 8 s. Every request held a connection for 8 s, the pool of 100 emptied in a second, and the whole site queued behind it, including pages that never touch payments. Fix: no remote calls inside transactions; a timeout on the payment call; a separate pool (bulkhead) for slow work, as in <a href="resilience.html">resilience</a>.</li>
+<li><strong>The silent overwrite.</strong> Two support agents edited the same customer; the second "Save" wiped the first agent's address change. Nothing logged an error. Fix: a <code>rowversion</code> column, an ETag on the form, <code>412</code> on conflict, and a "someone else changed this" screen.</li>
+<li><strong>The serializer N+1.</strong> An endpoint returned <code>List&lt;Order&gt;</code> with lazy loading on. JSON serialization touched <code>order.Customer</code> for each order: 501 queries per call, invisible in the controller code. Fix: projections; lazy loading off.</li>
+<li><strong>The migration that locked the table.</strong> <code>ALTER TABLE orders ADD COLUMN … DEFAULT now()</code> on an old MySQL version rewrote 200 GB under a lock. Fix: test migrations on a production-sized copy; use online DDL tools (gh-ost, pt-online-schema-change) or the database's online options.</li>
+<li><strong>The isolation surprise.</strong> Stock went negative under load because "we use transactions". The default READ COMMITTED doesn't stop read-modify-write races. Fix: <code>UPDATE … SET stock = stock - @q WHERE stock &gt;= @q</code>.</li>
+<li><strong>Replica confusion.</strong> Users reported "my settings don't save" for a few seconds after saving. The reads hit a replica. Fix: sticky primary for that user after a write.</li>
+</ul>
+</div>
+<h2 id="checklist">Checklist</h2>
+<div class="rule">
+<p><strong>Before shipping data-access code</strong></p>
+<ul>
+<li>[ ] SQL logging is on in development, and you've read the SQL each new endpoint generates. A test asserts the number of queries for key endpoints.</li>
+<li>[ ] No lazy loading on request paths. Related data is loaded with eager loading, split queries or projections.</li>
+<li>[ ] Read endpoints project to DTOs and use no-tracking. Write endpoints load aggregates, change them, and save once.</li>
+<li>[ ] Every query that filters or sorts large tables has a supporting index, checked with EXPLAIN on realistic data. Foreign keys are indexed.</li>
+<li>[ ] Lists use keyset pagination (or offset with a hard maximum page) and a stable, unique sort.</li>
+<li>[ ] Transactions are short, contain no remote calls, and use the isolation level the logic needs, with a retry loop for serialization failures.</li>
+<li>[ ] Concurrent edits are detected: a version column and ETag/<code>If-Match</code>, or atomic updates.</li>
+<li>[ ] The pool is sized for the database, not the traffic; every connection is disposed via <code>using</code> / try-with-resources / <code>with</code> / <code>defer</code> / <code>finally</code>; acquisition has a timeout; leak detection is on.</li>
+<li>[ ] All SQL is parameterized. Identifiers come from allowlists. The app's database user has least privilege.</li>
+<li>[ ] Migrations are reviewed, backward-compatible (expand / contract), run once per deploy outside app startup, and tested on production-sized data.</li>
+<li>[ ] Reads that go to replicas tolerate lag; read-your-writes paths go to the primary.</li>
+<li>[ ] Database time is visible: slow query log or <code>pg_stat_statements</code> / Query Store, plus database spans in traces (<a href="observability.html">observability</a>).</li>
+</ul>
+</div>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>An endpoint lists 100 orders and their customer names. It's slow, and the SQL log shows 101 queries. Name three fixes and the one you'd pick.</summary>
+<p>It's N+1: one query for the orders and one lazy load per order for its customer. Fixes: eager-load the customer (<code>Include</code>, <code>join fetch</code>, <code>joinedload</code>, Prisma <code>include</code>), which is a JOIN that adds columns but not rows for a many-to-one; batch-load customers with <code>WHERE id IN (…)</code> (split query, <code>selectinload</code>, <code>@BatchSize</code>); or <strong>project</strong> <code>new { o.Id, o.Total, CustomerName = o.Customer.Name }</code>. The projection is usually best for a read endpoint: one query, only the needed columns, nothing tracked.</p>
+</details>
+<details class="quiz">
+<summary>Two requests run <code>SELECT stock</code>, both see 1, and both run <code>UPDATE … SET stock = 0</code> and create an order. You're in a transaction at READ COMMITTED. Why didn't that help, and what's the simplest fix?</summary>
+<p>READ COMMITTED only guarantees you don't see uncommitted data. Both transactions read the committed value 1 before either wrote, so this is a lost update. The simplest fix is to make the check and the change one statement: <code>UPDATE products SET stock = stock - 1 WHERE id = @id AND stock &gt;= 1</code>, and treat "0 rows affected" as out of stock. Alternatives: <code>SELECT … FOR UPDATE</code>, a version column, or SERIALIZABLE with a retry loop.</p>
+</details>
+<details class="quiz">
+<summary>You have an index on <code>(status, customer_id)</code>. Which of these can seek: <code>WHERE customer_id = 4</code>; <code>WHERE status = 'paid'</code>; <code>WHERE customer_id = 4 AND status = 'paid'</code>?</summary>
+<p>The second and third. The index is sorted by <code>status</code> first, so any query constraining <code>status</code> has a leftmost prefix; the order of predicates in <code>WHERE</code> doesn't matter. <code>customer_id = 4</code> alone has no prefix: customer 4's entries are spread across every status group, so it scans (or, on some engines, does a skip scan when <code>status</code> has few distinct values). If <code>customer_id</code> alone is a common query, <code>(customer_id, status)</code> is the better index: it serves both.</p>
+</details>
+<details class="quiz">
+<summary>A list endpoint pages with <code>OFFSET</code>. Users on page 3 sometimes see an item they saw on page 2. What's happening, and how do you fix it?</summary>
+<p>New rows were inserted at the top of the sort order between the two requests, so every row shifted down by one and the last item of page 2 is now the first of page 3. Keyset pagination fixes it: page 3 asks for rows <em>after the last key it saw</em> (<code>WHERE (created_at, id) &lt; (@c, @i)</code>), so insertions above don't move the boundary. It's also faster at depth, because it seeks instead of reading and discarding.</p>
+</details>
+<details class="quiz">
+<summary>Why is <code>services.AddSingleton&lt;ShopDb&gt;()</code> a bug, but <code>AddSingleton(NpgsqlDataSource)</code> correct?</summary>
+<p>A <code>DbContext</code> is a unit of work: it holds an identity map and snapshots, isn't thread-safe, and grows with every query. As a singleton it's shared by concurrent requests (exceptions, corrupted state) and serves stale cached entities forever. A data source is a thread-safe factory that owns the connection pool, which <em>should</em> be shared process-wide. Make the context scoped (or use <code>AddDbContextPool</code>, which resets and reuses contexts safely).</p>
+</details>
+<details class="quiz">
+<summary>You must rename <code>customers.name</code> to <code>full_name</code> on a system that deploys with rolling updates. Outline the steps.</summary>
+<p>Expand / contract: (1) add <code>full_name</code> nullable; (2) deploy code that writes both columns and still reads <code>name</code>; (3) backfill old rows in batches; (4) deploy code that reads <code>full_name</code> (still writing both); (5) deploy code that writes only <code>full_name</code>; (6) once no running version reads <code>name</code>, drop it and add <code>NOT NULL</code> if needed. Every intermediate schema works with both the old and new running versions, so no deploy causes errors.</p>
+</details>
+<details class="quiz">
+<summary>A code review shows <code>db.Users.FromSqlRaw($"SELECT * FROM users WHERE email = '{email}'")</code>. What's wrong, and what's the smallest fix?</summary>
+<p><code>FromSqlRaw</code> with an interpolated string concatenates the input into SQL text: <code>email = x' OR '1'='1</code> returns every user. The smallest fix is <code>FromSql($"SELECT * FROM users WHERE email = {email}")</code> (or <code>FromSqlInterpolated</code>), which turns each interpolation hole into a <code>DbParameter</code>. Better still, <code>db.Users.Where(u =&gt; u.Email == email)</code>.</p>
+</details>
+<details class="quiz">
+<summary>Inserting 50,000 rows takes 90 seconds with a loop of <code>INSERT</code> statements. Where does the time go, and what gets it under a second?</summary>
+<p>Mostly per-row round trips (50,000 × ~1 ms) and, with autocommit, a log flush per row (another ~1 ms each). Wrapping the loop in one transaction removes the flushes; batching (<code>executeBatch</code>, <code>executemany</code>, EF Core's batched <code>SaveChanges</code>, a multi-row <code>INSERT</code>) removes most round trips; a bulk path (<code>COPY</code>, <code>SqlBulkCopy</code>, pgx <code>CopyFrom</code>) streams rows in one operation and is usually well under a second for 50,000 rows.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>The four numbers</strong>Round trips, rows touched, connection hold time, transaction and lock hold time. Know them per request.</div>
+<div><strong>ORM spectrum</strong>Raw driver → micro-ORM / typed SQL (Dapper, jOOQ, SQLAlchemy Core, sqlc, Kysely) → full ORM (EF Core, Hibernate, SQLAlchemy ORM, GORM, Prisma).</div>
+<div><strong>Unit of work</strong>Identity map + snapshots + one save. Scoped per request. No-tracking for reads. Never <code>SaveChanges</code> in a loop.</div>
+<div><strong>Loading</strong>Lazy = N+1 risk. JOIN for many-to-one. Split / <code>IN</code> for collections. Projection for read endpoints.</div>
+<div><strong>Pool</strong>Small (≈ cores × 2 per DB, summed across instances). Dispose always. Timeouts. PgBouncer for many pods or serverless.</div>
+<div><strong>Isolation</strong>Defaults are READ COMMITTED (PostgreSQL, SQL Server) or REPEATABLE READ (MySQL). SERIALIZABLE needs a retry loop.</div>
+<div><strong>Concurrency</strong>Atomic <code>UPDATE … WHERE stock &gt;= q</code> first. Then version + ETag (optimistic) or <code>FOR UPDATE</code> (pessimistic, short).</div>
+<div><strong>Paging</strong>Keyset: <code>WHERE (k, id) &lt; (@k, @id) ORDER BY k DESC, id DESC LIMIT n</code>, with a matching index.</div>
+<div><strong>Indexes</strong>Leftmost prefix. Equality, then range or sort. <code>INCLUDE</code> to cover. Keep predicates sargable. Check EXPLAIN.</div>
+<div><strong>Migrations</strong>Expand → dual-write → backfill → switch reads → stop old writes → contract. Run once, outside startup.</div>
+<div><strong>Bulk</strong>One transaction, batch statements, <code>COPY</code> / <code>SqlBulkCopy</code> / <code>CopyFrom</code> for big loads; set-based <code>UPDATE</code>/<code>DELETE</code>.</div>
+<div><strong>Safety</strong>Parameters always; allowlist identifiers; least-privilege DB user; replicas only for lag-tolerant reads.</div>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://use-the-index-luke.com/">Use The Index, Luke</a>: indexing and keyset pagination, explained for every major database</li>
+<li><a href="https://www.postgresql.org/docs/current/">PostgreSQL documentation</a>: <a href="https://www.postgresql.org/docs/current/transaction-iso.html">transaction isolation</a>, <a href="https://www.postgresql.org/docs/current/explicit-locking.html">explicit locking</a>, <a href="https://www.postgresql.org/docs/current/using-explain.html">using EXPLAIN</a>, <a href="https://www.postgresql.org/docs/current/indexes.html">indexes</a></li>
+<li><a href="https://learn.microsoft.com/sql/relational-databases/sql-server-transaction-locking-and-row-versioning-guide">SQL Server: transaction locking and row versioning guide</a> and <a href="https://learn.microsoft.com/sql/relational-databases/sql-server-index-design-guide">index architecture and design</a></li>
+<li><a href="https://learn.microsoft.com/ef/core/performance/">EF Core performance</a>, <a href="https://learn.microsoft.com/ef/core/saving/concurrency">concurrency conflicts</a>, <a href="https://learn.microsoft.com/ef/core/querying/related-data/">loading related data</a>, <a href="https://learn.microsoft.com/ef/core/managing-schemas/migrations/">migrations</a>; <a href="https://github.com/DapperLib/Dapper">Dapper</a></li>
+<li><a href="https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html">Hibernate ORM user guide</a>, <a href="https://docs.spring.io/spring-data/jpa/reference/">Spring Data JPA</a>, <a href="https://www.jooq.org/doc/latest/manual/">jOOQ manual</a>, <a href="https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing">HikariCP: about pool sizing</a>, <a href="https://documentation.red-gate.com/flyway">Flyway</a></li>
+<li><a href="https://docs.sqlalchemy.org/en/20/">SQLAlchemy 2.0 documentation</a> and <a href="https://alembic.sqlalchemy.org/">Alembic</a>; <a href="https://www.psycopg.org/psycopg3/docs/">psycopg 3</a></li>
+<li><a href="https://go.dev/doc/database/">Go database/sql tutorial</a>, <a href="https://github.com/jackc/pgx">pgx</a>, <a href="https://docs.sqlc.dev/">sqlc</a>, <a href="https://gorm.io/docs/">GORM</a>, <a href="https://github.com/golang-migrate/migrate">golang-migrate</a></li>
+<li><a href="https://www.prisma.io/docs">Prisma documentation</a>, <a href="https://orm.drizzle.team/docs/overview">Drizzle ORM</a>, <a href="https://kysely.dev/docs/intro">Kysely</a>, <a href="https://node-postgres.com/">node-postgres</a></li>
+<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html">OWASP SQL Injection Prevention Cheat Sheet</a></li>
+<li>Martin Fowler, <em>Patterns of Enterprise Application Architecture</em>: <a href="https://martinfowler.com/eaaCatalog/unitOfWork.html">Unit of Work</a>, <a href="https://martinfowler.com/eaaCatalog/identityMap.html">Identity Map</a>, <a href="https://martinfowler.com/eaaCatalog/repository.html">Repository</a>, <a href="https://martinfowler.com/eaaCatalog/optimisticOfflineLock.html">Optimistic Offline Lock</a>; Martin Kleppmann, <em>Designing Data-Intensive Applications</em>, chapters 5–7 (replication, partitioning, transactions)</li>
+<li>Related topics: <a href="api-design.html">API design</a>, <a href="api-protocols.html">API protocols</a>, <a href="api-security.html">API security</a>, <a href="request-pipeline.html">request pipeline</a>, <a href="middleware-patterns.html">middleware patterns</a>, <a href="outbound-pipelines.html">outbound pipelines</a>, <a href="resilience.html">resilience</a>, <a href="caching.html">caching</a>, <a href="concurrency-async.html">concurrency and async</a>, <a href="memory-and-gc.html">memory and GC</a>, <a href="anti-patterns.html">anti-patterns</a>, <a href="structural-patterns.html">structural patterns</a>, <a href="application-architecture.html">application architecture</a>, <a href="domain-driven-design.html">domain-driven design</a>, <a href="distributed-architecture.html">distributed architecture</a>, <a href="observability.html">observability</a>, <a href="performance-patterns.html">performance patterns</a></li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="caching.html"><small>&larr; PREVIOUS</small>Caching: When To, When Not To, and How</a><a class="next" href="performance-cadence.html"><small>NEXT &rarr;</small>The Performance Cadence</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-one-innocent-endpoint-six-production-bugs">The problem: one innocent endpoint, six production bugs</a></li>
+<li><a href="#the-mental-model-every-query-crosses-six-boundaries">The mental model: every query crosses six boundaries</a></li>
+<li><a href="#raw-sql-vs-micro-orm-vs-full-orm">Raw SQL vs micro-ORM vs full ORM</a><ul>
+<li><a href="#the-same-query-sql-first-in-five-stacks">The same query, SQL-first, in five stacks</a></li>
+<li><a href="#the-same-query-through-a-full-orm">The same query through a full ORM</a></li>
+</ul>
+</li>
+<li><a href="#connection-pooling-borrow-return-wait">Connection pooling: borrow, return, wait</a><ul>
+<li><a href="#sizing-smaller-than-you-think">Sizing: smaller than you think</a></li>
+</ul>
+</li>
+<li><a href="#transactions-and-isolation-levels">Transactions and isolation levels</a></li>
+<li><a href="#optimistic-vs-pessimistic-concurrency">Optimistic vs pessimistic concurrency</a></li>
+<li><a href="#change-tracking-and-the-unit-of-work">Change tracking and the unit of work</a></li>
+<li><a href="#loading-related-data-lazy-eager-explicit-and-projection">Loading related data: lazy, eager, explicit and projection</a></li>
+<li><a href="#projections-dont-return-entities-from-apis">Projections: don't return entities from APIs</a></li>
+<li><a href="#pagination-offset-vs-keyset">Pagination: offset vs keyset</a></li>
+<li><a href="#indexes-how-the-database-finds-rows">Indexes: how the database finds rows</a><ul>
+<li><a href="#composite-indexes-and-the-leftmost-prefix">Composite indexes and the leftmost prefix</a></li>
+<li><a href="#reading-an-explain-plan">Reading an EXPLAIN plan</a></li>
+</ul>
+</li>
+<li><a href="#migrations-changing-the-schema-without-downtime">Migrations: changing the schema without downtime</a></li>
+<li><a href="#the-repository-pattern-debate">The repository pattern debate</a></li>
+<li><a href="#batching-bulk-operations-compiled-queries-and-async-io">Batching, bulk operations, compiled queries and async I/O</a><ul>
+<li><a href="#compiled-queries-and-prepared-statements">Compiled queries and prepared statements</a></li>
+<li><a href="#async-io">Async I/O</a></li>
+</ul>
+</li>
+<li><a href="#read-replicas-and-replication-lag">Read replicas and replication lag</a><ul>
+<li><a href="#sharding-at-a-glance">Sharding at a glance</a></li>
+</ul>
+</li>
+<li><a href="#sql-injection-and-parameterization">SQL injection and parameterization</a></li>
+<li><a href="#when-to-pick-nosql">When to pick NoSQL</a></li>
+<li><a href="#data-access-anti-patterns">Data-access anti-patterns</a></li>
+<li><a href="#common-pitfalls">Common pitfalls</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

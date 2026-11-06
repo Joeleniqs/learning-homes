@@ -1,0 +1,142 @@
+/* Security fundamentals: visualizer and figure styles. Colours come only from theme variables. */
+.viz[data-viz^="security-fundamentals-"] .viz-stage { padding: 16px 14px; gap: 12px; }
+
+/* svg text helpers */
+svg.dg .sf-t { font-size: 12.5px; font-weight: 650; }
+svg.dg .sf-s { font-size: 10.5px; fill: var(--muted); }
+svg.dg .sf-t.sf-okc { fill: var(--v-done); font-weight: 800; }
+svg.dg rect.sf-zone { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5px; stroke-dasharray: 6 4; opacity: .7; }
+svg.dg .sf-boundary { stroke: var(--v-bad); stroke-width: 2px; stroke-dasharray: 7 5; }
+svg.sf-svg { flex: 0 1 auto; max-width: 100%; height: auto; }
+
+/* layout */
+.sf-col { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; }
+.sf-split { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; justify-content: center; width: 100%; }
+.sf-split-l { flex: 1 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 10px; align-items: stretch; }
+.sf-split-r { flex: 0 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.sf-split-r.sf-wide { flex: 1 1 300px; }
+.sf-fig { flex: 1 1 520px; min-width: 0; display: flex; justify-content: center; }
+.sf-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; justify-content: center; }
+.sf-h { padding: 4px 10px; font: 700 10.5px "Segoe UI", system-ui, sans-serif; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+
+/* stats */
+.sf-stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.sf-stat { border: 1.5px solid var(--line); border-radius: 8px; padding: 5px 12px; text-align: center; background: var(--surface); min-width: 96px; }
+.sf-stat b { display: block; font: 700 15px "Cascadia Code", Consolas, monospace; }
+.sf-stat span { font-size: 10.5px; color: var(--muted); }
+.sf-stat.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.sf-stat.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.sf-stat.active { border-color: var(--v-active); background: var(--v-active-soft); }
+
+/* code panels */
+.sf-codebox { width: 100%; border: 1px solid var(--line); border-radius: 8px; background: var(--code); overflow: hidden; }
+.sf-codebox > .sf-h { background: var(--surface); border-bottom: 1px solid var(--line); text-transform: none; letter-spacing: .2px; }
+.sf-code { margin: 0; padding: 8px 0; list-style: none; counter-reset: sfln; overflow-x: auto; font: 12px/1.6 "Cascadia Code", Consolas, monospace; }
+.prose .sf-code li, .sf-code li { margin: 0; padding: 0 12px 0 6px; white-space: pre; counter-increment: sfln; border-left: 3px solid transparent; font-size: 12px; line-height: 1.6; }
+.sf-code li::before { content: counter(sfln); display: inline-block; width: 22px; color: var(--muted); opacity: .6; font-size: 10.5px; }
+.sf-code li.cur { background: var(--v-active-soft); border-left-color: var(--v-active); }
+
+/* query / HTML boxes with the user's bytes highlighted */
+.sf-qbox { border: 1px solid var(--line); border-radius: 8px; background: var(--code); overflow: hidden; }
+.sf-qbox > .sf-h { background: var(--surface); border-bottom: 1px solid var(--line); }
+.prose pre.sf-q, pre.sf-q { margin: 0; padding: 10px 12px; background: transparent; border: 0; font: 12.5px/1.6 "Cascadia Code", Consolas, monospace; white-space: pre-wrap; word-break: break-all; }
+pre.sf-q.sf-dimq { color: var(--muted); }
+.sf-user { background: var(--v-active-soft); outline: 1.5px solid var(--v-active); border-radius: 3px; color: var(--text); }
+.sf-data { background: var(--v-done-soft); outline: 1.5px solid var(--v-done); border-radius: 3px; color: var(--text); }
+.sf-inj { background: var(--v-bad-soft); outline: 1.5px solid var(--v-bad); border-radius: 2px; color: var(--v-bad); font-weight: 700; }
+.sf-ph { background: var(--accent-soft); outline: 1.5px solid var(--accent); border-radius: 3px; font-weight: 700; }
+.sf-params { padding: 6px 12px; border-top: 1px dashed var(--line); font-size: 12px; }
+.sf-params em { color: var(--muted); font-size: 11px; }
+.sf-csp { padding: 5px 12px; border-top: 1px dashed var(--line); font: 11px "Cascadia Code", Consolas, monospace; color: var(--v-path); }
+
+/* tokens */
+.sf-toks { display: flex; flex-wrap: wrap; gap: 4px; }
+.sf-tok { display: inline-flex; flex-direction: column; align-items: center; padding: 2px 6px; border: 1.5px solid var(--line); border-radius: 6px; background: var(--surface); font: 12px "Cascadia Code", Consolas, monospace; }
+.sf-tok em { font: 700 8.5px "Segoe UI", system-ui, sans-serif; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); font-style: normal; }
+.sf-tok.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.sf-tok.bad { border-color: var(--v-bad); background: var(--v-bad-soft); color: var(--v-bad); font-weight: 700; }
+.sf-t-kw { color: var(--accent); }
+
+/* tables inside visualizers (reset the prose table styles) */
+.prose table.sf-tbl, table.sf-tbl { border-collapse: collapse; margin: 0; font: 12px "Cascadia Code", Consolas, monospace; width: auto; display: table; }
+.prose table.sf-tbl th, .prose table.sf-tbl td, table.sf-tbl th, table.sf-tbl td { border: 1px solid var(--line); padding: 3px 8px; min-width: 0; text-align: left; background: var(--surface); vertical-align: top; }
+.prose table.sf-tbl th, table.sf-tbl th { font: 700 10px "Segoe UI", system-ui, sans-serif; letter-spacing: .2px; text-transform: uppercase; color: var(--muted); background: var(--code); }
+table.sf-tbl td.sf-by { color: var(--muted); font-size: 11px; }
+table.sf-tbl tr.sf-leak td { background: var(--v-bad-soft); }
+table.sf-tbl tr.sf-hit td { background: var(--v-done-soft); }
+table.sf-tbl tr.sf-dim td { opacity: .45; }
+table.sf-tbl td.sf-hash { font-size: 11px; word-break: break-all; max-width: 470px; }
+.sf-col > table.sf-tbl td { font-family: "Segoe UI", system-ui, sans-serif; font-size: 12px; }
+.sf-col > table.sf-tbl td.sf-hash { font-family: "Cascadia Code", Consolas, monospace; font-size: 11px; }
+
+/* injection results */
+.sf-boom { padding: 6px 12px; border: 2px solid var(--v-bad); border-radius: 8px; background: var(--v-bad-soft); color: var(--v-bad); font: 800 13px "Cascadia Code", Consolas, monospace; }
+.sf-cmds { display: flex; flex-direction: column; gap: 4px; }
+.sf-cmd { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; padding: 4px 8px; border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 6px; background: var(--surface); font-size: 12px; }
+.sf-cmd span { color: var(--muted); font-size: 11px; }
+.sf-cmd em { margin-left: auto; font: 11px "Cascadia Code", Consolas, monospace; color: var(--muted); }
+.sf-cmd.done { border-left-color: var(--v-done); }
+.sf-cmd.bad { border-left-color: var(--v-bad); background: var(--v-bad-soft); }
+.sf-argv { display: flex; flex-wrap: wrap; gap: 4px; }
+.sf-argv span { display: inline-flex; flex-direction: column; padding: 2px 8px; border: 1.5px solid var(--line); border-radius: 6px; background: var(--surface); font: 12px "Cascadia Code", Consolas, monospace; }
+.sf-argv span em { font: 700 9px "Segoe UI", system-ui, sans-serif; color: var(--muted); font-style: normal; }
+.sf-argv span.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.sf-argv span.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+
+/* key/value rows */
+.sf-kv { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline; padding: 4px 10px; border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 6px; background: var(--surface); font-size: 12px; }
+.sf-kv > span { font: 700 10px "Segoe UI", system-ui, sans-serif; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); }
+.sf-kv > code { font-size: 12px; word-break: break-all; }
+.sf-kv.cur { border-left-color: var(--v-active); background: var(--v-active-soft); }
+.sf-okc { color: var(--v-done); font-weight: 800; }
+.sf-koc { color: var(--v-bad); font-weight: 800; }
+code.sf-big { font-size: 17px; letter-spacing: 2px; }
+
+/* XSS runs */
+.sf-runs { display: flex; flex-direction: column; gap: 4px; }
+.sf-run { display: flex; flex-wrap: wrap; gap: 10px; align-items: baseline; padding: 4px 10px; border: 1.5px solid var(--line); border-radius: 6px; font-size: 12px; }
+.sf-run b { font: 800 11px "Segoe UI", system-ui, sans-serif; letter-spacing: 1px; }
+.sf-run span { color: var(--muted); }
+.sf-run.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.sf-run.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.sf-run.done { border-color: var(--v-done); background: var(--v-done-soft); }
+
+/* path traversal filesystem */
+.sf-tree { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); padding-bottom: 6px; font: 12px/1.7 "Cascadia Code", Consolas, monospace; }
+.sf-tree > .sf-h { border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+.sf-fs { border-left: 3px solid transparent; }
+.sf-fs.sf-base { font-weight: 700; color: var(--accent); }
+.sf-fs.done { background: var(--v-done-soft); border-left-color: var(--v-done); }
+.sf-fs.bad { background: var(--v-bad-soft); border-left-color: var(--v-bad); color: var(--v-bad); font-weight: 700; }
+
+/* nonce reuse byte grid */
+.sf-bgrid { display: flex; flex-direction: column; gap: 4px; max-width: 100%; overflow-x: auto; }
+.sf-brow { display: flex; gap: 8px; align-items: center; }
+.sf-blab { flex: 0 0 140px; text-align: right; font: 700 11px "Segoe UI", system-ui, sans-serif; color: var(--muted); }
+.sf-bytes { display: flex; gap: 2px; }
+.sf-b { display: inline-block; width: 19px; text-align: center; padding: 2px 0; border: 1px solid var(--line); border-radius: 3px; font: 10.5px "Cascadia Code", Consolas, monospace; background: var(--surface); }
+.sf-b.plain { font-weight: 700; font-size: 12px; }
+.sf-b.visit { background: var(--v-visit-soft); border-color: var(--v-visit); }
+.sf-b.active { background: var(--v-active-soft); border-color: var(--v-active); }
+.sf-b.bad { background: var(--v-bad-soft); border-color: var(--v-bad); font-weight: 800; font-size: 12px; }
+.sf-b.done { background: var(--v-done-soft); border-color: var(--v-done); font-size: 12px; }
+
+/* STRIDE chips */
+.sf-chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.sf-chip { padding: 3px 10px; border: 1.5px solid var(--line); border-radius: 14px; font-size: 11.5px; background: var(--surface); }
+.sf-chip b { font-family: "Cascadia Code", Consolas, monospace; }
+.sf-chip.on { border-color: var(--v-bad); }
+.sf-chip.active { border-color: var(--v-bad); background: var(--v-bad-soft); font-weight: 700; }
+.sf-chip.off { opacity: .35; }
+
+/* verdict */
+.sf-verdict { text-align: center; padding: 6px 12px; border: 2px solid var(--line); border-radius: 8px; font: 800 13px "Segoe UI", system-ui, sans-serif; letter-spacing: 1px; }
+.sf-verdict small { display: block; font: 500 11.5px "Cascadia Code", Consolas, monospace; letter-spacing: 0; margin-top: 3px; word-break: break-all; }
+.sf-verdict.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.sf-verdict.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.sf-verdict.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.sf-verdict.active { border-color: var(--v-active); background: var(--v-active-soft); }
+
+/* static figures in the prose */
+.sf-figs { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; align-items: flex-end; }
+table.sf-tbl .sf-nw { white-space: nowrap; }

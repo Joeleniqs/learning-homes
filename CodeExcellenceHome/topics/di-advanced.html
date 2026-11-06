@@ -1,0 +1,1539 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Advanced DI: Decorators, Factories, Options &amp; Testing | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/di-advanced.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/di-advanced.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track" open><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html" aria-current="page">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Advanced DI: Decorators, Factories, Options &amp; Testing</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">DEPENDENCY INJECTION</p><h1>Advanced DI: Decorators, Factories, Options &amp; Testing</h1><p class="lede">Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests.</p><div class="meta"><span class="level level-advanced">Advanced</span><span>~50 min study</span><span>Builds on: <a href="di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a>, <a href="structural-patterns.html">Structural Patterns</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="di-advanced" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-the-container-works-until-the-app-grows">The problem: the container works until the app grows</h2>
+<p>You know the basics from <a href="di-fundamentals.html">Dependency Injection Fundamentals</a>: constructor injection and one composition root. You know the lifetime rules and how a captive dependency happens from <a href="di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a>. You have seen how each ecosystem wires the same graph in <a href="di-across-languages.html">DI Across Languages &amp; Frameworks</a>. Then the real app arrives with its requirements:</p>
+<ul>
+<li>The repository needs <strong>caching and logging</strong>, but nobody wants to edit <code>SqlOrderRepository</code> to add them.</li>
+<li>Payments go to <strong>Stripe or Adyen depending on the country</strong> of the order.</li>
+<li>One endpoint needs a <strong>PDF renderer that takes 300 ms to construct</strong>, and 95% of requests never use it.</li>
+<li>A NuGet package or a Spring starter registers <strong>its own default <code>INotifier</code></strong>, and you want yours to win.</li>
+<li>Every <strong>tenant has its own database</strong> and must never see another tenant's connection.</li>
+<li>The payment timeout lives in <strong>configuration that changes without a redeploy</strong>.</li>
+<li>A token cache must <strong>fetch signing keys over HTTP</strong> before it can serve, and constructors cannot <code>await</code>.</li>
+<li>The integration tests must <strong>swap the real payment gateway</strong> for a fake.</li>
+</ul>
+<p>Each of these tempts a shortcut. People write <code>new CachingRepository(new SqlRepository(...))</code> inside a class, or <code>if (country == "NL")</code> inside a service. They inject <code>IServiceProvider</code> everywhere "for flexibility", read a static config singleton, or call <code>.Result</code> in a constructor. Every shortcut works on day one. Every one of them hides a dependency from the container, and so from validation, from tests and from the next reader.</p>
+<div class="rule">
+<p><strong>Rule.</strong> Advanced DI is the art of expressing every <em>variation</em> as a <em>registration</em>. Which implementation, when it is created, what wraps it, for which <code>T</code>, inside which boundary, with which settings and replaced by what in tests: each question has a declarative answer the container can see. What the container can see, it can validate, test, override and explain. What you hide inside a lambda, a method body or an <code>if</code>, it cannot.</p>
+</div>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>WHICH ONE?</small><strong>Multi and keyed</strong><p>Lists of implementations, defaults, "last one wins", and lookup by key.</p></div>
+<div class="flow-step"><small>WHEN?</small><strong>Factories, Lazy, Func</strong><p>Defer or repeat creation, and mix container and runtime arguments.</p></div>
+<div class="flow-step"><small>WRAPPED HOW?</small><strong>Decorators</strong><p>Add caching, retries and logging around a service without touching it.</p></div>
+<div class="flow-step"><small>FOR WHICH T? WHERE?</small><strong>Generics, scopes, modules</strong><p>One registration for every entity, per-tenant boundaries, public and private providers.</p></div>
+<div class="flow-step"><small>WITH WHAT? INSTEAD OF WHAT?</small><strong>Options and overrides</strong><p>Typed settings that can reload, and swapping dependencies in tests.</p></div>
+</div>
+
+<h2 id="the-mental-model-the-registration-list-is-a-program">The mental model: the registration list is a program</h2>
+<p>In Microsoft.Extensions.DependencyInjection (MS.DI) the container is literally an <strong>ordered list of descriptors</strong>: service type, implementation, lifetime and an optional key. Several parties append to that list, in a fixed order. <code>Build()</code> turns it into lookup tables. Every advanced technique is either a different way of <em>writing</em> to the list or a different way of <em>reading</em> from it. Other containers store bean definitions in maps with their own override rules, but you can picture them the same way.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 304" width="760" role="img" aria-label="Registrations are written in order by framework, libraries, the app, decorators and tests, then built and resolved through four kinds of lookup"><defs><marker id="dav-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs><text x="160" y="22" text-anchor="middle" class="title">Who writes the list, in order</text><rect class="box" x="10" y="36" width="300" height="40" rx="8"/><text x="22" y="53" class="title">1 · Framework</text><text x="22" y="69" class="small muted">AddRouting, AddLogging, AddHttpClient …</text><rect class="box visit" x="10" y="82" width="300" height="40" rx="8"/><text x="22" y="99" class="title">2 · Libraries</text><text x="22" y="115" class="small">TryAdd: add a default only if none exists</text><rect class="box done" x="10" y="128" width="300" height="40" rx="8"/><text x="22" y="145" class="title">3 · Your app</text><text x="22" y="161" class="small">Add appends; the last entry wins a single resolve</text><rect class="box path" x="10" y="174" width="300" height="40" rx="8"/><text x="22" y="191" class="title">4 · Decorators</text><text x="22" y="207" class="small">Decorate rewrites entries to wrap them</text><rect class="box active" x="10" y="220" width="300" height="40" rx="8"/><text x="22" y="237" class="title">5 · Test overrides</text><text x="22" y="253" class="small">RemoveAll + Add, or Replace (first match only)</text><path class="edge accent" d="M312,148 L346,148" marker-end="url(#dav-arr)"/><rect class="box accent" x="350" y="114" width="150" height="68" rx="8"/><text x="425" y="142" text-anchor="middle" class="title">Build()</text><text x="425" y="162" text-anchor="middle" class="small">+ validation (opt-in)</text><path class="edge accent" d="M502,148 L526,148" marker-end="url(#dav-arr)"/><rect class="box" x="530" y="36" width="220" height="224" rx="8"/><text x="640" y="56" text-anchor="middle" class="title">Four ways to read it</text><rect class="box done" x="540" y="66" width="200" height="42" rx="6"/><text x="550" y="83" class="small mono">GetService&lt;T&gt;</text><text x="550" y="99" class="small muted">the last matching entry</text><rect class="box visit" x="540" y="114" width="200" height="42" rx="6"/><text x="550" y="131" class="small mono">IEnumerable&lt;T&gt;</text><text x="550" y="147" class="small muted">all entries, in order</text><rect class="box path" x="540" y="162" width="200" height="42" rx="6"/><text x="550" y="179" class="small mono">Keyed(T, "stripe")</text><text x="550" y="195" class="small muted">exact key, then AnyKey</text><rect class="box active" x="540" y="210" width="200" height="42" rx="6"/><text x="550" y="227" class="small mono">IRepo&lt;Order&gt;</text><text x="550" y="243" class="small muted">closed entry, else close IRepo&lt;&gt;</text><text x="380" y="290" text-anchor="middle" class="small muted">Validation reads only this list. A dependency hidden inside a lambda or a method body is invisible to it.</text></svg>
+<figcaption>Order is meaning. A library's <code>TryAdd</code> yields to whatever the app registered before it. The app's last <code>Add</code> wins a single resolve, but every entry still appears in <code>IEnumerable&lt;T&gt;</code>. Decorators rewrite entries in place. Test overrides run last so they win. Read the techniques below as "who writes which entry, and which lookup reads it".</figcaption>
+</figure>
+
+<div class="insight">
+<p><strong>Why ordering rules differ across containers.</strong> MS.DI was designed as the lowest common denominator for ASP.NET Core: an append-only list where the last entry wins and the whole list is still available as a collection. Spring Boot went the other way. Since Boot 2.1, <strong>overriding a bean definition with the same name is an error by default</strong> (<code>spring.main.allow-bean-definition-overriding=false</code>), and two beans of one type are an ambiguity error unless one is <code>@Primary</code> or you ask for a <code>@Qualifier</code>. Guice refuses duplicate bindings outright unless you use <code>Modules.override</code>. NestJS behaves like MS.DI: the last provider with a token wins. Go and Python have no list at all, because you pass the value you mean. Know which rule your container follows before you trust a default.</p>
+</div>
+<h2 id="many-implementations-lists-defaults-and-last-one-wins">Many implementations: lists, defaults and "last one wins"</h2>
+<p>Some abstractions legitimately have several implementations alive at the same time: notification channels, validation rules, health checks, startup filters, message handlers. MS.DI gives you five verbs for writing to the list, and they behave differently enough to cause real bugs. Here is what each one does:</p>
+<table>
+<thead>
+<tr>
+<th>Verb</th>
+<th>What it does</th>
+<th>Typical author</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Add…</code></td>
+<td>Always appends. The last entry wins <code>GetService&lt;T&gt;</code>; all entries appear in <code>IEnumerable&lt;T&gt;</code>.</td>
+<td>your app</td>
+</tr>
+<tr>
+<td><code>TryAdd…</code></td>
+<td>Appends only if <strong>no</strong> entry for the service type exists yet.</td>
+<td>libraries that ship a default</td>
+</tr>
+<tr>
+<td><code>TryAddEnumerable</code></td>
+<td>Appends only if this exact <strong>service + implementation pair</strong> is not there yet.</td>
+<td>libraries that contribute one item to a list</td>
+</tr>
+<tr>
+<td><code>Replace</code></td>
+<td>Removes the <strong>first</strong> entry for the service type, then appends the new one.</td>
+<td>tests, rarely apps</td>
+</tr>
+<tr>
+<td><code>RemoveAll</code></td>
+<td>Removes every entry for the service type.</td>
+<td>tests, before adding a fake</td>
+</tr>
+</tbody>
+</table>
+<p>Run the scripts below. Watch the left column, which is the actual list, and the right column, which shows what a constructor asking for one <code>INotifier</code> or for <code>IEnumerable&lt;INotifier&gt;</code> would receive at that moment. The "test swap with Replace" preset shows the most surprising rule: <code>Replace</code> takes out only the first registration, so the fake becomes the single answer while the old SMS notifier is <strong>still in the list</strong> and still sends real messages from a fan-out.</p>
+<div class="viz dav-wide" data-viz="di-advanced-multi"></div>
+
+<p>These rules come from running the code on .NET 10, not from memory. <code>[Email, Sms]</code> followed by <code>Replace(Push)</code> gives a single <code>Push</code>, but the collection is <code>[Sms, Push]</code>. Calling <code>TryAddEnumerable(Email)</code> twice adds Email only once. <code>TryAddEnumerable</code> with a factory lambda throws <code>ArgumentException</code>: "Implementation type cannot be 'INotifier' because it is indistinguishable from other services registered for 'INotifier'". It must know the implementation type to compare pairs, and a lambda does not say.</p>
+<div class="pitfall">
+<p><strong>The composite that contains itself.</strong> A natural design is a <code>FanOutNotifier : INotifier</code> that takes <code>IEnumerable&lt;INotifier&gt;</code> and calls each one. Register it as an <code>INotifier</code> next to Email and Sms and the collection it asks for now includes <strong>itself</strong>. MS.DI reports: "A circular dependency was detected for the service of type 'System.Collections.Generic.IEnumerable&lt;INotifier&gt;'. INotifier(Composite) -&gt; IEnumerable&lt;INotifier&gt; -&gt; IEnumerable&lt;INotifier&gt;." <code>ValidateOnBuild</code> catches this at startup, but other containers may recurse until the stack overflows. <strong>Fix:</strong> give the parts their own interface (<code>INotificationChannel</code>). The composite implements <code>INotifier</code> and consumes the channels, so the cycle cannot form.</p>
+</div>
+<h3 id="the-same-fan-out-in-five-ecosystems">The same fan-out in five ecosystems</h3>
+<p>Each ecosystem has a name for "inject all implementations of X": a collection in MS.DI, <code>List&lt;T&gt;</code> injection in Spring, a <code>Multibinder</code> in Guice, <code>@IntoSet</code> in Dagger, value groups in Fx, and a factory in NestJS. In plain Python you simply pass a list.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">public interface INotifier { Task SendAsync(Message m, CancellationToken ct); }
+public interface INotificationChannel { Task SendAsync(Message m, CancellationToken ct); }
+
+public sealed class FanOutNotifier(IEnumerable&lt;INotificationChannel&gt; channels) : INotifier
+{
+    private readonly INotificationChannel[] _channels = channels.ToArray();   // materialize once
+    public Task SendAsync(Message m, CancellationToken ct) =&gt;
+        Task.WhenAll(_channels.Select(c =&gt; c.SendAsync(m, ct)));
+}
+
+// a library contributes a channel without duplicating it if called twice
+services.TryAddEnumerable(ServiceDescriptor.Singleton&lt;INotificationChannel, EmailChannel&gt;());
+services.TryAddEnumerable(ServiceDescriptor.Singleton&lt;INotificationChannel, SmsChannel&gt;());
+services.AddSingleton&lt;INotifier, FanOutNotifier&gt;();   // no cycle: different interface
+</code></pre>
+<pre><code class="language-java">public interface NotificationChannel { void send(Message m); }
+
+@Component @Order(1) class EmailChannel implements NotificationChannel { /* ... */ }
+@Component @Order(2) class SmsChannel   implements NotificationChannel { /* ... */ }
+
+@Service
+class FanOutNotifier implements Notifier {
+    private final List&lt;NotificationChannel&gt; channels;   // every bean of the type, sorted by @Order
+    FanOutNotifier(List&lt;NotificationChannel&gt; channels) { this.channels = List.copyOf(channels); }
+    @Override public void send(Message m) { channels.forEach(c -&gt; c.send(m)); }
+}
+
+// Guice: Multibinder.newSetBinder(binder(), NotificationChannel.class)
+//            .addBinding().to(EmailChannel.class);          then inject Set&lt;NotificationChannel&gt;
+// Dagger: @Provides @IntoSet NotificationChannel email(EmailChannel c) { return c; }
+</code></pre>
+<pre><code class="language-python">from typing import Protocol, Sequence
+
+class Channel(Protocol):
+    def send(self, m: str) -&gt; None: ...
+
+class FanOutNotifier:
+    def __init__(self, channels: Sequence[Channel]) -&gt; None:
+        self._channels = tuple(channels)          # freeze the list at construction
+
+    def send(self, m: str) -&gt; None:
+        for c in self._channels:
+            c.send(m)
+
+def build_notifier(sms_enabled: bool) -&gt; FanOutNotifier:     # composition root
+    channels: list[Channel] = [EmailChannel()]
+    if sms_enabled:
+        channels.append(SmsChannel())
+    return FanOutNotifier(channels)
+
+# dependency-injector: notifier = providers.Singleton(FanOutNotifier,
+#     channels=providers.List(email_channel, sms_channel))
+</code></pre>
+<pre><code class="language-go">type Channel interface {
+    Send(ctx context.Context, m Message) error
+}
+
+type FanOut struct{ channels []Channel }
+
+func NewFanOut(chs []Channel) *FanOut { return &amp;FanOut{channels: chs} }
+
+// manual wiring: the list is just a slice literal in main()
+notifier := NewFanOut([]Channel{NewEmail(smtp), NewSMS(twilio)})
+
+// Fx: value groups collect every provider tagged with the group name
+fx.Provide(
+    fx.Annotate(NewEmail, fx.As(new(Channel)), fx.ResultTags(`group:&quot;channels&quot;`)),
+    fx.Annotate(NewSMS, fx.As(new(Channel)), fx.ResultTags(`group:&quot;channels&quot;`)),
+    fx.Annotate(NewFanOut, fx.ParamTags(`group:&quot;channels&quot;`)),
+)
+// Fx does not guarantee the order of a value group: never depend on it
+</code></pre>
+<pre><code class="language-typescript">// NestJS has no multi-providers (Angular does). Build the list with a factory provider.
+export const CHANNELS = Symbol('CHANNELS');
+
+@Injectable()
+export class FanOutNotifier {
+  constructor(@Inject(CHANNELS) private readonly channels: Channel[]) {}
+  async send(m: Message): Promise&lt;void&gt; {
+    await Promise.all(this.channels.map((c) =&gt; c.send(m)));
+  }
+}
+
+@Module({
+  providers: [
+    EmailChannel,
+    SmsChannel,
+    { provide: CHANNELS, useFactory: (e: EmailChannel, s: SmsChannel): Channel[] =&gt; [e, s], inject: [EmailChannel, SmsChannel] },
+    FanOutNotifier,
+  ],
+  exports: [FanOutNotifier],
+})
+export class NotificationsModule {}
+</code></pre>
+</div>
+<div class="tip">
+<p><strong>Order is an API only where the container promises it.</strong> MS.DI returns <code>IEnumerable&lt;T&gt;</code> in registration order, and Spring sorts <code>List&lt;T&gt;</code> by <code>@Order</code> or <code>Ordered</code>. Guice <code>Multibinder</code> keeps binding order. Dagger sets and Fx value groups make <strong>no</strong> order promise. If the order matters, for example validation rules that must run cheapest-first or middleware-like chains, make it explicit with a <code>Priority</code> property you sort by, or build the chain by hand. Do not rely on "it happened to work".</p>
+</div>
+<h2 id="keyed-and-named-resolution">Keyed and named resolution</h2>
+<p>Sometimes you need <em>one particular</em> implementation out of several. Ask first: <strong>when is the choice known?</strong></p>
+<ul>
+<li><strong>When you write the code</strong> (the refund job always uses Stripe): inject that one by key. Use <code>[FromKeyedServices("stripe")]</code> in .NET 8+, <code>@Qualifier("stripe")</code> in Spring, <code>@Named</code> in Guice and Dagger, a token in NestJS, or simply the concrete constructor in Go and Python.</li>
+<li><strong>Only at runtime</strong> (the order's country decides): this is the <em>Strategy</em> pattern. Put the lookup behind <strong>one</strong> small router type. Do not sprinkle <code>GetRequiredKeyedService(country)</code> across your business code.</li>
+</ul>
+<p>.NET 8 added keyed services to MS.DI. The lookup rules, verified on .NET 10, are:</p>
+<ol>
+<li>An <strong>exact key</strong> match wins.</li>
+<li>Otherwise a registration with <code>KeyedService.AnyKey</code> serves <em>any</em> key. With a <code>[ServiceKey]</code> constructor parameter, it receives the key that was asked for. If the registration is a singleton, you get <strong>one instance per key</strong>, not one in total.</li>
+<li>Otherwise <code>GetRequiredKeyedService</code> throws "No keyed service for type 'IPaymentGateway' using key type 'System.String' has been registered.", and <code>GetKeyedService</code> returns <code>null</code>.</li>
+<li>Keyed registrations are <strong>invisible to non-keyed lookups</strong>. <code>GetService&lt;IPaymentGateway&gt;()</code> returns <code>null</code> when only keyed entries exist, and <code>IEnumerable&lt;IPaymentGateway&gt;</code> leaves them out.</li>
+</ol>
+<p>Try different lookups, including the same key twice and a key nobody registered:</p>
+<div class="viz dav-wide" data-viz="di-advanced-keyed"></div>
+
+<div class="recognize">
+<p><strong>Recognize the smell.</strong> Look for a <code>switch</code> on a string that calls <code>new</code> in each branch, or a class that takes <code>IServiceProvider</code> only to call <code>GetRequiredKeyedService(someVariable)</code>. Both mean a runtime choice has leaked into business code. Replace them with a router that receives <strong>all</strong> candidates through its constructor, so the container validates every candidate at startup. The router also checks its routing table once, when it is built.</p>
+</div>
+<p>The pattern that scales is the same in every ecosystem: inject the candidates as a map, validate the routing configuration in the constructor, and expose one method.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// static choice: the key is part of the code
+public sealed class RefundJob([FromKeyedServices(&quot;stripe&quot;)] IPaymentGateway stripe) { /* ... */ }
+
+// runtime choice: one router, all candidates visible to validation
+public interface IPaymentGateway { string Name { get; } Task&lt;Receipt&gt; ChargeAsync(Charge c, CancellationToken ct); }
+
+public sealed class GatewayRouter : IGatewayRouter
+{
+    private readonly Dictionary&lt;string, IPaymentGateway&gt; _byName;
+    private readonly IReadOnlyDictionary&lt;string, string&gt; _byCountry;
+    private readonly string _default;
+
+    public GatewayRouter(IEnumerable&lt;IPaymentGateway&gt; gateways, IOptions&lt;RoutingOptions&gt; options)
+    {
+        _byName = gateways.ToDictionary(g =&gt; g.Name, StringComparer.OrdinalIgnoreCase);
+        _byCountry = options.Value.GatewayByCountry;
+        _default = options.Value.Default;
+        var unknown = _byCountry.Values.Append(_default).Where(n =&gt; !_byName.ContainsKey(n)).ToList();
+        if (unknown.Count &gt; 0) throw new InvalidOperationException($&quot;Routing refers to unknown gateways: {string.Join(&quot;, &quot;, unknown)}&quot;);
+    }
+
+    public IPaymentGateway For(string country) =&gt;
+        _byName[_byCountry.TryGetValue(country, out var name) ? name : _default];
+}
+
+services.AddSingleton&lt;IPaymentGateway, StripeGateway&gt;();
+services.AddSingleton&lt;IPaymentGateway, AdyenGateway&gt;();
+services.AddSingleton&lt;IGatewayRouter, GatewayRouter&gt;();
+</code></pre>
+<pre><code class="language-java">@Component(&quot;stripe&quot;) class StripeGateway implements PaymentGateway { /* ... */ }
+@Component(&quot;adyen&quot;)  class AdyenGateway  implements PaymentGateway { /* ... */ }
+
+@Service
+class RefundJob {
+    RefundJob(@Qualifier(&quot;stripe&quot;) PaymentGateway stripe) { /* static choice */ }
+}
+
+@Service
+class GatewayRouter {
+    private final Map&lt;String, PaymentGateway&gt; byName;     // Spring injects bean name -&gt; bean
+    private final Map&lt;String, String&gt; byCountry;
+
+    GatewayRouter(Map&lt;String, PaymentGateway&gt; byName, RoutingProperties routing) {
+        this.byName = Map.copyOf(byName);
+        this.byCountry = Map.copyOf(routing.gatewayByCountry());
+        byCountry.values().stream().filter(n -&gt; !this.byName.containsKey(n)).findAny()
+            .ifPresent(n -&gt; { throw new IllegalStateException(&quot;Unknown gateway &quot; + n); });
+    }
+
+    PaymentGateway forCountry(String country) {
+        return byName.get(byCountry.getOrDefault(country, &quot;stripe&quot;));
+    }
+}
+// Guice: MapBinder.newMapBinder(binder(), String.class, PaymentGateway.class)
+//            .addBinding(&quot;stripe&quot;).to(StripeGateway.class);
+// Dagger: @Provides @IntoMap @StringKey(&quot;stripe&quot;) PaymentGateway stripe(StripeGateway g) { return g; }
+</code></pre>
+<pre><code class="language-python">from typing import Mapping, Protocol
+
+class PaymentGateway(Protocol):
+    def charge(self, cents: int) -&gt; str: ...
+
+class GatewayRouter:
+    def __init__(self, gateways: Mapping[str, PaymentGateway],
+                 by_country: Mapping[str, str], default: str = &quot;stripe&quot;) -&gt; None:
+        unknown = sorted({n for n in [*by_country.values(), default] if n not in gateways})
+        if unknown:
+            raise ValueError(f&quot;routing refers to unknown gateways: {unknown}&quot;)
+        self._gateways = dict(gateways)
+        self._by_country = dict(by_country)
+        self._default = default
+
+    def for_country(self, country: str) -&gt; PaymentGateway:
+        return self._gateways[self._by_country.get(country, self._default)]
+
+# composition root
+router = GatewayRouter({&quot;stripe&quot;: StripeGateway(key), &quot;adyen&quot;: AdyenGateway(key2)},
+                       by_country=settings.gateway_by_country)
+</code></pre>
+<pre><code class="language-go">type GatewayRouter struct {
+    byName    map[string]PaymentGateway
+    byCountry map[string]string
+}
+
+func NewGatewayRouter(gws map[string]PaymentGateway, byCountry map[string]string) (*GatewayRouter, error) {
+    for country, name := range byCountry {
+        if _, ok := gws[name]; !ok {
+            return nil, fmt.Errorf(&quot;country %s routes to unknown gateway %q&quot;, country, name)
+        }
+    }
+    return &amp;GatewayRouter{byName: gws, byCountry: byCountry}, nil
+}
+
+func (r *GatewayRouter) For(country string) PaymentGateway {
+    if name, ok := r.byCountry[country]; ok {
+        return r.byName[name]
+    }
+    return r.byName[&quot;stripe&quot;]
+}
+
+// main.go: the &quot;keys&quot; are just map keys
+router, err := NewGatewayRouter(map[string]PaymentGateway{&quot;stripe&quot;: stripe, &quot;adyen&quot;: adyen}, cfg.GatewayByCountry)
+// Fx: fx.Annotate(NewStripe, fx.ResultTags(`name:&quot;stripe&quot;`)) and fx.ParamTags(`name:&quot;stripe&quot;`)
+</code></pre>
+<pre><code class="language-typescript">export const STRIPE = Symbol('STRIPE');
+export const ADYEN = Symbol('ADYEN');
+
+@Injectable()
+export class GatewayRouter {
+  private readonly byName: ReadonlyMap&lt;string, PaymentGateway&gt;;
+  private readonly byCountry: Record&lt;string, string&gt;;
+
+  constructor(@Inject(STRIPE) stripe: PaymentGateway, @Inject(ADYEN) adyen: PaymentGateway, config: ConfigService) {
+    this.byName = new Map([['stripe', stripe], ['adyen', adyen]]);
+    this.byCountry = config.getOrThrow&lt;Record&lt;string, string&gt;&gt;('gatewayByCountry');
+    const unknown = Object.values(this.byCountry).filter((n) =&gt; !this.byName.has(n));
+    if (unknown.length) throw new Error(`Routing refers to unknown gateways: ${unknown.join(', ')}`);
+  }
+
+  forCountry(country: string): PaymentGateway {
+    return this.byName.get(this.byCountry[country] ?? 'stripe')!;
+  }
+}
+// module providers: [{ provide: STRIPE, useClass: StripeGateway }, { provide: ADYEN, useClass: AdyenGateway }, GatewayRouter]
+</code></pre>
+</div>
+<div class="compare">
+<div class="good">
+<h4 id="keyed-injection-is-right-when">Keyed injection is right when</h4>
+<ul>
+<li>The key is a <strong>compile-time constant</strong> at the injection site (<code>[FromKeyedServices("stripe")]</code>, <code>@Qualifier</code>).</li>
+<li>Two configurations of the <strong>same type</strong> must coexist, such as two <code>HttpClient</code> setups or two database connections ("primary" and "replica").</li>
+<li>A framework hands you the key, for example a message type name or a route parameter, and one router class does the lookup.</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="keyed-lookup-is-a-smell-when">Keyed lookup is a smell when</h4>
+<ul>
+<li>Business methods call <code>GetRequiredKeyedService(variable)</code>. That is a service locator with a string attached.</li>
+<li>Keys are <strong>typo-prone strings</strong> scattered through the code. Use constants or an enum, so a rename cannot silently break the lookup.</li>
+<li>Each key has a <strong>different interface</strong> in practice. Then they are different services and should be different types.</li>
+</ul>
+</div>
+</div>
+<h2 id="deferring-creation-factories-lazy-func-and-assisted-injection">Deferring creation: factories, Lazy, Func and assisted injection</h2>
+<p>Constructor injection is <strong>eager</strong>. Resolve a controller and you build everything it might need, even if this request takes a branch that needs none of it. For cheap objects that does not matter. For a <code>PdfRenderer</code> that loads fonts for 300 ms, it does. There are three related needs:</p>
+<ul>
+<li><strong>Later.</strong> Build it on first use, then reuse it. This is <code>Lazy&lt;T&gt;</code>, Spring's <code>ObjectProvider&lt;T&gt;</code>, <code>sync.OnceValue</code> in Go, and <code>functools.cached_property</code> in Python.</li>
+<li><strong>Many.</strong> Build a fresh one each time you ask. This is <code>Func&lt;T&gt;</code>, <code>Provider&lt;T&gt;</code>, or a factory function.</li>
+<li><strong>With runtime arguments.</strong> The container supplies some constructor parameters and the caller supplies the rest, such as an order id. This is called <em>assisted injection</em>. It is <code>ActivatorUtilities</code> in .NET, <code>@Assisted</code> in Guice and Dagger, <code>functools.partial</code> in Python, and a closure in Go and TypeScript.</li>
+</ul>
+<div class="warn">
+<p><strong>MS.DI does not understand <code>Lazy&lt;T&gt;</code> or <code>Func&lt;T&gt;</code> by itself.</strong> Ask it for <code>Lazy&lt;PdfRenderer&gt;</code> and you get <code>null</code> (verified on .NET 10). You must register them yourself, and <strong>the lifetime you give that registration decides which provider the lambda receives</strong>. Autofac, by contrast, supports <code>Lazy&lt;T&gt;</code>, <code>Func&lt;T&gt;</code> and <code>Owned&lt;T&gt;</code> implicitly. Its <code>Owned&lt;T&gt;</code> hands you a disposable "ownership" token, so you can dispose a transient before the scope ends.</p>
+</div>
+<p>The visualizer below runs a list of requests against four strategies. Pay special attention to the last one. A <code>Func&lt;PdfRenderer&gt;</code> registered as a <strong>singleton</strong> is built by the root provider, so its lambda captures the <strong>root</strong>. A scoped renderer then either throws "Cannot resolve scoped service 'PdfRenderer' from root provider" (with <code>ValidateScopes</code>) or silently becomes a shared singleton (without it). A disposable <em>transient</em> renderer is tracked by the root until shutdown, which is a slow memory leak. This bug passes <code>ValidateOnBuild</code>, because a lambda's body is opaque to the validator.</p>
+<div class="viz dav-wide" data-viz="di-advanced-lazy"></div>
+
+<div class="insight">
+<p><strong>Why "the factory has the lifetime of what it creates" is the rule.</strong> A factory is a closure over <em>some</em> provider. A singleton closes over the root, a scoped one over the request scope, and only the scope knows when the request ends. So register a factory with the <strong>shortest</strong> lifetime of anything it can create. If a long-lived object really must create scoped work, such as a background service or a message consumer, inject <code>IServiceScopeFactory</code> and create and dispose an explicit scope for each unit of work. <a href="di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a> covers that pattern in detail.</p>
+</div>
+<h3 id="the-same-three-needs-across-ecosystems">The same three needs across ecosystems</h3>
+<p>Prefer a <strong>named factory interface</strong> (<code>IReportExporterFactory.Create(orderId)</code>) over a bare <code>Func&lt;int, ReportExporter&gt;</code>. It reads better in a constructor, it can be faked in a test, and it puts the assisted-injection plumbing in one place.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">public sealed class ReportExporter(PdfRenderer renderer, ILogger&lt;ReportExporter&gt; log, int orderId) { /* ... */ }
+
+public interface IReportExporterFactory { ReportExporter Create(int orderId); }
+
+// assisted injection: the container fills PdfRenderer and ILogger, the caller supplies orderId
+internal sealed class ReportExporterFactory(IServiceProvider sp) : IReportExporterFactory
+{
+    public ReportExporter Create(int orderId) =&gt; ActivatorUtilities.CreateInstance&lt;ReportExporter&gt;(sp, orderId);
+}
+
+services.AddScoped&lt;PdfRenderer&gt;();
+services.AddScoped&lt;IReportExporterFactory, ReportExporterFactory&gt;();   // scoped: sp is the request scope
+
+// Lazy&lt;T&gt; must be registered by hand in MS.DI; give it the lifetime of what it wraps
+services.AddScoped(sp =&gt; new Lazy&lt;PdfRenderer&gt;(sp.GetRequiredService&lt;PdfRenderer&gt;));
+
+public sealed class ReportsController(Lazy&lt;PdfRenderer&gt; pdf) : ControllerBase
+{
+    [HttpGet(&quot;reports/{id}.pdf&quot;)]
+    public IActionResult Get(int id) =&gt; File(pdf.Value.Render(id), &quot;application/pdf&quot;);   // built on first .Value
+}
+</code></pre>
+<pre><code class="language-java">// Spring: ObjectProvider&lt;T&gt; is a lazy, optional and repeatable handle
+@RestController
+class ReportsController {
+    private final ObjectProvider&lt;PdfRenderer&gt; pdf;
+    ReportsController(ObjectProvider&lt;PdfRenderer&gt; pdf) { this.pdf = pdf; }
+
+    @GetMapping(&quot;/reports/{id}.pdf&quot;)
+    byte[] get(@PathVariable int id) { return pdf.getObject().render(id); }   // singleton: built on first call
+}
+// alternatives: @Lazy on the parameter (injects a proxy), jakarta.inject.Provider&lt;PdfRenderer&gt;
+
+// Guice assisted injection
+class ReportExporter {
+    @Inject ReportExporter(PdfRenderer renderer, @Assisted int orderId) { /* ... */ }
+}
+interface ReportExporterFactory { ReportExporter create(int orderId); }
+// in a module: install(new FactoryModuleBuilder().build(ReportExporterFactory.class));
+
+// Dagger: @AssistedInject on the constructor, @Assisted on orderId,
+//         and an @AssistedFactory interface that Dagger implements at compile time
+</code></pre>
+<pre><code class="language-python">from functools import cached_property, partial
+from typing import Callable
+
+class PdfRenderer:
+    def render(self, order_id: int) -&gt; bytes:
+        return f&quot;%PDF order {order_id}&quot;.encode()
+
+class ReportExporter:
+    def __init__(self, renderer: PdfRenderer, order_id: int) -&gt; None:
+        self.renderer, self.order_id = renderer, order_id
+
+class ReportsService:
+    def __init__(self, renderer_factory: Callable[[], PdfRenderer]) -&gt; None:
+        self._factory = renderer_factory          # nothing is built yet
+
+    @cached_property
+    def _renderer(self) -&gt; PdfRenderer:           # Lazy: built on first access, then cached
+        return self._factory()
+
+    def pdf(self, order_id: int) -&gt; bytes:
+        return self._renderer.render(order_id)
+
+# composition root
+service = ReportsService(PdfRenderer)                          # a class is already a factory
+make_exporter = partial(ReportExporter, PdfRenderer())         # assisted: bind container args now
+exporter = make_exporter(order_id=42)                          # supply runtime args later
+</code></pre>
+<pre><code class="language-go">// Go has no Lazy or Func types: closures and sync.OnceValues are the factory
+type ExporterFactory func(orderID int) *ReportExporter
+
+func NewExporterFactory(r *PdfRenderer, log *slog.Logger) ExporterFactory {
+    return func(orderID int) *ReportExporter {
+        return &amp;ReportExporter{renderer: r, log: log, orderID: orderID}   // assisted injection
+    }
+}
+
+type ReportsHandler struct {
+    renderer func() (*PdfRenderer, error) // lazy, built once, safe for concurrent callers
+}
+
+func NewReportsHandler(cfg PdfConfig) *ReportsHandler {
+    return &amp;ReportsHandler{renderer: sync.OnceValues(func() (*PdfRenderer, error) {
+        return NewPdfRenderer(cfg) // careful: OnceValues also caches an error forever
+    })}
+}
+</code></pre>
+<pre><code class="language-typescript">export const EXPORTER_FACTORY = Symbol('EXPORTER_FACTORY');
+export type ExporterFactory = (orderId: number) =&gt; ReportExporter;
+
+// a factory provider that returns a function: assisted injection
+export const exporterFactoryProvider: Provider = {
+  provide: EXPORTER_FACTORY,
+  useFactory: (renderer: PdfRenderer, log: Logger): ExporterFactory =&gt;
+    (orderId) =&gt; new ReportExporter(renderer, log, orderId),
+  inject: [PdfRenderer, Logger],
+};
+
+// lazy: load a whole module (and its providers) on first use
+@Injectable()
+export class ReportsService {
+  constructor(private readonly lazyModules: LazyModuleLoader) {}
+
+  async pdf(orderId: number): Promise&lt;Buffer&gt; {
+    const { PdfModule } = await import('./pdf.module');
+    const moduleRef = await this.lazyModules.load(() =&gt; PdfModule);   // cached after the first load
+    return moduleRef.get(PdfRenderer).render(orderId);
+  }
+}
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Lazy hides a cost; it does not remove it.</strong> A <code>Lazy&lt;T&gt;</code> that is opened on every request saves nothing and adds an allocation plus a lock. It also moves the failure: a renderer that cannot find its fonts now fails at the first PDF request instead of at startup. Use deferral when a meaningful share of requests <strong>never</strong> need the dependency. Otherwise fix the slow constructor, by moving I/O out of it, or make the object a warmed-up singleton.</p>
+</div>
+<h2 id="decorators-and-interception">Decorators and interception</h2>
+<p>A <em>decorator</em> implements the same interface as the thing it wraps and adds behaviour before and after delegating to it. The pattern is covered in <a href="structural-patterns.html">Structural Patterns</a>. DI makes it powerful because consumers never know: <code>OrderService</code> asks for <code>IOrderRepository</code> and receives <code>Logging(Caching(Sql))</code>. Request-level wrapping (authentication, logging per HTTP call) is the job of the pipeline, covered in <a href="middleware-patterns.html">Middleware Patterns &amp; Ordering</a>. Decorators do the same job <strong>around one dependency</strong>.</p>
+<p>In .NET, the Scrutor library adds <code>services.Decorate&lt;TService, TDecorator&gt;()</code>. It rewrites the existing descriptor into a factory that builds the old implementation and passes it to the decorator's constructor. Each call wraps <strong>whatever is registered now</strong>, so <strong>the last <code>Decorate</code> call is the outermost layer</strong> (verified: Caching then Logging gives <code>Logging(Caching(Sql))</code>). <code>Decorate</code> on a service with several registrations wraps each one. <code>Decorate</code> on a service that is not registered throws <code>DecorationException</code>: "Could not find any registered services for type …".</p>
+<p>Order changes behaviour, not just structure. Set the order and a scenario, then compare how many database queries, log lines and metric points each arrangement produces:</p>
+<div class="viz dav-wide" data-viz="di-advanced-decorators"></div>
+
+<div class="tip">
+<p><strong>A default order that is usually right, from outermost to innermost:</strong></p>
+<ol>
+<li><strong>Logging, tracing and metrics.</strong> They see every call, including cache hits, and measure what the caller experiences.</li>
+<li><strong>Caching.</strong> A hit skips everything below it.</li>
+<li><strong>Resilience</strong> (retry, timeout, circuit breaker). It sits around the unreliable call only.</li>
+<li><strong>The real implementation.</strong></li>
+</ol>
+<p>Deviate on purpose. For example, put metrics <em>inside</em> retry when you want one data point per attempt. The details of ordering resilience strategies are in <a href="resilience.html">Resilience</a>.</p>
+</div>
+<h3 id="decorators-versus-interception-dynamic-proxies">Decorators versus interception (dynamic proxies)</h3>
+<p>There are two ways to wrap a dependency. A <strong>decorator</strong> is a class you write: one per interface, checked by the compiler and visible in the code. <strong>Interception</strong> generates a proxy at runtime and runs <em>interceptors</em> chosen by a rule ("every method on types ending in <code>Repository</code>", "every method annotated <code>@Transactional</code>"). Spring AOP, Guice <code>bindInterceptor</code>, Castle DynamicProxy and .NET's <code>DispatchProxy</code> all work this way.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 236" width="760" role="img" aria-label="Left: a decorator chain of classes you write, nested Logging, Caching, Sql. Right: a runtime proxy runs interceptors chosen by a rule; self-calls bypass it."><defs><marker id="dav-arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs><text x="190" y="20" text-anchor="middle" class="title">Decorator: classes you write</text><rect class="box path" x="20" y="34" width="340" height="150" rx="10"/><text x="32" y="52" class="small mono">LoggingOrderRepository : IOrderRepository</text><rect class="box visit" x="40" y="62" width="300" height="110" rx="9"/><text x="52" y="80" class="small mono">CachingOrderRepository : IOrderRepository</text><rect class="box done" x="60" y="92" width="260" height="64" rx="8"/><text x="190" y="120" text-anchor="middle" class="small mono">SqlOrderRepository</text><text x="190" y="140" text-anchor="middle" class="small muted">the real work</text><text x="190" y="204" text-anchor="middle" class="small">one class per interface · compiler-checked</text><text x="190" y="222" text-anchor="middle" class="small">explicit order · easy to step through</text><text x="575" y="20" text-anchor="middle" class="title">Interception: proxies chosen by a rule</text><rect class="box" x="396" y="88" width="64" height="40" rx="8"/><text x="428" y="112" text-anchor="middle" class="small">caller</text><path class="edge accent" d="M460,108 L486,108" marker-end="url(#dav-arr2)"/><rect class="box active" x="490" y="34" width="132" height="150" rx="10"/><text x="556" y="52" text-anchor="middle" class="small">proxy (generated)</text><rect class="box" x="500" y="64" width="112" height="30" rx="6"/><text x="556" y="84" text-anchor="middle" class="small mono">TxInterceptor</text><rect class="box" x="500" y="102" width="112" height="30" rx="6"/><text x="556" y="122" text-anchor="middle" class="small mono">LogInterceptor</text><text x="556" y="160" text-anchor="middle" class="small muted">matched by rule</text><path class="edge accent" d="M622,108 L644,108" marker-end="url(#dav-arr2)"/><rect class="box done" x="648" y="88" width="102" height="40" rx="8"/><text x="699" y="112" text-anchor="middle" class="small mono">OrderService</text><path class="edge bad dash" d="M676,128 C676,158 722,158 722,128" marker-end="url(#dav-arr2)"/><text x="699" y="174" text-anchor="middle" class="small">this.audit()</text><text x="575" y="204" text-anchor="middle" class="small">one rule covers many types · runtime-generated</text><text x="575" y="222" text-anchor="middle" class="small">self-calls bypass it · invisible at the call site</text></svg>
+<figcaption>A decorator is ordinary code: you can read the chain, set breakpoints in it and see it in the stack trace. A proxy applies one concern to hundreds of methods without writing a class for each, but the behaviour is invisible where the method is called, and a call from inside the object (<code>this.audit()</code>) never passes through the proxy. <a href="di-across-languages.html">DI Across Languages</a> lets you break Spring's proxy on purpose.</figcaption>
+</figure>
+
+<div class="compare">
+<div class="good">
+<h4 id="prefer-a-decorator-when">Prefer a decorator when</h4>
+<ul>
+<li>The behaviour is <strong>specific to one abstraction</strong>: caching orders, or auditing payments.</li>
+<li>You want the order and the logic <strong>visible in code and in stack traces</strong>.</li>
+<li>The language makes it cheap: one small class (C#, Java, TypeScript), a struct embedding the interface (Go), or a wrapper class (Python).</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="consider-interception-when">Consider interception when</h4>
+<ul>
+<li>The <strong>same</strong> concern applies to <strong>many</strong> types: transactions, method-level security, timing every repository.</li>
+<li>A framework already gives it to you (<code>@Transactional</code>, <code>@Cacheable</code>, <code>@PreAuthorize</code>), with documented rules about what is proxied.</li>
+<li>You accept the costs: no self-invocation, no <code>final</code> or non-virtual methods, and behaviour you cannot see at the call site.</li>
+</ul>
+</div>
+</div>
+<div class="code-tabs">
+<pre><code class="language-csharp">services.AddScoped&lt;IOrderRepository, SqlOrderRepository&gt;();
+services.Decorate&lt;IOrderRepository, CachingOrderRepository&gt;();   // Scrutor
+services.Decorate&lt;IOrderRepository, LoggingOrderRepository&gt;();   // last call = outermost
+// resolved: LoggingOrderRepository(CachingOrderRepository(SqlOrderRepository))
+
+public sealed class CachingOrderRepository(IOrderRepository inner, HybridCache cache) : IOrderRepository
+{
+    public async Task&lt;Order?&gt; GetAsync(int id, CancellationToken ct) =&gt;
+        await cache.GetOrCreateAsync($&quot;order:{id}&quot;, async c =&gt; await inner.GetAsync(id, c), cancellationToken: ct);
+}
+
+// without Scrutor: register the inner type as itself and compose by hand
+services.AddScoped&lt;SqlOrderRepository&gt;();
+services.AddScoped&lt;IOrderRepository&gt;(sp =&gt; new LoggingOrderRepository(
+    new CachingOrderRepository(sp.GetRequiredService&lt;SqlOrderRepository&gt;(), sp.GetRequiredService&lt;HybridCache&gt;()),
+    sp.GetRequiredService&lt;ILogger&lt;LoggingOrderRepository&gt;&gt;()));
+// trade-off: this lambda is opaque to ValidateOnBuild (see &quot;What validation cannot see&quot;)
+</code></pre>
+<pre><code class="language-java">// Spring has no Decorate verb: make the wrapper the @Primary bean and qualify the inner one
+@Repository(&quot;sqlOrders&quot;)
+class SqlOrderRepository implements OrderRepository { /* ... */ }
+
+@Configuration
+class RepositoryConfig {
+    @Bean @Primary
+    OrderRepository orderRepository(@Qualifier(&quot;sqlOrders&quot;) OrderRepository sql, CacheManager caches, MeterRegistry meters) {
+        return new MeteredOrderRepository(new CachingOrderRepository(sql, caches.getCache(&quot;orders&quot;)), meters);
+    }
+}
+
+// interception by rule instead of by class (a runtime proxy)
+@Aspect @Component
+class RepositoryTiming {
+    private final MeterRegistry meters;
+    RepositoryTiming(MeterRegistry meters) { this.meters = meters; }
+
+    @Around(&quot;execution(* com.shop..*Repository.*(..))&quot;)
+    Object time(ProceedingJoinPoint pjp) throws Throwable {
+        return meters.timer(&quot;repo.calls&quot;, &quot;method&quot;, pjp.getSignature().getName()).recordCallable(() -&gt; {
+            try { return pjp.proceed(); } catch (Throwable t) { throw new RuntimeException(t); }
+        });
+    }
+}
+// Guice: bindInterceptor(Matchers.subclassesOf(OrderRepository.class), Matchers.any(), new TimingInterceptor());
+</code></pre>
+<pre><code class="language-python">from typing import Protocol
+
+class OrderRepository(Protocol):
+    def get(self, order_id: int) -&gt; dict | None: ...
+
+class CachingOrderRepository:
+    def __init__(self, inner: OrderRepository, cache: dict[int, dict]) -&gt; None:
+        self._inner, self._cache = inner, cache
+
+    def get(self, order_id: int) -&gt; dict | None:
+        if order_id in self._cache:
+            return self._cache[order_id]
+        order = self._inner.get(order_id)
+        if order is not None:                     # never cache &quot;not found&quot; or failures
+            self._cache[order_id] = order
+        return order
+
+class LoggingOrderRepository:
+    def __init__(self, inner: OrderRepository, log) -&gt; None:
+        self._inner, self._log = inner, log
+
+    def get(self, order_id: int) -&gt; dict | None:
+        self._log.info(&quot;get %s&quot;, order_id)
+        return self._inner.get(order_id)
+
+def build_repository(db, log) -&gt; OrderRepository:   # composition root: read it inside-out
+    return LoggingOrderRepository(CachingOrderRepository(SqlOrderRepository(db), cache={}), log)
+
+# A Python @decorator wraps one function. To decorate a dependency behind an interface, wrap the object.
+</code></pre>
+<pre><code class="language-go">type cachingRepo struct {
+    inner OrderRepository
+    cache *lru.Cache[int, Order] // github.com/hashicorp/golang-lru/v2
+}
+
+func (c *cachingRepo) Get(ctx context.Context, id int) (Order, error) {
+    if o, ok := c.cache.Get(id); ok {
+        return o, nil
+    }
+    o, err := c.inner.Get(ctx, id)
+    if err == nil {
+        c.cache.Add(id, o)
+    }
+    return o, err
+}
+
+// main.go: plain nesting, read top to bottom = inside to outside
+var repo OrderRepository = NewSQLRepo(db)
+repo = &amp;cachingRepo{inner: repo, cache: cache}
+repo = &amp;loggingRepo{inner: repo, log: logger}
+
+// Fx: fx.Decorate replaces the value for this module and everything below it
+fx.Decorate(func(r OrderRepository, log *slog.Logger) OrderRepository {
+    return &amp;loggingRepo{inner: r, log: log}
+})
+</code></pre>
+<pre><code class="language-typescript">export const SQL_ORDERS = Symbol('SQL_ORDERS');
+export const ORDERS = Symbol('ORDERS');
+
+@Module({
+  providers: [
+    { provide: SQL_ORDERS, useClass: SqlOrderRepository },
+    {
+      provide: ORDERS, // consumers inject ORDERS and receive the whole chain
+      useFactory: (sql: OrderRepository, cache: Cache, log: Logger) =&gt;
+        new LoggingOrderRepository(new CachingOrderRepository(sql, cache), log),
+      inject: [SQL_ORDERS, CACHE_MANAGER, Logger],
+    },
+  ],
+  exports: [ORDERS],
+})
+export class OrdersDataModule {}
+
+// around controllers (not providers) Nest uses interceptors: interception by rule
+@Injectable()
+export class TimingInterceptor implements NestInterceptor {
+  constructor(private readonly metrics: Metrics) {}
+  intercept(ctx: ExecutionContext, next: CallHandler): Observable&lt;unknown&gt; {
+    const t0 = performance.now();
+    return next.handle().pipe(finalize(() =&gt; this.metrics.record(ctx.getHandler().name, performance.now() - t0)));
+  }
+}
+</code></pre>
+</div>
+<h2 id="open-generics-one-registration-for-every-t">Open generics: one registration for every T</h2>
+<p>.NET can register an <strong>unbound</strong> generic type: <code>services.AddScoped(typeof(IRepository&lt;&gt;), typeof(EfRepository&lt;&gt;))</code>. When someone asks for <code>IRepository&lt;Order&gt;</code>, the container <em>closes</em> the template with <code>T = Order</code> and builds <code>EfRepository&lt;Order&gt;</code>. <code>ILogger&lt;T&gt;</code> and <code>IOptions&lt;T&gt;</code> work this way. So do the "pipeline behaviours" of mediator libraries, where one <code>ValidationBehavior&lt;TRequest, TResponse&gt;</code> wraps every handler.</p>
+<p>The resolution rules were verified on .NET 10. Read them alongside the visualizer:</p>
+<ul>
+<li><strong>A closed registration beats the open one</strong> for a single resolve, <em>regardless of registration order</em>. This is the one place where "last wins" does not apply.</li>
+<li><strong><code>IEnumerable&lt;IRepository&lt;Order&gt;&gt;</code> returns both</strong> the closed and the closed-over open implementation, in registration order.</li>
+<li><strong>Generic constraints are checked when the type is closed.</strong> <code>IRepository&lt;string&gt;</code> violates <code>where T : IEntity</code>, so a single resolve throws "GenericArguments[0], 'System.String', on 'EfRepository<code>1[T]' violates the constraint of type 'T'". In an</code>IEnumerable` the open registration is <strong>skipped silently</strong>.</li>
+<li><strong><code>ValidateOnBuild</code> cannot check an open generic.</strong> It has no <code>T</code>, so there is no concrete constructor to inspect. An open generic with a missing dependency passes validation and fails on first use (see the blind-spots visualizer below).</li>
+</ul>
+<div class="viz dav-wide" data-viz="di-advanced-generic"></div>
+
+<div class="insight">
+<p><strong>Why open generics are mostly a .NET feature.</strong> The CLR has <em>reified</em> generics: <code>EfRepository&lt;Order&gt;</code> is a real runtime type that can be created by reflection. Java erases generics at runtime, so Spring can <em>match</em> <code>Repository&lt;Order&gt;</code> against beans whose declared type says <code>Repository&lt;Order&gt;</code>, but it cannot <em>create</em> "EfRepository for any T" from one definition. Python and TypeScript erase type parameters too. Go generics are instantiated at compile time, and each instantiation is a separate call you write. In those ecosystems the equivalent of an open generic is <strong>a function that produces a closed provider per type</strong>. TypeORM's <code>forFeature([Order, Customer])</code> in NestJS is exactly that.</p>
+</div>
+<p>Two more verified details matter in practice. <strong>Scrutor can decorate the closed registrations</strong> of a generic service with an open decorator type (<code>Decorate(typeof(IHandler&lt;&gt;), typeof(LoggingHandler&lt;&gt;))</code> wrapped <code>IHandler&lt;string&gt;</code> and <code>IHandler&lt;int&gt;</code>). But it <strong>throws <code>DecorationException</code> when the only registration is an open generic</strong>, because MS.DI has no factory hook for open types. Autofac's <code>RegisterGenericDecorator</code> handles that case.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">public interface IRepository&lt;T&gt; where T : class, IEntity { Task&lt;T?&gt; GetAsync(int id, CancellationToken ct); }
+
+public class EfRepository&lt;T&gt;(AppDbContext db) : IRepository&lt;T&gt; where T : class, IEntity
+{
+    public async Task&lt;T?&gt; GetAsync(int id, CancellationToken ct) =&gt; await db.Set&lt;T&gt;().FindAsync([id], ct);
+}
+
+public sealed class OrderRepository(AppDbContext db) : EfRepository&lt;Order&gt;(db) { /* order-specific queries */ }
+
+services.AddScoped(typeof(IRepository&lt;&gt;), typeof(EfRepository&lt;&gt;));   // every entity
+services.AddScoped&lt;IRepository&lt;Order&gt;, OrderRepository&gt;();          // the closed one wins for Order
+
+// the mediator idea: one open behaviour wraps every request handler
+services.AddTransient(typeof(IPipelineBehavior&lt;,&gt;), typeof(ValidationBehavior&lt;,&gt;));
+</code></pre>
+<pre><code class="language-java">public interface Repository&lt;T extends Entity&gt; { Optional&lt;T&gt; get(long id); }
+
+@org.springframework.stereotype.Repository
+class OrderRepository implements Repository&lt;Order&gt; { /* ... */ }
+
+@org.springframework.stereotype.Repository
+class CustomerRepository implements Repository&lt;Customer&gt; { /* ... */ }
+
+@Service
+class OrderService {
+    // Spring uses the generic type as a qualifier: this matches OrderRepository only
+    OrderService(Repository&lt;Order&gt; orders) { /* ... */ }
+}
+// No &quot;open&quot; registration: erasure means one class (or one @Bean method) per T.
+// Spring Data generates those classes for you from interfaces such as
+// interface OrderRepository extends JpaRepository&lt;Order, Long&gt; {}
+// Guice: bind(new TypeLiteral&lt;Repository&lt;Order&gt;&gt;() {}).to(OrderRepository.class);
+</code></pre>
+<pre><code class="language-python">from typing import Generic, TypeVar
+
+T = TypeVar(&quot;T&quot;)
+
+class Repository(Generic[T]):
+    def __init__(self, session, model: type[T]) -&gt; None:
+        self._session, self._model = session, model
+
+    def get(self, id: int) -&gt; T | None:
+        return self._session.get(self._model, id)       # SQLAlchemy 2.x Session.get
+
+# Type parameters are erased at runtime: pass the type as a value.
+orders: Repository[Order] = Repository(session, Order)
+customers: Repository[Customer] = Repository(session, Customer)
+</code></pre>
+<pre><code class="language-go">type Repository[T any] struct {
+    db    *sql.DB
+    table string
+}
+
+func NewRepository[T any](db *sql.DB, table string) *Repository[T] {
+    return &amp;Repository[T]{db: db, table: table}
+}
+
+// main.go: each instantiation is explicit and checked by the compiler
+orders := NewRepository[Order](db, &quot;orders&quot;)
+customers := NewRepository[Customer](db, &quot;customers&quot;)
+
+// Fx: provide each instantiation you need
+fx.Provide(
+    func(db *sql.DB) *Repository[Order] { return NewRepository[Order](db, &quot;orders&quot;) },
+    func(db *sql.DB) *Repository[Customer] { return NewRepository[Customer](db, &quot;customers&quot;) },
+)
+</code></pre>
+<pre><code class="language-typescript">// Types are erased: a token per closed type, produced by one function.
+@Module({
+  imports: [TypeOrmModule.forFeature([Order, Customer])], // one provider per entity
+  providers: [OrderService],
+})
+export class OrdersModule {}
+
+@Injectable()
+export class OrderService {
+  // the token is derived from the entity class, not from the generic type
+  constructor(@InjectRepository(Order) private readonly orders: Repository&lt;Order&gt;) {}
+}
+</code></pre>
+</div>
+<h2 id="conditional-registration-decide-once-at-the-root">Conditional registration: decide once, at the root</h2>
+<p>Many variations are decided <strong>once per process</strong>: the environment (development or production), the edition (on-premises or cloud), or whether a sandbox gateway is configured. Those belong in the composition root as plain <code>if</code> statements or their framework equivalent, so the rest of the code never asks. The mistake is using registration-time conditions for choices that change <strong>per request</strong> or <strong>while the process runs</strong>. Registrations execute once, at startup.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 226" width="760" role="img" aria-label="Decision tree: when is the choice made? once at startup, per request, while running, or per test, and the matching technique"><text x="380" y="18" text-anchor="middle" class="small muted">Pick the technique by asking one question first</text><rect class="box accent" x="230" y="26" width="300" height="40" rx="8"/><text x="380" y="51" text-anchor="middle" class="title">When is the choice made?</text><path class="edge" d="M380,66 L98,96"/><path class="edge" d="M380,66 L286,96"/><path class="edge" d="M380,66 L474,96"/><path class="edge" d="M380,66 L662,96"/><rect class="box done" x="10" y="96" width="176" height="122" rx="8"/><text x="22" y="117" class="title">Once, at startup</text><text x="22" y="137" class="small">env, edition, config</text><text x="22" y="155" class="small">→ conditional registration</text><text x="22" y="181" class="small muted">if (env) · @Profile</text><text x="22" y="199" class="small muted">forRoot() · Fx options</text><rect class="box visit" x="198" y="96" width="176" height="122" rx="8"/><text x="210" y="117" class="title">Per request</text><text x="210" y="137" class="small">tenant, country, message</text><text x="210" y="155" class="small">→ strategy / router</text><text x="210" y="181" class="small muted">keyed · Map&lt;String, T&gt;</text><text x="210" y="199" class="small muted">MapBinder · map[string]T</text><rect class="box path" x="386" y="96" width="176" height="122" rx="8"/><text x="398" y="117" class="title">While running</text><text x="398" y="137" class="small">config reload, flags</text><text x="398" y="155" class="small">→ read current value</text><text x="398" y="181" class="small muted">IOptionsMonitor</text><text x="398" y="199" class="small muted">feature manager · atomic</text><rect class="box active" x="574" y="96" width="176" height="122" rx="8"/><text x="586" y="117" class="title">Per test</text><text x="586" y="137" class="small">fakes at the boundary</text><text x="586" y="155" class="small">→ override the root</text><text x="586" y="181" class="small muted">ConfigureTestServices</text><text x="586" y="199" class="small muted">@MockitoBean · fx.Replace</text></svg>
+<figcaption>The same "use X instead of Y" request needs a different technique depending on when X is chosen. Using the wrong one causes the classic bugs: a feature flag read at startup that never turns off, or a per-tenant choice baked into a singleton.</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-csharp">if (builder.Environment.IsDevelopment())
+    builder.Services.AddSingleton&lt;IEmailSender, ConsoleEmailSender&gt;();
+else
+    builder.Services.AddSingleton&lt;IEmailSender, SmtpEmailSender&gt;();
+
+// a library module: defaults only if the app has not chosen (TryAdd), then its own choice
+public static IServiceCollection AddBilling(this IServiceCollection services, IConfiguration config)
+{
+    services.TryAddSingleton(TimeProvider.System);
+    if (config.GetValue&lt;bool&gt;(&quot;Billing:UseSandbox&quot;))
+        services.AddSingleton&lt;IPaymentGateway, SandboxGateway&gt;();
+    else
+        services.AddSingleton&lt;IPaymentGateway, StripeGateway&gt;();
+    return services;
+}
+</code></pre>
+<pre><code class="language-java">@Configuration
+class EmailConfig {
+    @Bean @Profile(&quot;dev&quot;)
+    EmailSender consoleSender() { return new ConsoleEmailSender(); }
+
+    @Bean @Profile(&quot;!dev&quot;)
+    EmailSender smtpSender(SmtpProperties p) { return new SmtpEmailSender(p); }
+}
+
+@AutoConfiguration
+class BillingAutoConfiguration {
+    @Bean @ConditionalOnProperty(name = &quot;billing.use-sandbox&quot;, havingValue = &quot;true&quot;)
+    PaymentGateway sandboxGateway() { return new SandboxGateway(); }
+
+    @Bean @ConditionalOnMissingBean(PaymentGateway.class)   // reliable in auto-configuration, which runs last
+    PaymentGateway stripeGateway(StripeProperties p) { return new StripeGateway(p); }
+}
+</code></pre>
+<pre><code class="language-python">def build_email_sender(settings: Settings) -&gt; EmailSender:
+    if settings.environment == &quot;dev&quot;:
+        return ConsoleEmailSender()
+    return SmtpEmailSender(settings.smtp_host)
+
+def build_gateway(settings: Settings) -&gt; PaymentGateway:
+    return SandboxGateway() if settings.use_sandbox else StripeGateway(settings.stripe_key)
+</code></pre>
+<pre><code class="language-go">var sender EmailSender = NewSMTPSender(cfg.SMTP)
+if cfg.Env == &quot;dev&quot; {
+    sender = ConsoleSender{}
+}
+
+// Fx: assemble the option list conditionally, before fx.New
+opts := []fx.Option{core.Module, fx.Supply(cfg)}
+if cfg.UseSandbox {
+    opts = append(opts, fx.Provide(fx.Annotate(NewSandboxGateway, fx.As(new(PaymentGateway)))))
+} else {
+    opts = append(opts, fx.Provide(fx.Annotate(NewStripeGateway, fx.As(new(PaymentGateway)))))
+}
+app := fx.New(opts...)
+</code></pre>
+<pre><code class="language-typescript">@Module({})
+export class EmailModule {
+  static forRoot(opts: { env: 'dev' | 'prod' }): DynamicModule {
+    return {
+      module: EmailModule,
+      providers: [{ provide: EMAIL_SENDER, useClass: opts.env === 'dev' ? ConsoleEmailSender : SmtpEmailSender }],
+      exports: [EMAIL_SENDER],
+    };
+  }
+}
+
+// AppModule
+// imports: [EmailModule.forRoot({ env: process.env.NODE_ENV === 'production' ? 'prod' : 'dev' })]
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>A feature flag in a registration.</strong> <code>if (flags.IsEnabled("NewPricing")) services.AddScoped&lt;IPricing, NewPricing&gt;()</code> reads the flag <strong>once</strong>, at startup. Turning the flag off in the dashboard changes nothing until the next deploy, and the on-call engineer who flips it during an incident is not told that. <strong>Fix:</strong> register both implementations and let a small router read the flag on every call, for example with <code>IFeatureManager</code> from Microsoft.FeatureManagement, a Spring <code>@RefreshScope</code> bean, or a flag client in Go, Python or Node. More on flags in <a href="configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a>.</p>
+</div>
+<h2 id="child-scopes-and-per-tenant-containers">Child scopes and per-tenant containers</h2>
+<p>Most apps need two levels of sharing: <strong>the process</strong> (singletons) and <strong>the request</strong> (scoped). Multi-tenant SaaS apps often need a third level between them: objects shared by all requests of <strong>one tenant</strong>, such as its settings, its database connection factory, or a client built with its API key. Objects at that level must never leak to another tenant, and they must be rebuilt when that tenant's settings change.</p>
+<p>A <em>hierarchical</em> container models this with <strong>child scopes that can add registrations</strong>. Autofac's <code>BeginLifetimeScope(tag, builder =&gt; …)</code>, Guice's <code>createChildInjector</code> and Spring's parent and child <code>ApplicationContext</code> all work this way. A child sees its parent's objects. A parent never sees its children's objects. And disposal runs <strong>inside-out</strong>: requests first, then tenants, then the root. Step through a few requests and an eviction:</p>
+<div class="viz dav-wide" data-viz="di-advanced-scopes"></div>
+
+<div class="warn">
+<p><strong>MS.DI scopes are flat.</strong> Calling <code>CreateScope()</code> on a scope's provider creates a <em>sibling</em> scope under the root, not a child, and a scope cannot add registrations. To get a real tenant level in .NET you have three choices. In order of preference:</p>
+<ol>
+<li><strong>A scoped <code>ITenantContext</code> plus singleton caches keyed by tenant.</strong> This is the most common choice and needs no special container. For example, use a <code>ConcurrentDictionary&lt;string, TenantDbFactory&gt;</code> and dispose an entry yourself when you evict it.</li>
+<li><strong>Autofac.Multitenant</strong> (or Autofac's <code>BeginLifetimeScope</code> directly), which gives true per-tenant registrations and disposal.</li>
+<li><strong>One <code>ServiceProvider</code> per tenant</strong>, cached and disposed on eviction. This is simple to reason about, but every singleton is now duplicated per tenant, including heavy ones such as <code>HttpClient</code> handlers and caches.</li>
+</ol>
+</div>
+<table>
+<thead>
+<tr>
+<th>Ecosystem</th>
+<th>Tenant-level sharing</th>
+<th>Watch out for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.NET MS.DI</td>
+<td>Scoped <code>ITenantContext</code> + singleton <code>tenant → resource</code> cache</td>
+<td>You own eviction and disposal of cache entries</td>
+</tr>
+<tr>
+<td>.NET Autofac</td>
+<td><code>BeginLifetimeScope(tenantId, b =&gt; b.RegisterInstance(settings))</code>, Autofac.Multitenant</td>
+<td>Remember to dispose evicted tenant scopes</td>
+</tr>
+<tr>
+<td>Spring</td>
+<td><code>AbstractRoutingDataSource</code> for databases; a child <code>ApplicationContext</code> per tenant is rare</td>
+<td>Child contexts duplicate every bean they define</td>
+</tr>
+<tr>
+<td>Guice</td>
+<td><code>injector.createChildInjector(new TenantModule(t))</code></td>
+<td>Just-in-time bindings may be created in the parent</td>
+</tr>
+<tr>
+<td>Go</td>
+<td><code>map[string]*TenantDeps</code> behind a mutex or <code>sync.Map</code>, built lazily</td>
+<td>Close the old entry when you replace it</td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>dict[str, TenantDeps]</code> + <code>asyncio.Lock</code>, resolved in a FastAPI dependency</td>
+<td>A global dict is shared by every worker task</td>
+</tr>
+<tr>
+<td>NestJS</td>
+<td>Durable providers: <code>ContextIdFactory.apply(strategy)</code> with <code>durable: true</code></td>
+<td>Request-scoped providers make the whole chain request-scoped</td>
+</tr>
+</tbody>
+</table>
+<div class="pitfall">
+<p><strong>The tenant id comes from the request, so treat it as input.</strong> If the tenant is read from a header or subdomain <em>before</em> authentication, an attacker can pick another tenant's scope. Resolve the tenant from the authenticated identity, or validate the claim against the host name. A cache keyed by tenant also needs a size limit: an unbounded dictionary keyed by attacker-controlled strings is a memory leak with a public API.</p>
+</div>
+<h2 id="modules-and-plugins-registrations-with-boundaries">Modules and plugins: registrations with boundaries</h2>
+<p>A large app's registrations are grouped into <strong>modules</strong>, one per feature or library: <code>AddBilling()</code>, <code>BillingModule</code>, <code>fx.Module("billing", …)</code>. Modules matter for two reasons. They keep the composition root short, and in some ecosystems they <strong>control visibility</strong>. NestJS is the strictest. A provider is private to its module unless the module <strong>exports</strong> it, and other modules see it only if they <strong>import</strong> that module, or if the module is <code>@Global()</code>. Pick a broken scenario and watch Nest search for a dependency:</p>
+<div class="viz dav-wide" data-viz="di-advanced-modules"></div>
+
+<div class="insight">
+<p><strong>A module's exports are its public API, so keep them small.</strong> Every exported provider is something other teams can start depending on. MS.DI has <strong>no</strong> visibility at all: every registration is global. In .NET you get the same effect by making the implementation classes <code>internal</code> and exposing only an <code>AddBilling(this IServiceCollection)</code> extension method and the public interfaces. Guice's <code>PrivateModule</code> + <code>expose(...)</code> and Fx's <code>fx.Private</code> give real private bindings in Java and Go.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Ecosystem</th>
+<th>Module</th>
+<th>Private by default?</th>
+<th>Plugins discovered at runtime</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.NET</td>
+<td><code>IServiceCollection</code> extension method</td>
+<td>No: use <code>internal</code> types</td>
+<td>Scan assemblies loaded with <code>AssemblyLoadContext</code>; each plugin exposes an <code>IPlugin.Register(services)</code></td>
+</tr>
+<tr>
+<td>Spring</td>
+<td><code>@Configuration</code> + <code>@Import</code>, auto-configuration</td>
+<td>No</td>
+<td><code>AutoConfiguration.imports</code> files on the classpath; <code>java.util.ServiceLoader</code></td>
+</tr>
+<tr>
+<td>Guice</td>
+<td><code>AbstractModule</code>, <code>PrivateModule</code></td>
+<td>Only in <code>PrivateModule</code></td>
+<td><code>ServiceLoader</code> producing <code>Module</code> instances</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>A package with constructors, <code>fx.Module</code></td>
+<td>With <code>fx.Private</code></td>
+<td>Usually compiled in: plugins register themselves in <code>init()</code>, chosen by build tags</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>A package with a <code>build_x()</code> function, dependency-injector <code>Container</code></td>
+<td>Convention (<code>_private</code>)</td>
+<td><code>importlib.metadata.entry_points(group="shop.plugins")</code></td>
+</tr>
+<tr>
+<td>NestJS</td>
+<td><code>@Module</code> with <code>providers</code> / <code>exports</code> / <code>imports</code></td>
+<td>Yes</td>
+<td>Dynamic modules (<code>forRoot</code>), <code>LazyModuleLoader</code></td>
+</tr>
+</tbody>
+</table>
+<div class="tip">
+<p><strong>Give every plugin the same tiny contract</strong>: a name, a version, and one <code>Register(services, config)</code> method. Load plugins <strong>once at startup</strong>, log what was loaded, and fail fast if two plugins claim the same key. Plugins that can be loaded and unloaded while the app runs are a much harder problem (isolation, unloading, versioning); avoid them unless that is your product.</p>
+</div>
+<h2 id="async-initialization-constructors-cannot-await">Async initialization: constructors cannot await</h2>
+<p>Some dependencies need I/O before they are usable: signing keys from an identity provider, a schema check, a cache warm-up. In C#, Java, Python, Go and TypeScript <strong>a constructor cannot be async</strong>, and containers resolve synchronously (Python's dependency-injector and NestJS's async providers are partial exceptions). So the tempting fix is to block inside the constructor with <code>.GetAwaiter().GetResult()</code>. On a thread pool, that is how a service goes down at startup: every request thread blocks waiting for an I/O continuation that needs a free thread to run. The pool adds about one thread per half second, so a burst of traffic can stall for many seconds. This is <em>thread-pool starvation</em>.</p>
+<p>Compare four strategies under the same load. Then make the first attempt fail and see why <code>Lazy&lt;Task&lt;T&gt;&gt;</code> is not enough on its own: it <strong>caches the faulted task</strong> (verified on .NET 10), so every later caller gets the same exception until the process restarts.</p>
+<div class="viz dav-wide" data-viz="di-advanced-asyncinit"></div>
+
+<p>The safest default has two parts. <strong>Warm up before taking traffic</strong>, and <strong>keep an async, retrying accessor</strong> for the rare case where the value must be refreshed later. Each ecosystem has a "before traffic" hook:</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// AsyncLazy that does NOT cache failures: the next caller starts a new attempt
+public sealed class AsyncLazy&lt;T&gt;(Func&lt;CancellationToken, Task&lt;T&gt;&gt; factory)
+{
+    private readonly Lock _gate = new();
+    private Task&lt;T&gt;? _task;
+
+    public Task&lt;T&gt; GetAsync(CancellationToken ct = default)
+    {
+        lock (_gate)
+        {
+            if (_task is null || _task.IsFaulted || _task.IsCanceled)
+                _task = factory(CancellationToken.None); // shared attempt: one caller's cancellation must not fail the others
+            return _task.WaitAsync(ct);                   // each caller can still stop waiting
+        }
+    }
+}
+
+public sealed class TokenCache(IdpClient idp)
+{
+    private readonly AsyncLazy&lt;SigningKeys&gt; _keys = new(ct =&gt; idp.FetchKeysAsync(ct));
+    public Task&lt;SigningKeys&gt; GetKeysAsync(CancellationToken ct) =&gt; _keys.GetAsync(ct);
+}
+
+// warm up in the background; the readiness probe stays red until it finishes
+public sealed class TokenWarmUp(TokenCache cache, ReadinessGate gate) : BackgroundService
+{
+    protected override async Task ExecuteAsync(CancellationToken stop)
+    {
+        await cache.GetKeysAsync(stop);
+        gate.MarkReady();
+    }
+}
+
+public sealed class ReadinessGate
+{
+    private volatile bool _ready;
+    public bool IsReady =&gt; _ready;
+    public void MarkReady() =&gt; _ready = true;
+}
+
+public sealed class ReadinessGateCheck(ReadinessGate gate) : IHealthCheck
+{
+    public Task&lt;HealthCheckResult&gt; CheckHealthAsync(HealthCheckContext context, CancellationToken ct = default) =&gt;
+        Task.FromResult(gate.IsReady ? HealthCheckResult.Healthy() : HealthCheckResult.Unhealthy(&quot;warming up&quot;));
+}
+
+builder.Services.AddSingleton&lt;TokenCache&gt;().AddSingleton&lt;ReadinessGate&gt;().AddHostedService&lt;TokenWarmUp&gt;();
+builder.Services.AddHealthChecks().AddCheck&lt;ReadinessGateCheck&gt;(&quot;warm&quot;, tags: [&quot;ready&quot;]);
+app.MapHealthChecks(&quot;/health/ready&quot;, new() { Predicate = r =&gt; r.Tags.Contains(&quot;ready&quot;) });
+</code></pre>
+<pre><code class="language-java">// Blocking at startup is normal in Spring: the context is built on one thread before traffic.
+@Component
+class TokenWarmUp implements ApplicationRunner {
+    private final TokenCache cache;
+    TokenWarmUp(TokenCache cache) { this.cache = cache; }
+
+    @Override
+    public void run(ApplicationArguments args) {
+        cache.refresh();   // readiness becomes ACCEPTING_TRAFFIC only after all runners finish
+    }
+}
+// Never block on a reactive (WebFlux) event-loop thread; there, use Mono.cache() with a retry.
+</code></pre>
+<pre><code class="language-python">from contextlib import asynccontextmanager
+from fastapi import FastAPI, Request
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    app.state.http = httpx.AsyncClient(timeout=5)
+    app.state.keys = await fetch_signing_keys(app.state.http)   # no request is served before this
+    yield
+    await app.state.http.aclose()                               # shutdown
+
+app = FastAPI(lifespan=lifespan)
+
+def get_keys(request: Request) -&gt; SigningKeys:                  # a dependency that reads the warmed value
+    return request.app.state.keys
+</code></pre>
+<pre><code class="language-go">func NewTokenCache(lc fx.Lifecycle, idp *IdpClient) *TokenCache {
+    c := &amp;TokenCache{idp: idp}
+    lc.Append(fx.Hook{
+        OnStart: func(ctx context.Context) error {
+            return c.Refresh(ctx) // Fx runs OnStart hooks in order; an error aborts startup
+        },
+    })
+    return c
+}
+// fx.StartTimeout(30*time.Second) if the default 15 s is too short.
+// Without Fx: call c.Refresh(ctx) in main() before http.ListenAndServe.
+</code></pre>
+<pre><code class="language-typescript">export const SIGNING_KEYS = Symbol('SIGNING_KEYS');
+
+// Nest awaits async factory providers before the app starts listening
+export const signingKeysProvider: Provider = {
+  provide: SIGNING_KEYS,
+  useFactory: async (idp: IdpClient): Promise&lt;SigningKeys&gt; =&gt; idp.fetchKeys(),
+  inject: [IdpClient],
+};
+
+@Injectable()
+export class TokenValidator {
+  constructor(@Inject(SIGNING_KEYS) private readonly keys: SigningKeys) {} // already resolved
+}
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Do not warm up forever.</strong> A warm-up that retries endlessly keeps a broken instance alive and "starting" while the orchestrator waits. Bound it: retry a few times with back-off (see <a href="resilience.html">Resilience</a>), then <strong>fail startup</strong> so the platform restarts the instance and alerts you. For thread-pool behaviour and why blocking on async code hurts, see <a href="concurrency-async.html">Concurrency &amp; Async</a>.</p>
+</div>
+<h2 id="what-validation-cannot-see">What validation cannot see</h2>
+<p><code>ValidateOnBuild</code>, Dagger, Wire and Nest's bootstrap all prove the graph <strong>from what registrations declare</strong>. The pages on <a href="di-lifetimes.html">lifetimes</a> and <a href="di-across-languages.html">ecosystems</a> showed what that catches: missing constructor parameters and captive dependencies. This section is about what it <strong>cannot</strong> catch. Several of the techniques above create <em>opaque edges</em>, that is, dependencies the validator cannot see:</p>
+<ul>
+<li><strong>A factory lambda</strong> is just <code>Func&lt;IServiceProvider, T&gt;</code>. What it will ask for is unknown until it runs (verified: a lambda that requests a missing service passes <code>ValidateOnBuild</code>).</li>
+<li><strong>A <code>GetService</code> call inside a method</strong> happens long after construction.</li>
+<li><strong>An open generic</strong> has no <code>T</code> yet, so there is no concrete constructor to check.</li>
+<li><strong>A singleton <code>Func&lt;T&gt;</code></strong> captures the root. The validator sees a <code>Func</code>, not the scoped service it will produce.</li>
+</ul>
+<p>Pick each scenario, then switch the version to "made visible" to see the fix move the failure from production to startup or CI:</p>
+<div class="viz dav-wide" data-viz="di-advanced-blindspots"></div>
+
+<p>Two habits close most of the gap. First, <strong>prefer registrations the container can see</strong>: <code>AddSingleton&lt;PaymentClient&gt;()</code> with a constructor is better than a lambda that calls <code>new</code>. Use a lambda only when you must, for example for a third-party type with several constructors. Second, add one <strong>smoke test that resolves every service you own</strong> in a scope, including each closed generic you actually use:</p>
+<pre><code class="language-csharp">[Fact]
+public void Every_service_we_own_resolves_in_a_scope()
+{
+    IServiceCollection? services = null;
+    using var factory = new WebApplicationFactory&lt;Program&gt;()
+        .WithWebHostBuilder(b =&gt; b.ConfigureTestServices(s =&gt; services = s));
+    using var scope = factory.Services.CreateScope();          // building the host runs ValidateOnBuild first
+
+    foreach (var d in services!.Where(d =&gt; d.ServiceType.Assembly == typeof(Program).Assembly
+                                        &amp;&amp; !d.ServiceType.ContainsGenericParameters
+                                        &amp;&amp; !Equals(d.ServiceKey, KeyedService.AnyKey)))   // AnyKey cannot be resolved directly
+        _ = d.IsKeyedService
+            ? scope.ServiceProvider.GetRequiredKeyedService(d.ServiceType, d.ServiceKey)
+            : scope.ServiceProvider.GetRequiredService(d.ServiceType);   // runs every factory lambda once
+
+    var entities = typeof(Order).Assembly.GetTypes()
+        .Where(t =&gt; t is { IsClass: true, IsAbstract: false } &amp;&amp; typeof(IEntity).IsAssignableFrom(t));
+    foreach (var e in entities)                                 // close every open generic you rely on
+        _ = scope.ServiceProvider.GetRequiredService(typeof(IRepository&lt;&gt;).MakeGenericType(e));
+}
+</code></pre>
+<div class="tip">
+<p><strong>Smoke tests catch "missing", not "captive".</strong> Resolving a singleton <code>Func&lt;T&gt;</code> does not call the <code>Func</code>, and resolving a service does not run its methods. A service-locator call inside a method stays invisible. Ban <code>IServiceProvider</code> outside the composition root (see the service locator section below) and the remaining blind spots are rare enough to review by hand.</p>
+</div>
+<h2 id="the-options-pattern-typed-validated-and-sometimes-reloadable">The options pattern: typed, validated, and sometimes reloadable</h2>
+<p>The basics of typed configuration and failing the deploy on bad config are in <a href="di-across-languages.html">DI Across Languages</a> (Job 2) and <a href="configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a>. Here is the advanced part that trips people up: <strong>.NET gives you three ways to read the same options, and they deliberately see different values after a reload.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Lifetime</th>
+<th>Value after the file changes</th>
+<th>Use it in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IOptions&lt;T&gt;</code></td>
+<td>Singleton</td>
+<td>Never changes; computed once on first <code>.Value</code></td>
+<td>Most code. Settings that need a restart anyway</td>
+</tr>
+<tr>
+<td><code>IOptionsSnapshot&lt;T&gt;</code></td>
+<td>Scoped</td>
+<td>New value <strong>per request</strong>, fixed within a request</td>
+<td>Request handlers that must see one consistent config</td>
+</tr>
+<tr>
+<td><code>IOptionsMonitor&lt;T&gt;</code></td>
+<td>Singleton</td>
+<td>Always current, plus <code>OnChange</code> callbacks</td>
+<td>Singletons that must react (pool sizes, rate limits)</td>
+</tr>
+</tbody>
+</table>
+<p>Change the file in the middle of a long request, then write an invalid value, and watch each column. This shows the verified .NET 10 behaviour: an invalid reload makes <code>CurrentValue</code> <strong>throw</strong> rather than keep the old value, and the file watcher often fires <strong>twice</strong> for one save.</p>
+<div class="viz dav-wide" data-viz="di-advanced-options"></div>
+
+<p>Named options, post-configuration and cross-field validation complete the pattern. The pipeline for every options instance is <strong>Configure → PostConfigure → Validate</strong>, in registration order within each stage:</p>
+<pre><code class="language-csharp">public sealed class PayOptions
+{
+    [Range(1, 10_000)] public int TimeoutMs { get; set; } = 2_000;
+    [Range(0, 10)] public int Retries { get; set; } = 2;
+}
+
+// one options type, several named instances (one per gateway)
+builder.Services.AddOptions&lt;PayOptions&gt;(&quot;stripe&quot;).BindConfiguration(&quot;Pay:Stripe&quot;).ValidateDataAnnotations().ValidateOnStart();
+builder.Services.AddOptions&lt;PayOptions&gt;(&quot;adyen&quot;).BindConfiguration(&quot;Pay:Adyen&quot;).ValidateDataAnnotations().ValidateOnStart();
+
+builder.Services.PostConfigureAll&lt;PayOptions&gt;(o =&gt; o.TimeoutMs = Math.Min(o.TimeoutMs, 5_000)); // runs after every binding
+builder.Services.AddSingleton&lt;IValidateOptions&lt;PayOptions&gt;, PayBudgetValidator&gt;();               // rules across fields
+
+public sealed class PayBudgetValidator : IValidateOptions&lt;PayOptions&gt;
+{
+    public ValidateOptionsResult Validate(string? name, PayOptions o) =&gt;
+        (o.Retries + 1) * o.TimeoutMs &gt; 30_000
+            ? ValidateOptionsResult.Fail($&quot;Pay:{name}: (Retries + 1) x TimeoutMs exceeds the 30 s request budget.&quot;)
+            : ValidateOptionsResult.Success;
+}
+
+public sealed class StripeGateway(IOptionsMonitor&lt;PayOptions&gt; options)
+{
+    private PayOptions Current =&gt; options.Get(&quot;stripe&quot;);   // named options: IOptions&lt;T&gt;.Value only returns the unnamed one
+}
+</code></pre>
+<div class="compare">
+<div class="good">
+<h4 id="reloadable-settings-are-worth-it-for">Reloadable settings are worth it for</h4>
+<ul>
+<li>Limits and thresholds an operator may tune during an incident: rate limits, timeouts, log levels.</li>
+<li>Values that are read on every call anyway, so a reload costs nothing extra.</li>
+<li>Cases where you have a test proving that a bad reload is rejected or contained.</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="avoid-reloading-when">Avoid reloading when</h4>
+<ul>
+<li>The value builds something expensive at startup: connection strings, pool sizes, certificates. A reload silently does nothing unless you rebuild the object.</li>
+<li>Two values must change together. A reader can see one updated and the other not.</li>
+<li>A restart is cheap and safer. Most settings should simply use <code>IOptions&lt;T&gt;</code>.</li>
+</ul>
+</div>
+</div>
+<p>Other ecosystems reload differently. <strong>Spring</strong> rebinds <code>@ConfigurationProperties</code> and refreshes <code>@RefreshScope</code> beans when Spring Cloud publishes an <code>EnvironmentChangeEvent</code>. <strong>Go</strong> code usually keeps an <code>atomic.Pointer[Config]</code> that a file or remote watcher swaps after validating the new value. <strong>Python</strong> apps rebuild a pydantic-settings object and swap one reference. <strong>NestJS</strong>'s <code>ConfigModule</code> reads at startup, so reloading needs your own provider. In every language the safe shape is the same: <strong>validate first, then swap one immutable snapshot atomically</strong>, and let readers take the current snapshot once per unit of work.</p>
+<h2 id="swapping-dependencies-in-tests-override-the-root-not-the-code">Swapping dependencies in tests: override the root, not the code</h2>
+<p>Unit tests do not need a container at all: you pass fakes to the constructor, as shown in <a href="di-fundamentals.html">DI Fundamentals</a>. The <strong>container override</strong> is for <em>integration</em> tests. You start the real app with its real composition root, and replace only the edges that leave the process: the payment gateway, the clock, the email sender. Everything in between is the production wiring, so a test also proves the registrations.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">public sealed class CheckoutTests(WebApplicationFactory&lt;Program&gt; app) : IClassFixture&lt;WebApplicationFactory&lt;Program&gt;&gt;
+{
+    [Fact]
+    public async Task Declined_card_returns_402_and_sends_no_email()
+    {
+        var gateway = new FakePaymentGateway(approve: false);
+        var email = new RecordingEmailSender();
+        var clock = new FakeTimeProvider(DateTimeOffset.Parse(&quot;2026-11-03T09:00Z&quot;));  // Microsoft.Extensions.TimeProvider.Testing
+
+        var client = app.WithWebHostBuilder(b =&gt; b.ConfigureTestServices(s =&gt;      // runs AFTER the app's registrations
+        {
+            s.RemoveAll&lt;IPaymentGateway&gt;();          // remove EVERY registration, then add the fake
+            s.AddSingleton&lt;IPaymentGateway&gt;(gateway);
+            s.RemoveAll&lt;IEmailSender&gt;();
+            s.AddSingleton&lt;IEmailSender&gt;(email);
+            s.AddSingleton&lt;TimeProvider&gt;(clock);     // a single-resolve service: last registration wins
+        })).CreateClient();
+
+        var res = await client.PostAsJsonAsync(&quot;/orders&quot;, new { sku = &quot;BOOK-1&quot;, qty = 1 });
+
+        Assert.Equal(HttpStatusCode.PaymentRequired, res.StatusCode);
+        Assert.Empty(email.Sent);
+    }
+}
+</code></pre>
+<pre><code class="language-java">@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class CheckoutTests {
+    @MockitoBean PaymentGateway gateway;          // Spring 6.2+: replaces the bean (was @MockBean)
+    @MockitoBean EmailSender email;
+    @Autowired TestRestTemplate http;
+
+    @Test
+    void declinedCardReturns402AndSendsNoEmail() {
+        when(gateway.charge(any())).thenReturn(ChargeResult.declined());
+        var res = http.postForEntity(&quot;/orders&quot;, Map.of(&quot;sku&quot;, &quot;BOOK-1&quot;, &quot;qty&quot;, 1), String.class);
+        assertThat(res.getStatusCode()).isEqualTo(HttpStatus.PAYMENT_REQUIRED);
+        verifyNoInteractions(email);
+    }
+}
+// Guice: Guice.createInjector(Modules.override(new AppModule()).with(new FakeGatewayModule()));
+// Hilt: @TestInstallIn(components = SingletonComponent.class, replaces = PaymentModule.class)
+</code></pre>
+<pre><code class="language-python">import pytest
+from fastapi.testclient import TestClient
+from shop.main import app, get_gateway, get_email_sender
+
+@pytest.fixture
+def client():
+    gateway, email = FakeGateway(approve=False), RecordingEmailSender()
+    app.dependency_overrides[get_gateway] = lambda: gateway       # key = the original dependency function
+    app.dependency_overrides[get_email_sender] = lambda: email
+    with TestClient(app) as c:                                     # &quot;with&quot; also runs the lifespan
+        yield c, email
+    app.dependency_overrides.clear()                               # a global dict: always clean up
+
+def test_declined_card_returns_402_and_sends_no_email(client):
+    c, email = client
+    res = c.post(&quot;/orders&quot;, json={&quot;sku&quot;: &quot;BOOK-1&quot;, &quot;qty&quot;: 1})
+    assert res.status_code == 402
+    assert email.sent == []
+
+# dependency-injector: with container.gateway.override(providers.Object(FakeGateway(False))): ...
+</code></pre>
+<pre><code class="language-go">func TestDeclinedCard(t *testing.T) {
+    gateway := &amp;FakeGateway{Approve: false}
+    email := &amp;RecordingEmail{}
+    var handler http.Handler
+
+    app := fxtest.New(t,
+        shop.Module, // the production module
+        fx.Replace(
+            fx.Annotate(gateway, fx.As(new(shop.PaymentGateway))),
+            fx.Annotate(email, fx.As(new(shop.EmailSender))),
+        ),
+        fx.Populate(&amp;handler),
+    )
+    app.RequireStart()
+    defer app.RequireStop()
+
+    rec := httptest.NewRecorder()
+    handler.ServeHTTP(rec, httptest.NewRequest(&quot;POST&quot;, &quot;/orders&quot;, strings.NewReader(`{&quot;sku&quot;:&quot;BOOK-1&quot;,&quot;qty&quot;:1}`)))
+    if rec.Code != http.StatusPaymentRequired || len(email.Sent) != 0 {
+        t.Fatalf(&quot;got %d, %d emails&quot;, rec.Code, len(email.Sent))
+    }
+}
+// Without Fx: call your own NewServer(deps) with fakes. It is the same function main() calls.
+</code></pre>
+<pre><code class="language-typescript">describe('checkout', () =&gt; {
+  let app: INestApplication;
+  const gateway = { charge: jest.fn().mockResolvedValue({ approved: false }) };
+  const email = { send: jest.fn() };
+
+  beforeAll(async () =&gt; {
+    const moduleRef = await Test.createTestingModule({ imports: [AppModule] })
+      .overrideProvider(PAYMENT_GATEWAY).useValue(gateway)
+      .overrideProvider(EMAIL_SENDER).useValue(email)
+      .compile();
+    app = moduleRef.createNestApplication();
+    await app.init();
+  });
+  afterAll(() =&gt; app.close());
+
+  it('returns 402 for a declined card and sends no email', async () =&gt; {
+    await request(app.getHttpServer()).post('/orders').send({ sku: 'BOOK-1', qty: 1 }).expect(402);
+    expect(email.send).not.toHaveBeenCalled();
+  });
+});
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>"Add the fake" is not "replace the real one" when there is a list.</strong> In .NET, <code>s.AddSingleton&lt;INotifier, FakeNotifier&gt;()</code> makes the fake win a <em>single</em> resolve, because the last registration wins. But a fan-out that injects <code>IEnumerable&lt;INotifier&gt;</code> still receives the <strong>real</strong> email and SMS notifiers too, so the test sends real messages. <code>Replace</code> does not help either: it removes only the <strong>first</strong> match (verified). Use <code>RemoveAll&lt;T&gt;()</code> before adding fakes. In Python, forgetting <code>dependency_overrides.clear()</code> leaks a fake into every later test in the session. In Spring, every <em>different</em> set of <code>@MockitoBean</code>s creates a new application context, so give test classes shared base configurations to keep the context cache effective.</p>
+</div>
+<h2 id="service-locator-allowed-at-the-edges-banned-in-the-middle">Service locator: allowed at the edges, banned in the middle</h2>
+<p><a href="di-fundamentals.html">DI Fundamentals</a> explains why a class that pulls from <code>IServiceProvider</code> hides its dependencies. Several techniques on this page legitimately touch the provider: a keyed router, a factory, a background worker opening scopes, a plugin host. So the useful rule is about <strong>where</strong> the provider may appear, not "never use it".</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 196" width="760" role="img" aria-label="The provider may appear in the composition root and infrastructure adapters at the edge, but not in application and domain code in the middle"><rect class="box done" x="10" y="30" width="220" height="150" rx="10"/><text x="120" y="52" text-anchor="middle" class="title">Edge: allowed</text><text x="24" y="76" class="small">composition root (Program.cs)</text><text x="24" y="96" class="small">factories: IReportExporterFactory</text><text x="24" y="116" class="small">routers: keyed lookup by country</text><text x="24" y="136" class="small">workers: IServiceScopeFactory</text><text x="24" y="156" class="small">plugin host, middleware Invoke</text><path class="edge accent" d="M230,105 L270,105" marker-end="url(#dav-arr)"/><rect class="box bad" x="274" y="30" width="230" height="150" rx="10"/><text x="389" y="52" text-anchor="middle" class="title">Middle: banned</text><text x="288" y="76" class="small">OrderService(IServiceProvider sp)</text><text x="288" y="96" class="small">static ServiceLocator.Current</text><text x="288" y="116" class="small">HttpContext.RequestServices in domain</text><text x="288" y="136" class="small">ApplicationContext.getBean() in logic</text><text x="288" y="156" class="small muted">dependencies invisible + untestable</text><rect class="box accent" x="530" y="30" width="220" height="150" rx="10"/><text x="640" y="52" text-anchor="middle" class="title">Make it a rule</text><text x="544" y="76" class="small">only infrastructure namespaces</text><text x="544" y="96" class="small">may reference IServiceProvider</text><text x="544" y="120" class="small">enforce with an architecture test</text><text x="544" y="140" class="small">(NetArchTest, ArchUnit) or an</text><text x="544" y="160" class="small">analyzer rule in CI</text><text x="380" y="18" text-anchor="middle" class="small muted">The provider is a tool for wiring code, never a dependency of business code</text></svg>
+<figcaption>The edge code that touches the provider is small, generic and tested once. Business code declares what it needs in its constructor, so it can be validated, read and tested without a container.</figcaption>
+</figure>
+
+<div class="recognize">
+<p><strong>Recognize a locator in disguise:</strong> a constructor parameter of type <code>IServiceProvider</code>, <code>ApplicationContext</code>, <code>Injector</code>, <code>ModuleRef</code> or a whole container object; a <code>GetService</code> call inside a loop or an <code>if</code>; a "context" or "services" bag object passed to every method; a test that has to build a container just to construct one class.</p>
+</div>
+<h2 id="resolution-performance-what-a-container-really-costs">Resolution performance: what a container really costs</h2>
+<p>Containers are fast enough that resolution is almost never your bottleneck. These numbers come from a rough Release-mode loop on .NET 10 on one laptop. They show orders of magnitude, not a benchmark:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Approximate cost</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>new</code> the same 4 objects by hand</td>
+<td>~27 ns</td>
+<td>The baseline</td>
+</tr>
+<tr>
+<td>Resolve a transient with 3 dependencies</td>
+<td>~120 ns</td>
+<td>About 4× hand-wiring, still nothing next to one database call (~1 ms)</td>
+</tr>
+<tr>
+<td>Resolve an already-created scoped service</td>
+<td>~43 ns</td>
+<td>A dictionary lookup in the scope</td>
+</tr>
+<tr>
+<td><code>CreateScope</code> + resolve + <code>Dispose</code></td>
+<td>~350 ns</td>
+<td>Per-request overhead of scoping</td>
+</tr>
+<tr>
+<td>First resolve on a new provider (cold, includes JIT)</td>
+<td>~0.6 ms</td>
+<td>Paid once per service type at startup</td>
+</tr>
+</tbody>
+</table>
+<div class="insight">
+<p><strong>Where DI really costs time:</strong></p>
+<ul>
+<li><strong>Startup.</strong> Classpath scanning (Spring), reflection over every constructor, building proxies, and eager singletons. Dagger and Wire move this cost to compile time. Spring AOT and GraalVM, and .NET Native AOT, which MS.DI supports without runtime code generation, reduce it.</li>
+<li><strong>Big per-request graphs.</strong> A request-scoped provider in NestJS makes its whole dependency chain request-scoped, so every request rebuilds it.</li>
+<li><strong>Leaks, not lookups.</strong> Disposable transients resolved from the root are kept until shutdown (verified), and a captured <code>Func&lt;T&gt;</code> can create objects nobody disposes.</li>
+</ul>
+<p>Measure before optimizing. Then prefer singletons for stateless services, never resolve inside a hot loop (resolve once, then reuse), and warm the graph at startup. <a href="performance-cadence.html">Performance Cadence</a> and <a href="performance-patterns.html">Performance Patterns</a> show how to measure.</p>
+</div>
+<h2 id="when-to-use-each-technique-and-when-not-to">When to use each technique, and when not to</h2>
+<div class="compare">
+<div class="good">
+<h4 id="reach-for-it-when">Reach for it when</h4>
+<ul>
+<li><strong>Multi-registration:</strong> a real fan-out or pipeline where every implementation must run.</li>
+<li><strong>Keyed:</strong> a small, closed set chosen by a value known at the call site.</li>
+<li><strong>Factories, Lazy:</strong> a meaningful share of requests never need an expensive dependency, or you need runtime arguments.</li>
+<li><strong>Decorators:</strong> one cross-cutting concern around one abstraction, in an order you want to see in code.</li>
+<li><strong>Open generics:</strong> one implementation that is truly identical for every <code>T</code>.</li>
+<li><strong>Tenant scopes:</strong> objects whose configuration differs per tenant and must be isolated.</li>
+<li><strong>Options monitor:</strong> an operator must change a value without a restart.</li>
+<li><strong>Container overrides:</strong> integration tests that replace only out-of-process edges.</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="skip-it-when">Skip it when</h4>
+<ul>
+<li><strong>Multi-registration:</strong> ordering matters but nobody documents it. Use an explicit pipeline type instead.</li>
+<li><strong>Keyed:</strong> the key arrives from the user. Use a router with validation and a default.</li>
+<li><strong>Factories, Lazy:</strong> every request opens it anyway. Fix the constructor instead.</li>
+<li><strong>Decorators:</strong> the behaviour needs the inner object's private state. Change the class.</li>
+<li><strong>Open generics:</strong> half the types need a special case. Write explicit closed types.</li>
+<li><strong>Tenant scopes:</strong> the only difference is a connection string. Use a scoped tenant context.</li>
+<li><strong>Options monitor:</strong> the value builds a pool or client at startup. Restart instead.</li>
+<li><strong>Container overrides:</strong> a plain unit test with constructor arguments would do.</li>
+</ul>
+</div>
+</div>
+<p>Every technique on this page adds indirection: one more place a reader must look to know what runs. Use the simplest wiring that expresses the variation, and write down the reason in the registration.</p>
+<h2 id="pitfalls-and-production-war-stories">Pitfalls and production war stories</h2>
+<div class="pitfall">
+<p><strong>The retry that hammered a dead database.</strong> A team added <code>Decorate&lt;IOrderRepository, RetryRepo&gt;()</code> <em>after</em> the caching decorator, which made retry the outermost layer. During a database outage every request retried three times, <em>and</em> each attempt re-checked the cache, logged and recorded metrics. Database connections tripled at the worst moment. <strong>Fix:</strong> put retry innermost, around the database call only, add a circuit breaker, and pin the decorator order with a test that resolves the service and asserts the type chain.</p>
+</div>
+<div class="pitfall">
+<p><strong>The token cache that never recovered.</strong> <code>Lazy&lt;Task&lt;Keys&gt;&gt;</code> fetched signing keys on first use. The identity provider had a 30-second blip just as one instance started. The faulted task was cached, so every authenticated request on that instance failed until someone restarted it hours later, while its health check was green. <strong>Fix:</strong> an <code>AsyncLazy</code> that drops failed tasks, warm-up before readiness, and a health check that exercises the keys.</p>
+</div>
+<div class="pitfall">
+<p><strong>The test that emailed customers.</strong> An integration test registered <code>FakeNotifier</code> with <code>AddSingleton</code> and asserted that "a notification was sent". It passed. It also sent a real email to the test customer's address, because the order flow injected <code>IEnumerable&lt;INotifier&gt;</code> and still received the SMTP notifier. <strong>Fix:</strong> <code>RemoveAll&lt;INotifier&gt;()</code> before adding fakes, and point the test environment's SMTP at a sink.</p>
+</div>
+<div class="pitfall">
+<p><strong>The config reload that half-applied.</strong> An operator lowered <code>Pay:TimeoutMs</code> during an incident. The retry policy used <code>IOptionsMonitor</code> and changed immediately. The <code>HttpClient</code> timeout had been set from <code>IOptions</code> at startup and did not. For twenty minutes the retry budget assumed 500 ms calls while each call could still take 5 s. <strong>Fix:</strong> decide per setting whether it reloads, document it next to the option, and rebuild dependent objects in <code>OnChange</code> (or require a restart).</p>
+</div>
+<h2 id="best-practice-checklist">Best-practice checklist</h2>
+<ul>
+<li>[ ] Every variation is a registration the container can see. Factory lambdas and <code>GetService</code> calls are rare and commented.</li>
+<li>[ ] Libraries use <code>TryAdd</code> and <code>TryAddEnumerable</code>. Applications register their choices after library calls.</li>
+<li>[ ] Keyed lookups by runtime value go through a router that validates the key at startup and has an explicit default.</li>
+<li>[ ] Factories are registered with the shortest lifetime of what they create. Long-lived code uses <code>IServiceScopeFactory</code>.</li>
+<li>[ ] Decorator order is deliberate (observability → caching → resilience → real) and pinned by a test.</li>
+<li>[ ] Open generics are covered by a smoke test that closes them for every type you use.</li>
+<li>[ ] Constructors do no I/O. Async initialization happens in a warm-up step before readiness, with bounded retries.</li>
+<li>[ ] Options are validated on start. Each setting is documented as reloadable or restart-only.</li>
+<li>[ ] Integration tests replace only out-of-process edges, with <code>RemoveAll</code> (or the ecosystem's equivalent) before adding fakes.</li>
+<li>[ ] <code>IServiceProvider</code> appears only in the composition root and infrastructure, enforced by an architecture test.</li>
+</ul>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>1. You call <code>Decorate&lt;IRepo, CachingRepo&gt;()</code> and then <code>Decorate&lt;IRepo, LoggingRepo&gt;()</code>. Are cache hits logged?</summary>
+<p>Yes. Each <code>Decorate</code> wraps what is registered at that moment, so the last call is outermost: <code>Logging(Caching(Sql))</code>. Every call enters Logging first. Calls the cache answers return before reaching Sql, but they have already passed through Logging. Reverse the calls and cache hits become invisible in the logs.</p>
+</details>
+<details class="quiz">
+<summary>2. A singleton <code>Func&lt;AppDbContext&gt;</code> passes <code>ValidateOnBuild</code> and <code>ValidateScopes</code>. Why does it fail later?</summary>
+<p>A singleton is created by the root provider, so the lambda's <code>sp</code> <strong>is the root</strong>. The validator sees a registration of type <code>Func&lt;AppDbContext&gt;</code> and cannot look inside the lambda. When the function is called, it asks the root for a scoped service and throws "Cannot resolve scoped service 'AppDbContext' from root provider." Without <code>ValidateScopes</code>, it silently creates a captive <code>AppDbContext</code> shared by everyone. Inject <code>IServiceScopeFactory</code> and create a scope per unit of work.</p>
+</details>
+<details class="quiz">
+<summary>3. A request starts, then the config file changes, then the same request reads its options again. What do <code>IOptions</code>, <code>IOptionsSnapshot</code> and <code>IOptionsMonitor</code> return?</summary>
+<p><code>IOptions</code> returns the value computed on its first read and never changes. <code>IOptionsSnapshot</code> returns the <strong>old</strong> value: it is computed once per scope, so one request never sees two configs. <code>IOptionsMonitor.CurrentValue</code> returns the <strong>new</strong> value, or throws <code>OptionsValidationException</code> if the new value is invalid.</p>
+</details>
+<details class="quiz">
+<summary>4. Why is <code>Lazy&lt;Task&lt;T&gt;&gt;</code> risky for initialization that calls a network service?</summary>
+<p><code>Lazy&lt;T&gt;</code> caches whatever its factory returned, and here that is a <code>Task</code>. If the first attempt fails, the cached task is faulted, and every later <code>await</code> rethrows the same exception for the life of the process. Use an async lazy that discards faulted or cancelled tasks, and do the first attempt during warm-up so failures stop the rollout instead of failing users.</p>
+</details>
+<details class="quiz">
+<summary>5. NestJS says it cannot resolve <code>PaymentGateway</code> "in the OrdersModule context", but OrdersModule imports PaymentsModule. What is missing?</summary>
+<p><code>PaymentsModule</code> must list <code>PaymentGateway</code> in its <code>exports</code>. Importing a module gives access only to what it exports; everything else is private. Do not "fix" it by making PaymentsModule <code>@Global()</code>, which hides the dependency instead of declaring it.</p>
+</details>
+<details class="quiz">
+<summary>6. In which situations is a feature flag in a registration (<code>if (flag) services.Add…</code>) correct?</summary>
+<p>Only when the choice is meant to be fixed for the life of the process: the environment, the edition, or a deployment-time setting. Registrations run once at startup, so a runtime flag read there never turns off without a restart. For per-request or runtime choices, register all implementations and choose in a router that reads the flag (or the options monitor) on each call.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Last wins</strong>Single resolve = last registration; <code>IEnumerable</code> = all, in order; <code>TryAdd</code> for libraries.</div>
+<div><strong>Replace</strong>Removes only the first match. In tests, use <code>RemoveAll</code> then add.</div>
+<div><strong>Keyed</strong>Exact key → <code>AnyKey</code> → error. Not in non-keyed <code>GetServices</code>.</div>
+<div><strong>Factories</strong>Lifetime = shortest of what it creates. Singletons capture the root.</div>
+<div><strong>Lazy / Func</strong>Not built into MS.DI; built into Autofac (plus <code>Owned&lt;T&gt;</code>).</div>
+<div><strong>Decorators</strong>Last <code>Decorate</code> = outermost. Observability → cache → resilience → real.</div>
+<div><strong>Proxies</strong>One rule, many types; no self-calls, no <code>final</code>/non-virtual.</div>
+<div><strong>Open generics</strong>Closed beats open; constraints checked on close; not validated on build.</div>
+<div><strong>Tenants</strong>MS.DI scopes are flat; scoped tenant context + keyed caches first.</div>
+<div><strong>Async init</strong>No I/O in constructors; warm up before ready; never cache a faulted task.</div>
+<div><strong>Options</strong>IOptions = process, Snapshot = request, Monitor = live; validate on start.</div>
+<div><strong>Locator</strong>Edges only: root, factories, routers, workers, plugin hosts.</div>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/dotnet/core/extensions/dependency-injection">Dependency injection in .NET</a>, including keyed services, and <a href="https://learn.microsoft.com/dotnet/core/extensions/dependency-injection-guidelines">DI guidelines</a> (disposal, service locator, async factories).</li>
+<li><a href="https://learn.microsoft.com/dotnet/core/extensions/options">Options pattern in .NET</a>: <code>IOptionsSnapshot</code>, <code>IOptionsMonitor</code>, named options and validation.</li>
+<li><a href="https://learn.microsoft.com/aspnet/core/test/integration-tests">Integration tests in ASP.NET Core</a> (<code>WebApplicationFactory</code>, <code>ConfigureTestServices</code>) and <a href="https://learn.microsoft.com/aspnet/core/host-and-deploy/health-checks">health checks</a>.</li>
+<li><a href="https://github.com/khellang/Scrutor">Scrutor</a> (<code>Decorate</code> and assembly scanning) and <a href="https://autofac.readthedocs.io/en/latest/resolve/relationships.html">Autofac: relationship types</a> and <a href="https://autofac.readthedocs.io/en/latest/advanced/multitenant.html">multitenancy</a>.</li>
+<li><a href="https://docs.spring.io/spring-framework/reference/core/beans.html">Spring: the IoC container</a>, <a href="https://docs.spring.io/spring-framework/reference/core/aop/proxying.html">AOP proxies</a> and <a href="https://docs.spring.io/spring-framework/reference/testing/annotations/integration-spring/annotation-mockitobean.html">testing bean overrides</a>.</li>
+<li><a href="https://github.com/google/guice/wiki">Guice wiki</a> (Multibindings, AssistedInject, PrivateModule) and <a href="https://dagger.dev/dev-guide/">Dagger</a> (multibindings, assisted injection).</li>
+<li><a href="https://uber-go.github.io/fx/">Fx documentation</a>: modules, value groups, <code>fx.Decorate</code>, <code>fx.Replace</code> and lifecycle hooks.</li>
+<li><a href="https://fastapi.tiangolo.com/advanced/testing-dependencies/">FastAPI: testing dependencies with overrides</a>, <a href="https://fastapi.tiangolo.com/advanced/events/">lifespan events</a> and <a href="https://python-dependency-injector.ets-labs.org/">dependency-injector</a>.</li>
+<li><a href="https://docs.nestjs.com/modules">NestJS: modules</a>, <a href="https://docs.nestjs.com/fundamentals/custom-providers">custom providers</a>, <a href="https://docs.nestjs.com/fundamentals/async-providers">async providers</a>, <a href="https://docs.nestjs.com/fundamentals/injection-scopes">injection scopes</a> and <a href="https://docs.nestjs.com/fundamentals/testing">testing</a>.</li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="di-across-languages.html"><small>&larr; PREVIOUS</small>DI Across Languages &amp; Frameworks</a><a class="next" href="request-pipeline.html"><small>NEXT &rarr;</small>The Request Delegate Pipeline</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-the-container-works-until-the-app-grows">The problem: the container works until the app grows</a></li>
+<li><a href="#the-mental-model-the-registration-list-is-a-program">The mental model: the registration list is a program</a></li>
+<li><a href="#many-implementations-lists-defaults-and-last-one-wins">Many implementations: lists, defaults and "last one wins"</a><ul>
+<li><a href="#the-same-fan-out-in-five-ecosystems">The same fan-out in five ecosystems</a></li>
+</ul>
+</li>
+<li><a href="#keyed-and-named-resolution">Keyed and named resolution</a></li>
+<li><a href="#deferring-creation-factories-lazy-func-and-assisted-injection">Deferring creation: factories, Lazy, Func and assisted injection</a><ul>
+<li><a href="#the-same-three-needs-across-ecosystems">The same three needs across ecosystems</a></li>
+</ul>
+</li>
+<li><a href="#decorators-and-interception">Decorators and interception</a><ul>
+<li><a href="#decorators-versus-interception-dynamic-proxies">Decorators versus interception (dynamic proxies)</a></li>
+</ul>
+</li>
+<li><a href="#open-generics-one-registration-for-every-t">Open generics: one registration for every T</a></li>
+<li><a href="#conditional-registration-decide-once-at-the-root">Conditional registration: decide once, at the root</a></li>
+<li><a href="#child-scopes-and-per-tenant-containers">Child scopes and per-tenant containers</a></li>
+<li><a href="#modules-and-plugins-registrations-with-boundaries">Modules and plugins: registrations with boundaries</a></li>
+<li><a href="#async-initialization-constructors-cannot-await">Async initialization: constructors cannot await</a></li>
+<li><a href="#what-validation-cannot-see">What validation cannot see</a></li>
+<li><a href="#the-options-pattern-typed-validated-and-sometimes-reloadable">The options pattern: typed, validated, and sometimes reloadable</a></li>
+<li><a href="#swapping-dependencies-in-tests-override-the-root-not-the-code">Swapping dependencies in tests: override the root, not the code</a></li>
+<li><a href="#service-locator-allowed-at-the-edges-banned-in-the-middle">Service locator: allowed at the edges, banned in the middle</a></li>
+<li><a href="#resolution-performance-what-a-container-really-costs">Resolution performance: what a container really costs</a></li>
+<li><a href="#when-to-use-each-technique-and-when-not-to">When to use each technique, and when not to</a></li>
+<li><a href="#pitfalls-and-production-war-stories">Pitfalls and production war stories</a></li>
+<li><a href="#best-practice-checklist">Best-practice checklist</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

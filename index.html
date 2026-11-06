@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learning Homes</title>
+<style>
+:root { color-scheme: light dark; --bg: #f7f7f9; --surface: #fff; --text: #1d1d24; --muted: #5d5d6b; --line: #e3e3ea; }
+@media (prefers-color-scheme: dark) { :root { --bg: #0f1218; --surface: #171b23; --text: #e8e8ee; --muted: #a0a3ad; --line: #2a2f3a; } }
+* { box-sizing: border-box; }
+body { margin: 0; font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); }
+main { max-width: 980px; margin: 0 auto; padding: 64px 24px; }
+h1 { font-size: 40px; margin: 0 0 8px; letter-spacing: -.02em; }
+.lede { color: var(--muted); max-width: 640px; margin: 0 0 36px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.card { display: grid; gap: 12px; padding: 26px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); border-top: 5px solid var(--a); color: inherit; text-decoration: none; transition: transform .15s, box-shadow .15s; }
+.card:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,.12); }
+.card h2 { margin: 0; color: var(--a); font-size: 24px; }
+.card p { margin: 0; color: var(--muted); }
+.bar { height: 8px; border-radius: 8px; background: var(--line); overflow: hidden; }
+.bar span { display: block; height: 100%; width: 0; background: var(--a); }
+small { color: var(--muted); }
+footer { margin-top: 40px; color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+<h1>Learning Homes</h1>
+<p class="lede">Visual, interactive guides for data structures and algorithms and for cross-language engineering craft. Your progress is saved in this browser, for this site only. Use <b>Export progress</b> on a home page to back it up or move it to another device.</p>
+<div class="grid"><a class="card" href="DSAHome/index.html" style="--a:#4f46e5" data-home="dsa-home" data-slugs="problem-solving-playbook complexity-analysis recursion two-pointers sliding-window prefix-sums binary-search sorting hashing monotonic-stack-queue intervals-sweep-line string-algorithms linked-lists stacks-queues heaps-priority-queues tree-traversals binary-search-trees tree-patterns tries segment-fenwick-trees graph-fundamentals topological-sort union-find shortest-paths minimum-spanning-trees advanced-graphs backtracking greedy dp-framework dp-linear-grid dp-knapsack dp-sequences-strings dp-intervals-trees dp-bitmask-digit dp-advanced bit-manipulation math-number-theory"><h2>DSA Home</h2><p>See the algorithm. Then you can solve the problem.</p><div class="bar"><span></span></div><small><b class="done">&ndash;</b> of 37 topics mastered</small></a><a class="card" href="CodeExcellenceHome/index.html" style="--a:#c2410c" data-home="code-excellence-home" data-slugs="design-principles language-mental-models clean-code types-and-immutability error-handling creational-patterns structural-patterns behavioral-patterns functional-patterns anti-patterns application-architecture domain-driven-design distributed-architecture di-fundamentals di-lifetimes di-across-languages di-advanced request-pipeline middleware-patterns outbound-pipelines api-design api-protocols api-security caching data-access performance-cadence memory-and-gc concurrency-async performance-patterns resilience observability configuration-and-secrets testing-strategy security-fundamentals code-review-and-collaboration"><h2>Code Excellence Home</h2><p>Write code that is clear, fast, and still correct at 3 a.m.</p><div class="bar"><span></span></div><small><b class="done">&ndash;</b> of 35 topics mastered</small></a></div>
+<footer>Static site, no account and no tracking. Progress lives in your browser's local storage.</footer>
+</main>
+<script>
+for (const card of document.querySelectorAll(".card")) {
+  const slugs = new Set(card.dataset.slugs.split(" ").filter(Boolean));
+  let n = 0;
+  try { const v = JSON.parse(localStorage.getItem(card.dataset.home + "-mastered") || "[]"); if (Array.isArray(v)) n = new Set(v.filter((s) => slugs.has(s))).size; } catch {}
+  card.querySelector(".done").textContent = n;
+  card.querySelector(".bar span").style.width = (slugs.size ? 100 * n / slugs.size : 0) + "%";
+}
+</script>
+</body>
+</html>

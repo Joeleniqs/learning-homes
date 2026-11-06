@@ -1,0 +1,99 @@
+/* Backtracking: topic-only styles. Colours come from shared CSS variables only. */
+
+/* Wide visualizers: stage on top, code + variables side by side underneath */
+.viz.bt-wide .viz-body.with-code { grid-template-columns: minmax(0, 1fr); }
+.viz.bt-wide .viz-side { border-left: 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(200px, 1fr); }
+.viz.bt-wide .viz-vars { border-top: 0; border-left: 1px solid var(--line); align-content: start; }
+@media (max-width: 720px) {
+  .viz.bt-wide .viz-side { grid-template-columns: minmax(0, 1fr); }
+  .viz.bt-wide .viz-vars { border-left: 0; border-top: 1px solid var(--line); }
+}
+
+.bt-col { display: flex; flex-direction: column; align-items: center; gap: 16px; width: 100%; }
+
+/* Decision tree */
+.bt-treewrap { max-width: 100%; }
+svg.bt-tree { max-width: 100%; height: auto; overflow: visible; }
+.bt-tree .bt-hide { visibility: hidden; }
+.bt-n rect { fill: var(--v-node); stroke: var(--line); stroke-width: 1.5; transition: fill .2s, stroke .2s; }
+.bt-n text { font: 600 12px "Cascadia Code", Consolas, monospace; fill: var(--text); text-anchor: middle; dominant-baseline: central; }
+.bt-n.active rect { fill: var(--v-active-soft); stroke: var(--v-active); }
+.bt-n.visit rect { fill: var(--v-visit-soft); stroke: var(--v-visit); }
+.bt-n.done rect { fill: var(--v-done-soft); stroke: var(--v-done); }
+.bt-n.bad rect { fill: var(--v-bad-soft); stroke: var(--v-bad); }
+.bt-n.path rect { fill: var(--v-path-soft); stroke: var(--v-path); }
+.bt-n.dim rect { fill: transparent; stroke: var(--muted); stroke-dasharray: 4 3; }
+.bt-n.dim { opacity: .5; }
+.bt-n.bt-cur rect { stroke-width: 3; }
+.bt-e { stroke: var(--line); stroke-width: 1.5; }
+.bt-e.active { stroke: var(--v-active); stroke-width: 2.5; }
+.bt-e.bad { stroke: var(--v-bad); stroke-width: 2; stroke-dasharray: 5 3; }
+.bt-e.dim { stroke: var(--muted); stroke-dasharray: 4 3; opacity: .45; }
+.bt-el { font: 600 10.5px "Cascadia Code", Consolas, monospace; fill: var(--muted); text-anchor: middle; dominant-baseline: central; paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+.bt-el.active { fill: var(--v-active); }
+.bt-el.bad { fill: var(--v-bad); }
+.bt-el.dim { opacity: .55; }
+.bt-dl { font: 600 10.5px "Cascadia Code", Consolas, monospace; fill: var(--muted); dominant-baseline: central; }
+
+/* State panel under the tree */
+.bt-path { display: flex; gap: 4px; flex-wrap: wrap; }
+.bt-empty { font: 600 13px "Cascadia Code", Consolas, monospace; color: var(--muted); padding: 5px 10px; border: 1.5px dashed var(--line); border-radius: 6px; }
+.bt-resbox { max-width: 560px; }
+.bt-res { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
+.bt-res .v-item { padding: 3px 7px; font-size: 12px; }
+.bt-res .bt-new { box-shadow: 0 0 0 2px var(--accent); }
+.bt-none { color: var(--muted); font-size: 12.5px; font-style: italic; }
+.bt-stats { display: grid; gap: 3px; font: 13px "Cascadia Code", Consolas, monospace; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); min-width: 150px; }
+
+/* N-Queens board: attacked cells are striped, the current row is outlined */
+.v-gcell.bt-att { background-image: repeating-linear-gradient(135deg, var(--v-bad-soft) 0 5px, transparent 5px 10px); }
+.v-gcell.bt-row { outline: 2px solid var(--accent); outline-offset: -3px; }
+.v-gcell.bt-att.dim { opacity: .55; }
+.bt-sets { display: flex; flex-direction: column; gap: 6px; }
+.bt-sets .v-cell { min-width: 26px; height: 26px; padding: 0 3px; font-size: 12px; border-radius: 6px; }
+.bt-sets .v-cells, .bt-sets .v-col { gap: 2px !important; }
+.bt-sets .v-ptr-under { display: none; }
+
+/* Sudoku */
+.bt-sdk { display: grid; grid-template-columns: repeat(9, 34px); grid-auto-rows: 34px; border: 2.5px solid var(--text); border-radius: 6px; overflow: hidden; background: var(--line); gap: 1px; }
+.bt-sc { display: grid; place-items: center; background: var(--v-node); font: 600 15px "Cascadia Code", Consolas, monospace; color: var(--v-done); transition: background .2s; }
+.bt-sc.bt-given { color: var(--text); font-weight: 800; }
+.bt-sc.done { background: var(--v-done-soft); }
+.bt-sc.bt-peer { background: var(--v-visit-soft); }
+.bt-sc.active { background: var(--v-active-soft); color: var(--text); box-shadow: inset 0 0 0 2.5px var(--v-active); }
+.bt-sc.bad { background: var(--v-bad-soft); box-shadow: inset 0 0 0 2.5px var(--v-bad); }
+.bt-sc.bt-br { border-right: 2px solid var(--text); }
+.bt-sc.bt-bb { border-bottom: 2px solid var(--text); }
+.bt-cnt { font-size: 10.5px; font-weight: 600; color: var(--muted); }
+.bt-sdkside { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+.bt-sdkside .v-cell { min-width: 30px; height: 30px; font-size: 13px; }
+
+/* Partition into k buckets */
+.bt-buckets { display: flex; gap: 12px; align-items: flex-end; }
+.bt-bk { position: relative; width: 58px; height: 150px; border: 2px solid var(--line); border-top: 0; border-radius: 0 0 10px 10px; display: flex; flex-direction: column-reverse; align-items: center; transition: border-color .2s; }
+.bt-bk.active { border-color: var(--v-active); }
+.bt-bk.bad { border-color: var(--v-bad); }
+.bt-bk.path { border-color: var(--v-path); }
+.bt-bk.visit { border-color: var(--v-visit); }
+.bt-bkfill { position: absolute; left: 0; right: 0; bottom: 0; background: var(--v-done-soft); border-radius: 0 0 8px 8px; transition: height .25s; }
+.bt-bk.bad .bt-bkfill { background: var(--v-bad-soft); }
+.bt-bkitems { position: relative; display: flex; flex-direction: column-reverse; gap: 2px; padding: 4px; }
+.bt-bkitems span { font: 600 12px "Cascadia Code", Consolas, monospace; padding: 1px 8px; border: 1.5px solid var(--v-done); border-radius: 5px; background: var(--surface); }
+.bt-bklab { position: absolute; bottom: -20px; font: 11px "Cascadia Code", Consolas, monospace; color: var(--muted); }
+.bt-buckets { padding-bottom: 22px; }
+
+/* Search-space bars (log scale) */
+.bt-costwrap { width: min(760px, 100%); }
+.bt-cost { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.bt-crow { display: grid; grid-template-columns: 110px minmax(0, 1fr) 150px; gap: 10px; align-items: center; }
+.bt-crow.bt-hide { visibility: hidden; }
+.bt-clab { font: 600 12.5px "Cascadia Code", Consolas, monospace; text-align: right; }
+.bt-cval { font: 600 12.5px "Cascadia Code", Consolas, monospace; }
+.bt-ctrack { height: 22px; border-radius: 6px; background-color: var(--bg); border: 1px solid var(--line); background-image: repeating-linear-gradient(90deg, transparent 0, transparent calc(100% / var(--dec) - 1px), var(--line) calc(100% / var(--dec) - 1px), var(--line) calc(100% / var(--dec))); }
+.bt-cbar { height: 100%; border-radius: 5px; transition: width .3s; }
+.bt-cbar.bad { background: var(--v-bad); }
+.bt-cbar.visit { background: var(--v-visit); }
+.bt-cbar.done { background: var(--v-done); }
+
+/* Static figures */
+svg.bt-fig { max-width: 100%; height: auto; }

@@ -1,0 +1,2537 @@
+<!doctype html>
+<html lang="en" data-home="dsa-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Binary Search Trees | DSA Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#4f46e5;--accent-soft:#eef0ff;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#a5b4fc;--accent-soft:#252a5c;}}:root[data-theme=dark]{--accent:#a5b4fc;--accent-soft:#252a5c;}</style>
+  <link rel="stylesheet" href="../assets/topics/binary-search-trees.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/binary-search-trees.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="DSA Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">DS</span>DSA Home</a>
+    <p class="sidebar-caption">Data structures &amp; algorithms, seen.<br>Every idea animated, every pattern drilled.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations</summary><ul class="topic-list"><li data-search="The Problem-Solving Playbook Foundations A visual decision map from input size, shape and question type to the right technique, plus a repeatable interview/contest workflow. pattern recognition constraints approach interview" data-slug="problem-solving-playbook"><a href="../topics/problem-solving-playbook.html">The Problem-Solving Playbook</a></li><li data-search="Complexity Analysis Foundations Big-O growth you can see, amortized cost, recursion trees and the Master theorem, and what 10^8 operations per second really buys you. big o amortized master theorem time space" data-slug="complexity-analysis"><a href="../topics/complexity-analysis.html">Complexity Analysis</a></li><li data-search="Recursion &amp; the Call Stack Foundations Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from. call stack recursion tree divide and conquer" data-slug="recursion"><a href="../topics/recursion.html">Recursion &amp; the Call Stack</a></li></ul></details><details class="nav-track"><summary>Arrays &amp; Strings</summary><ul class="topic-list"><li data-search="Two Pointers Arrays &amp; Strings Opposite-end, same-direction and fast/slow pointers: why moving one pointer is safe, with partitioning and k-sum. pair sum partition dutch flag 3sum" data-slug="two-pointers"><a href="../topics/two-pointers.html">Two Pointers</a></li><li data-search="Sliding Window Arrays &amp; Strings Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows. substring subarray window at most k" data-slug="sliding-window"><a href="../topics/sliding-window.html">Sliding Window</a></li><li data-search="Prefix Sums &amp; Difference Arrays Arrays &amp; Strings 1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR. subarray sum equals k range sum 2d prefix difference array" data-slug="prefix-sums"><a href="../topics/prefix-sums.html">Prefix Sums &amp; Difference Arrays</a></li><li data-search="Binary Search Arrays &amp; Strings One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection. lower bound upper bound search on answer rotated monotonic predicate" data-slug="binary-search"><a href="../topics/binary-search.html">Binary Search</a></li><li data-search="Sorting Algorithms Arrays &amp; Strings Animated bubble, insertion, merge, quick, heap, counting and radix sorts; stability, quickselect and custom comparators. merge sort quick sort quickselect counting sort inversions" data-slug="sorting"><a href="../topics/sorting.html">Sorting Algorithms</a></li><li data-search="Hashing Patterns Arrays &amp; Strings How hash tables work inside, then frequency maps, grouping by canonical keys, complement lookups and rolling hashes. hash map hash set anagram two sum collision" data-slug="hashing"><a href="../topics/hashing.html">Hashing Patterns</a></li><li data-search="Monotonic Stack &amp; Queue Arrays &amp; Strings Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight. next greater largest rectangle deque trapping rain water" data-slug="monotonic-stack-queue"><a href="../topics/monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a></li><li data-search="Intervals &amp; Sweep Line Arrays &amp; Strings Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline. merge intervals meeting rooms events skyline" data-slug="intervals-sweep-line"><a href="../topics/intervals-sweep-line.html">Intervals &amp; Sweep Line</a></li><li data-search="String Algorithms Arrays &amp; Strings KMP failure function, Z-algorithm, Rabin–Karp, Manacher&#x27;s palindromes and string hashing, each animated character by character. kmp z algorithm rabin karp manacher palindrome pattern matching" data-slug="string-algorithms"><a href="../topics/string-algorithms.html">String Algorithms</a></li></ul></details><details class="nav-track"><summary>Linked Lists, Stacks, Queues &amp; Heaps</summary><ul class="topic-list"><li data-search="Linked Lists Linked Lists, Stacks, Queues &amp; Heaps Pointer rewiring you can watch: reversal, dummy heads, fast/slow cycle detection, merging, and LRU cache design. reverse floyd cycle merge lru" data-slug="linked-lists"><a href="../topics/linked-lists.html">Linked Lists</a></li><li data-search="Stacks &amp; Queues Linked Lists, Stacks, Queues &amp; Heaps Balanced brackets, expression evaluation, min-stack, queues from stacks, deques and BFS queues. parentheses calculator deque min stack" data-slug="stacks-queues"><a href="../topics/stacks-queues.html">Stacks &amp; Queues</a></li><li data-search="Heaps &amp; Priority Queues Linked Lists, Stacks, Queues &amp; Heaps Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling. heap top k median k way merge priority queue" data-slug="heaps-priority-queues"><a href="../topics/heaps-priority-queues.html">Heaps &amp; Priority Queues</a></li></ul></details><details class="nav-track" open><summary>Trees</summary><ul class="topic-list"><li data-search="Tree Traversals Trees Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees. dfs bfs inorder level order morris" data-slug="tree-traversals"><a href="../topics/tree-traversals.html">Tree Traversals</a></li><li data-search="Binary Search Trees Trees Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters. bst validate successor avl red black" data-slug="binary-search-trees"><a href="../topics/binary-search-trees.html" aria-current="page">Binary Search Trees</a></li><li data-search="Tree Problem Patterns Trees Return-value recursion (diameter, max path sum), top-down state, LCA, serialization, and binary lifting. lca diameter path sum binary lifting serialize" data-slug="tree-patterns"><a href="../topics/tree-patterns.html">Tree Problem Patterns</a></li><li data-search="Tries Trees Prefix trees animated insert by insert: autocomplete, word search on boards, and bitwise tries for max XOR. prefix tree autocomplete word search xor trie" data-slug="tries"><a href="../topics/tries.html">Tries</a></li><li data-search="Segment Trees, Fenwick Trees &amp; Sparse Tables Trees Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables. segment tree lazy propagation fenwick bit rmq" data-slug="segment-fenwick-trees"><a href="../topics/segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a></li></ul></details><details class="nav-track"><summary>Graphs</summary><ul class="topic-list"><li data-search="Graph Fundamentals: BFS &amp; DFS Graphs Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS. bfs dfs grid islands connected components cycle" data-slug="graph-fundamentals"><a href="../topics/graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></li><li data-search="Topological Sort &amp; DAGs Graphs Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs. kahn course schedule dag dependency order" data-slug="topological-sort"><a href="../topics/topological-sort.html">Topological Sort &amp; DAGs</a></li><li data-search="Union-Find (Disjoint Set Union) Graphs Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries. dsu disjoint set path compression connectivity" data-slug="union-find"><a href="../topics/union-find.html">Union-Find (Disjoint Set Union)</a></li><li data-search="Shortest Paths Graphs BFS, 0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall and A* animated, and a chart to pick the right one every time. dijkstra bellman ford floyd warshall a star 0-1 bfs" data-slug="shortest-paths"><a href="../topics/shortest-paths.html">Shortest Paths</a></li><li data-search="Minimum Spanning Trees Graphs Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems. kruskal prim mst cut property" data-slug="minimum-spanning-trees"><a href="../topics/minimum-spanning-trees.html">Minimum Spanning Trees</a></li><li data-search="Advanced Graph Algorithms Graphs Strongly connected components, bridges and articulation points, bipartite checks, Euler paths, and max-flow / matching. tarjan kosaraju scc bridges euler max flow bipartite matching" data-slug="advanced-graphs"><a href="../topics/advanced-graphs.html">Advanced Graph Algorithms</a></li></ul></details><details class="nav-track"><summary>Backtracking &amp; Greedy</summary><ul class="topic-list"><li data-search="Backtracking Backtracking &amp; Greedy The choose/explore/un-choose template animated on a decision tree: subsets, permutations, combinations, N-Queens, Sudoku and pruning. subsets permutations n queens sudoku pruning" data-slug="backtracking"><a href="../topics/backtracking.html">Backtracking</a></li><li data-search="Greedy Algorithms Backtracking &amp; Greedy When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding. exchange argument interval scheduling jump game huffman" data-slug="greedy"><a href="../topics/greedy.html">Greedy Algorithms</a></li></ul></details><details class="nav-track"><summary>Dynamic Programming</summary><ul class="topic-list"><li data-search="The DP Framework Dynamic Programming Recursion → memoization → tabulation → space optimisation, visualised on one problem; how to design state and transitions. memoization tabulation state transition overlapping subproblems" data-slug="dp-framework"><a href="../topics/dp-framework.html">The DP Framework</a></li><li data-search="1D &amp; Grid DP Dynamic Programming Climbing stairs, house robber, decode ways, unique paths, min path sum, maximal square and dungeon game with animated tables. house robber unique paths grid dp maximal square" data-slug="dp-linear-grid"><a href="../topics/dp-linear-grid.html">1D &amp; Grid DP</a></li><li data-search="Knapsack Family Dynamic Programming 0/1 vs unbounded vs bounded knapsack, why loop direction matters, coin change, subset sum and target sum. knapsack coin change subset sum partition" data-slug="dp-knapsack"><a href="../topics/dp-knapsack.html">Knapsack Family</a></li><li data-search="Sequence &amp; String DP Dynamic Programming LIS with patience sorting, LCS, edit distance, palindromic subsequences, regex/wildcard matching and distinct subsequences. lis lcs edit distance regex matching palindrome" data-slug="dp-sequences-strings"><a href="../topics/dp-sequences-strings.html">Sequence &amp; String DP</a></li><li data-search="Interval &amp; Tree DP Dynamic Programming Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting). interval dp burst balloons matrix chain tree dp rerooting" data-slug="dp-intervals-trees"><a href="../topics/dp-intervals-trees.html">Interval &amp; Tree DP</a></li><li data-search="Bitmask &amp; Digit DP Dynamic Programming Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints. bitmask tsp digit dp subset dp" data-slug="dp-bitmask-digit"><a href="../topics/dp-bitmask-digit.html">Bitmask &amp; Digit DP</a></li><li data-search="State Machines &amp; DP Optimisations Dynamic Programming Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth. stock state machine convex hull trick knuth optimisation" data-slug="dp-advanced"><a href="../topics/dp-advanced.html">State Machines &amp; DP Optimisations</a></li></ul></details><details class="nav-track"><summary>Bits &amp; Math</summary><ul class="topic-list"><li data-search="Bit Manipulation Bits &amp; Math Bits drawn as switches: masks, XOR tricks, counting bits, subset enumeration and Gray codes. xor mask single number popcount subsets" data-slug="bit-manipulation"><a href="../topics/bit-manipulation.html">Bit Manipulation</a></li><li data-search="Math, Number Theory &amp; Combinatorics Bits &amp; Math GCD, sieves, fast power, modular inverses, nCr mod p, inclusion–exclusion, and the geometry primitives you need. gcd sieve modular fast exponentiation combinatorics geometry" data-slug="math-number-theory"><a href="../topics/math-number-theory.html">Math, Number Theory &amp; Combinatorics</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../CodeExcellenceHome/index.html">Code Excellence Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>DSA Home / Binary Search Trees</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">TREES</p><h1>Binary Search Trees</h1><p class="lede">Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters.</p><div class="meta"><span class="level level-beginner">Beginner → Advanced</span><span>~45 min study</span><span>Builds on: <a href="tree-traversals.html">Tree Traversals</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="binary-search-trees" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><p>A binary search tree is binary search that you can keep editing. A sorted array answers "is x here?", "what
+comes just before x?" and "what is the 5th smallest?" in O(log n), but inserting one key costs O(n) because
+everything after it shifts. A BST stores the same sorted order as <strong>shape</strong>: smaller keys go left, larger keys go
+right. Each comparison still throws away half the candidates, and an insert or delete only touches one
+root-to-leaf path. This page shows every operation step by step: the comparison path, the window of values each
+node is allowed to hold, the three delete cases, the rotations that keep the tree short, and the library classes
+(C# <code>SortedSet</code>, Python <code>bisect</code> and <code>SortedList</code>) that do all of it for you in an interview.</p>
+<div class="rule">
+<p><strong>The invariant.</strong> For <strong>every</strong> node v, every key in v's left subtree is smaller than v, and every key in
+v's right subtree is larger. Two consequences carry the whole topic: (1) at any node you know which side x must be
+on, so search, insert and delete walk a single path and cost <strong>O(h)</strong>; (2) an <strong>inorder traversal visits the keys in
+sorted order</strong>. h is about log₂ n when the tree is balanced, and n when it degenerates into a chain.</p>
+</div>
+<p>Prerequisites: <a href="tree-traversals.html">Tree Traversals</a> (the <code>TreeNode</code> class, the level-order array format,
+iterative inorder) and <a href="binary-search.html">Binary Search</a> (a BST search is binary search on a linked structure).
+<a href="recursion.html">Recursion &amp; the Call Stack</a> explains the "return the new subtree" style used by insert and delete.
+Later: <a href="tree-patterns.html">Tree Problem Patterns</a> for general LCA, diameter and serialization, and
+<a href="hashing.html">Hashing</a> for when you need membership only and not order.</p>
+<h2 id="the-invariant-in-one-picture">The invariant in one picture</h2>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 960 420" width="960" role="img" aria-label="BST invariant: left subtree smaller, right subtree bigger, and the inorder projection is sorted">
+<rect class="edge dash accent" x="22" y="92" width="308" height="194" rx="14"/>
+<text x="26" y="84" text-anchor="start" class="small fill-accent">left subtree: every key &lt; 8</text>
+<rect class="edge dash done" x="425" y="92" width="184" height="194" rx="14"/>
+<text x="605" y="84" text-anchor="end" class="small fill-done">right subtree: every key &gt; 8</text>
+<line class="edge" x1="343.6" y1="60.9" x2="132.4" y2="117.1"/>
+<line class="edge" x1="377.5" y1="67" x2="439.5" y2="111"/>
+<line class="edge" x1="101" y1="135.8" x2="65" y2="174.2"/>
+<line class="edge" x1="130.8" y1="130.9" x2="221.2" y2="179.1"/>
+<line class="edge" x1="471.8" y1="130.9" x2="562.2" y2="179.1"/>
+<line class="edge" x1="225" y1="201.8" x2="189" y2="240.2"/>
+<line class="edge" x1="251" y1="201.8" x2="287" y2="240.2"/>
+<line class="edge" x1="566" y1="201.8" x2="530" y2="240.2"/>
+<circle class="box" cx="52" cy="188" r="19"/>
+<text x="52" y="193" text-anchor="middle" class="mono">1</text>
+<circle class="box" cx="114" cy="122" r="19"/>
+<text x="114" y="127" text-anchor="middle" class="mono">3</text>
+<circle class="box" cx="176" cy="254" r="19"/>
+<text x="176" y="259" text-anchor="middle" class="mono">4</text>
+<circle class="box" cx="238" cy="188" r="19"/>
+<text x="238" y="193" text-anchor="middle" class="mono">6</text>
+<circle class="box" cx="300" cy="254" r="19"/>
+<text x="300" y="259" text-anchor="middle" class="mono">7</text>
+<circle class="box active" cx="362" cy="56" r="19"/>
+<text x="362" y="61" text-anchor="middle" class="mono">8</text>
+<circle class="box" cx="455" cy="122" r="19"/>
+<text x="455" y="127" text-anchor="middle" class="mono">10</text>
+<circle class="box" cx="517" cy="254" r="19"/>
+<text x="517" y="259" text-anchor="middle" class="mono">13</text>
+<circle class="box" cx="579" cy="188" r="19"/>
+<text x="579" y="193" text-anchor="middle" class="mono">14</text>
+<line class="edge" x1="22" y1="367" x2="672" y2="367"/>
+<line class="edge dash" x1="52" y1="209" x2="52" y2="348"/>
+<rect class="box done" x="32" y="352" width="40" height="30" rx="5"/>
+<text x="52" y="372" text-anchor="middle" class="mono">1</text>
+<line class="edge dash" x1="114" y1="143" x2="114" y2="348"/>
+<rect class="box done" x="94" y="352" width="40" height="30" rx="5"/>
+<text x="114" y="372" text-anchor="middle" class="mono">3</text>
+<line class="edge dash" x1="176" y1="275" x2="176" y2="348"/>
+<rect class="box done" x="156" y="352" width="40" height="30" rx="5"/>
+<text x="176" y="372" text-anchor="middle" class="mono">4</text>
+<line class="edge dash" x1="238" y1="209" x2="238" y2="348"/>
+<rect class="box done" x="218" y="352" width="40" height="30" rx="5"/>
+<text x="238" y="372" text-anchor="middle" class="mono">6</text>
+<line class="edge dash" x1="300" y1="275" x2="300" y2="348"/>
+<rect class="box done" x="280" y="352" width="40" height="30" rx="5"/>
+<text x="300" y="372" text-anchor="middle" class="mono">7</text>
+<line class="edge dash" x1="362" y1="77" x2="362" y2="348"/>
+<rect class="box done" x="342" y="352" width="40" height="30" rx="5"/>
+<text x="362" y="372" text-anchor="middle" class="mono">8</text>
+<line class="edge dash" x1="455" y1="143" x2="455" y2="348"/>
+<rect class="box done" x="435" y="352" width="40" height="30" rx="5"/>
+<text x="455" y="372" text-anchor="middle" class="mono">10</text>
+<line class="edge dash" x1="517" y1="275" x2="517" y2="348"/>
+<rect class="box done" x="497" y="352" width="40" height="30" rx="5"/>
+<text x="517" y="372" text-anchor="middle" class="mono">13</text>
+<line class="edge dash" x1="579" y1="209" x2="579" y2="348"/>
+<rect class="box done" x="559" y="352" width="40" height="30" rx="5"/>
+<text x="579" y="372" text-anchor="middle" class="mono">14</text>
+<text x="22" y="404" text-anchor="start" class="small muted">drop every node straight down: the keys land in sorted order (inorder = sorted)</text>
+<text x="700" y="66" text-anchor="start" class="title">The invariant</text>
+<text x="700" y="94" text-anchor="start" class="small">for EVERY node v:</text>
+<text x="700" y="115" text-anchor="start" class="small mono">  all keys in v.left  &lt;  v.val</text>
+<text x="700" y="136" text-anchor="start" class="small mono">  all keys in v.right &gt;  v.val</text>
+<text x="700" y="157" text-anchor="start" class="small"></text>
+<text x="700" y="178" text-anchor="start" class="small">not just the children: whole</text>
+<text x="700" y="199" text-anchor="start" class="small">subtrees. 7 is under 3 but it</text>
+<text x="700" y="220" text-anchor="start" class="small">must still be &lt; 8.</text>
+<text x="700" y="241" text-anchor="start" class="small"></text>
+<text x="700" y="262" text-anchor="start" class="small">search / insert / delete walk</text>
+<text x="700" y="283" text-anchor="start" class="small">one root-to-leaf path: O(h)</text>
+<text x="700" y="304" text-anchor="start" class="small">h = log₂ n (balanced) … n (chain)</text>
+</svg>
+<figcaption>One rule, applied at every node, gives two superpowers: each comparison throws away a whole subtree (search in O(h)), and an inorder walk reads the keys in sorted order.</figcaption>
+</figure>
+
+<p>Read the picture twice. Top-down, it is a decision tree: to find 7, compare with 8 (go left), with 3 (go right),
+with 6 (go right), done. Bottom-up, it is a sorted list folded into a tree: drop every node straight down and the
+keys land in the order 1, 3, 4, 6, 7, 8, 10, 13, 14. That projection is exactly what an inorder traversal reads.</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Sorted array</th>
+<th>Hash set</th>
+<th>BST (balanced)</th>
+<th>BST (degenerate)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>contains(x)</td>
+<td>O(log n)</td>
+<td>O(1) average</td>
+<td>O(log n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>insert / delete</td>
+<td>O(n) (shift)</td>
+<td>O(1) average</td>
+<td>O(log n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>min / max</td>
+<td>O(1)</td>
+<td>O(n)</td>
+<td>O(log n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>floor / ceiling / successor</td>
+<td>O(log n)</td>
+<td>O(n)</td>
+<td>O(log n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>k-th smallest / rank</td>
+<td>O(1) / O(log n)</td>
+<td>O(n log n)</td>
+<td>O(log n) with sizes</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>iterate in order</td>
+<td>O(n)</td>
+<td>O(n log n) (sort)</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+</tbody>
+</table>
+<p>The BST column is why ordered sets exist. Whenever a problem mixes <strong>updates</strong> with <strong>order questions</strong> (nearest
+value, how many smaller, next free slot, k-th), a balanced BST or its library version is usually the tool.</p>
+<div class="tip">
+<p><strong>Duplicates.</strong> The textbook BST stores distinct keys, and LeetCode BST problems almost always promise
+that. If you must allow repeats, pick one convention and apply it everywhere: "equal goes right" (left is strictly
+smaller, right is greater or equal), or store a <code>count</code> field in the node. Validation, search and delete must all
+use the same rule, otherwise a duplicate ends up on the side your search never looks at.</p>
+</div>
+<h2 id="search-floor-and-ceiling">Search, floor and ceiling</h2>
+<p>To search for x, start at the root. If x equals the node, stop. If x is smaller, everything in the right subtree
+is even bigger, so the right subtree cannot contain x: go left. Otherwise go right. Fall off the tree and x is not
+present. That is binary search, except that "the middle" is whatever key sits at the current node.</p>
+<p><strong>Floor</strong> (largest key ≤ x) and <strong>ceiling</strong> (smallest key ≥ x) use the same walk with one extra variable. When the
+current key is smaller than x, it is a floor <em>candidate</em>, and a better one could only be further right. When it
+is bigger than x, it is a ceiling candidate and a better one could only be further left. Remember the latest
+candidate; when you fall off the tree it is the answer. The visualizer dims every subtree a comparison rules out.</p>
+<div class="viz bst-wide" data-viz="binary-search-trees-search"></div>
+
+<p>Try x = 13 with floor: the walk goes 20 (too big), 8 (candidate, go right), 12 (better candidate, go right), 14
+(too big, go left), 13 is missing, so it falls off and returns 12. Switch to ceiling and the same path collects 20,
+then 14. Every candidate you remember sits on the path you walked, which is why one O(h) walk is enough.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def search_bst(root, x):
+    cur = root
+    while cur and cur.val != x:
+        cur = cur.left if x &lt; cur.val else cur.right     # the other side cannot contain x
+    return cur                                           # the node, or None
+
+
+def floor_bst(root, x):
+    &quot;&quot;&quot;Largest key &lt;= x, or None.&quot;&quot;&quot;
+    best, cur = None, root
+    while cur:
+        if cur.val == x:
+            return x
+        if cur.val &lt; x:
+            best = cur.val           # a candidate; a closer one can only be to the right
+            cur = cur.right
+        else:
+            cur = cur.left
+    return best
+
+
+def ceiling_bst(root, x):
+    &quot;&quot;&quot;Smallest key &gt;= x, or None.&quot;&quot;&quot;
+    best, cur = None, root
+    while cur:
+        if cur.val == x:
+            return x
+        if cur.val &gt; x:
+            best = cur.val           # a candidate; a closer one can only be to the left
+            cur = cur.left
+        else:
+            cur = cur.right
+    return best
+</code></pre>
+<pre><code class="language-csharp">public static class BstSearch
+{
+    public static TreeNode Search(TreeNode root, int x)
+    {
+        var cur = root;
+        while (cur is not null &amp;&amp; cur.val != x)
+            cur = x &lt; cur.val ? cur.left : cur.right;
+        return cur;
+    }
+
+    // Largest key &lt;= x, or null.
+    public static int? Floor(TreeNode root, int x)
+    {
+        int? best = null;
+        for (var cur = root; cur is not null; )
+        {
+            if (cur.val == x) return x;
+            if (cur.val &lt; x) { best = cur.val; cur = cur.right; }
+            else cur = cur.left;
+        }
+        return best;
+    }
+
+    // Smallest key &gt;= x, or null.
+    public static int? Ceiling(TreeNode root, int x)
+    {
+        int? best = null;
+        for (var cur = root; cur is not null; )
+        {
+            if (cur.val == x) return x;
+            if (cur.val &gt; x) { best = cur.val; cur = cur.left; }
+            else cur = cur.right;
+        }
+        return best;
+    }
+}
+</code></pre>
+</div>
+<p><strong>Min and max</strong> are the two extreme walks: keep going left (or right) until there is no child. <strong>Lower</strong>
+(largest key strictly below x) and <strong>higher</strong> (smallest key strictly above x) are floor and ceiling without the
+<code>== x</code> early return: treat equality as "too big" for lower and "too small" for higher.</p>
+<h2 id="insert-follow-the-search-attach-where-it-falls-off">Insert: follow the search, attach where it falls off</h2>
+<p>A new key goes exactly where an unsuccessful search for it ends. Walk down as if searching; when the next child
+pointer is empty, hang a new leaf there. Nothing else moves, so the invariant still holds everywhere: the new key
+was compared with every ancestor and went to the correct side of each.</p>
+<p>The strip under the tree is the sorted list of keys inserted so far. Each comparison narrows the <strong>window</strong> of
+values the new key could have, from (−∞, ∞) to an interval between two neighbours; the leaf you create is the
+gap between its predecessor and successor.</p>
+<div class="viz bst-wide" data-viz="binary-search-trees-insert"></div>
+
+<p>Now change "insertion order" to <em>sorted (worst case)</em> below. The same keys, inserted smallest first, produce a
+chain leaning right: every new key is bigger than everything so far, so it walks the whole spine. Inserting n
+sorted keys costs 1 + 2 + … + n = O(n²) comparisons, and every later search is O(n).</p>
+<div class="viz bst-wide" data-viz="binary-search-trees-insert" data-opts='{"order":"sorted (worst case)"}'></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def insert_into_bst(root, x):
+    &quot;&quot;&quot;LeetCode 701. Iterative: O(h) time, O(1) extra space.&quot;&quot;&quot;
+    node = TreeNode(x)
+    if root is None:
+        return node
+    cur = root
+    while True:
+        if x &lt; cur.val:
+            if cur.left is None:
+                cur.left = node
+                return root
+            cur = cur.left
+        else:
+            if cur.right is None:
+                cur.right = node
+                return root
+            cur = cur.right
+
+
+def insert_rec(node, x):
+    &quot;&quot;&quot;Recursive: return the (possibly new) root of this subtree.&quot;&quot;&quot;
+    if node is None:
+        return TreeNode(x)
+    if x &lt; node.val:
+        node.left = insert_rec(node.left, x)     # re-link: the child may have been None
+    else:
+        node.right = insert_rec(node.right, x)
+    return node
+</code></pre>
+<pre><code class="language-csharp">public static class BstInsert
+{
+    public static TreeNode InsertIntoBST(TreeNode root, int x)
+    {
+        var node = new TreeNode(x);
+        if (root is null) return node;
+        var cur = root;
+        while (true)
+        {
+            if (x &lt; cur.val)
+            {
+                if (cur.left is null) { cur.left = node; return root; }
+                cur = cur.left;
+            }
+            else
+            {
+                if (cur.right is null) { cur.right = node; return root; }
+                cur = cur.right;
+            }
+        }
+    }
+
+    public static TreeNode InsertRec(TreeNode node, int x)
+    {
+        if (node is null) return new TreeNode(x);
+        if (x &lt; node.val) node.left = InsertRec(node.left, x);
+        else node.right = InsertRec(node.right, x);
+        return node;
+    }
+}
+</code></pre>
+</div>
+<p>The recursive version shows a pattern you will reuse for delete, trim and AVL insert: <strong>the function returns the
+root of the subtree after the change, and the caller stores it back</strong> (<code>node.left = insert_rec(node.left, x)</code>).
+It removes every "is this the root? which side was I on?" special case, because each call only ever fixes its own
+subtree.</p>
+<h2 id="delete-three-cases">Delete: three cases</h2>
+<p>Deleting is the only BST operation with real thinking in it. Find the node, then look at its children.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 960 500" width="960" role="img" aria-label="The three delete cases: leaf, one child, two children">
+<defs><marker id="binary-search-trees-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="20" y="28" text-anchor="start" class="title">Case 1: leaf (delete 4)</text>
+<line class="edge" x1="183.5" y1="74.9" x2="124.5" y2="111.1"/>
+<line class="edge" x1="208.7" y1="79.2" x2="231.3" y2="106.8"/>
+<line class="edge" x1="120.7" y1="133.2" x2="143.3" y2="160.8"/>
+<circle class="box" cx="110" cy="120" r="17"/>
+<text x="110" y="125" text-anchor="middle" class="mono">3</text>
+<circle class="box bad" cx="154" cy="174" r="17"/>
+<text x="154" y="179" text-anchor="middle" class="mono">4</text>
+<circle class="box" cx="198" cy="66" r="17"/>
+<text x="198" y="71" text-anchor="middle" class="mono">5</text>
+<circle class="box" cx="242" cy="120" r="17"/>
+<text x="242" y="125" text-anchor="middle" class="mono">8</text>
+<line class="edge accent" x1="165" y1="278" x2="165" y2="308" marker-end="url(#binary-search-trees-ar)"/>
+<text x="165" y="268" text-anchor="middle" class="small muted">just drop it: parent's link = None</text>
+<line class="edge" x1="154.3" y1="353.2" x2="131.7" y2="380.8"/>
+<line class="edge" x1="175.7" y1="353.2" x2="198.3" y2="380.8"/>
+<circle class="box" cx="121" cy="394" r="17"/>
+<text x="121" y="399" text-anchor="middle" class="mono">3</text>
+<circle class="box" cx="165" cy="340" r="17"/>
+<text x="165" y="345" text-anchor="middle" class="mono">5</text>
+<circle class="box" cx="209" cy="394" r="17"/>
+<text x="209" y="399" text-anchor="middle" class="mono">8</text>
+<text x="335" y="28" text-anchor="start" class="title">Case 2: one child (delete 3)</text>
+<line class="edge" x1="532.8" y1="76.8" x2="493.2" y2="109.2"/>
+<line class="edge" x1="556.7" y1="79.2" x2="579.3" y2="106.8"/>
+<line class="edge" x1="465.5" y1="128.9" x2="406.5" y2="165.1"/>
+<line class="edge" x1="402.7" y1="187.2" x2="425.3" y2="214.8"/>
+<circle class="box" cx="392" cy="174" r="17"/>
+<text x="392" y="179" text-anchor="middle" class="mono">1</text>
+<circle class="box" cx="436" cy="228" r="17"/>
+<text x="436" y="233" text-anchor="middle" class="mono">2</text>
+<circle class="box bad" cx="480" cy="120" r="17"/>
+<text x="480" y="125" text-anchor="middle" class="mono">3</text>
+<circle class="box" cx="546" cy="66" r="17"/>
+<text x="546" y="71" text-anchor="middle" class="mono">5</text>
+<circle class="box" cx="590" cy="120" r="17"/>
+<text x="590" y="125" text-anchor="middle" class="mono">8</text>
+<line class="edge accent" x1="480" y1="278" x2="480" y2="308" marker-end="url(#binary-search-trees-ar)"/>
+<text x="480" y="268" text-anchor="middle" class="small muted">splice: parent links to the only child</text>
+<line class="edge" x1="498.5" y1="348.9" x2="439.5" y2="385.1"/>
+<line class="edge" x1="523.7" y1="353.2" x2="546.3" y2="380.8"/>
+<line class="edge" x1="435.7" y1="407.2" x2="458.3" y2="434.8"/>
+<circle class="box done" cx="425" cy="394" r="17"/>
+<text x="425" y="399" text-anchor="middle" class="mono">1</text>
+<circle class="box done" cx="469" cy="448" r="17"/>
+<text x="469" y="453" text-anchor="middle" class="mono">2</text>
+<circle class="box" cx="513" cy="340" r="17"/>
+<text x="513" y="345" text-anchor="middle" class="mono">5</text>
+<circle class="box" cx="557" cy="394" r="17"/>
+<text x="557" y="399" text-anchor="middle" class="mono">8</text>
+<text x="650" y="28" text-anchor="start" class="title">Case 3: two children (delete 5)</text>
+<line class="edge" x1="707.3" y1="79.2" x2="684.7" y2="106.8"/>
+<line class="edge path" x1="734" y1="71.6" x2="856" y2="114.4"/>
+<line class="edge path" x1="858.8" y1="130.8" x2="819.2" y2="163.2"/>
+<line class="edge" x1="882.7" y1="133.2" x2="905.3" y2="160.8"/>
+<line class="edge path" x1="795.3" y1="187.2" x2="772.7" y2="214.8"/>
+<circle class="box" cx="674" cy="120" r="17"/>
+<text x="674" y="125" text-anchor="middle" class="mono">3</text>
+<circle class="box bad" cx="718" cy="66" r="17"/>
+<text x="718" y="71" text-anchor="middle" class="mono">5</text>
+<circle class="box path" cx="762" cy="228" r="17"/>
+<text x="762" y="233" text-anchor="middle" class="mono">6</text>
+<circle class="box visit" cx="806" cy="174" r="17"/>
+<text x="806" y="179" text-anchor="middle" class="mono">7</text>
+<circle class="box visit" cx="872" cy="120" r="17"/>
+<text x="872" y="125" text-anchor="middle" class="mono">8</text>
+<circle class="box" cx="916" cy="174" r="17"/>
+<text x="916" y="179" text-anchor="middle" class="mono">9</text>
+<text x="738" y="232" text-anchor="end" class="small fill-path">successor</text>
+<line class="edge accent" x1="795" y1="278" x2="795" y2="308" marker-end="url(#binary-search-trees-ar)"/>
+<text x="795" y="268" text-anchor="middle" class="small muted">copy successor 6 up, delete the old 6</text>
+<line class="edge" x1="740.3" y1="353.2" x2="717.7" y2="380.8"/>
+<line class="edge" x1="765.5" y1="348.9" x2="824.5" y2="385.1"/>
+<line class="edge" x1="828.3" y1="407.2" x2="805.7" y2="434.8"/>
+<line class="edge" x1="849.7" y1="407.2" x2="872.3" y2="434.8"/>
+<circle class="box" cx="707" cy="394" r="17"/>
+<text x="707" y="399" text-anchor="middle" class="mono">3</text>
+<circle class="box done" cx="751" cy="340" r="17"/>
+<text x="751" y="345" text-anchor="middle" class="mono">6</text>
+<circle class="box" cx="795" cy="448" r="17"/>
+<text x="795" y="453" text-anchor="middle" class="mono">7</text>
+<circle class="box" cx="839" cy="394" r="17"/>
+<text x="839" y="399" text-anchor="middle" class="mono">8</text>
+<circle class="box" cx="883" cy="448" r="17"/>
+<text x="883" y="453" text-anchor="middle" class="mono">9</text>
+<text x="20" y="488" text-anchor="start" class="small muted">Case 3 reduces to case 1 or 2: the successor is the leftmost node of the right subtree, so it never has a left child.</text>
+</svg>
+<figcaption>Deleting must keep the invariant. A leaf or a one-child node can be spliced out because its single subtree already sits on the correct side of the parent. A two-child node is replaced by its <b>successor</b> (or predecessor), the only keys that fit between its two subtrees.</figcaption>
+</figure>
+
+<ol>
+<li><strong>Leaf.</strong> Remove it: the parent's pointer becomes <code>None</code>.</li>
+<li><strong>One child.</strong> Splice it out: the parent points straight to the only child. That child's subtree was already on
+   the correct side of the parent (it sat inside the deleted node's window, which is inside the parent's), so the
+   invariant survives.</li>
+<li><strong>Two children.</strong> You cannot splice, because two subtrees need one parent slot. Replace the key with its
+   <strong>inorder successor</strong>, the smallest key in the right subtree. The successor is bigger than everything on the left
+   (it came from the right) and smaller than everything else on the right (it is the minimum there), so it is the one
+   key that fits. Then delete the successor from the right subtree, which is case 1 or 2: the successor is the
+   leftmost node, so it has no left child. The predecessor (largest on the left) works just as well.</li>
+</ol>
+<p>The visualizer runs the recursive LeetCode 450 solution. The cards on the right are the call stack: each call
+returns the new root of its subtree and the caller re-links it.</p>
+<div class="viz bst-wide" data-viz="binary-search-trees-delete"></div>
+
+<p>Try deleting 50 (the root, two children), 20 (a leaf), 40 (two children whose successor 45 is a leaf) and 70.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def delete_node(root, key):
+    &quot;&quot;&quot;LeetCode 450. Copies the successor's key into the node. O(h).&quot;&quot;&quot;
+    if root is None:
+        return None                                  # key not in the tree
+    if key &lt; root.val:
+        root.left = delete_node(root.left, key)
+    elif key &gt; root.val:
+        root.right = delete_node(root.right, key)
+    else:
+        if root.left is None:                        # leaf, or right child only
+            return root.right
+        if root.right is None:                       # left child only
+            return root.left
+        succ = root.right                            # two children:
+        while succ.left:                             #   leftmost of the right subtree
+            succ = succ.left
+        root.val = succ.val                          #   copy the key up
+        root.right = delete_node(root.right, succ.val)   # and remove the old copy
+    return root
+
+
+def delete_node_relink(root, key):
+    &quot;&quot;&quot;Same result, but moves the successor NODE instead of copying its value.&quot;&quot;&quot;
+    if root is None:
+        return None
+    if key &lt; root.val:
+        root.left = delete_node_relink(root.left, key)
+    elif key &gt; root.val:
+        root.right = delete_node_relink(root.right, key)
+    else:
+        if root.left is None:
+            return root.right
+        if root.right is None:
+            return root.left
+        parent, succ = root, root.right
+        while succ.left:
+            parent, succ = succ, succ.left
+        if parent is not root:
+            parent.left = succ.right                 # unhook succ (it has no left child)
+            succ.right = root.right
+        succ.left = root.left
+        return succ                                  # succ takes root's place
+    return root
+</code></pre>
+<pre><code class="language-csharp">public static class BstDelete
+{
+    public static TreeNode DeleteNode(TreeNode root, int key)
+    {
+        if (root is null) return null;
+        if (key &lt; root.val) root.left = DeleteNode(root.left, key);
+        else if (key &gt; root.val) root.right = DeleteNode(root.right, key);
+        else
+        {
+            if (root.left is null) return root.right;
+            if (root.right is null) return root.left;
+            var succ = root.right;
+            while (succ.left is not null) succ = succ.left;
+            root.val = succ.val;
+            root.right = DeleteNode(root.right, succ.val);
+        }
+        return root;
+    }
+
+    public static TreeNode DeleteNodeRelink(TreeNode root, int key)
+    {
+        if (root is null) return null;
+        if (key &lt; root.val) { root.left = DeleteNodeRelink(root.left, key); return root; }
+        if (key &gt; root.val) { root.right = DeleteNodeRelink(root.right, key); return root; }
+        if (root.left is null) return root.right;
+        if (root.right is null) return root.left;
+        TreeNode parent = root, succ = root.right;
+        while (succ.left is not null) { parent = succ; succ = succ.left; }
+        if (parent != root)
+        {
+            parent.left = succ.right;
+            succ.right = root.right;
+        }
+        succ.left = root.left;
+        return succ;
+    }
+}
+</code></pre>
+</div>
+<p>Copying the value is shorter and is what most interview answers do. Re-linking matters when nodes carry more than
+a key (satellite data, or outside references to node objects that must stay valid): after a value copy, the node
+object that held 50 now holds 60, which surprises any caller still pointing at it.</p>
+<h3 id="successor-and-predecessor">Successor and predecessor</h3>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 960 330" width="960" role="img" aria-label="Inorder successor: leftmost of the right subtree, or the first ancestor reached from a left child">
+<defs><marker id="binary-search-trees-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<line class="edge" x1="331.9" y1="55.8" x2="136.1" y2="118.2"/>
+<line class="edge" x1="366" y1="60.2" x2="450" y2="113.8"/>
+<line class="edge" x1="106.3" y1="139" x2="71.7" y2="183"/>
+<line class="edge path" x1="134" y1="134.2" x2="218" y2="187.8"/>
+<line class="edge" x1="454.3" y1="139" x2="419.7" y2="183"/>
+<line class="edge" x1="477.7" y1="139" x2="512.3" y2="183"/>
+<line class="edge path" x1="222.3" y1="213" x2="187.7" y2="257"/>
+<line class="edge" x1="245.7" y1="213" x2="280.3" y2="257"/>
+<circle class="box" cx="60" cy="198" r="19"/>
+<text x="60" y="203" text-anchor="middle" class="mono">4</text>
+<circle class="box visit" cx="118" cy="124" r="19"/>
+<text x="118" y="129" text-anchor="middle" class="mono">8</text>
+<circle class="box path" cx="176" cy="272" r="19"/>
+<text x="176" y="277" text-anchor="middle" class="mono">10</text>
+<circle class="box" cx="234" cy="198" r="19"/>
+<text x="234" y="203" text-anchor="middle" class="mono">12</text>
+<circle class="box active" cx="292" cy="272" r="19"/>
+<text x="292" y="277" text-anchor="middle" class="mono">14</text>
+<circle class="box done" cx="350" cy="50" r="19"/>
+<text x="350" y="55" text-anchor="middle" class="mono">20</text>
+<circle class="box" cx="408" cy="198" r="19"/>
+<text x="408" y="203" text-anchor="middle" class="mono">25</text>
+<circle class="box" cx="466" cy="124" r="19"/>
+<text x="466" y="129" text-anchor="middle" class="mono">30</text>
+<circle class="box" cx="524" cy="198" r="19"/>
+<text x="524" y="203" text-anchor="middle" class="mono">40</text>
+<text x="92" y="120" text-anchor="end" class="small fill-visit">succ(8)?</text>
+<text x="176" y="310" text-anchor="middle" class="small fill-path">= 10</text>
+<text x="318" y="276" text-anchor="start" class="small fill-active">succ(14)?</text>
+<path class="edge accent dash" d="M300.0,246 C322.0,202 274.0,148 256.0,176" marker-end="url(#binary-search-trees-ar)"/>
+<path class="edge accent dash" d="M232.0,172 C224.0,128 158.0,84 140.0,110" marker-end="url(#binary-search-trees-ar)"/>
+<path class="edge accent dash" d="M128.0,98 C148.0,60 310.0,56 328.0,58" marker-end="url(#binary-search-trees-ar)"/>
+<text x="376" y="54" text-anchor="start" class="small fill-done">= 20</text>
+<text x="640" y="60" text-anchor="start" class="title">Where is the next key?</text>
+<text x="640" y="88" text-anchor="start" class="small">Has a right subtree (8):</text>
+<text x="640" y="107" text-anchor="start" class="small mono">  go right once, then left</text>
+<text x="640" y="126" text-anchor="start" class="small mono">  as far as possible: 10</text>
+<text x="640" y="145" text-anchor="start" class="small"></text>
+<text x="640" y="164" text-anchor="start" class="small">No right subtree (14):</text>
+<text x="640" y="183" text-anchor="start" class="small mono">  climb while you are a right</text>
+<text x="640" y="202" text-anchor="start" class="small mono">  child; the first parent you</text>
+<text x="640" y="221" text-anchor="start" class="small mono">  reach from the LEFT: 20</text>
+<text x="640" y="240" text-anchor="start" class="small"></text>
+<text x="640" y="259" text-anchor="start" class="small">Top-down, no parent pointers:</text>
+<text x="640" y="278" text-anchor="start" class="small mono">  the last node where the</text>
+<text x="640" y="297" text-anchor="start" class="small mono">  search turned LEFT</text>
+</svg>
+<figcaption>The successor is the smallest key that is bigger. It is either straight below (leftmost node of the right subtree) or above (the nearest ancestor whose <i>left</i> subtree contains you). The predecessor is the mirror image.</figcaption>
+</figure>
+
+<p>Delete needed the successor of a node with a right subtree. In general there are two cases, and the top-down
+version handles both without parent pointers: walk from the root as if searching for p, and every time you turn
+<strong>left</strong> at a node, that node is bigger than p and becomes the best successor so far. It is just "higher(p)" from
+the search section.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def inorder_successor(root, p):
+    &quot;&quot;&quot;LeetCode 285: the node with the smallest key &gt; p.val, or None. O(h).&quot;&quot;&quot;
+    succ, cur = None, root
+    while cur:
+        if p.val &lt; cur.val:
+            succ = cur          # bigger than p: candidate; look left for a closer one
+            cur = cur.left
+        else:
+            cur = cur.right
+    return succ
+
+
+def inorder_predecessor(root, p):
+    pred, cur = None, root
+    while cur:
+        if p.val &gt; cur.val:
+            pred = cur          # smaller than p: candidate; look right for a closer one
+            cur = cur.right
+        else:
+            cur = cur.left
+    return pred
+</code></pre>
+<pre><code class="language-csharp">public static class BstNeighbors
+{
+    public static TreeNode InorderSuccessor(TreeNode root, TreeNode p)
+    {
+        TreeNode succ = null;
+        for (var cur = root; cur is not null; )
+        {
+            if (p.val &lt; cur.val) { succ = cur; cur = cur.left; }
+            else cur = cur.right;
+        }
+        return succ;
+    }
+
+    public static TreeNode InorderPredecessor(TreeNode root, TreeNode p)
+    {
+        TreeNode pred = null;
+        for (var cur = root; cur is not null; )
+        {
+            if (p.val &gt; cur.val) { pred = cur; cur = cur.right; }
+            else cur = cur.left;
+        }
+        return pred;
+    }
+}
+</code></pre>
+</div>
+<p>With parent pointers (LeetCode 510) you can do it from the node itself: if it has a right child, go right once
+and then left to the bottom; otherwise climb while you are a right child, and the next parent is the answer.</p>
+<h2 id="validate-windows-not-parents">Validate: windows, not parents</h2>
+<p>The most common BST bug is checking only each node against its children. The tree below passes that check and
+is not a BST.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 960 350" width="960" role="img" aria-label="The parent-only check passes this tree, but the window check correctly rejects it">
+<text x="40" y="28" text-anchor="start" class="title">Parent-only check: compare each node with its parent</text>
+<line class="edge done" x1="122.1" y1="84.8" x2="81.9" y2="135.2"/>
+<text x="92" y="108" text-anchor="end" class="small fill-done">5 &lt; 10 ok</text>
+<line class="edge done" x1="150.1" y1="80.1" x2="245.9" y2="139.9"/>
+<text x="208" y="108" text-anchor="start" class="small fill-done">15 &gt; 10 ok</text>
+<line class="edge done" x1="250.1" y1="164.8" x2="209.9" y2="215.2"/>
+<text x="220" y="188" text-anchor="end" class="small fill-done">6 &lt; 15 ok</text>
+<line class="edge done" x1="273.9" y1="164.8" x2="314.1" y2="215.2"/>
+<text x="304" y="188" text-anchor="start" class="small fill-done">20 &gt; 15 ok</text>
+<circle class="box done" cx="70" cy="150" r="19"/>
+<text x="70" y="155" text-anchor="middle" class="mono">5</text>
+<circle class="box done" cx="134" cy="70" r="19"/>
+<text x="134" y="75" text-anchor="middle" class="mono">10</text>
+<circle class="box done" cx="198" cy="230" r="19"/>
+<text x="198" y="235" text-anchor="middle" class="mono">6</text>
+<circle class="box done" cx="262" cy="150" r="19"/>
+<text x="262" y="155" text-anchor="middle" class="mono">15</text>
+<circle class="box done" cx="326" cy="230" r="19"/>
+<text x="326" y="235" text-anchor="middle" class="mono">20</text>
+<text x="40" y="334" text-anchor="start" class="small fill-bad">every edge looks fine, so it answers True: WRONG</text>
+<text x="520" y="28" text-anchor="start" class="title">Window check: each node must fit (lo, hi) from ALL ancestors</text>
+<line class="edge" x1="632.1" y1="84.8" x2="591.9" y2="135.2"/>
+<line class="edge" x1="660.1" y1="80.1" x2="755.9" y2="139.9"/>
+<line class="edge bad" x1="760.1" y1="164.8" x2="719.9" y2="215.2"/>
+<line class="edge" x1="783.9" y1="164.8" x2="824.1" y2="215.2"/>
+<circle class="box done" cx="580" cy="150" r="19"/>
+<text x="580" y="155" text-anchor="middle" class="mono">5</text>
+<text x="580" y="186" text-anchor="middle" class="small mono muted">(−∞, 10)</text>
+<circle class="box done" cx="644" cy="70" r="19"/>
+<text x="644" y="75" text-anchor="middle" class="mono">10</text>
+<text x="672" y="75" text-anchor="start" class="small mono muted">(−∞, ∞)</text>
+<circle class="box bad" cx="708" cy="230" r="19"/>
+<text x="708" y="235" text-anchor="middle" class="mono">6</text>
+<text x="708" y="266" text-anchor="middle" class="small mono fill-bad">(10, 15)</text>
+<circle class="box done" cx="772" cy="150" r="19"/>
+<text x="772" y="155" text-anchor="middle" class="mono">15</text>
+<text x="800" y="155" text-anchor="start" class="small mono muted">(10, ∞)</text>
+<circle class="box done" cx="836" cy="230" r="19"/>
+<text x="836" y="235" text-anchor="middle" class="mono">20</text>
+<text x="836" y="266" text-anchor="middle" class="small mono muted">(15, ∞)</text>
+<text x="520" y="312" text-anchor="start" class="small fill-bad">6 is in 10's RIGHT subtree, so it must be &gt; 10. It is not.</text>
+<text x="520" y="334" text-anchor="start" class="small fill-done">the window (10, 15) catches it: False, correct</text>
+<line class="edge dash" x1="490" y1="40" x2="490" y2="330"/>
+</svg>
+<figcaption>LeetCode 98's classic trap. Local checks see only one edge at a time; the BST rule is about whole subtrees, so every node must carry the tightest bounds inherited from all of its ancestors.</figcaption>
+</figure>
+
+<p>The fix is to pass down a <strong>window</strong> (lo, hi). The root may be anything. Going left, the upper bound tightens to
+the parent's key; going right, the lower bound tightens. Every node must sit strictly inside the window it
+inherits, and that window encodes every ancestor's constraint at once. The visualizer prints each node's window
+beneath it; try the default tree, where 6 sits under 7 (fine locally) but in 10's right subtree.</p>
+<div class="viz bst-wide" data-viz="binary-search-trees-validate"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">import math
+
+
+def is_valid_bst(root):
+    &quot;&quot;&quot;LeetCode 98, recursive bounds. O(n) time, O(h) stack.&quot;&quot;&quot;
+    def ok(node, lo, hi):
+        if node is None:
+            return True
+        if not (lo &lt; node.val &lt; hi):
+            return False
+        return ok(node.left, lo, node.val) and ok(node.right, node.val, hi)
+    return ok(root, -math.inf, math.inf)
+</code></pre>
+<pre><code class="language-csharp">public static class BstValidate
+{
+    // Nullable bounds: no sentinel can collide with int.MinValue / int.MaxValue keys.
+    public static bool IsValidBST(TreeNode root) =&gt; Ok(root, null, null);
+
+    static bool Ok(TreeNode node, int? lo, int? hi)
+    {
+        if (node is null) return true;
+        if ((lo is int a &amp;&amp; node.val &lt;= a) || (hi is int b &amp;&amp; node.val &gt;= b)) return false;
+        return Ok(node.left, lo, node.val) &amp;&amp; Ok(node.right, node.val, hi);
+    }
+}
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Sentinel bounds overflow.</strong> LeetCode 98 includes nodes equal to <code>int.MinValue</code> and <code>int.MaxValue</code>. Starting
+with <code>lo = int.MinValue</code> and the test <code>node.val &gt; lo</code> wrongly rejects a node holding <code>int.MinValue</code>. Use nullable
+bounds (above), <code>long</code> bounds, or Python's <code>math.inf</code>. Equally valid: an inorder traversal that checks each key is
+strictly bigger than the previous one (worked problem 1).</p>
+</div>
+<h2 id="inorder-is-sorted-order-iterators-k-th-smallest-rank">Inorder is sorted order: iterators, k-th smallest, rank</h2>
+<p>Because inorder visits a BST in sorted order, <strong>every "sorted" question becomes a traversal question</strong>: the k-th
+smallest is the k-th node inorder, two keys that sum to a target can be found with two inorder streams (one
+forward, one backward), the minimum gap between keys is the minimum gap between inorder neighbours, and a
+corrupted BST shows up as a dip in the inorder sequence.</p>
+<p>The iterative inorder from <a href="tree-traversals.html">Tree Traversals</a> can be cut into pieces and resumed, which is
+exactly what an <strong>iterator</strong> is. Keep a stack holding the left spine; <code>next()</code> pops the smallest remaining node,
+then pushes the left spine of its right subtree. Each node is pushed and popped once, so n calls cost O(n) total:
+<strong>O(1) amortised per call, O(h) memory</strong>.</p>
+<div class="viz bst-wide" data-viz="binary-search-trees-iter"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">class BSTIterator:
+    &quot;&quot;&quot;LeetCode 173.&quot;&quot;&quot;
+
+    def __init__(self, root):
+        self.stack = []
+        self._push_left(root)
+
+    def _push_left(self, node):
+        while node:
+            self.stack.append(node)
+            node = node.left
+
+    def next(self) -&gt; int:
+        node = self.stack.pop()              # smallest key not yet returned
+        self._push_left(node.right)          # its successors come next
+        return node.val
+
+    def hasNext(self) -&gt; bool:
+        return bool(self.stack)
+
+
+def kth_smallest(root, k):
+    &quot;&quot;&quot;LeetCode 230. Stops after k pops: O(h + k).&quot;&quot;&quot;
+    stack, cur = [], root
+    while True:
+        while cur:
+            stack.append(cur)
+            cur = cur.left
+        cur = stack.pop()
+        k -= 1
+        if k == 0:
+            return cur.val
+        cur = cur.right
+</code></pre>
+<pre><code class="language-csharp">public class BSTIterator
+{
+    private readonly Stack&lt;TreeNode&gt; stack = new();
+
+    public BSTIterator(TreeNode root) =&gt; PushLeft(root);
+
+    private void PushLeft(TreeNode node)
+    {
+        for (; node is not null; node = node.left) stack.Push(node);
+    }
+
+    public int Next()
+    {
+        var node = stack.Pop();
+        PushLeft(node.right);
+        return node.val;
+    }
+
+    public bool HasNext() =&gt; stack.Count &gt; 0;
+}
+
+public static class KthSmallestBst
+{
+    public static int KthSmallest(TreeNode root, int k)
+    {
+        var stack = new Stack&lt;TreeNode&gt;();
+        var cur = root;
+        while (true)
+        {
+            for (; cur is not null; cur = cur.left) stack.Push(cur);
+            cur = stack.Pop();
+            if (--k == 0) return cur.val;
+            cur = cur.right;
+        }
+    }
+}
+</code></pre>
+</div>
+<p><strong>Reverse inorder</strong> (right, node, left) visits keys from largest to smallest. LeetCode 538/1038 "Convert BST to
+Greater Tree" is one reverse inorder pass with a running sum: each node becomes itself plus everything bigger.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def convert_bst(root):
+    &quot;&quot;&quot;LeetCode 538: node.val += sum of all larger keys.&quot;&quot;&quot;
+    running, stack, cur = 0, [], root
+    while stack or cur:
+        while cur:
+            stack.append(cur)
+            cur = cur.right          # mirror of inorder: right spine first
+        cur = stack.pop()
+        running += cur.val
+        cur.val = running
+        cur = cur.left
+    return root
+</code></pre>
+<pre><code class="language-csharp">public static class GreaterTree
+{
+    public static TreeNode ConvertBST(TreeNode root)
+    {
+        int running = 0;
+        var stack = new Stack&lt;TreeNode&gt;();
+        var cur = root;
+        while (stack.Count &gt; 0 || cur is not null)
+        {
+            for (; cur is not null; cur = cur.right) stack.Push(cur);
+            cur = stack.Pop();
+            running += cur.val;
+            cur.val = running;
+            cur = cur.left;
+        }
+        return root;
+    }
+}
+</code></pre>
+</div>
+<h3 id="order-statistics-k-th-in-oh-with-subtree-sizes">Order statistics: k-th in O(h) with subtree sizes</h3>
+<p>The inorder walk costs O(h + k), which is O(n) for k near n. LeetCode 230's follow-up asks: what if the tree is
+modified often and you query k-th often? <strong>Augment</strong> each node with the size of its subtree. Then at any node the
+rank of that node inside its subtree is <code>size(left) + 1</code>, and you know which side the k-th key is on without
+visiting the other side.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 960 320" width="960" role="img" aria-label="Size-augmented BST: each node stores its subtree size, so the k-th smallest is one root-to-leaf walk">
+<line class="edge" x1="321.8" y1="55.5" x2="126.2" y2="114.5"/>
+<line class="edge path" x1="354.8" y1="61.9" x2="412.2" y2="108.1"/>
+<line class="edge" x1="95.9" y1="134.6" x2="62.1" y2="175.4"/>
+<line class="edge" x1="124.3" y1="129.8" x2="207.7" y2="180.2"/>
+<line class="edge path" x1="443.3" y1="129.8" x2="526.7" y2="180.2"/>
+<line class="edge" x1="211.9" y1="204.6" x2="178.1" y2="245.4"/>
+<line class="edge" x1="236.1" y1="204.6" x2="269.9" y2="245.4"/>
+<line class="edge path" x1="530.9" y1="204.6" x2="497.1" y2="245.4"/>
+<circle class="box" cx="50" cy="190" r="19"/>
+<text x="50" y="195" text-anchor="middle" class="mono">1</text>
+<text x="50" y="224" text-anchor="middle" class="small mono muted">size 1</text>
+<circle class="box" cx="108" cy="120" r="19"/>
+<text x="108" y="125" text-anchor="middle" class="mono">3</text>
+<text x="86" y="106" text-anchor="end" class="small mono muted">size 5</text>
+<circle class="box" cx="166" cy="260" r="19"/>
+<text x="166" y="265" text-anchor="middle" class="mono">4</text>
+<text x="144" y="246" text-anchor="end" class="small mono muted">size 1</text>
+<circle class="box" cx="224" cy="190" r="19"/>
+<text x="224" y="195" text-anchor="middle" class="mono">6</text>
+<text x="246" y="176" text-anchor="start" class="small mono muted">size 3</text>
+<circle class="box" cx="282" cy="260" r="19"/>
+<text x="282" y="265" text-anchor="middle" class="mono">7</text>
+<text x="304" y="246" text-anchor="start" class="small mono muted">size 1</text>
+<circle class="box visit" cx="340" cy="50" r="19"/>
+<text x="340" y="55" text-anchor="middle" class="mono">8</text>
+<text x="362" y="36" text-anchor="start" class="small mono muted">size 9</text>
+<circle class="box visit" cx="427" cy="120" r="19"/>
+<text x="427" y="125" text-anchor="middle" class="mono">10</text>
+<text x="449" y="106" text-anchor="start" class="small mono muted">size 3</text>
+<circle class="box done" cx="485" cy="260" r="19"/>
+<text x="485" y="265" text-anchor="middle" class="mono">13</text>
+<text x="463" y="246" text-anchor="end" class="small mono muted">size 1</text>
+<circle class="box visit" cx="543" cy="190" r="19"/>
+<text x="543" y="195" text-anchor="middle" class="mono">14</text>
+<text x="565" y="176" text-anchor="start" class="small mono muted">size 2</text>
+<text x="640" y="60" text-anchor="start" class="title">k-th smallest, k = 8</text>
+<text x="640" y="90" text-anchor="start" class="small mono">at 8: left size 5, so 8 is rank 6</text>
+<text x="640" y="110" text-anchor="start" class="small mono">  8 &gt; 6: k = 8 − 6 = 2, go right</text>
+<text x="640" y="130" text-anchor="start" class="small mono">at 10: left size 0, rank 1 &lt; 2</text>
+<text x="640" y="150" text-anchor="start" class="small mono">  k = 2 − 1 = 1, go right</text>
+<text x="640" y="170" text-anchor="start" class="small mono">at 14: left size 1 ≥ k = 1, go left</text>
+<text x="640" y="190" text-anchor="start" class="small mono">at 13: left size 0, rank 1 = k</text>
+<text x="640" y="210" text-anchor="start" class="small mono">  answer 13</text>
+<text x="640" y="230" text-anchor="start" class="small"></text>
+<text x="640" y="250" text-anchor="start" class="small">O(h) per query, even after inserts</text>
+<text x="640" y="270" text-anchor="start" class="small">and deletes (update sizes on the path)</text>
+</svg>
+<figcaption>Plain inorder needs O(h + k) per query. Store <code>size</code> in each node and compare k with <code>size(left) + 1</code>: smaller means go left, equal means this node, bigger means subtract and go right. This is an order-statistic tree; it also answers rank(x) in O(h).</figcaption>
+</figure>
+
+<p>The code is in worked problem 3 below.</p>
+<p>This only helps if h stays small, so in practice the sizes live inside a balanced tree, and rotations must
+recompute the size of the two nodes they move (<code>size = 1 + size(left) + size(right)</code>). The same "store a summary of
+the subtree in the node" idea gives segment trees; see
+<a href="segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a>, which are often the easier way to
+answer rank queries over a fixed range of values.</p>
+<h2 id="range-queries-prune-whole-subtrees">Range queries: prune whole subtrees</h2>
+<p>To sum (or list, or count) the keys in [lo, hi], a plain traversal visits all n nodes. The invariant lets you skip
+subtrees: if a node is below lo, its whole left subtree is even smaller, so only its right subtree can contribute;
+symmetrically above hi. Only nodes on the two boundary paths and the nodes actually inside the range are visited:
+<strong>O(h + m)</strong> for m reported keys.</p>
+<div class="viz bst-wide" data-viz="binary-search-trees-range"></div>
+
+<p>Dimmed subtrees were never entered. Shrink the range to <code>lo = 13, hi = 13</code> and the walk becomes a single search.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def range_sum_bst(node, lo, hi):
+    &quot;&quot;&quot;LeetCode 938.&quot;&quot;&quot;
+    if node is None:
+        return 0
+    if node.val &lt; lo:
+        return range_sum_bst(node.right, lo, hi)     # node and its left side too small
+    if node.val &gt; hi:
+        return range_sum_bst(node.left, lo, hi)      # node and its right side too big
+    return node.val + range_sum_bst(node.left, lo, hi) + range_sum_bst(node.right, lo, hi)
+
+
+def trim_bst(node, lo, hi):
+    &quot;&quot;&quot;LeetCode 669: drop every key outside [lo, hi], return the new root.&quot;&quot;&quot;
+    if node is None:
+        return None
+    if node.val &lt; lo:
+        return trim_bst(node.right, lo, hi)          # node goes, and its whole left side
+    if node.val &gt; hi:
+        return trim_bst(node.left, lo, hi)
+    node.left = trim_bst(node.left, lo, hi)
+    node.right = trim_bst(node.right, lo, hi)
+    return node
+</code></pre>
+<pre><code class="language-csharp">public static class BstRange
+{
+    public static int RangeSumBST(TreeNode node, int lo, int hi)
+    {
+        if (node is null) return 0;
+        if (node.val &lt; lo) return RangeSumBST(node.right, lo, hi);
+        if (node.val &gt; hi) return RangeSumBST(node.left, lo, hi);
+        return node.val + RangeSumBST(node.left, lo, hi) + RangeSumBST(node.right, lo, hi);
+    }
+
+    public static TreeNode TrimBST(TreeNode node, int lo, int hi)
+    {
+        if (node is null) return null;
+        if (node.val &lt; lo) return TrimBST(node.right, lo, hi);
+        if (node.val &gt; hi) return TrimBST(node.left, lo, hi);
+        node.left = TrimBST(node.left, lo, hi);
+        node.right = TrimBST(node.right, lo, hi);
+        return node;
+    }
+}
+</code></pre>
+</div>
+<p>Trim is "return the new subtree root" again: when a node falls outside the range, the answer for its position
+is the trimmed version of its one surviving side, which slots straight into the parent's pointer.</p>
+<h2 id="lowest-common-ancestor-in-a-bst">Lowest common ancestor in a BST</h2>
+<p>In a general binary tree the LCA needs a full postorder search (see <a href="tree-patterns.html">Tree Problem Patterns</a>).
+In a BST, keys tell you where p and q are. While both are smaller than the current node, both live on the left,
+so the LCA does too; while both are bigger, go right. The first node where they <strong>split</strong> (one on each side, or
+the node equals one of them) is the lowest node that has both below it.</p>
+<div class="viz bst-wide" data-viz="binary-search-trees-lca"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def lowest_common_ancestor(root, p, q):
+    &quot;&quot;&quot;LeetCode 235. O(h) time, O(1) space.&quot;&quot;&quot;
+    cur = root
+    while cur:
+        if p.val &lt; cur.val and q.val &lt; cur.val:
+            cur = cur.left
+        elif p.val &gt; cur.val and q.val &gt; cur.val:
+            cur = cur.right
+        else:
+            return cur          # split point, or cur is p or q
+    return None
+</code></pre>
+<pre><code class="language-csharp">public static class BstLca
+{
+    public static TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+    {
+        var cur = root;
+        while (cur is not null)
+        {
+            if (p.val &lt; cur.val &amp;&amp; q.val &lt; cur.val) cur = cur.left;
+            else if (p.val &gt; cur.val &amp;&amp; q.val &gt; cur.val) cur = cur.right;
+            else return cur;
+        }
+        return null;
+    }
+}
+</code></pre>
+</div>
+<p>The distance between two keys in a BST follows directly: depth(p) + depth(q) − 2 · depth(LCA), each depth being one
+search from the LCA.</p>
+<h2 id="building-a-balanced-bst-from-sorted-data">Building a balanced BST from sorted data</h2>
+<p>Given sorted keys, the best possible tree puts the <strong>middle</strong> key at the root, so each side gets half. Recurse on
+both halves and every root-to-leaf path has length ⌊log₂ n⌋ or so. This is binary search's recursion tree, frozen
+into nodes.</p>
+<div class="viz bst-wide" data-viz="binary-search-trees-balanced"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def sorted_array_to_bst(nums):
+    &quot;&quot;&quot;LeetCode 108. O(n): every key becomes one node.&quot;&quot;&quot;
+    def build(lo, hi):                   # inclusive range
+        if lo &gt; hi:
+            return None
+        mid = (lo + hi) // 2
+        node = TreeNode(nums[mid])
+        node.left = build(lo, mid - 1)
+        node.right = build(mid + 1, hi)
+        return node
+    return build(0, len(nums) - 1)
+
+
+def balance_bst(root):
+    &quot;&quot;&quot;LeetCode 1382: flatten by inorder (sorted!), then rebuild.&quot;&quot;&quot;
+    vals, stack, cur = [], [], root
+    while stack or cur:
+        while cur:
+            stack.append(cur)
+            cur = cur.left
+        cur = stack.pop()
+        vals.append(cur.val)
+        cur = cur.right
+    return sorted_array_to_bst(vals)
+</code></pre>
+<pre><code class="language-csharp">public static class BuildBalanced
+{
+    public static TreeNode SortedArrayToBST(int[] nums) =&gt; Build(nums, 0, nums.Length - 1);
+
+    static TreeNode Build(int[] a, int lo, int hi)
+    {
+        if (lo &gt; hi) return null;
+        int mid = lo + (hi - lo) / 2;
+        return new TreeNode(a[mid], Build(a, lo, mid - 1), Build(a, mid + 1, hi));
+    }
+
+    public static TreeNode BalanceBST(TreeNode root)
+    {
+        var vals = new List&lt;int&gt;();
+        var stack = new Stack&lt;TreeNode&gt;();
+        for (var cur = root; stack.Count &gt; 0 || cur is not null; )
+        {
+            for (; cur is not null; cur = cur.left) stack.Push(cur);
+            cur = stack.Pop();
+            vals.Add(cur.val);
+            cur = cur.right;
+        }
+        return SortedArrayToBST(vals.ToArray());
+    }
+}
+</code></pre>
+</div>
+<p>Rebuilding from scratch is O(n), which is fine once but far too slow after every insert. That is the job of
+self-balancing trees.</p>
+<h2 id="why-balance-matters-and-how-trees-stay-balanced">Why balance matters, and how trees stay balanced</h2>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 960 340" width="960" role="img" aria-label="Same seven keys, two insertion orders: a 7-level chain versus a 3-level perfect tree">
+<text x="20" y="28" text-anchor="start" class="title">insert 1, 2, 3, 4, 5, 6, 7 (sorted)</text>
+<line class="edge" x1="68.4" y1="68.5" x2="91.6" y2="84.5"/>
+<line class="edge" x1="116.4" y1="101.5" x2="139.6" y2="117.5"/>
+<line class="edge" x1="164.4" y1="134.5" x2="187.6" y2="150.5"/>
+<line class="edge" x1="212.4" y1="167.5" x2="235.6" y2="183.5"/>
+<line class="edge" x1="260.4" y1="200.5" x2="283.6" y2="216.5"/>
+<line class="edge" x1="306.4" y1="235.8" x2="317.6" y2="247.2"/>
+<circle class="box bad" cx="56" cy="60" r="15"/>
+<text x="56" y="65" text-anchor="middle" class="mono">1</text>
+<circle class="box bad" cx="104" cy="93" r="15"/>
+<text x="104" y="98" text-anchor="middle" class="mono">2</text>
+<circle class="box bad" cx="152" cy="126" r="15"/>
+<text x="152" y="131" text-anchor="middle" class="mono">3</text>
+<circle class="box bad" cx="200" cy="159" r="15"/>
+<text x="200" y="164" text-anchor="middle" class="mono">4</text>
+<circle class="box bad" cx="248" cy="192" r="15"/>
+<text x="248" y="197" text-anchor="middle" class="mono">5</text>
+<circle class="box bad" cx="296" cy="225" r="15"/>
+<text x="296" y="230" text-anchor="middle" class="mono">6</text>
+<circle class="box bad" cx="328" cy="258" r="15"/>
+<text x="328" y="263" text-anchor="middle" class="mono">7</text>
+<text x="20" y="318" text-anchor="start" class="small fill-bad">7 levels: finding 7 takes 7 comparisons.</text>
+<text x="20" y="334" text-anchor="start" class="small fill-bad">A linked list in disguise.</text>
+<text x="340" y="28" text-anchor="start" class="title">insert 4, 2, 6, 1, 3, 5, 7 (middle first)</text>
+<line class="edge" x1="483.4" y1="91.4" x2="424.6" y2="144.6"/>
+<line class="edge" x1="508.6" y1="91.4" x2="567.4" y2="144.6"/>
+<line class="edge" x1="403.8" y1="170.9" x2="378.2" y2="217.1"/>
+<line class="edge" x1="420.2" y1="170.9" x2="445.8" y2="217.1"/>
+<line class="edge" x1="571.8" y1="170.9" x2="546.2" y2="217.1"/>
+<line class="edge" x1="588.2" y1="170.9" x2="613.8" y2="217.1"/>
+<circle class="box done" cx="370" cy="232" r="17"/>
+<text x="370" y="237" text-anchor="middle" class="mono">1</text>
+<circle class="box done" cx="412" cy="156" r="17"/>
+<text x="412" y="161" text-anchor="middle" class="mono">2</text>
+<circle class="box done" cx="454" cy="232" r="17"/>
+<text x="454" y="237" text-anchor="middle" class="mono">3</text>
+<circle class="box done" cx="496" cy="80" r="17"/>
+<text x="496" y="85" text-anchor="middle" class="mono">4</text>
+<circle class="box done" cx="538" cy="232" r="17"/>
+<text x="538" y="237" text-anchor="middle" class="mono">5</text>
+<circle class="box done" cx="580" cy="156" r="17"/>
+<text x="580" y="161" text-anchor="middle" class="mono">6</text>
+<circle class="box done" cx="622" cy="232" r="17"/>
+<text x="622" y="237" text-anchor="middle" class="mono">7</text>
+<text x="340" y="300" text-anchor="start" class="small fill-done">3 levels: any key in ≤ 3 comparisons.</text>
+<text x="690" y="66" text-anchor="start" class="title">height (levels)</text>
+<text x="690" y="100" text-anchor="start" class="small mono muted">n</text>
+<text x="830" y="100" text-anchor="middle" class="small muted">chain</text>
+<text x="915" y="100" text-anchor="middle" class="small muted">balanced</text>
+<text x="690" y="126" text-anchor="start" class="small mono">7</text>
+<text x="830" y="126" text-anchor="middle" class="small mono fill-bad">7</text>
+<text x="915" y="126" text-anchor="middle" class="small mono fill-done">3</text>
+<text x="690" y="152" text-anchor="start" class="small mono">1,000</text>
+<text x="830" y="152" text-anchor="middle" class="small mono fill-bad">1,000</text>
+<text x="915" y="152" text-anchor="middle" class="small mono fill-done">10</text>
+<text x="690" y="178" text-anchor="start" class="small mono">1,000,000</text>
+<text x="830" y="178" text-anchor="middle" class="small mono fill-bad">1,000,000</text>
+<text x="915" y="178" text-anchor="middle" class="small mono fill-done">20</text>
+<line class="edge" x1="690" y1="108" x2="950" y2="108"/>
+<text x="690" y="220" text-anchor="start" class="small">Every operation is O(h). Balance</text>
+<text x="690" y="238" text-anchor="start" class="small">is the difference between 20 steps</text>
+<text x="690" y="256" text-anchor="start" class="small">and a million.</text>
+</svg>
+<figcaption>A plain BST has no say over its shape: the insertion order decides it. Sorted or nearly sorted input, which is common in real data, produces the worst case. Self-balancing trees (AVL, red-black) fix the shape after every update.</figcaption>
+</figure>
+
+<p>A plain BST has no control over its own shape. Every operation is O(h), and h depends only on the insertion order.
+Random orders give an expected height of about 2.99 · log₂ n, but real inputs are often sorted, nearly sorted, or
+adversarial (a LeetCode test with 10⁵ increasing keys turns your O(n log n) solution into O(n²) and your recursion
+into a stack overflow). <strong>Self-balancing</strong> trees repair the shape after each insert or delete in O(log n) extra work,
+using one primitive.</p>
+<h3 id="rotations">Rotations</h3>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 960 330" width="960" role="img" aria-label="Right and left rotation: the middle subtree B changes parent, the inorder order A y B z C stays">
+<defs><marker id="binary-search-trees-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<line class="edge" x1="206" y1="83" x2="154" y2="137"/>
+<line class="edge" x1="232" y1="85" x2="280" y2="148"/>
+<line class="edge" x1="128" y1="165" x2="90" y2="216"/>
+<line class="edge path" x1="152" y1="165" x2="186" y2="216"/>
+<circle class="box bad" cx="220" cy="70" r="19"/>
+<text x="220" y="75" text-anchor="middle" class="mono">z</text>
+<circle class="box active" cx="140" cy="150" r="19"/>
+<text x="140" y="155" text-anchor="middle" class="mono">y</text>
+<path class="box visit" d="M286,152 L263.0,204 L309.0,204 Z"/>
+<text x="286" y="192" text-anchor="middle" class="mono">C</text>
+<path class="box visit" d="M86,220 L63.0,272 L109.0,272 Z"/>
+<text x="86" y="260" text-anchor="middle" class="mono">A</text>
+<path class="box path" d="M190,220 L167.0,272 L213.0,272 Z"/>
+<text x="190" y="260" text-anchor="middle" class="mono">B</text>
+<text x="170" y="300" text-anchor="middle" class="small mono">inorder: A  y  B  z  C</text>
+<line class="edge" x1="754" y1="83" x2="806" y2="137"/>
+<line class="edge" x1="728" y1="85" x2="680" y2="148"/>
+<line class="edge path" x1="808" y1="165" x2="774" y2="216"/>
+<line class="edge" x1="832" y1="165" x2="870" y2="216"/>
+<circle class="box active" cx="740" cy="70" r="19"/>
+<text x="740" y="75" text-anchor="middle" class="mono">y</text>
+<circle class="box bad" cx="820" cy="150" r="19"/>
+<text x="820" y="155" text-anchor="middle" class="mono">z</text>
+<path class="box visit" d="M674,152 L651.0,204 L697.0,204 Z"/>
+<text x="674" y="192" text-anchor="middle" class="mono">A</text>
+<path class="box path" d="M770,220 L747.0,272 L793.0,272 Z"/>
+<text x="770" y="260" text-anchor="middle" class="mono">B</text>
+<path class="box visit" d="M874,220 L851.0,272 L897.0,272 Z"/>
+<text x="874" y="260" text-anchor="middle" class="mono">C</text>
+<text x="770" y="300" text-anchor="middle" class="small mono">inorder: A  y  B  z  C</text>
+<line class="edge accent" x1="380" y1="120" x2="590" y2="120" marker-end="url(#binary-search-trees-ar)"/>
+<text x="485" y="108" text-anchor="middle" class="small fill-accent">rotate right at z</text>
+<line class="edge accent" x1="590" y1="180" x2="380" y2="180" marker-end="url(#binary-search-trees-ar)"/>
+<text x="485" y="206" text-anchor="middle" class="small fill-accent">rotate left at y</text>
+<text x="485" y="252" text-anchor="middle" class="small muted">3 pointer changes, O(1)</text>
+</svg>
+<figcaption>A rotation lifts a child above its parent. Only three links change: <code>z.left = y.right</code> (B moves across), <code>y.right = z</code>, and z's old parent now points to y. A, B and C keep their contents, so the inorder sequence and therefore the BST property are untouched. The tree just gets one level shorter on one side and one level taller on the other.</figcaption>
+</figure>
+
+<p>A rotation changes which of two nodes is the parent while keeping the inorder sequence fixed, so the BST property
+cannot break. A right rotation at z moves the left child y up, z down to the right, and hands y's right subtree B
+over to z as its new left subtree (B's keys are between y and z, so it belongs there). Left rotation is the mirror.
+Every balanced-tree scheme (AVL, red-black, treap, splay) is a policy for <em>when</em> to rotate.</p>
+<div class="code-tabs">
+<pre><code class="language-python">class AVLNode:
+    def __init__(self, val):
+        self.val, self.left, self.right, self.height = val, None, None, 1
+
+
+def height(n):
+    return n.height if n else 0
+
+
+def update(n):
+    n.height = 1 + max(height(n.left), height(n.right))
+
+
+def rotate_right(z):
+    y = z.left
+    z.left = y.right            # B moves across
+    y.right = z
+    update(z)                   # z is now below y: fix it first
+    update(y)
+    return y                    # caller re-links: parent.child = rotate_right(z)
+
+
+def rotate_left(z):
+    y = z.right
+    z.right = y.left
+    y.left = z
+    update(z)
+    update(y)
+    return y
+</code></pre>
+<pre><code class="language-csharp">public class AVLNode
+{
+    public int val, height = 1;
+    public AVLNode left, right;
+    public AVLNode(int v) =&gt; val = v;
+}
+
+public static class Rotations
+{
+    public static int Height(AVLNode n) =&gt; n?.height ?? 0;
+    public static void Update(AVLNode n) =&gt; n.height = 1 + Math.Max(Height(n.left), Height(n.right));
+
+    public static AVLNode RotateRight(AVLNode z)
+    {
+        var y = z.left;
+        z.left = y.right;
+        y.right = z;
+        Update(z);
+        Update(y);
+        return y;
+    }
+
+    public static AVLNode RotateLeft(AVLNode z)
+    {
+        var y = z.right;
+        z.right = y.left;
+        y.left = z;
+        Update(z);
+        Update(y);
+        return y;
+    }
+}
+</code></pre>
+</div>
+<h3 id="avl-trees-heights-differ-by-at-most-one">AVL trees: heights differ by at most one</h3>
+<p>An AVL tree stores each node's height and keeps the <strong>balance factor</strong> height(left) − height(right) in
+{−1, 0, +1} at every node. After an ordinary insert, walk back up the path (the recursion unwinding does this for
+free) and update heights. The first node whose balance reaches ±2 is fixed with one or two rotations, depending on
+the shape of the path from it to the new key.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 960 330" width="960" role="img" aria-label="The four AVL imbalance cases and the rotations that fix them">
+<defs><marker id="binary-search-trees-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="128" y="28" text-anchor="middle" class="title">LL case</text>
+<line class="edge" x1="165.3" y1="67.7" x2="130.7" y2="94.3"/>
+<line class="edge" x1="107.5" y1="116.1" x2="88.5" y2="137.9"/>
+<circle class="box path" cx="78" cy="150" r="16"/>
+<text x="78" y="155" text-anchor="middle" class="mono">10</text>
+<circle class="box active" cx="118" cy="104" r="16"/>
+<text x="118" y="109" text-anchor="middle" class="mono">20</text>
+<circle class="box bad" cx="178" cy="58" r="16"/>
+<text x="178" y="63" text-anchor="middle" class="mono">30</text>
+<line class="edge accent" x1="128" y1="168" x2="128" y2="204" marker-end="url(#binary-search-trees-ar)"/>
+<text x="128" y="222" text-anchor="middle" class="small fill-accent">rotate right at 30</text>
+<line class="edge" x1="118" y1="262.5" x2="98" y2="287.5"/>
+<line class="edge" x1="138" y1="262.5" x2="158" y2="287.5"/>
+<circle class="box done" cx="88" cy="300" r="16"/>
+<text x="88" y="305" text-anchor="middle" class="mono">10</text>
+<circle class="box done" cx="128" cy="250" r="16"/>
+<text x="128" y="255" text-anchor="middle" class="mono">20</text>
+<circle class="box done" cx="168" cy="300" r="16"/>
+<text x="168" y="305" text-anchor="middle" class="mono">30</text>
+<text x="364" y="28" text-anchor="middle" class="title">RR case</text>
+<line class="edge" x1="326.7" y1="67.7" x2="361.3" y2="94.3"/>
+<line class="edge" x1="384.5" y1="116.1" x2="403.5" y2="137.9"/>
+<circle class="box bad" cx="314" cy="58" r="16"/>
+<text x="314" y="63" text-anchor="middle" class="mono">10</text>
+<circle class="box active" cx="374" cy="104" r="16"/>
+<text x="374" y="109" text-anchor="middle" class="mono">20</text>
+<circle class="box path" cx="414" cy="150" r="16"/>
+<text x="414" y="155" text-anchor="middle" class="mono">30</text>
+<line class="edge accent" x1="364" y1="168" x2="364" y2="204" marker-end="url(#binary-search-trees-ar)"/>
+<text x="364" y="222" text-anchor="middle" class="small fill-accent">rotate left at 10</text>
+<line class="edge" x1="354" y1="262.5" x2="334" y2="287.5"/>
+<line class="edge" x1="374" y1="262.5" x2="394" y2="287.5"/>
+<circle class="box done" cx="324" cy="300" r="16"/>
+<text x="324" y="305" text-anchor="middle" class="mono">10</text>
+<circle class="box done" cx="364" cy="250" r="16"/>
+<text x="364" y="255" text-anchor="middle" class="mono">20</text>
+<circle class="box done" cx="404" cy="300" r="16"/>
+<text x="404" y="305" text-anchor="middle" class="mono">30</text>
+<line class="edge dash" x1="246" y1="20" x2="246" y2="310"/>
+<text x="600" y="28" text-anchor="middle" class="title">LR case</text>
+<line class="edge" x1="626.1" y1="66" x2="573.9" y2="96"/>
+<line class="edge" x1="570.5" y1="116.1" x2="589.5" y2="137.9"/>
+<circle class="box active" cx="560" cy="104" r="16"/>
+<text x="560" y="109" text-anchor="middle" class="mono">10</text>
+<circle class="box path" cx="600" cy="150" r="16"/>
+<text x="600" y="155" text-anchor="middle" class="mono">20</text>
+<circle class="box bad" cx="640" cy="58" r="16"/>
+<text x="640" y="63" text-anchor="middle" class="mono">30</text>
+<line class="edge accent" x1="600" y1="168" x2="600" y2="204" marker-end="url(#binary-search-trees-ar)"/>
+<text x="600" y="222" text-anchor="middle" class="small fill-accent">left at 10, right at 30</text>
+<line class="edge" x1="590" y1="262.5" x2="570" y2="287.5"/>
+<line class="edge" x1="610" y1="262.5" x2="630" y2="287.5"/>
+<circle class="box done" cx="560" cy="300" r="16"/>
+<text x="560" y="305" text-anchor="middle" class="mono">10</text>
+<circle class="box done" cx="600" cy="250" r="16"/>
+<text x="600" y="255" text-anchor="middle" class="mono">20</text>
+<circle class="box done" cx="640" cy="300" r="16"/>
+<text x="640" y="305" text-anchor="middle" class="mono">30</text>
+<line class="edge dash" x1="482" y1="20" x2="482" y2="310"/>
+<text x="836" y="28" text-anchor="middle" class="title">RL case</text>
+<line class="edge" x1="809.9" y1="66" x2="862.1" y2="96"/>
+<line class="edge" x1="865.5" y1="116.1" x2="846.5" y2="137.9"/>
+<circle class="box bad" cx="796" cy="58" r="16"/>
+<text x="796" y="63" text-anchor="middle" class="mono">10</text>
+<circle class="box path" cx="836" cy="150" r="16"/>
+<text x="836" y="155" text-anchor="middle" class="mono">20</text>
+<circle class="box active" cx="876" cy="104" r="16"/>
+<text x="876" y="109" text-anchor="middle" class="mono">30</text>
+<line class="edge accent" x1="836" y1="168" x2="836" y2="204" marker-end="url(#binary-search-trees-ar)"/>
+<text x="836" y="222" text-anchor="middle" class="small fill-accent">right at 30, left at 10</text>
+<line class="edge" x1="826" y1="262.5" x2="806" y2="287.5"/>
+<line class="edge" x1="846" y1="262.5" x2="866" y2="287.5"/>
+<circle class="box done" cx="796" cy="300" r="16"/>
+<text x="796" y="305" text-anchor="middle" class="mono">10</text>
+<circle class="box done" cx="836" cy="250" r="16"/>
+<text x="836" y="255" text-anchor="middle" class="mono">20</text>
+<circle class="box done" cx="876" cy="300" r="16"/>
+<text x="876" y="305" text-anchor="middle" class="mono">30</text>
+<line class="edge dash" x1="718" y1="20" x2="718" y2="310"/>
+</svg>
+<figcaption>Walk back up from the new leaf to the first node z with |balance| = 2. Name the two steps from z towards the new key: <b>LL</b> or <b>RR</b> is a straight line and one rotation at z fixes it; <b>LR</b> or <b>RL</b> is a zig-zag, so first rotate the child to make it straight, then rotate at z. Every case ends with the middle key on top.</figcaption>
+</figure>
+
+<p>Watch the visualizer insert 10, 20, 30: a straight right-right line, so one left rotation at 10. Then 25 and 28
+create a zig-zag under 30 (left, then right: LR), fixed by two rotations. Every frame shows each node's height and balance underneath it; red marks the
+node that tipped over.</p>
+<div class="viz bst-wide" data-viz="binary-search-trees-avl"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def avl_insert(node, x):
+    if node is None:
+        return AVLNode(x)
+    if x &lt; node.val:
+        node.left = avl_insert(node.left, x)
+    elif x &gt; node.val:
+        node.right = avl_insert(node.right, x)
+    else:
+        return node                                  # no duplicates
+    update(node)
+    b = height(node.left) - height(node.right)
+    if b &gt; 1:                                        # left side too tall
+        if x &gt; node.left.val:                        # LR: straighten the zig-zag first
+            node.left = rotate_left(node.left)
+        return rotate_right(node)                    # LL
+    if b &lt; -1:                                       # right side too tall
+        if x &lt; node.right.val:                       # RL
+            node.right = rotate_right(node.right)
+        return rotate_left(node)                     # RR
+    return node
+</code></pre>
+<pre><code class="language-csharp">public static class Avl
+{
+    public static AVLNode Insert(AVLNode node, int x)
+    {
+        if (node is null) return new AVLNode(x);
+        if (x &lt; node.val) node.left = Insert(node.left, x);
+        else if (x &gt; node.val) node.right = Insert(node.right, x);
+        else return node;
+        Rotations.Update(node);
+        int b = Rotations.Height(node.left) - Rotations.Height(node.right);
+        if (b &gt; 1)
+        {
+            if (x &gt; node.left.val) node.left = Rotations.RotateLeft(node.left);
+            return Rotations.RotateRight(node);
+        }
+        if (b &lt; -1)
+        {
+            if (x &lt; node.right.val) node.right = Rotations.RotateRight(node.right);
+            return Rotations.RotateLeft(node);
+        }
+        return node;
+    }
+}
+</code></pre>
+</div>
+<p>After an insert, one fix (single or double rotation) restores the subtree to its height before the insert, so
+nothing above it changes: at most two rotations per insert. Deletes can need a rotation at every level on the
+way up, still O(log n). The guarantee: an AVL tree with n nodes has height below 1.44 · log₂(n + 2), because the
+sparsest AVL tree of height h has Fibonacci-many nodes.</p>
+<h3 id="red-black-trees-what-your-standard-library-uses">Red-black trees: what your standard library uses</h3>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 960 300" width="960" role="img" aria-label="A red-black tree is a 2-3-4 tree in disguise: each red node glues onto its black parent">
+<text x="30" y="28" text-anchor="start" class="title">2-3-4 tree (fat nodes, all leaves at one depth)</text>
+<rect class="box accent" x="134" y="54" width="72" height="32" rx="8"/>
+<text x="152" y="75" text-anchor="middle" class="mono">10</text>
+<text x="188" y="75" text-anchor="middle" class="mono">20</text>
+<line class="edge" x1="170" y1="54" x2="170" y2="86"/>
+<rect class="box accent" x="52" y="154" width="36" height="32" rx="8"/>
+<text x="70" y="175" text-anchor="middle" class="mono">5</text>
+<rect class="box accent" x="152" y="154" width="36" height="32" rx="8"/>
+<text x="170" y="175" text-anchor="middle" class="mono">15</text>
+<rect class="box accent" x="254" y="154" width="72" height="32" rx="8"/>
+<text x="272" y="175" text-anchor="middle" class="mono">25</text>
+<text x="308" y="175" text-anchor="middle" class="mono">30</text>
+<line class="edge" x1="290" y1="154" x2="290" y2="186"/>
+<line class="edge" x1="145" y1="86" x2="70" y2="154"/>
+<line class="edge" x1="170" y1="86" x2="170" y2="154"/>
+<line class="edge" x1="200" y1="86" x2="290" y2="154"/>
+<text x="30" y="230" text-anchor="start" class="small muted">a node holds 1-3 keys and has 1 more child than keys;</text>
+<text x="30" y="248" text-anchor="start" class="small muted">it grows at the ROOT (splits), so it is always perfectly balanced</text>
+<text x="520" y="28" text-anchor="start" class="title">the same tree as a red-black BST</text>
+<line class="edge bad" x1="705.8" y1="81.1" x2="644.2" y2="128.9"/>
+<line class="edge" x1="734.7" y1="80.3" x2="805.3" y2="129.7"/>
+<line class="edge" x1="619.9" y1="154.9" x2="590.1" y2="199.1"/>
+<line class="edge" x1="640.1" y1="154.9" x2="669.9" y2="199.1"/>
+<line class="edge bad" x1="811.4" y1="155.8" x2="788.6" y2="198.2"/>
+<circle class="box" cx="720" cy="70" r="18"/>
+<text x="720" y="75" text-anchor="middle" class="mono">20</text>
+<circle class="box bad" cx="630" cy="140" r="18"/>
+<text x="630" y="145" text-anchor="middle" class="mono">10</text>
+<circle class="box" cx="820" cy="140" r="18"/>
+<text x="820" y="145" text-anchor="middle" class="mono">30</text>
+<circle class="box" cx="580" cy="214" r="18"/>
+<text x="580" y="219" text-anchor="middle" class="mono">5</text>
+<circle class="box" cx="680" cy="214" r="18"/>
+<text x="680" y="219" text-anchor="middle" class="mono">15</text>
+<circle class="box bad" cx="780" cy="214" r="18"/>
+<text x="780" y="219" text-anchor="middle" class="mono">25</text>
+<text x="520" y="262" text-anchor="start" class="small fill-bad">red node = shares a fat node with its parent (10 with 20, 25 with 30)</text>
+<text x="520" y="280" text-anchor="start" class="small muted">rules: no red-red edge · every root-to-None path has the same number of blacks</text>
+<line class="edge dash" x1="480" y1="40" x2="480" y2="280"/>
+</svg>
+<figcaption>You will rarely implement a red-black tree, but you use one daily: C# <code>SortedSet</code>/<code>SortedDictionary</code>, Java <code>TreeMap</code> and C++ <code>std::map</code> are red-black trees. Read each red node as glued to its black parent and you get a 2-3-4 tree whose leaves are all at the same depth. That is why the height stays below 2·log₂(n + 1).</figcaption>
+</figure>
+
+<p>A red-black tree colours each node red or black and keeps two rules: <strong>no red node has a red child</strong>, and <strong>every
+path from a node down to a missing child passes the same number of black nodes</strong>. So the longest path (alternating
+red and black) is at most twice the shortest (all black): h ≤ 2 · log₂(n + 1). It is looser than AVL (slightly
+taller trees, slightly slower lookups) but needs fewer rotations per update, which is why general-purpose libraries
+choose it. Fixes after insert are recolourings plus at most two rotations.</p>
+<p>You will not be asked to code one in an interview. What you need is the cost model it gives you:</p>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Ordered set</th>
+<th>Ordered map</th>
+<th>Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C#</td>
+<td><code>SortedSet&lt;T&gt;</code></td>
+<td><code>SortedDictionary&lt;K, V&gt;</code></td>
+<td>red-black tree</td>
+</tr>
+<tr>
+<td>C#</td>
+<td>n/a</td>
+<td><code>SortedList&lt;K, V&gt;</code></td>
+<td>sorted arrays: O(n) insert, O(log n) lookup by key, O(1) by index</td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>TreeSet</code></td>
+<td><code>TreeMap</code></td>
+<td>red-black tree</td>
+</tr>
+<tr>
+<td>C++</td>
+<td><code>std::set</code></td>
+<td><code>std::map</code></td>
+<td>red-black tree</td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>sortedcontainers.SortedList</code></td>
+<td><code>SortedDict</code></td>
+<td>list of sorted lists (≈ B-tree of height 2), not in the standard library</td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>bisect</code> + <code>list</code></td>
+<td>n/a</td>
+<td>binary search on a plain list: O(log n) find, <strong>O(n)</strong> insert</td>
+</tr>
+</tbody>
+</table>
+<p>Other balanced designs worth knowing by name: <strong>treaps</strong> (random priorities, heap-ordered, so the shape is that of
+a random insertion order), <strong>splay trees</strong> (move each accessed node to the root, amortised O(log n)), <strong>B-trees</strong>
+(fat nodes with hundreds of keys, used by databases and file systems because one node is one disk page), and
+<strong>skip lists</strong> (a probabilistic linked-list alternative, used by Redis sorted sets).</p>
+<h2 id="ordered-sets-in-practice-c-and-python">Ordered sets in practice: C# and Python</h2>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 960 300" width="960" role="img" aria-label="Floor, ceiling, lower and higher on a sorted list, with bisect indices">
+<defs><marker id="binary-search-trees-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box" x="60" y="118" width="56" height="36" rx="5"/>
+<text x="88" y="141" text-anchor="middle" class="mono">2</text>
+<text x="88" y="167" text-anchor="middle" class="small muted">[0]</text>
+<rect class="box" x="126" y="118" width="56" height="36" rx="5"/>
+<text x="154" y="141" text-anchor="middle" class="mono">5</text>
+<text x="154" y="167" text-anchor="middle" class="small muted">[1]</text>
+<rect class="box" x="192" y="118" width="56" height="36" rx="5"/>
+<text x="220" y="141" text-anchor="middle" class="mono">8</text>
+<text x="220" y="167" text-anchor="middle" class="small muted">[2]</text>
+<rect class="box" x="258" y="118" width="56" height="36" rx="5"/>
+<text x="286" y="141" text-anchor="middle" class="mono">12</text>
+<text x="286" y="167" text-anchor="middle" class="small muted">[3]</text>
+<rect class="box" x="324" y="118" width="56" height="36" rx="5"/>
+<text x="352" y="141" text-anchor="middle" class="mono">15</text>
+<text x="352" y="167" text-anchor="middle" class="small muted">[4]</text>
+<text x="60" y="40" text-anchor="start" class="title mono">keys = [2, 5, 8, 12, 15]</text>
+<line class="edge accent dash" x1="253" y1="72" x2="253" y2="114"/>
+<text x="253" y="66" text-anchor="middle" class="small fill-accent">x = 10</text>
+<path class="edge done" d="M249.0,84 Q224.0,82 220.0,113" marker-end="url(#binary-search-trees-ar)"/>
+<text x="218" y="84" text-anchor="end" class="small fill-done">floor 8</text>
+<path class="edge path" d="M257.0,84 Q282.0,82 286.0,113" marker-end="url(#binary-search-trees-ar)"/>
+<text x="288" y="84" text-anchor="start" class="small fill-path">ceiling 12</text>
+<text x="60" y="196" text-anchor="start" class="small mono">bisect_left(keys, 10) = bisect_right(keys, 10) = 3: the gap before index 3</text>
+<text x="60" y="218" text-anchor="start" class="small mono">x = 12: bisect_left = 3 (before the 12), bisect_right = 4 (after it)</text>
+<text x="60" y="240" text-anchor="start" class="small mono">floor(12) = ceiling(12) = 12;  lower(12) = 8;  higher(12) = 15</text>
+<text x="560" y="40" text-anchor="start" class="title">Query and formula (keys sorted)</text>
+<text x="560" y="70" text-anchor="start" class="small">floor(x)   largest ≤ x</text>
+<text x="574" y="86" text-anchor="start" class="small mono fill-accent">keys[bisect_right(x) - 1]</text>
+<text x="560" y="106" text-anchor="start" class="small">ceiling(x) smallest ≥ x</text>
+<text x="574" y="122" text-anchor="start" class="small mono fill-accent">keys[bisect_left(x)]</text>
+<text x="560" y="142" text-anchor="start" class="small">lower(x)   largest &lt; x</text>
+<text x="574" y="158" text-anchor="start" class="small mono fill-accent">keys[bisect_left(x) - 1]</text>
+<text x="560" y="178" text-anchor="start" class="small">higher(x)  smallest &gt; x</text>
+<text x="574" y="194" text-anchor="start" class="small mono fill-accent">keys[bisect_right(x)]</text>
+<text x="560" y="214" text-anchor="start" class="small">count &lt; x</text>
+<text x="574" y="230" text-anchor="start" class="small mono fill-accent">bisect_left(x)</text>
+<text x="560" y="250" text-anchor="start" class="small">count in [a, b]</text>
+<text x="574" y="266" text-anchor="start" class="small mono fill-accent">bisect_right(b) - bisect_left(a)</text>
+</svg>
+<figcaption>Four neighbours of a query value, all answered in O(log n) by binary search on a sorted list (see <a href="binary-search.html">Binary Search</a>) or by walking a balanced BST. Each formula needs a bounds check: index −1 or len(keys) means "no such key".</figcaption>
+</figure>
+
+<p>In an interview you almost never write a balanced tree; you use one. The queries you need are the four
+neighbours (floor, ceiling, lower, higher), min, max, delete, and sometimes "k-th" or "how many are smaller".</p>
+<div class="code-tabs">
+<pre><code class="language-python">from bisect import bisect_left, bisect_right, insort
+
+
+def floor_key(keys, x):          # largest &lt;= x, or None
+    i = bisect_right(keys, x)
+    return keys[i - 1] if i else None
+
+
+def ceiling_key(keys, x):        # smallest &gt;= x, or None
+    i = bisect_left(keys, x)
+    return keys[i] if i &lt; len(keys) else None
+
+
+def lower_key(keys, x):          # largest &lt; x, or None
+    i = bisect_left(keys, x)
+    return keys[i - 1] if i else None
+
+
+def higher_key(keys, x):         # smallest &gt; x, or None
+    i = bisect_right(keys, x)
+    return keys[i] if i &lt; len(keys) else None
+
+
+# keys must stay sorted: insort(keys, x) is O(log n) to find + O(n) to shift.
+# For many updates use sortedcontainers (available on LeetCode):
+#
+#   from sortedcontainers import SortedList
+#   sl = SortedList([8, 2, 15, 5, 12])
+#   sl.add(10)                  # O(log n)
+#   sl.remove(5)                # ValueError if absent; sl.discard(5) does not raise
+#   sl[0], sl[-1], sl[2]        # min 2, max 15, 3rd smallest 10: O(log n) indexing
+#   sl.bisect_left(10)          # 2 = how many keys are &lt; 10
+#   list(sl.irange(6, 12))      # [8, 10, 12]
+</code></pre>
+<pre><code class="language-csharp">public static class OrderedSet
+{
+    // GetViewBetween is lazy: building the view and reading Min / Max is O(log n).
+    // view.Count is NOT: it walks the whole range, O(k). Avoid it in hot loops.
+    // Min / Max of an EMPTY view return default(T) (0), so rule that case out first.
+    public static int? Floor(SortedSet&lt;int&gt; set, int x)
+    {
+        if (set.Count == 0 || set.Min &gt; x) return null;
+        return set.GetViewBetween(set.Min, x).Max;
+    }
+
+    public static int? Ceiling(SortedSet&lt;int&gt; set, int x)
+    {
+        if (set.Count == 0 || set.Max &lt; x) return null;
+        return set.GetViewBetween(x, set.Max).Min;
+    }
+
+    public static int? Lower(SortedSet&lt;int&gt; set, int x) =&gt; x == int.MinValue ? null : Floor(set, x - 1);
+
+    public static int? Higher(SortedSet&lt;int&gt; set, int x) =&gt; x == int.MaxValue ? null : Ceiling(set, x + 1);
+}
+
+// var set = new SortedSet&lt;int&gt; { 8, 2, 15, 5, 12 };
+// set.Add(10);              // returns false if already present
+// set.Remove(5);            // returns false if absent
+// set.Min, set.Max          // 2, 15
+// OrderedSet.Floor(set, 11) // 10
+// foreach (var k in set.GetViewBetween(6, 12)) ...   // 8, 10, 12 in order
+// var map = new SortedDictionary&lt;int, string&gt;();     // same tree, keyed values; no floor API at all
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong><code>GetViewBetween(...).Count</code> is a linear scan.</strong> On .NET 10, with 10⁶ keys in the set and about 750,000 inside each
+range, 2,000 calls to <code>GetViewBetween(int.MinValue, x).Count</code> took about 28 seconds; the same views read with <code>.Max</code> took under 1 ms.
+The view recounts its range whenever the underlying set has changed. Use <code>Min</code>/<code>Max</code> (after ruling out an empty
+range as above) or <code>foreach … break</code> to test for emptiness. Also: <code>GetViewBetween(lo, hi)</code> <strong>throws</strong> if
+lo is greater than hi, and <code>SortedDictionary</code> has no floor/ceiling at all, so keep a <code>SortedSet</code> of keys next to
+it when you need neighbours.</p>
+</div>
+<p>Python's plain <code>list</code> + <code>insort</code> is fine up to roughly 10⁵ inserts, because the O(n) shift is a fast memmove. For
+more, or when you need deletes by value, reach for <code>SortedList</code>. When neither is allowed, a heap with lazy deletion
+(see <a href="heaps-priority-queues.html">Heaps &amp; Priority Queues</a>) covers min/max-only cases, and a Fenwick tree over
+compressed values covers rank and k-th.</p>
+<h2 id="choosing-the-tool">Choosing the tool</h2>
+<div class="recognize">
+<p><strong>Recognise the BST shape of a problem.</strong></p>
+<ul>
+<li>"Given a BST…" and the question is about order (k-th, closest, successor, range, minimum difference): walk the
+  tree using comparisons, or traverse <strong>inorder</strong> and treat it as a sorted array.</li>
+<li>"Is this a valid BST / fix this BST": pass <strong>(lo, hi) windows</strong> down, or check the inorder sequence for dips.</li>
+<li>"Build a BST from…": sorted input means <strong>middle as root</strong>; preorder means <strong>bounds recursion</strong> (worked problem 4).</li>
+<li>Updates mixed with "nearest value", "how many smaller", "next free slot", "values within t": an <strong>ordered set</strong>
+  (<code>SortedSet</code>, <code>SortedList</code>), possibly over a sliding window.</li>
+<li>Membership only, no order: a hash set is simpler and faster (<a href="hashing.html">Hashing</a>).</li>
+<li>Only the min or max ever matters: a heap (<a href="heaps-priority-queues.html">Heaps &amp; Priority Queues</a>).</li>
+<li>Rank / k-th over a fixed range of integer values: a Fenwick tree may be simpler than an augmented BST.</li>
+</ul>
+</div>
+<h2 id="pitfalls">Pitfalls</h2>
+<div class="pitfall">
+<p><strong>Checking only parent and child.</strong> A node must fit the window set by <strong>all</strong> of its ancestors, not just
+its parent. See the trap figure in the validation section: every edge looks right and the tree is still invalid.</p>
+</div>
+<div class="pitfall">
+<p><strong>Dropping the returned subtree.</strong> In the recursive style, <code>insert(node.left, x)</code> without
+<code>node.left = …</code> builds the new node and throws it away (when the child was <code>None</code>). Every recursive modifier
+(insert, delete, trim, AVL insert) must store the result back into the parent's pointer.</p>
+</div>
+<div class="pitfall">
+<p><strong>Assuming O(log n).</strong> A plain BST is only as good as its shape. Sorted input makes it a linked
+list: O(n) per operation and, with recursion, n stack frames. Python's default recursion limit is 1,000, and a deep
+C# recursion throws a <code>StackOverflowException</code> that cannot be caught. On untrusted input prefer the iterative
+search, insert and inorder versions, or use a balanced library structure.</p>
+</div>
+<div class="pitfall">
+<p><strong>Duplicates on the wrong side.</strong> If inserts send equal keys right, then search must also continue right
+on equality (to find all copies), validation must allow <code>node.val == lo</code> on the right side, and delete must pick
+which copy to remove. Mixing conventions silently loses keys. Simplest: store a count per key.</p>
+</div>
+<div class="pitfall">
+<p><strong>Bounds that overflow.</strong> <code>int.MinValue - 1</code>, <code>x + t</code> and <code>x - t</code> in C# can wrap around. Use <code>long</code>
+for computed bounds (LeetCode 220 needs it: values reach ±2³¹ − 1 and t reaches 2³¹ − 1) or nullable bounds for
+validation.</p>
+</div>
+<div class="pitfall">
+<p><strong>Changing a sorted collection while enumerating it.</strong> Removing from a <code>SortedSet</code> inside
+<code>foreach</code> over the same set (or one of its views) throws <code>InvalidOperationException</code>. Collect the keys first, or use
+<code>RemoveWhere</code>. Python's <code>SortedList</code> is just as unsafe: iterate over a copy (<code>list(sl.irange(a, b))</code>).</p>
+</div>
+<h2 id="worked-problems">Worked problems</h2>
+<h3 id="1-validate-binary-search-tree-medium">1. Validate Binary Search Tree (Medium)</h3>
+<p><a href="https://leetcode.com/problems/validate-binary-search-tree/">LeetCode 98</a>. Return whether a binary tree is a valid
+BST with strictly increasing keys.</p>
+<p><strong>Insight.</strong> The bounds recursion above is one answer. The other uses the second superpower: a tree is a BST
+<strong>exactly when its inorder sequence is strictly increasing</strong>. Walk inorder iteratively, remember only the previous
+key, and fail at the first key that is not bigger. No recursion (so no stack overflow on a chain) and no sentinel
+problems, because <code>prev</code> starts as "nothing yet" rather than a fake minimum.</p>
+<details class="solution">
+<summary>Solution: iterative inorder, compare with the previous key</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def is_valid_bst_inorder(root):
+    prev = None
+    stack, cur = [], root
+    while stack or cur:
+        while cur:
+            stack.append(cur)
+            cur = cur.left
+        cur = stack.pop()
+        if prev is not None and cur.val &lt;= prev:
+            return False                 # a dip: order broken
+        prev = cur.val
+        cur = cur.right
+    return True
+</code></pre>
+<pre><code class="language-csharp">public static class ValidateInorder
+{
+    public static bool IsValidBST(TreeNode root)
+    {
+        int? prev = null;
+        var stack = new Stack&lt;TreeNode&gt;();
+        var cur = root;
+        while (stack.Count &gt; 0 || cur is not null)
+        {
+            for (; cur is not null; cur = cur.left) stack.Push(cur);
+            cur = stack.Pop();
+            if (prev is int p &amp;&amp; cur.val &lt;= p) return false;
+            prev = cur.val;
+            cur = cur.right;
+        }
+        return true;
+    }
+}
+</code></pre>
+</div>
+<p>O(n) time in the worst case, but it stops at the first violation. O(h) space for the stack.</p>
+</details>
+<h3 id="2-two-sum-iv-input-is-a-bst-easy">2. Two Sum IV: Input is a BST (Easy)</h3>
+<p><a href="https://leetcode.com/problems/two-sum-iv-input-is-a-bst/">LeetCode 653</a>. Return whether two different nodes
+have keys that add up to k.</p>
+<p><strong>Insight.</strong> A hash set of seen values works on any tree (O(n) space). Using the BST gives the two-pointer
+algorithm from <a href="two-pointers.html">Two Pointers</a> without copying the keys into an array: run <strong>two iterators</strong>, one
+forward (smallest first) and one backward (largest first). If the sum is too small, advance the forward one; too
+big, advance the backward one; stop when they meet. Space drops to O(h).</p>
+<details class="solution">
+<summary>Solution: forward and backward BST iterators as two pointers</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def find_target(root, k):
+    def push(stack, node, forward):
+        while node:
+            stack.append(node)
+            node = node.left if forward else node.right
+
+    lo, hi = [], []                      # lo top = smallest unused, hi top = largest unused
+    push(lo, root, True)
+    push(hi, root, False)
+    while lo and hi and lo[-1].val &lt; hi[-1].val:
+        s = lo[-1].val + hi[-1].val
+        if s == k:
+            return True
+        if s &lt; k:
+            node = lo.pop()
+            push(lo, node.right, True)   # next larger key
+        else:
+            node = hi.pop()
+            push(hi, node.left, False)   # next smaller key
+    return False
+</code></pre>
+<pre><code class="language-csharp">public static class TwoSumBst
+{
+    static void Push(Stack&lt;TreeNode&gt; st, TreeNode node, bool forward)
+    {
+        while (node is not null) { st.Push(node); node = forward ? node.left : node.right; }
+    }
+
+    public static bool FindTarget(TreeNode root, int k)
+    {
+        var lo = new Stack&lt;TreeNode&gt;();
+        var hi = new Stack&lt;TreeNode&gt;();
+        Push(lo, root, true);
+        Push(hi, root, false);
+        while (lo.Count &gt; 0 &amp;&amp; hi.Count &gt; 0 &amp;&amp; lo.Peek().val &lt; hi.Peek().val)
+        {
+            int s = lo.Peek().val + hi.Peek().val;
+            if (s == k) return true;
+            if (s &lt; k) Push(lo, lo.Pop().right, true);
+            else Push(hi, hi.Pop().left, false);
+        }
+        return false;
+    }
+}
+</code></pre>
+</div>
+<p>O(n) time, O(h) space. The <code>lo.val &lt; hi.val</code> test is the "pointers have not crossed" check.</p>
+</details>
+<h3 id="3-kth-smallest-element-in-a-bst-with-updates-medium">3. Kth Smallest Element in a BST, with updates (Medium)</h3>
+<p><a href="https://leetcode.com/problems/kth-smallest-element-in-a-bst/">LeetCode 230</a>. Return the k-th smallest key.
+Follow-up: the BST is modified often and k-th is asked often.</p>
+<p><strong>Insight.</strong> The basic answer is the iterator: pop k times, O(h + k) (see <code>kth_smallest</code> above and the iterator
+visualizer with k = 6). The follow-up wants O(h) per query, which needs each node to know its <strong>subtree size</strong>
+(the augmented-tree figure). Walking down, compare k with <code>size(left) + 1</code>.</p>
+<details class="solution">
+<summary>Solution: both versions, and how to keep sizes current</summary>
+<p>The plain version is <code>kth_smallest</code> / <code>KthSmallestBst.KthSmallest</code> from the inorder section. For the follow-up,
+store sizes:</p>
+<div class="code-tabs">
+<pre><code class="language-python">class SizeNode:
+    def __init__(self, val):
+        self.val, self.left, self.right, self.size = val, None, None, 1
+
+
+def size(n):
+    return n.size if n else 0
+
+
+def os_insert(node, x):
+    &quot;&quot;&quot;Insert a new distinct key, keeping sizes correct on the path.&quot;&quot;&quot;
+    if node is None:
+        return SizeNode(x)
+    if x &lt; node.val:
+        node.left = os_insert(node.left, x)
+    else:
+        node.right = os_insert(node.right, x)
+    node.size += 1
+    return node
+
+
+def os_kth(node, k):
+    &quot;&quot;&quot;k-th smallest, 1-based. O(h).&quot;&quot;&quot;
+    while node:
+        r = size(node.left) + 1                  # rank of node in its subtree
+        if k == r:
+            return node.val
+        if k &lt; r:
+            node = node.left
+        else:
+            k -= r                               # skip the left subtree and node
+            node = node.right
+    return None
+
+
+def os_rank(node, x):
+    &quot;&quot;&quot;How many keys are &lt; x. O(h).&quot;&quot;&quot;
+    r = 0
+    while node:
+        if x &lt;= node.val:
+            node = node.left
+        else:
+            r += size(node.left) + 1
+            node = node.right
+    return r
+</code></pre>
+<pre><code class="language-csharp">public class SizeNode
+{
+    public int val, size = 1;
+    public SizeNode left, right;
+    public SizeNode(int v) =&gt; val = v;
+}
+
+public static class OrderStatistics
+{
+    static int Size(SizeNode n) =&gt; n?.size ?? 0;
+
+    public static SizeNode Insert(SizeNode node, int x)
+    {
+        if (node is null) return new SizeNode(x);
+        if (x &lt; node.val) node.left = Insert(node.left, x);
+        else node.right = Insert(node.right, x);
+        node.size++;
+        return node;
+    }
+
+    public static int? Kth(SizeNode node, int k)
+    {
+        while (node is not null)
+        {
+            int r = Size(node.left) + 1;
+            if (k == r) return node.val;
+            if (k &lt; r) node = node.left;
+            else { k -= r; node = node.right; }
+        }
+        return null;
+    }
+
+    public static int Rank(SizeNode node, int x)
+    {
+        int r = 0;
+        while (node is not null)
+        {
+            if (x &lt;= node.val) node = node.left;
+            else { r += Size(node.left) + 1; node = node.right; }
+        }
+        return r;
+    }
+}
+</code></pre>
+</div>
+<p>Deletes decrement <code>size</code> on the path the same way inserts increment it. To get O(log n) in the worst case, the sizes must live in a balanced
+tree, and every rotation recomputes <code>size</code> for the two nodes it moves, bottom one first, exactly like <code>update</code>
+recomputes heights in the AVL code.</p>
+<p>Interview phrasing: "plain inorder is O(h + k). With frequent queries I'd store subtree sizes, which makes k-th and
+rank O(h); combined with a balanced tree that is O(log n) per query and per update."</p>
+</details>
+<h3 id="4-construct-bst-from-preorder-traversal-medium">4. Construct BST from Preorder Traversal (Medium)</h3>
+<p><a href="https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal/">LeetCode 1008</a>. Rebuild
+the BST whose preorder traversal is given.</p>
+<p><strong>Insight.</strong> For a general tree you need preorder <strong>and</strong> inorder (see
+<a href="tree-traversals.html">Tree Traversals</a>). For a BST, the inorder is just the sorted preorder, so preorder alone is
+enough, and you do not even need to sort. Read the preorder left to right with a shared index; each call builds a
+subtree whose keys must stay below an upper bound <code>hi</code>. The next key becomes the subtree root if it fits; its
+left subtree takes keys below the new root, its right subtree takes keys below <code>hi</code>. A key that does not fit
+belongs to some ancestor's right side, so the call returns <code>None</code> and lets that ancestor take it. Each key is read
+once: <strong>O(n)</strong>. The same idea serialises a BST compactly (<a href="https://leetcode.com/problems/serialize-and-deserialize-bst/">LeetCode 449</a>):
+write the preorder, rebuild with bounds, no <code>null</code> markers needed.</p>
+<details class="solution">
+<summary>Solution: one pass with an upper bound</summary>
+<div class="code-tabs">
+<pre><code class="language-python">import math
+
+
+def bst_from_preorder(preorder):
+    i = 0
+
+    def build(hi):
+        nonlocal i
+        if i == len(preorder) or preorder[i] &gt; hi:
+            return None                  # next key belongs to an ancestor's right side
+        node = TreeNode(preorder[i])
+        i += 1
+        node.left = build(node.val)      # keys below node.val
+        node.right = build(hi)           # keys between node.val and hi
+        return node
+
+    return build(math.inf)
+</code></pre>
+<pre><code class="language-csharp">public static class FromPreorder
+{
+    public static TreeNode BstFromPreorder(int[] preorder)
+    {
+        int i = 0;
+        TreeNode Build(long hi)
+        {
+            if (i == preorder.Length || preorder[i] &gt; hi) return null;
+            var node = new TreeNode(preorder[i++]);
+            node.left = Build(node.val);
+            node.right = Build(hi);
+            return node;
+        }
+        return Build(long.MaxValue);
+    }
+}
+</code></pre>
+</div>
+<p>O(n) time, O(h) recursion depth. The lower bound is never checked because preorder order guarantees it: by the time
+a key is read, every smaller key that belongs further left has already been consumed.</p>
+</details>
+<h3 id="5-convert-sorted-list-to-binary-search-tree-medium">5. Convert Sorted List to Binary Search Tree (Medium)</h3>
+<p><a href="https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/">LeetCode 109</a>. Same as LeetCode 108,
+but the sorted keys come as a singly linked list (<code>ListNode</code> with <code>val</code> and <code>next</code>).</p>
+<p><strong>Insight.</strong> Finding the middle of a list costs O(n), so "middle as root" naively is O(n log n). Flip it around:
+an inorder traversal of the finished tree visits the keys in list order. So <strong>build the tree in inorder</strong>: recurse
+on the left half's <em>size</em> first (no list access), then take the current list node as the root and advance the list
+pointer, then build the right half. The list is consumed exactly in order, once: <strong>O(n)</strong>. Same shape of answer
+as the balanced visualizer, because the same index splits are used.</p>
+<details class="solution">
+<summary>Solution: simulate inorder over index ranges</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def sorted_list_to_bst(head):
+    n, p = 0, head
+    while p:
+        n += 1
+        p = p.next
+    cur = head
+
+    def build(lo, hi):                   # builds list positions [lo, hi)
+        nonlocal cur
+        if lo &gt;= hi:
+            return None
+        mid = (lo + hi) // 2
+        left = build(lo, mid)            # consumes positions lo..mid-1
+        node = TreeNode(cur.val, left)   # cur is now position mid
+        cur = cur.next
+        node.right = build(mid + 1, hi)
+        return node
+
+    return build(0, n)
+</code></pre>
+<pre><code class="language-csharp">public static class ListToBst
+{
+    public static TreeNode SortedListToBST(ListNode head)
+    {
+        int n = 0;
+        for (var p = head; p is not null; p = p.next) n++;
+        var cur = head;
+        TreeNode Build(int lo, int hi)
+        {
+            if (lo &gt;= hi) return null;
+            int mid = (lo + hi) / 2;
+            var left = Build(lo, mid);
+            var node = new TreeNode(cur.val, left);
+            cur = cur.next;
+            node.right = Build(mid + 1, hi);
+            return node;
+        }
+        return Build(0, n);
+    }
+}
+</code></pre>
+</div>
+<p>O(n) time, O(log n) recursion depth. The alternative, slow/fast pointers to find each middle (see
+<a href="linked-lists.html">Linked Lists</a>), is O(n log n) and also accepted.</p>
+</details>
+<h3 id="6-recover-binary-search-tree-medium">6. Recover Binary Search Tree (Medium)</h3>
+<p><a href="https://leetcode.com/problems/recover-binary-search-tree/">LeetCode 99</a>. Exactly two nodes of a BST had their
+keys swapped. Fix the tree without changing its structure.</p>
+<p><strong>Insight.</strong> Look at the inorder sequence. Swapping two keys of a sorted list creates <strong>descents</strong> (places where a
+key is bigger than the next one). If the swapped keys are adjacent in inorder, there is one descent and both keys
+are in it. Otherwise there are two: the <strong>first</strong> wrong key is the bigger key of the first descent, the <strong>second</strong>
+wrong key is the smaller key of the last descent. Record them during an inorder walk and swap their values at the
+end. The visualizer below marks each descent as it is found.</p>
+<div class="viz bst-wide" data-viz="binary-search-trees-recover"></div>
+
+<details class="solution">
+<summary>Solution: inorder walk, track descents</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def recover_tree(root):
+    first = second = prev = None
+    stack, cur = [], root
+    while stack or cur:
+        while cur:
+            stack.append(cur)
+            cur = cur.left
+        cur = stack.pop()
+        if prev and prev.val &gt; cur.val:      # a descent
+            if first is None:
+                first = prev                 # first descent: the bigger key is wrong
+            second = cur                     # last descent: the smaller key is wrong
+        prev = cur
+        cur = cur.right
+    first.val, second.val = second.val, first.val
+</code></pre>
+<pre><code class="language-csharp">public static class RecoverBst
+{
+    public static void RecoverTree(TreeNode root)
+    {
+        TreeNode first = null, second = null, prev = null;
+        var stack = new Stack&lt;TreeNode&gt;();
+        var cur = root;
+        while (stack.Count &gt; 0 || cur is not null)
+        {
+            for (; cur is not null; cur = cur.left) stack.Push(cur);
+            cur = stack.Pop();
+            if (prev is not null &amp;&amp; prev.val &gt; cur.val)
+            {
+                first ??= prev;
+                second = cur;
+            }
+            prev = cur;
+            cur = cur.right;
+        }
+        (first.val, second.val) = (second.val, first.val);
+    }
+}
+</code></pre>
+</div>
+<p>O(n) time, O(h) space. The follow-up asks for O(1) space: run the same descent check inside a <strong>Morris inorder</strong>
+traversal (see <a href="tree-traversals.html">Tree Traversals</a>), and swap only after the walk has removed all its threads.</p>
+</details>
+<h3 id="7-contains-duplicate-iii-hard">7. Contains Duplicate III (Hard)</h3>
+<p><a href="https://leetcode.com/problems/contains-duplicate-iii/">LeetCode 220</a>. Is there a pair of indices i ≠ j with
+|i − j| ≤ indexDiff and |nums[i] − nums[j]| ≤ valueDiff?</p>
+<p><strong>Insight.</strong> The index condition is a <a href="sliding-window.html">sliding window</a> of the last indexDiff values. The
+value condition asks whether any value in that window lies in [x − t, x + t]. An unordered window cannot answer
+that quickly, but an <strong>ordered set</strong> can: the only candidate worth checking is the <strong>ceiling of x − t</strong> (the
+smallest window value that is not too small). If it exists and is ≤ x + t, we are done.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 960 300" width="960" role="img" aria-label="Contains Duplicate III: a sliding window kept in an ordered set, queried with ceiling">
+<defs><marker id="binary-search-trees-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box" x="40" y="70" width="46" height="34" rx="5"/>
+<text x="63" y="92" text-anchor="middle" class="mono">8</text>
+<text x="63" y="117" text-anchor="middle" class="small muted">i=0</text>
+<rect class="box" x="92" y="70" width="46" height="34" rx="5"/>
+<text x="115" y="92" text-anchor="middle" class="mono">1</text>
+<text x="115" y="117" text-anchor="middle" class="small muted">i=1</text>
+<rect class="box" x="144" y="70" width="46" height="34" rx="5"/>
+<text x="167" y="92" text-anchor="middle" class="mono">15</text>
+<text x="167" y="117" text-anchor="middle" class="small muted">i=2</text>
+<rect class="box visit" x="196" y="70" width="46" height="34" rx="5"/>
+<text x="219" y="92" text-anchor="middle" class="mono">4</text>
+<text x="219" y="117" text-anchor="middle" class="small muted">i=3</text>
+<rect class="box visit" x="248" y="70" width="46" height="34" rx="5"/>
+<text x="271" y="92" text-anchor="middle" class="mono">11</text>
+<text x="271" y="117" text-anchor="middle" class="small muted">i=4</text>
+<rect class="box active" x="300" y="70" width="46" height="34" rx="5"/>
+<text x="323" y="92" text-anchor="middle" class="mono">6</text>
+<text x="323" y="117" text-anchor="middle" class="small muted">i=5</text>
+<text x="40" y="36" text-anchor="start" class="title">nums, indexDiff k = 2, valueDiff t = 2</text>
+<path class="edge accent" d="M197.0,62 L197.0,56 L293.0,56 L293.0,62"/>
+<text x="245" y="50" text-anchor="middle" class="small fill-accent">window: last k</text>
+<text x="40" y="150" text-anchor="start" class="small">at i = 5, x = 6: the set holds the previous k values {4, 11}</text>
+<text x="40" y="172" text-anchor="start" class="small">is there a y in the set with 6 − 2 ≤ y ≤ 6 + 2?</text>
+<text x="40" y="194" text-anchor="start" class="small mono fill-done">y = ceiling(x − t) = ceiling(4) = 4, and 4 ≤ 8: yes</text>
+<text x="40" y="222" text-anchor="start" class="small muted">then add x, and remove nums[i − k] once the window is full</text>
+<line class="edge" x1="470" y1="150" x2="920" y2="150"/>
+<line class="edge" x1="470" y1="146" x2="470" y2="154"/>
+<text x="470" y="184" text-anchor="middle" class="small muted">0</text>
+<line class="edge" x1="500" y1="146" x2="500" y2="154"/>
+<line class="edge" x1="530" y1="146" x2="530" y2="154"/>
+<text x="530" y="184" text-anchor="middle" class="small muted">2</text>
+<line class="edge" x1="560" y1="146" x2="560" y2="154"/>
+<line class="edge" x1="590" y1="146" x2="590" y2="154"/>
+<text x="590" y="184" text-anchor="middle" class="small muted">4</text>
+<line class="edge" x1="620" y1="146" x2="620" y2="154"/>
+<line class="edge" x1="650" y1="146" x2="650" y2="154"/>
+<line class="edge" x1="680" y1="146" x2="680" y2="154"/>
+<line class="edge" x1="710" y1="146" x2="710" y2="154"/>
+<text x="710" y="184" text-anchor="middle" class="small muted">8</text>
+<line class="edge" x1="740" y1="146" x2="740" y2="154"/>
+<line class="edge" x1="770" y1="146" x2="770" y2="154"/>
+<text x="770" y="184" text-anchor="middle" class="small muted">10</text>
+<line class="edge" x1="800" y1="146" x2="800" y2="154"/>
+<line class="edge" x1="830" y1="146" x2="830" y2="154"/>
+<text x="830" y="184" text-anchor="middle" class="small muted">12</text>
+<line class="edge" x1="860" y1="146" x2="860" y2="154"/>
+<line class="edge" x1="890" y1="146" x2="890" y2="154"/>
+<text x="890" y="184" text-anchor="middle" class="small muted">14</text>
+<line class="edge" x1="920" y1="146" x2="920" y2="154"/>
+<rect class="box done" x="590" y="110" width="120" height="10" rx="4"/>
+<line class="edge dash done" x1="590" y1="120" x2="590" y2="150"/>
+<line class="edge dash done" x1="710" y1="120" x2="710" y2="150"/>
+<text x="650" y="102" text-anchor="middle" class="small fill-done">[x − t, x + t] = [4, 8]</text>
+<circle class="box visit" cx="590" cy="150" r="14"/>
+<text x="590" y="155" text-anchor="middle" class="mono">4</text>
+<circle class="box visit" cx="800" cy="150" r="14"/>
+<text x="800" y="155" text-anchor="middle" class="mono">11</text>
+<line class="edge accent" x1="650" y1="220" x2="650" y2="158" marker-end="url(#binary-search-trees-ar)"/>
+<text x="650" y="236" text-anchor="middle" class="small fill-accent">x = 6</text>
+<text x="470" y="270" text-anchor="start" class="small muted">ordered set of the window: ceiling(x − t) finds the closest candidate in O(log k)</text>
+</svg>
+<figcaption>The window keeps only the last k values, in sorted order. One <code>ceiling</code> query answers "is any value within t of x?" because the smallest value ≥ x − t is the only one that can be closest from above. Total O(n log k).</figcaption>
+</figure>
+
+<details class="solution">
+<summary>Solution: sliding window in an ordered set, one ceiling query per step</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from sortedcontainers import SortedList
+
+
+def contains_nearby_almost_duplicate(nums, index_diff, value_diff):
+    window = SortedList()
+    for i, x in enumerate(nums):
+        j = window.bisect_left(x - value_diff)          # ceiling(x - t)
+        if j &lt; len(window) and window[j] &lt;= x + value_diff:
+            return True
+        window.add(x)
+        if i &gt;= index_diff:
+            window.remove(nums[i - index_diff])         # keep only the last index_diff values
+    return False
+</code></pre>
+<pre><code class="language-csharp">public static class NearbyAlmostDuplicate
+{
+    public static bool ContainsNearbyAlmostDuplicate(int[] nums, int indexDiff, int valueDiff)
+    {
+        var window = new SortedSet&lt;long&gt;();
+        for (int i = 0; i &lt; nums.Length; i++)
+        {
+            long x = nums[i];
+            if (window.Count &gt; 0 &amp;&amp; window.Max &gt;= x - valueDiff)
+            {
+                long c = window.GetViewBetween(x - valueDiff, window.Max).Min;   // ceiling(x - t)
+                if (c &lt;= x + valueDiff) return true;
+            }
+            window.Add(x);
+            if (i &gt;= indexDiff) window.Remove(nums[i - indexDiff]);
+        }
+        return false;
+    }
+}
+</code></pre>
+</div>
+<p>O(n log k) time, O(k) space for k = indexDiff. A set (not a multiset) is enough: if two equal values were ever in
+the window together, the second would already have returned <code>True</code>. <code>long</code> keeps <code>x ± t</code> from overflowing. There
+is also an O(n) answer: <strong>buckets</strong> of width t + 1 keyed by <code>x // (t + 1)</code>; two values in the same bucket are
+close, so only the neighbouring buckets need a check (see <a href="hashing.html">Hashing</a>).</p>
+</details>
+<h3 id="8-maximum-sum-bst-in-binary-tree-hard">8. Maximum Sum BST in Binary Tree (Hard)</h3>
+<p><a href="https://leetcode.com/problems/maximum-sum-bst-in-binary-tree/">LeetCode 1373</a>. In an arbitrary binary tree,
+find the maximum key sum of any subtree that is a BST (0 if all are negative, since the empty tree counts).</p>
+<p><strong>Insight.</strong> Checking each subtree separately is O(n²). Instead, compute bottom-up (<strong>postorder</strong>) a summary of
+each subtree: its minimum, its maximum and its sum, with a marker for "not a BST". A node roots a BST exactly when
+both children do and <code>max(left) &lt; node.val &lt; min(right)</code>, which is the window rule seen from below. Return
+(−∞, +∞) for "not a BST": that pair fails every parent's comparison, so the failure propagates for free. Empty
+subtrees return (+∞, −∞, 0), which every parent accepts.</p>
+<details class="solution">
+<summary>Solution: postorder (min, max, sum) summaries</summary>
+<div class="code-tabs">
+<pre><code class="language-python">import math
+
+
+def max_sum_bst(root):
+    best = 0
+
+    def go(node):                        # -&gt; (lo, hi, total) of this subtree
+        nonlocal best
+        if node is None:
+            return math.inf, -math.inf, 0
+        llo, lhi, ls = go(node.left)
+        rlo, rhi, rs = go(node.right)
+        if lhi &lt; node.val &lt; rlo:         # both sides are BSTs and fit around node
+            total = ls + node.val + rs
+            best = max(best, total)
+            return min(llo, node.val), max(rhi, node.val), total
+        return -math.inf, math.inf, 0    # poison: no ancestor can be a BST
+
+    go(root)
+    return best
+</code></pre>
+<pre><code class="language-csharp">public static class MaxSumBstSolver
+{
+    public static int MaxSumBST(TreeNode root)
+    {
+        int best = 0;
+        (long lo, long hi, int sum) Go(TreeNode node)
+        {
+            if (node is null) return (long.MaxValue, long.MinValue, 0);
+            var l = Go(node.left);
+            var r = Go(node.right);
+            if (l.hi &lt; node.val &amp;&amp; node.val &lt; r.lo)
+            {
+                int total = l.sum + node.val + r.sum;
+                best = Math.Max(best, total);
+                return (Math.Min(l.lo, node.val), Math.Max(r.hi, node.val), total);
+            }
+            return (long.MinValue, long.MaxValue, 0);
+        }
+        Go(root);
+        return best;
+    }
+}
+</code></pre>
+</div>
+<p>O(n) time, O(h) recursion. This "return a small tuple from each child and combine" pattern is the core of
+<a href="tree-patterns.html">Tree Problem Patterns</a>. The tree can be a 40,000-node chain, so in Python add
+<code>sys.setrecursionlimit(100_000)</code> (or convert to an iterative postorder).</p>
+</details>
+<h2 id="problem-ladder">Problem ladder</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Level</th>
+<th>The key idea</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://leetcode.com/problems/search-in-a-binary-search-tree/">Search in a Binary Search Tree</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>One comparison per level; go left or right.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/">Convert Sorted Array to Binary Search Tree</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Middle is the root, recurse on halves.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://leetcode.com/problems/range-sum-of-bst/">Range Sum of BST</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Prune sides that cannot reach [lo, hi].</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://leetcode.com/problems/minimum-absolute-difference-in-bst/">Minimum Absolute Difference in BST</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Inorder neighbours; track <code>prev</code>.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://leetcode.com/problems/two-sum-iv-input-is-a-bst/">Two Sum IV - Input is a BST</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Forward + backward iterators = two pointers.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://leetcode.com/problems/find-mode-in-binary-search-tree/">Find Mode in Binary Search Tree</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Duplicates are adjacent in inorder: run lengths, O(1) extra space.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://leetcode.com/problems/insert-into-a-binary-search-tree/">Insert into a Binary Search Tree</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Attach where the search falls off.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/">Lowest Common Ancestor of a BST</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Walk down until p and q split.</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://leetcode.com/problems/validate-binary-search-tree/">Validate Binary Search Tree</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>(lo, hi) windows or a strictly increasing inorder.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://leetcode.com/problems/kth-smallest-element-in-a-bst/">Kth Smallest Element in a BST</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Iterative inorder, stop at k; sizes for the follow-up.</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://leetcode.com/problems/binary-search-tree-iterator/">Binary Search Tree Iterator</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Stack of the left spine; O(1) amortised.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://leetcode.com/problems/delete-node-in-a-bst/">Delete Node in a BST</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Three cases; successor for two children.</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://leetcode.com/problems/trim-a-binary-search-tree/">Trim a Binary Search Tree</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Out-of-range node returns its trimmed surviving side.</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="https://leetcode.com/problems/convert-bst-to-greater-tree/">Convert BST to Greater Tree</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Reverse inorder with a running sum.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal/">Construct BST from Preorder Traversal</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Shared index + upper bound, O(n).</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/">Convert Sorted List to Binary Search Tree</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Build in inorder, consume the list in order.</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="https://leetcode.com/problems/balance-a-binary-search-tree/">Balance a Binary Search Tree</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Inorder to a sorted array, rebuild from the middle.</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="https://leetcode.com/problems/unique-binary-search-trees/">Unique Binary Search Trees</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Choose the root: G(n) = Σ G(i − 1) · G(n − i), Catalan numbers.</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="https://leetcode.com/problems/serialize-and-deserialize-bst/">Serialize and Deserialize BST</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Preorder only; rebuild with bounds.</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="https://leetcode.com/problems/recover-binary-search-tree/">Recover Binary Search Tree</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>First descent's big key, last descent's small key.</td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="https://leetcode.com/problems/my-calendar-i/">My Calendar I</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Ordered map of starts; check floor and ceiling neighbours.</td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="https://leetcode.com/problems/contains-duplicate-iii/">Contains Duplicate III</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Ordered window + ceiling(x − t), or buckets.</td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="https://leetcode.com/problems/maximum-sum-bst-in-binary-tree/">Maximum Sum BST in Binary Tree</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Postorder (min, max, sum) with a poison value.</td>
+</tr>
+<tr>
+<td>24</td>
+<td><a href="https://leetcode.com/problems/data-stream-as-disjoint-intervals/">Data Stream as Disjoint Intervals</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Ordered map of interval starts; merge with floor and ceiling.</td>
+</tr>
+<tr>
+<td>25</td>
+<td><a href="https://leetcode.com/problems/count-of-smaller-numbers-after-self/">Count of Smaller Numbers After Self</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Right to left, rank(x) in an order-statistic structure (or a Fenwick tree).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>Of the 6 orders in which you can insert the keys 1, 2, 3, how many give a tree with only two levels? How many different tree shapes appear in total?</summary>
+<p>Two orders, (2, 1, 3) and (2, 3, 1), put 2 at the root and give the balanced tree. The other four give chains:
+(1, 2, 3), (1, 3, 2), (3, 2, 1) and (3, 1, 2), each a different shape. So 5 distinct shapes, which is the Catalan
+number C₃ = 5 and the answer to LeetCode 96 for n = 3. Only a third of random orders are balanced here, but for
+large n random orders are balanced on average (height about 3 log₂ n); sorted orders never are.</p>
+</details>
+<details class="quiz">
+<summary>When deleting a node with two children, why can the successor always be removed with the easy cases?</summary>
+<p>The successor is the leftmost node of the right subtree. If it had a left child, that child would be smaller and
+still in the right subtree, so it would be further left: contradiction. With no left child it is a leaf (case 1)
+or has only a right child (case 2), so it can be spliced out.</p>
+</details>
+<details class="quiz">
+<summary>Is the tree <code>[5, 4, 6, null, null, 3, 7]</code> a valid BST? Which check catches it?</summary>
+<p>No. 3 is the left child of 6, which is fine locally (3 is smaller than 6), but it lies in 5's <strong>right</strong> subtree,
+so it must be bigger than 5. Its window is (5, 6). The window check rejects it, and so does the inorder check: the
+inorder sequence is 4, 5, 3, 6, 7, with a dip after 5.</p>
+</details>
+<details class="quiz">
+<summary>Preorder is <code>[8, 5, 1, 7, 10, 12]</code>. Draw the BST. What is its inorder sequence, and why didn't you need it?</summary>
+<p>8 is the root. 5, 1, 7 are smaller, so they form the left subtree: 5 with children 1 and 7. 10 and 12 form the
+right subtree: 10 with right child 12. The inorder is the sorted list 1, 5, 7, 8, 10, 12. You never need it as
+input because sorting the keys always produces it, which is why preorder alone determines a BST.</p>
+</details>
+<details class="quiz">
+<summary>Using a C# <code>SortedSet&lt;int&gt;</code> with 10⁶ keys, which of these is O(log n): <code>GetViewBetween(a, b)</code>, <code>view.Min</code>, <code>view.Count</code>?</summary>
+<p>Creating the view and reading <code>Min</code> or <code>Max</code> are O(log n): the view is lazy and walks one path. <code>Count</code> walks every
+key in the range, O(k), and recounts after every change to the set. Also watch out for an empty view, whose <code>Min</code> and
+<code>Max</code> return <code>default(int)</code> = 0 instead of throwing.</p>
+</details>
+<details class="quiz">
+<summary>A right rotation at z changes three pointers. Which subtree changes parent, and why can't the rotation break the BST property?</summary>
+<p>Subtree B (y's old right child) moves from y to become z's left child. Every key in B is between y and z, which
+is exactly the window of z's left child after the rotation. A, B and C keep their contents and the inorder
+sequence stays A, y, B, z, C, so the tree is still sorted.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Invariant</strong>left subtree smaller, right subtree larger, at <b>every</b> node. Inorder = sorted. Operations cost O(h).</div>
+<div><strong>Search</strong><code>cur = cur.left if x &lt; cur.val else cur.right</code> until hit or None.</div>
+<div><strong>Floor / ceiling</strong>same walk; remember the last node where you went right (floor) or left (ceiling).</div>
+<div><strong>Insert</strong>attach where the search falls off. Recursive: <code>node.left = insert(node.left, x)</code>.</div>
+<div><strong>Delete</strong>0 or 1 child: return the other child. 2 children: copy successor (leftmost of right), delete it from the right.</div>
+<div><strong>Successor</strong>right subtree's leftmost, else last ancestor where the search turned left.</div>
+<div><strong>Validate</strong>windows (lo, hi) from all ancestors, or inorder strictly increasing. Use long / nullable bounds.</div>
+<div><strong>k-th / iterator</strong>stack of the left spine: O(1) amortised, O(h) memory. Sizes in nodes give O(h) k-th and rank.</div>
+<div><strong>Range</strong>below lo: only go right; above hi: only go left. O(h + m).</div>
+<div><strong>LCA</strong>both smaller: left; both bigger: right; else here.</div>
+<div><strong>Balance</strong>sorted input → chain. Build from sorted: middle as root. AVL: |height diff| ≤ 1, LL/RR one rotation, LR/RL two. Red-black: h ≤ 2 log₂(n + 1).</div>
+<div><strong>Libraries</strong>C# SortedSet/SortedDictionary (red-black; floor = view Max, never view.Count). Python bisect on a list (O(n) insert) or sortedcontainers.SortedList.</div>
+</div>
+<p>Related: <a href="tree-traversals.html">Tree Traversals</a> (inorder, iterative stacks, Morris), <a href="binary-search.html">Binary Search</a>
+(the same halving on arrays), <a href="tree-patterns.html">Tree Problem Patterns</a> (LCA in any tree, serialization, path
+problems), <a href="tries.html">Tries</a> (a search tree keyed by characters instead of comparisons), and
+<a href="segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a> (rank and range queries over fixed
+value ranges).</p><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="tree-traversals.html"><small>&larr; PREVIOUS</small>Tree Traversals</a><a class="next" href="tree-patterns.html"><small>NEXT &rarr;</small>Tree Problem Patterns</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-invariant-in-one-picture">The invariant in one picture</a></li>
+<li><a href="#search-floor-and-ceiling">Search, floor and ceiling</a></li>
+<li><a href="#insert-follow-the-search-attach-where-it-falls-off">Insert: follow the search, attach where it falls off</a></li>
+<li><a href="#delete-three-cases">Delete: three cases</a><ul>
+<li><a href="#successor-and-predecessor">Successor and predecessor</a></li>
+</ul>
+</li>
+<li><a href="#validate-windows-not-parents">Validate: windows, not parents</a></li>
+<li><a href="#inorder-is-sorted-order-iterators-k-th-smallest-rank">Inorder is sorted order: iterators, k-th smallest, rank</a><ul>
+<li><a href="#order-statistics-k-th-in-oh-with-subtree-sizes">Order statistics: k-th in O(h) with subtree sizes</a></li>
+</ul>
+</li>
+<li><a href="#range-queries-prune-whole-subtrees">Range queries: prune whole subtrees</a></li>
+<li><a href="#lowest-common-ancestor-in-a-bst">Lowest common ancestor in a BST</a></li>
+<li><a href="#building-a-balanced-bst-from-sorted-data">Building a balanced BST from sorted data</a></li>
+<li><a href="#why-balance-matters-and-how-trees-stay-balanced">Why balance matters, and how trees stay balanced</a><ul>
+<li><a href="#rotations">Rotations</a></li>
+<li><a href="#avl-trees-heights-differ-by-at-most-one">AVL trees: heights differ by at most one</a></li>
+<li><a href="#red-black-trees-what-your-standard-library-uses">Red-black trees: what your standard library uses</a></li>
+</ul>
+</li>
+<li><a href="#ordered-sets-in-practice-c-and-python">Ordered sets in practice: C# and Python</a></li>
+<li><a href="#choosing-the-tool">Choosing the tool</a></li>
+<li><a href="#pitfalls">Pitfalls</a></li>
+<li><a href="#worked-problems">Worked problems</a><ul>
+<li><a href="#1-validate-binary-search-tree-medium">1. Validate Binary Search Tree (Medium)</a></li>
+<li><a href="#2-two-sum-iv-input-is-a-bst-easy">2. Two Sum IV: Input is a BST (Easy)</a></li>
+<li><a href="#3-kth-smallest-element-in-a-bst-with-updates-medium">3. Kth Smallest Element in a BST, with updates (Medium)</a></li>
+<li><a href="#4-construct-bst-from-preorder-traversal-medium">4. Construct BST from Preorder Traversal (Medium)</a></li>
+<li><a href="#5-convert-sorted-list-to-binary-search-tree-medium">5. Convert Sorted List to Binary Search Tree (Medium)</a></li>
+<li><a href="#6-recover-binary-search-tree-medium">6. Recover Binary Search Tree (Medium)</a></li>
+<li><a href="#7-contains-duplicate-iii-hard">7. Contains Duplicate III (Hard)</a></li>
+<li><a href="#8-maximum-sum-bst-in-binary-tree-hard">8. Maximum Sum BST in Binary Tree (Hard)</a></li>
+</ul>
+</li>
+<li><a href="#problem-ladder">Problem ladder</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

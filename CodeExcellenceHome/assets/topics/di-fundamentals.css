@@ -1,0 +1,112 @@
+/* Topic styles for "Dependency Injection Fundamentals" (prefix dif-). Colours come only from site variables. */
+.viz [class^="dif-"], .viz [class*=" dif-"] { overflow-wrap: normal; }
+
+/* wide visualizers: stage gets the full width, code + vars sit underneath side by side */
+.viz.dif-wide .viz-body.with-code { grid-template-columns: minmax(0, 1fr); }
+.viz.dif-wide .viz-side { border-left: 0; border-top: 1px solid var(--line); flex-direction: row; }
+.viz.dif-wide .viz-code { flex: 2.3 1 0; min-width: 0; }
+.viz.dif-wide .viz-vars { flex: 1 1 0; border-top: 0; border-left: 1px solid var(--line); align-content: start; }
+@media (max-width: 900px) { .viz.dif-wide .viz-side { flex-direction: column; } .viz.dif-wide .viz-vars { border-left: 0; border-top: 1px solid var(--line); } }
+
+/* ---- object graph svg ---- */
+svg.dif-g { max-width: 100%; height: auto; overflow: visible; font: 600 12.5px "Cascadia Code", Consolas, monospace; }
+svg.dif-g .nb rect { fill: var(--v-node); stroke: var(--muted); stroke-width: 1.6; transition: fill .2s, stroke .2s; }
+svg.dif-g .nb text { text-anchor: middle; fill: var(--text); }
+svg.dif-g .t1 { font-weight: 700; font-size: 12.5px; }
+svg.dif-g .t2 { font-weight: 500; font-size: 10.5px; fill: var(--muted); }
+svg.dif-g .nb .t2 { fill: var(--muted); }
+svg.dif-g .t0 { font-size: 10.5px; font-weight: 700; letter-spacing: .8px; fill: var(--accent); text-transform: uppercase; }
+svg.dif-g .nb .t0 { fill: var(--accent); }
+svg.dif-g .lt { font-weight: 700; }
+svg.dif-g .nb .lt.path { fill: var(--v-path); } svg.dif-g .nb .lt.visit { fill: var(--v-visit); } svg.dif-g .nb .lt.muted { fill: var(--muted); }
+svg.dif-g .nb .lt.bad { fill: var(--v-bad); }
+svg.dif-g .nb.active rect { fill: var(--v-active-soft); stroke: var(--v-active); stroke-width: 2.6; }
+svg.dif-g .nb.pending rect { stroke-dasharray: 6 4; fill: var(--surface); }
+svg.dif-g .nb.done rect { fill: var(--v-done-soft); stroke: var(--v-done); stroke-width: 2; }
+svg.dif-g .nb.single rect { fill: var(--v-path-soft); stroke: var(--v-path); }
+svg.dif-g .nb.visit rect { fill: var(--v-visit-soft); stroke: var(--v-visit); stroke-width: 2.8; }
+svg.dif-g .nb.bad rect { fill: var(--v-bad-soft); stroke: var(--v-bad); stroke-width: 2.6; stroke-dasharray: 6 4; }
+svg.dif-g .nb.path rect { fill: var(--v-path-soft); stroke: var(--v-path); stroke-width: 2.4; }
+svg.dif-g .ge { fill: none; stroke: var(--v-dim); stroke-width: 1.8; transition: stroke .2s; }
+svg.dif-g .ge.active { stroke: var(--v-active); stroke-width: 2.6; }
+svg.dif-g .ge.visit { stroke: var(--v-visit); stroke-width: 2.4; stroke-dasharray: 6 4; }
+svg.dif-g .ge.bad { stroke: var(--v-bad); stroke-width: 2.4; stroke-dasharray: 6 4; }
+svg.dif-g .ge.done { stroke: var(--v-done); stroke-width: 2.2; }
+svg.dif-g .gah { fill: var(--v-dim); }
+svg.dif-g .gah.active { fill: var(--v-active); } svg.dif-g .gah.visit { fill: var(--v-visit); }
+svg.dif-g .gah.bad { fill: var(--v-bad); } svg.dif-g .gah.done { fill: var(--v-done); }
+svg.dif-g .gl { font-size: 10.5px; font-weight: 700; fill: var(--v-bad); paint-order: stroke; stroke: var(--surface); stroke-width: 4px; }
+
+/* ---- grid tables (divs, so prose table rules never apply) ---- */
+.dif-tbl { display: grid; grid-template-columns: auto auto auto auto; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; font: 12px "Cascadia Code", Consolas, monospace; background: var(--surface); }
+.dif-tbl.dif-calls { grid-template-columns: auto minmax(0, auto) auto auto minmax(0, 1fr); max-width: 100%; }
+.dif-tr { display: contents; }
+.dif-tr > span { padding: 4px 10px; border-top: 1px solid var(--line); white-space: nowrap; transition: background .2s; }
+.dif-tr.dif-th > span { border-top: 0; background: var(--bg); color: var(--muted); font: 700 10.5px system-ui, sans-serif; letter-spacing: .8px; text-transform: uppercase; }
+.dif-tr.active > span { background: var(--v-active-soft); }
+.dif-tr.active > span:first-child { box-shadow: inset 3px 0 0 var(--v-active); }
+.dif-tr.bad > span { background: var(--v-bad-soft); }
+.dif-tr.bad > span:first-child { box-shadow: inset 3px 0 0 var(--v-bad); }
+.dif-calls .dif-tr > span:last-child { white-space: normal; min-width: 180px; }
+.dif-tbl code { font-size: 11.5px; background: none; padding: 0; }
+.dif-life { font-weight: 700; }
+.dif-life.singleton { color: var(--v-path); } .dif-life.scoped { color: var(--v-visit); } .dif-life.transient { color: var(--muted); }
+.dif-hit { color: var(--v-done); font-weight: 700; }
+.dif-mute { color: var(--muted); }
+
+/* ---- hand-written wiring panel ---- */
+.dif-code { min-width: 300px; max-width: 420px; border: 1px solid var(--line); border-radius: 9px; background: var(--code); padding: 8px 0; font: 11.5px/1.6 "Cascadia Code", Consolas, monospace; }
+.dif-code > div { padding: 0 12px 0 calc(12px + 2ch); text-indent: -2ch; white-space: pre-wrap; overflow-wrap: anywhere; border-left: 3px solid transparent; }
+.dif-code > div.c { color: var(--muted); }
+.dif-code > div.cur { background: var(--v-active-soft); border-left-color: var(--v-active); font-weight: 700; }
+
+/* ---- resolve chain breadcrumb ---- */
+.dif-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 2px; width: 100%; }
+.dif-chain .v-caption { margin-right: 10px; align-self: center; }
+.dif-ci { padding: 3px 9px; border: 1.5px solid var(--line); border-radius: 6px; background: var(--v-node); font: 600 12px "Cascadia Code", Consolas, monospace; }
+.dif-ci.active { background: var(--v-active-soft); border-color: var(--v-active); }
+.dif-ci.bad { background: var(--v-bad-soft); border-color: var(--v-bad); }
+.dif-arr { color: var(--muted); padding: 0 4px; }
+
+.dif-err { width: 100%; max-width: 760px; padding: 9px 13px; border: 1.5px solid var(--v-bad); border-radius: 9px; background: var(--v-bad-soft); font: 12px/1.5 "Cascadia Code", Consolas, monospace; }
+.dif-note { font-size: 12.5px; color: var(--muted); text-align: center; }
+.dif-note code { font-size: 11.5px; }
+
+/* ---- collaborator card (seams, styles) ---- */
+.dif-card { display: flex; flex-direction: column; gap: 6px; min-width: 300px; max-width: 520px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.dif-who { font-size: 12.5px; color: var(--muted); }
+.dif-who b { color: var(--text); }
+.dif-field { display: grid; grid-template-columns: 70px auto 1fr; align-items: baseline; gap: 2px 6px; padding: 5px 9px; border: 1.5px solid var(--line); border-radius: 7px; background: var(--v-node); font: 12px "Cascadia Code", Consolas, monospace; }
+.dif-field code { background: none; padding: 0; font-size: 12px; color: var(--muted); }
+.dif-field small { grid-column: 2 / -1; color: var(--muted); font-size: 11px; }
+.dif-field.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.dif-field.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.dif-field.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.dif-fx.bad { color: var(--v-bad); font-weight: 700; } .dif-fx.ok { color: var(--v-done); font-weight: 700; } .dif-fx.warn { color: var(--v-active); font-weight: 700; }
+.dif-fx.done { color: var(--v-done); font-weight: 700; } .dif-fx.visit { color: var(--v-visit); font-weight: 700; }
+.dif-verdict { width: 100%; max-width: 760px; padding: 9px 13px; border-radius: 9px; border: 1.5px solid var(--line); font-size: 13px; font-weight: 600; }
+.dif-verdict.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.dif-verdict.warn { border-color: var(--v-active); background: var(--v-active-soft); }
+.dif-verdict.ok { border-color: var(--v-done); background: var(--v-done-soft); }
+.dif-ok { color: var(--v-done); } .dif-bad { color: var(--v-bad); }
+
+/* ---- statement strip ---- */
+.dif-steps { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; max-width: 640px; }
+.dif-step { padding: 4px 10px; border: 1.5px solid var(--line); border-radius: 7px; background: var(--v-node); font: 12px "Cascadia Code", Consolas, monospace; }
+.dif-step.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.dif-step.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.dif-step.warn { border-color: var(--v-active); background: var(--v-active-soft); }
+.dif-step.cur { box-shadow: 0 0 0 2px var(--accent); }
+
+/* ---- locator vs DI lanes ---- */
+.dif-lanes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; width: 100%; }
+@media (max-width: 760px) { .dif-lanes { grid-template-columns: minmax(0, 1fr); } }
+.dif-lane { display: flex; flex-direction: column; gap: 6px; padding: 10px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--surface); min-width: 0; }
+.dif-lane.bad { border-top: 4px solid var(--v-bad); } .dif-lane.ok { border-top: 4px solid var(--v-done); }
+.dif-lane-h { font-weight: 700; font-size: 13px; }
+.dif-ev { padding: 5px 9px; border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 6px; background: var(--v-node); font-size: 12.5px; line-height: 1.45; }
+.dif-ev small { display: block; font-size: 10px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); }
+.dif-ev code { font-size: 11.5px; }
+.dif-ev.ok { border-left-color: var(--v-done); } .dif-ev.bad { border-left-color: var(--v-bad); background: var(--v-bad-soft); }
+.dif-ev.warn { border-left-color: var(--v-active); background: var(--v-active-soft); }
+.dif-ev.cur { box-shadow: 0 0 0 2px var(--accent); }

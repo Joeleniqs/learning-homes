@@ -1,0 +1,159 @@
+/* Topic styles for "Outbound Pipelines" (prefix ob-). Colours come only from theme variables. */
+.viz[data-viz^="outbound-pipelines-"] .viz-stage { padding: 16px 14px; gap: 12px; }
+.viz[data-viz^="outbound-pipelines-"] .viz-code li { font-size: 12px; }
+.ob-fit { width: 100%; display: flex; justify-content: safe center; overflow-x: auto; }
+.ob-fit > svg, .ob-fit > table { max-width: 100%; height: auto; }
+.ob-fit > table { max-width: none; }
+.ob-col { display: flex; flex-direction: column; gap: 10px; flex: 1 1 270px; max-width: 440px; min-width: 0; }
+.ob-hint { padding: 18px 10px; color: var(--muted); font-style: italic; font-size: 12.5px; width: 240px; text-align: center; border: 1.5px dashed var(--line); border-radius: 12px; }
+
+/* ---- key/value panels and stat chips ---- */
+.ob-kv { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); font: 12px "Cascadia Code", Consolas, monospace; overflow: hidden; min-width: 0; }
+.ob-kv-h { padding: 4px 10px; font: 700 10.5px "Segoe UI", system-ui, sans-serif; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line); background: var(--code); }
+.ob-kv-r { display: flex; justify-content: space-between; gap: 12px; padding: 3px 10px; border-left: 3px solid transparent; }
+.ob-kv-r > span { overflow-wrap: anywhere; min-width: 0; }
+.ob-kv-r > span:first-child { font-weight: 700; flex: none; max-width: 48%; }
+.ob-kv-r > span:last-child { text-align: right; }
+.ob-kv-r.one > span:first-child { font-weight: 400; max-width: none; flex: 1; text-align: left; }
+.ob-kv-r.done { border-left-color: var(--v-done); background: var(--v-done-soft); }
+.ob-kv-r.bad { border-left-color: var(--v-bad); background: var(--v-bad-soft); }
+.ob-kv-r.active { border-left-color: var(--v-active); background: var(--v-active-soft); }
+.ob-kv-r.visit { border-left-color: var(--v-visit); background: var(--v-visit-soft); }
+.ob-kv-r.path { border-left-color: var(--v-path); background: var(--v-path-soft); }
+.ob-kv-r.dim, .ob-kv-r.empty { color: var(--muted); }
+.ob-kv-r.empty > span:first-child { font-weight: 400; font-style: italic; }
+.ob-stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; width: 100%; }
+.ob-stat { border: 1.5px solid var(--line); border-radius: 8px; padding: 5px 12px; text-align: center; background: var(--surface); min-width: 92px; }
+.ob-stat b { display: block; font: 700 15px "Cascadia Code", Consolas, monospace; }
+.ob-stat span { font-size: 10.5px; color: var(--muted); }
+.ob-stat.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.ob-stat.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.ob-stat.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.ob-stat.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.ob-stat.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.ob-badge { font: 700 10.5px "Cascadia Code", Consolas, monospace; padding: 1px 6px; border-radius: 5px; background: var(--v-active); color: var(--bg); white-space: nowrap; flex: none; }
+
+/* ---- onion (handler chain, behaviors) ---- */
+.ob-onion { width: 310px; display: flex; flex-direction: column; gap: 6px; }
+.ob-onion.narrow { width: 250px; }
+.ob-caller { border: 1.5px dashed var(--muted); border-radius: 10px; padding: 5px 10px; font: 600 12px "Cascadia Code", Consolas, monospace; text-align: center; background: var(--code); overflow-wrap: anywhere; }
+.ob-caller.done { border-style: solid; border-color: var(--v-done); background: var(--v-done-soft); }
+.ob-caller.bad { border-style: solid; border-color: var(--v-bad); background: var(--v-bad-soft); }
+.ob-layer { border: 2px solid var(--line); border-radius: 14px; padding: 6px 8px 8px; background: var(--surface); transition: background .2s, border-color .2s, opacity .2s; }
+.ob-layer > .ob-layer { margin-top: 4px; }
+.ob-layer.core { padding: 10px 8px; border-style: dashed; }
+.ob-lname { display: flex; align-items: center; justify-content: space-between; gap: 6px; font-size: 12px; min-height: 20px; }
+.ob-lname small { color: var(--muted); font-size: 10.5px; }
+.ob-layer.active { border-color: var(--v-active); background: var(--v-active-soft); border-style: solid; }
+.ob-layer.visit { border-color: var(--v-visit); background: color-mix(in srgb, var(--v-visit-soft) 55%, var(--surface)); border-style: solid; }
+.ob-layer.done { border-color: var(--v-done); background: color-mix(in srgb, var(--v-done-soft) 55%, var(--surface)); border-style: solid; }
+.ob-layer.bad { border-color: var(--v-bad); background: var(--v-bad-soft); border-style: solid; }
+.ob-layer.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.ob-layer.dim { border-style: dashed; opacity: .45; }
+.ob-layer.cur { box-shadow: 0 0 0 3px var(--v-active-soft); outline: 2px solid var(--v-active); outline-offset: 1px; }
+.ob-server { margin-top: 6px; display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 5px 9px; border-radius: 9px; border: 1.5px solid var(--line); background: var(--v-node); font: 600 12px "Cascadia Code", Consolas, monospace; }
+.ob-server.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.ob-server.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.ob-server.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.ob-server.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+
+/* ---- charts ---- */
+svg.ob-chart { font: 11px "Segoe UI", system-ui, sans-serif; display: block; }
+svg.ob-chart .grid { stroke: var(--line); stroke-width: 1; }
+svg.ob-chart .ax { fill: var(--muted); }
+svg.ob-chart .bar.path { fill: var(--v-path); }
+svg.ob-chart .bar.visit { fill: var(--v-visit); opacity: .75; }
+svg.ob-chart .bar.done { fill: var(--v-done); }
+svg.ob-chart .bar.active { fill: var(--v-active); }
+svg.ob-chart .bar.bad { fill: var(--v-bad); }
+svg.ob-chart .cap { stroke: var(--v-bad); stroke-width: 1.6; stroke-dasharray: 6 4; }
+svg.ob-chart .capt { fill: var(--v-bad); font-weight: 700; paint-order: stroke; stroke: var(--bg); stroke-width: 5px; stroke-linejoin: round; }
+svg.ob-chart .mark { stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 3 3; }
+svg.ob-chart .mark.dns { stroke: var(--accent); stroke-width: 1.8; stroke-dasharray: none; }
+svg.ob-chart .mark.rot { stroke: var(--v-visit); opacity: .6; }
+svg.ob-chart .markt { fill: var(--accent); font-weight: 700; }
+svg.ob-chart .now { stroke: var(--v-active); stroke-width: 2; }
+
+/* ---- token timeline ---- */
+.viz table.ob-tl { border-collapse: separate; border-spacing: 2px; font: 600 10.5px "Cascadia Code", Consolas, monospace; }
+.prose table.ob-tl { display: table; width: auto; margin: 0; overflow: visible; }
+.viz table.ob-tl th { font-weight: 600; color: var(--muted); font-size: 10px; padding: 0 1px; white-space: nowrap; min-width: 0; border: 0; background: none; }
+.viz table.ob-tl tr > th:first-child { text-align: right; padding-right: 6px; }
+.viz table.ob-tl th.cur { color: var(--v-active); font-weight: 800; }
+.viz table.ob-tl td { width: 22px; min-width: 22px; height: 22px; padding: 0; text-align: center; font-size: 9.5px; letter-spacing: -.3px; border: 1.5px solid var(--line); border-radius: 5px; background: var(--v-node); }
+.viz table.ob-tl td.fut { opacity: .3; }
+.viz table.ob-tl td.done { background: var(--v-done-soft); border-color: var(--v-done); }
+.viz table.ob-tl td.bad { background: var(--v-bad-soft); border-color: var(--v-bad); }
+.viz table.ob-tl td.dead { background: var(--v-bad); color: var(--bg); }
+.viz table.ob-tl td.active { background: var(--v-active-soft); border-color: var(--v-active); }
+.viz table.ob-tl td.visit { background: var(--v-visit-soft); border-color: var(--v-visit); }
+.viz table.ob-tl td.cur { box-shadow: 0 0 0 2px var(--v-active); }
+.viz table.ob-tl tr.idprow td { height: 40px; position: relative; vertical-align: bottom; border-color: transparent; background: var(--code); }
+.viz table.ob-tl tr.idprow td.cur { box-shadow: inset 0 0 0 1.5px var(--v-active); }
+.viz table.ob-tl tr.idprow td i { position: absolute; left: 2px; right: 2px; bottom: 0; border-radius: 3px 3px 0 0; background: var(--v-active); opacity: .7; }
+.viz table.ob-tl tr.idprow td i.hot { background: var(--v-bad); }
+.viz table.ob-tl tr.idprow td em { position: relative; font-style: normal; font-size: 10.5px; color: var(--text); }
+.viz table.ob-tl tr.exprow td { height: 8px; border: 0; border-radius: 2px; }
+.viz table.ob-tl tr.exprow td.ok { background: var(--v-done); opacity: .6; }
+.viz table.ob-tl tr.exprow td.exp { background: var(--v-bad); opacity: .35; }
+
+/* ---- registration order ---- */
+.ob-chips { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; width: 100%; }
+.ob-chip { display: inline-block; margin: 2px 3px 2px 0; padding: 3px 8px; border-radius: 6px; border: 1.5px solid var(--line); background: var(--v-node); font: 600 12px "Cascadia Code", Consolas, monospace; }
+.ob-chip small { font-weight: 400; color: var(--muted); }
+.ob-chip.active { background: var(--v-active-soft); border-color: var(--v-active); }
+.ob-chip.visit { background: var(--v-visit-soft); border-color: var(--v-visit); }
+.ob-chip.done { background: var(--v-done-soft); border-color: var(--v-done); }
+.ob-chip.bad { background: var(--v-bad-soft); border-color: var(--v-bad); }
+.ob-chip.dim { opacity: .4; }
+.ob-hooks { display: flex; flex-direction: column; gap: 10px; width: 250px; }
+.ob-hooks .ob-kv-h { border: 0; background: none; padding: 0 0 4px; }
+.ob-net { text-align: center; padding: 6px; border-radius: 9px; border: 1.5px dashed var(--muted); font: 600 12px "Cascadia Code", Consolas, monospace; background: var(--code); }
+.ob-net.done { border-style: solid; border-color: var(--v-done); background: var(--v-done-soft); }
+pre.ob-snip { margin: 0; padding: 8px 0; max-width: 100%; min-width: 0; border-radius: 8px; border: 1px solid var(--line); background: var(--code); font: 11.5px/1.55 "Cascadia Code", Consolas, monospace; overflow-x: auto; white-space: pre; }
+pre.ob-snip span { display: inline-block; min-width: 100%; padding: 0 10px; box-sizing: border-box; border-left: 3px solid transparent; }
+pre.ob-snip span.hi { background: var(--v-active-soft); border-left-color: var(--v-active); font-weight: 700; }
+.ob-trail { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; width: 100%; min-height: 22px; }
+.ob-trail span { font: 600 11.5px "Cascadia Code", Consolas, monospace; padding: 1px 5px; border-radius: 5px; border: 1px solid var(--line); }
+.ob-trail span.in { background: var(--v-visit-soft); }
+.ob-trail span.out { background: var(--v-done-soft); }
+.ob-trail span.net { background: var(--v-path-soft); }
+.ob-trail span.cur { outline: 2px solid var(--v-active); }
+
+/* ---- OkHttp interceptor stack ---- */
+.ob-stack { display: flex; flex-direction: column; gap: 4px; width: 300px; }
+.ob-slot { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 5px 9px; border-radius: 8px; border: 1.5px solid var(--line); border-left-width: 5px; background: var(--v-node); transition: background .2s, border-color .2s; }
+.ob-slot > span b { display: block; font: 700 11.5px "Cascadia Code", Consolas, monospace; overflow-wrap: anywhere; }
+.ob-slot > span small { font-size: 10.5px; color: var(--muted); }
+.ob-slot.app { border-left-color: var(--v-path); }
+.ob-slot.net { border-left-color: var(--v-visit); }
+.ob-slot.int { border-left-color: var(--line); }
+.ob-slot.server { border-style: dashed; border-left-width: 1.5px; margin-top: 4px; background: var(--code); }
+.ob-slot.active { background: var(--v-active-soft); border-color: var(--v-active); }
+.ob-slot.visit { background: color-mix(in srgb, var(--v-visit-soft) 55%, var(--v-node)); }
+.ob-slot.done { background: color-mix(in srgb, var(--v-done-soft) 60%, var(--v-node)); }
+.ob-slot.bad { background: var(--v-bad-soft); }
+.ob-slot.cur { box-shadow: 0 0 0 2px var(--v-active); }
+
+/* ---- trace waterfall ---- */
+svg.ob-wf { font: 11px "Cascadia Code", Consolas, monospace; display: block; }
+svg.ob-wf .grid { stroke: var(--line); stroke-width: 1; }
+svg.ob-wf .ax { fill: var(--muted); font-family: "Segoe UI", system-ui, sans-serif; }
+svg.ob-wf .now { stroke: var(--v-active); stroke-width: 1.6; stroke-dasharray: 4 3; }
+svg.ob-wf .th { fill: var(--text); font-weight: 700; font-family: "Segoe UI", system-ui, sans-serif; font-size: 11.5px; }
+svg.ob-wf .th.bad { fill: var(--v-bad); }
+svg.ob-wf .lb { fill: var(--text); }
+svg.ob-wf .lb.client { fill: var(--muted); }
+svg.ob-wf .sp { stroke-width: 1.4; }
+svg.ob-wf .sp.path { fill: var(--v-path-soft); stroke: var(--v-path); }
+svg.ob-wf .sp.path.client { fill: var(--bg); }
+svg.ob-wf .sp.bad { fill: var(--v-bad-soft); stroke: var(--v-bad); }
+svg.ob-wf .sp.dangling { stroke-dasharray: 4 3; }
+svg.ob-wf .sp.open { opacity: .75; }
+svg.ob-wf .sp.cur { stroke: var(--v-active); stroke-width: 2.6; }
+svg.ob-wf .dur { fill: var(--text); font-size: 10px; font-weight: 700; }
+
+/* ---- static figure helpers (inside svg.dg) ---- */
+svg.dg .ob-t { font-size: 12.5px; font-weight: 650; }
+svg.dg .ob-s { font-size: 11px; fill: var(--muted); }
+svg.dg text.ob-h { paint-order: stroke; stroke: var(--bg); stroke-width: 7px; stroke-linejoin: round; }

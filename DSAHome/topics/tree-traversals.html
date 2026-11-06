@@ -1,0 +1,2565 @@
+<!doctype html>
+<html lang="en" data-home="dsa-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Tree Traversals | DSA Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#4f46e5;--accent-soft:#eef0ff;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#a5b4fc;--accent-soft:#252a5c;}}:root[data-theme=dark]{--accent:#a5b4fc;--accent-soft:#252a5c;}</style>
+  <link rel="stylesheet" href="../assets/topics/tree-traversals.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/tree-traversals.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="DSA Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">DS</span>DSA Home</a>
+    <p class="sidebar-caption">Data structures &amp; algorithms, seen.<br>Every idea animated, every pattern drilled.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations</summary><ul class="topic-list"><li data-search="The Problem-Solving Playbook Foundations A visual decision map from input size, shape and question type to the right technique, plus a repeatable interview/contest workflow. pattern recognition constraints approach interview" data-slug="problem-solving-playbook"><a href="../topics/problem-solving-playbook.html">The Problem-Solving Playbook</a></li><li data-search="Complexity Analysis Foundations Big-O growth you can see, amortized cost, recursion trees and the Master theorem, and what 10^8 operations per second really buys you. big o amortized master theorem time space" data-slug="complexity-analysis"><a href="../topics/complexity-analysis.html">Complexity Analysis</a></li><li data-search="Recursion &amp; the Call Stack Foundations Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from. call stack recursion tree divide and conquer" data-slug="recursion"><a href="../topics/recursion.html">Recursion &amp; the Call Stack</a></li></ul></details><details class="nav-track"><summary>Arrays &amp; Strings</summary><ul class="topic-list"><li data-search="Two Pointers Arrays &amp; Strings Opposite-end, same-direction and fast/slow pointers: why moving one pointer is safe, with partitioning and k-sum. pair sum partition dutch flag 3sum" data-slug="two-pointers"><a href="../topics/two-pointers.html">Two Pointers</a></li><li data-search="Sliding Window Arrays &amp; Strings Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows. substring subarray window at most k" data-slug="sliding-window"><a href="../topics/sliding-window.html">Sliding Window</a></li><li data-search="Prefix Sums &amp; Difference Arrays Arrays &amp; Strings 1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR. subarray sum equals k range sum 2d prefix difference array" data-slug="prefix-sums"><a href="../topics/prefix-sums.html">Prefix Sums &amp; Difference Arrays</a></li><li data-search="Binary Search Arrays &amp; Strings One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection. lower bound upper bound search on answer rotated monotonic predicate" data-slug="binary-search"><a href="../topics/binary-search.html">Binary Search</a></li><li data-search="Sorting Algorithms Arrays &amp; Strings Animated bubble, insertion, merge, quick, heap, counting and radix sorts; stability, quickselect and custom comparators. merge sort quick sort quickselect counting sort inversions" data-slug="sorting"><a href="../topics/sorting.html">Sorting Algorithms</a></li><li data-search="Hashing Patterns Arrays &amp; Strings How hash tables work inside, then frequency maps, grouping by canonical keys, complement lookups and rolling hashes. hash map hash set anagram two sum collision" data-slug="hashing"><a href="../topics/hashing.html">Hashing Patterns</a></li><li data-search="Monotonic Stack &amp; Queue Arrays &amp; Strings Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight. next greater largest rectangle deque trapping rain water" data-slug="monotonic-stack-queue"><a href="../topics/monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a></li><li data-search="Intervals &amp; Sweep Line Arrays &amp; Strings Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline. merge intervals meeting rooms events skyline" data-slug="intervals-sweep-line"><a href="../topics/intervals-sweep-line.html">Intervals &amp; Sweep Line</a></li><li data-search="String Algorithms Arrays &amp; Strings KMP failure function, Z-algorithm, Rabin–Karp, Manacher&#x27;s palindromes and string hashing, each animated character by character. kmp z algorithm rabin karp manacher palindrome pattern matching" data-slug="string-algorithms"><a href="../topics/string-algorithms.html">String Algorithms</a></li></ul></details><details class="nav-track"><summary>Linked Lists, Stacks, Queues &amp; Heaps</summary><ul class="topic-list"><li data-search="Linked Lists Linked Lists, Stacks, Queues &amp; Heaps Pointer rewiring you can watch: reversal, dummy heads, fast/slow cycle detection, merging, and LRU cache design. reverse floyd cycle merge lru" data-slug="linked-lists"><a href="../topics/linked-lists.html">Linked Lists</a></li><li data-search="Stacks &amp; Queues Linked Lists, Stacks, Queues &amp; Heaps Balanced brackets, expression evaluation, min-stack, queues from stacks, deques and BFS queues. parentheses calculator deque min stack" data-slug="stacks-queues"><a href="../topics/stacks-queues.html">Stacks &amp; Queues</a></li><li data-search="Heaps &amp; Priority Queues Linked Lists, Stacks, Queues &amp; Heaps Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling. heap top k median k way merge priority queue" data-slug="heaps-priority-queues"><a href="../topics/heaps-priority-queues.html">Heaps &amp; Priority Queues</a></li></ul></details><details class="nav-track" open><summary>Trees</summary><ul class="topic-list"><li data-search="Tree Traversals Trees Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees. dfs bfs inorder level order morris" data-slug="tree-traversals"><a href="../topics/tree-traversals.html" aria-current="page">Tree Traversals</a></li><li data-search="Binary Search Trees Trees Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters. bst validate successor avl red black" data-slug="binary-search-trees"><a href="../topics/binary-search-trees.html">Binary Search Trees</a></li><li data-search="Tree Problem Patterns Trees Return-value recursion (diameter, max path sum), top-down state, LCA, serialization, and binary lifting. lca diameter path sum binary lifting serialize" data-slug="tree-patterns"><a href="../topics/tree-patterns.html">Tree Problem Patterns</a></li><li data-search="Tries Trees Prefix trees animated insert by insert: autocomplete, word search on boards, and bitwise tries for max XOR. prefix tree autocomplete word search xor trie" data-slug="tries"><a href="../topics/tries.html">Tries</a></li><li data-search="Segment Trees, Fenwick Trees &amp; Sparse Tables Trees Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables. segment tree lazy propagation fenwick bit rmq" data-slug="segment-fenwick-trees"><a href="../topics/segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a></li></ul></details><details class="nav-track"><summary>Graphs</summary><ul class="topic-list"><li data-search="Graph Fundamentals: BFS &amp; DFS Graphs Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS. bfs dfs grid islands connected components cycle" data-slug="graph-fundamentals"><a href="../topics/graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></li><li data-search="Topological Sort &amp; DAGs Graphs Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs. kahn course schedule dag dependency order" data-slug="topological-sort"><a href="../topics/topological-sort.html">Topological Sort &amp; DAGs</a></li><li data-search="Union-Find (Disjoint Set Union) Graphs Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries. dsu disjoint set path compression connectivity" data-slug="union-find"><a href="../topics/union-find.html">Union-Find (Disjoint Set Union)</a></li><li data-search="Shortest Paths Graphs BFS, 0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall and A* animated, and a chart to pick the right one every time. dijkstra bellman ford floyd warshall a star 0-1 bfs" data-slug="shortest-paths"><a href="../topics/shortest-paths.html">Shortest Paths</a></li><li data-search="Minimum Spanning Trees Graphs Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems. kruskal prim mst cut property" data-slug="minimum-spanning-trees"><a href="../topics/minimum-spanning-trees.html">Minimum Spanning Trees</a></li><li data-search="Advanced Graph Algorithms Graphs Strongly connected components, bridges and articulation points, bipartite checks, Euler paths, and max-flow / matching. tarjan kosaraju scc bridges euler max flow bipartite matching" data-slug="advanced-graphs"><a href="../topics/advanced-graphs.html">Advanced Graph Algorithms</a></li></ul></details><details class="nav-track"><summary>Backtracking &amp; Greedy</summary><ul class="topic-list"><li data-search="Backtracking Backtracking &amp; Greedy The choose/explore/un-choose template animated on a decision tree: subsets, permutations, combinations, N-Queens, Sudoku and pruning. subsets permutations n queens sudoku pruning" data-slug="backtracking"><a href="../topics/backtracking.html">Backtracking</a></li><li data-search="Greedy Algorithms Backtracking &amp; Greedy When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding. exchange argument interval scheduling jump game huffman" data-slug="greedy"><a href="../topics/greedy.html">Greedy Algorithms</a></li></ul></details><details class="nav-track"><summary>Dynamic Programming</summary><ul class="topic-list"><li data-search="The DP Framework Dynamic Programming Recursion → memoization → tabulation → space optimisation, visualised on one problem; how to design state and transitions. memoization tabulation state transition overlapping subproblems" data-slug="dp-framework"><a href="../topics/dp-framework.html">The DP Framework</a></li><li data-search="1D &amp; Grid DP Dynamic Programming Climbing stairs, house robber, decode ways, unique paths, min path sum, maximal square and dungeon game with animated tables. house robber unique paths grid dp maximal square" data-slug="dp-linear-grid"><a href="../topics/dp-linear-grid.html">1D &amp; Grid DP</a></li><li data-search="Knapsack Family Dynamic Programming 0/1 vs unbounded vs bounded knapsack, why loop direction matters, coin change, subset sum and target sum. knapsack coin change subset sum partition" data-slug="dp-knapsack"><a href="../topics/dp-knapsack.html">Knapsack Family</a></li><li data-search="Sequence &amp; String DP Dynamic Programming LIS with patience sorting, LCS, edit distance, palindromic subsequences, regex/wildcard matching and distinct subsequences. lis lcs edit distance regex matching palindrome" data-slug="dp-sequences-strings"><a href="../topics/dp-sequences-strings.html">Sequence &amp; String DP</a></li><li data-search="Interval &amp; Tree DP Dynamic Programming Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting). interval dp burst balloons matrix chain tree dp rerooting" data-slug="dp-intervals-trees"><a href="../topics/dp-intervals-trees.html">Interval &amp; Tree DP</a></li><li data-search="Bitmask &amp; Digit DP Dynamic Programming Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints. bitmask tsp digit dp subset dp" data-slug="dp-bitmask-digit"><a href="../topics/dp-bitmask-digit.html">Bitmask &amp; Digit DP</a></li><li data-search="State Machines &amp; DP Optimisations Dynamic Programming Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth. stock state machine convex hull trick knuth optimisation" data-slug="dp-advanced"><a href="../topics/dp-advanced.html">State Machines &amp; DP Optimisations</a></li></ul></details><details class="nav-track"><summary>Bits &amp; Math</summary><ul class="topic-list"><li data-search="Bit Manipulation Bits &amp; Math Bits drawn as switches: masks, XOR tricks, counting bits, subset enumeration and Gray codes. xor mask single number popcount subsets" data-slug="bit-manipulation"><a href="../topics/bit-manipulation.html">Bit Manipulation</a></li><li data-search="Math, Number Theory &amp; Combinatorics Bits &amp; Math GCD, sieves, fast power, modular inverses, nCr mod p, inclusion–exclusion, and the geometry primitives you need. gcd sieve modular fast exponentiation combinatorics geometry" data-slug="math-number-theory"><a href="../topics/math-number-theory.html">Math, Number Theory &amp; Combinatorics</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../CodeExcellenceHome/index.html">Code Excellence Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>DSA Home / Tree Traversals</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">TREES</p><h1>Tree Traversals</h1><p class="lede">Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees.</p><div class="meta"><span class="level level-beginner">Beginner → Intermediate</span><span>~50 min study</span><span>Builds on: <a href="recursion.html">Recursion &amp; the Call Stack</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="tree-traversals" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><p>Every tree problem you will meet is a traversal with a little work bolted on. Count nodes, find depth, check a
+property, rebuild a tree, print it level by level: the question is always the same two choices. <strong>In what order
+do I reach the nodes?</strong> And <strong>at which moment, relative to a node's children, do I do the work?</strong> This page
+makes both choices visible. You will watch the call stack grow and shrink, push and pop an explicit stack by
+hand, thread a tree with temporary pointers so it needs no stack at all, sweep it level by level with a queue,
+and rebuild a tree from two of its traversals.</p>
+<div class="rule">
+<p><strong>The invariant.</strong> A depth-first traversal walks once around the tree and passes every node three times:
+before its left subtree, between its subtrees, and after its right subtree. <strong>Preorder, inorder and postorder are the
+same walk</strong>, writing the node down at pass 1, 2 or 3. A breadth-first traversal instead uses a queue, and finishes
+each depth before starting the next.</p>
+</div>
+<p>Prerequisite: <a href="recursion.html">Recursion &amp; the Call Stack</a>. Everything here builds on "a function call is a frame on
+a stack". Trees are also graphs (connected, acyclic, n − 1 edges), so <a href="graph-fundamentals.html">Graph Fundamentals</a>
+is the general version of the BFS and DFS you see here. Next steps: <a href="binary-search-trees.html">Binary Search Trees</a>,
+<a href="tree-patterns.html">Tree Problem Patterns</a> (diameter, path sums, LCA, serialization), and <a href="tries.html">Tries</a>.</p>
+<h2 id="trees-in-one-picture">Trees in one picture</h2>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 960 330" width="960" role="img" aria-label="Tree vocabulary: root, internal nodes, leaves, depth, height and a subtree">
+<line class="edge dash" x1="96" y1="52" x2="520" y2="52"/>
+<text x="20" y="57" text-anchor="start" class="small muted">depth 0</text>
+<line class="edge dash" x1="96" y1="134" x2="520" y2="134"/>
+<text x="20" y="139" text-anchor="start" class="small muted">depth 1</text>
+<line class="edge dash" x1="96" y1="216" x2="520" y2="216"/>
+<text x="20" y="221" text-anchor="start" class="small muted">depth 2</text>
+<rect class="edge dash accent" x="140" y="106" width="184" height="138" rx="16"/>
+<text x="148" y="100" text-anchor="start" class="small fill-accent">subtree rooted at 2</text>
+<line class="edge" x1="340.2" y1="62.5" x2="247.8" y2="123.5"/>
+<line class="edge" x1="370.3" y1="64.6" x2="434.7" y2="121.4"/>
+<line class="edge" x1="220.5" y1="149.2" x2="181.5" y2="200.8"/>
+<line class="edge" x1="243.5" y1="149.2" x2="282.5" y2="200.8"/>
+<line class="edge" x1="460.5" y1="149.2" x2="499.5" y2="200.8"/>
+<circle class="box done" cx="170" cy="216" r="19"/>
+<text x="170" y="221" text-anchor="middle" class="mono">4</text>
+<circle class="box visit" cx="232" cy="134" r="19"/>
+<text x="232" y="139" text-anchor="middle" class="mono">2</text>
+<circle class="box done" cx="294" cy="216" r="19"/>
+<text x="294" y="221" text-anchor="middle" class="mono">5</text>
+<circle class="box accent" cx="356" cy="52" r="19"/>
+<text x="356" y="57" text-anchor="middle" class="mono">1</text>
+<circle class="box visit" cx="449" cy="134" r="19"/>
+<text x="449" y="139" text-anchor="middle" class="mono">3</text>
+<circle class="box done" cx="511" cy="216" r="19"/>
+<text x="511" y="221" text-anchor="middle" class="mono">6</text>
+<text x="386" y="34" text-anchor="start" class="small">root (no parent)</text>
+<text x="537" y="220" text-anchor="start" class="small">leaf (no children)</text>
+<text x="453" y="106" text-anchor="start" class="small">internal: 3 has one child</text>
+<text x="700" y="60" text-anchor="start" class="title">Facts that never change</text>
+<text x="700" y="88" text-anchor="start" class="small">n nodes, exactly n − 1 edges</text>
+<text x="700" y="110" text-anchor="start" class="small">every node except the root</text>
+<text x="700" y="132" text-anchor="start" class="small">   has exactly one parent</text>
+<text x="700" y="154" text-anchor="start" class="small">depth(v) = edges from root to v</text>
+<text x="700" y="176" text-anchor="start" class="small">height = max depth = 2 here</text>
+<text x="700" y="198" text-anchor="start" class="small">a binary node has ≤ 2 children:</text>
+<text x="700" y="220" text-anchor="start" class="small">   .left and .right (either None)</text>
+<text x="356" y="316" text-anchor="middle" class="small muted">6 nodes · 5 edges · height 2 · leaves 4, 5, 6</text>
+</svg>
+<figcaption>One tree, all the words. A <b>subtree</b> is a node plus everything below it; every recursive tree algorithm is “solve the subtrees, then combine”.</figcaption>
+</figure>
+
+<p>A <strong>binary tree</strong> is either empty (<code>None</code> / <code>null</code>) or a node with a value and two binary trees: <code>left</code> and
+<code>right</code>. The "either empty or a node with two subtrees" phrasing is the definition you code against. Every
+recursive function you write on trees has the shape:</p>
+<ol>
+<li><strong>Base case:</strong> the empty tree. What is the answer for <code>None</code>? (0 nodes, depth 0, an empty list, <code>True</code>…)</li>
+<li><strong>Recursive case:</strong> get the answers for <code>node.left</code> and <code>node.right</code>, then combine them with <code>node.val</code>.</li>
+</ol>
+<p>Words you will see constantly:</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>In the picture</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>root</td>
+<td>the only node without a parent</td>
+<td>1</td>
+</tr>
+<tr>
+<td>leaf</td>
+<td>a node with no children</td>
+<td>4, 5, 6</td>
+</tr>
+<tr>
+<td>depth of a node</td>
+<td>edges from the root down to it</td>
+<td>depth(5) = 2</td>
+</tr>
+<tr>
+<td>height of a tree</td>
+<td>the maximum depth (edges on the longest root-to-leaf path)</td>
+<td>2</td>
+</tr>
+<tr>
+<td>subtree of v</td>
+<td>v and all its descendants</td>
+<td>{2, 4, 5}</td>
+</tr>
+<tr>
+<td>full binary tree</td>
+<td>every node has 0 or 2 children</td>
+<td>no (3 has one child)</td>
+</tr>
+<tr>
+<td>complete binary tree</td>
+<td>every level full except possibly the last, which fills left to right</td>
+<td>no (gap under 3)</td>
+</tr>
+<tr>
+<td>perfect binary tree</td>
+<td>every level completely full: 2<sup>h+1</sup> − 1 nodes</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+<p>Some books count height in nodes rather than edges (so a single node has height 1). LeetCode's "maximum depth"
+counts <strong>nodes</strong>. Always check which one a problem means.</p>
+<h3 id="treenode-in-python-and-c">TreeNode in Python and C</h3>
+<p>This is the exact class LeetCode gives you. Every snippet on this page uses it.</p>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+from typing import Optional
+
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def build(arr: list) -&gt; Optional[TreeNode]:
+    &quot;&quot;&quot;LeetCode level-order list -&gt; tree. None means 'no child here'.&quot;&quot;&quot;
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    q, i = deque([root]), 1
+    while q and i &lt; len(arr):
+        node = q.popleft()                    # the next parent that owns two slots
+        if i &lt; len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i])
+            q.append(node.left)
+        i += 1
+        if i &lt; len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i])
+            q.append(node.right)
+        i += 1
+    return root
+
+
+def serialize(root: Optional[TreeNode]) -&gt; list:
+    &quot;&quot;&quot;Tree -&gt; LeetCode level-order list (trailing None values trimmed).&quot;&quot;&quot;
+    out, q = [], deque([root])
+    while q:
+        node = q.popleft()
+        if node is None:
+            out.append(None)
+            continue
+        out.append(node.val)
+        q.append(node.left)
+        q.append(node.right)
+    while out and out[-1] is None:
+        out.pop()
+    return out
+</code></pre>
+<pre><code class="language-csharp">public class TreeNode
+{
+    public int val;
+    public TreeNode left;
+    public TreeNode right;
+    public TreeNode(int val = 0, TreeNode left = null, TreeNode right = null)
+    {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+public static class TreeIO
+{
+    // LeetCode level-order array -&gt; tree. null means &quot;no child here&quot;.
+    public static TreeNode Build(int?[] a)
+    {
+        if (a.Length == 0 || a[0] is null) return null;
+        var root = new TreeNode(a[0].Value);
+        var q = new Queue&lt;TreeNode&gt;();
+        q.Enqueue(root);
+        int i = 1;
+        while (q.Count &gt; 0 &amp;&amp; i &lt; a.Length)
+        {
+            var node = q.Dequeue();               // the next parent that owns two slots
+            if (i &lt; a.Length &amp;&amp; a[i] is int l) { node.left = new TreeNode(l); q.Enqueue(node.left); }
+            i++;
+            if (i &lt; a.Length &amp;&amp; a[i] is int r) { node.right = new TreeNode(r); q.Enqueue(node.right); }
+            i++;
+        }
+        return root;
+    }
+
+    // Tree -&gt; level-order list with trailing nulls trimmed.
+    public static List&lt;int?&gt; Serialize(TreeNode root)
+    {
+        var output = new List&lt;int?&gt;();
+        var q = new Queue&lt;TreeNode&gt;();
+        q.Enqueue(root);
+        while (q.Count &gt; 0)
+        {
+            var node = q.Dequeue();
+            if (node is null) { output.Add(null); continue; }
+            output.Add(node.val);
+            q.Enqueue(node.left);
+            q.Enqueue(node.right);
+        }
+        while (output.Count &gt; 0 &amp;&amp; output[^1] is null) output.RemoveAt(output.Count - 1);
+        return output;
+    }
+}
+</code></pre>
+</div>
+<p>Conventions worth noticing:</p>
+<ul>
+<li><strong>Python:</strong> test <code>if node is None</code>, not <code>if not node.val</code>. A node whose value is <code>0</code> is falsy in the second form.
+  <code>if node:</code> is fine because a <code>TreeNode</code> object is always truthy; only <code>None</code> is falsy.</li>
+<li><strong>C#:</strong> <code>TreeNode</code> is a reference type, so <code>null</code> is the empty tree. <code>Queue&lt;T&gt;</code>, <code>Stack&lt;T&gt;</code> and
+  <code>Dictionary&lt;TreeNode, …&gt;</code> use <strong>reference</strong> equality on nodes, which is what you want (two different nodes can
+  hold the same value). <code>int?[]</code> with <code>a[i] is int x</code> is the idiomatic way to read the nullable array.</li>
+<li>Node identity is not node value. Several problems (Distance K, LCA) hand you a node object. Store nodes, not
+  values, in maps and sets unless the problem promises distinct values.</li>
+</ul>
+<h3 id="the-level-order-array-format">The level-order array format</h3>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 300" width="860" role="img" aria-label="LeetCode level-order array 3,9,20,null,null,15,7 mapped onto the tree">
+<defs><marker id="tree-traversals-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<line class="edge" x1="116.8" y1="75.4" x2="81.2" y2="124.6"/>
+<line class="edge" x1="143.6" y1="70.8" x2="228.4" y2="129.2"/>
+<line class="edge" x1="232.8" y1="155.4" x2="197.2" y2="204.6"/>
+<line class="edge" x1="255.2" y1="155.4" x2="290.8" y2="204.6"/>
+<circle class="box" cx="70" cy="140" r="19"/>
+<text x="70" y="145" text-anchor="middle" class="mono">9</text>
+<circle class="box accent" cx="128" cy="60" r="19"/>
+<text x="128" y="65" text-anchor="middle" class="mono">3</text>
+<circle class="box" cx="186" cy="220" r="19"/>
+<text x="186" y="225" text-anchor="middle" class="mono">15</text>
+<circle class="box" cx="244" cy="140" r="19"/>
+<text x="244" y="145" text-anchor="middle" class="mono">20</text>
+<circle class="box" cx="302" cy="220" r="19"/>
+<text x="302" y="225" text-anchor="middle" class="mono">7</text>
+<rect class="box" x="340" y="110" width="52" height="32" rx="5"/>
+<text x="366" y="131" text-anchor="middle" class="mono">3</text>
+<text x="366" y="158" text-anchor="middle" class="small muted">[0]</text>
+<rect class="box" x="398" y="110" width="52" height="32" rx="5"/>
+<text x="424" y="131" text-anchor="middle" class="mono">9</text>
+<text x="424" y="158" text-anchor="middle" class="small muted">[1]</text>
+<rect class="box" x="456" y="110" width="52" height="32" rx="5"/>
+<text x="482" y="131" text-anchor="middle" class="mono">20</text>
+<text x="482" y="158" text-anchor="middle" class="small muted">[2]</text>
+<rect class="box" x="514" y="110" width="52" height="32" rx="5"/>
+<text x="540" y="131" text-anchor="middle" class="mono muted">null</text>
+<text x="540" y="158" text-anchor="middle" class="small muted">[3]</text>
+<rect class="box" x="572" y="110" width="52" height="32" rx="5"/>
+<text x="598" y="131" text-anchor="middle" class="mono muted">null</text>
+<text x="598" y="158" text-anchor="middle" class="small muted">[4]</text>
+<rect class="box" x="630" y="110" width="52" height="32" rx="5"/>
+<text x="656" y="131" text-anchor="middle" class="mono">15</text>
+<text x="656" y="158" text-anchor="middle" class="small muted">[5]</text>
+<rect class="box" x="688" y="110" width="52" height="32" rx="5"/>
+<text x="714" y="131" text-anchor="middle" class="mono">7</text>
+<text x="714" y="158" text-anchor="middle" class="small muted">[6]</text>
+<text x="340" y="60" text-anchor="start" class="title">level-order array: read it with a queue of parents</text>
+<text x="340" y="82" text-anchor="start" class="small muted">each real node, in order, claims the next two slots</text>
+<path class="edge accent" d="M404,174 L404,184 L502,184 L502,174"/>
+<text x="453" y="200" text-anchor="middle" class="small fill-accent">slots of 3</text>
+<path class="edge dash" d="M366.0,110 C366.0,88 453.0,88 453.0,106" marker-end="url(#tree-traversals-ar)"/>
+<path class="edge accent" d="M520,174 L520,184 L618,184 L618,174"/>
+<text x="569" y="200" text-anchor="middle" class="small fill-accent">slots of 9</text>
+<path class="edge dash" d="M424.0,110 C424.0,88 569.0,88 569.0,106" marker-end="url(#tree-traversals-ar)"/>
+<path class="edge accent" d="M636,174 L636,184 L734,184 L734,174"/>
+<text x="685" y="200" text-anchor="middle" class="small fill-accent">slots of 20</text>
+<path class="edge dash" d="M482.0,110 C482.0,88 685.0,88 685.0,106" marker-end="url(#tree-traversals-ar)"/>
+<text x="340" y="236" text-anchor="start" class="small">Trailing nulls are dropped. 9 is a leaf, so its two slots are null, null.</text>
+<text x="340" y="256" text-anchor="start" class="small">Nulls only appear for missing children of real nodes; a null claims no slots.</text>
+<text x="340" y="276" text-anchor="start" class="small muted">So [1,null,2] is 1 with only a right child 2.</text>
+</svg>
+<figcaption>The format LeetCode uses for every tree input. It is <b>not</b> the heap layout <code>2i+1, 2i+2</code>: the slots after a null node are never written, so positions shift. Parse it with a queue of parents, exactly like BFS.</figcaption>
+</figure>
+
+<p>Every LeetCode tree arrives as a list like <code>[3,9,20,null,null,15,7]</code>. Read it the way BFS would build it: keep a
+queue of real nodes, and let each one, in order, take the next two entries as its left and right child. A <code>null</code>
+entry fills a slot with nothing, and because nothing was created, it never claims slots of its own. That is why it
+is <strong>not</strong> the heap layout (<code>children of i are 2i+1 and 2i+2</code>): in <code>[1,null,2,3]</code>, the 3 is the left child of 2,
+at index 3, not at index 5. Type your own arrays below and watch the parent queue hand out slots.</p>
+<div class="viz tt-wide" data-viz="tree-traversals-parse"></div>
+
+<h2 id="depth-first-three-orders-one-walk">Depth-first: three orders, one walk</h2>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 360" width="860" role="img" aria-label="Euler tour: one walk around the tree passes each node on its left, underneath and on its right">
+<defs><marker id="tree-traversals-tour" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<line class="edge" x1="327.6" y1="69.7" x2="204.4" y2="142.3"/>
+<line class="edge" x1="358.9" y1="71.7" x2="446.1" y2="140.3"/>
+<line class="edge" x1="175.7" y1="166.5" x2="122.3" y2="229.5"/>
+<line class="edge" x1="200.3" y1="166.5" x2="253.7" y2="229.5"/>
+<line class="edge" x1="473.3" y1="166.5" x2="526.7" y2="229.5"/>
+<path class="edge accent dash" d="M314.0,60.0 C288.0,75.3 197.0,121.3 158.0,152.0 C119.0,182.7 88.0,223.7 80.0,244.0 C72.0,264.3 100.0,274.0 110.0,274.0 C120.0,274.0 127.0,259.3 140.0,244.0 C153.0,228.7 172.0,182.0 188.0,182.0 C204.0,182.0 223.0,228.7 236.0,244.0 C249.0,259.3 256.0,274.0 266.0,274.0 C276.0,274.0 304.0,264.3 296.0,244.0 C288.0,223.7 210.0,177.7 218.0,152.0 C226.0,126.3 308.5,90.0 344.0,90.0 C379.5,90.0 411.5,136.7 431.0,152.0 C450.5,167.3 448.0,166.7 461.0,182.0 C474.0,197.3 496.0,228.7 509.0,244.0 C522.0,259.3 529.0,274.0 539.0,274.0 C549.0,274.0 577.0,264.3 569.0,244.0 C561.0,223.7 523.5,182.7 491.0,152.0 C458.5,121.3 393.5,75.3 374.0,60.0" marker-end="url(#tree-traversals-tour)"/>
+<circle class="box" cx="110" cy="244" r="19"/>
+<text x="110" y="249" text-anchor="middle" class="mono">4</text>
+<circle class="box" cx="188" cy="152" r="19"/>
+<text x="188" y="157" text-anchor="middle" class="mono">2</text>
+<circle class="box" cx="266" cy="244" r="19"/>
+<text x="266" y="249" text-anchor="middle" class="mono">5</text>
+<circle class="box" cx="344" cy="60" r="19"/>
+<text x="344" y="65" text-anchor="middle" class="mono">1</text>
+<circle class="box" cx="461" cy="152" r="19"/>
+<text x="461" y="157" text-anchor="middle" class="mono">3</text>
+<circle class="box" cx="539" cy="244" r="19"/>
+<text x="539" y="249" text-anchor="middle" class="mono">6</text>
+<circle class="box visit" cx="314" cy="60" r="8"/>
+<text x="314" y="63.5" text-anchor="middle" class="small mono">1</text>
+<circle class="box visit" cx="158" cy="152" r="8"/>
+<text x="158" y="155.5" text-anchor="middle" class="small mono">1</text>
+<circle class="box visit" cx="80" cy="244" r="8"/>
+<text x="80" y="247.5" text-anchor="middle" class="small mono">1</text>
+<circle class="box active" cx="110" cy="274" r="8"/>
+<text x="110" y="277.5" text-anchor="middle" class="small mono">2</text>
+<circle class="box done" cx="140" cy="244" r="8"/>
+<text x="140" y="247.5" text-anchor="middle" class="small mono">3</text>
+<circle class="box active" cx="188" cy="182" r="8"/>
+<text x="188" y="185.5" text-anchor="middle" class="small mono">2</text>
+<circle class="box visit" cx="236" cy="244" r="8"/>
+<text x="236" y="247.5" text-anchor="middle" class="small mono">1</text>
+<circle class="box active" cx="266" cy="274" r="8"/>
+<text x="266" y="277.5" text-anchor="middle" class="small mono">2</text>
+<circle class="box done" cx="296" cy="244" r="8"/>
+<text x="296" y="247.5" text-anchor="middle" class="small mono">3</text>
+<circle class="box done" cx="218" cy="152" r="8"/>
+<text x="218" y="155.5" text-anchor="middle" class="small mono">3</text>
+<circle class="box active" cx="344" cy="90" r="8"/>
+<text x="344" y="93.5" text-anchor="middle" class="small mono">2</text>
+<circle class="box visit" cx="431" cy="152" r="8"/>
+<text x="431" y="155.5" text-anchor="middle" class="small mono">1</text>
+<circle class="box active" cx="461" cy="182" r="8"/>
+<text x="461" y="185.5" text-anchor="middle" class="small mono">2</text>
+<circle class="box visit" cx="509" cy="244" r="8"/>
+<text x="509" y="247.5" text-anchor="middle" class="small mono">1</text>
+<circle class="box active" cx="539" cy="274" r="8"/>
+<text x="539" y="277.5" text-anchor="middle" class="small mono">2</text>
+<circle class="box done" cx="569" cy="244" r="8"/>
+<text x="569" y="247.5" text-anchor="middle" class="small mono">3</text>
+<circle class="box done" cx="491" cy="152" r="8"/>
+<text x="491" y="155.5" text-anchor="middle" class="small mono">3</text>
+<circle class="box done" cx="374" cy="60" r="8"/>
+<text x="374" y="63.5" text-anchor="middle" class="small mono">3</text>
+<text x="560" y="60" text-anchor="start" class="title">Walk counter-clockwise around the outline.</text>
+<text x="560" y="82" text-anchor="start" class="small">Every node is passed exactly three times:</text>
+<circle class="box visit" cx="570" cy="120" r="10"/>
+<text x="570" y="124" text-anchor="middle" class="small mono">1</text>
+<text x="590" y="125" text-anchor="start" class="small">left side  → preorder</text>
+<text x="590" y="147" text-anchor="start" class="mono">1 2 4 5 3 6</text>
+<circle class="box active" cx="570" cy="182" r="10"/>
+<text x="570" y="186" text-anchor="middle" class="small mono">2</text>
+<text x="590" y="187" text-anchor="start" class="small">underneath → inorder</text>
+<text x="590" y="209" text-anchor="start" class="mono">4 2 5 1 3 6</text>
+<circle class="box done" cx="570" cy="244" r="10"/>
+<text x="570" y="248" text-anchor="middle" class="small mono">3</text>
+<text x="590" y="249" text-anchor="start" class="small">right side → postorder</text>
+<text x="590" y="271" text-anchor="start" class="mono">4 5 2 6 3 1</text>
+<text x="560" y="316" text-anchor="start" class="small muted">Record a node the first time you pass a</text>
+<text x="560" y="334" text-anchor="start" class="small muted">marker of your colour: that is the order.</text>
+</svg>
+<figcaption>The single most useful picture for traversals. Recursion performs this walk; the three orders differ only in <i>which</i> of the three passes writes the node down. Leaves get all three passes in a row.</figcaption>
+</figure>
+
+<p>Recursion performs this walk for free. Calling <code>dfs(node.left)</code> <em>is</em> walking down the left edge; returning from it
+<em>is</em> walking back up. The three places you can put "record the node" inside the function are the three passes:</p>
+<table>
+<thead>
+<tr>
+<th>Order</th>
+<th>Record the node</th>
+<th>Sequence for the tree above</th>
+<th>Typical use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>preorder</strong></td>
+<td>before both children (node, L, R)</td>
+<td>1 2 4 5 3 6</td>
+<td>copy/serialize a tree, pass state <em>down</em> (depth, path so far, bounds)</td>
+</tr>
+<tr>
+<td><strong>inorder</strong></td>
+<td>between the children (L, node, R)</td>
+<td>4 2 5 1 3 6</td>
+<td>BSTs: inorder is sorted order; "k-th smallest", validate BST</td>
+</tr>
+<tr>
+<td><strong>postorder</strong></td>
+<td>after both children (L, R, node)</td>
+<td>4 5 2 6 3 1</td>
+<td>compute from children's answers: height, size, diameter, delete/free a tree</td>
+</tr>
+</tbody>
+</table>
+<p>Step through the recursion below. The call stack on the right is the real Python call stack: one frame per
+<code>dfs</code> call that has started and not yet returned. A frame's label says <em>where in its body</em> it is waiting. Use
+"dfs(None) calls: hide" once you have seen that every missing child is a real (cheap) call.</p>
+<div class="viz tt-wide" data-viz="tree-traversals-dfs"></div>
+
+<p>Things to notice in the animation:</p>
+<ul>
+<li>The stack only ever holds <strong>one root-to-node path</strong>. That is why recursion uses O(h) memory, where h is the
+  height: log n for a balanced tree, n for a chain.</li>
+<li>A node turns green (returned) only after <strong>its whole subtree</strong> has. Postorder is literally "the order in which
+  frames are popped".</li>
+<li>Inorder emits a node exactly when control comes back up from its left child. For a node with no left child that
+  is immediately after <code>dfs(None)</code> returns.</li>
+</ul>
+<h3 id="recursive-templates">Recursive templates</h3>
+<div class="code-tabs">
+<pre><code class="language-python">def traversals(root: Optional[TreeNode]) -&gt; tuple[list, list, list]:
+    pre, ino, post = [], [], []
+
+    def dfs(node: Optional[TreeNode]) -&gt; None:
+        if node is None:              # base case: the empty tree
+            return
+        pre.append(node.val)          # pass 1: before both children
+        dfs(node.left)
+        ino.append(node.val)          # pass 2: between the children
+        dfs(node.right)
+        post.append(node.val)         # pass 3: after both children
+
+    dfs(root)
+    return pre, ino, post
+
+
+def max_depth(root: Optional[TreeNode]) -&gt; int:
+    &quot;&quot;&quot;Postorder in disguise: combine the children's answers.&quot;&quot;&quot;
+    if root is None:
+        return 0
+    return 1 + max(max_depth(root.left), max_depth(root.right))
+</code></pre>
+<pre><code class="language-csharp">public static class Recursive
+{
+    public static (List&lt;int&gt; Pre, List&lt;int&gt; In, List&lt;int&gt; Post) Traversals(TreeNode root)
+    {
+        var pre = new List&lt;int&gt;();
+        var ino = new List&lt;int&gt;();
+        var post = new List&lt;int&gt;();
+        void Dfs(TreeNode node)
+        {
+            if (node is null) return;     // base case: the empty tree
+            pre.Add(node.val);            // pass 1
+            Dfs(node.left);
+            ino.Add(node.val);            // pass 2
+            Dfs(node.right);
+            post.Add(node.val);           // pass 3
+        }
+        Dfs(root);
+        return (pre, ino, post);
+    }
+
+    public static int MaxDepth(TreeNode root) =&gt;
+        root is null ? 0 : 1 + Math.Max(MaxDepth(root.left), MaxDepth(root.right));
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n) time (each node is entered once and does O(1) work), O(h) stack space. There are also n + 1
+calls on <code>None</code> (a binary tree with n nodes has n + 1 empty child slots), which only changes the constant.</p>
+<div class="tip">
+<p><strong>Two ways to move information</strong></p>
+<p><strong>Down</strong> (preorder style): pass it as a parameter, for example <code>dfs(node, depth + 1)</code> or <code>dfs(node, lo, hi)</code>. <strong>Up</strong>
+(postorder style): return it, for example <code>return 1 + max(left, right)</code>. Most tree problems need one or both.
+<a href="tree-patterns.html">Tree Problem Patterns</a> builds on exactly this split.</p>
+</div>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 260" width="860" role="img" aria-label="Recursion depth equals tree height: balanced log n versus skewed n">
+<line class="edge" x1="147.4" y1="59.8" x2="92.6" y2="102.2"/>
+<line class="edge" x1="172.6" y1="59.8" x2="227.4" y2="102.2"/>
+<line class="edge" x1="71.3" y1="125.4" x2="48.7" y2="160.6"/>
+<line class="edge" x1="88.7" y1="125.4" x2="111.3" y2="160.6"/>
+<line class="edge" x1="231.3" y1="125.4" x2="208.7" y2="160.6"/>
+<line class="edge" x1="248.7" y1="125.4" x2="271.3" y2="160.6"/>
+<circle class="box" cx="40" cy="174" r="16"/>
+<text x="40" y="179" text-anchor="middle" class="mono">4</text>
+<circle class="box" cx="80" cy="112" r="16"/>
+<text x="80" y="117" text-anchor="middle" class="mono">2</text>
+<circle class="box" cx="120" cy="174" r="16"/>
+<text x="120" y="179" text-anchor="middle" class="mono">5</text>
+<circle class="box" cx="160" cy="50" r="16"/>
+<text x="160" y="55" text-anchor="middle" class="mono">1</text>
+<circle class="box" cx="200" cy="174" r="16"/>
+<text x="200" y="179" text-anchor="middle" class="mono">6</text>
+<circle class="box" cx="240" cy="112" r="16"/>
+<text x="240" y="117" text-anchor="middle" class="mono">3</text>
+<circle class="box" cx="280" cy="174" r="16"/>
+<text x="280" y="179" text-anchor="middle" class="mono">7</text>
+<text x="160" y="230" text-anchor="middle" class="small">balanced: height ≈ log₂ n</text>
+<line class="edge" x1="394.6" y1="39.9" x2="435.4" y2="72.1"/>
+<line class="edge" x1="460.6" y1="91.9" x2="501.4" y2="124.1"/>
+<line class="edge" x1="524.3" y1="146.2" x2="547.7" y2="173.8"/>
+<circle class="box bad" cx="382" cy="30" r="16"/>
+<text x="382" y="35" text-anchor="middle" class="mono">1</text>
+<circle class="box bad" cx="448" cy="82" r="16"/>
+<text x="448" y="87" text-anchor="middle" class="mono">2</text>
+<circle class="box bad" cx="514" cy="134" r="16"/>
+<text x="514" y="139" text-anchor="middle" class="mono">3</text>
+<circle class="box bad" cx="558" cy="186" r="16"/>
+<text x="558" y="191" text-anchor="middle" class="mono">4</text>
+<text x="430" y="230" text-anchor="middle" class="small">skewed: height = n − 1</text>
+<text x="620" y="50" text-anchor="start" class="title">stack frames for n = 100 000</text>
+<text x="620" y="80" text-anchor="start" class="small">balanced: ~17 frames</text>
+<text x="620" y="104" text-anchor="start" class="small fill-bad">chain: 100 000 frames</text>
+<text x="620" y="136" text-anchor="start" class="small">Python: RecursionError at ~1000</text>
+<text x="620" y="158" text-anchor="start" class="small">C#: StackOverflowException (≈1 MB</text>
+<text x="620" y="176" text-anchor="start" class="small">   stack), which cannot be caught</text>
+<text x="620" y="206" text-anchor="start" class="small fill-accent">→ iterative stack or BFS for</text>
+<text x="620" y="224" text-anchor="start" class="small fill-accent">   untrusted / sorted-input trees</text>
+</svg>
+<figcaption>“O(h) space” hides a cliff. Trees built from sorted input, linked-list-shaped test cases and parsing deep JSON all produce h ≈ n. The iterative templates on this page use a heap-allocated stack instead.</figcaption>
+</figure>
+
+<h2 id="iterative-traversals-with-an-explicit-stack">Iterative traversals with an explicit stack</h2>
+<p>Recursion is a stack you do not see. Replacing it with a stack you manage yourself gives you three things:
+no recursion-depth limit, the ability to pause and resume (iterators), and control over exactly when a node is
+"done". The catch is that each order needs a slightly different loop, because the explicit stack must remember
+<em>which pass</em> a node is waiting for.</p>
+<h3 id="preorder-pop-emit-push-right-then-left">Preorder: pop, emit, push right then left</h3>
+<p>The easiest one. A node is emitted the moment it is popped, so the stack only needs to remember subtrees still
+to visit. Push the right child <strong>first</strong> so that the left child ends up on top and is processed first.</p>
+<div class="viz tt-wide" data-viz="tree-traversals-iter" data-opts='{"order":"preorder"}'></div>
+
+<h3 id="inorder-slide-down-the-left-spine">Inorder: slide down the left spine</h3>
+<p>A node can only be emitted once its whole left subtree is done. So keep a pointer <code>cur</code>: push it and move left
+until you fall off the tree. The top of the stack is now the leftmost unfinished node: pop it, emit it, and
+continue from its right child. The stack holds exactly the ancestors whose left side you are still inside.</p>
+<div class="viz tt-wide" data-viz="tree-traversals-iter" data-opts='{"order":"inorder"}'></div>
+
+<h3 id="postorder-the-tricky-one">Postorder: the tricky one</h3>
+<p>A node must wait until <strong>both</strong> subtrees are done, so it is visited twice while sitting on the stack: once when
+you come back up from the left, once when you come back from the right. Only the second time may you pop it. How
+do you tell the two apart? Remember <code>prev</code>, the last node emitted. If the top's right child is <code>prev</code>, you just
+finished its right side. Watch the "peek" frames: the same node is examined twice before it turns green.</p>
+<div class="viz tt-wide" data-viz="tree-traversals-iter" data-opts='{"order":"postorder"}'></div>
+
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 220" width="860" role="img" aria-label="Postorder as reversed root-right-left preorder">
+<defs><marker id="tree-traversals-rv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<line class="edge" x1="173.9" y1="55.5" x2="110.1" y2="98.5"/>
+<line class="edge" x1="200.6" y1="57.4" x2="244.4" y2="96.6"/>
+<line class="edge" x1="85.9" y1="121.7" x2="60.1" y2="156.3"/>
+<line class="edge" x1="106.1" y1="121.7" x2="131.9" y2="156.3"/>
+<line class="edge" x1="267.1" y1="121.7" x2="292.9" y2="156.3"/>
+<circle class="box" cx="50" cy="170" r="17"/>
+<text x="50" y="175" text-anchor="middle" class="mono">4</text>
+<circle class="box" cx="96" cy="108" r="17"/>
+<text x="96" y="113" text-anchor="middle" class="mono">2</text>
+<circle class="box" cx="142" cy="170" r="17"/>
+<text x="142" y="175" text-anchor="middle" class="mono">5</text>
+<circle class="box" cx="188" cy="46" r="17"/>
+<text x="188" y="51" text-anchor="middle" class="mono">1</text>
+<circle class="box" cx="257" cy="108" r="17"/>
+<text x="257" y="113" text-anchor="middle" class="mono">3</text>
+<circle class="box" cx="303" cy="170" r="17"/>
+<text x="303" y="175" text-anchor="middle" class="mono">6</text>
+<text x="330" y="40" text-anchor="start" class="small">preorder but right first (root, R, L)</text>
+<rect class="box visit" x="330" y="50" width="38" height="32" rx="5"/>
+<text x="349" y="71" text-anchor="middle" class="mono">1</text>
+<rect class="box visit" x="374" y="50" width="38" height="32" rx="5"/>
+<text x="393" y="71" text-anchor="middle" class="mono">3</text>
+<rect class="box visit" x="418" y="50" width="38" height="32" rx="5"/>
+<text x="437" y="71" text-anchor="middle" class="mono">6</text>
+<rect class="box visit" x="462" y="50" width="38" height="32" rx="5"/>
+<text x="481" y="71" text-anchor="middle" class="mono">2</text>
+<rect class="box visit" x="506" y="50" width="38" height="32" rx="5"/>
+<text x="525" y="71" text-anchor="middle" class="mono">5</text>
+<rect class="box visit" x="550" y="50" width="38" height="32" rx="5"/>
+<text x="569" y="71" text-anchor="middle" class="mono">4</text>
+<text x="330" y="132" text-anchor="start" class="small">reverse it</text>
+<rect class="box done" x="330" y="142" width="38" height="32" rx="5"/>
+<text x="349" y="163" text-anchor="middle" class="mono">4</text>
+<rect class="box done" x="374" y="142" width="38" height="32" rx="5"/>
+<text x="393" y="163" text-anchor="middle" class="mono">5</text>
+<rect class="box done" x="418" y="142" width="38" height="32" rx="5"/>
+<text x="437" y="163" text-anchor="middle" class="mono">2</text>
+<rect class="box done" x="462" y="142" width="38" height="32" rx="5"/>
+<text x="481" y="163" text-anchor="middle" class="mono">6</text>
+<rect class="box done" x="506" y="142" width="38" height="32" rx="5"/>
+<text x="525" y="163" text-anchor="middle" class="mono">3</text>
+<rect class="box done" x="550" y="142" width="38" height="32" rx="5"/>
+<text x="569" y="163" text-anchor="middle" class="mono">1</text>
+<line class="edge accent" x1="450" y1="92" x2="450" y2="118" marker-end="url(#tree-traversals-rv)"/>
+<text x="465" y="110" text-anchor="start" class="small fill-accent">reversed</text>
+<text x="600" y="182" text-anchor="start" class="small">= postorder (L, R, root)</text>
+<text x="330" y="205" text-anchor="start" class="small muted">Correct output, but it builds the whole answer before returning anything: no early exit, O(n) extra.</text>
+</svg>
+<figcaption>The shortcut for iterative postorder. Mirror image of preorder is (root, right, left); reading that backwards gives (left, right, root). Fine for “return the list”, useless when you must <i>process</i> a node only after its children (for example to free memory or combine child results).</figcaption>
+</figure>
+
+<h3 id="iterative-templates">Iterative templates</h3>
+<div class="code-tabs">
+<pre><code class="language-python">def preorder_iter(root: Optional[TreeNode]) -&gt; list[int]:
+    if root is None:
+        return []
+    out, stack = [], [root]
+    while stack:
+        node = stack.pop()
+        out.append(node.val)
+        if node.right:
+            stack.append(node.right)
+        if node.left:                    # pushed last, so popped first
+            stack.append(node.left)
+    return out
+
+
+def inorder_iter(root: Optional[TreeNode]) -&gt; list[int]:
+    out, stack, cur = [], [], root
+    while cur or stack:
+        while cur:                       # push the whole left spine
+            stack.append(cur)
+            cur = cur.left
+        cur = stack.pop()                # leftmost unfinished node
+        out.append(cur.val)
+        cur = cur.right                  # then its right subtree
+    return out
+
+
+def postorder_iter(root: Optional[TreeNode]) -&gt; list[int]:
+    out, stack, cur, prev = [], [], root, None
+    while cur or stack:
+        while cur:
+            stack.append(cur)
+            cur = cur.left
+        top = stack[-1]
+        if top.right and top.right is not prev:
+            cur = top.right              # right side not done yet: go there
+        else:
+            stack.pop()                  # both sides done
+            out.append(top.val)
+            prev = top
+    return out
+
+
+def postorder_reversed(root: Optional[TreeNode]) -&gt; list[int]:
+    &quot;&quot;&quot;(root, right, left) preorder, reversed = (left, right, root).&quot;&quot;&quot;
+    if root is None:
+        return []
+    out, stack = [], [root]
+    while stack:
+        node = stack.pop()
+        out.append(node.val)
+        if node.left:
+            stack.append(node.left)
+        if node.right:
+            stack.append(node.right)
+    return out[::-1]
+</code></pre>
+<pre><code class="language-csharp">public static class Iterative
+{
+    public static List&lt;int&gt; Preorder(TreeNode root)
+    {
+        var output = new List&lt;int&gt;();
+        if (root is null) return output;
+        var stack = new Stack&lt;TreeNode&gt;();
+        stack.Push(root);
+        while (stack.Count &gt; 0)
+        {
+            var node = stack.Pop();
+            output.Add(node.val);
+            if (node.right is not null) stack.Push(node.right);
+            if (node.left is not null) stack.Push(node.left);   // popped first
+        }
+        return output;
+    }
+
+    public static List&lt;int&gt; Inorder(TreeNode root)
+    {
+        var output = new List&lt;int&gt;();
+        var stack = new Stack&lt;TreeNode&gt;();
+        var cur = root;
+        while (cur is not null || stack.Count &gt; 0)
+        {
+            while (cur is not null) { stack.Push(cur); cur = cur.left; }
+            cur = stack.Pop();
+            output.Add(cur.val);
+            cur = cur.right;
+        }
+        return output;
+    }
+
+    public static List&lt;int&gt; Postorder(TreeNode root)
+    {
+        var output = new List&lt;int&gt;();
+        var stack = new Stack&lt;TreeNode&gt;();
+        TreeNode cur = root, prev = null;
+        while (cur is not null || stack.Count &gt; 0)
+        {
+            while (cur is not null) { stack.Push(cur); cur = cur.left; }
+            var top = stack.Peek();
+            if (top.right is not null &amp;&amp; top.right != prev)
+            {
+                cur = top.right;                                  // right side not done yet
+            }
+            else
+            {
+                stack.Pop();                                      // both sides done
+                output.Add(top.val);
+                prev = top;
+            }
+        }
+        return output;
+    }
+
+    public static List&lt;int&gt; PostorderReversed(TreeNode root)
+    {
+        var output = new List&lt;int&gt;();
+        if (root is null) return output;
+        var stack = new Stack&lt;TreeNode&gt;();
+        stack.Push(root);
+        while (stack.Count &gt; 0)
+        {
+            var node = stack.Pop();
+            output.Add(node.val);
+            if (node.left is not null) stack.Push(node.left);
+            if (node.right is not null) stack.Push(node.right);
+        }
+        output.Reverse();
+        return output;
+    }
+}
+</code></pre>
+</div>
+<p>All four are O(n) time and O(h) extra space (<code>postorder_reversed</code> also stores the whole output before reversing
+it). Each node is pushed once and popped once; in the <code>prev</code> version each node is <em>peeked</em> at most twice.</p>
+<h3 id="one-template-for-all-three-the-ready-flag">One template for all three: the "ready" flag</h3>
+<p>If you would rather memorise one loop, push pairs <code>(node, ready)</code>. A node popped with <code>ready = False</code> is
+expanded: push its children and itself (marked ready) in the <strong>reverse</strong> of the order you want them. A node popped
+with <code>ready = True</code> is emitted. Changing the order means reordering three pushes, which is also how you would
+write an iterative version of <em>any</em> recursive function: each frame says what is left to do.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def traverse_flags(root: Optional[TreeNode], order: str = &quot;in&quot;) -&gt; list[int]:
+    out, stack = [], [(root, False)]
+    while stack:
+        node, ready = stack.pop()
+        if node is None:
+            continue
+        if ready:
+            out.append(node.val)
+            continue
+        # push in REVERSE of the desired order (stack = last in, first out)
+        if order == &quot;pre&quot;:
+            stack += [(node.right, False), (node.left, False), (node, True)]
+        elif order == &quot;in&quot;:
+            stack += [(node.right, False), (node, True), (node.left, False)]
+        else:  # post
+            stack += [(node, True), (node.right, False), (node.left, False)]
+    return out
+</code></pre>
+<pre><code class="language-csharp">public static class FlagTraversal
+{
+    public static List&lt;int&gt; Traverse(TreeNode root, string order = &quot;in&quot;)
+    {
+        var output = new List&lt;int&gt;();
+        var stack = new Stack&lt;(TreeNode Node, bool Ready)&gt;();
+        stack.Push((root, false));
+        while (stack.Count &gt; 0)
+        {
+            var (node, ready) = stack.Pop();
+            if (node is null) continue;
+            if (ready) { output.Add(node.val); continue; }
+            // push in REVERSE of the desired order
+            switch (order)
+            {
+                case &quot;pre&quot;:
+                    stack.Push((node.right, false)); stack.Push((node.left, false)); stack.Push((node, true));
+                    break;
+                case &quot;in&quot;:
+                    stack.Push((node.right, false)); stack.Push((node, true)); stack.Push((node.left, false));
+                    break;
+                default: // post
+                    stack.Push((node, true)); stack.Push((node.right, false)); stack.Push((node.left, false));
+                    break;
+            }
+        }
+        return output;
+    }
+}
+</code></pre>
+</div>
+<p>It costs up to twice as many pushes as the specialised loops, which rarely matters. In an interview, write the
+specialised inorder loop (it is the one that appears in BST problems) and know this one as a fallback.</p>
+<h2 id="morris-traversal-o1-extra-space">Morris traversal: O(1) extra space</h2>
+<p>Both recursion and the explicit stack need O(h) memory to remember how to get back up. Morris traversal (1979)
+needs none. It notices that the tree already contains n + 1 null pointers doing nothing, and it borrows some of
+them as temporary "return addresses".</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 300" width="880" role="img" aria-label="Morris threads: the inorder predecessor's empty right pointer temporarily points back to the node">
+<defs><marker id="tree-traversals-th" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker><marker id="tree-traversals-th2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<line class="edge" x1="181.7" y1="81" x2="106.3" y2="139"/>
+<line class="edge" x1="210.3" y1="81" x2="285.7" y2="139"/>
+<line class="edge" x1="82.2" y1="165.1" x2="49.8" y2="214.9"/>
+<line class="edge" x1="101.8" y1="165.1" x2="134.2" y2="214.9"/>
+<line class="edge" x1="290.2" y1="165.1" x2="257.8" y2="214.9"/>
+<line class="edge" x1="309.8" y1="165.1" x2="342.2" y2="214.9"/>
+<circle class="box" cx="40" cy="230" r="18"/>
+<text x="40" y="235" text-anchor="middle" class="mono">1</text>
+<circle class="box" cx="92" cy="150" r="18"/>
+<text x="92" y="155" text-anchor="middle" class="mono">2</text>
+<circle class="box" cx="144" cy="230" r="18"/>
+<text x="144" y="235" text-anchor="middle" class="mono">3</text>
+<circle class="box" cx="196" cy="70" r="18"/>
+<text x="196" y="75" text-anchor="middle" class="mono">4</text>
+<circle class="box" cx="248" cy="230" r="18"/>
+<text x="248" y="235" text-anchor="middle" class="mono">5</text>
+<circle class="box" cx="300" cy="150" r="18"/>
+<text x="300" y="155" text-anchor="middle" class="mono">6</text>
+<circle class="box" cx="352" cy="230" r="18"/>
+<text x="352" y="235" text-anchor="middle" class="mono">7</text>
+<text x="170" y="30" text-anchor="middle" class="title">all threads that ever exist</text>
+<path class="edge path dash" d="M54.0,240 Q110.0,222.0 102.0,166" marker-end="url(#tree-traversals-th)"/>
+<path class="edge path dash" d="M158.0,240 Q214.0,182.0 206.0,86" marker-end="url(#tree-traversals-th)"/>
+<path class="edge path dash" d="M262.0,240 Q318.0,222.0 310.0,166" marker-end="url(#tree-traversals-th)"/>
+<text x="170" y="280" text-anchor="middle" class="small muted">1→2, 3→4, 5→6: one per node with a left child</text>
+<line class="edge" x1="611.7" y1="81" x2="536.3" y2="139"/>
+<line class="edge" x1="640.3" y1="81" x2="715.7" y2="139"/>
+<line class="edge" x1="512.2" y1="165.1" x2="479.8" y2="214.9"/>
+<line class="edge" x1="531.8" y1="165.1" x2="564.2" y2="214.9"/>
+<line class="edge" x1="720.2" y1="165.1" x2="687.8" y2="214.9"/>
+<line class="edge" x1="739.8" y1="165.1" x2="772.2" y2="214.9"/>
+<circle class="box" cx="470" cy="230" r="18"/>
+<text x="470" y="235" text-anchor="middle" class="mono">1</text>
+<circle class="box" cx="522" cy="150" r="18"/>
+<text x="522" y="155" text-anchor="middle" class="mono">2</text>
+<circle class="box visit" cx="574" cy="230" r="18"/>
+<text x="574" y="235" text-anchor="middle" class="mono">3</text>
+<circle class="box active" cx="626" cy="70" r="18"/>
+<text x="626" y="75" text-anchor="middle" class="mono">4</text>
+<circle class="box" cx="678" cy="230" r="18"/>
+<text x="678" y="235" text-anchor="middle" class="mono">5</text>
+<circle class="box" cx="730" cy="150" r="18"/>
+<text x="730" y="155" text-anchor="middle" class="mono">6</text>
+<circle class="box" cx="782" cy="230" r="18"/>
+<text x="782" y="235" text-anchor="middle" class="mono">7</text>
+<text x="600" y="30" text-anchor="middle" class="title">first visit to 4: build 3 → 4</text>
+<path class="edge path dash" d="M588.0,240 Q644.0,182.0 636.0,86" marker-end="url(#tree-traversals-th)"/>
+<text x="600" y="280" text-anchor="middle" class="small muted">walk 2 → 3 (rightmost of left subtree)</text>
+<text x="600" y="41" text-anchor="middle" class="small mono">cur = 4, pred = 3</text>
+</svg>
+<figcaption>Each node with a left subtree has a unique inorder predecessor: the rightmost node of that left subtree, whose right pointer is always None. Morris borrows that pointer as a “return address” (dashed), climbs back through it later, and removes it. Seeing the thread a second time is how you know the left side is finished.</figcaption>
+</figure>
+
+<p>The rule, at the current node <code>cur</code>:</p>
+<ol>
+<li><strong>No left child?</strong> Nothing comes before <code>cur</code> in its subtree. Emit it and go right. (The right pointer is either
+   a real child or a thread back up: you do not need to know which.)</li>
+<li><strong>Has a left child?</strong> Find the <strong>predecessor</strong>: step left once, then right as far as possible, stopping if you
+   reach a pointer back to <code>cur</code>.
+   - Predecessor's right is <code>None</code>: this is the <strong>first</strong> visit. Point it at <code>cur</code> (build the thread) and go left.
+   - Predecessor's right is <code>cur</code>: you came back up through the thread, so the left subtree is <strong>finished</strong>.
+     Remove the thread, emit <code>cur</code>, go right.</li>
+</ol>
+<div class="viz tt-wide" data-viz="tree-traversals-morris" data-opts='{"order":"inorder"}'></div>
+
+<p>For <strong>preorder</strong>, move the emit: a node is emitted on its <em>first</em> visit (when the thread is built, or when it has
+no left child) instead of its second.</p>
+<div class="viz tt-wide" data-viz="tree-traversals-morris" data-opts='{"order":"preorder"}'></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def morris_inorder(root: Optional[TreeNode]) -&gt; list[int]:
+    out, cur = [], root
+    while cur:
+        if cur.left is None:
+            out.append(cur.val)
+            cur = cur.right                       # real child or thread
+        else:
+            pred = cur.left
+            while pred.right and pred.right is not cur:
+                pred = pred.right
+            if pred.right is None:                # first visit: build thread
+                pred.right = cur
+                cur = cur.left
+            else:                                 # second visit: remove it
+                pred.right = None
+                out.append(cur.val)
+                cur = cur.right
+    return out
+
+
+def morris_preorder(root: Optional[TreeNode]) -&gt; list[int]:
+    out, cur = [], root
+    while cur:
+        if cur.left is None:
+            out.append(cur.val)
+            cur = cur.right
+        else:
+            pred = cur.left
+            while pred.right and pred.right is not cur:
+                pred = pred.right
+            if pred.right is None:
+                out.append(cur.val)               # emit on the FIRST visit
+                pred.right = cur
+                cur = cur.left
+            else:
+                pred.right = None
+                cur = cur.right
+    return out
+</code></pre>
+<pre><code class="language-csharp">public static class Morris
+{
+    public static List&lt;int&gt; Inorder(TreeNode root)
+    {
+        var output = new List&lt;int&gt;();
+        var cur = root;
+        while (cur is not null)
+        {
+            if (cur.left is null)
+            {
+                output.Add(cur.val);
+                cur = cur.right;                  // real child or thread
+                continue;
+            }
+            var pred = cur.left;
+            while (pred.right is not null &amp;&amp; pred.right != cur) pred = pred.right;
+            if (pred.right is null) { pred.right = cur; cur = cur.left; }       // build thread
+            else { pred.right = null; output.Add(cur.val); cur = cur.right; }   // remove it
+        }
+        return output;
+    }
+
+    public static List&lt;int&gt; Preorder(TreeNode root)
+    {
+        var output = new List&lt;int&gt;();
+        var cur = root;
+        while (cur is not null)
+        {
+            if (cur.left is null)
+            {
+                output.Add(cur.val);
+                cur = cur.right;
+                continue;
+            }
+            var pred = cur.left;
+            while (pred.right is not null &amp;&amp; pred.right != cur) pred = pred.right;
+            if (pred.right is null) { output.Add(cur.val); pred.right = cur; cur = cur.left; }
+            else { pred.right = null; cur = cur.right; }
+        }
+        return output;
+    }
+}
+</code></pre>
+</div>
+<p><strong>Why is it O(n) if there is a nested loop?</strong> The inner <code>while</code> walks the right spine of a left subtree. Each
+such spine is walked exactly twice (once to build the thread, once to find and remove it), and every edge belongs
+to at most one such spine. So the total inner work is at most about 2n steps, plus n outer steps.</p>
+<div class="pitfall">
+<p><strong>Pitfall: leaving early from a Morris loop</strong></p>
+<p>Morris temporarily <strong>modifies the tree</strong>. If you <code>return</code> or <code>break</code> mid-traversal (say, "find the k-th smallest
+and stop"), any threads still in place stay there: the tree now has cycles and every later traversal loops
+forever. Either finish the loop, or keep going until the threads you built are removed. It is also unsafe when
+another thread is reading the same tree. Postorder Morris exists, but it reverses right spines in place; in
+practice reach for the explicit stack instead.</p>
+</div>
+<h2 id="breadth-first-level-by-level">Breadth-first: level by level</h2>
+<p>Depth-first goes deep along one path; breadth-first visits nodes <strong>in order of depth</strong>. A queue does this
+automatically: children are discovered after their parent and served after everything discovered earlier, so
+all of depth d leaves the queue before any of depth d + 1.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 300" width="860" role="img" aria-label="BFS levels as bands with the queue contents at the start of each level">
+<rect class="box visit" x="30" y="24" width="500" height="52" rx="12"/>
+<text x="42" y="54" text-anchor="start" class="small mono">L0</text>
+<rect class="box active" x="30" y="94" width="500" height="52" rx="12"/>
+<text x="42" y="124" text-anchor="start" class="small mono">L1</text>
+<rect class="box done" x="30" y="164" width="500" height="52" rx="12"/>
+<text x="42" y="194" text-anchor="start" class="small mono">L2</text>
+<rect class="box path" x="30" y="234" width="500" height="52" rx="12"/>
+<text x="42" y="264" text-anchor="start" class="small mono">L3</text>
+<line class="edge" x1="309.2" y1="56.3" x2="165.8" y2="113.7"/>
+<line class="edge" x1="338.9" y1="59.7" x2="411.1" y2="110.3"/>
+<line class="edge" x1="140.1" y1="133.8" x2="109.9" y2="176.2"/>
+<line class="edge" x1="163.9" y1="129.7" x2="236.1" y2="180.3"/>
+<line class="edge" x1="415.1" y1="133.8" x2="384.9" y2="176.2"/>
+<line class="edge" x1="434.9" y1="133.8" x2="465.1" y2="176.2"/>
+<line class="edge" x1="240.1" y1="203.8" x2="209.9" y2="246.2"/>
+<circle class="box" cx="100" cy="190" r="17"/>
+<text x="100" y="195" text-anchor="middle" class="mono">4</text>
+<circle class="box" cx="150" cy="120" r="17"/>
+<text x="150" y="125" text-anchor="middle" class="mono">2</text>
+<circle class="box" cx="200" cy="260" r="17"/>
+<text x="200" y="265" text-anchor="middle" class="mono">8</text>
+<circle class="box" cx="250" cy="190" r="17"/>
+<text x="250" y="195" text-anchor="middle" class="mono">5</text>
+<circle class="box" cx="325" cy="50" r="17"/>
+<text x="325" y="55" text-anchor="middle" class="mono">1</text>
+<circle class="box" cx="375" cy="190" r="17"/>
+<text x="375" y="195" text-anchor="middle" class="mono">6</text>
+<circle class="box" cx="425" cy="120" r="17"/>
+<text x="425" y="125" text-anchor="middle" class="mono">3</text>
+<circle class="box" cx="475" cy="190" r="17"/>
+<text x="475" y="195" text-anchor="middle" class="mono">7</text>
+<text x="570" y="22" text-anchor="start" class="title">queue when level d starts</text>
+<rect class="box visit" x="570" y="34" width="34" height="30" rx="5"/>
+<text x="587" y="54" text-anchor="middle" class="mono">1</text>
+<text x="616" y="54" text-anchor="start" class="small mono">len(q) = 1</text>
+<rect class="box active" x="570" y="104" width="34" height="30" rx="5"/>
+<text x="587" y="124" text-anchor="middle" class="mono">2</text>
+<rect class="box active" x="608" y="104" width="34" height="30" rx="5"/>
+<text x="625" y="124" text-anchor="middle" class="mono">3</text>
+<text x="654" y="124" text-anchor="start" class="small mono">len(q) = 2</text>
+<rect class="box done" x="570" y="174" width="34" height="30" rx="5"/>
+<text x="587" y="194" text-anchor="middle" class="mono">4</text>
+<rect class="box done" x="608" y="174" width="34" height="30" rx="5"/>
+<text x="625" y="194" text-anchor="middle" class="mono">5</text>
+<rect class="box done" x="646" y="174" width="34" height="30" rx="5"/>
+<text x="663" y="194" text-anchor="middle" class="mono">6</text>
+<rect class="box done" x="684" y="174" width="34" height="30" rx="5"/>
+<text x="701" y="194" text-anchor="middle" class="mono">7</text>
+<text x="730" y="194" text-anchor="start" class="small mono">len(q) = 4</text>
+<rect class="box path" x="570" y="244" width="34" height="30" rx="5"/>
+<text x="587" y="264" text-anchor="middle" class="mono">8</text>
+<text x="616" y="264" text-anchor="start" class="small mono">len(q) = 1</text>
+</svg>
+<figcaption>At the start of each round the queue holds <b>exactly one level</b>. Read <code>len(q)</code> once, pop that many, and the children you append belong to the next round. That frozen count is the only difference between “BFS” and “BFS that knows levels”.</figcaption>
+</figure>
+
+<p>Almost every level-order problem is this loop with a different "finish the level" step. Pick a variant in the
+dropdown: the queue never changes, only what you do with each finished level.</p>
+<div class="viz tt-wide" data-viz="tree-traversals-bfs"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def level_order(root: Optional[TreeNode]) -&gt; list[list[int]]:
+    if root is None:
+        return []
+    res, q = [], deque([root])
+    while q:
+        level = []
+        for _ in range(len(q)):          # freeze this level's size
+            node = q.popleft()
+            level.append(node.val)
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
+        res.append(level)
+    return res
+
+
+def right_side_view(root: Optional[TreeNode]) -&gt; list[int]:
+    return [level[-1] for level in level_order(root)]
+
+
+def average_of_levels(root: Optional[TreeNode]) -&gt; list[float]:
+    return [sum(level) / len(level) for level in level_order(root)]
+
+
+def level_order_dfs(root: Optional[TreeNode]) -&gt; list[list[int]]:
+    &quot;&quot;&quot;Same output with DFS: carry the depth and append into res[depth].&quot;&quot;&quot;
+    res = []
+
+    def dfs(node, depth):
+        if node is None:
+            return
+        if depth == len(res):
+            res.append([])
+        res[depth].append(node.val)      # preorder + left-first = left-to-right
+        dfs(node.left, depth + 1)
+        dfs(node.right, depth + 1)
+
+    dfs(root, 0)
+    return res
+</code></pre>
+<pre><code class="language-csharp">public static class Levels
+{
+    public static List&lt;List&lt;int&gt;&gt; LevelOrder(TreeNode root)
+    {
+        var res = new List&lt;List&lt;int&gt;&gt;();
+        if (root is null) return res;
+        var q = new Queue&lt;TreeNode&gt;();
+        q.Enqueue(root);
+        while (q.Count &gt; 0)
+        {
+            int size = q.Count;                      // freeze this level's size
+            var level = new List&lt;int&gt;(size);
+            for (int k = 0; k &lt; size; k++)
+            {
+                var node = q.Dequeue();
+                level.Add(node.val);
+                if (node.left is not null) q.Enqueue(node.left);
+                if (node.right is not null) q.Enqueue(node.right);
+            }
+            res.Add(level);
+        }
+        return res;
+    }
+
+    public static List&lt;int&gt; RightSideView(TreeNode root) =&gt;
+        LevelOrder(root).Select(level =&gt; level[^1]).ToList();
+
+    public static List&lt;double&gt; AverageOfLevels(TreeNode root) =&gt;
+        LevelOrder(root).Select(level =&gt; level.Average(v =&gt; (double)v)).ToList();
+
+    public static List&lt;List&lt;int&gt;&gt; LevelOrderDfs(TreeNode root)
+    {
+        var res = new List&lt;List&lt;int&gt;&gt;();
+        void Dfs(TreeNode node, int depth)
+        {
+            if (node is null) return;
+            if (depth == res.Count) res.Add(new List&lt;int&gt;());
+            res[depth].Add(node.val);
+            Dfs(node.left, depth + 1);
+            Dfs(node.right, depth + 1);
+        }
+        Dfs(root, 0);
+        return res;
+    }
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n) time. The queue holds at most one level plus part of the next, so space is O(w) where w is
+the maximum width: up to about n/2 for a perfect tree (the last level), O(1) for a chain. That is the mirror image
+of DFS, whose space is O(h). <strong>Pick BFS when the answer is about depth or levels</strong> (minimum depth, nearest leaf,
+right side view): BFS can stop at the first level that satisfies the question, while DFS must explore everything.</p>
+<div class="callout">
+<p><strong>Averages overflow too.</strong> In C#, summing a level of <code>int</code> values near <code>int.MaxValue</code> overflows silently in an
+<code>unchecked</code> context. LeetCode 637 has such tests: sum into a <code>long</code> (or <code>double</code>) as <code>Average(v =&gt; (double)v)</code> does
+above.</p>
+</div>
+<h2 id="vertical-order-and-column-traversal">Vertical order and column traversal</h2>
+<p>Give every node a coordinate: the root is (row 0, column 0), a left child is one row down and one column <strong>left</strong>
+(c − 1), a right child is one row down and one column <strong>right</strong> (c + 1). Then "vertical order" means: group nodes
+by column, columns from left to right, and inside a column top to bottom. The only argument is about <strong>ties</strong>,
+when two nodes land on the same (row, column).</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 340" width="860" role="img" aria-label="Vertical order: columns by horizontal offset; nodes 6 and 1 collide at the same row and column">
+<line class="edge" x1="231.7" y1="67.6" x2="110.3" y2="124.4"/>
+<line class="edge" x1="264.3" y1="67.6" x2="385.7" y2="124.4"/>
+<line class="edge" x1="84.6" y1="147.4" x2="59.4" y2="188.6"/>
+<line class="edge" x1="106.2" y1="145.3" x2="147.8" y2="190.7"/>
+<line class="edge" x1="389.8" y1="145.3" x2="348.2" y2="190.7"/>
+<line class="edge" x1="411.4" y1="147.4" x2="436.6" y2="188.6"/>
+<line class="edge" x1="169.4" y1="219.4" x2="194.6" y2="260.6"/>
+<line class="edge" x1="326.6" y1="219.4" x2="301.4" y2="260.6"/>
+<circle class="box" cx="50" cy="204" r="18"/>
+<text x="50" y="209" text-anchor="middle" class="mono">4</text>
+<text x="50" y="238" text-anchor="middle" class="small mono muted">(2,-2)</text>
+<circle class="box" cx="94" cy="132" r="18"/>
+<text x="94" y="137" text-anchor="middle" class="mono">9</text>
+<text x="70" y="137" text-anchor="end" class="small mono muted">(1,-1)</text>
+<circle class="box bad" cx="160" cy="204" r="18"/>
+<text x="160" y="209" text-anchor="middle" class="mono">6</text>
+<text x="184" y="209" text-anchor="start" class="small mono muted">(2,0)</text>
+<circle class="box" cx="204" cy="276" r="18"/>
+<text x="204" y="281" text-anchor="middle" class="mono">2</text>
+<text x="204" y="310" text-anchor="middle" class="small mono muted">(3,1)</text>
+<circle class="box" cx="248" cy="60" r="18"/>
+<text x="248" y="65" text-anchor="middle" class="mono">3</text>
+<text x="272" y="65" text-anchor="start" class="small mono muted">(0,0)</text>
+<circle class="box" cx="292" cy="276" r="18"/>
+<text x="292" y="281" text-anchor="middle" class="mono">5</text>
+<text x="292" y="310" text-anchor="middle" class="small mono muted">(3,-1)</text>
+<circle class="box bad" cx="336" cy="204" r="18"/>
+<text x="336" y="209" text-anchor="middle" class="mono">1</text>
+<text x="312" y="209" text-anchor="end" class="small mono muted">(2,0)</text>
+<circle class="box" cx="402" cy="132" r="18"/>
+<text x="402" y="137" text-anchor="middle" class="mono">8</text>
+<text x="426" y="137" text-anchor="start" class="small mono muted">(1,1)</text>
+<circle class="box" cx="446" cy="204" r="18"/>
+<text x="446" y="209" text-anchor="middle" class="mono">7</text>
+<text x="446" y="238" text-anchor="middle" class="small mono muted">(2,2)</text>
+<text x="540" y="40" text-anchor="start" class="title">group by column, left to right</text>
+<text x="540" y="86" text-anchor="start" class="mono">col -2</text>
+<rect class="box done" x="610" y="66" width="34" height="30" rx="5"/>
+<text x="627" y="86" text-anchor="middle" class="mono">4</text>
+<text x="540" y="126" text-anchor="start" class="mono">col -1</text>
+<rect class="box done" x="610" y="106" width="34" height="30" rx="5"/>
+<text x="627" y="126" text-anchor="middle" class="mono">9</text>
+<rect class="box done" x="648" y="106" width="34" height="30" rx="5"/>
+<text x="665" y="126" text-anchor="middle" class="mono">5</text>
+<text x="540" y="166" text-anchor="start" class="mono">col  0</text>
+<rect class="box done" x="610" y="146" width="34" height="30" rx="5"/>
+<text x="627" y="166" text-anchor="middle" class="mono">3</text>
+<rect class="box bad" x="648" y="146" width="34" height="30" rx="5"/>
+<text x="665" y="166" text-anchor="middle" class="mono">1</text>
+<rect class="box bad" x="686" y="146" width="34" height="30" rx="5"/>
+<text x="703" y="166" text-anchor="middle" class="mono">6</text>
+<text x="540" y="206" text-anchor="start" class="mono">col +1</text>
+<rect class="box done" x="610" y="186" width="34" height="30" rx="5"/>
+<text x="627" y="206" text-anchor="middle" class="mono">8</text>
+<rect class="box done" x="648" y="186" width="34" height="30" rx="5"/>
+<text x="665" y="206" text-anchor="middle" class="mono">2</text>
+<text x="540" y="246" text-anchor="start" class="mono">col +2</text>
+<rect class="box done" x="610" y="226" width="34" height="30" rx="5"/>
+<text x="627" y="246" text-anchor="middle" class="mono">7</text>
+<text x="540" y="280" text-anchor="start" class="small">6 and 1 are both at (2, 0).</text>
+<text x="540" y="300" text-anchor="start" class="small">LC 987 sorts ties by value: 1, 6.</text>
+<text x="540" y="320" text-anchor="start" class="small">LC 314 keeps BFS order: 6, 1.</text>
+</svg>
+<figcaption>Each node gets (row, col): left child (r+1, c−1), right child (r+1, c+1). The drawing's x-position is <b>not</b> the column: the inorder-based layout spreads nodes apart, while two different nodes can share a column offset. Group by the integer column, never by pixel position.</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Inside one column</th>
+<th>Tie (same row and column)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://leetcode.com/problems/binary-tree-vertical-order-traversal/">Binary Tree Vertical Order Traversal</a> (314)</td>
+<td>top to bottom</td>
+<td>left to right, i.e. <strong>BFS order</strong>: no sort needed</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/">Vertical Order Traversal of a Binary Tree</a> (987)</td>
+<td>by row</td>
+<td><strong>by value</strong>: sort by (column, row, value)</td>
+</tr>
+</tbody>
+</table>
+<p>Must it be BFS? For 314, yes: a DFS would put a deeper node from the left subtree ahead of a shallower node from the
+right subtree. BFS fills each column top to bottom for free. For 987 the final sort fixes any order, so DFS works
+too. Try the example: the default tree has 5 and 6 sharing (2, 0). Switch the problem in the dropdown.</p>
+<div class="viz tt-wide" data-viz="tree-traversals-vertical"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">from collections import defaultdict
+
+
+def vertical_order_bfs(root: Optional[TreeNode]) -&gt; list[list[int]]:
+    &quot;&quot;&quot;LC 314: ties keep BFS (left-to-right) order.&quot;&quot;&quot;
+    if root is None:
+        return []
+    cols = defaultdict(list)
+    q = deque([(root, 0)])
+    lo = hi = 0
+    while q:
+        node, c = q.popleft()
+        cols[c].append(node.val)
+        lo, hi = min(lo, c), max(hi, c)
+        if node.left:
+            q.append((node.left, c - 1))
+        if node.right:
+            q.append((node.right, c + 1))
+    return [cols[c] for c in range(lo, hi + 1)]   # columns are contiguous: no sort
+</code></pre>
+<pre><code class="language-csharp">public static class Vertical
+{
+    // LC 314: ties keep BFS (left-to-right) order.
+    public static List&lt;List&lt;int&gt;&gt; VerticalOrderBfs(TreeNode root)
+    {
+        var res = new List&lt;List&lt;int&gt;&gt;();
+        if (root is null) return res;
+        var cols = new Dictionary&lt;int, List&lt;int&gt;&gt;();
+        var q = new Queue&lt;(TreeNode Node, int Col)&gt;();
+        q.Enqueue((root, 0));
+        int lo = 0, hi = 0;
+        while (q.Count &gt; 0)
+        {
+            var (node, c) = q.Dequeue();
+            if (!cols.TryGetValue(c, out var list)) cols[c] = list = new List&lt;int&gt;();
+            list.Add(node.val);
+            lo = Math.Min(lo, c); hi = Math.Max(hi, c);
+            if (node.left is not null) q.Enqueue((node.left, c - 1));
+            if (node.right is not null) q.Enqueue((node.right, c + 1));
+        }
+        for (int c = lo; c &lt;= hi; c++) res.Add(cols[c]);
+        return res;
+    }
+}
+</code></pre>
+</div>
+<p>The columns that appear are always a contiguous range (a path from the root to any column passes through every
+column in between), so you can track <code>lo</code> and <code>hi</code> and skip sorting the keys. The LC 987 version, with its sort,
+is worked problem 7 below.</p>
+<h2 id="rebuilding-a-tree-from-its-traversals">Rebuilding a tree from its traversals</h2>
+<p>A single traversal does not determine a tree: <code>[1, 2]</code> as a preorder could be 1 with a left child 2 or 1 with a
+right child 2. Two traversals usually do, <strong>if one of them is inorder</strong> and the values are distinct.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 330" width="880" role="img" aria-label="Rebuilding from preorder and inorder: the root's position in inorder splits both arrays">
+<defs><marker id="tree-traversals-sp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="40" y="30" text-anchor="start" class="small">preorder</text>
+<text x="348" y="61" text-anchor="start" class="small muted">root, [left], [right]</text>
+<rect class="box active" x="40" y="40" width="44" height="32" rx="5"/>
+<text x="62" y="61" text-anchor="middle" class="mono">3</text>
+<text x="62" y="85" text-anchor="middle" class="small muted">0</text>
+<rect class="box visit" x="90" y="40" width="44" height="32" rx="5"/>
+<text x="112" y="61" text-anchor="middle" class="mono">9</text>
+<text x="112" y="85" text-anchor="middle" class="small muted">1</text>
+<rect class="box visit" x="140" y="40" width="44" height="32" rx="5"/>
+<text x="162" y="61" text-anchor="middle" class="mono">1</text>
+<text x="162" y="85" text-anchor="middle" class="small muted">2</text>
+<rect class="box path" x="190" y="40" width="44" height="32" rx="5"/>
+<text x="212" y="61" text-anchor="middle" class="mono">20</text>
+<text x="212" y="85" text-anchor="middle" class="small muted">3</text>
+<rect class="box path" x="240" y="40" width="44" height="32" rx="5"/>
+<text x="262" y="61" text-anchor="middle" class="mono">15</text>
+<text x="262" y="85" text-anchor="middle" class="small muted">4</text>
+<rect class="box path" x="290" y="40" width="44" height="32" rx="5"/>
+<text x="312" y="61" text-anchor="middle" class="mono">7</text>
+<text x="312" y="85" text-anchor="middle" class="small muted">5</text>
+<text x="40" y="120" text-anchor="start" class="small">inorder</text>
+<text x="348" y="151" text-anchor="start" class="small muted">[left], root, [right]</text>
+<rect class="box visit" x="40" y="130" width="44" height="32" rx="5"/>
+<text x="62" y="151" text-anchor="middle" class="mono">1</text>
+<text x="62" y="175" text-anchor="middle" class="small muted">0</text>
+<rect class="box visit" x="90" y="130" width="44" height="32" rx="5"/>
+<text x="112" y="151" text-anchor="middle" class="mono">9</text>
+<text x="112" y="175" text-anchor="middle" class="small muted">1</text>
+<rect class="box active" x="140" y="130" width="44" height="32" rx="5"/>
+<text x="162" y="151" text-anchor="middle" class="mono">3</text>
+<text x="162" y="175" text-anchor="middle" class="small muted">2</text>
+<rect class="box path" x="190" y="130" width="44" height="32" rx="5"/>
+<text x="212" y="151" text-anchor="middle" class="mono">15</text>
+<text x="212" y="175" text-anchor="middle" class="small muted">3</text>
+<rect class="box path" x="240" y="130" width="44" height="32" rx="5"/>
+<text x="262" y="151" text-anchor="middle" class="mono">20</text>
+<text x="262" y="175" text-anchor="middle" class="small muted">4</text>
+<rect class="box path" x="290" y="130" width="44" height="32" rx="5"/>
+<text x="312" y="151" text-anchor="middle" class="mono">7</text>
+<text x="312" y="175" text-anchor="middle" class="small muted">5</text>
+<path class="edge accent" d="M62.0,72 C62.0,100 162.0,90 162.0,128" marker-end="url(#tree-traversals-sp)"/>
+<text x="180" y="104" text-anchor="start" class="small fill-accent">find 3 with a hash map: mid = 2</text>
+<path class="edge visit" d="M43,182 L43,190 L131,190 L131,182"/>
+<text x="87" y="206" text-anchor="middle" class="small">2 values → left</text>
+<path class="edge path" d="M193,182 L193,190 L331,190 L331,182"/>
+<text x="262" y="206" text-anchor="middle" class="small">3 values → right</text>
+<text x="40" y="238" text-anchor="start" class="small">Sizes carry over: the left subtree is the next</text>
+<text x="40" y="256" text-anchor="start" class="small">2 entries of preorder (9, 1), the right is the rest.</text>
+<text x="40" y="282" text-anchor="start" class="small mono">Recurse on (pre[1..2], ino[0..1]) and (pre[3..5], ino[3..5]).</text>
+<line class="edge" x1="672" y1="83.9" x2="623" y2="136.1"/>
+<line class="edge" x1="699.8" y1="81.9" x2="770.2" y2="138.1"/>
+<line class="edge" x1="599.9" y1="166.1" x2="570.1" y2="213.9"/>
+<line class="edge" x1="774.9" y1="166.1" x2="745.1" y2="213.9"/>
+<line class="edge" x1="795.1" y1="166.1" x2="824.9" y2="213.9"/>
+<circle class="box visit" cx="560" cy="230" r="19"/>
+<text x="560" y="235" text-anchor="middle" class="mono">1</text>
+<circle class="box visit" cx="610" cy="150" r="19"/>
+<text x="610" y="155" text-anchor="middle" class="mono">9</text>
+<circle class="box active" cx="685" cy="70" r="19"/>
+<text x="685" y="75" text-anchor="middle" class="mono">3</text>
+<circle class="box path" cx="735" cy="230" r="19"/>
+<text x="735" y="235" text-anchor="middle" class="mono">15</text>
+<circle class="box path" cx="785" cy="150" r="19"/>
+<text x="785" y="155" text-anchor="middle" class="mono">20</text>
+<circle class="box path" cx="835" cy="230" r="19"/>
+<text x="835" y="235" text-anchor="middle" class="mono">7</text>
+<text x="660" y="30" text-anchor="middle" class="title">the tree both arrays describe</text>
+</svg>
+<figcaption>Preorder tells you <i>who</i> the root is; inorder tells you <i>how many</i> nodes go left. Neither alone is enough. With a value → index map, each split is O(1) and the whole rebuild is O(n). Values must be distinct, or the root's inorder position is ambiguous.</figcaption>
+</figure>
+
+<p>The recursion: the first unused value of preorder is the root of the current subtree. Look it up in inorder
+(hash map, O(1)): everything left of it in the current inorder window is the left subtree, everything right of it
+is the right subtree. Build the left subtree first (preorder lists it next), then the right. You never need to
+slice arrays: a shared pointer <code>p</code> into preorder plus the window <code>[lo, hi]</code> into inorder is enough.</p>
+<div class="viz tt-wide" data-viz="tree-traversals-build" data-opts='{"mode":"pre"}'></div>
+
+<p><strong>Postorder + inorder</strong> is the mirror image. Postorder ends with the root, so read roots from the <strong>back</strong>. Reading
+backwards gives root, right subtree, left subtree, so you must build the <strong>right</strong> subtree first. Swap those two
+lines and you get a wrong tree with no error. The visualizer checks itself: try swapping two values in one input.</p>
+<div class="viz tt-wide" data-viz="tree-traversals-build" data-opts='{"mode":"post"}'></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def build_tree_pre_in(preorder: list[int], inorder: list[int]) -&gt; Optional[TreeNode]:
+    pos = {v: i for i, v in enumerate(inorder)}
+    nxt = iter(preorder)                          # roots, in the order we need them
+
+    def build(lo: int, hi: int) -&gt; Optional[TreeNode]:   # inorder[lo..hi]
+        if lo &gt; hi:
+            return None
+        root = TreeNode(next(nxt))
+        mid = pos[root.val]
+        root.left = build(lo, mid - 1)
+        root.right = build(mid + 1, hi)
+        return root
+
+    return build(0, len(inorder) - 1)
+
+
+def build_tree_post_in(inorder: list[int], postorder: list[int]) -&gt; Optional[TreeNode]:
+    pos = {v: i for i, v in enumerate(inorder)}
+    nxt = reversed(postorder)                     # root, right..., left...
+
+    def build(lo: int, hi: int) -&gt; Optional[TreeNode]:
+        if lo &gt; hi:
+            return None
+        root = TreeNode(next(nxt))
+        mid = pos[root.val]
+        root.right = build(mid + 1, hi)           # right FIRST
+        root.left = build(lo, mid - 1)
+        return root
+
+    return build(0, len(inorder) - 1)
+</code></pre>
+<pre><code class="language-csharp">public static class Rebuild
+{
+    public static TreeNode BuildTreePreIn(int[] preorder, int[] inorder)
+    {
+        var pos = new Dictionary&lt;int, int&gt;();
+        for (int i = 0; i &lt; inorder.Length; i++) pos[inorder[i]] = i;
+        int p = 0;
+        TreeNode Build(int lo, int hi)            // inorder[lo..hi]
+        {
+            if (lo &gt; hi) return null;
+            var root = new TreeNode(preorder[p++]);
+            int mid = pos[root.val];
+            root.left = Build(lo, mid - 1);
+            root.right = Build(mid + 1, hi);
+            return root;
+        }
+        return Build(0, inorder.Length - 1);
+    }
+
+    public static TreeNode BuildTreePostIn(int[] inorder, int[] postorder)
+    {
+        var pos = new Dictionary&lt;int, int&gt;();
+        for (int i = 0; i &lt; inorder.Length; i++) pos[inorder[i]] = i;
+        int p = postorder.Length - 1;
+        TreeNode Build(int lo, int hi)
+        {
+            if (lo &gt; hi) return null;
+            var root = new TreeNode(postorder[p--]);
+            int mid = pos[root.val];
+            root.right = Build(mid + 1, hi);      // right FIRST
+            root.left = Build(lo, mid - 1);
+            return root;
+        }
+        return Build(0, inorder.Length - 1);
+    }
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n) time and O(n) space for the map, plus O(h) recursion. The common slower version calls
+<code>inorder.index(root)</code> and slices arrays: O(n²) on a skewed tree, both in time and in copied memory.</p>
+<h3 id="preorder-postorder-unique-only-for-full-trees">Preorder + postorder: unique only for full trees</h3>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 700 200" width="700" role="img" aria-label="Preorder and postorder alone cannot tell a lone left child from a lone right child">
+<line class="edge" x1="158.6" y1="65.2" x2="121.4" y2="114.8"/>
+<circle class="box visit" cx="110" cy="130" r="19"/>
+<text x="110" y="135" text-anchor="middle" class="mono">2</text>
+<circle class="box" cx="170" cy="50" r="19"/>
+<text x="170" y="55" text-anchor="middle" class="mono">1</text>
+<line class="edge" x1="371.4" y1="65.2" x2="408.6" y2="114.8"/>
+<circle class="box" cx="360" cy="50" r="19"/>
+<text x="360" y="55" text-anchor="middle" class="mono">1</text>
+<circle class="box visit" cx="420" cy="130" r="19"/>
+<text x="420" y="135" text-anchor="middle" class="mono">2</text>
+<text x="120" y="176" text-anchor="middle" class="small">2 is a left child</text>
+<text x="380" y="176" text-anchor="middle" class="small">2 is a right child</text>
+<text x="470" y="70" text-anchor="start" class="title">both trees:</text>
+<text x="470" y="98" text-anchor="start" class="mono">preorder  = [1, 2]</text>
+<text x="470" y="122" text-anchor="start" class="mono">postorder = [2, 1]</text>
+<text x="470" y="146" text-anchor="start" class="mono fill-active">inorder   = [2, 1] vs [1, 2]</text>
+</svg>
+<figcaption>Why “preorder + postorder” (LC 889) only promises <i>some</i> valid tree: when a node has one child, nothing says which side. Inorder breaks the tie. If every node has 0 or 2 children (a full binary tree), pre + post is unique again.</figcaption>
+</figure>
+
+<p>Without inorder there is no way to tell a lone left child from a lone right child. <a href="https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/">LeetCode 889</a>
+therefore asks for <em>any</em> valid tree. The trick: after the root, the next preorder value is the root of the left
+subtree (choose left when ambiguous). In postorder that value comes <strong>last</strong> in its subtree, so its position
+marks where the left subtree ends.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def construct_from_pre_post(preorder: list[int], postorder: list[int]) -&gt; Optional[TreeNode]:
+    pos = {v: i for i, v in enumerate(postorder)}
+    i = 0
+
+    def build(lo: int, hi: int) -&gt; Optional[TreeNode]:   # postorder[lo..hi]
+        nonlocal i
+        if lo &gt; hi:
+            return None
+        root = TreeNode(preorder[i])
+        i += 1
+        if lo == hi:                              # a leaf
+            return root
+        m = pos[preorder[i]]                      # left child's subtree ends at m
+        root.left = build(lo, m)
+        root.right = build(m + 1, hi - 1)         # hi itself is the root
+        return root
+
+    return build(0, len(postorder) - 1)
+</code></pre>
+<pre><code class="language-csharp">public static class RebuildPrePost
+{
+    public static TreeNode ConstructFromPrePost(int[] preorder, int[] postorder)
+    {
+        var pos = new Dictionary&lt;int, int&gt;();
+        for (int k = 0; k &lt; postorder.Length; k++) pos[postorder[k]] = k;
+        int i = 0;
+        TreeNode Build(int lo, int hi)            // postorder[lo..hi]
+        {
+            if (lo &gt; hi) return null;
+            var root = new TreeNode(preorder[i++]);
+            if (lo == hi) return root;
+            int m = pos[preorder[i]];             // left child's subtree ends at m
+            root.left = Build(lo, m);
+            root.right = Build(m + 1, hi - 1);
+            return root;
+        }
+        return Build(0, postorder.Length - 1);
+    }
+}
+</code></pre>
+</div>
+<h2 id="a-tree-is-a-graph-going-up-as-well-as-down">A tree is a graph: going up as well as down</h2>
+<p><code>TreeNode</code> only points down. Questions about distance ("all nodes k edges from this one"), or about walking up
+from a node, need the <strong>parent</strong> too. Record parents with any traversal, and the tree becomes an undirected graph
+you can BFS from any node, exactly as in <a href="graph-fundamentals.html">Graph Fundamentals</a>. A <code>seen</code> set is needed
+again, because the edge to the parent can lead straight back.</p>
+<div class="viz tt-wide" data-viz="tree-traversals-distk"></div>
+
+<p>The same trick answers "burn a tree from a node" (minutes until all nodes burn = BFS eccentricity of that node),
+"closest leaf to a target", and "path between two nodes". For many such questions on a <em>static</em> tree, <a href="tree-patterns.html">Tree
+Problem Patterns</a> shows faster tools: LCA and binary lifting.</p>
+<h3 id="n-ary-trees">N-ary trees</h3>
+<p>When a node has a <code>children</code> list instead of <code>left</code>/<code>right</code>, preorder and postorder and level order carry over
+unchanged; inorder has no meaning (there is no single "between"). The only edit to the iterative preorder is to
+push the children <strong>in reverse</strong> so that the first child is popped first.</p>
+<div class="code-tabs">
+<pre><code class="language-python">class NaryNode:
+    def __init__(self, val=None, children=None):
+        self.val = val
+        self.children = children or []
+
+
+def nary_preorder(root: Optional[NaryNode]) -&gt; list:
+    out, stack = [], [root] if root else []
+    while stack:
+        node = stack.pop()
+        out.append(node.val)
+        stack.extend(reversed(node.children))     # first child ends up on top
+    return out
+</code></pre>
+<pre><code class="language-csharp">public class NaryNode
+{
+    public int val;
+    public IList&lt;NaryNode&gt; children = new List&lt;NaryNode&gt;();
+}
+
+public static class Nary
+{
+    public static List&lt;int&gt; Preorder(NaryNode root)
+    {
+        var output = new List&lt;int&gt;();
+        if (root is null) return output;
+        var stack = new Stack&lt;NaryNode&gt;();
+        stack.Push(root);
+        while (stack.Count &gt; 0)
+        {
+            var node = stack.Pop();
+            output.Add(node.val);
+            for (int i = node.children.Count - 1; i &gt;= 0; i--) stack.Push(node.children[i]);
+        }
+        return output;
+    }
+}
+</code></pre>
+</div>
+<h2 id="choosing-a-traversal">Choosing a traversal</h2>
+<div class="recognize">
+<p><strong>Recognize it when</strong></p>
+<ul>
+<li><strong>"Compute something from the children"</strong> (height, size, balanced?, diameter, subtree sums, delete the tree):
+  <strong>postorder</strong>, usually as a recursive function that <em>returns</em> the answer.</li>
+<li><strong>"Pass something down"</strong> (depth, path so far, allowed value range, prefix): <strong>preorder</strong>, with a parameter.</li>
+<li><strong>"In sorted order", "k-th smallest", "validate a BST"</strong>: <strong>inorder</strong> (iterative if you need to stop early).</li>
+<li><strong>"Level", "row", "depth d", "closest", "minimum depth", "from the right/left side"</strong>: <strong>BFS</strong> with the frozen
+  <code>len(q)</code> loop.</li>
+<li><strong>"Column", "vertical", "diagonal"</strong>: BFS (or DFS) carrying a coordinate, then group.</li>
+<li><strong>"Given preorder/inorder/postorder, build…"</strong>: the split-at-the-root recursion with a value → index map.</li>
+<li><strong>"Distance from a node", "nodes within k", "burn"</strong>: parent map, then graph BFS.</li>
+<li><strong>"O(1) extra space"</strong> on a tree with no parent pointers: Morris threading (or <code>next</code> pointers if the problem
+  provides them).</li>
+</ul>
+</div>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Time</th>
+<th>Extra space</th>
+<th>Modifies tree?</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Recursive DFS (any order)</td>
+<td>O(n)</td>
+<td>O(h) call stack</td>
+<td>no</td>
+<td>simplest; depth limit on skewed trees</td>
+</tr>
+<tr>
+<td>Iterative pre/in-order</td>
+<td>O(n)</td>
+<td>O(h)</td>
+<td>no</td>
+<td>each node pushed and popped once</td>
+</tr>
+<tr>
+<td>Iterative postorder (<code>prev</code>)</td>
+<td>O(n)</td>
+<td>O(h)</td>
+<td>no</td>
+<td>nodes peeked twice</td>
+</tr>
+<tr>
+<td>Postorder by reversing</td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td>no</td>
+<td>must store the full output first</td>
+</tr>
+<tr>
+<td>Ready-flag stack</td>
+<td>O(n)</td>
+<td>O(h)</td>
+<td>no</td>
+<td>≈ 2× pushes; one loop for all orders</td>
+</tr>
+<tr>
+<td>Morris (in/pre)</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>temporarily</td>
+<td>never exit early; not thread-safe</td>
+</tr>
+<tr>
+<td>BFS level order</td>
+<td>O(n)</td>
+<td>O(w) queue</td>
+<td>no</td>
+<td>w ≤ ⌈n/2⌉; stops early at shallow answers</td>
+</tr>
+<tr>
+<td>Rebuild from two traversals</td>
+<td>O(n)</td>
+<td>O(n) map</td>
+<td>builds new</td>
+<td>O(n²) with <code>index()</code> + slicing</td>
+</tr>
+</tbody>
+</table>
+<p>h = height (log n balanced, up to n − 1 skewed). w = maximum level width.</p>
+<h2 id="pitfalls">Pitfalls</h2>
+<div class="pitfall">
+<p><strong>Pitfall: testing the value instead of the node</strong></p>
+<p><code>if not root.left.val:</code> or <code>while node and node.val:</code> treats a node with value <code>0</code> as missing. LeetCode loves
+zeros in tree tests. Always test identity: <code>if node is None</code>, <code>if node.left is not None</code>, or just <code>if node.left:</code>
+(a node object is truthy, <code>None</code> is not).</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: BFS that forgets level boundaries</strong></p>
+<pre><code class="language-python">for node in q:              # BUG: iterating a deque while appending to it
+    q.append(node.left)     # RuntimeError, or levels blur together
+</code></pre>
+<p>Read <code>size = len(q)</code> <strong>once</strong> before the inner loop and pop exactly that many. Also check children for <code>None</code>
+<em>before</em> enqueueing (or skip <code>None</code> after dequeuing); enqueueing <code>None</code> and then reading <code>.val</code> is the C#
+<code>NullReferenceException</code> classic.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: iterative postorder without <code>prev</code></strong></p>
+<p>If you peek the top and "go right if it has a right child", you go back into the right subtree every time you
+return to that node: an infinite loop. The node is visited twice and you need state (the <code>prev</code> pointer, the
+ready flag, or a second stack) to know which visit this is.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: rebuilding with the wrong subtree first</strong></p>
+<p>Preorder + inorder: build <strong>left then right</strong>. Postorder + inorder (reading the postorder backwards): build
+<strong>right then left</strong>. With a shared index into the root list, the wrong order silently consumes the other
+subtree's roots. Also: <code>inorder.index(v)</code> inside the recursion is O(n) per node, O(n²) total. Build a map once.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: recursion depth on real inputs</strong></p>
+<p>LeetCode trees with 10⁴–10⁵ nodes may be a single chain. Python stops at about 1000 frames (<code>sys.setrecursionlimit</code>
+helps, but the C stack can still overflow). C# throws a <code>StackOverflowException</code> that kills the process. When
+height can be large, use the iterative templates or BFS.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: vertical order sorted by the wrong key</strong></p>
+<p>Sorting a column by value alone breaks "top to bottom"; sorting by row alone breaks the tie rule. LC 987 needs
+<code>(column, row, value)</code>. And never group by drawing x-position: different layouts give different pixels, while
+columns are defined by the ±1 rule.</p>
+</div>
+<h2 id="worked-problems">Worked problems</h2>
+<h3 id="1-binary-tree-zigzag-level-order-traversal-medium">1. Binary Tree Zigzag Level Order Traversal (Medium)</h3>
+<p><a href="https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/">LeetCode 103</a>. Return the level order,
+but alternate direction: left to right, then right to left, and so on.</p>
+<p><strong>Insight.</strong> Do <em>not</em> change how the queue is filled; children must still be enqueued left to right or the next
+level comes out scrambled. Only the <strong>output</strong> of each level alternates. Either reverse every other level, or
+build the level in a deque and <code>appendleft</code> on odd levels. The BFS visualizer above defaults to zigzag: watch
+the <code>res</code> panel flip while the queue stays in order.</p>
+<details class="solution">
+<summary>Solution: BFS, alternate where each value is written</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def zigzag_level_order(root: Optional[TreeNode]) -&gt; list[list[int]]:
+    if root is None:
+        return []
+    res, q, left_to_right = [], deque([root]), True
+    while q:
+        level = deque()
+        for _ in range(len(q)):
+            node = q.popleft()
+            if left_to_right:
+                level.append(node.val)
+            else:
+                level.appendleft(node.val)          # write it at the front
+            if node.left:
+                q.append(node.left)                 # queue order never changes
+            if node.right:
+                q.append(node.right)
+        res.append(list(level))
+        left_to_right = not left_to_right
+    return res
+</code></pre>
+<pre><code class="language-csharp">public static class Zigzag
+{
+    public static IList&lt;IList&lt;int&gt;&gt; ZigzagLevelOrder(TreeNode root)
+    {
+        var res = new List&lt;IList&lt;int&gt;&gt;();
+        if (root is null) return res;
+        var q = new Queue&lt;TreeNode&gt;();
+        q.Enqueue(root);
+        bool leftToRight = true;
+        while (q.Count &gt; 0)
+        {
+            int size = q.Count;
+            var level = new int[size];
+            for (int k = 0; k &lt; size; k++)
+            {
+                var node = q.Dequeue();
+                level[leftToRight ? k : size - 1 - k] = node.val;   // write from the other end
+                if (node.left is not null) q.Enqueue(node.left);
+                if (node.right is not null) q.Enqueue(node.right);
+            }
+            res.Add(level);
+            leftToRight = !leftToRight;
+        }
+        return res;
+    }
+}
+</code></pre>
+</div>
+<p>O(n) time, O(w) space. The C# version knows the level size in advance, so it writes each value straight into its
+final slot instead of reversing.</p>
+</details>
+<h3 id="2-maximum-width-of-binary-tree-medium">2. Maximum Width of Binary Tree (Medium)</h3>
+<p><a href="https://leetcode.com/problems/maximum-width-of-binary-tree/">LeetCode 662</a>. The width of a level is the
+distance between its leftmost and rightmost non-null nodes, <strong>counting the null positions in between</strong> as if the
+tree were complete. Return the maximum width.</p>
+<p><strong>Insight.</strong> Number positions like a heap: root 0, children 2i + 1 and 2i + 2. Then width = last − first + 1 on
+each level. The danger is size: positions double every level, so a chain of depth 3000 needs 3000-bit numbers.
+Subtract each level's first position before computing children; numbers then stay below the width itself.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 330" width="860" role="img" aria-label="Maximum width: heap positions keep the gaps that missing nodes leave">
+<line class="edge" x1="188.7" y1="58" x2="151.3" y2="104"/>
+<line class="edge" x1="211.3" y1="58" x2="248.7" y2="104"/>
+<line class="edge" x1="128.7" y1="132" x2="91.3" y2="178"/>
+<line class="edge" x1="273.2" y1="130.2" x2="326.8" y2="179.8"/>
+<line class="edge" x1="71.4" y1="207.8" x2="48.6" y2="250.2"/>
+<line class="edge" x1="331.4" y1="207.8" x2="308.6" y2="250.2"/>
+<circle class="box visit" cx="40" cy="266" r="18"/>
+<text x="40" y="271" text-anchor="middle" class="mono">6</text>
+<text x="40" y="300" text-anchor="middle" class="small mono fill-accent">#7</text>
+<circle class="box" cx="80" cy="192" r="18"/>
+<text x="80" y="197" text-anchor="middle" class="mono">5</text>
+<text x="80" y="226" text-anchor="middle" class="small mono fill-accent">#3</text>
+<circle class="box" cx="140" cy="118" r="18"/>
+<text x="140" y="123" text-anchor="middle" class="mono">3</text>
+<text x="140" y="152" text-anchor="middle" class="small mono fill-accent">#1</text>
+<circle class="box" cx="200" cy="44" r="18"/>
+<text x="200" y="49" text-anchor="middle" class="mono">1</text>
+<text x="200" y="78" text-anchor="middle" class="small mono fill-accent">#0</text>
+<circle class="box" cx="260" cy="118" r="18"/>
+<text x="260" y="123" text-anchor="middle" class="mono">2</text>
+<text x="260" y="152" text-anchor="middle" class="small mono fill-accent">#2</text>
+<circle class="box visit" cx="300" cy="266" r="18"/>
+<text x="300" y="271" text-anchor="middle" class="mono">7</text>
+<text x="300" y="300" text-anchor="middle" class="small mono fill-accent">#13</text>
+<circle class="box" cx="340" cy="192" r="18"/>
+<text x="340" y="197" text-anchor="middle" class="mono">9</text>
+<text x="340" y="226" text-anchor="middle" class="small mono fill-accent">#6</text>
+<text x="440" y="40" text-anchor="start" class="title">position: root 0, left 2i + 1, right 2i + 2</text>
+<text x="440" y="74" text-anchor="start" class="mono">L0</text>
+<text x="490" y="74" text-anchor="start" class="mono">first … last = 0 … 0</text>
+<text x="710" y="74" text-anchor="start" class="mono">width 1</text>
+<text x="440" y="104" text-anchor="start" class="mono">L1</text>
+<text x="490" y="104" text-anchor="start" class="mono">first … last = 1 … 2</text>
+<text x="710" y="104" text-anchor="start" class="mono">width 2</text>
+<text x="440" y="134" text-anchor="start" class="mono">L2</text>
+<text x="490" y="134" text-anchor="start" class="mono">first … last = 3 … 6</text>
+<text x="710" y="134" text-anchor="start" class="mono">width 4</text>
+<text x="440" y="164" text-anchor="start" class="mono">L3</text>
+<text x="490" y="164" text-anchor="start" class="mono">first … last = 7 … 13</text>
+<text x="710" y="164" text-anchor="start" class="mono fill-active">width 7</text>
+<text x="440" y="210" text-anchor="start" class="small">width = last − first + 1 counts the empty slots between.</text>
+<text x="440" y="232" text-anchor="start" class="small">Positions double each level: depth 3000 overflows any int.</text>
+<text x="440" y="254" text-anchor="start" class="small">Fix: subtract the level's first position before computing</text>
+<text x="440" y="274" text-anchor="start" class="small">children (C#: use long and normalise per level).</text>
+</svg>
+<figcaption>LeetCode 662 on its own example. The answer is 7 even though level 3 has only two real nodes, because width counts the slots between the outermost nodes as if the level were full.</figcaption>
+</figure>
+
+<div class="viz tt-wide" data-viz="tree-traversals-bfs" data-opts='{"mode":"max width (indices)","t":"1,3,2,5,null,null,9,6,null,7"}'></div>
+
+<details class="solution">
+<summary>Solution: BFS with normalised heap positions</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def width_of_binary_tree(root: Optional[TreeNode]) -&gt; int:
+    if root is None:
+        return 0
+    best, level = 0, [(root, 0)]
+    while level:
+        first = level[0][1]
+        best = max(best, level[-1][1] - first + 1)
+        nxt = []
+        for node, i in level:
+            i -= first                            # normalise: keeps numbers small
+            if node.left:
+                nxt.append((node.left, 2 * i + 1))
+            if node.right:
+                nxt.append((node.right, 2 * i + 2))
+        level = nxt
+    return best
+</code></pre>
+<pre><code class="language-csharp">public static class Width
+{
+    public static int WidthOfBinaryTree(TreeNode root)
+    {
+        if (root is null) return 0;
+        long best = 0;
+        var level = new List&lt;(TreeNode Node, long Pos)&gt; { (root, 0) };
+        while (level.Count &gt; 0)
+        {
+            long first = level[0].Pos;
+            best = Math.Max(best, level[^1].Pos - first + 1);
+            var next = new List&lt;(TreeNode Node, long Pos)&gt;();
+            foreach (var (node, pos) in level)
+            {
+                long i = pos - first;                 // normalise per level
+                if (node.left is not null) next.Add((node.left, 2 * i + 1));
+                if (node.right is not null) next.Add((node.right, 2 * i + 2));
+            }
+            level = next;
+        }
+        return (int)best;
+    }
+}
+</code></pre>
+</div>
+<p>O(n) time, O(w) space. Python's integers never overflow, but without normalisation they grow to thousands of bits
+and every arithmetic operation slows down; in C# <code>long</code> alone is not enough without the normalisation.</p>
+</details>
+<h3 id="3-construct-binary-tree-from-preorder-and-inorder-traversal-medium">3. Construct Binary Tree from Preorder and Inorder Traversal (Medium)</h3>
+<p><a href="https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/">LeetCode 105</a>.
+Values are distinct; rebuild the tree.</p>
+<p><strong>Insight.</strong> This is the split recursion from <a href="#rebuilding-a-tree-from-its-traversals">Rebuilding a tree</a>:
+preorder supplies roots in exactly the order the recursion needs them (root, then the whole left subtree, then
+the right), and inorder says how many values each side gets. A shared pointer into preorder means you never
+compute subarray boundaries for it at all.</p>
+<details class="solution">
+<summary>Solution: shared preorder pointer, inorder window, hash map</summary>
+<p><code>build_tree_pre_in</code> / <code>Rebuild.BuildTreePreIn</code> above is the full solution. The <a href="#rebuilding-a-tree-from-its-traversals">visualizer</a>
+runs it step by step: the yellow window is the inorder range of the current call, the green node is the root just
+taken from preorder.</p>
+<p>O(n) time, O(n) space. Follow-ups worth knowing:</p>
+<ul>
+<li><strong>Iterative version</strong> (no recursion): walk preorder with a stack. Each new value is the left child of the stack
+  top, until the top equals the next inorder value; then pop while they match, and the next value is the right
+  child of the last popped node.</li>
+<li><strong>Postorder + inorder</strong> (LeetCode 106): roots from the back, build right first.</li>
+<li><strong>Preorder of a BST alone</strong> (LeetCode 1008) is enough, because sorting it gives the inorder: see
+  <a href="binary-search-trees.html">Binary Search Trees</a>.</li>
+</ul>
+</details>
+<h3 id="4-flatten-binary-tree-to-linked-list-medium">4. Flatten Binary Tree to Linked List (Medium)</h3>
+<p><a href="https://leetcode.com/problems/flatten-binary-tree-to-linked-list/">LeetCode 114</a>. Rearrange the tree in place so
+it becomes a "linked list" along <code>.right</code> pointers in <strong>preorder</strong>, with every <code>.left</code> set to <code>None</code>. Follow-up:
+O(1) extra space.</p>
+<p><strong>Insight.</strong> In preorder, the node after the left subtree's last node is the right child. And the left subtree's
+last preorder node is its <strong>rightmost</strong> node: exactly the Morris predecessor. So at each node with a left
+subtree, splice: hang <code>cur.right</code> on the predecessor, move <code>cur.left</code> to <code>cur.right</code>, clear <code>cur.left</code>, and step
+right. No threads to undo, because these rewirings are the answer.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 300" width="860" role="img" aria-label="Flatten a binary tree to a right-leaning list in preorder by splicing each left subtree">
+<defs><marker id="tree-traversals-fl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="tree-traversals-fl2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker></defs>
+<line class="edge" x1="197.5" y1="70.7" x2="118.5" y2="129.3"/>
+<line class="edge" x1="224.8" y1="72.6" x2="280.2" y2="127.4"/>
+<line class="edge" x1="93.9" y1="154.9" x2="60.1" y2="205.1"/>
+<line class="edge" x1="114.1" y1="154.9" x2="147.9" y2="205.1"/>
+<line class="edge" x1="303.1" y1="154.9" x2="336.9" y2="205.1"/>
+<circle class="box" cx="50" cy="220" r="18"/>
+<text x="50" y="225" text-anchor="middle" class="mono">3</text>
+<circle class="box" cx="104" cy="140" r="18"/>
+<text x="104" y="145" text-anchor="middle" class="mono">2</text>
+<circle class="box visit" cx="158" cy="220" r="18"/>
+<text x="158" y="225" text-anchor="middle" class="mono">4</text>
+<circle class="box active" cx="212" cy="60" r="18"/>
+<text x="212" y="65" text-anchor="middle" class="mono">1</text>
+<circle class="box" cx="293" cy="140" r="18"/>
+<text x="293" y="145" text-anchor="middle" class="mono">5</text>
+<circle class="box" cx="347" cy="220" r="18"/>
+<text x="347" y="225" text-anchor="middle" class="mono">6</text>
+<text x="160" y="30" text-anchor="middle" class="small">cur = 1: pred = rightmost of left = 4</text>
+<path class="edge accent dash" d="M174.0,228 C228.0,260 283.0,210 287.0,158" marker-end="url(#tree-traversals-fl)"/>
+<text x="208" y="284" text-anchor="middle" class="small fill-accent">4.right = 5</text>
+<path class="edge accent" d="M372,140 L414,140" marker-end="url(#tree-traversals-fl)"/>
+<circle class="box done" cx="440" cy="40" r="17"/>
+<text x="440" y="45" text-anchor="middle" class="mono">1</text>
+<line class="edge done" x1="454.1" y1="49.4" x2="483.4" y2="68.9" marker-end="url(#tree-traversals-fl2)"/>
+<circle class="box done" cx="500" cy="80" r="17"/>
+<text x="500" y="85" text-anchor="middle" class="mono">2</text>
+<line class="edge done" x1="514.1" y1="89.4" x2="543.4" y2="108.9" marker-end="url(#tree-traversals-fl2)"/>
+<circle class="box done" cx="560" cy="120" r="17"/>
+<text x="560" y="125" text-anchor="middle" class="mono">3</text>
+<line class="edge done" x1="574.1" y1="129.4" x2="603.4" y2="148.9" marker-end="url(#tree-traversals-fl2)"/>
+<circle class="box done" cx="620" cy="160" r="17"/>
+<text x="620" y="165" text-anchor="middle" class="mono">4</text>
+<line class="edge done" x1="634.1" y1="169.4" x2="663.4" y2="188.9" marker-end="url(#tree-traversals-fl2)"/>
+<circle class="box done" cx="680" cy="200" r="17"/>
+<text x="680" y="205" text-anchor="middle" class="mono">5</text>
+<line class="edge done" x1="694.1" y1="209.4" x2="723.4" y2="228.9" marker-end="url(#tree-traversals-fl2)"/>
+<circle class="box done" cx="740" cy="240" r="17"/>
+<text x="740" y="245" text-anchor="middle" class="mono">6</text>
+<text x="560" y="286" text-anchor="middle" class="small">after: every .left = None, .right = next in preorder</text>
+</svg>
+<figcaption>Morris-style O(1) space: at each node with a left subtree, hang the old right subtree off the left subtree's rightmost node, move the left subtree to the right, clear left, and advance. Every node is passed a constant number of times.</figcaption>
+</figure>
+
+<details class="solution">
+<summary>Solution: Morris-style splicing, O(1) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def flatten(root: Optional[TreeNode]) -&gt; None:
+    cur = root
+    while cur:
+        if cur.left:
+            pred = cur.left
+            while pred.right:                     # rightmost node of the left subtree
+                pred = pred.right
+            pred.right = cur.right                # old right subtree goes after it
+            cur.right = cur.left                  # left subtree moves to the right
+            cur.left = None
+        cur = cur.right
+</code></pre>
+<pre><code class="language-csharp">public static class Flattener
+{
+    public static void Flatten(TreeNode root)
+    {
+        var cur = root;
+        while (cur is not null)
+        {
+            if (cur.left is not null)
+            {
+                var pred = cur.left;
+                while (pred.right is not null) pred = pred.right;   // rightmost of left subtree
+                pred.right = cur.right;
+                cur.right = cur.left;
+                cur.left = null;
+            }
+            cur = cur.right;
+        }
+    }
+}
+</code></pre>
+</div>
+<p>O(n) time: each right spine is walked once before it is spliced away. O(1) space. The recursive alternative
+visits in <strong>reverse preorder</strong> (right, left, node) keeping a <code>prev</code> pointer: <code>node.right = prev; node.left = None;
+prev = node</code>. Elegant, but O(h) stack.</p>
+</details>
+<h3 id="5-all-nodes-distance-k-in-binary-tree-medium">5. All Nodes Distance K in Binary Tree (Medium)</h3>
+<p><a href="https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/">LeetCode 863</a>. Given the root, a <code>target</code>
+<strong>node</strong> and <code>k</code>, return the values of all nodes exactly k edges from the target.</p>
+<p><strong>Insight.</strong> Distances go up through parents as well as down. Record each node's parent, then BFS from the target
+over three neighbours (left, right, parent) for k rounds; the queue then <em>is</em> the answer. The <a href="#a-tree-is-a-graph-going-up-as-well-as-down">visualizer above</a>
+runs exactly this on the LeetCode example.</p>
+<details class="solution">
+<summary>Solution: parent map + ring-by-ring BFS</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def distance_k(root: TreeNode, target: TreeNode, k: int) -&gt; list[int]:
+    parent, stack = {root: None}, [root]
+    while stack:                                  # any traversal works
+        node = stack.pop()
+        for child in (node.left, node.right):
+            if child:
+                parent[child] = node
+                stack.append(child)
+    q, seen = deque([target]), {target}
+    for _ in range(k):
+        for _ in range(len(q)):                   # one ring per round
+            node = q.popleft()
+            for nb in (node.left, node.right, parent[node]):
+                if nb and nb not in seen:
+                    seen.add(nb)
+                    q.append(nb)
+    return [node.val for node in q]
+</code></pre>
+<pre><code class="language-csharp">public static class DistanceK
+{
+    public static IList&lt;int&gt; DistanceKNodes(TreeNode root, TreeNode target, int k)
+    {
+        var parent = new Dictionary&lt;TreeNode, TreeNode&gt; { [root] = null };
+        var stack = new Stack&lt;TreeNode&gt;();
+        stack.Push(root);
+        while (stack.Count &gt; 0)
+        {
+            var node = stack.Pop();
+            foreach (var child in new[] { node.left, node.right })
+                if (child is not null) { parent[child] = node; stack.Push(child); }
+        }
+        var q = new Queue&lt;TreeNode&gt;();
+        q.Enqueue(target);
+        var seen = new HashSet&lt;TreeNode&gt; { target };
+        for (int d = 0; d &lt; k; d++)
+        {
+            for (int size = q.Count; size &gt; 0; size--)
+            {
+                var node = q.Dequeue();
+                foreach (var nb in new[] { node.left, node.right, parent[node] })
+                    if (nb is not null &amp;&amp; seen.Add(nb)) q.Enqueue(nb);
+            }
+        }
+        return q.Select(node =&gt; node.val).ToList();
+    }
+}
+</code></pre>
+</div>
+<p>O(n) time and space. If the queue empties before k rounds, the answer is empty: the loop handles that naturally.</p>
+</details>
+<h3 id="6-populating-next-right-pointers-in-each-node-ii-medium">6. Populating Next Right Pointers in Each Node II (Medium)</h3>
+<p><a href="https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/">LeetCode 117</a>. Each node has an
+extra <code>next</code> pointer. Point every node to its right neighbour on the same level (or <code>None</code>). The tree is
+<strong>not</strong> necessarily perfect. Follow-up: O(1) extra space.</p>
+<p><strong>Insight.</strong> BFS with a queue solves it in O(w) space. For O(1), notice that once a level is linked, it <strong>is</strong> a
+queue: walk it with <code>.next</code>. While walking level d, stitch level d + 1 together behind a dummy head with a
+<code>tail</code> pointer. When level d ends, the dummy's <code>next</code> is the start of level d + 1.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 280" width="860" role="img" aria-label="Populating next right pointers: each level becomes a linked list built from the level above">
+<defs><marker id="tree-traversals-nx" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<line class="edge" x1="264.4" y1="58.9" x2="155.6" y2="121.1"/>
+<line class="edge" x1="294.3" y1="60.9" x2="370.7" y2="119.1"/>
+<line class="edge" x1="128.1" y1="143.5" x2="81.9" y2="196.5"/>
+<line class="edge" x1="151.9" y1="143.5" x2="198.1" y2="196.5"/>
+<line class="edge" x1="396.9" y1="143.5" x2="443.1" y2="196.5"/>
+<circle class="box" cx="70" cy="210" r="18"/>
+<text x="70" y="215" text-anchor="middle" class="mono">4</text>
+<circle class="box" cx="140" cy="130" r="18"/>
+<text x="140" y="135" text-anchor="middle" class="mono">2</text>
+<circle class="box" cx="210" cy="210" r="18"/>
+<text x="210" y="215" text-anchor="middle" class="mono">5</text>
+<circle class="box" cx="280" cy="50" r="18"/>
+<text x="280" y="55" text-anchor="middle" class="mono">1</text>
+<circle class="box" cx="385" cy="130" r="18"/>
+<text x="385" y="135" text-anchor="middle" class="mono">3</text>
+<circle class="box" cx="455" cy="210" r="18"/>
+<text x="455" y="215" text-anchor="middle" class="mono">7</text>
+<line class="edge accent dash" x1="88" y1="210" x2="189" y2="210" marker-end="url(#tree-traversals-nx)"/>
+<line class="edge accent dash" x1="228" y1="210" x2="434" y2="210" marker-end="url(#tree-traversals-nx)"/>
+<text x="483" y="214" text-anchor="start" class="small mono muted">→ None</text>
+<line class="edge accent dash" x1="158" y1="130" x2="364" y2="130" marker-end="url(#tree-traversals-nx)"/>
+<text x="413" y="134" text-anchor="start" class="small mono muted">→ None</text>
+<text x="308" y="54" text-anchor="start" class="small mono muted">→ None</text>
+<text x="600" y="50" text-anchor="start" class="title">O(1) extra space:</text>
+<text x="600" y="78" text-anchor="start" class="small">walk level d using the .next</text>
+<text x="600" y="100" text-anchor="start" class="small">pointers you already built,</text>
+<text x="600" y="122" text-anchor="start" class="small">and stitch level d + 1 behind a</text>
+<text x="600" y="144" text-anchor="start" class="small">dummy head with a tail pointer.</text>
+<text x="600" y="166" text-anchor="start" class="small"></text>
+<text x="600" y="188" text-anchor="start" class="small">No queue: the level above</text>
+<text x="600" y="210" text-anchor="start" class="small">is the queue.</text>
+</svg>
+<figcaption>LeetCode 117. The finished level is a linked list, so you can iterate it like a queue that costs nothing. Children appended to <code>tail.next</code> form the next level's list.</figcaption>
+</figure>
+
+<details class="solution">
+<summary>Solution: use the finished level as the queue</summary>
+<div class="code-tabs">
+<pre><code class="language-python">class Node:
+    def __init__(self, val=0, left=None, right=None, next=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
+
+
+def connect(root: Optional[Node]) -&gt; Optional[Node]:
+    head = root                                   # first node of the current level
+    while head:
+        dummy = tail = Node(0)                    # builds the next level's list
+        node = head
+        while node:
+            for child in (node.left, node.right):
+                if child:
+                    tail.next = child
+                    tail = child
+            node = node.next                      # walk the current level
+        head = dummy.next
+    return root
+</code></pre>
+<pre><code class="language-csharp">public class Node
+{
+    public int val;
+    public Node left, right, next;
+    public Node(int val = 0, Node left = null, Node right = null, Node next = null)
+    {
+        this.val = val; this.left = left; this.right = right; this.next = next;
+    }
+}
+
+public static class NextPointers
+{
+    public static Node Connect(Node root)
+    {
+        var head = root;
+        while (head is not null)
+        {
+            var dummy = new Node(0);
+            var tail = dummy;
+            for (var node = head; node is not null; node = node.next)
+            {
+                if (node.left is not null) { tail.next = node.left; tail = tail.next; }
+                if (node.right is not null) { tail.next = node.right; tail = tail.next; }
+            }
+            head = dummy.next;
+        }
+        return root;
+    }
+}
+</code></pre>
+</div>
+<p>O(n) time, O(1) extra space. The dummy node removes the "is this the first child on the level?" special case.
+For a <strong>perfect</strong> tree (LeetCode 116) it is even simpler: <code>node.left.next = node.right</code> and
+<code>node.right.next = node.next.left</code>.</p>
+</details>
+<h3 id="7-vertical-order-traversal-of-a-binary-tree-hard">7. Vertical Order Traversal of a Binary Tree (Hard)</h3>
+<p><a href="https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/">LeetCode 987</a>. Columns left to right;
+within a column, top to bottom; nodes at the <strong>same row and column</strong> sorted by value.</p>
+<p><strong>Insight.</strong> Collect <code>(column, row, value)</code> for every node with any traversal, sort the triples, and cut the sorted
+list wherever the column changes. Sorting by the whole triple encodes all three rules at once. Here is the tie
+case from the <a href="#vertical-order-and-column-traversal">column picture</a>: 6 and 1 share (2, 0). LC 987 lists them by
+value, 1 before 6; switch to LC 314 and BFS order puts 6 (the left one) first.</p>
+<div class="viz tt-wide" data-viz="tree-traversals-vertical" data-opts='{"t":"3,9,8,4,6,1,7,null,null,null,2,5"}'></div>
+
+<details class="solution">
+<summary>Solution: collect (col, row, val), sort, group</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def vertical_traversal(root: Optional[TreeNode]) -&gt; list[list[int]]:
+    if not root:
+        return []
+    entries = []                                  # (col, row, val)
+    q = deque([(root, 0, 0)])
+    while q:
+        node, r, c = q.popleft()
+        entries.append((c, r, node.val))
+        if node.left:
+            q.append((node.left, r + 1, c - 1))
+        if node.right:
+            q.append((node.right, r + 1, c + 1))
+    entries.sort()                                # col, then row, then value
+    res, last = [], None
+    for c, r, v in entries:
+        if c != last:
+            res.append([])
+            last = c
+        res[-1].append(v)
+    return res
+</code></pre>
+<pre><code class="language-csharp">public static class VerticalTraversal
+{
+    public static IList&lt;IList&lt;int&gt;&gt; Solve(TreeNode root)
+    {
+        var res = new List&lt;IList&lt;int&gt;&gt;();
+        if (root is null) return res;
+        var entries = new List&lt;(int Col, int Row, int Val)&gt;();
+        var q = new Queue&lt;(TreeNode Node, int Row, int Col)&gt;();
+        q.Enqueue((root, 0, 0));
+        while (q.Count &gt; 0)
+        {
+            var (node, r, c) = q.Dequeue();
+            entries.Add((c, r, node.val));
+            if (node.left is not null) q.Enqueue((node.left, r + 1, c - 1));
+            if (node.right is not null) q.Enqueue((node.right, r + 1, c + 1));
+        }
+        entries.Sort();                           // tuples compare field by field
+        int? last = null;
+        foreach (var (c, _, v) in entries)
+        {
+            if (c != last) { res.Add(new List&lt;int&gt;()); last = c; }
+            res[^1].Add(v);
+        }
+        return res;
+    }
+}
+</code></pre>
+</div>
+<p>O(n log n) time for the sort, O(n) space. You can shave the sort to per-column sorts (bucket by column first,
+columns are contiguous), but the asymptotic cost is the same when one column holds most nodes.</p>
+</details>
+<h3 id="8-recover-a-tree-from-preorder-traversal-hard">8. Recover a Tree From Preorder Traversal (Hard)</h3>
+<p><a href="https://leetcode.com/problems/recover-a-tree-from-preorder-traversal/">LeetCode 1028</a>. The input is a preorder
+dump like <code>"1-2--3--4-5--6--7"</code>: each node is written as <code>depth</code> dashes followed by its value. If a node has one
+child, it is the left child. Rebuild the tree.</p>
+<p><strong>Insight.</strong> This is the iterative preorder <strong>in reverse</strong>. During a preorder walk the explicit stack holds the
+path from the root to the current node, and the stack's height is the current depth. So when you read a node of
+depth d, pop until the stack has exactly d nodes; the top is then its parent. The parent gets it as <code>left</code> if
+that is still free, otherwise as <code>right</code>.</p>
+<details class="solution">
+<summary>Solution: stack of the current root-to-node path</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def recover_from_preorder(traversal: str) -&gt; Optional[TreeNode]:
+    stack, i, n = [], 0, len(traversal)
+    while i &lt; n:
+        depth = 0
+        while traversal[i] == &quot;-&quot;:
+            depth += 1
+            i += 1
+        j = i
+        while j &lt; n and traversal[j] != &quot;-&quot;:
+            j += 1
+        node = TreeNode(int(traversal[i:j]))
+        i = j
+        while len(stack) &gt; depth:                 # climb back to the parent
+            stack.pop()
+        if stack:
+            parent = stack[-1]
+            if parent.left is None:
+                parent.left = node
+            else:
+                parent.right = node
+        stack.append(node)
+    return stack[0] if stack else None
+</code></pre>
+<pre><code class="language-csharp">public static class RecoverPreorder
+{
+    public static TreeNode RecoverFromPreorder(string traversal)
+    {
+        var stack = new List&lt;TreeNode&gt;();         // index = depth
+        int i = 0, n = traversal.Length;
+        while (i &lt; n)
+        {
+            int depth = 0;
+            while (traversal[i] == '-') { depth++; i++; }
+            int value = 0;
+            while (i &lt; n &amp;&amp; traversal[i] != '-') value = value * 10 + (traversal[i++] - '0');
+            var node = new TreeNode(value);
+            stack.RemoveRange(depth, stack.Count - depth);   // climb back to the parent
+            if (stack.Count &gt; 0)
+            {
+                var parent = stack[^1];
+                if (parent.left is null) parent.left = node; else parent.right = node;
+            }
+            stack.Add(node);
+        }
+        return stack.Count &gt; 0 ? stack[0] : null;
+    }
+}
+</code></pre>
+</div>
+<p>O(n) time in the length of the string (each node is pushed and popped once), O(h) space. The bottom of the stack
+is the root, which is why the answer is <code>stack[0]</code>.</p>
+</details>
+<h2 id="problem-ladder">Problem ladder</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Level</th>
+<th>The key idea</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://leetcode.com/problems/binary-tree-preorder-traversal/">Binary Tree Preorder Traversal</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Recursive, then iterative: push right before left.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://leetcode.com/problems/binary-tree-inorder-traversal/">Binary Tree Inorder Traversal</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Left-spine loop; then try Morris.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://leetcode.com/problems/binary-tree-postorder-traversal/">Binary Tree Postorder Traversal</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>One stack + <code>prev</code>, or reversed (root, R, L).</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://leetcode.com/problems/maximum-depth-of-binary-tree/">Maximum Depth of Binary Tree</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Postorder: <code>1 + max(left, right)</code>; or count BFS levels.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://leetcode.com/problems/average-of-levels-in-binary-tree/">Average of Levels in Binary Tree</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Frozen <code>len(q)</code>; sum in a wide type.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://leetcode.com/problems/n-ary-tree-preorder-traversal/">N-ary Tree Preorder Traversal</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Push children reversed.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://leetcode.com/problems/binary-tree-level-order-traversal/">Binary Tree Level Order Traversal</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>The base BFS template.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://leetcode.com/problems/binary-tree-level-order-traversal-ii/">Binary Tree Level Order Traversal II</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Same, reverse the list of levels at the end.</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/">Binary Tree Zigzag Level Order Traversal</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Flip the output, never the queue.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://leetcode.com/problems/binary-tree-right-side-view/">Binary Tree Right Side View</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Last node of each level (or DFS right-first, first visit per depth).</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://leetcode.com/problems/find-largest-value-in-each-tree-row/">Find Largest Value in Each Tree Row</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Level max.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://leetcode.com/problems/deepest-leaves-sum/">Deepest Leaves Sum</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>The sum of the last level BFS finishes.</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://leetcode.com/problems/maximum-width-of-binary-tree/">Maximum Width of Binary Tree</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Heap positions, normalised per level.</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/">Construct Binary Tree from Preorder and Inorder Traversal</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Root from preorder, split by inorder map.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/">Construct Binary Tree from Inorder and Postorder Traversal</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Roots from the back; right subtree first.</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/">Construct Binary Tree from Preorder and Postorder Traversal</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Next preorder value ends the left block in postorder.</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="https://leetcode.com/problems/flatten-binary-tree-to-linked-list/">Flatten Binary Tree to Linked List</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Splice onto the rightmost node of the left subtree.</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="https://leetcode.com/problems/populating-next-right-pointers-in-each-node/">Populating Next Right Pointers in Each Node</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Perfect tree: <code>left.next = right</code>, <code>right.next = next.left</code>.</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/">Populating Next Right Pointers in Each Node II</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Walk level d by <code>next</code>, stitch level d + 1 behind a dummy.</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/">All Nodes Distance K in Binary Tree</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Parent map turns the tree into a graph; BFS k rings.</td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="https://leetcode.com/problems/binary-tree-vertical-order-traversal/">Binary Tree Vertical Order Traversal</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>BFS with columns; ties stay in BFS order (premium).</td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="https://leetcode.com/problems/minimum-number-of-operations-to-sort-a-binary-tree-by-level/">Minimum Number of Operations to Sort a Binary Tree by Level</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>BFS levels + minimum swaps = n − cycles of the permutation.</td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/">Vertical Order Traversal of a Binary Tree</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Sort (col, row, value), then group.</td>
+</tr>
+<tr>
+<td>24</td>
+<td><a href="https://leetcode.com/problems/recover-a-tree-from-preorder-traversal/">Recover a Tree From Preorder Traversal</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Stack height = depth; pop to the parent.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>A node's inorder position is 0. What must be true about it, and where is it in the tree?</summary>
+<p>Nothing is emitted before it, so it has <strong>no left child</strong>, and every ancestor it hangs under it from the left.
+It is the end of the left spine: start at the root and keep going left. In a BST that is the minimum.</p>
+</details>
+<details class="quiz">
+<summary>Why does iterative preorder push the right child before the left?</summary>
+<p>A stack is last in, first out. Pushing right then left leaves left on top, so the left subtree is processed
+completely before the right one is popped. Push them the other way round and you get (root, right, left), which,
+reversed, is the postorder trick.</p>
+</details>
+<details class="quiz">
+<summary>Recursive DFS and BFS both take O(n) time. Give a tree where DFS needs far less memory than BFS, and one where it is the other way round.</summary>
+<p>A <strong>perfect</strong> tree of n nodes: DFS holds one root-to-leaf path, about log₂ n frames; BFS holds the last level,
+about n/2 nodes. A <strong>chain</strong> (linked-list-shaped tree): BFS holds one node at a time, while DFS recursion holds
+all n frames. DFS space is O(height), BFS space is O(width).</p>
+</details>
+<details class="quiz">
+<summary>In Morris inorder, how does the algorithm know whether it is visiting a node for the first or second time?</summary>
+<p>It walks to the node's inorder predecessor (left once, then right while possible). If the predecessor's right
+pointer is <code>None</code>, no thread exists yet: first visit, so build one and go left. If it points back to the current
+node, we must have climbed up through that thread: second visit, so the left subtree is done; remove the thread,
+emit and go right.</p>
+</details>
+<details class="quiz">
+<summary>Preorder <code>[1, 2, 3]</code> and postorder <code>[3, 2, 1]</code>. How many binary trees match? What extra information would pin it down?</summary>
+<p>Four. Each of the two nodes with one child (1 and 2) could have it on the left or the right: 2 × 2 = 4 chains.
+The inorder traversal pins it down: for example <code>[3, 2, 1]</code> means both are left children. (A "the tree is full"
+promise would also make pre + post unique, but no full tree has these traversals: a full tree never has a node with
+exactly one child.)</p>
+</details>
+<details class="quiz">
+<summary>You need the k-th node in inorder and want to stop as soon as you find it. Which inorder implementation should you use, and which must you avoid?</summary>
+<p>Use the iterative stack version: return the moment the counter reaches k, at O(h + k) cost. Recursion also works
+with an early-exit flag. <strong>Avoid Morris</strong> unless you keep looping until all threads are removed: returning early
+leaves the tree with cycles.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Three passes</strong>pre = before children (pass state down) · in = between (BST sorted order) · post = after children (combine answers up)</div>
+<div><strong>Recursive</strong><code>if node is None: return</code> → work → recurse. O(n) time, O(h) stack; h can be n.</div>
+<div><strong>Iterative pre</strong>stack = [root]; pop, emit, push <b>right then left</b>.</div>
+<div><strong>Iterative in</strong><code>while cur or stack</code>: push left spine; pop, emit; <code>cur = cur.right</code>.</div>
+<div><strong>Iterative post</strong>peek top; if <code>top.right</code> and not <code>prev</code> → go right; else pop, emit, <code>prev = top</code>. Or reverse (root, R, L).</div>
+<div><strong>Morris</strong>No left → emit, go right. Else pred = rightmost of left: None → thread, go left; == cur → unthread, emit (inorder), go right. O(1) space, never exit early.</div>
+<div><strong>BFS levels</strong><code>for _ in range(len(q))</code> freezes one level. O(w) space. Zigzag flips output only.</div>
+<div><strong>Coordinates</strong>left (r+1, c−1), right (r+1, c+1). Width: heap index 2i+1 / 2i+2, normalise per level.</div>
+<div><strong>Rebuild</strong>pre+in: roots from front, left first. post+in: roots from back, right first. Map value → inorder index. pre+post: unique only if full.</div>
+<div><strong>Tree as graph</strong>parent map + BFS with <code>seen</code> for distances, burning, nearest leaf.</div>
+</div>
+<p>Related: <a href="recursion.html">Recursion &amp; the Call Stack</a> (the stack the DFS animation shows), <a href="graph-fundamentals.html">Graph Fundamentals</a>
+(BFS and DFS in general), <a href="binary-search-trees.html">Binary Search Trees</a> (where inorder becomes sorted order), and
+<a href="tree-patterns.html">Tree Problem Patterns</a> (return-value recursion, LCA, serialization).</p><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="heaps-priority-queues.html"><small>&larr; PREVIOUS</small>Heaps &amp; Priority Queues</a><a class="next" href="binary-search-trees.html"><small>NEXT &rarr;</small>Binary Search Trees</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#trees-in-one-picture">Trees in one picture</a><ul>
+<li><a href="#treenode-in-python-and-c">TreeNode in Python and C</a></li>
+<li><a href="#the-level-order-array-format">The level-order array format</a></li>
+</ul>
+</li>
+<li><a href="#depth-first-three-orders-one-walk">Depth-first: three orders, one walk</a><ul>
+<li><a href="#recursive-templates">Recursive templates</a></li>
+</ul>
+</li>
+<li><a href="#iterative-traversals-with-an-explicit-stack">Iterative traversals with an explicit stack</a><ul>
+<li><a href="#preorder-pop-emit-push-right-then-left">Preorder: pop, emit, push right then left</a></li>
+<li><a href="#inorder-slide-down-the-left-spine">Inorder: slide down the left spine</a></li>
+<li><a href="#postorder-the-tricky-one">Postorder: the tricky one</a></li>
+<li><a href="#iterative-templates">Iterative templates</a></li>
+<li><a href="#one-template-for-all-three-the-ready-flag">One template for all three: the "ready" flag</a></li>
+</ul>
+</li>
+<li><a href="#morris-traversal-o1-extra-space">Morris traversal: O(1) extra space</a></li>
+<li><a href="#breadth-first-level-by-level">Breadth-first: level by level</a></li>
+<li><a href="#vertical-order-and-column-traversal">Vertical order and column traversal</a></li>
+<li><a href="#rebuilding-a-tree-from-its-traversals">Rebuilding a tree from its traversals</a><ul>
+<li><a href="#preorder-postorder-unique-only-for-full-trees">Preorder + postorder: unique only for full trees</a></li>
+</ul>
+</li>
+<li><a href="#a-tree-is-a-graph-going-up-as-well-as-down">A tree is a graph: going up as well as down</a><ul>
+<li><a href="#n-ary-trees">N-ary trees</a></li>
+</ul>
+</li>
+<li><a href="#choosing-a-traversal">Choosing a traversal</a></li>
+<li><a href="#pitfalls">Pitfalls</a></li>
+<li><a href="#worked-problems">Worked problems</a><ul>
+<li><a href="#1-binary-tree-zigzag-level-order-traversal-medium">1. Binary Tree Zigzag Level Order Traversal (Medium)</a></li>
+<li><a href="#2-maximum-width-of-binary-tree-medium">2. Maximum Width of Binary Tree (Medium)</a></li>
+<li><a href="#3-construct-binary-tree-from-preorder-and-inorder-traversal-medium">3. Construct Binary Tree from Preorder and Inorder Traversal (Medium)</a></li>
+<li><a href="#4-flatten-binary-tree-to-linked-list-medium">4. Flatten Binary Tree to Linked List (Medium)</a></li>
+<li><a href="#5-all-nodes-distance-k-in-binary-tree-medium">5. All Nodes Distance K in Binary Tree (Medium)</a></li>
+<li><a href="#6-populating-next-right-pointers-in-each-node-ii-medium">6. Populating Next Right Pointers in Each Node II (Medium)</a></li>
+<li><a href="#7-vertical-order-traversal-of-a-binary-tree-hard">7. Vertical Order Traversal of a Binary Tree (Hard)</a></li>
+<li><a href="#8-recover-a-tree-from-preorder-traversal-hard">8. Recover a Tree From Preorder Traversal (Hard)</a></li>
+</ul>
+</li>
+<li><a href="#problem-ladder">Problem ladder</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1264 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Caching: When To, When Not To, and How | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/caching.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/caching.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track" open><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html" aria-current="page">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Caching: When To, When Not To, and How</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">DATA &AMP; CACHING</p><h1>Caching: When To, When Not To, and How</h1><p class="lede">Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all.</p><div class="meta"><span class="level level-intermediate">Intermediate → Expert</span><span>~75 min study</span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="caching" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-the-fastest-query-is-the-one-you-never-run">The problem: the fastest query is the one you never run</h2>
+<p>A product page runs three queries, about 40 ms in total, and it is requested 2,000 times a second. Nearly every one of those requests asks for the same few hundred products, and a product changes perhaps twice a day. So the database spends most of its time computing answers it computed a moment ago. A cache keeps a copy of the answer close to the code that needs it, and turns 40 ms into 0.5 ms.</p>
+<p>That is the whole appeal, and it is real. The trouble is what tends to come with it. Here is the first version that most teams write:</p>
+<div class="code-tabs" data-labels="Before: a dictionary and good intentions,After: bounded, expiring, invalidated, stampede-safe">
+<pre><code class="language-csharp">public class ProductService(AppDb db)
+{
+    // static: shared by every request, forever
+    private static readonly Dictionary&lt;int, Product&gt; Cache = new();
+
+    public async Task&lt;Product?&gt; GetAsync(int id)
+    {
+        if (Cache.TryGetValue(id, out var p)) return p;   // not thread-safe
+        p = await db.Products.FindAsync(id);              // 500 concurrent misses = 500 queries
+        if (p != null) Cache[id] = p;                     // no size limit, no expiry
+        return p;                                         // callers can mutate the cached object
+    }
+
+    public async Task UpdatePriceAsync(int id, decimal price)
+    {
+        var p = await db.Products.FindAsync(id);
+        p!.Price = price;
+        await db.SaveChangesAsync();                      // cache never told: old price forever
+    }
+}
+</code></pre>
+<pre><code class="language-csharp">public class ProductService(AppDb db, HybridCache cache)
+{
+    private static readonly HybridCacheEntryOptions Options = new()
+    {
+        Expiration = TimeSpan.FromMinutes(5),             // bound staleness (L2 + L1)
+        LocalCacheExpiration = TimeSpan.FromMinutes(1),   // in-process copy lives less
+    };
+
+    public ValueTask&lt;ProductDto?&gt; GetAsync(int id, CancellationToken ct) =&gt;
+        cache.GetOrCreateAsync(
+            $&quot;product:v1:{id}&quot;,                           // namespaced, versioned key
+            async token =&gt; await db.Products.AsNoTracking()
+                .Where(p =&gt; p.Id == id)
+                .Select(p =&gt; new ProductDto(p.Id, p.Name, p.Price))   // immutable DTO
+                .FirstOrDefaultAsync(token),
+            Options, tags: [&quot;products&quot;], cancellationToken: ct);      // one load per key at a time
+
+    public async Task UpdatePriceAsync(int id, decimal price, CancellationToken ct)
+    {
+        await db.Products.Where(p =&gt; p.Id == id)
+            .ExecuteUpdateAsync(s =&gt; s.SetProperty(p =&gt; p.Price, price), ct);  // DB first
+        await cache.RemoveAsync($&quot;product:v1:{id}&quot;, ct);                       // then invalidate
+    }
+}
+</code></pre>
+</div>
+<p>The "before" version has five bugs, and none of them shows up in a unit test. It <strong>grows without bound</strong> until the process runs out of memory. It <strong>never expires</strong>, so a missed invalidation is permanent. The price update <strong>doesn't invalidate</strong>, so the page shows the old price until the next deploy. When the cache is cold (after every deploy), 500 concurrent requests for the same product cause 500 identical queries. That is a <strong>stampede</strong>. And it hands out <strong>shared mutable objects</strong>, so one request that changes <code>p.Name</code> for display changes it for everyone. Every one of those bugs comes from treating a cache as a dictionary. A cache is really a second copy of your data, with its own lifetime and its own consistency rules.</p>
+<div class="rule">
+<p><strong>Cache only when a stale copy is acceptable, the copy will be read many times before it changes, and a miss costs much more than a lookup.</strong> Then bound every entry: a size, a TTL, and a write path that invalidates it.</p>
+</div>
+<p>This topic is about that decision first, and the mechanics second. It leans on <a href="data-access.html">Data Access Patterns</a> (what you're caching in front of), <a href="performance-patterns.html">Performance Patterns</a> (measure before you optimise) and <a href="resilience.html">Resilience Patterns</a> (what happens when the cache itself fails).</p>
+<h2 id="should-you-cache-at-all">Should you cache at all?</h2>
+<p>Caching is a bet. You trade memory, code complexity and a second source of truth for latency and database load. Six questions decide whether the bet pays off. Ask them in this order, because each one is cheaper to answer than the next, and any of them can end the discussion.</p>
+<ol>
+<li><strong>Can readers tolerate stale data?</strong> A cache is a copy, and copies lag. If the answer must be exact at the moment it is read (an account balance before a withdrawal, stock count at checkout, "is this user still allowed?"), don't cache that read path.</li>
+<li><strong>Is a miss much more expensive than a lookup?</strong> A Redis round trip costs about 0.5 ms. Putting it in front of a 0.8 ms primary-key lookup buys almost nothing, and every miss now pays both costs.</li>
+<li><strong>Is the data read much more often than it is written?</strong> Every write invalidates the entry. If an entry is replaced before anyone reads it twice, the cache only adds work.</li>
+<li><strong>Will the hit rate be high?</strong> The same key has to be requested again while its copy is still valid, and the working set has to fit in memory.</li>
+<li><strong>Is the data shared or per-user?</strong> Shared data (catalogue, configuration, exchange rates) gives one entry for millions of reads. Per-user data multiplies memory by the number of users, gets fewer hits per key, and risks leaking one user's data to another.</li>
+<li><strong>Do users need to read their own writes?</strong> If they do, expiry alone isn't enough: the write path must invalidate.</li>
+</ol>
+<figure class="figure">
+<svg class="dg cx-tree" viewBox="0 0 700 476" width="700" role="img" aria-label="Decision tree: should you cache this data?"><path class="edge " d="M350,58 L350,71"/><polygon class="muted" points="350,78 345.5,69 354.5,69"/><text class="small muted cx-h" x="358" y="72" text-anchor="start">yes</text><path class="edge " d="M470,36 L503,36"/><polygon class="muted" points="510,36 501,40.5 501,31.5"/><text class="small muted cx-h" x="490" y="31" text-anchor="middle">no</text><path class="edge " d="M350,122 L350,135"/><polygon class="muted" points="350,142 345.5,133 354.5,133"/><text class="small muted cx-h" x="358" y="136" text-anchor="start">yes</text><path class="edge " d="M470,100 L503,100"/><polygon class="muted" points="510,100 501,104.5 501,95.5"/><text class="small muted cx-h" x="490" y="95" text-anchor="middle">no</text><path class="edge " d="M350,186 L350,199"/><polygon class="muted" points="350,206 345.5,197 354.5,197"/><text class="small muted cx-h" x="358" y="200" text-anchor="start">yes</text><path class="edge " d="M470,164 L503,164"/><polygon class="muted" points="510,164 501,168.5 501,159.5"/><text class="small muted cx-h" x="490" y="159" text-anchor="middle">no</text><path class="edge " d="M350,250 L350,263"/><polygon class="muted" points="350,270 345.5,261 354.5,261"/><text class="small muted cx-h" x="358" y="264" text-anchor="start">yes</text><path class="edge " d="M470,228 L503,228"/><polygon class="muted" points="510,228 501,232.5 501,223.5"/><text class="small muted cx-h" x="490" y="223" text-anchor="middle">no</text><path class="edge " d="M350,314 L181.89935578369287,342.8172532942241"/><polygon class="muted" points="175,344 183.11026312532059,338.0440255173427 184.6309374613182,346.9146258106621"/><text class="small muted cx-h" x="254.5" y="323" text-anchor="end">shared</text><path class="edge " d="M350,314 L518.1006442163072,342.8172532942241"/><polygon class="muted" points="525,344 515.3690625386818,346.9146258106621 516.8897368746794,338.0440255173427"/><text class="small muted cx-h" x="445.5" y="323" text-anchor="start">per-user</text><path class="edge " d="M175,388 L96.49933683619682,419.4002652655213"/><polygon class="muted" points="90,422 96.68503217437386,414.4793388038294 100.0275482615608,422.8356290217967"/><text class="small muted cx-h" x="114" y="409" text-anchor="end">no</text><path class="edge " d="M175,388 L255.48019547817074,419.4520304167564"/><polygon class="muted" points="262,422 251.9794137398486,422.91534201414845 255.25537463259042,414.53273620036794"/><text class="small muted cx-h" x="236" y="409" text-anchor="start">yes</text><path class="edge " d="M525,388 L444.51980452182926,419.4520304167564"/><polygon class="muted" points="438,422 444.7446253674096,414.53273620036794 448.02058626015133,422.91534201414845"/><text class="small muted cx-h" x="464" y="409" text-anchor="end">no</text><path class="edge " d="M525,388 L603.5006631638032,419.4002652655213"/><polygon class="muted" points="610,422 599.9724517384393,422.8356290217967 603.3149678256261,414.4793388038294"/><text class="small muted cx-h" x="586" y="409" text-anchor="start">yes</text><rect class="box " x="230" y="14" width="240" height="44" rx="8"/><text class="cx-t" x="350" y="32" text-anchor="middle">Can readers accept stale data?</text><text class="cx-s" x="350" y="48" text-anchor="middle">money, stock, authz → no</text><rect class="box " x="230" y="78" width="240" height="44" rx="8"/><text class="cx-t" x="350" y="96" text-anchor="middle">Is a miss ≥ 5× a cache lookup?</text><text class="cx-s" x="350" y="112" text-anchor="middle">else the cache is no faster</text><rect class="box " x="230" y="142" width="240" height="44" rx="8"/><text class="cx-t" x="350" y="160" text-anchor="middle">Reads ≥ 2× writes per key?</text><text class="cx-s" x="350" y="176" text-anchor="middle">else it changes before reuse</text><rect class="box " x="230" y="206" width="240" height="44" rx="8"/><text class="cx-t" x="350" y="224" text-anchor="middle">Estimated hit rate ≥ 50%?</text><text class="cx-s" x="350" y="240" text-anchor="middle">keys repeat within TTL and fit</text><rect class="box " x="230" y="270" width="240" height="44" rx="8"/><text class="cx-t" x="350" y="288" text-anchor="middle">Is the value per-user?</text><text class="cx-s" x="350" y="304" text-anchor="middle">or shared by everyone</text><rect class="box " x="70" y="344" width="210" height="44" rx="8"/><text class="cx-t" x="175" y="362" text-anchor="middle">Need read-your-writes?</text><text class="cx-s" x="175" y="378" text-anchor="middle">shared data</text><rect class="box " x="420" y="344" width="210" height="44" rx="8"/><text class="cx-t" x="525" y="362" text-anchor="middle">Need read-your-writes?</text><text class="cx-s" x="525" y="378" text-anchor="middle">per-user data</text><rect class="box bad" x="510" y="14" width="180" height="44" rx="8"/><text class="cx-t" x="600" y="32" text-anchor="middle">Don&#39;t cache this path</text><text class="cx-s" x="600" y="48" text-anchor="middle">cache immutable parts only</text><rect class="box bad" x="510" y="78" width="180" height="44" rx="8"/><text class="cx-t" x="600" y="96" text-anchor="middle">Don&#39;t cache</text><text class="cx-s" x="600" y="112" text-anchor="middle">the source is already fast</text><rect class="box bad" x="510" y="142" width="180" height="44" rx="8"/><text class="cx-t" x="600" y="160" text-anchor="middle">Don&#39;t cache</text><text class="cx-s" x="600" y="176" text-anchor="middle">it changes before reuse</text><rect class="box active" x="510" y="206" width="180" height="44" rx="8"/><text class="cx-t" x="600" y="224" text-anchor="middle">Probably not</text><text class="cx-s" x="600" y="240" text-anchor="middle">fix source / cache hot head</text><rect class="box done" x="7" y="422" width="166" height="44" rx="8"/><text class="cx-t" x="90" y="440" text-anchor="middle">Shared cache</text><text class="cx-s" x="90" y="456" text-anchor="middle">TTL ≈ tolerance + jitter</text><rect class="box done" x="179" y="422" width="166" height="44" rx="8"/><text class="cx-t" x="262" y="440" text-anchor="middle">Shared cache</text><text class="cx-s" x="262" y="456" text-anchor="middle">delete on write + TTL</text><rect class="box done" x="355" y="422" width="166" height="44" rx="8"/><text class="cx-t" x="438" y="440" text-anchor="middle">Private cache</text><text class="cx-s" x="438" y="456" text-anchor="middle">short TTL, user in key</text><rect class="box done" x="527" y="422" width="166" height="44" rx="8"/><text class="cx-t" x="610" y="440" text-anchor="middle">Private cache</text><text class="cx-s" x="610" y="456" text-anchor="middle">evict on the user&#39;s writes</text></svg>
+<figcaption>Each question can stop the bet. Red leaves mean "don't cache". The amber leaf means "probably not; look at the source first". The green leaves are the four ways to cache when you should.</figcaption>
+</figure>
+
+<p>Put your own numbers into the tree. The hit-rate estimate uses a deliberately pessimistic model: uniform traffic over every key. Each key is read <code>reads ÷ keys</code> times a second, and an entry lives for the shorter of its TTL and the time to the next write. So one miss buys about <code>n = reads per key × lifetime</code> hits, and the hit rate is roughly <code>n ÷ (n + 1)</code>, scaled down by the fraction of keys that fit in the cache. Real traffic is usually skewed (a few keys get most of the reads), which only improves the hit rate. If the uniform estimate already says yes, you're safe.</p>
+<div class="viz" data-viz="caching-decide"></div>
+
+<p>Try <strong>Randomize</strong> a few times. Each preset is a real kind of workload: a hot catalogue (cache it), a write-heavy counter (don't), a long tail of a million keys (the uniform model says no, so check how skewed the real traffic is), and a sub-millisecond lookup behind Redis (don't).</p>
+<div class="insight">
+<p><strong>Insight</strong>
+Hit rate is set by <strong>reuse within the entry's lifetime</strong>, not by how popular the data feels. A key read once a minute, with a 30-second TTL, never hits, however important it is. That's why the tree asks about reads per key and lifetime instead of "is it slow?".</p>
+</div>
+<h3 id="what-a-cache-costs-you">What a cache costs you</h3>
+<p>The benefits are easy to see in a benchmark. The costs show up later, in production:</p>
+<table>
+<thead>
+<tr>
+<th>Cost</th>
+<th>What it looks like in production</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A second source of truth</strong></td>
+<td>Two copies can disagree. Every caching bug is a variant of "the copy is wrong and nobody knows".</td>
+</tr>
+<tr>
+<td><strong>Staleness bugs</strong></td>
+<td>"I changed my address and the confirmation email used the old one." These are hard to reproduce, because they depend on timing.</td>
+</tr>
+<tr>
+<td><strong>Invalidation code</strong></td>
+<td>Every write path must know which keys it affects. A new write path (an admin tool, a batch job, a second service) that forgets is a latent bug.</td>
+</tr>
+<tr>
+<td><strong>Memory</strong></td>
+<td>In-process caches compete with your app for heap and add GC pressure (see <a href="memory-and-gc.html">Memory and GC</a>). Distributed caches are another system to size and pay for.</td>
+</tr>
+<tr>
+<td><strong>Cold starts</strong></td>
+<td>After a deploy, a restart or a flush, every request misses at once. If the database can't take full traffic, a cache restart becomes an outage.</td>
+</tr>
+<tr>
+<td><strong>Hidden load-bearing</strong></td>
+<td>At a 95% hit rate the database only sees 5% of traffic, and it gets sized for that. The cache has quietly become something the system can't run without.</td>
+</tr>
+<tr>
+<td><strong>Security</strong></td>
+<td>A key that forgets the tenant or user, or a CDN that stores a personalised page, serves one user's data to another.</td>
+</tr>
+<tr>
+<td><strong>Masking</strong></td>
+<td>A cache in front of a slow query hides it until the cache misses, which happens at the worst possible moment.</td>
+</tr>
+</tbody>
+</table>
+<div class="pitfall">
+<p><strong>Pitfall: the cache becomes load-bearing</strong>
+If the database can't survive the cache being empty, the cache isn't an optimisation any more: it's a critical dependency with no durability. Either size the source for a cold cache, or plan for one explicitly. Warm the cache gradually after deploys, use request coalescing, rate-limit misses, or serve stale data during an outage (see <a href="resilience.html">Resilience Patterns</a>).</p>
+</div>
+<h2 id="when-not-to-cache">When NOT to cache</h2>
+<p>The tree's red leaves come up often enough to deserve their own list. Each card shows a case where caching is the wrong tool, and what to do instead.</p>
+<div class="compare">
+<div class="bad">
+<h4 id="data-that-must-be-exact">Data that must be exact</h4>
+<p>Balances, inventory you decrement, seat maps, permissions, feature entitlements, rate-limit counters. A stale read here is a bug, not a trade-off. <strong>Instead:</strong> make the source fast (an index, a projection), or cache the immutable inputs (product names, plan definitions), never the decision.</p>
+</div>
+<div class="bad">
+<h4 id="write-heavy-or-read-once-data">Write-heavy or read-once data</h4>
+<p>Counters, presence, "last seen", audit rows, one-off search queries, report exports. Each entry is overwritten or abandoned before its second read. <strong>Instead:</strong> batch the writes, aggregate in the database, or use a data structure built for it (a Redis counter is a <em>primary store</em>, not a cache).</p>
+</div>
+<div class="bad">
+<h4 id="already-fast-sources">Already-fast sources</h4>
+<p>A primary-key lookup with hot pages in the buffer pool takes about 1 ms. A Redis hop plus deserialization costs 0.3–1 ms. You've added a dependency and a staleness window for little gain. <strong>Instead:</strong> let the database's own cache work, or use a tiny in-process cache if the profile says so.</p>
+</div>
+<div class="warn">
+<h4 id="per-user-data-in-a-shared-cache">Per-user data in a shared cache</h4>
+<p>It's legitimate, but it's where the leaks happen. Every key must include the user or tenant, the hit rate per key is low, and memory grows with users. <strong>Prefer</strong> the browser (<code>Cache-Control: private</code>) or the session, with short TTLs.</p>
+</div>
+<div class="warn">
+<h4 id="huge-or-cheap-to-compute-values">Huge or cheap-to-compute values</h4>
+<p>A 2 MB object that takes 3 ms to serialize, sent over the network to save a 4 ms computation, is a loss. It also blocks single-threaded Redis while it's transferred. <strong>Instead:</strong> cache a smaller projection, compress, or keep it in-process.</p>
+</div>
+<div class="warn">
+<h4 id="a-slow-query-you-havent-looked-at">A slow query you haven't looked at</h4>
+<p>A cache in front of a 2-second query turns a performance bug into a correctness and availability risk. <strong>First</strong> run <code>EXPLAIN</code>, add the index, fix the N+1 (see <a href="data-access.html">Data Access Patterns</a>). Cache what is still slow <em>after</em> that.</p>
+</div>
+</div>
+<h3 id="war-stories">War stories</h3>
+<div class="pitfall">
+<p><strong>The revoked admin who stayed an admin</strong>
+Permissions were cached per user for an hour, to save a join on every request. An employee left, their role was removed, and they kept admin access until the entry expired. The fix was to stop caching the <em>decision</em> (does this user have this role?). The service now caches the role definitions, which rarely change and aren't per-user, and reads the user's role assignments fresh, or invalidates them with an event when access changes.</p>
+</div>
+<div class="pitfall">
+<p><strong>The CDN that served other people's accounts</strong>
+A change in CDN configuration let account pages for signed-in users be cached at the edge, so visitors briefly saw other users' account details. This is a well-known failure, and it was widely reported for Valve's Steam store in December 2015. Responses that depend on who is asking need <code>Cache-Control: private</code> or <code>no-store</code>. When the edge could cache by mistake, a <code>Vary</code> on the auth header or cookie is the backstop. And the safe default is to cache only what you have explicitly marked as public.</p>
+</div>
+<div class="pitfall">
+<p><strong>Cache restart, database outage</strong>
+A Redis failover emptied the cache at peak traffic. The hit rate dropped from 97% to zero, so database load jumped about 30 times, queries timed out, retries doubled the load, and the site went down. Nothing was "wrong" with the cache. The system had just never been tested with it empty. Facebook's widely cited September 2010 outage had a similar feedback loop: clients that saw an invalid cached configuration value all went to the database to fix it at once.</p>
+</div>
+<div class="pitfall">
+<p><strong>"User not found", cached for a day</strong>
+A sign-up flow read the user back right after creating it, and hit a read replica that hadn't caught up yet. The "not found" result was cached with the default 24-hour TTL. New users couldn't log in until the next day. Negative results need their own, much shorter TTL. Errors and timeouts must never be cached as if they were answers.</p>
+</div>
+<h2 id="where-caches-live">Where caches live</h2>
+<p>"Add a cache" isn't specific enough. Caches exist at every layer between the user and the disk, and each layer trades latency for scope and for how much control you have. The useful question is: <strong>which hop am I trying to skip?</strong></p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 368" width="760" role="img" aria-label="Latency ladder on a log scale from a 1 nanosecond CPU cache hit to a 150 millisecond cross-continent round trip"><path class="edge dash" d="M250,28 L250,334"/><text x="250" y="22" text-anchor="middle" class="small muted">1 ns</text><path class="edge dash" d="M383.3,28 L383.3,334"/><text x="383.3" y="22" text-anchor="middle" class="small muted">1 µs</text><path class="edge dash" d="M516.7,28 L516.7,334"/><text x="516.7" y="22" text-anchor="middle" class="small muted">1 ms</text><path class="edge dash" d="M650,28 L650,334"/><text x="650" y="22" text-anchor="middle" class="small muted">1 s</text><text x="240" y="49" text-anchor="end" class="small">CPU L1 cache hit</text><rect class="box visit" x="250" y="37" width="4" height="16" rx="4"/><text x="256" y="49" text-anchor="start" class="small mono cx-h">1 ns</text><text x="240" y="74" text-anchor="end" class="small">CPU L2 cache</text><rect class="box visit" x="250" y="62" width="26.8" height="16" rx="4"/><text x="282.8" y="74" text-anchor="start" class="small mono cx-h">4 ns</text><text x="240" y="99" text-anchor="end" class="small">CPU L3 cache</text><rect class="box visit" x="250" y="87" width="65.6" height="16" rx="4"/><text x="321.6" y="99" text-anchor="start" class="small mono cx-h">~10–40 ns</text><text x="240" y="124" text-anchor="end" class="small">Main memory (RAM)</text><rect class="box visit" x="250" y="112" width="88.9" height="16" rx="4"/><text x="344.9" y="124" text-anchor="start" class="small mono cx-h">~100 ns</text><text x="240" y="149" text-anchor="end" class="small">In-process cache lookup</text><rect class="box done" x="250" y="137" width="96.7" height="16" rx="4"/><text x="352.7" y="149" text-anchor="start" class="small mono cx-h">~50–200 ns</text><text x="240" y="174" text-anchor="end" class="small">Deserialize a 10 KB JSON value</text><rect class="box active" x="250" y="162" width="191.2" height="16" rx="4"/><text x="447.2" y="174" text-anchor="start" class="small mono cx-h">~10–50 µs</text><text x="240" y="199" text-anchor="end" class="small">SSD random read</text><rect class="box path" x="250" y="187" width="222.2" height="16" rx="4"/><text x="478.2" y="199" text-anchor="start" class="small mono cx-h">~100 µs</text><text x="240" y="224" text-anchor="end" class="small">Redis GET, same zone</text><rect class="box active" x="250" y="212" width="243.4" height="16" rx="4"/><text x="499.4" y="224" text-anchor="start" class="small mono cx-h">~0.2–0.5 ms</text><text x="240" y="249" text-anchor="end" class="small">Indexed DB query, hot pages</text><rect class="box path" x="250" y="237" width="266.7" height="16" rx="4"/><text x="522.7" y="249" text-anchor="start" class="small mono cx-h">~1 ms</text><text x="240" y="274" text-anchor="end" class="small">Cold DB query (disk, joins)</text><rect class="box path" x="250" y="262" width="324.5" height="16" rx="4"/><text x="580.5" y="274" text-anchor="start" class="small mono cx-h">~5–50 ms</text><text x="240" y="299" text-anchor="end" class="small">CDN edge round trip</text><rect class="box bad" x="250" y="287" width="324.5" height="16" rx="4"/><text x="580.5" y="299" text-anchor="start" class="small mono cx-h">~10–30 ms</text><text x="240" y="324" text-anchor="end" class="small">Cross-continent round trip</text><rect class="box bad" x="250" y="312" width="363.4" height="16" rx="4"/><text x="619.4" y="324" text-anchor="start" class="small mono cx-h">~100–150 ms</text><rect class="box visit" x="30" y="346" width="12" height="12" rx="3"/><text x="48" y="356" text-anchor="start" class="small">hardware</text><rect class="box done" x="140" y="346" width="12" height="12" rx="3"/><text x="158" y="356" text-anchor="start" class="small">in-process cache</text><rect class="box active" x="290" y="346" width="12" height="12" rx="3"/><text x="308" y="356" text-anchor="start" class="small">network cache + serialization</text><rect class="box path" x="500" y="346" width="12" height="12" rx="3"/><text x="518" y="356" text-anchor="start" class="small">storage / database</text><rect class="box bad" x="640" y="346" width="12" height="12" rx="3"/><text x="658" y="356" text-anchor="start" class="small">wide-area network</text></svg>
+<figcaption>Latency on a log scale: every gridline is 1,000× slower than the one before. An in-process lookup and a Redis lookup are about three orders of magnitude apart, mostly because of the network hop and deserialization, not the store itself.</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Typical latency</th>
+<th>Shared by</th>
+<th>Who can invalidate it</th>
+<th>Good for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CPU caches</strong> (L1/L2/L3)</td>
+<td>1–40 ns</td>
+<td>one core / socket</td>
+<td>hardware only</td>
+<td>data layout: arrays beat pointer chasing (<a href="performance-patterns.html">Performance Patterns</a>)</td>
+</tr>
+<tr>
+<td><strong>Browser cache</strong></td>
+<td>~0 (no request)</td>
+<td>one user</td>
+<td>nobody (you can't recall it)</td>
+<td>static assets, per-user GETs with <code>private</code></td>
+</tr>
+<tr>
+<td><strong>CDN / reverse proxy</strong></td>
+<td>10–30 ms (edge RTT)</td>
+<td>everyone near a PoP</td>
+<td>you, by purge API or tag</td>
+<td>public pages, images, API responses that are identical for everyone</td>
+</tr>
+<tr>
+<td><strong>In-process (L1)</strong></td>
+<td>~100 ns</td>
+<td>one process</td>
+<td>that process only</td>
+<td>small, hot, read-mostly data: config, reference data, compiled templates</td>
+</tr>
+<tr>
+<td><strong>Distributed (L2)</strong>: Redis, Memcached</td>
+<td>0.2–1 ms</td>
+<td>every app instance</td>
+<td>any instance</td>
+<td>shared session-like data, computed views, rate-limit state, larger working sets</td>
+</tr>
+<tr>
+<td><strong>Database buffer pool</strong></td>
+<td>~1 ms for an indexed query</td>
+<td>every query</td>
+<td>the DB, automatically</td>
+<td>everything; it's free and always consistent</td>
+</tr>
+</tbody>
+</table>
+<p>Two things in this table are easy to miss. First, the <strong>database already caches</strong>. PostgreSQL's shared buffers, SQL Server's buffer pool and MySQL's InnoDB buffer pool keep hot pages in RAM, so an indexed query on hot data is often within 2× of a Redis round trip. And unlike Redis, it is never stale. Second, the <strong>closer a cache is to the user, the harder it is to invalidate</strong>. You can delete a Redis key. You can purge a CDN, but it takes time to propagate. A response sitting in a browser can't be recalled at all.</p>
+<p>Pick where the request is answered and compare the totals. The insight is in the bars: the network hop you skip matters far more than how fast the store is.</p>
+<div class="viz" data-viz="caching-layers"></div>
+
+<div class="recognize">
+<p><strong>Recognize it</strong>
+"We added Redis and it barely helped." Look at what it replaced. If the query it fronts was already ~1 ms from the buffer pool, a ~0.5 ms Redis hop plus deserialization is a wash. The wins come from skipping an <em>expensive</em> computation, or a <em>wide-area</em> round trip.</p>
+</div>
+<h2 id="five-caching-patterns">Five caching patterns</h2>
+<p>The patterns differ in two ways: <strong>who talks to the database</strong> (your code, or the cache), and <strong>when a write reaches the database</strong> (before the cache, with it, or later). Cache-aside is the default, and it's what most of this topic assumes.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 300" width="760" role="img" aria-label="Cache-aside: on read, check the cache, on a miss load from the database and set the cache; on write, update the database then delete the cache key"><text x="175" y="18" text-anchor="middle" class="title">Read path</text><path class="edge dash" d="M60,70 L60,288"/><rect class="box " x="10" y="30" width="100" height="36" rx="8"/><text x="60" y="53" text-anchor="middle" class="mono">App</text><path class="edge dash" d="M185,70 L185,288"/><rect class="box " x="135" y="30" width="100" height="36" rx="8"/><text x="185" y="53" text-anchor="middle" class="mono">Cache</text><path class="edge dash" d="M310,70 L310,288"/><rect class="box " x="260" y="30" width="100" height="36" rx="8"/><text x="310" y="53" text-anchor="middle" class="mono">DB</text><text x="565" y="18" text-anchor="middle" class="title">Write path</text><path class="edge dash" d="M450,70 L450,288"/><rect class="box " x="400" y="30" width="100" height="36" rx="8"/><text x="450" y="53" text-anchor="middle" class="mono">App</text><path class="edge dash" d="M575,70 L575,288"/><rect class="box " x="525" y="30" width="100" height="36" rx="8"/><text x="575" y="53" text-anchor="middle" class="mono">Cache</text><path class="edge dash" d="M700,70 L700,288"/><rect class="box " x="650" y="30" width="100" height="36" rx="8"/><text x="700" y="53" text-anchor="middle" class="mono">DB</text><path class="edge accent" d="M60,98 L178,98"/><polygon class="fill-accent" points="185,98 176,102.5 176,93.5"/><text x="122.5" y="92" text-anchor="middle" class="small mono cx-h">1. GET k</text><path class="edge done" d="M185,128 L67,128"/><polygon class="fill-done" points="60,128 69,123.5 69,132.5"/><text x="122.5" y="122" text-anchor="middle" class="small mono cx-h">2. hit → return v</text><path class="edge bad dash" d="M185,158 L67,158"/><polygon class="fill-bad" points="60,158 69,153.5 69,162.5"/><text x="122.5" y="152" text-anchor="middle" class="small mono cx-h">2. miss</text><path class="edge visit" d="M60,188 L303,188"/><polygon class="fill-visit" points="310,188 301,192.5 301,183.5"/><text x="185" y="182" text-anchor="middle" class="small mono cx-h">3. SELECT … WHERE id = k</text><path class="edge visit" d="M310,218 L67,218"/><polygon class="fill-visit" points="60,218 69,213.5 69,222.5"/><text x="185" y="212" text-anchor="middle" class="small mono cx-h">row v</text><path class="edge path" d="M60,248 L178,248"/><polygon class="fill-path" points="185,248 176,252.5 176,243.5"/><text x="122.5" y="242" text-anchor="middle" class="small mono cx-h">4. SET k v EX ttl</text><text x="185" y="282" text-anchor="middle" class="small muted cx-h">the next reads of k are hits until the TTL ends</text><path class="edge visit" d="M450,98 L693,98"/><polygon class="fill-visit" points="700,98 691,102.5 691,93.5"/><text x="575" y="92" text-anchor="middle" class="small mono cx-h">1. UPDATE … SET … (commit)</text><path class="edge visit" d="M700,128 L457,128"/><polygon class="fill-visit" points="450,128 459,123.5 459,132.5"/><text x="575" y="122" text-anchor="middle" class="small mono cx-h">ok</text><path class="edge bad" d="M450,158 L568,158"/><polygon class="fill-bad" points="575,158 566,162.5 566,153.5"/><text x="512.5" y="152" text-anchor="middle" class="small mono cx-h">2. DEL k</text><rect class="box " x="430" y="180" width="290" height="62" rx="8"/><text x="575" y="202" text-anchor="middle" class="small">Delete, don't set: the next read loads</text><text x="575" y="218" text-anchor="middle" class="small">the committed value. Always DB first,</text><text x="575" y="234" text-anchor="middle" class="small">cache second (after the commit).</text><path class="edge" d="M380,40 L380,290"/></svg>
+<figcaption>Cache-aside, also called lazy loading. Reads fill the cache on a miss; writes update the database and then delete the key. The cache only ever holds data somebody actually asked for.</figcaption>
+</figure>
+
+<p>Each visualizer below plays a list of operations against a cache and a database that start with <code>a=10, b=20, c=30</code>. The operations are <code>R a</code> (read), <code>W a=5</code> (write), <code>wait 3</code> (let time pass, in ticks), and for write-behind, <code>crash</code>. Edit the operations to try your own sequences, and watch the cache and database panels drift apart and come back together.</p>
+<h3 id="cache-aside-lazy-loading">Cache-aside (lazy loading)</h3>
+<p>The application owns both conversations: ask the cache; on a miss, query the database and set the cache; on a write, update the database and delete the key. The cache is a dumb key-value store. It's the most flexible pattern, and it works with any cache, but the read path has a gap between "load" and "set" that matters later, in <a href="#invalidation-strategies-and-their-races">the race section</a>.</p>
+<div class="viz" data-viz="caching-pattern-aside"></div>
+
+<h3 id="read-through">Read-through</h3>
+<p>Same behaviour, but the cache owns the loader: your code only calls <code>cache.get(key)</code>, and the cache calls the database on a miss. <code>HybridCache.GetOrCreateAsync</code>, a Caffeine <code>LoadingCache</code> and lru-cache's <code>fetchMethod</code> are all read-through. Because all misses go through one place, the cache can <strong>coalesce</strong> concurrent misses for the same key, which is exactly what stops a stampede.</p>
+<div class="viz" data-viz="caching-pattern-rt"></div>
+
+<h3 id="write-through">Write-through</h3>
+<p>Writes go to the cache, and the cache writes them to the database synchronously before acknowledging. Readers always see the latest value, and a read right after a write is a hit. The cost is write latency (both stores) and memory spent on values that may never be read. It's usually paired with read-through.</p>
+<div class="viz" data-viz="caching-pattern-wt"></div>
+
+<h3 id="write-behind-write-back">Write-behind (write-back)</h3>
+<p>Writes are acknowledged once they're in cache memory, and flushed to the database later in batches, so several writes to the same key collapse into one. That's very fast and very kind to the database. It's also the only pattern where <strong>the cache holds data the database doesn't have</strong>: the <code>crash</code> step loses every queued write. Use it only where losing recent writes is acceptable (view counters, analytics) or the cache is itself durable and replicated.</p>
+<div class="viz" data-viz="caching-pattern-wb"></div>
+
+<h3 id="refresh-ahead">Refresh-ahead</h3>
+<p>When a hot entry is read near the end of its life (here, with less than half its TTL left), the cache serves the current value <strong>and</strong> reloads it in the background. A key that keeps being read never expires, so nobody pays the miss. Caffeine's <code>refreshAfterWrite</code> and <code>stale-while-revalidate</code> in HTTP are both refresh-ahead. The cost is loads for keys that turn out not to be read again.</p>
+<div class="viz" data-viz="caching-pattern-ra"></div>
+
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Read miss handled by</th>
+<th>Write goes to</th>
+<th>Stale window</th>
+<th>Risk</th>
+<th>Reach for it when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cache-aside</strong></td>
+<td>your code</td>
+<td>DB, then delete key</td>
+<td>until delete or TTL</td>
+<td>load/set race, forgotten invalidation</td>
+<td>the default; any cache, any data</td>
+</tr>
+<tr>
+<td><strong>Read-through</strong></td>
+<td>the cache's loader</td>
+<td>(usually) DB + delete</td>
+<td>until delete or TTL</td>
+<td>loader must be idempotent</td>
+<td>you want coalescing and one place for loading</td>
+</tr>
+<tr>
+<td><strong>Write-through</strong></td>
+<td>the cache's loader</td>
+<td>cache → DB, synchronously</td>
+<td>~none for this cache</td>
+<td>slower writes, cold data in memory</td>
+<td>reads right after writes are common</td>
+</tr>
+<tr>
+<td><strong>Write-behind</strong></td>
+<td>the cache's loader</td>
+<td>cache now, DB later</td>
+<td>DB lags the cache</td>
+<td><strong>data loss</strong> on crash</td>
+<td>write bursts on loss-tolerant data</td>
+</tr>
+<tr>
+<td><strong>Refresh-ahead</strong></td>
+<td>background reload</td>
+<td>(any of the above)</td>
+<td>up to one refresh</td>
+<td>wasted reloads</td>
+<td>a few very hot keys that must never miss</td>
+</tr>
+</tbody>
+</table>
+<h2 id="eviction-what-to-throw-away">Eviction: what to throw away</h2>
+<p>A bounded cache has to choose a victim when it's full. The policy decides which keys survive, and the hit rate depends on how well that guess matches your access pattern.</p>
+<ul>
+<li><strong>LRU</strong> (least recently used) evicts the key untouched for longest. It's great when recent use predicts future use, which is most of the time. Its weakness is <strong>scans</strong>: one pass over 10,000 cold keys pushes out every hot key.</li>
+<li><strong>LFU</strong> (least frequently used) evicts the key with the fewest hits. It resists scans, but old popularity lingers: yesterday's hot key, with 10,000 hits, outlives today's. Real implementations age the counts.</li>
+<li><strong>FIFO</strong> evicts the oldest insert, regardless of use. It's simple and cheap, and it's usually worse than LRU. It's included here as a baseline.</li>
+<li><strong>TTL</strong> isn't a replacement policy. It bounds <em>staleness</em>, not memory. Expired entries die whatever the pressure; you still need a size limit.</li>
+<li><strong>Size limits</strong> can count entries, or weigh them (bytes, cost). With a count limit, one 50 MB value counts the same as a 50-byte one.</li>
+<li><strong>W-TinyLFU</strong> (Caffeine, and ristretto's admission policy) combines a small LRU window with a frequency sketch that decides whether a newcomer is worth more than the victim. It's near-optimal across most workloads, so you don't have to choose. Use it when your library offers it.</li>
+</ul>
+<div class="tip">
+<p><strong>Check your Redis eviction policy</strong>
+Redis's <code>maxmemory-policy</code> defaults to <code>noeviction</code>: when memory is full, <strong>writes fail with an error</strong> instead of evicting. For a cache, set <code>maxmemory</code> and use <code>allkeys-lru</code> or <code>allkeys-lfu</code>. Use the <code>volatile-*</code> policies only if the same Redis also holds data that must never be evicted, and then ask whether it should be a separate instance.</p>
+</div>
+<p>Type an access sequence, choose a capacity and a policy, and step through. The final frame compares the policy with <strong>OPT</strong>, Bélády's optimal policy, which evicts the key that will be used furthest in the future. It needs to see the future, so no real cache can implement it, but it gives the upper bound on the hit rate. The default sequence has a hot pair (A, B) and some one-off keys. Try <code>A B C D E A B C D E</code> with capacity 4: every policy scores 0, because the loop is one key bigger than the cache. That's the classic LRU worst case.</p>
+<div class="viz" data-viz="caching-evict"></div>
+
+<h2 id="ttl-sliding-expiration-and-jitter">TTL, sliding expiration and jitter</h2>
+<p>A TTL is your <strong>staleness budget</strong>. It bounds how wrong a cached value can be if every invalidation fails. Choose it from the business tolerance ("prices may lag by a minute"), not from what makes the hit-rate graph look good.</p>
+<ul>
+<li><strong>Absolute expiration</strong> ends an entry a fixed time after it was written. This is the one that bounds staleness.</li>
+<li><strong>Sliding expiration</strong> extends an entry each time it's read. A hot key with sliding expiration <strong>never expires</strong>, so it can be stale forever. Only use sliding expiration with an absolute cap as well, and for things like sessions, where "idle timeout" is what you mean.</li>
+<li><strong>Separate TTLs for separate truths.</strong> Positive results, negative results ("not found") and errors each get their own (see <a href="#negative-caching-keys-and-serialization">negative caching</a>).</li>
+</ul>
+<p>The trap: entries loaded together expire together. A deploy, a cache flush or a nightly warm-up loads thousands of keys in the same second, and exactly one TTL later they all miss in the same second, and do so again every TTL after that. <strong>Jitter</strong> spreads the expiry times out: <code>ttl × (1 ± random × jitter)</code>.</p>
+<div class="viz" data-viz="caching-ttl-jitter"></div>
+
+<p>With no jitter, 1,000 keys expire in one bucket and the database sees one massive spike per TTL. With ±10–20% jitter, the reloads become a gentle hump that stays under what the database can absorb, and the second and third waves smooth out further. Jitter costs one line of code:</p>
+<pre><code class="language-csharp">static TimeSpan Jittered(TimeSpan ttl, double spread = 0.15) =&gt;
+    ttl * (1 + spread * (2 * Random.Shared.NextDouble() - 1));   // ttl ± 15%
+</code></pre>
+<h2 id="cache-stampede-thundering-herd">Cache stampede (thundering herd)</h2>
+<p>A hot key expires. In the time it takes to recompute it (say 200 ms), every request for it misses, and every one of them starts the same expensive query. At 1,000 requests a second that's 200 identical queries, all arriving at once at a database that is already slow because of the load. Recompute time goes up, so more requests miss, and the herd feeds itself. The same thing happens on a cold start, when <em>every</em> key is missing.</p>
+<p>There are three families of fixes:</p>
+<ul>
+<li><strong>Coalesce (single-flight, or a lock).</strong> The first miss for a key does the load. Everyone else who misses meanwhile waits for that result instead of starting their own. One load per key per process; with a distributed lock, one per cluster.</li>
+<li><strong>Serve stale while one caller refreshes.</strong> Keep the expired value around a little longer. One caller refreshes it, and everyone else gets the old value at once. Nobody waits, as long as stale is acceptable.</li>
+<li><strong>Refresh early, probabilistically (XFetch).</strong> Before the expiry, each request recomputes with a probability that rises as the expiry gets closer, scaled by how long the recompute takes. Usually one request refreshes the value just before it expires, with no coordination at all. The rule is: recompute when <code>now − Δ·β·ln(rand()) ≥ expiry</code>, where Δ is the recompute time and β ≥ 1 makes it more eager.</li>
+</ul>
+<p>Compare them on the same traffic. Each row is a tick, and each cell is one request: <strong>H</strong> hit, <strong>M</strong> miss that recomputes, <strong>W</strong> waits for someone else's load, <strong>S</strong> served stale, <strong>R</strong> served stale and also starts the one background refresh, <strong>E</strong> won the early-refresh roll and recomputes before the expiry (that one request waits). The bottom row is database load.</p>
+<div class="viz" data-viz="caching-stampede"></div>
+
+<p>With the defaults, no protection costs a dozen recomputes for one expiry. Coalescing costs one, but eleven requests wait for it. Serve-stale costs one and nobody waits. XFetch refreshes before the expiry, so callers rarely see a miss at all; with a recompute this long relative to the TTL, a few early rolls overlap, which a lock would remove. Raise <strong>recompute</strong> to 6 ticks and watch the no-protection row get much worse: the herd grows with recompute time × request rate.</p>
+<p>The tabs show request coalescing in each ecosystem. Most mature caching libraries do it for you, <em>if</em> you use their get-or-load API instead of a separate get and set.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// HybridCache (.NET 9+): concurrent callers for the same key share one factory call,
+// per process. IMemoryCache.GetOrCreateAsync does NOT do this: every caller runs the factory.
+public ValueTask&lt;ProductDto?&gt; GetAsync(int id, CancellationToken ct) =&gt;
+    cache.GetOrCreateAsync(
+        $&quot;product:v1:{id}&quot;,
+        async token =&gt; await LoadProductAsync(id, token),
+        cancellationToken: ct);
+</code></pre>
+<pre><code class="language-java">// Caffeine: get(key, loader) is atomic per key; other threads block until the one load finishes.
+LoadingCache&lt;Long, Product&gt; products = Caffeine.newBuilder()
+    .maximumSize(10_000)
+    .expireAfterWrite(Duration.ofMinutes(5))
+    .refreshAfterWrite(Duration.ofMinutes(1))   // refresh-ahead: readers get the old value meanwhile
+    .recordStats()
+    .build(id -&gt; repository.findById(id).orElse(null));
+
+// Spring: sync = true makes concurrent misses for the same key wait for one load (per JVM).
+@Cacheable(cacheNames = &quot;products&quot;, key = &quot;#id&quot;, sync = true)
+public Product find(long id) { return repository.findById(id).orElseThrow(); }
+</code></pre>
+<pre><code class="language-python">import asyncio, json
+
+class SingleFlight:
+    &quot;&quot;&quot;At most one in-flight load per key; other callers await the same future.&quot;&quot;&quot;
+    def __init__(self) -&gt; None:
+        self._inflight: dict[str, asyncio.Future] = {}
+
+    async def do(self, key: str, load):
+        fut = self._inflight.get(key)
+        if fut is None:
+            fut = asyncio.ensure_future(load())
+            self._inflight[key] = fut
+            fut.add_done_callback(lambda _: self._inflight.pop(key, None))
+        return await asyncio.shield(fut)   # one caller's cancellation must not cancel the rest
+
+flight = SingleFlight()
+
+async def get_product(pid: int) -&gt; dict | None:
+    key = f&quot;product:v1:{pid}&quot;
+    if (raw := await r.get(key)) is not None:      # r = redis.asyncio.Redis(...)
+        return json.loads(raw)
+
+    async def load():
+        row = await db.fetch_product(pid)
+        await r.set(key, json.dumps(row), ex=300)
+        return row
+
+    return await flight.do(key, load)
+</code></pre>
+<pre><code class="language-go">var group singleflight.Group // golang.org/x/sync/singleflight
+
+func (s *Service) Product(ctx context.Context, id int) (*Product, error) {
+    key := fmt.Sprintf(&quot;product:v1:%d&quot;, id)
+    if p, ok := s.cache.Get(key); ok {
+        return p, nil
+    }
+    v, err, _ := group.Do(key, func() (any, error) {
+        // Detach from the first caller's cancellation: everyone shares this result.
+        p, err := s.db.Product(context.WithoutCancel(ctx), id)
+        if err != nil {
+            return nil, err // errors are shared too, but not cached
+        }
+        s.cache.SetWithTTL(key, p, 1, 5*time.Minute)
+        return p, nil
+    })
+    if err != nil {
+        return nil, err
+    }
+    return v.(*Product), nil
+}
+</code></pre>
+<pre><code class="language-typescript">import { LRUCache } from 'lru-cache';
+
+// fetch() is read-through: concurrent fetches for the same key share one promise.
+const products = new LRUCache&lt;number, Product&gt;({
+  max: 10_000,
+  ttl: 5 * 60_000,
+  allowStale: true,                         // return the stale value while it refreshes
+  fetchMethod: async (id, _stale, { signal }) =&gt; db.product(id, { signal }),
+});
+
+const p = await products.fetch(42);
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Insight: coalescing is per process</strong>
+Single-flight stops the herd <em>inside</em> one process. Fifty instances can still send fifty loads for the same key. That's usually fine: 50 is not 50,000. When it isn't, add a short distributed lock (<code>SET lock:key token NX EX 10</code>, released with a compare-and-delete script so you never delete someone else's lock), and have the losers serve stale data or retry the cache after a short wait. Always give the lock an expiry, so a crashed holder can't block the key forever.</p>
+</div>
+<h2 id="invalidation-strategies-and-their-races">Invalidation strategies and their races</h2>
+<p>"There are only two hard things in computer science: cache invalidation and naming things." The joke is popular because invalidation really is a distributed-systems problem: two stores, no transaction across them, and concurrent readers and writers.</p>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>How</th>
+<th>Staleness</th>
+<th>Good for</th>
+<th>Watch out for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TTL only</strong></td>
+<td>entries expire; writes don't touch the cache</td>
+<td>up to the TTL</td>
+<td>data that changes on its own (feeds, rates), or where a lag is fine</td>
+<td>choosing the TTL from the hit rate instead of the tolerance</td>
+</tr>
+<tr>
+<td><strong>Delete on write</strong></td>
+<td>after the DB commit, <code>DEL key</code></td>
+<td>until the delete (ms) + races</td>
+<td>the default with cache-aside</td>
+<td>every write path must know every affected key</td>
+</tr>
+<tr>
+<td><strong>Update DB, then delete</strong></td>
+<td>strictly in this order, after commit</td>
+<td>as above</td>
+<td>always prefer it to <em>delete-then-update</em></td>
+<td>delete-then-update lets a reader refill the old value before your commit</td>
+</tr>
+<tr>
+<td><strong>Versioned keys</strong></td>
+<td>key includes a version: <code>product:v42:7</code>, or a group generation <code>catalog:gen:19:…</code></td>
+<td>none for the new version</td>
+<td>invalidating a whole group with one increment; deploys that change the schema</td>
+<td>old versions linger until evicted (set a TTL)</td>
+</tr>
+<tr>
+<td><strong>Event-driven</strong></td>
+<td>a change event (outbox, CDC, pub/sub) triggers invalidation in every service</td>
+<td>event lag (ms–s)</td>
+<td>caches owned by other services (<a href="distributed-architecture.html">Distributed Architecture</a>)</td>
+<td>lost or reordered events; the consumer must be idempotent</td>
+</tr>
+<tr>
+<td><strong>Tags</strong></td>
+<td>entries carry tags; evict by tag</td>
+<td>until the eviction</td>
+<td>"everything about product 7", CDN surrogate keys</td>
+<td>tag sets that grow without bound</td>
+</tr>
+</tbody>
+</table>
+<p>Why <strong>delete</strong> rather than <strong>set</strong> the new value on write? A set races with other writers: if A writes 2 and B writes 3, but their cache sets arrive in the opposite order, the cache ends at 2 while the database says 3, until the TTL expires. A delete is idempotent: whatever order deletes arrive in, the next read loads the committed value.</p>
+<p>Deleting isn't completely safe either. The classic remaining race is a <strong>stale set after delete</strong>:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 330" width="760" role="img" aria-label="Race: a slow reader loads the old value, a writer updates the database and deletes the cache key, then the reader writes the old value into the cache"><path class="edge dash" d="M90,50 L90,290"/><rect class="box active" x="18" y="10" width="144" height="36" rx="8"/><text x="90" y="33" text-anchor="middle" class="small">Client A (reader)</text><path class="edge dash" d="M280,50 L280,290"/><rect class="box " x="208" y="10" width="144" height="36" rx="8"/><text x="280" y="33" text-anchor="middle" class="small">Client B (writer)</text><path class="edge dash" d="M470,50 L470,290"/><rect class="box " x="398" y="10" width="144" height="36" rx="8"/><text x="470" y="33" text-anchor="middle" class="small">Cache</text><path class="edge dash" d="M650,50 L650,290"/><rect class="box " x="578" y="10" width="144" height="36" rx="8"/><text x="650" y="33" text-anchor="middle" class="small">Database</text><text x="16" y="80" text-anchor="start" class="small muted">t1</text><path class="edge bad" d="M90,76 L463,76"/><polygon class="fill-bad" points="470,76 461,80.5 461,71.5"/><text x="280" y="70" text-anchor="middle" class="small mono cx-h">GET x → miss</text><text x="16" y="114" text-anchor="start" class="small muted">t2</text><path class="edge visit" d="M90,110 L643,110"/><polygon class="fill-visit" points="650,110 641,114.5 641,105.5"/><text x="370" y="104" text-anchor="middle" class="small mono cx-h">SELECT x → 1   (old value, held in memory)</text><rect class="box active" x="18" y="124" width="144" height="36" rx="6"/><text x="90" y="140" text-anchor="middle" class="small">A stalls: GC pause,</text><text x="90" y="154" text-anchor="middle" class="small">slow packet, CPU</text><text x="16" y="188" text-anchor="start" class="small muted">t3</text><path class="edge visit" d="M280,184 L643,184"/><polygon class="fill-visit" points="650,184 641,188.5 641,179.5"/><text x="465" y="178" text-anchor="middle" class="small mono cx-h">UPDATE x = 2 (commit)</text><text x="16" y="218" text-anchor="start" class="small muted">t4</text><path class="edge done" d="M280,214 L463,214"/><polygon class="fill-done" points="470,214 461,218.5 461,209.5"/><text x="375" y="208" text-anchor="middle" class="small mono cx-h">DEL x</text><text x="16" y="252" text-anchor="start" class="small muted">t5</text><path class="edge bad" d="M90,248 L463,248"/><polygon class="fill-bad" points="470,248 461,252.5 461,243.5"/><text x="280" y="242" text-anchor="middle" class="small mono cx-h">SET x = 1   ← stale!</text><rect class="box bad" x="380" y="262" width="360" height="26" rx="6"/><text x="560" y="280" text-anchor="middle" class="small">cache x = 1, DB x = 2 … until the TTL expires</text><text x="380" y="318" text-anchor="middle" class="small muted">Fixes: short TTL (bounds it) · leases / versioned set (prevent it) · delayed second delete (narrows it)</text></svg>
+<figcaption>Cache-aside's read path is two separate steps: load, then set. A write can commit and delete in between, and then the slow reader writes its old value back. Nothing will correct it until the TTL.</figcaption>
+</figure>
+
+<p>Step through the six scenarios. The verdict at the end of each one says whether the cache and the database agree.</p>
+<div class="viz" data-viz="caching-race"></div>
+
+<ul>
+<li><strong>Stale set after delete:</strong> the race above. It's rare (it needs a slow reader and a write in a small window), but on hot keys at scale it happens daily.</li>
+<li><strong>Leases:</strong> on a miss the cache hands out a token, and a delete invalidates every outstanding token. A set with an invalidated token is rejected. Facebook described this mechanism in its 2013 paper on scaling memcache. It also helps with stampedes, because the cache can tell other missers to wait instead of issuing a second lease.</li>
+<li><strong>Delayed double delete:</strong> delete, then delete again a few hundred ms later, to remove anything a slow reader put back. It's cheap and narrows the window, but the delay is a guess.</li>
+<li><strong>Two writers, set on write:</strong> last <em>arrival</em> wins, not last commit, so the cache ends at the older value.</li>
+<li><strong>Two writers, delete on write:</strong> the order of the deletes doesn't matter, so the cache ends correct.</li>
+<li><strong>Versioned set:</strong> store a version with the value and reject a set whose version is older than the stored one (a compare-and-set, for example a short Lua script in Redis). Now the newest <em>version</em> wins, whatever the arrival order.</li>
+</ul>
+<div class="rule">
+<p><strong>Write the database first, then delete the key, and always keep a TTL as the backstop.</strong> Whatever race you didn't think of, the TTL bounds how long it can last.</p>
+</div>
+<div class="tip">
+<p><strong>Invalidate after commit, not inside the transaction</strong>
+If you delete the key inside the transaction, a reader can reload the <em>old</em> committed value before your commit lands. If you delete it and the transaction then rolls back, you've only cost a miss, which is harmless. Delete after the commit. For cross-service caches, write an outbox row in the same transaction and let a relay publish the invalidation event, so it can't be lost if the process dies between the commit and the delete.</p>
+</div>
+<h2 id="negative-caching-keys-and-serialization">Negative caching, keys and serialization</h2>
+<h3 id="negative-caching">Negative caching</h3>
+<p>If "product 999 doesn't exist" isn't cached, every request for 999 goes to the database. A bug, a crawler or an attacker enumerating IDs can then bypass the cache completely (this is sometimes called <em>cache penetration</em>). The fix is to cache absence too, with care:</p>
+<ul>
+<li>Store an explicit <strong>sentinel</strong> ("not found"), not <code>null</code>. Many cache APIs use <code>null</code> to mean "miss", so a cached null looks like a miss forever.</li>
+<li>Give negative entries a <strong>much shorter TTL</strong> (seconds, not hours). Things get created, and replicas catch up.</li>
+<li><strong>Never cache errors or timeouts</strong> as answers. A database blip would become an hour of "not found".</li>
+<li>Delete the negative entry when the thing is created. Otherwise "create, then read" fails for one negative TTL.</li>
+<li>For huge ID spaces, a Bloom filter of the IDs that exist can reject impossible keys before they reach either store.</li>
+</ul>
+<h3 id="key-design">Key design</h3>
+<p>A key must capture <strong>every input that changes the output</strong>, and nothing else. Too little and users see each other's data. Too much and the hit rate collapses.</p>
+<pre><code class="language-text">{app}:{entity}:v{schema}:{tenant}:{id}[:{variant}]
+shop:product:v3:t42:1007:en-GB:GBP
+</code></pre>
+<ul>
+<li><strong>Namespace and version.</strong> The <code>v3</code> lets a deploy that changes the cached shape use new keys instead of deserializing old bytes into a new type.</li>
+<li><strong>Tenant and user</strong> whenever the data depends on them. Most cache leaks between users are a missing key component.</li>
+<li><strong>Variants:</strong> locale, currency, role, feature flags, anything else the response depends on.</li>
+<li><strong>Normalize</strong> inputs: lowercase, trim, sort query parameters. <code>?a=1&amp;b=2</code> and <code>?b=2&amp;a=1</code> should be one entry.</li>
+<li><strong>Hash long inputs</strong> (SHA-256 of a normalized query), but keep a readable prefix for debugging and metrics.</li>
+<li><strong>No secrets or personal data</strong> in keys. Keys show up in logs, <code>MONITOR</code> output and metrics labels.</li>
+<li><strong>Watch the cardinality.</strong> A timestamp or a random ID in a key means every entry is read once.</li>
+</ul>
+<h3 id="serialization-cost">Serialization cost</h3>
+<p>An in-process cache stores references, so a hit costs nothing extra. Every distributed cache stores <strong>bytes</strong>, so every hit pays to deserialize and every set pays to serialize. For large objects that can cost more than the network hop.</p>
+<ul>
+<li>Cache <strong>projections</strong> (the DTO the page needs), not entity graphs with lazy-loaded navigation properties.</li>
+<li>Measure. JSON is easy to debug. MessagePack or Protobuf is often several times smaller and faster. Compress values over a few KB.</li>
+<li>Keep values small. Redis runs commands on one thread, so a multi-megabyte value blocks every other client while it's sent. Very hot keys concentrate load on one shard: put them in L1, or replicate them.</li>
+<li><strong>Cache immutable values.</strong> If a cached object is mutable and shared, one caller's edit changes it for every reader in the process. Use records or frozen copies, or have the cache hand out copies.</li>
+</ul>
+<h2 id="two-level-caches-l1-l2-and-the-backplane">Two-level caches (L1 + L2) and the backplane</h2>
+<p>An in-process L1 is about 1,000× faster than a distributed L2, but each instance has its own copy. A layered cache checks L1, then L2, then the source, and fills both on the way back. That gives you most of L1's speed and most of L2's sharing. The new problem: when instance 1 writes, <strong>instance 2's L1 copy is stale</strong>, and deleting the L2 key doesn't reach it.</p>
+<figure class="figure">
+<svg class="dg cx-l12" viewBox="0 0 640 300" width="640" role="img" aria-label="Two app nodes with in-process L1 caches, a shared Redis L2 and the database"><line class="edge  " x1="150" y1="118" x2="260" y2="176"/><line class="edge  " x1="490" y1="118" x2="380" y2="176"/><line class="edge  " x1="320" y1="222" x2="320" y2="238"/><line class="edge  " x1="70" y1="118" x2="230" y2="262"/><line class="edge  " x1="570" y1="118" x2="410" y2="262"/><line class="edge active dash " x1="232" y1="46" x2="408" y2="46"/><text class="small" x="320" y="38" text-anchor="middle">backplane: “x changed”</text><rect class="box " x="20" y="12" width="210" height="106" rx="10"/><text class="cx-t" x="125" y="32" text-anchor="middle">App node 1</text><rect class="box done" x="34" y="44" width="182" height="62" rx="10"/><text class="cx-s" x="125" y="64" text-anchor="middle">L1 · in-process</text><text class="mono" x="125" y="88" text-anchor="middle">x=7 · 30s left</text><rect class="box " x="410" y="12" width="210" height="106" rx="10"/><text class="cx-t" x="515" y="32" text-anchor="middle">App node 2</text><rect class="box bad" x="424" y="44" width="182" height="62" rx="10"/><text class="cx-s" x="515" y="64" text-anchor="middle">L1 · in-process</text><text class="mono" x="515" y="88" text-anchor="middle">x=10 · 12s left</text><rect class="box done" x="230" y="176" width="180" height="46" rx="10"/><text class="cx-s" x="320" y="194" text-anchor="middle">L2 · Redis (shared)</text><text class="mono" x="320" y="212" text-anchor="middle">x=7 · 300s left</text><rect class="box " x="230" y="238" width="180" height="50" rx="10"/><text class="cx-s" x="320" y="258" text-anchor="middle">Database</text><text class="mono" x="320" y="278" text-anchor="middle">x = 7</text></svg>
+<figcaption>Each instance has a fast private L1 in front of a shared L2. A write on one instance updates the database and L2, then publishes an invalidation on a backplane (for example Redis pub/sub) so every other instance drops its L1 copy. Until that message arrives, node 2 still serves its old copy.</figcaption>
+</figure>
+
+<p>The operations are <code>1:get</code> (instance 1 reads), <code>2:set 7</code> (instance 2 writes 7) and <code>wait 30</code> (seconds pass). Run the default with the backplane <strong>off</strong>: instance 2 keeps reading its old L1 copy until the L1 TTL ends. Switch it <strong>on</strong> and the stale read disappears.</p>
+<div class="viz" data-viz="caching-l1l2"></div>
+
+<ul>
+<li><strong>Without a backplane</strong>, the L1 TTL is your staleness bound across instances. Keep it short (seconds to a minute) and keep L2's TTL longer.</li>
+<li><strong>With a backplane</strong>, invalidations are fast but best-effort: pub/sub messages sent while an instance is disconnected are lost. Keep the short L1 TTL anyway.</li>
+<li><strong>.NET:</strong> <code>HybridCache</code> provides L1 + L2 (any registered <code>IDistributedCache</code>), stampede protection and tags. As of .NET 9 it doesn't ship a backplane for L1 invalidation across instances, so rely on <code>LocalCacheExpiration</code>. FusionCache is a popular library that adds one. HybridCache only reuses a single L1 instance for types it knows are immutable (sealed and marked <code>[ImmutableObject(true)]</code>). Otherwise it deserializes a fresh copy per call, which protects you from shared mutation at some CPU cost.</li>
+<li><strong>Java:</strong> Caffeine (L1) in front of Redis, with Redisson or Spring's cache abstraction; invalidate via Redis pub/sub.</li>
+</ul>
+<pre><code class="language-csharp">builder.Services.AddStackExchangeRedisCache(o =&gt;
+    o.Configuration = builder.Configuration.GetConnectionString(&quot;redis&quot;));   // becomes L2
+
+builder.Services.AddHybridCache(o =&gt;
+{
+    o.MaximumPayloadBytes = 1024 * 1024;                      // refuse giant values
+    o.DefaultEntryOptions = new HybridCacheEntryOptions
+    {
+        Expiration = TimeSpan.FromMinutes(5),                 // L2 (and overall) lifetime
+        LocalCacheExpiration = TimeSpan.FromSeconds(30),      // L1 staleness bound per instance
+    };
+});
+</code></pre>
+<h2 id="http-caching-let-someone-else-store-it">HTTP caching: let someone else store it</h2>
+<p>HTTP has a complete caching protocol built in, and it reaches places your own cache can't: the user's browser and CDN edges a few milliseconds from the user. You don't write a cache. You <strong>describe</strong> your responses with headers, and every cache along the path obeys them.</p>
+<table>
+<thead>
+<tr>
+<th>Header</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Cache-Control: max-age=60</code></td>
+<td>fresh for 60 s; any cache may reuse it without asking</td>
+</tr>
+<tr>
+<td><code>s-maxage=300</code></td>
+<td>overrides <code>max-age</code> for <strong>shared</strong> caches (CDN, proxies) only</td>
+</tr>
+<tr>
+<td><code>public</code> / <code>private</code></td>
+<td><code>private</code>: only the user's browser may store it (personalized responses)</td>
+</tr>
+<tr>
+<td><code>no-cache</code></td>
+<td>store it, but <strong>revalidate before every use</strong>. It does <em>not</em> mean "don't cache"</td>
+</tr>
+<tr>
+<td><code>no-store</code></td>
+<td>never store it anywhere. For secrets and one-time data</td>
+</tr>
+<tr>
+<td><code>stale-while-revalidate=60</code></td>
+<td>after expiry, serve the stale copy for up to 60 s while refreshing in the background</td>
+</tr>
+<tr>
+<td><code>immutable</code></td>
+<td>this URL's content never changes; don't even revalidate. For fingerprinted assets (<code>app.3f9a1c.js</code>)</td>
+</tr>
+<tr>
+<td><code>ETag: "v7"</code> + <code>If-None-Match: "v7"</code></td>
+<td>the validator: "I have v7, has it changed?" If not, a <strong>304 Not Modified</strong> with no body</td>
+</tr>
+<tr>
+<td><code>Last-Modified</code> + <code>If-Modified-Since</code></td>
+<td>the same thing with a date (1-second resolution)</td>
+</tr>
+<tr>
+<td><code>Vary: Accept-Encoding, Accept-Language</code></td>
+<td>the response differs by these request headers, so caches must key on them too</td>
+</tr>
+<tr>
+<td><code>Age: 42</code></td>
+<td>how long a shared cache has held this copy</td>
+</tr>
+</tbody>
+</table>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 330" width="760" role="img" aria-label="HTTP caching: the browser private cache, a shared CDN edge cache and the origin; fresh responses are served locally, stale ones are revalidated with If-None-Match and a 304"><path class="edge dash" d="M90,56 L90,320"/><rect class="box " x="10" y="8" width="160" height="46" rx="9"/><text x="90" y="28" text-anchor="middle" class="title">Browser</text><text x="90" y="45" text-anchor="middle" class="small muted">private cache</text><path class="edge dash" d="M380,56 L380,320"/><rect class="box " x="300" y="8" width="160" height="46" rx="9"/><text x="380" y="28" text-anchor="middle" class="title">CDN edge</text><text x="380" y="45" text-anchor="middle" class="small muted">shared cache</text><path class="edge dash" d="M670,56 L670,320"/><rect class="box " x="590" y="8" width="160" height="46" rx="9"/><text x="670" y="28" text-anchor="middle" class="title">Origin</text><text x="670" y="45" text-anchor="middle" class="small muted">your app</text><text x="12" y="78" text-anchor="start" class="small muted">1. First request</text><path class="edge accent" d="M90,98 L373,98"/><polygon class="fill-accent" points="380,98 371,102.5 371,93.5"/><text x="235" y="92" text-anchor="middle" class="small mono cx-h">GET /products</text><path class="edge visit" d="M380,98 L663,98"/><polygon class="fill-visit" points="670,98 661,102.5 661,93.5"/><text x="525" y="92" text-anchor="middle" class="small mono cx-h">GET /products (miss)</text><path class="edge visit" d="M670,128 L387,128"/><polygon class="fill-visit" points="380,128 389,123.5 389,132.5"/><text x="525" y="122" text-anchor="middle" class="small mono cx-h">200 · max-age=60 · ETag &quot;v7&quot;</text><path class="edge done" d="M380,152 L97,152"/><polygon class="fill-done" points="90,152 99,147.5 99,156.5"/><text x="235" y="146" text-anchor="middle" class="small mono cx-h">200 + body (edge stores it, Age: 0)</text><text x="12" y="180" text-anchor="start" class="small muted">2. 30 s later</text><rect class="box done" x="16" y="188" width="290" height="24" rx="6"/><text x="161" y="204" text-anchor="middle" class="small">fresh (age 30 &lt; 60): no request at all</text><text x="12" y="236" text-anchor="start" class="small muted">3. 90 s later</text><path class="edge accent" d="M90,256 L373,256"/><polygon class="fill-accent" points="380,256 371,260.5 371,251.5"/><text x="235" y="250" text-anchor="middle" class="small mono cx-h">GET · If-None-Match: &quot;v7&quot;</text><path class="edge visit" d="M380,256 L663,256"/><polygon class="fill-visit" points="670,256 661,260.5 661,251.5"/><text x="525" y="250" text-anchor="middle" class="small mono cx-h">If-None-Match: &quot;v7&quot;</text><path class="edge path" d="M670,282 L387,282"/><polygon class="fill-path" points="380,282 389,277.5 389,286.5"/><text x="525" y="276" text-anchor="middle" class="small mono cx-h">304 Not Modified (no body)</text><path class="edge path" d="M380,306 L97,306"/><polygon class="fill-path" points="90,306 99,301.5 99,310.5"/><text x="235" y="300" text-anchor="middle" class="small mono cx-h">304 → reuse the stored body</text></svg>
+<figcaption>A fresh copy is reused with no request at all. After expiry, the browser or the edge revalidates with the ETag, and an unchanged resource costs a 304 with headers only, not the whole body again.</figcaption>
+</figure>
+
+<p>Two browsers (A and B) request the same resource through one CDN edge, at the times in the requests box. The content changes at t = 90. Change the <code>Cache-Control</code> value and watch three totals: requests that reach the origin, bytes transferred, and responses served <strong>stale</strong> (older than the origin's current version).</p>
+<div class="viz" data-viz="caching-http"></div>
+
+<p>With <code>public, max-age=60</code> and an ETag, the origin sees three requests and one user sees the old version after the change: that's the staleness you agreed to. <code>no-cache</code> sends every request to the origin, but most are cheap 304s and nobody sees stale content. <code>private</code> keeps the CDN out of it, and <code>no-store</code> sends the full body every time. There's no best setting, only the right staleness for each resource.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">app.MapGet(&quot;/products/{id:int}&quot;, async (int id, HttpContext http, AppDb db, CancellationToken ct) =&gt;
+{
+    var p = await db.Products.AsNoTracking().FirstOrDefaultAsync(x =&gt; x.Id == id, ct);
+    if (p is null) return Results.NotFound();
+
+    var etag = new EntityTagHeaderValue($&quot;\&quot;{p.UpdatedAt.Ticks}\&quot;&quot;);   // changes when the row does
+    var headers = http.Response.GetTypedHeaders();
+    headers.CacheControl = new() { Public = true, MaxAge = TimeSpan.FromSeconds(60) };
+    headers.ETag = etag;
+
+    if (http.Request.GetTypedHeaders().IfNoneMatch.Any(t =&gt; t.Compare(etag, useStrongComparison: false)))
+        return Results.StatusCode(StatusCodes.Status304NotModified);   // headers only, no body
+
+    return Results.Ok(new ProductDto(p.Id, p.Name, p.Price));
+});
+</code></pre>
+<pre><code class="language-java">@GetMapping(&quot;/products/{id}&quot;)
+public ResponseEntity&lt;ProductDto&gt; product(@PathVariable long id, WebRequest request) {
+    ProductDto p = service.find(id);
+    String etag = &quot;\&quot;&quot; + p.version() + &quot;\&quot;&quot;;
+    if (request.checkNotModified(etag)) {
+        return null;                                   // Spring has already sent the 304
+    }
+    return ResponseEntity.ok()
+        .cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS).cachePublic())
+        .eTag(etag)
+        .body(p);
+}
+</code></pre>
+<pre><code class="language-python">from fastapi import FastAPI, Request, Response
+
+@app.get(&quot;/products/{pid}&quot;)
+async def product(pid: int, request: Request, response: Response):
+    p = await repo.get(pid)
+    etag = f'&quot;{p.version}&quot;'
+    headers = {&quot;Cache-Control&quot;: &quot;public, max-age=60&quot;, &quot;ETag&quot;: etag}
+    sent = {t.strip().removeprefix(&quot;W/&quot;) for t in request.headers.get(&quot;if-none-match&quot;, &quot;&quot;).split(&quot;,&quot;)}
+    if etag in sent or &quot;*&quot; in sent:
+        return Response(status_code=304, headers=headers)   # no body
+    response.headers.update(headers)
+    return p
+</code></pre>
+<pre><code class="language-go">func productHandler(w http.ResponseWriter, r *http.Request) {
+    p, err := repo.Product(r.Context(), r.PathValue(&quot;id&quot;))
+    if err != nil {
+        http.Error(w, &quot;not found&quot;, http.StatusNotFound)
+        return
+    }
+    body, _ := json.Marshal(p)
+    w.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+    w.Header().Set(&quot;Cache-Control&quot;, &quot;public, max-age=60&quot;)
+    w.Header().Set(&quot;ETag&quot;, fmt.Sprintf(`&quot;%d&quot;`, p.Version))
+    // ServeContent answers If-None-Match with a 304 using the ETag set above.
+    http.ServeContent(w, r, &quot;&quot;, p.UpdatedAt, bytes.NewReader(body))
+}
+</code></pre>
+<pre><code class="language-typescript">app.get('/products/:id', async (req, res) =&gt; {
+  const p = await repo.product(Number(req.params.id));
+  if (!p) return res.sendStatus(404);
+  res.set('Cache-Control', 'public, max-age=60');
+  res.json(p);   // Express adds a weak ETag and answers a matching If-None-Match with 304
+});
+
+// Fingerprinted build output never changes at a given URL: cache it for a year.
+app.use('/assets', express.static('dist/assets', { immutable: true, maxAge: '1y' }));
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: an ETag computed from the body saves bandwidth, not work</strong>
+Express's automatic ETag, Spring's <code>ShallowEtagHeaderFilter</code> and similar features hash the response <em>after</em> you've built it. The 304 saves the transfer, but your server still ran every query. To save the work as well, derive the ETag from something cheap (a row version or an updated-at timestamp) and check it <em>before</em> building the response, as the C# and Java tabs do.</p>
+</div>
+<div class="tip">
+<p><strong>Output caching is server-side, and conservative by default</strong>
+ASP.NET Core's output caching (<code>AddOutputCache</code> / <code>UseOutputCache</code> / <code>.CacheOutput("policy")</code>) stores whole responses on the server. Unlike <code>Cache-Control</code>, you can evict them (<code>IOutputCacheStore.EvictByTagAsync</code>). Its default policy only caches <code>GET</code>/<code>HEAD</code> 200 responses to requests without authentication, and doesn't cache responses that set cookies. Keep it that way for anything personalized.</p>
+</div>
+<h2 id="caching-across-ecosystems">Caching across ecosystems</h2>
+<p>Every ecosystem has the same three tiers: a function memoizer, a proper bounded in-process cache, and a client for a distributed cache. The names differ, and so do the defaults that bite.</p>
+<h3 id="in-process">In-process</h3>
+<div class="code-tabs">
+<pre><code class="language-csharp">builder.Services.AddMemoryCache(o =&gt;
+{
+    o.SizeLimit = 10_000;          // units are yours; once set, EVERY entry must set Size
+    o.TrackStatistics = true;      // enables GetCurrentStatistics()
+});
+
+public sealed class RatesService(IMemoryCache cache, IRatesClient client)
+{
+    // Not stampede-safe: concurrent misses each run the factory. Prefer HybridCache for hot keys.
+    public Task&lt;decimal&gt; GetRateAsync(string currency) =&gt;
+        cache.GetOrCreateAsync($&quot;fx:v1:{currency}&quot;, entry =&gt;
+        {
+            entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5);
+            entry.Size = 1;        // without it, adding the entry throws when SizeLimit is set
+            return client.FetchRateAsync(currency);
+        });
+}
+</code></pre>
+<pre><code class="language-java">// Spring + Caffeine. application.properties:
+//   spring.cache.cache-names=products
+//   spring.cache.caffeine.spec=maximumSize=10000,expireAfterWrite=5m,recordStats
+@Configuration
+@EnableCaching
+class CacheConfig {}
+
+@Service
+class ProductService {
+    @Cacheable(cacheNames = &quot;products&quot;, key = &quot;#id&quot;, sync = true)
+    public ProductDto find(long id) { return repository.load(id); }
+
+    // Evicts when the method returns: make sure the transaction has committed by then.
+    @CacheEvict(cacheNames = &quot;products&quot;, key = &quot;#id&quot;)
+    public void updatePrice(long id, BigDecimal price) { repository.updatePrice(id, price); }
+
+    // Pitfall: calling find() from inside this class bypasses the proxy, so nothing is cached.
+}
+</code></pre>
+<pre><code class="language-python">import threading
+from functools import lru_cache
+from cachetools import TTLCache, cached
+
+@lru_cache(maxsize=1024)            # pure function of hashable args: the ideal case
+def parse_template(name: str) -&gt; &quot;Template&quot;:
+    ...
+
+parse_template.cache_info()         # CacheInfo(hits=..., misses=..., maxsize=1024, currsize=...)
+
+# Bounded AND expiring. The lock makes the cache object thread-safe; check your
+# cachetools version's docs before relying on it to coalesce concurrent loads.
+@cached(cache=TTLCache(maxsize=10_000, ttl=300), lock=threading.Lock())
+def get_rate(currency: str) -&gt; &quot;Decimal&quot;:
+    return rates_client.fetch(currency)
+</code></pre>
+<pre><code class="language-go">// sync.Map is a concurrent map, not a cache: no size bound, no expiry. It's designed
+// for keys written once and read many times, or goroutines working on disjoint keys.
+var seen sync.Map // keyed by request ID? it grows until the process dies
+
+// ristretto v2: bounded by cost, TinyLFU admission, TTLs.
+cache, err := ristretto.NewCache(&amp;ristretto.Config[string, *Product]{
+    NumCounters: 1_000_000, // ~10× the number of entries you expect to hold
+    MaxCost:     256 &lt;&lt; 20, // 256 MB when cost is bytes
+    BufferItems: 64,
+})
+if err != nil {
+    log.Fatal(err)
+}
+defer cache.Close()
+
+cache.SetWithTTL(&quot;product:v1:7&quot;, p, int64(p.SizeBytes()), 5*time.Minute) // may be dropped by design
+if v, ok := cache.Get(&quot;product:v1:7&quot;); ok {
+    render(v)
+}
+</code></pre>
+<pre><code class="language-typescript">import { LRUCache } from 'lru-cache';
+
+const templates = new LRUCache&lt;string, Template&gt;({
+  max: 500,                                  // entries
+  maxSize: 50_000_000,                       // and/or a weight budget
+  sizeCalculation: (t) =&gt; t.source.length,
+  ttl: 10 * 60_000,
+  updateAgeOnGet: false,                     // keep expiry absolute, not sliding
+});
+
+templates.set('home', compile(src));
+const t = templates.get('home');             // undefined on a miss or after the TTL
+</code></pre>
+</div>
+<h3 id="distributed-redis">Distributed (Redis)</h3>
+<div class="code-tabs">
+<pre><code class="language-csharp">// IDistributedCache over Redis: builder.Services.AddStackExchangeRedisCache(...)
+public async Task&lt;ProductDto?&gt; GetAsync(int id, CancellationToken ct)
+{
+    var key = $&quot;product:v1:{id}&quot;;
+    var json = await cache.GetStringAsync(key, ct);
+    if (json is not null) return JsonSerializer.Deserialize&lt;ProductDto&gt;(json);
+
+    var dto = await LoadAsync(id, ct);
+    if (dto is not null)
+        await cache.SetStringAsync(key, JsonSerializer.Serialize(dto),
+            new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5) }, ct);
+    return dto;
+}
+// For new code prefer HybridCache over IDistributedCache: same L2, plus L1, coalescing and tags.
+</code></pre>
+<pre><code class="language-java">// Spring Data Redis as the cache store (spring.cache.type=redis)
+@Bean
+RedisCacheConfiguration cacheConfiguration() {
+    return RedisCacheConfiguration.defaultCacheConfig()
+        .entryTtl(Duration.ofMinutes(5))
+        .prefixCacheNameWith(&quot;shop:&quot;)
+        .disableCachingNullValues()
+        .serializeValuesWith(RedisSerializationContext.SerializationPair
+            .fromSerializer(new GenericJackson2JsonRedisSerializer()));
+}
+// The same @Cacheable / @CacheEvict annotations now use Redis.
+</code></pre>
+<pre><code class="language-python">import json, random
+import redis
+
+r = redis.Redis(host=&quot;cache&quot;, decode_responses=True)
+NOT_FOUND = &quot;__none__&quot;                          # sentinel: never confuse &quot;absent&quot; with &quot;miss&quot;
+
+def get_product(pid: int) -&gt; dict | None:
+    key = f&quot;product:v1:{pid}&quot;
+    raw = r.get(key)
+    if raw is not None:
+        return None if raw == NOT_FOUND else json.loads(raw)
+    row = db.fetch_product(pid)
+    if row is None:
+        r.set(key, NOT_FOUND, ex=30)            # negative entry: short TTL
+    else:
+        r.set(key, json.dumps(row), ex=300 + random.randint(-30, 30))   # TTL ± 10% jitter
+    return row
+</code></pre>
+<pre><code class="language-go">// go-redis v9. groupcache is the other classic: a peer-to-peer cache whose
+// built-in single-flight loads each key once across the whole group.
+func (s *Service) Product(ctx context.Context, id int) (*Product, error) {
+    key := fmt.Sprintf(&quot;product:v1:%d&quot;, id)
+    raw, err := s.rdb.Get(ctx, key).Bytes()
+    if err == nil {
+        var p Product
+        if err := json.Unmarshal(raw, &amp;p); err == nil {
+            return &amp;p, nil
+        }
+    } else if !errors.Is(err, redis.Nil) {
+        slog.Warn(&quot;cache unavailable, falling back to the DB&quot;, &quot;err&quot;, err)
+    }
+    p, err := s.db.Product(ctx, id)
+    if err != nil {
+        return nil, err
+    }
+    if b, err := json.Marshal(p); err == nil {
+        s.rdb.Set(ctx, key, b, 5*time.Minute)
+    }
+    return p, nil
+}
+</code></pre>
+<pre><code class="language-typescript">import Redis from 'ioredis';
+
+const redis = new Redis(process.env.REDIS_URL!);
+
+export async function getProduct(id: number): Promise&lt;Product | null&gt; {
+  const key = `product:v1:${id}`;
+  const raw = await redis.get(key);               // null on a miss
+  if (raw !== null) return JSON.parse(raw) as Product;
+
+  const p = await db.product(id);
+  if (p) await redis.set(key, JSON.stringify(p), 'EX', 300);
+  return p;
+}
+
+// One loader per cluster: a short lock that expires on its own if the holder dies.
+const token = crypto.randomUUID();
+const locked = (await redis.set(`lock:${key}`, token, 'EX', 10, 'NX')) === 'OK';
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: <code>lru_cache</code> on a method</strong>
+<code>@lru_cache</code> on an instance method puts <code>self</code> in the key, so the cache holds a strong reference to every instance it has seen. They're never garbage-collected, and with the default <code>maxsize=128</code> most of them never hit anyway. Cache module-level functions, or use a per-instance cache that dies with the instance. The same leak happens with any unbounded <code>dict</code> used as a cache, in any language.</p>
+</div>
+<div class="recognize">
+<p><strong>Recognize it: the cache that fails the request</strong>
+A cache is an optimisation, so <strong>a cache outage should make you slower, not broken</strong>. Wrap cache reads and writes so that errors fall through to the source (as the Go tab does), with a short client timeout. A Redis client stuck on a 5-second connect timeout turns a cache outage into a site outage. Then apply the herd protections above, because the source is about to get every request. See <a href="resilience.html">Resilience Patterns</a>.</p>
+</div>
+<h2 id="monitoring-a-cache">Monitoring a cache</h2>
+<p>A cache you don't measure is a guess. Track these for each cache (and for each key prefix, if you can):</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Healthy</th>
+<th>Investigate when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hit ratio</strong> <code>hits ÷ (hits + misses)</code></td>
+<td>stable, and matches your estimate</td>
+<td>it drops after a deploy (key change? cold start?) or slowly decays (working set outgrew the cache)</td>
+</tr>
+<tr>
+<td><strong>Eviction rate</strong></td>
+<td>low and steady</td>
+<td>it rises with traffic: capacity is too small, so entries die before their TTL and the hit ratio follows</td>
+</tr>
+<tr>
+<td><strong>Memory / entry count</strong></td>
+<td>under the limit with headroom</td>
+<td>it's flat at the limit (constant evictions), or growing without bound (no limit!)</td>
+</tr>
+<tr>
+<td><strong>Load latency and load count</strong></td>
+<td>loads ≈ misses</td>
+<td>loads ≫ unique keys (stampedes), or slow loads (the source is the problem)</td>
+</tr>
+<tr>
+<td><strong>Cache latency</strong> (p99)</td>
+<td>sub-ms for Redis</td>
+<td>it spikes: big values, hot keys, a saturated network or a slow command (<code>KEYS *</code>)</td>
+</tr>
+<tr>
+<td><strong>Errors / timeouts</strong></td>
+<td>~0</td>
+<td>any sustained rate: your fallback path is now carrying the load</td>
+</tr>
+</tbody>
+</table>
+<p>Where to read them: Redis <code>INFO stats</code> (<code>keyspace_hits</code>, <code>keyspace_misses</code>, <code>evicted_keys</code>, <code>expired_keys</code>) and <code>INFO memory</code>; <code>IMemoryCache.GetCurrentStatistics()</code> (with <code>TrackStatistics = true</code>); Caffeine's <code>cache.stats()</code> (with <code>recordStats()</code>); Python's <code>fn.cache_info()</code>; ristretto's <code>Metrics</code> (with <code>Metrics: true</code>). Export them as metrics (see <a href="observability.html">Observability</a>) and alert on the hit ratio dropping <em>relative to its baseline</em>: a single absolute threshold rarely fits more than one cache.</p>
+<div class="insight">
+<p><strong>Insight: a hit ratio is only meaningful with the miss cost</strong>
+A 99% hit ratio on a 1 ms query saves less than an 80% hit ratio on a 500 ms query. Report <strong>time saved</strong> (hits × miss cost) or the database load avoided, not just the ratio. And note that a falling hit ratio may simply mean traffic got more diverse, which is not a cache bug.</p>
+</div>
+<h2 id="testing-caches">Testing caches</h2>
+<p>Caches fail in ways that ordinary tests miss: time passes, many callers arrive at once, and the cache itself breaks. Test those explicitly.</p>
+<ul>
+<li><strong>Control time.</strong> Inject a clock (Caffeine's <code>ticker</code>, cachetools' <code>timer</code>, a <code>func() time.Time</code> in Go) so expiry tests run instantly and deterministically. Never <code>sleep</code> in a cache test.</li>
+<li><strong>Count loads.</strong> Wrap the loader with a counter and assert hits don't call it: <code>get, get → 1 load</code>, and <code>write, get → 2 loads</code> (the invalidation worked).</li>
+<li><strong>Test the herd.</strong> Start 50 concurrent gets for one cold key and assert exactly one load.</li>
+<li><strong>Test the write path.</strong> For every write operation, assert that the next read returns the new value. This catches forgotten invalidations, which are the most common cache bug.</li>
+<li><strong>Test with the cache down.</strong> Point the client at a dead port: requests should succeed (slower), not fail.</li>
+<li><strong>Test key isolation.</strong> The same ID for two tenants, two locales or two users must give different entries.</li>
+<li><strong>Don't let the cache hide bugs in other tests.</strong> Use a fresh cache per test, or none at all in tests that aren't about caching. See <a href="testing-strategy.html">Testing Strategy</a>.</li>
+</ul>
+<div class="code-tabs">
+<pre><code class="language-csharp">[Fact]
+public async Task Concurrent_misses_run_the_factory_once()
+{
+    var cache = new ServiceCollection().AddHybridCache().Services
+        .BuildServiceProvider().GetRequiredService&lt;HybridCache&gt;();
+    var loads = 0;
+    var gate = new TaskCompletionSource();
+
+    var calls = Enumerable.Range(0, 50).Select(_ =&gt; cache.GetOrCreateAsync(&quot;k&quot;, async ct =&gt;
+    {
+        Interlocked.Increment(ref loads);
+        await gate.Task;                       // hold the first load open while the others arrive
+        return 42;
+    }).AsTask()).ToArray();
+
+    gate.SetResult();
+    var results = await Task.WhenAll(calls);
+
+    Assert.Equal(1, loads);
+    Assert.All(results, r =&gt; Assert.Equal(42, r));
+}
+</code></pre>
+<pre><code class="language-java">@Test
+void entryExpiresAfterFiveMinutes() {
+    var nanos = new AtomicLong();
+    var loads = new AtomicInteger();
+    LoadingCache&lt;String, Integer&gt; cache = Caffeine.newBuilder()
+        .expireAfterWrite(Duration.ofMinutes(5))
+        .ticker(nanos::get)                   // fake clock
+        .executor(Runnable::run)              // run maintenance on the test thread
+        .build(k -&gt; loads.incrementAndGet());
+
+    cache.get(&quot;k&quot;);
+    cache.get(&quot;k&quot;);
+    assertEquals(1, loads.get());             // second get was a hit
+
+    nanos.addAndGet(Duration.ofMinutes(5).toNanos());
+    cache.get(&quot;k&quot;);
+    assertEquals(2, loads.get());             // expired, reloaded
+}
+</code></pre>
+<pre><code class="language-python">from cachetools import TTLCache
+
+def test_entry_expires_after_ttl():
+    now = [0.0]
+    cache = TTLCache(maxsize=10, ttl=300, timer=lambda: now[0])   # fake clock
+    cache[&quot;k&quot;] = 1
+
+    now[0] = 299
+    assert &quot;k&quot; in cache
+
+    now[0] = 300
+    assert &quot;k&quot; not in cache
+</code></pre>
+<pre><code class="language-go">// Your own cache type takes a clock instead of calling time.Now directly.
+func TestEntryExpires(t *testing.T) {
+    now := time.Unix(0, 0)
+    c := NewTTLCache[string, int](5*time.Minute, func() time.Time { return now })
+
+    c.Set(&quot;k&quot;, 1)
+    if _, ok := c.Get(&quot;k&quot;); !ok {
+        t.Fatal(&quot;want a hit before the TTL&quot;)
+    }
+    now = now.Add(5 * time.Minute)
+    if _, ok := c.Get(&quot;k&quot;); ok {
+        t.Fatal(&quot;want a miss at the TTL&quot;)
+    }
+}
+</code></pre>
+<pre><code class="language-typescript">test('concurrent fetches load once', async () =&gt; {
+  let loads = 0;
+  const cache = new LRUCache&lt;string, number&gt;({
+    max: 10,
+    fetchMethod: async () =&gt; {
+      loads++;
+      await new Promise((r) =&gt; setTimeout(r, 10));
+      return 42;
+    },
+  });
+
+  const results = await Promise.all(Array.from({ length: 50 }, () =&gt; cache.fetch('k')));
+
+  expect(loads).toBe(1);
+  expect(results.every((r) =&gt; r === 42)).toBe(true);
+});
+</code></pre>
+</div>
+<h2 id="common-pitfalls">Common pitfalls</h2>
+<ul>
+<li><strong>Caching without a bound.</strong> Every cache needs a size limit <em>and</em> an expiry. "It's only a few keys" lasts until someone puts a user ID or a timestamp in the key.</li>
+<li><strong>Caching the decision instead of the data.</strong> Cache the role definitions, not "user 7 is an admin"; cache the price list, not "this cart is valid".</li>
+<li><strong>Setting instead of deleting on write.</strong> It races other writers. Write the DB, then delete the key.</li>
+<li><strong>Invalidating inside the transaction</strong>, or before it. Readers can reload the old row. Invalidate after the commit.</li>
+<li><strong>Forgetting a write path.</strong> An admin screen, a batch import or another service writes the table and nobody deletes the key. A TTL is your only safety net, so always set one.</li>
+<li><strong>Caching errors, timeouts or empty results with the normal TTL.</strong> One blip becomes hours of wrong answers.</li>
+<li><strong>Sliding expiration on hot keys.</strong> They never expire, so they're never refreshed.</li>
+<li><strong>Synchronized expiry.</strong> Thousands of keys loaded at once expire at once. Add jitter.</li>
+<li><strong>No stampede protection on hot keys.</strong> Use a get-or-load API that coalesces, or serve stale while one caller refreshes.</li>
+<li><strong>Mutable cached objects</strong> shared between requests in an in-process cache.</li>
+<li><strong>A key missing a dimension</strong>: tenant, user, locale, currency, role. That's how one user's data reaches another.</li>
+<li><strong>Personalized responses with <code>public</code> or no <code>Cache-Control</code></strong> behind a CDN.</li>
+<li><strong>A cache that fails the request</strong> when the cache is down. Fall back to the source, with a short timeout.</li>
+<li><strong>A load-bearing cache nobody has tested empty.</strong> Know what the database does at a 0% hit rate.</li>
+</ul>
+<h2 id="checklist">Checklist</h2>
+<ul>
+<li>The data can tolerate the staleness of its TTL, and that TTL came from the business, not the hit-rate graph.</li>
+<li>A miss costs well over 5× a lookup, and the expected hit rate (reads per key within the entry's lifetime) is high.</li>
+<li>Every entry has a size bound and an absolute expiry; hot keys have jitter.</li>
+<li>Writes update the source first, then delete (not set) the affected keys, after the commit.</li>
+<li>Every write path that touches cached data invalidates it, or the TTL is short enough to accept missing ones.</li>
+<li>Hot keys go through a coalescing get-or-load API or serve-stale; there's a plan for a cold cache.</li>
+<li>Keys include every dimension that changes the value (tenant, user, locale, version) and nothing unbounded.</li>
+<li>Negative results use a sentinel and a short TTL; errors are never cached.</li>
+<li>Cached values are immutable or copied; large values are projected, compressed or kept out of the distributed cache.</li>
+<li>Cache failures fall through to the source with a short timeout.</li>
+<li>HTTP responses state their cacheability explicitly: <code>private</code>/<code>no-store</code> for anything personal, ETags for revalidation, <code>immutable</code> for fingerprinted assets.</li>
+<li>Hit ratio, evictions, memory, load counts and cache errors are on a dashboard, with alerts relative to the baseline.</li>
+<li>Tests cover expiry (with a fake clock), invalidation after each write, concurrent misses and the cache being down.</li>
+</ul>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>A team wants to cache account balances for 5 seconds "because the balance endpoint is slow". What do you tell them?</summary>
+<p>Don't cache the balance. A balance is read before decisions (withdrawals, transfers, limit checks), so a 5-second-old value can authorise something that should have been refused: that's a correctness bug, not a trade-off. Make the read fast instead (an index, a maintained balance column, a projection), or cache only the immutable parts of the page (account name, product details). If a display-only page really can show a slightly old balance, label it ("as of 10:42") and never use that value for a decision.</p>
+</details>
+<details class="quiz">
+<summary>2,000 reads/s are spread evenly over 1,000,000 keys, with a 60-second TTL. Roughly what hit rate should you expect, and why?</summary>
+<p>Very low: about 11%. Each key is read 0.002 times a second, so about 0.12 times per 60-second lifetime. One miss buys about 0.12 hits, and the hit rate is <code>n ÷ (n + 1) ≈ 0.12 ÷ 1.12</code>. Hit rate comes from <strong>reuse within the lifetime</strong>, and here most entries expire before their second read. It only works if real traffic is heavily skewed towards a small hot set, so measure the distribution before building it.</p>
+</details>
+<details class="quiz">
+<summary>Why delete the key on write instead of setting the new value?</summary>
+<p>Two concurrent writers can commit in one order and set the cache in the other, leaving the older value cached until the TTL. Deletes are idempotent and order-independent: whatever order they arrive in, the next read loads the committed value from the database. (Write-through caches that serialize writes per key, or versioned compare-and-set, are the exceptions.)</p>
+</details>
+<details class="quiz">
+<summary>You write the DB, then delete the key, and a reader still occasionally caches the old value. How?</summary>
+<p>The stale-set-after-delete race. The reader missed, loaded the old value, and then paused; the writer committed and deleted; the reader then set its old value. The delete happened <em>before</em> the stale set, so it didn't help. The TTL bounds the damage. Leases (the cache rejects sets after an invalidation), versioned compare-and-set, or a delayed second delete reduce or prevent it.</p>
+</details>
+<details class="quiz">
+<summary>A hot key takes 2 s to recompute and is read 500 times a second. It expires. What happens, and what are three fixes?</summary>
+<p>Around 1,000 requests miss during the 2 seconds of recompute, and each one starts the same expensive query: a stampede that slows the database, which makes the recompute even slower. Fixes: <strong>coalesce</strong> (one load per key; the others wait for its result), <strong>serve stale</strong> while one caller refreshes, or <strong>refresh early</strong> (refresh-ahead or XFetch), so the key never expires under load. Add TTL jitter so many keys don't do this at the same moment.</p>
+</details>
+<details class="quiz">
+<summary>What's the difference between <code>Cache-Control: no-cache</code> and <code>no-store</code>?</summary>
+<p><code>no-cache</code> allows storing, but requires revalidation before every use. With an ETag, that's a cheap 304 when nothing changed, so you get bandwidth savings with no staleness. <code>no-store</code> forbids storing anywhere, so every request is a full response. Use <code>no-store</code> for sensitive one-time data, and <code>no-cache</code> (or a short <code>max-age</code>) for data that must always be current.</p>
+</details>
+<details class="quiz">
+<summary>Instance 1 updates a product and deletes the Redis key. Instance 2 keeps serving the old price for 30 seconds. Why?</summary>
+<p>Instance 2 has its own in-process L1 copy, and deleting the L2 (Redis) key doesn't reach it. It stays until the L1 expiration (here, 30 s). Fix it with a backplane (pub/sub invalidation of every L1), a shorter L1 TTL, or no L1 for data where 30 seconds of staleness across instances isn't acceptable.</p>
+</details>
+<details class="quiz">
+<summary>Your Redis cache fills up and suddenly writes start failing with OOM errors. What's wrong?</summary>
+<p>Redis is using the default <code>maxmemory-policy noeviction</code>: at the memory limit it refuses writes instead of evicting. For a pure cache, set <code>maxmemory</code> and an eviction policy such as <code>allkeys-lru</code> or <code>allkeys-lfu</code>. Also check that every key has a TTL and that nothing unbounded (timestamps, request IDs) is in the keys.</p>
+</details>
+<details class="quiz">
+<summary>Users report that after they sign up, login says "user not found" for a while. Sign-up and login both work in tests. What would you look for?</summary>
+<p>A negative result cached during replication lag. Login read the user from a replica that hadn't seen the insert yet, and the "not found" was cached, probably with the normal TTL. Give negative entries a short TTL, delete the negative key when the user is created, and read your own writes from the primary (or skip caching) right after creating something. Tests miss it because they have no replica lag and a fresh cache.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Cache when</strong>Stale is OK, reads ≫ writes, a miss ≫ a lookup, the hit rate will be high, and the data is shared.</div>
+<div><strong>Don't cache</strong>Money, stock, permissions, rate limits, write-heavy or read-once data, sub-ms sources, slow queries you haven't fixed.</div>
+<div><strong>Hit rate</strong>Comes from reuse within the lifetime: <code>n = reads per key × lifetime</code>, <code>h ≈ n ÷ (n + 1)</code>.</div>
+<div><strong>Layers</strong>Browser ~0 · CDN ~20 ms · in-process ~100 ns · Redis ~0.5 ms · DB buffer pool ~1 ms · disk 5–50 ms.</div>
+<div><strong>Default pattern</strong>Cache-aside or read-through. Write the DB, then <code>DEL</code> the key after the commit.</div>
+<div><strong>Write-behind</strong>Fast writes, coalesced flushes, and data loss on crash. Only for loss-tolerant data.</div>
+<div><strong>Eviction</strong>LRU for recency, LFU for frequency, W-TinyLFU (Caffeine, ristretto) for both. Redis: set <code>allkeys-lru</code>/<code>lfu</code>.</div>
+<div><strong>TTL</strong>Absolute, from the business tolerance. Jitter ±10–20%. Short TTLs for negative results.</div>
+<div><strong>Stampede</strong>Coalesce (single-flight), serve stale + 1 refresher, or refresh early (XFetch).</div>
+<div><strong>Races</strong>Stale set after delete → TTL, leases, versioned CAS, delayed double delete.</div>
+<div><strong>Keys</strong><code>app:entity:vN:tenant:id:variant</code>. Every dimension that changes the value; nothing unbounded.</div>
+<div><strong>L1 + L2</strong>A short L1 TTL bounds cross-instance staleness; a backplane invalidates faster.</div>
+<div><strong>HTTP</strong><code>max-age</code>, <code>s-maxage</code>, <code>private</code>, <code>no-cache</code> (revalidate) ≠ <code>no-store</code>, ETag → 304, <code>immutable</code>.</div>
+<div><strong>Watch</strong>Hit ratio vs baseline, evictions, memory, loads per miss, cache errors.</div>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/aspnet/core/performance/caching/hybrid">HybridCache library in ASP.NET Core</a>, <a href="https://learn.microsoft.com/aspnet/core/performance/caching/memory">Cache in-memory in ASP.NET Core</a> and <a href="https://learn.microsoft.com/aspnet/core/performance/caching/output">Output caching middleware</a> (Microsoft Learn)</li>
+<li><a href="https://learn.microsoft.com/azure/architecture/patterns/cache-aside">Cache-Aside pattern</a> (Azure Architecture Center)</li>
+<li><a href="https://github.com/ben-manes/caffeine/wiki">Caffeine wiki</a> and <a href="https://docs.spring.io/spring-framework/reference/integration/cache.html">Spring Framework: Cache Abstraction</a></li>
+<li><a href="https://docs.python.org/3/library/functools.html#functools.lru_cache">functools.lru_cache</a> (Python docs) and <a href="https://cachetools.readthedocs.io/">cachetools</a></li>
+<li><a href="https://pkg.go.dev/golang.org/x/sync/singleflight">singleflight</a> and <a href="https://pkg.go.dev/sync#Map">sync.Map</a> (Go packages), and <a href="https://github.com/dgraph-io/ristretto">ristretto</a></li>
+<li><a href="https://github.com/isaacs/node-lru-cache">lru-cache</a> and <a href="https://github.com/redis/ioredis">ioredis</a></li>
+<li><a href="https://redis.io/docs/latest/develop/reference/eviction/">Key eviction</a> (Redis docs)</li>
+<li><a href="https://developer.mozilla.org/docs/Web/HTTP/Caching">HTTP caching</a> (MDN) and <a href="https://www.rfc-editor.org/rfc/rfc9111">RFC 9111: HTTP Caching</a></li>
+<li><a href="https://www.usenix.org/conference/nsdi13/technical-sessions/presentation/nishtala">Scaling Memcache at Facebook</a> (NSDI 2013): leases, stale sets and regional invalidation</li>
+<li><a href="https://www.vldb.org/pvldb/vol8/p886-vattani.pdf">Optimal Probabilistic Cache Stampede Prevention</a> (VLDB 2015): the XFetch algorithm</li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="api-security.html"><small>&larr; PREVIOUS</small>API Security: AuthN, AuthZ &amp; Rate Limiting</a><a class="next" href="data-access.html"><small>NEXT &rarr;</small>Data Access Patterns</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-the-fastest-query-is-the-one-you-never-run">The problem: the fastest query is the one you never run</a></li>
+<li><a href="#should-you-cache-at-all">Should you cache at all?</a><ul>
+<li><a href="#what-a-cache-costs-you">What a cache costs you</a></li>
+</ul>
+</li>
+<li><a href="#when-not-to-cache">When NOT to cache</a><ul>
+<li><a href="#war-stories">War stories</a></li>
+</ul>
+</li>
+<li><a href="#where-caches-live">Where caches live</a></li>
+<li><a href="#five-caching-patterns">Five caching patterns</a><ul>
+<li><a href="#cache-aside-lazy-loading">Cache-aside (lazy loading)</a></li>
+<li><a href="#read-through">Read-through</a></li>
+<li><a href="#write-through">Write-through</a></li>
+<li><a href="#write-behind-write-back">Write-behind (write-back)</a></li>
+<li><a href="#refresh-ahead">Refresh-ahead</a></li>
+</ul>
+</li>
+<li><a href="#eviction-what-to-throw-away">Eviction: what to throw away</a></li>
+<li><a href="#ttl-sliding-expiration-and-jitter">TTL, sliding expiration and jitter</a></li>
+<li><a href="#cache-stampede-thundering-herd">Cache stampede (thundering herd)</a></li>
+<li><a href="#invalidation-strategies-and-their-races">Invalidation strategies and their races</a></li>
+<li><a href="#negative-caching-keys-and-serialization">Negative caching, keys and serialization</a><ul>
+<li><a href="#negative-caching">Negative caching</a></li>
+<li><a href="#key-design">Key design</a></li>
+<li><a href="#serialization-cost">Serialization cost</a></li>
+</ul>
+</li>
+<li><a href="#two-level-caches-l1-l2-and-the-backplane">Two-level caches (L1 + L2) and the backplane</a></li>
+<li><a href="#http-caching-let-someone-else-store-it">HTTP caching: let someone else store it</a></li>
+<li><a href="#caching-across-ecosystems">Caching across ecosystems</a><ul>
+<li><a href="#in-process">In-process</a></li>
+<li><a href="#distributed-redis">Distributed (Redis)</a></li>
+</ul>
+</li>
+<li><a href="#monitoring-a-cache">Monitoring a cache</a></li>
+<li><a href="#testing-caches">Testing caches</a></li>
+<li><a href="#common-pitfalls">Common pitfalls</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Lifetimes, Scopes &amp; Captive Dependencies | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/di-lifetimes.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/di-lifetimes.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track" open><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html" aria-current="page">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Lifetimes, Scopes &amp; Captive Dependencies</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">DEPENDENCY INJECTION</p><h1>Lifetimes, Scopes &amp; Captive Dependencies</h1><p class="lede">Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation.</p><div class="meta"><span class="level level-intermediate">Intermediate → Advanced</span><span>~50 min study</span><span>Builds on: <a href="di-fundamentals.html">DI Fundamentals</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="di-lifetimes" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-a-cache-that-works-on-your-machine">The problem: a cache that works on your machine</h2>
+<p>A team adds a price cache to speed up checkout. It is registered as a singleton, because a cache should live for the whole app, and it asks for the EF Core <code>AppDbContext</code> in its constructor. Every unit test passes, and it works in the staging environment, where requests rarely overlap.</p>
+<pre><code class="language-csharp">builder.Services.AddDbContext&lt;AppDbContext&gt;(...);   // scoped: one per request (the default for AddDbContext)
+builder.Services.AddSingleton&lt;PriceCache&gt;();         // one for the whole app
+
+public sealed class PriceCache(AppDbContext db)      // ← the singleton keeps the first request's context forever
+{
+    public Task&lt;Price&gt; GetAsync(string sku) =&gt; db.Prices.SingleAsync(p =&gt; p.Sku == sku);
+}
+</code></pre>
+<p>In production, under real concurrency, three unrelated-looking symptoms appear:</p>
+<ul>
+<li><code>InvalidOperationException: A second operation was started on this context instance before a previous operation completed.</code> Two requests are now using <strong>one</strong> <code>DbContext</code> at the same time, and <code>DbContext</code> is not thread-safe.</li>
+<li>Stale prices. The context's change tracker caches every entity it has loaded, so the "cache" never sees updates made by other requests.</li>
+<li>Memory that grows until the pod is recycled, because that one context tracks every price ever read.</li>
+</ul>
+<p>Nothing is wrong with <code>PriceCache</code> or with <code>AppDbContext</code>. The bug is in the <strong>lifetimes</strong>: a long-lived object holds on to a short-lived one, so the short-lived object is kept far past its intended life. This page shows exactly what each lifetime means at runtime, who owns and disposes every instance, and how to make the container catch this mistake at startup. It builds on <a href="di-fundamentals.html">DI Fundamentals</a>.</p>
+<div class="rule">
+<p><strong>A lifetime answers two questions: who shares this instance, and who disposes it?</strong> The one rule that prevents most lifetime bugs is that <strong>an object may only depend on objects that live at least as long as it does</strong>.</p>
+</div>
+<h2 id="the-three-lifetimes">The three lifetimes</h2>
+<p>Every mainstream container has the same three basic answers, under different names:</p>
+<ul>
+<li><strong>Singleton.</strong> One instance for the whole application, created on first use and cached in the <strong>root</strong> container. Every request and every thread shares it, so it <strong>must be thread-safe</strong>. It is disposed at shutdown.</li>
+<li><strong>Scoped.</strong> One instance per <strong>scope</strong>. In a web app the framework opens one scope per HTTP request, so a scoped service is "one per request". The scope disposes it when the request ends.</li>
+<li><strong>Transient.</strong> A new instance for <strong>every resolution</strong>: every constructor parameter that asks for it, and every <code>GetService</code> call. If it is disposable, the scope (or root) that created it disposes it.</li>
+</ul>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 940 360" width="940" role="img" aria-label="The root provider contains singletons SystemClock #1 and PriceCache #2. Inside it, request A and request B each have their own scope with their own AppDbContext and OrderService, and new PriceCalculator instances per resolution. Both requests reuse the singleton PriceCache #2.">
+<defs><marker id="di-lifetimes-ar-n" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box path" x="16" y="12" width="908" height="336" rx="14"/>
+<text x="36" y="38" class="title">Root provider</text><text x="160" y="38" class="small muted">built at startup, disposed at shutdown; owns the singletons (and any transient resolved from it)</text>
+<rect class="box path" x="36" y="54" width="200" height="46" rx="8"/><text x="136" y="74" text-anchor="middle" font-weight="700">SystemClock #1</text><text x="136" y="91" text-anchor="middle" class="small muted">singleton</text>
+<rect class="box path" x="256" y="54" width="200" height="46" rx="8"/><text x="356" y="74" text-anchor="middle" font-weight="700">PriceCache #2</text><text x="356" y="91" text-anchor="middle" class="small muted">singleton</text>
+<text x="478" y="74" class="small">One instance, shared by every request and thread:</text><text x="478" y="91" class="small">it must be thread-safe.</text>
+<rect class="box visit" x="36" y="124" width="428" height="208" rx="12"/>
+<text x="52" y="148" font-weight="700">Request A scope</text><text x="52" y="166" class="small muted">opened when the request arrives, disposed when it ends</text>
+<rect class="box visit" x="52" y="180" width="190" height="46" rx="8"/><text x="147" y="200" text-anchor="middle" font-weight="700">AppDbContext #3</text><text x="147" y="217" text-anchor="middle" class="small muted">scoped: one per request</text>
+<rect class="box visit" x="258" y="180" width="190" height="46" rx="8"/><text x="353" y="200" text-anchor="middle" font-weight="700">OrderService #4</text><text x="353" y="217" text-anchor="middle" class="small muted">scoped</text>
+<rect class="box" x="52" y="240" width="190" height="46" rx="8" stroke-dasharray="6 4"/><text x="147" y="260" text-anchor="middle" font-weight="700">PriceCalculator #5</text><text x="147" y="277" text-anchor="middle" class="small muted">transient: new per resolve</text>
+<rect class="box" x="258" y="240" width="190" height="46" rx="8" stroke-dasharray="6 4"/><text x="353" y="260" text-anchor="middle" font-weight="700">PriceCalculator #6</text><text x="353" y="277" text-anchor="middle" class="small muted">transient: another one</text>
+<text x="52" y="314" class="small muted">at the end it disposes AppDbContext #3, the only IDisposable it created</text>
+<rect class="box visit" x="480" y="124" width="428" height="208" rx="12"/>
+<text x="496" y="148" font-weight="700">Request B scope (at the same time)</text><text x="496" y="166" class="small muted">its own cache: it never sees #3 or #4</text>
+<rect class="box visit" x="496" y="180" width="190" height="46" rx="8"/><text x="591" y="200" text-anchor="middle" font-weight="700">AppDbContext #7</text><text x="591" y="217" text-anchor="middle" class="small muted">scoped: one per request</text>
+<rect class="box visit" x="702" y="180" width="190" height="46" rx="8"/><text x="797" y="200" text-anchor="middle" font-weight="700">OrderService #8</text><text x="797" y="217" text-anchor="middle" class="small muted">scoped</text>
+<rect class="box" x="496" y="240" width="190" height="46" rx="8" stroke-dasharray="6 4"/><text x="591" y="260" text-anchor="middle" font-weight="700">PriceCalculator #9</text><text x="591" y="277" text-anchor="middle" class="small muted">transient</text>
+<text x="496" y="314" class="small muted">disposes AppDbContext #7; singletons #1 and #2 are untouched</text>
+<path class="edge accent" d="M353 180 L353 102" marker-end="url(#di-lifetimes-ar-n)" stroke-dasharray="5 4"/>
+<path class="edge accent" d="M797 180 C797 128 560 112 458 90" marker-end="url(#di-lifetimes-ar-n)" stroke-dasharray="5 4"/>
+<text x="662" y="116" class="small">both requests reuse PriceCache #2</text>
+</svg>
+<figcaption>Lifetimes are nested boxes. A singleton lives in the root; each request gets a scope inside it; transients are created on demand and owned by whichever scope created them. An arrow pointing <em>outward</em> (a scoped service using a singleton) is always safe. An arrow pointing <em>inward</em>, from a singleton to something in a request box, is the captive dependency from the opening story.</figcaption>
+</figure>
+
+<div class="compare">
+<div>
+<h4 id="singleton">Singleton</h4>
+<ul>
+<li><strong>Created:</strong> first resolution (or eagerly at startup).</li>
+<li><strong>Cached in:</strong> the root.</li>
+<li><strong>Disposed:</strong> at shutdown, by the root.</li>
+<li><strong>Shared by:</strong> every request and thread at once.</li>
+<li><strong>Typical:</strong> configuration, clocks, <code>HttpClient</code> handlers via <code>IHttpClientFactory</code>, connection pools, <code>IMemoryCache</code>, stateless services.</li>
+</ul>
+</div>
+<div>
+<h4 id="scoped">Scoped</h4>
+<ul>
+<li><strong>Created:</strong> first resolution inside a scope.</li>
+<li><strong>Cached in:</strong> that scope.</li>
+<li><strong>Disposed:</strong> when the scope ends (the request completes).</li>
+<li><strong>Shared by:</strong> everything in one request.</li>
+<li><strong>Typical:</strong> <code>DbContext</code> / unit of work, the current user or tenant, per-request caches.</li>
+</ul>
+</div>
+<div>
+<h4 id="transient">Transient</h4>
+<ul>
+<li><strong>Created:</strong> on every resolution.</li>
+<li><strong>Cached in:</strong> nothing. The scope only records it if it is disposable.</li>
+<li><strong>Disposed:</strong> when the scope or root that created it ends.</li>
+<li><strong>Shared by:</strong> nobody, unless a longer-lived consumer keeps it.</li>
+<li><strong>Typical:</strong> lightweight, stateful-per-use helpers and builders.</li>
+</ul>
+</div>
+</div>
+<h3 id="watch-two-concurrent-requests">Watch two concurrent requests</h3>
+<p>The visualizer runs a real container simulation. Three services are registered: <code>IClock</code>, <code>AppDbContext</code> (not thread-safe, disposable) and <code>PriceCalculator</code>, which needs both. Requests A and B overlap in time. Each row is one event. The chips show which <strong>instance id</strong> each resolution received, with a solid border for <strong>new</strong> and a dashed border for <strong>reused</strong>. The table underneath lists every instance ever created, who owns it, who has used it, and whether that is safe.</p>
+<div class="viz dil-wide" data-viz="di-lifetimes-timeline"></div>
+
+<p>Things to try with the selects:</p>
+<ul>
+<li><strong>The defaults</strong> (singleton / scoped / transient): <code>SystemClock #1</code> is shared across both requests; each request gets its own <code>AppDbContext</code>; every <code>PriceCalculator</code> resolution is new, but within one request they all share that request's context.</li>
+<li><strong><code>AppDbContext</code> = singleton:</strong> one context is now used by two requests at the same time, and the row turns red. This is the opening story without the cache class.</li>
+<li><strong><code>PriceCalculator</code> = singleton</strong> while the context is scoped: <code>ValidateOnBuild</code> refuses to start the app, before any request is served.</li>
+<li><strong><code>AppDbContext</code> = transient:</strong> every resolution gets a fresh context, so two services in the same request <strong>no longer share a unit of work</strong>: a save in one does not see the other's changes. Transient is not "safer"; it changes behaviour.</li>
+<li><strong>Schedule</strong> <code>A+ A:Calc A- A:Calc stop</code>: resolving from a scope that has already ended throws <code>ObjectDisposedException</code>.</li>
+</ul>
+<p>The same simulation with <code>AppDbContext</code> registered as a singleton:</p>
+<div class="viz dil-wide" data-viz="di-lifetimes-timeline" data-opts='{"db":"singleton","title":"AppDbContext as a singleton: one context, two concurrent requests"}'></div>
+
+<h2 id="thread-safety-per-lifetime">Thread safety per lifetime</h2>
+<p>A lifetime is also a statement about <strong>concurrency</strong>. Choosing one is choosing how many threads can reach the object at the same time.</p>
+<table>
+<thead>
+<tr>
+<th>Lifetime</th>
+<th>Who can touch it concurrently</th>
+<th>What it must guarantee</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Singleton</td>
+<td>Every in-flight request, background services, timers</td>
+<td>Fully thread-safe: immutable, or guarded with <code>lock</code>, <code>ConcurrentDictionary</code>, <code>Interlocked</code>, or similar. Its dependencies must also be safe to share.</td>
+</tr>
+<tr>
+<td>Scoped</td>
+<td>Only code running for that request</td>
+<td>No cross-request sharing, but <strong>not automatically single-threaded</strong>. <code>Task.WhenAll</code> inside one request runs two operations on the same scoped <code>DbContext</code> in parallel.</td>
+</tr>
+<tr>
+<td>Transient</td>
+<td>Only the consumer that received it</td>
+<td>Nothing extra, <strong>unless</strong> that consumer is long-lived. A transient injected into a singleton is shared exactly like the singleton is.</td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs" data-labels="Bad: parallel work on one scoped context,Good: sequential or one context per task">
+<pre><code class="language-csharp">// Both queries run on the request's single AppDbContext at the same time.
+public async Task&lt;Dashboard&gt; LoadAsync(int userId)
+{
+    var orders = db.Orders.Where(o =&gt; o.UserId == userId).ToListAsync();
+    var invoices = db.Invoices.Where(i =&gt; i.UserId == userId).ToListAsync();
+    await Task.WhenAll(orders, invoices);   // &quot;A second operation was started on this context instance...&quot;
+    return new Dashboard(orders.Result, invoices.Result);
+}
+</code></pre>
+<pre><code class="language-csharp">// Option 1: await one at a time; the scoped context is used by one operation at a time.
+var orders = await db.Orders.Where(o =&gt; o.UserId == userId).ToListAsync();
+var invoices = await db.Invoices.Where(i =&gt; i.UserId == userId).ToListAsync();
+
+// Option 2: real parallelism needs one context per operation.
+// Register with services.AddDbContextFactory&lt;AppDbContext&gt;(...) and inject IDbContextFactory&lt;AppDbContext&gt;.
+async Task&lt;List&lt;T&gt;&gt; Query&lt;T&gt;(Func&lt;AppDbContext, Task&lt;List&lt;T&gt;&gt;&gt; q)
+{
+    await using var ctx = await contexts.CreateDbContextAsync();   // you created it, so you dispose it
+    return await q(ctx);
+}
+var (o, i) = (Query(c =&gt; c.Orders.Where(x =&gt; x.UserId == userId).ToListAsync()),
+              Query(c =&gt; c.Invoices.Where(x =&gt; x.UserId == userId).ToListAsync()));
+await Task.WhenAll(o, i);
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Singletons need thread-safe dependencies as well.</strong> A singleton made of <code>readonly</code> fields is thread-safe only if every object those fields point to is also safe to share. "Stateless" means <em>no mutable state reachable from the object</em>, not "no fields".</p>
+</div>
+<h2 id="the-lifetime-matrix-who-may-depend-on-whom">The lifetime matrix: who may depend on whom</h2>
+<p>Read each row as "a <strong>consumer</strong> with this lifetime takes a <strong>dependency</strong> with that lifetime". The safe direction is always towards something that lives <strong>at least as long</strong>.</p>
+<ul>
+<li><strong>Singleton → scoped</strong> is the captive dependency. MS.DI rejects it when scope validation is on.</li>
+<li><strong>Singleton → transient</strong> is <em>legal</em>, but the transient is created once and then lives as long as the singleton: its <strong>effective lifetime</strong> becomes singleton. That is harmless for a stateless helper. It is a bug if the transient was transient for a reason, for example because it holds per-operation state or is not thread-safe.</li>
+<li><strong>Scoped → transient → scoped</strong> is fine: inside a request, everything resolves from the same scope.</li>
+<li><strong>Anything → singleton</strong> is always fine.</li>
+</ul>
+<p>The validator below walks a dependency chain the way <code>ValidateScopes</code> does: it remembers whether there is a singleton above the current node and fails as soon as it reaches a scoped service underneath. It also tracks the <strong>effective</strong> lifetime, so you can see a transient being promoted. Type your own chain, or resolve it from the root provider to see the root-specific errors.</p>
+<div class="viz dil-wide" data-viz="di-lifetimes-validate"></div>
+
+<h2 id="captive-dependencies">Captive dependencies</h2>
+<p>A <strong>captive dependency</strong> is a service held by a consumer that lives longer than the service was designed to live. The consumer "captures" it: the container would have disposed it and created a fresh one for the next request, but the consumer still holds the old one. The step-through below replays the opening story. Change the configuration to see what validation does, and what each fix changes.</p>
+<div class="viz dil-wide" data-viz="di-lifetimes-captive"></div>
+
+<p>Notice where the context lives in each run. With no validation, <code>AppDbContext #1</code> is created while request 1 is being served, but the <strong>root</strong> creates and owns it, because a singleton and all of its dependencies are always built by the root. Request 1 ends and nothing is disposed. Request 2 then gets the <em>same</em> context, already tracking request 1's entities. When the two requests overlap, the context is used from two threads.</p>
+<div class="compare">
+<div class="bad">
+<h4 id="fixes-that-do-not-work">Fixes that do not work</h4>
+<ul>
+<li><strong>A <code>Func&lt;AppDbContext&gt;</code> or <code>Lazy&lt;AppDbContext&gt;</code></strong> in the singleton, registered as <code>sp =&gt; () =&gt; sp.GetRequiredService&lt;AppDbContext&gt;()</code>. The factory was created by the root, so <code>sp</code> <em>is</em> the root: with validation it throws, and without validation it hands out root-owned contexts that are never disposed until shutdown.</li>
+<li><strong>Making <code>AppDbContext</code> transient.</strong> That hides the error message but keeps the bug: the singleton still keeps its one transient context forever.</li>
+<li><strong>Injecting <code>IServiceProvider</code> and calling <code>GetService</code> in each method.</strong> The singleton's provider <em>is</em> the root, so it is the same problem behind a service locator.</li>
+<li><strong>Turning validation off</strong> because "it only fails in Development".</li>
+</ul>
+</div>
+<div class="good">
+<h4 id="fixes-that-work">Fixes that work</h4>
+<ul>
+<li><strong>Shorten the consumer.</strong> If <code>PriceCache</code> does not need to outlive a request, register it as scoped. This is the simplest correct fix.</li>
+<li><strong>Split state from work.</strong> Keep the long-lived part (a <code>ConcurrentDictionary</code>, an <code>IMemoryCache</code>) in a singleton that has <strong>no</strong> scoped dependencies, and do the database work in a scoped service that uses it.</li>
+<li><strong>Create a scope per unit of work.</strong> Inject <code>IServiceScopeFactory</code>, open a scope for each operation and resolve the context from it, as background services do.</li>
+<li><strong>Use a factory designed for it:</strong> <code>IDbContextFactory&lt;T&gt;</code> creates contexts that <em>you</em> own and dispose.</li>
+</ul>
+</div>
+</div>
+<h2 id="scope-validation-make-the-container-catch-it">Scope validation: make the container catch it</h2>
+<p>MS.DI can detect captive dependencies, but you have to ask it to:</p>
+<ul>
+<li><strong><code>ValidateScopes</code></strong> checks every resolution at runtime. It throws if a singleton (directly or through transients) depends on a scoped service, or if a scoped service is resolved from the <strong>root</strong> provider. Without it, the root silently creates a "scoped" instance that it then keeps until shutdown.</li>
+<li><strong><code>ValidateOnBuild</code></strong> tries to build the call site for <strong>every</strong> registration when the provider is built. Missing registrations and captive chains then fail at startup instead of on the first request that needs them.</li>
+</ul>
+<p>Both are <strong>on by default in the Development environment</strong> (<code>WebApplication.CreateBuilder</code> and <code>Host.CreateDefaultBuilder</code>) and <strong>off</strong> everywhere else, because validation costs startup time. That default explains the opening story: the unit tests built their own provider with a bare <code>BuildServiceProvider()</code>, staging ran as <code>Staging</code>, and nobody happened to start the app as <code>Development</code> after the change. Nothing ever validated the graph.</p>
+<div class="code-tabs" data-labels="ASP.NET Core,Hand-built provider,Integration test">
+<pre><code class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+// Turn validation on everywhere. It is a one-time cost at startup, and it turns a production
+// incident into a deployment that fails immediately.
+builder.Host.UseDefaultServiceProvider(o =&gt;
+{
+    o.ValidateScopes = true;
+    o.ValidateOnBuild = true;
+});
+</code></pre>
+<pre><code class="language-csharp">var services = new ServiceCollection();
+services.AddDbContext&lt;AppDbContext&gt;(o =&gt; o.UseSqlite(&quot;Data Source=app.db&quot;));   // scoped
+services.AddSingleton&lt;PriceCache&gt;();
+// BuildServiceProvider() with no options validates nothing.
+using var root = services.BuildServiceProvider(new ServiceProviderOptions
+{
+    ValidateScopes = true,
+    ValidateOnBuild = true,   // throws here: Cannot consume scoped service 'AppDbContext' from singleton 'PriceCache'.
+});
+</code></pre>
+<pre><code class="language-csharp">[Fact]
+public void Container_is_valid()
+{
+    // WebApplicationFactory runs in the Development environment by default, so validation is on.
+    // This test fails the build on any captive dependency or missing registration.
+    using var app = new WebApplicationFactory&lt;Program&gt;();
+    _ = app.Services;   // forces the host, and therefore the provider, to be built
+}
+</code></pre>
+</div>
+<p>The errors you will see, and what each one means:</p>
+<table>
+<thead>
+<tr>
+<th>Message</th>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Cannot consume scoped service 'X' from singleton 'Y'.</code></td>
+<td>A singleton reaches a scoped service, possibly through transients.</td>
+<td>Shorten the consumer, split it, or use a scope factory.</td>
+</tr>
+<tr>
+<td><code>Cannot resolve scoped service 'X' from root provider.</code></td>
+<td><code>app.Services.GetService&lt;X&gt;()</code> or a constructor resolved by the root.</td>
+<td>Create a scope: <code>using var s = app.Services.CreateScope();</code>.</td>
+</tr>
+<tr>
+<td><code>Cannot resolve 'T' from root provider because it requires scoped service 'X'.</code></td>
+<td>A transient that needs a scoped service, resolved from the root.</td>
+<td>The same: resolve it from a scope.</td>
+</tr>
+</tbody>
+</table>
+<div class="warn">
+<p><strong>Validation cannot see inside factories.</strong> <code>services.AddSingleton&lt;IPriceCache&gt;(sp =&gt; new PriceCache(sp.GetRequiredService&lt;AppDbContext&gt;()))</code> hides the dependency inside a lambda. <code>ValidateOnBuild</code> cannot inspect it, and at runtime <code>sp</code> is the root, so the scoped context is resolved from the root. <code>ValidateScopes</code> catches that call when it runs, but only on the code path that runs it. Prefer constructor registrations, or keep factories trivial.</p>
+</div>
+<h2 id="disposal-and-ownership">Disposal and ownership</h2>
+<p>The ownership rules in MS.DI are short. They are worth memorising because every disposal bug breaks one of them:</p>
+<ol>
+<li><strong>The container disposes what it created, and only that.</strong> Instances that the container constructed, through a type registration or a factory lambda, are tracked if they implement <code>IDisposable</code> or <code>IAsyncDisposable</code>.</li>
+<li><strong>It disposes them when their owner ends.</strong> Scoped instances, and transients created by a scope, are disposed when the scope ends. Singletons, and transients created by the <strong>root</strong>, are disposed only when the root is disposed, at shutdown.</li>
+<li><strong>Newest first.</strong> Disposal runs in reverse creation order, so a service is disposed before the dependencies it might still use in its own <code>Dispose</code>.</li>
+<li><strong>Instances you hand over are yours.</strong> <code>AddSingleton(myInstance)</code> is never disposed by the container: you created it, so you own it.</li>
+<li><strong>Never dispose an injected dependency yourself.</strong> You do not own it, and the next consumer in the same scope would receive a disposed object.</li>
+<li><strong>Async disposal needs an async owner.</strong> If a service implements only <code>IAsyncDisposable</code>, disposing its scope with the synchronous <code>Dispose()</code> throws. Use <code>await using</code> / <code>CreateAsyncScope()</code> / <code>DisposeAsync()</code>.</li>
+</ol>
+<p>Step through each scenario. The stack on the left is the owner's list of disposables, newest on top.</p>
+<div class="viz dil-wide" data-viz="di-lifetimes-dispose"></div>
+
+<div class="pitfall">
+<p><strong>Transient disposables resolved from the root are a slow memory leak</strong>
+Every <code>root.GetService&lt;ReportBuilder&gt;()</code> on a transient that implements <code>IDisposable</code> adds the new instance to the <strong>root's</strong> disposables list, and the root lives until shutdown. A job that does this once a second keeps 86,400 builders alive per day. Resolve per-operation services from a scope that you dispose, or construct them directly if they do not need the container.</p>
+</div>
+<div class="code-tabs" data-labels="Bad: you dispose what you did not create,Good: the owner disposes">
+<pre><code class="language-csharp">public sealed class ReportService(AppDbContext db) : IDisposable
+{
+    public void Dispose() =&gt; db.Dispose();   // AppDbContext is scoped: other services in this request still use it
+}
+</code></pre>
+<pre><code class="language-csharp">public sealed class ReportService(AppDbContext db)   // borrows db; the scope owns it
+{
+    public Task&lt;Report&gt; BuildAsync() =&gt; ...;
+}
+
+public sealed class ExportJob(IDbContextFactory&lt;AppDbContext&gt; contexts)
+{
+    public async Task RunAsync()
+    {
+        await using var db = await contexts.CreateDbContextAsync();   // this code created it, so this code disposes it
+        ...
+    }
+}
+</code></pre>
+</div>
+<h2 id="background-services-and-iservicescopefactory">Background services and IServiceScopeFactory</h2>
+<p>A <code>BackgroundService</code> is registered as a singleton <code>IHostedService</code>. There is no request, so <strong>there is no scope</strong>. If it injects a scoped service, that service is either rejected by validation or captured for the life of the app. The fix is to own the scope yourself: inject <code>IServiceScopeFactory</code> (a singleton) and create one scope per <strong>unit of work</strong>, such as a message, a batch or a timer tick.</p>
+<div class="viz dil-wide" data-viz="di-lifetimes-background"></div>
+
+<ul>
+<li><strong>One scope per unit of work.</strong> It gives a fresh change tracker per batch, bounded memory, and a failure in one batch cannot poison the next.</li>
+<li><strong><code>CreateAsyncScope()</code> with <code>await using</code></strong> so that <code>IAsyncDisposable</code> services are disposed correctly.</li>
+<li><strong>Never pass a request's scoped objects to work that outlives the request:</strong> <code>Task.Run</code>, fire-and-forget calls, <code>BackgroundTasks</code> and queued callbacks. The request's scope is disposed when the response finishes, so the work later meets a disposed context (<code>Cannot access a disposed context instance</code>). Pass <strong>data</strong> (ids, DTOs) and let the background side create its own scope.</li>
+</ul>
+<pre><code class="language-csharp">public sealed class OutboxWorker(IServiceScopeFactory scopes, ILogger&lt;OutboxWorker&gt; log) : BackgroundService
+{
+    protected override async Task ExecuteAsync(CancellationToken ct)
+    {
+        using var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+        while (await timer.WaitForNextTickAsync(ct))
+        {
+            await using var scope = scopes.CreateAsyncScope();               // one scope per batch
+            var db = scope.ServiceProvider.GetRequiredService&lt;AppDbContext&gt;();
+            var batch = await db.Outbox.Where(m =&gt; m.SentAt == null).Take(50).ToListAsync(ct);
+            foreach (var m in batch) { await Publish(m, ct); m.SentAt = DateTime.UtcNow; }
+            await db.SaveChangesAsync(ct);
+        }                                                                    // context disposed here, every tick
+    }
+}
+</code></pre>
+<h2 id="lifetimes-across-ecosystems">Lifetimes across ecosystems</h2>
+<p>The same three ideas exist everywhere. What differs is how far each framework goes to protect you from mixing them.</p>
+<table>
+<thead>
+<tr>
+<th>Ecosystem</th>
+<th>App-wide</th>
+<th>Per request</th>
+<th>Per resolution</th>
+<th>Outside a request</th>
+<th>Captive protection</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>.NET</strong> (MS.DI)</td>
+<td><code>Singleton</code></td>
+<td><code>Scoped</code> (one scope per request)</td>
+<td><code>Transient</code></td>
+<td><code>IServiceScopeFactory</code>, <code>IDbContextFactory</code></td>
+<td><code>ValidateScopes</code>, <code>ValidateOnBuild</code> at runtime (on in Development)</td>
+</tr>
+<tr>
+<td><strong>Spring</strong></td>
+<td><code>singleton</code> (default)</td>
+<td><code>request</code>, <code>session</code>, <code>application</code>, <code>websocket</code>, via scoped proxies</td>
+<td><code>prototype</code></td>
+<td><code>@Scheduled</code> and <code>@Async</code> have no request scope; use transactions</td>
+<td>A request bean without a proxy fails at startup; a prototype in a singleton is captured <strong>silently</strong></td>
+</tr>
+<tr>
+<td><strong>Dagger / Hilt</strong></td>
+<td><code>@Singleton</code> (per component)</td>
+<td>Custom scopes on subcomponents; Hilt's <code>@ActivityScoped</code>, <code>@ViewModelScoped</code></td>
+<td>Unscoped (<code>@Reusable</code> = cache if convenient)</td>
+<td>A new subcomponent</td>
+<td><strong>Compile-time</strong> error for scope mismatches</td>
+</tr>
+<tr>
+<td><strong>NestJS</strong></td>
+<td><code>Scope.DEFAULT</code></td>
+<td><code>Scope.REQUEST</code> (bubbles up to consumers)</td>
+<td><code>Scope.TRANSIENT</code> (one per consumer)</td>
+<td><code>ContextIdFactory.create()</code> and <code>moduleRef.resolve()</code></td>
+<td>None needed: request scope propagates up the chain instead</td>
+</tr>
+<tr>
+<td><strong>FastAPI</strong></td>
+<td>Module level, <code>lru_cache</code>, or <code>lifespan</code> state</td>
+<td><code>Depends</code> (cached once per request); <code>yield</code> for cleanup</td>
+<td><code>Depends(..., use_cache=False)</code></td>
+<td>Open your own session inside the task</td>
+<td>Your discipline: no container-level checks</td>
+</tr>
+<tr>
+<td><strong>Go</strong></td>
+<td>Values built in <code>main</code></td>
+<td>Values built in the handler</td>
+<td>A plain constructor call</td>
+<td>A goroutine opens its own transaction</td>
+<td>The compiler shows every wiring line; Wire and Fx generate or run the same wiring</td>
+</tr>
+</tbody>
+</table>
+<p>Here is the same small app in each ecosystem: an app-wide clock, a per-request unit of work that must be cleaned up, a per-use <code>PriceCalculator</code>, and a background worker that needs its own unit of work.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSingleton(TimeProvider.System);                         // app-wide; thread-safe
+builder.Services.AddDbContext&lt;AppDbContext&gt;(o =&gt; o.UseNpgsql(connString));  // scoped: one per request
+builder.Services.AddTransient&lt;PriceCalculator&gt;();                          // new per resolution
+builder.Services.AddHostedService&lt;OutboxWorker&gt;();                          // singleton: needs its own scopes
+builder.Host.UseDefaultServiceProvider(o =&gt; { o.ValidateScopes = true; o.ValidateOnBuild = true; });
+
+var app = builder.Build();
+app.MapGet(&quot;/price/{sku}&quot;, (string sku, PriceCalculator calc) =&gt; calc.PriceOfAsync(sku));
+app.Run();   // each request: new scope → new AppDbContext → disposed when the response completes
+
+public sealed class PriceCalculator(TimeProvider clock, AppDbContext db)
+{
+    public async Task&lt;decimal&gt; PriceOfAsync(string sku) =&gt;
+        (await db.Prices.SingleAsync(p =&gt; p.Sku == sku)).At(clock.GetUtcNow());
+}
+// OutboxWorker: IServiceScopeFactory + CreateAsyncScope() per batch (see above).
+</code></pre>
+<pre><code class="language-java">@Configuration
+class AppConfig {
+    @Bean Clock clock() { return Clock.systemUTC(); }                // singleton is the default scope
+}
+
+@Component
+@RequestScope                                                         // one per HTTP request, behind a proxy
+class RequestContext {
+    final String tenant;
+    RequestContext(HttpServletRequest req) { this.tenant = req.getHeader(&quot;X-Tenant&quot;); }
+    @PreDestroy void close() { /* called when the request ends */ }
+}
+
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)                       // new instance per lookup
+class PriceCalculator {
+    PriceCalculator(Clock clock, PriceRepository prices, RequestContext ctx) { ... }
+}
+
+@RestController
+class PriceController {                                               // a singleton...
+    private final ObjectProvider&lt;PriceCalculator&gt; calcs;              // ...so ask for a fresh prototype per call
+    PriceController(ObjectProvider&lt;PriceCalculator&gt; calcs) { this.calcs = calcs; }
+
+    @GetMapping(&quot;/price/{sku}&quot;)
+    BigDecimal price(@PathVariable String sku) { return calcs.getObject().priceOf(sku); }
+}
+
+@Component
+class OutboxWorker {
+    private final TransactionTemplate tx;
+    private final OutboxRepository outbox;
+    OutboxWorker(TransactionTemplate tx, OutboxRepository outbox) { this.tx = tx; this.outbox = outbox; }
+
+    @Scheduled(fixedDelay = 1000)                                      // no request scope here
+    void publish() { tx.executeWithoutResult(s -&gt; outbox.publishBatch(50)); }   // a transaction per batch
+}
+</code></pre>
+<pre><code class="language-python">from datetime import datetime, timezone
+from functools import lru_cache
+from typing import Annotated, Iterator
+
+from fastapi import BackgroundTasks, Depends, FastAPI
+
+from shop.db import Session, SessionLocal     # a SQLAlchemy sessionmaker
+
+app = FastAPI()
+
+
+class SystemClock:
+    def now(self) -&gt; datetime: return datetime.now(timezone.utc)
+
+
+@lru_cache                                    # app-wide: built once, shared by every request
+def get_clock() -&gt; SystemClock:
+    return SystemClock()
+
+
+def get_session() -&gt; Iterator[Session]:       # per request: cached for the request, closed after it
+    session = SessionLocal()
+    try:
+        yield session
+    finally:
+        session.close()
+
+
+class PriceCalculator:
+    def __init__(self, clock: Annotated[SystemClock, Depends(get_clock)],
+                 session: Annotated[Session, Depends(get_session)]) -&gt; None:
+        self.clock, self.session = clock, session
+
+    def price_of(self, sku: str) -&gt; float: ...
+
+
+@app.get(&quot;/price/{sku}&quot;)
+def price(sku: str,
+          calc: Annotated[PriceCalculator, Depends(PriceCalculator, use_cache=False)],   # per use
+          session: Annotated[Session, Depends(get_session)],                            # same session as calc's
+          tasks: BackgroundTasks):
+    tasks.add_task(audit, sku)                # pass data, not the session
+    return {&quot;sku&quot;: sku, &quot;price&quot;: calc.price_of(sku)}
+
+
+def audit(sku: str) -&gt; None:                  # background work opens its own unit of work
+    with SessionLocal() as session:
+        ...
+</code></pre>
+<pre><code class="language-go">// Lifetimes are explicit: where you construct a value decides how long it lives.
+type App struct {
+    clock Clock   // built once in main: shared by every goroutine, so it must be safe for concurrent use
+    db    *sql.DB // a connection pool: designed to be shared
+}
+
+func (a *App) price(w http.ResponseWriter, r *http.Request) {
+    tx, err := a.db.BeginTx(r.Context(), nil) // per request: this handler owns it
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusServiceUnavailable)
+        return
+    }
+    defer tx.Rollback() // cleanup when the request ends (a no-op after Commit)
+
+    calc := NewPriceCalculator(a.clock, tx) // per use: just a constructor call
+    p, err := calc.PriceOf(r.Context(), r.PathValue(&quot;sku&quot;))
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+    _ = tx.Commit()
+    json.NewEncoder(w).Encode(p)
+}
+
+func (a *App) outbox(ctx context.Context) {
+    for range time.Tick(time.Second) {
+        _ = publishBatch(ctx, a.db) // opens and closes its own transaction per batch
+    }
+}
+
+func main() {
+    db, err := sql.Open(&quot;pgx&quot;, os.Getenv(&quot;DATABASE_URL&quot;))
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer db.Close() // singleton cleanup at shutdown
+
+    app := &amp;App{clock: realClock{}, db: db}
+    go app.outbox(context.Background())
+    http.HandleFunc(&quot;GET /price/{sku}&quot;, app.price)
+    log.Fatal(http.ListenAndServe(&quot;:8080&quot;, nil))
+}
+</code></pre>
+<pre><code class="language-typescript">@Injectable()                                         // Scope.DEFAULT: one instance for the app
+export class SystemClock { now() { return new Date(); } }
+
+@Injectable({ scope: Scope.REQUEST })                 // one per HTTP request
+export class UnitOfWork {
+  constructor(private readonly ds: DataSource) {}
+  // Lifecycle hooks such as onModuleDestroy do not run for request-scoped providers:
+  // release resources explicitly (an interceptor, or finally blocks).
+}
+
+@Injectable({ scope: Scope.TRANSIENT })               // a separate instance for each consumer
+export class PriceCalculator {
+  constructor(private readonly clock: SystemClock, private readonly uow: UnitOfWork) {}
+}
+
+@Controller('price')
+export class PriceController {                        // becomes request-scoped too: scope bubbles up
+  constructor(private readonly calc: PriceCalculator) {}
+  @Get(':sku') price(@Param('sku') sku: string) { return this.calc.priceOf(sku); }
+}
+
+@Injectable()
+export class OutboxWorker {
+  constructor(private readonly moduleRef: ModuleRef) {}
+
+  @Interval(1000)
+  async publish() {
+    const contextId = ContextIdFactory.create();     // a fresh DI sub-tree, like a scope
+    const uow = await this.moduleRef.resolve(UnitOfWork, contextId);
+    await uow.publishBatch(50);
+  }
+}
+</code></pre>
+</div>
+<p>Dagger (and Hilt on Android) handle lifetimes at <strong>compile time</strong>. A scope annotation binds an instance to a component: <code>@Singleton</code> means "one per <code>AppComponent</code>", and a custom <code>@RequestScoped</code> means "one per <code>RequestComponent</code>". A longer-lived component cannot see bindings that belong to a shorter-lived subcomponent, so the captive dependency does not compile.</p>
+<pre><code class="language-java">@Scope @Retention(RetentionPolicy.RUNTIME) @interface RequestScoped {}
+
+@Singleton @Component(modules = DataModule.class)
+interface AppComponent {
+    RequestComponent.Factory requests();                    // one RequestComponent per request
+}
+
+@RequestScoped @Subcomponent
+interface RequestComponent {
+    PriceController controller();
+    @Subcomponent.Factory interface Factory { RequestComponent create(@BindsInstance HttpRequest req); }
+}
+
+@RequestScoped class UnitOfWork { @Inject UnitOfWork(DataSource ds) { ... } }       // one per request
+@Singleton class PriceCache { @Inject PriceCache(Clock clock) { ... } }             // fine: singleton → singleton
+
+// @Singleton class BadCache { @Inject BadCache(UnitOfWork uow) { ... } }
+// does not compile: [Dagger/IncompatiblyScopedBindings] AppComponent scoped with @Singleton
+// may not reference bindings with different scopes: @RequestScoped class UnitOfWork
+// When a longer-lived object needs a fresh short-lived one, inject Provider&lt;T&gt; from the right component.
+</code></pre>
+<h3 id="why-the-ecosystems-differ">Why the ecosystems differ</h3>
+<ul>
+<li><strong>.NET</strong> is explicit and runtime-checked. Scopes are visible objects (<code>IServiceScope</code>) that you can create yourself, which is why background services are easy to get right <em>once you know to do it</em>. Validation is opt-in outside Development for startup speed.</li>
+<li><strong>Spring</strong> hides the scope behind a <strong>proxy</strong>: a singleton that holds a request-scoped bean actually holds a proxy that looks up the <em>current</em> request's instance on every call. This is why Spring apps rarely capture an <code>EntityManager</code>: the injected one is a shared, thread-safe proxy bound to the current transaction. The catch is <code>prototype</code>: Spring creates it once when it builds a singleton, and <strong>never calls its destroy callbacks</strong>. Use <code>ObjectProvider&lt;T&gt;</code> or <code>@Lookup</code> when you want a new one per use.</li>
+<li><strong>Dagger</strong> turns lifetimes into types: a component <em>is</em> a scope, and the compiler checks the graph.</li>
+<li><strong>NestJS</strong> avoids captives by <strong>propagating</strong> scope instead of rejecting it: anything that depends on a <code>REQUEST</code> provider becomes request-scoped itself, all the way up to the controller. This is safe but has a cost: a deep request-scoped chain means many objects are created per request. <code>TRANSIENT</code> means one instance <strong>per consumer</strong>, not per call.</li>
+<li><strong>FastAPI</strong> has no container, only a per-request dependency graph. <code>Depends</code> caches each dependency <strong>once per request</strong> by default. A <code>yield</code> dependency is the per-request "scope": the code after <code>yield</code> is its dispose. Its exact timing relative to the response and to background tasks has changed between FastAPI versions, so never hand a yielded session to a <code>BackgroundTask</code>; open a new one inside it. App-wide objects are simply module-level objects, <code>lru_cache</code>d factories, or values created in the <code>lifespan</code> handler.</li>
+<li><strong>Go</strong> has no container by default, so lifetime equals <strong>where you construct the value</strong>. Values built in <code>main</code> are singletons and must be safe for concurrent use: <code>*sql.DB</code> and <code>*http.Client</code> are designed for this; a map is not. Values built in a handler live for that request, and cleanup is a <code>defer</code>. <code>context.Context</code> carries request-scoped <em>values</em> (deadlines, trace ids), not services. Wire generates this wiring and supports cleanup functions; Fx builds singletons at startup and runs <code>fx.Lifecycle</code> <code>OnStart</code>/<code>OnStop</code> hooks.</li>
+</ul>
+<h2 id="choosing-a-lifetime">Choosing a lifetime</h2>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 420" width="900" role="img" aria-label="Decision guide. If it holds per-request state or a non-thread-safe resource: scoped. Otherwise if it is stateless, immutable or thread-safe and worth sharing: singleton. Otherwise if it is cheap and stateful per use: transient. Otherwise split the state from the service. Then check that every dependency lives at least as long as its consumer.">
+<defs><marker id="di-lifetimes-ar-q" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box accent" x="20" y="18" width="370" height="66" rx="10"/><text x="205" y="44" text-anchor="middle">Holds <tspan font-weight="700">per-request state</tspan> or a</text><text x="205" y="62" text-anchor="middle">non-thread-safe resource?</text><text x="205" y="78" text-anchor="middle" class="small muted">DbContext, unit of work, current user, tenant</text>
+<rect class="box accent" x="20" y="110" width="370" height="66" rx="10"/><text x="205" y="136" text-anchor="middle"><tspan font-weight="700">Stateless</tspan>, immutable, or thread-safe,</text><text x="205" y="154" text-anchor="middle">and worth sharing?</text><text x="205" y="170" text-anchor="middle" class="small muted">config, clocks, caches, pools, HTTP handlers</text>
+<rect class="box accent" x="20" y="202" width="370" height="66" rx="10"/><text x="205" y="228" text-anchor="middle"><tspan font-weight="700">Cheap</tspan>, with state that belongs</text><text x="205" y="246" text-anchor="middle">to a single use?</text><text x="205" y="262" text-anchor="middle" class="small muted">builders, per-operation helpers</text>
+<rect class="box bad" x="20" y="294" width="370" height="50" rx="10"/><text x="205" y="315" text-anchor="middle" font-weight="700">Split it</text><text x="205" y="334" text-anchor="middle" class="small muted">separate the shared state from the per-request work</text>
+<path class="edge accent" d="M205 84 L205 108" marker-end="url(#di-lifetimes-ar-q)"/><text x="213" y="101" class="small muted">no</text>
+<path class="edge accent" d="M205 176 L205 200" marker-end="url(#di-lifetimes-ar-q)"/><text x="213" y="193" class="small muted">no</text>
+<path class="edge accent" d="M205 268 L205 292" marker-end="url(#di-lifetimes-ar-q)"/><text x="213" y="285" class="small muted">no</text>
+<path class="edge accent" d="M390 51 L438 51" marker-end="url(#di-lifetimes-ar-q)"/><text x="402" y="44" class="small">yes</text>
+<path class="edge accent" d="M390 143 L438 143" marker-end="url(#di-lifetimes-ar-q)"/><text x="402" y="136" class="small">yes</text>
+<path class="edge accent" d="M390 235 L438 235" marker-end="url(#di-lifetimes-ar-q)"/><text x="402" y="228" class="small">yes</text>
+<rect class="box visit" x="440" y="18" width="440" height="66" rx="10"/><text x="456" y="43"><tspan font-weight="700">Scoped.</tspan> One per request, disposed at its end.</text><text x="456" y="64" class="small muted">Outside requests: a scope (or a factory) per unit of work.</text>
+<rect class="box path" x="440" y="110" width="440" height="66" rx="10"/><text x="456" y="135"><tspan font-weight="700">Singleton.</tspan> Must be thread-safe.</text><text x="456" y="156" class="small muted">May depend only on other singletons.</text>
+<rect class="box" x="440" y="202" width="440" height="66" rx="10" stroke-dasharray="6 4"/><text x="456" y="227"><tspan font-weight="700">Transient.</tspan> New per resolution.</text><text x="456" y="248" class="small muted">Inside a singleton it lives as long as the singleton.</text>
+<rect class="box done" x="20" y="362" width="860" height="44" rx="10"/><text x="450" y="389" text-anchor="middle">Then check the matrix: <tspan font-weight="700">every dependency must live at least as long as its consumer.</tspan></text>
+</svg>
+<figcaption>Ask the questions in order. The first question matters most: anything that holds per-request state must not be shared across requests, however tempting "one instance" is for performance.</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Usual lifetime</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DbContext</code>, <code>ISession</code> (NHibernate), unit of work</td>
+<td>Scoped</td>
+<td>Change tracking and transactions are per request, and they are not thread-safe.</td>
+</tr>
+<tr>
+<td><code>IOptions&lt;T&gt;</code> / <code>IOptionsMonitor&lt;T&gt;</code></td>
+<td>Singleton</td>
+<td>Immutable or change-notifying configuration. <code>IOptionsSnapshot&lt;T&gt;</code> is scoped: re-read per request.</td>
+</tr>
+<tr>
+<td><code>ILogger&lt;T&gt;</code>, <code>TimeProvider</code>, <code>IMemoryCache</code></td>
+<td>Singleton</td>
+<td>Thread-safe by design.</td>
+</tr>
+<tr>
+<td>Typed <code>HttpClient</code> (<code>AddHttpClient&lt;T&gt;</code>)</td>
+<td>Transient client over pooled handlers</td>
+<td>The factory pools and rotates the handlers. Do not capture a typed client in a singleton, or DNS changes are never seen.</td>
+</tr>
+<tr>
+<td>Current user, tenant, correlation context</td>
+<td>Scoped</td>
+<td>Belongs to one request.</td>
+</tr>
+<tr>
+<td>Stateless domain services, validators</td>
+<td>Singleton or transient</td>
+<td>Either works. Singleton saves allocations; transient avoids accidental shared state. Keep them stateless.</td>
+</tr>
+<tr>
+<td><code>IHostedService</code> / <code>BackgroundService</code></td>
+<td>Singleton (fixed)</td>
+<td>Uses <code>IServiceScopeFactory</code> for anything scoped.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="when-not-to-reach-for-a-particular-lifetime">When <em>not</em> to reach for a particular lifetime</h4>
+<ul>
+<li><strong>Not singleton "for performance"</strong> when the class has mutable fields, or depends on anything scoped. Allocation is cheap; data races and captured contexts are not. Measure first.</li>
+<li><strong>Not transient "to be safe".</strong> Transient disposables resolved from the root leak until shutdown, transients inside singletons are singletons anyway, and a transient <code>DbContext</code> breaks the shared unit of work within a request.</li>
+<li><strong>Not scoped outside a scope.</strong> In console apps, tests and workers there is no automatic scope: either create one, or use a factory and own the object yourself.</li>
+</ul>
+<h2 id="pitfalls-and-production-war-stories">Pitfalls and production war stories</h2>
+<div class="pitfall">
+<p><strong>The captive DbContext behind a "harmless" cache</strong>
+The opening story. It was found only because the error rate rose with traffic: "A second operation was started on this context instance". The real cost was weeks of stale prices that nobody had noticed. Fix: the cache became a singleton <code>IMemoryCache</code> wrapper with <strong>no</strong> database dependency, and a scoped <code>PriceService</code> reads through it. <code>ValidateOnBuild</code> is now on in every environment, and a test builds the host.</p>
+</div>
+<div class="pitfall">
+<p><strong>Fire-and-forget with the request's context</strong>
+<code>_ = Task.Run(() =&gt; audit.WriteAsync(db, evt));</code> in a controller works locally, where requests are slow and the audit write wins the race. In production the response completes first, the scope disposes <code>db</code>, and the audit write fails with "Cannot access a disposed context instance". It runs on a thread-pool thread, so nobody sees the exception. Fix: enqueue the <strong>data</strong> to a <code>Channel&lt;T&gt;</code> read by a <code>BackgroundService</code> that creates its own scope.</p>
+</div>
+<div class="pitfall">
+<p><strong>A singleton that is "stateless" but holds a non-thread-safe dependency</strong>
+A singleton <code>ReportFormatter</code> held a <code>StringBuilder</code> field "to avoid allocations", and a singleton <code>ShippingCalculator</code> held a <code>Random</code>. Both produced corrupted output only under load. <code>System.Random</code> is not thread-safe: under concurrent use its state can be corrupted until it returns only zeros. Fix: no mutable instance state in singletons. Use locals, <code>Random.Shared</code>, or make the service transient.</p>
+</div>
+<div class="pitfall">
+<p><strong>Spring prototype inside a singleton</strong>
+A <code>@Scope("prototype")</code> <code>ShoppingCart</code> was injected into a singleton controller, so every customer shared one cart. Spring injects the prototype <strong>once</strong>, when it creates the singleton, and validation does not flag it. Fix: <code>ObjectProvider&lt;ShoppingCart&gt;.getObject()</code> per use, or <code>@SessionScope</code> with a proxy, which is what was actually meant.</p>
+</div>
+<div class="pitfall">
+<p><strong>Resolving from <code>app.Services</code> at startup</strong>
+<code>app.Services.GetRequiredService&lt;AppDbContext&gt;().Database.Migrate();</code> resolves a scoped service from the <strong>root</strong>. With validation on it throws "Cannot resolve scoped service from root provider". With validation off, the context lives in the root until shutdown. Fix: <code>using (var scope = app.Services.CreateScope()) { scope.ServiceProvider.GetRequiredService&lt;AppDbContext&gt;().Database.Migrate(); }</code>.</p>
+</div>
+<div class="pitfall">
+<p><strong>NestJS: one request-scoped provider makes the whole chain request-scoped</strong>
+Adding <code>Scope.REQUEST</code> to a small <code>TenantContext</code> made every service that depended on it, and every controller above them, request-scoped. Each request now constructed dozens of objects, and p99 latency doubled. Fix: keep request-scoped providers at the edges. Pass the tenant id as an argument, use <code>AsyncLocalStorage</code> (for example through nestjs-cls), or use durable providers (one sub-tree per tenant, not per request).</p>
+</div>
+<h2 id="best-practice-checklist">Best-practice checklist</h2>
+<ul>
+<li>Choose each lifetime deliberately: <strong>scoped</strong> for per-request state, <strong>singleton</strong> for thread-safe shared services, <strong>transient</strong> for cheap per-use objects.</li>
+<li>No dependency arrow points to a shorter lifetime: singleton → scoped never; singleton → transient only for stateless helpers.</li>
+<li><code>ValidateScopes</code> and <code>ValidateOnBuild</code> are on, and a test builds the real host so validation runs in CI.</li>
+<li>Singletons have no mutable state that is not thread-safe, and every dependency they hold is also safe to share.</li>
+<li>Nothing calls <code>Dispose</code> on an injected dependency; code disposes only what it created.</li>
+<li>Singletons that need scoped services inject <code>IServiceScopeFactory</code> and create one scope per unit of work with <code>CreateAsyncScope()</code>.</li>
+<li>Work that outlives a request receives <strong>data</strong>, not the request's scoped objects.</li>
+<li>Scoped and transient services are never resolved from the root (<code>app.Services</code>) outside a scope.</li>
+<li>Services with async cleanup implement <code>IAsyncDisposable</code>, and every scope that might own them is disposed with <code>await using</code>.</li>
+<li>In other ecosystems, know the equivalents: Spring <code>ObjectProvider</code> for prototypes, Dagger subcomponents, NestJS scope bubbling, FastAPI per-request caching and <code>yield</code>, and Go's "where you construct it is its lifetime".</li>
+</ul>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary><code>PriceCalculator</code> is transient and depends on a scoped <code>AppDbContext</code>. In one request it is resolved three times. How many contexts are created?</summary>
+<p>One. Each resolution creates a new <code>PriceCalculator</code>, but each of them asks the <strong>same scope</strong> for <code>AppDbContext</code>, and the scope caches it. Three calculators share one context, and therefore one unit of work. A second request gets a different context.</p>
+</details>
+<details class="quiz">
+<summary>A singleton depends on a transient. Is that a captive dependency?</summary>
+<p>Technically yes: the transient's <strong>effective lifetime</strong> becomes singleton, because it is created once and held forever. MS.DI allows it, because it is harmless for a stateless helper. It is a real bug if the transient is transient because it is stateful or not thread-safe, or if it is disposable. Only singleton → scoped is rejected by <code>ValidateScopes</code>.</p>
+</details>
+<details class="quiz">
+<summary>Why does injecting <code>Func&lt;AppDbContext&gt;</code> into a singleton not fix the captive dependency?</summary>
+<p>MS.DI has no built-in <code>Func&lt;T&gt;</code>, so you register one yourself (<code>sp =&gt; () =&gt; sp.GetRequiredService&lt;AppDbContext&gt;()</code>). The <code>sp</code> it closes over is the provider that built the singleton, which is the <strong>root</strong>. Each call either throws (with scope validation) or creates a root-owned context that is not disposed until shutdown. The fix needs a <em>new scope</em>: <code>IServiceScopeFactory.CreateAsyncScope()</code>, or an <code>IDbContextFactory&lt;T&gt;</code> whose contexts you dispose yourself.</p>
+</details>
+<details class="quiz">
+<summary>Which instances does the container dispose: <code>AddSingleton(new Cache())</code>, <code>AddSingleton&lt;Cache&gt;()</code>, <code>AddSingleton(sp =&gt; new Cache())</code>?</summary>
+<p>The second and the third. The container disposes what it <strong>created</strong>, and that includes instances returned by a factory lambda, since the container called it. An instance you passed in yourself is yours to dispose.</p>
+</details>
+<details class="quiz">
+<summary>A scope created a disposable <code>Repo</code>, and then a disposable <code>UnitOfWork</code> that uses <code>Repo</code>. In what order are they disposed, and why?</summary>
+<p><code>UnitOfWork</code> first, then <code>Repo</code>: reverse creation order. A dependency is always created before its consumer, so disposing newest first guarantees that <code>UnitOfWork.Dispose</code> can still flush through a live <code>Repo</code>.</p>
+</details>
+<details class="quiz">
+<summary>Your <code>BackgroundService</code> needs <code>AppDbContext</code>. What is the correct shape, and why is one scope for the whole loop not good enough?</summary>
+<p>Inject <code>IServiceScopeFactory</code> and create a scope (<code>await using var scope = scopes.CreateAsyncScope()</code>) for <strong>each unit of work</strong>: a batch, a message or a tick. One scope around the whole loop would be a captive in disguise: one context for the life of the app, with an ever-growing change tracker, and one failed <code>SaveChanges</code> would leave it in a bad state for every later batch.</p>
+</details>
+<details class="quiz">
+<summary>In NestJS, <code>OrdersService</code> (default scope) depends on a <code>Scope.REQUEST</code> provider. What happens to <code>OrdersService</code>?</summary>
+<p>It becomes request-scoped too, as does every provider and controller that depends on it. NestJS <strong>propagates</strong> scope up the injection chain rather than rejecting the dependency. That is correct and safe, but it means more objects created per request. Keep request-scoped providers at the edges.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Singleton</strong>One per app, cached in the root, disposed at shutdown. Must be thread-safe; depends only on singletons.</div>
+<div><strong>Scoped</strong>One per scope (= per request). Disposed when the scope ends. Not thread-safe across parallel tasks.</div>
+<div><strong>Transient</strong>New per resolution. Owned by the scope that created it. In a singleton it lives forever.</div>
+<div><strong>The rule</strong>Depend only on things that live at least as long as you do.</div>
+<div><strong>Captive</strong>A longer-lived consumer holds a shorter-lived service: stale data, races, leaks.</div>
+<div><strong>Validate</strong><code>ValidateScopes</code> + <code>ValidateOnBuild</code>; on in Development only, so enable them everywhere or test them.</div>
+<div><strong>Disposal</strong>The container disposes what it created, newest first. Instances you passed in are yours.</div>
+<div><strong>Async</strong>IAsyncDisposable-only services need <code>await using</code> / <code>CreateAsyncScope()</code>.</div>
+<div><strong>Background</strong><code>IServiceScopeFactory</code>: one scope per unit of work. Pass data, not scoped objects.</div>
+<div><strong>Root leaks</strong>Transient disposables resolved from the root live until shutdown.</div>
+<div><strong>Spring</strong>singleton / prototype / request / session; request scope uses proxies; <code>ObjectProvider</code> for prototypes.</div>
+<div><strong>Others</strong>Dagger: scope = component (compile-checked). NestJS: REQUEST bubbles up. FastAPI: cached per request, <code>yield</code> for cleanup. Go: where you construct it.</div>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection#service-lifetimes">Service lifetimes</a> and <a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection-guidelines">DI guidelines: disposal and captive dependencies</a> (Microsoft Learn)</li>
+<li><a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/scoped-service">Use scoped services within a BackgroundService</a> and <a href="https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/">DbContext lifetime, configuration and initialization</a></li>
+<li><a href="https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html">Spring Framework: Bean scopes</a></li>
+<li><a href="https://dagger.dev/dev-guide/subcomponents">Dagger: Subcomponents</a> and <a href="https://developer.android.com/training/dependency-injection/hilt-android#component-scopes">Hilt components and scopes</a></li>
+<li><a href="https://docs.nestjs.com/fundamentals/injection-scopes">NestJS: Injection scopes</a></li>
+<li><a href="https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/">FastAPI: Dependencies with yield</a> and <a href="https://fastapi.tiangolo.com/advanced/events/">Lifespan events</a></li>
+<li><a href="https://uber-go.github.io/fx/lifecycle.html">Fx: Lifecycle</a> and the <a href="https://github.com/google/wire/blob/main/docs/guide.md">Wire guide</a></li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="di-fundamentals.html"><small>&larr; PREVIOUS</small>DI Fundamentals</a><a class="next" href="di-across-languages.html"><small>NEXT &rarr;</small>DI Across Languages &amp; Frameworks</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-a-cache-that-works-on-your-machine">The problem: a cache that works on your machine</a></li>
+<li><a href="#the-three-lifetimes">The three lifetimes</a><ul>
+<li><a href="#watch-two-concurrent-requests">Watch two concurrent requests</a></li>
+</ul>
+</li>
+<li><a href="#thread-safety-per-lifetime">Thread safety per lifetime</a></li>
+<li><a href="#the-lifetime-matrix-who-may-depend-on-whom">The lifetime matrix: who may depend on whom</a></li>
+<li><a href="#captive-dependencies">Captive dependencies</a></li>
+<li><a href="#scope-validation-make-the-container-catch-it">Scope validation: make the container catch it</a></li>
+<li><a href="#disposal-and-ownership">Disposal and ownership</a></li>
+<li><a href="#background-services-and-iservicescopefactory">Background services and IServiceScopeFactory</a></li>
+<li><a href="#lifetimes-across-ecosystems">Lifetimes across ecosystems</a><ul>
+<li><a href="#why-the-ecosystems-differ">Why the ecosystems differ</a></li>
+</ul>
+</li>
+<li><a href="#choosing-a-lifetime">Choosing a lifetime</a></li>
+<li><a href="#pitfalls-and-production-war-stories">Pitfalls and production war stories</a></li>
+<li><a href="#best-practice-checklist">Best-practice checklist</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

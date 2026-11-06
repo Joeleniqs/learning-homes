@@ -1,0 +1,1691 @@
+<!doctype html>
+<html lang="en" data-home="dsa-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Bitmask &amp; Digit DP | DSA Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#4f46e5;--accent-soft:#eef0ff;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#a5b4fc;--accent-soft:#252a5c;}}:root[data-theme=dark]{--accent:#a5b4fc;--accent-soft:#252a5c;}</style>
+  <link rel="stylesheet" href="../assets/topics/dp-bitmask-digit.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/dp-bitmask-digit.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="DSA Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">DS</span>DSA Home</a>
+    <p class="sidebar-caption">Data structures &amp; algorithms, seen.<br>Every idea animated, every pattern drilled.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations</summary><ul class="topic-list"><li data-search="The Problem-Solving Playbook Foundations A visual decision map from input size, shape and question type to the right technique, plus a repeatable interview/contest workflow. pattern recognition constraints approach interview" data-slug="problem-solving-playbook"><a href="../topics/problem-solving-playbook.html">The Problem-Solving Playbook</a></li><li data-search="Complexity Analysis Foundations Big-O growth you can see, amortized cost, recursion trees and the Master theorem, and what 10^8 operations per second really buys you. big o amortized master theorem time space" data-slug="complexity-analysis"><a href="../topics/complexity-analysis.html">Complexity Analysis</a></li><li data-search="Recursion &amp; the Call Stack Foundations Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from. call stack recursion tree divide and conquer" data-slug="recursion"><a href="../topics/recursion.html">Recursion &amp; the Call Stack</a></li></ul></details><details class="nav-track"><summary>Arrays &amp; Strings</summary><ul class="topic-list"><li data-search="Two Pointers Arrays &amp; Strings Opposite-end, same-direction and fast/slow pointers: why moving one pointer is safe, with partitioning and k-sum. pair sum partition dutch flag 3sum" data-slug="two-pointers"><a href="../topics/two-pointers.html">Two Pointers</a></li><li data-search="Sliding Window Arrays &amp; Strings Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows. substring subarray window at most k" data-slug="sliding-window"><a href="../topics/sliding-window.html">Sliding Window</a></li><li data-search="Prefix Sums &amp; Difference Arrays Arrays &amp; Strings 1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR. subarray sum equals k range sum 2d prefix difference array" data-slug="prefix-sums"><a href="../topics/prefix-sums.html">Prefix Sums &amp; Difference Arrays</a></li><li data-search="Binary Search Arrays &amp; Strings One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection. lower bound upper bound search on answer rotated monotonic predicate" data-slug="binary-search"><a href="../topics/binary-search.html">Binary Search</a></li><li data-search="Sorting Algorithms Arrays &amp; Strings Animated bubble, insertion, merge, quick, heap, counting and radix sorts; stability, quickselect and custom comparators. merge sort quick sort quickselect counting sort inversions" data-slug="sorting"><a href="../topics/sorting.html">Sorting Algorithms</a></li><li data-search="Hashing Patterns Arrays &amp; Strings How hash tables work inside, then frequency maps, grouping by canonical keys, complement lookups and rolling hashes. hash map hash set anagram two sum collision" data-slug="hashing"><a href="../topics/hashing.html">Hashing Patterns</a></li><li data-search="Monotonic Stack &amp; Queue Arrays &amp; Strings Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight. next greater largest rectangle deque trapping rain water" data-slug="monotonic-stack-queue"><a href="../topics/monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a></li><li data-search="Intervals &amp; Sweep Line Arrays &amp; Strings Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline. merge intervals meeting rooms events skyline" data-slug="intervals-sweep-line"><a href="../topics/intervals-sweep-line.html">Intervals &amp; Sweep Line</a></li><li data-search="String Algorithms Arrays &amp; Strings KMP failure function, Z-algorithm, Rabin–Karp, Manacher&#x27;s palindromes and string hashing, each animated character by character. kmp z algorithm rabin karp manacher palindrome pattern matching" data-slug="string-algorithms"><a href="../topics/string-algorithms.html">String Algorithms</a></li></ul></details><details class="nav-track"><summary>Linked Lists, Stacks, Queues &amp; Heaps</summary><ul class="topic-list"><li data-search="Linked Lists Linked Lists, Stacks, Queues &amp; Heaps Pointer rewiring you can watch: reversal, dummy heads, fast/slow cycle detection, merging, and LRU cache design. reverse floyd cycle merge lru" data-slug="linked-lists"><a href="../topics/linked-lists.html">Linked Lists</a></li><li data-search="Stacks &amp; Queues Linked Lists, Stacks, Queues &amp; Heaps Balanced brackets, expression evaluation, min-stack, queues from stacks, deques and BFS queues. parentheses calculator deque min stack" data-slug="stacks-queues"><a href="../topics/stacks-queues.html">Stacks &amp; Queues</a></li><li data-search="Heaps &amp; Priority Queues Linked Lists, Stacks, Queues &amp; Heaps Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling. heap top k median k way merge priority queue" data-slug="heaps-priority-queues"><a href="../topics/heaps-priority-queues.html">Heaps &amp; Priority Queues</a></li></ul></details><details class="nav-track"><summary>Trees</summary><ul class="topic-list"><li data-search="Tree Traversals Trees Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees. dfs bfs inorder level order morris" data-slug="tree-traversals"><a href="../topics/tree-traversals.html">Tree Traversals</a></li><li data-search="Binary Search Trees Trees Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters. bst validate successor avl red black" data-slug="binary-search-trees"><a href="../topics/binary-search-trees.html">Binary Search Trees</a></li><li data-search="Tree Problem Patterns Trees Return-value recursion (diameter, max path sum), top-down state, LCA, serialization, and binary lifting. lca diameter path sum binary lifting serialize" data-slug="tree-patterns"><a href="../topics/tree-patterns.html">Tree Problem Patterns</a></li><li data-search="Tries Trees Prefix trees animated insert by insert: autocomplete, word search on boards, and bitwise tries for max XOR. prefix tree autocomplete word search xor trie" data-slug="tries"><a href="../topics/tries.html">Tries</a></li><li data-search="Segment Trees, Fenwick Trees &amp; Sparse Tables Trees Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables. segment tree lazy propagation fenwick bit rmq" data-slug="segment-fenwick-trees"><a href="../topics/segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a></li></ul></details><details class="nav-track"><summary>Graphs</summary><ul class="topic-list"><li data-search="Graph Fundamentals: BFS &amp; DFS Graphs Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS. bfs dfs grid islands connected components cycle" data-slug="graph-fundamentals"><a href="../topics/graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></li><li data-search="Topological Sort &amp; DAGs Graphs Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs. kahn course schedule dag dependency order" data-slug="topological-sort"><a href="../topics/topological-sort.html">Topological Sort &amp; DAGs</a></li><li data-search="Union-Find (Disjoint Set Union) Graphs Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries. dsu disjoint set path compression connectivity" data-slug="union-find"><a href="../topics/union-find.html">Union-Find (Disjoint Set Union)</a></li><li data-search="Shortest Paths Graphs BFS, 0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall and A* animated, and a chart to pick the right one every time. dijkstra bellman ford floyd warshall a star 0-1 bfs" data-slug="shortest-paths"><a href="../topics/shortest-paths.html">Shortest Paths</a></li><li data-search="Minimum Spanning Trees Graphs Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems. kruskal prim mst cut property" data-slug="minimum-spanning-trees"><a href="../topics/minimum-spanning-trees.html">Minimum Spanning Trees</a></li><li data-search="Advanced Graph Algorithms Graphs Strongly connected components, bridges and articulation points, bipartite checks, Euler paths, and max-flow / matching. tarjan kosaraju scc bridges euler max flow bipartite matching" data-slug="advanced-graphs"><a href="../topics/advanced-graphs.html">Advanced Graph Algorithms</a></li></ul></details><details class="nav-track"><summary>Backtracking &amp; Greedy</summary><ul class="topic-list"><li data-search="Backtracking Backtracking &amp; Greedy The choose/explore/un-choose template animated on a decision tree: subsets, permutations, combinations, N-Queens, Sudoku and pruning. subsets permutations n queens sudoku pruning" data-slug="backtracking"><a href="../topics/backtracking.html">Backtracking</a></li><li data-search="Greedy Algorithms Backtracking &amp; Greedy When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding. exchange argument interval scheduling jump game huffman" data-slug="greedy"><a href="../topics/greedy.html">Greedy Algorithms</a></li></ul></details><details class="nav-track" open><summary>Dynamic Programming</summary><ul class="topic-list"><li data-search="The DP Framework Dynamic Programming Recursion → memoization → tabulation → space optimisation, visualised on one problem; how to design state and transitions. memoization tabulation state transition overlapping subproblems" data-slug="dp-framework"><a href="../topics/dp-framework.html">The DP Framework</a></li><li data-search="1D &amp; Grid DP Dynamic Programming Climbing stairs, house robber, decode ways, unique paths, min path sum, maximal square and dungeon game with animated tables. house robber unique paths grid dp maximal square" data-slug="dp-linear-grid"><a href="../topics/dp-linear-grid.html">1D &amp; Grid DP</a></li><li data-search="Knapsack Family Dynamic Programming 0/1 vs unbounded vs bounded knapsack, why loop direction matters, coin change, subset sum and target sum. knapsack coin change subset sum partition" data-slug="dp-knapsack"><a href="../topics/dp-knapsack.html">Knapsack Family</a></li><li data-search="Sequence &amp; String DP Dynamic Programming LIS with patience sorting, LCS, edit distance, palindromic subsequences, regex/wildcard matching and distinct subsequences. lis lcs edit distance regex matching palindrome" data-slug="dp-sequences-strings"><a href="../topics/dp-sequences-strings.html">Sequence &amp; String DP</a></li><li data-search="Interval &amp; Tree DP Dynamic Programming Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting). interval dp burst balloons matrix chain tree dp rerooting" data-slug="dp-intervals-trees"><a href="../topics/dp-intervals-trees.html">Interval &amp; Tree DP</a></li><li data-search="Bitmask &amp; Digit DP Dynamic Programming Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints. bitmask tsp digit dp subset dp" data-slug="dp-bitmask-digit"><a href="../topics/dp-bitmask-digit.html" aria-current="page">Bitmask &amp; Digit DP</a></li><li data-search="State Machines &amp; DP Optimisations Dynamic Programming Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth. stock state machine convex hull trick knuth optimisation" data-slug="dp-advanced"><a href="../topics/dp-advanced.html">State Machines &amp; DP Optimisations</a></li></ul></details><details class="nav-track"><summary>Bits &amp; Math</summary><ul class="topic-list"><li data-search="Bit Manipulation Bits &amp; Math Bits drawn as switches: masks, XOR tricks, counting bits, subset enumeration and Gray codes. xor mask single number popcount subsets" data-slug="bit-manipulation"><a href="../topics/bit-manipulation.html">Bit Manipulation</a></li><li data-search="Math, Number Theory &amp; Combinatorics Bits &amp; Math GCD, sieves, fast power, modular inverses, nCr mod p, inclusion–exclusion, and the geometry primitives you need. gcd sieve modular fast exponentiation combinatorics geometry" data-slug="math-number-theory"><a href="../topics/math-number-theory.html">Math, Number Theory &amp; Combinatorics</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../CodeExcellenceHome/index.html">Code Excellence Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>DSA Home / Bitmask &amp; Digit DP</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">DYNAMIC PROGRAMMING</p><h1>Bitmask &amp; Digit DP</h1><p class="lede">Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints.</p><div class="meta"><span class="level level-advanced">Advanced → Expert</span><span>~60 min study</span><span>Builds on: <a href="dp-framework.html">The DP Framework</a>, <a href="bit-manipulation.html">Bit Manipulation</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="dp-bitmask-digit" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="where-this-page-fits">Where this page fits</h2>
+<p><a href="dp-framework.html">The DP Framework</a> gave you the five-step recipe (<strong>state, transition, base cases, order, answer</strong>). Up to now the state was always an index or two: a prefix, a capacity, a pair of prefixes, a piece <code>i..j</code> (<a href="dp-intervals-trees.html">Interval &amp; Tree DP</a>), or a subtree. This page covers two kinds of state that <strong>are not positions in the input at all</strong>:</p>
+<ul>
+<li><strong>Bitmask DP.</strong> The state is a <strong>set</strong>: which people already have a task, which cities have been visited, which items are already in a bucket. With <code>n ≤ 20</code> or so, a set fits in one integer, with one bit per item. Then <code>dp[mask]</code> (or <code>dp[mask][last]</code>) is an ordinary array, and "add item <code>i</code>" is <code>mask | 1 &lt;&lt; i</code>. This turns <code>n!</code> orderings into <code>2ⁿ</code> sets.</li>
+<li><strong>Digit DP.</strong> The question is "how many integers in <code>[0, N]</code> have property P?", with <code>N</code> up to 10¹⁸, so you cannot look at them one by one. Instead, you build the number <strong>one digit at a time</strong>, and the state is <code>(position, tight, …whatever P needs to remember)</code>. At most a few thousand states replace 10¹⁸ numbers.</li>
+</ul>
+<div class="rule">
+<p><strong>Bitmask DP: when the answer depends on <em>which</em> items have been used but not on the <em>order</em> they were used in, make the set itself the state. Digit DP: when you must count numbers up to N, build them left to right and keep one flag that says "my prefix still equals N's prefix". Everything that is not tight is free and can be memoised.</strong></p>
+</div>
+<p>You will use the bit operations from <a href="bit-manipulation.html">Bit Manipulation</a> constantly. The next section recaps the five you need, so you can start here.</p>
+<h2 id="bitmask-dp-a-set-is-a-number">Bitmask DP: a set is a number</h2>
+<p>Number the items <code>0 … n−1</code>. A set of items is a binary number with <strong>bit <code>i</code> = 1 exactly when item <code>i</code> is in the set</strong>. With <code>n = 5</code>, the set <code>{1, 2, 4}</code> is <code>0b10110 = 22</code>. Bits are printed with the <strong>highest</strong> bit on the left, so item 0 is the <strong>rightmost</strong> bit. That trips up everyone the first time.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 640 234" width="640" role="img" aria-label="The mask 0b10110 drawn as five bits, bit 4 on the left; bits 1, 2 and 4 are set, so items 1, 2 and 4 are chosen">
+<defs><marker id="dp-bitmask-digit-f1-path" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker></defs>
+<text x="20" y="22" class="title">mask 22 = 0b10110 is the set {1, 2, 4}</text>
+<text x="158" y="50" text-anchor="middle" class="small mono muted">bit 4</text><rect class="box active" x="130" y="58" width="56" height="44" rx="7"/><text x="158" y="86" text-anchor="middle" class="mono">1</text><text x="158" y="120" text-anchor="middle" class="small mono muted">×16</text><path class="edge path" d="M158 128 L158 158" marker-end="url(#dp-bitmask-digit-f1-path)"/><rect class="box path" x="134" y="162" width="48" height="34" rx="17"/><text x="158" y="184" text-anchor="middle" class="small">item 4</text><text x="228" y="50" text-anchor="middle" class="small mono muted">bit 3</text><rect class="box" x="200" y="58" width="56" height="44" rx="7"/><text x="228" y="86" text-anchor="middle" class="mono">0</text><text x="228" y="120" text-anchor="middle" class="small mono muted">×8</text><rect class="box" x="204" y="162" width="48" height="34" rx="17"/><text x="228" y="184" text-anchor="middle" class="small">item 3</text><text x="298" y="50" text-anchor="middle" class="small mono muted">bit 2</text><rect class="box active" x="270" y="58" width="56" height="44" rx="7"/><text x="298" y="86" text-anchor="middle" class="mono">1</text><text x="298" y="120" text-anchor="middle" class="small mono muted">×4</text><path class="edge path" d="M298 128 L298 158" marker-end="url(#dp-bitmask-digit-f1-path)"/><rect class="box path" x="274" y="162" width="48" height="34" rx="17"/><text x="298" y="184" text-anchor="middle" class="small">item 2</text><text x="368" y="50" text-anchor="middle" class="small mono muted">bit 1</text><rect class="box active" x="340" y="58" width="56" height="44" rx="7"/><text x="368" y="86" text-anchor="middle" class="mono">1</text><text x="368" y="120" text-anchor="middle" class="small mono muted">×2</text><path class="edge path" d="M368 128 L368 158" marker-end="url(#dp-bitmask-digit-f1-path)"/><rect class="box path" x="344" y="162" width="48" height="34" rx="17"/><text x="368" y="184" text-anchor="middle" class="small">item 1</text><text x="438" y="50" text-anchor="middle" class="small mono muted">bit 0</text><rect class="box" x="410" y="58" width="56" height="44" rx="7"/><text x="438" y="86" text-anchor="middle" class="mono">0</text><text x="438" y="120" text-anchor="middle" class="small mono muted">×1</text><rect class="box" x="414" y="162" width="48" height="34" rx="17"/><text x="438" y="184" text-anchor="middle" class="small">item 0</text>
+<text x="118" y="86" text-anchor="end" class="mono">mask</text><text x="118" y="184" text-anchor="end" class="mono">items</text>
+<text x="490" y="76" class="mono">16 + 4 + 2</text><text x="490" y="94" class="mono">= 22</text>
+<text x="490" y="176" class="small">in the set:</text><text x="490" y="194" class="mono">{1, 2, 4}</text>
+<text x="320" y="222" text-anchor="middle" class="small muted">read right to left: item 0 is the lowest bit (here 0, so item 0 is not chosen)</text>
+</svg>
+<figcaption>Bit i of the mask stands for item i, and the bits are written with the highest one on the left. The number 22 and the set {1, 2, 4} are the same thing, so a DP indexed by the number is a DP indexed by the set.</figcaption>
+</figure>
+
+<h3 id="the-five-moves-you-need">The five moves you need</h3>
+<table>
+<thead>
+<tr>
+<th>You want to…</th>
+<th>Write</th>
+<th>Example with <code>mask = 0b10110</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>test whether item <code>i</code> is in the set</td>
+<td><code>mask &gt;&gt; i &amp; 1</code></td>
+<td><code>i = 2</code> → 1 (yes), <code>i = 0</code> → 0 (no)</td>
+</tr>
+<tr>
+<td>add item <code>i</code></td>
+<td><code>mask \| 1 &lt;&lt; i</code></td>
+<td><code>i = 0</code> → <code>0b10111</code></td>
+</tr>
+<tr>
+<td>remove item <code>i</code></td>
+<td><code>mask &amp; ~(1 &lt;&lt; i)</code> (or <code>mask ^ 1 &lt;&lt; i</code> if you know it is there)</td>
+<td><code>i = 4</code> → <code>0b00110</code></td>
+</tr>
+<tr>
+<td>the lowest item in the set</td>
+<td><code>low = mask &amp; -mask</code>, index <code>low.bit_length() − 1</code></td>
+<td><code>low = 0b10</code>, item 1</td>
+</tr>
+<tr>
+<td>the size of the set</td>
+<td><code>mask.bit_count()</code> (C#: <code>BitOperations.PopCount((uint)mask)</code>)</td>
+<td>3</td>
+</tr>
+<tr>
+<td>the full set of <code>n</code> items</td>
+<td><code>(1 &lt;&lt; n) − 1</code></td>
+<td><code>0b11111 = 31</code></td>
+</tr>
+<tr>
+<td>"is <code>sub</code> a subset of <code>mask</code>?"</td>
+<td><code>sub &amp; mask == sub</code></td>
+<td><code>0b00110</code> → yes</td>
+</tr>
+</tbody>
+</table>
+<div class="pitfall">
+<p><strong>Precedence bites.</strong> In Python, <code>1 &lt;&lt; i</code> binds tighter than <code>&amp;</code> and <code>|</code> but looser than <code>+</code> and <code>-</code>, so <code>mask &amp; 1 &lt;&lt; i</code> is fine, but <code>1 &lt;&lt; i + 1</code> is <code>1 &lt;&lt; (i + 1)</code>. In C# and Java, <code>==</code> binds tighter than <code>&amp;</code>, so <code>mask &amp; 1 &lt;&lt; i == 0</code> does <strong>not</strong> do what you mean: write <code>(mask &gt;&gt; i &amp; 1) == 0</code>. When in doubt, add parentheses.</p>
+</div>
+<h3 id="every-mask-reuses-a-smaller-mask">Every mask reuses a smaller mask</h3>
+<p>The single fact that makes bitmask DP work: <strong>removing any item from a set gives a smaller number</strong> (you clear a 1 bit). So if you loop <code>for mask in range(1 &lt;&lt; n)</code>, every subset of <code>mask</code> with one item fewer has already been processed. That is the fill order for almost every problem on this page, and you get it for free.</p>
+<p>The visualizer computes the sum of every subset of the items this way. Each mask peels off its <strong>lowest</strong> item (<code>low = mask &amp; -mask</code>) and adds it to the sum of the smaller mask. The masks are drawn as a <strong>lattice</strong>: one column per set size, so the arrow always goes from a column to the one on its right.</p>
+<div class="viz dbd-wide" data-viz="dp-bitmask-digit-mask"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def subset_sums(a: list[int]) -&gt; list[int]:
+    n = len(a)
+    s = [0] * (1 &lt;&lt; n)                     # s[mask] = total of the chosen items
+    for mask in range(1, 1 &lt;&lt; n):          # smaller numbers first
+        low = mask &amp; -mask                 # lowest set bit, as a number
+        b = low.bit_length() - 1           # ... and as an item index
+        s[mask] = s[mask ^ low] + a[b]     # drop item b: a smaller mask, already done
+    return s
+</code></pre>
+<pre><code class="language-csharp">public int[] SubsetSums(int[] a) {
+    int n = a.Length;
+    var s = new int[1 &lt;&lt; n];                         // s[mask] = total of the chosen items
+    for (int mask = 1; mask &lt; 1 &lt;&lt; n; mask++) {
+        int low = mask &amp; -mask;                      // lowest set bit
+        int b = BitOperations.TrailingZeroCount(low);
+        s[mask] = s[mask ^ low] + a[b];              // a smaller mask, already done
+    }
+    return s;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(2ⁿ) time and memory: one addition per subset. The naive way (sum the items of every subset from scratch) is O(n·2ⁿ).</p>
+<h3 id="how-big-can-n-be">How big can n be?</h3>
+<p>Bitmask DP is exponential, so the constraint tells you immediately whether it is intended. Here is the rough budget for about 10⁸ simple steps per second:</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Transition</th>
+<th>Work</th>
+<th>Comfortable n</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dp[mask]</code></td>
+<td>add one item</td>
+<td>O(n·2ⁿ)</td>
+<td>n ≤ 20–22</td>
+</tr>
+<tr>
+<td><code>dp[mask][last]</code></td>
+<td>try the next item</td>
+<td>O(n²·2ⁿ)</td>
+<td>n ≤ 16–18</td>
+</tr>
+<tr>
+<td><code>dp[mask]</code></td>
+<td>enumerate submasks</td>
+<td>O(3ⁿ)</td>
+<td>n ≤ 15–16</td>
+</tr>
+<tr>
+<td><code>dp[i][mask]</code>, mask over a row</td>
+<td>all pairs of row masks</td>
+<td>O(rows·4ʷ)</td>
+<td>width w ≤ 8–10</td>
+</tr>
+<tr>
+<td>SOS DP</td>
+<td>one bit per pass</td>
+<td>O(n·2ⁿ)</td>
+<td>n ≤ 20–22</td>
+</tr>
+</tbody>
+</table>
+<div class="recognize">
+<p><strong>Smells like bitmask DP:</strong> <code>n ≤ 12</code>, <code>n ≤ 16</code> or <code>n ≤ 20</code> in the constraints, especially when the rest of the input is large. Phrases like "each person exactly one task", "visit every city", "every skill must be covered", "use each element once", "partition into groups". If the brute force is <code>n!</code> orderings, ask whether the <strong>order</strong> really matters, or only the <strong>set</strong> of things used so far.</p>
+</div>
+<h2 id="assignment-the-person-is-popcountmask">Assignment: the person is popcount(mask)</h2>
+<p>The textbook bitmask problem: <code>n</code> people, <code>n</code> tasks, <code>cost[p][t]</code> for person <code>p</code> doing task <code>t</code>. Each person gets exactly one task. Minimise the total cost. Trying every assignment is <code>n!</code> (20! ≈ 2.4·10¹⁸).</p>
+<p>The trick is to hand out the tasks <strong>to the people in order</strong>: person 0 first, then person 1, and so on. Then the state does not need to say which person is next, because <strong>if the mask has <code>k</code> tasks taken, persons <code>0 … k−1</code> have been served and person <code>k</code> is next</strong>. The state is just the set of taken tasks.</p>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · STATE</small><strong>dp[mask]</strong><p>The cheapest way to give the tasks in mask to persons 0 … popcount(mask) − 1.</p></div>
+<div class="flow-step"><small>2 · TRANSITION</small><strong>Next person takes a free task</strong><p>p = popcount(mask). For every task t not in mask: dp[mask | 1&lt;&lt;t] = min(…, dp[mask] + cost[p][t]).</p></div>
+<div class="flow-step"><small>3 · BASE</small><strong>dp[0] = 0</strong><p>Nobody has a task, nothing is spent. Everything else starts at ∞.</p></div>
+<div class="flow-step"><small>4 · ORDER</small><strong>Increasing mask</strong><p>Every push goes to a larger number, so a mask is final before it is expanded.</p></div>
+<div class="flow-step"><small>5 · ANSWER</small><strong>dp[2ⁿ − 1]</strong><p>Every task taken. O(n·2ⁿ) time, O(2ⁿ) memory.</p></div>
+</div>
+
+<p>This is written <strong>push-style</strong>: each finished state pushes its value forward into the states it can reach. Pull-style (<code>dp[mask] = min over t in mask of dp[mask ^ 1&lt;&lt;t] + cost[popcount(mask)−1][t]</code>) is equally correct; push is often easier when the transition is "add one thing". In the visualizer, the cost grid shows which row (person) is being served, and the lattice shows the arrows from the current mask.</p>
+<p><div class="viz dbd-wide" data-viz="dp-bitmask-digit-assign"></div></p>
+<div class="code-tabs">
+<pre><code class="language-python">def min_cost_assignment(cost: list[list[int]]) -&gt; int:
+    n = len(cost)                          # cost[p][t]: person p does task t
+    dp = [inf] * (1 &lt;&lt; n)                  # dp[mask]: tasks in mask are taken
+    dp[0] = 0
+    for mask in range(1 &lt;&lt; n):
+        if dp[mask] == inf:
+            continue
+        p = mask.bit_count()               # persons 0..p-1 are already placed
+        if p == n:
+            continue
+        for t in range(n):
+            if not mask &gt;&gt; t &amp; 1:          # task t still free: give it to person p
+                nxt = mask | 1 &lt;&lt; t
+                dp[nxt] = min(dp[nxt], dp[mask] + cost[p][t])
+    return dp[(1 &lt;&lt; n) - 1]
+</code></pre>
+<pre><code class="language-csharp">public int MinCostAssignment(int[][] cost) {
+    int n = cost.Length;
+    var dp = new int[1 &lt;&lt; n];                        // dp[mask]: tasks in mask are taken
+    Array.Fill(dp, int.MaxValue);
+    dp[0] = 0;
+    for (int mask = 0; mask &lt; 1 &lt;&lt; n; mask++) {
+        if (dp[mask] == int.MaxValue) continue;
+        int p = BitOperations.PopCount((uint)mask);  // persons 0..p-1 are placed
+        if (p == n) continue;
+        for (int t = 0; t &lt; n; t++)
+            if ((mask &gt;&gt; t &amp; 1) == 0) {              // task t free: give it to person p
+                int nxt = mask | 1 &lt;&lt; t;
+                dp[nxt] = Math.Min(dp[nxt], dp[mask] + cost[p][t]);
+            }
+    }
+    return dp[(1 &lt;&lt; n) - 1];
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n·2ⁿ) time, O(2ⁿ) memory. For n = 20 that is about 2·10⁷ steps, against 2.4·10¹⁸ orderings. The same skeleton solves <a href="https://leetcode.com/problems/minimum-xor-sum-of-two-arrays/">Minimum XOR Sum of Two Arrays</a> (cost = <code>a[p] ^ b[t]</code>) and <a href="https://leetcode.com/problems/maximum-and-sum-of-array/">Maximum AND Sum of Array</a> (each slot holds two numbers, so use two bits per slot).</p>
+<div class="insight">
+<p><strong>Why order of people is free but order of tasks is not.</strong> Fixing the order of the <strong>people</strong> costs nothing: every assignment can be listed person by person. What you cannot fix is <strong>which</strong> tasks those people took, so that is what the mask stores. Whenever a problem has two groups to match, put one group in a fixed order (the loop) and the other in the mask, and <strong>put the smaller group in the mask</strong>. <a href="#3-number-of-ways-to-wear-different-hats-flip-which-side-is-the-mask">Number of Ways to Wear Different Hats</a> takes this to its extreme.</p>
+</div>
+<h2 id="tsp-and-hamiltonian-paths-dpmasklast">TSP and Hamiltonian paths: dp[mask][last]</h2>
+<p>The travelling salesman: <code>n</code> cities, a distance <code>w[i][j]</code> between every pair. Start at city 0, visit every city exactly once, come back, and minimise the total distance. Brute force tries <code>(n−1)!</code> routes. With <code>n = 16</code> that is 1.3·10¹².</p>
+<p>Look at two partial routes that both start at 0, visit <code>{0, 1, 2, 3}</code>, and stand at city 3: <code>0 → 1 → 2 → 3</code> and <code>0 → 2 → 1 → 3</code>. <strong>Whatever happens next is the same for both</strong>: the cities still to visit are the same, and so is the current city. So only the cheaper of the two can be part of the best tour. That is the whole idea: the state is <strong>(the set visited, the city you are at)</strong>, and the order inside the set is forgotten.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 640 226" width="640" role="img" aria-label="Two partial routes 0,1,2,3 costing 16 and 0,2,1,3 costing 19 both reach the state visited set 0 to 3, at city 3; only 16 is kept">
+<defs><marker id="dp-bitmask-digit-f2-path" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker><marker id="dp-bitmask-digit-f2-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker></defs>
+<text x="20" y="22" class="title">Two orders, one state</text>
+<path class="edge" d="M66 70 L104 70"/><text x="85" y="62" text-anchor="middle" class="small mono">2</text><rect class="box" x="34" y="54" width="32" height="32" rx="16"/><text x="50" y="75" text-anchor="middle" class="mono">0</text><path class="edge" d="M136 70 L174 70"/><text x="155" y="62" text-anchor="middle" class="small mono">6</text><rect class="box" x="104" y="54" width="32" height="32" rx="16"/><text x="120" y="75" text-anchor="middle" class="mono">1</text><path class="edge" d="M206 70 L244 70"/><text x="225" y="62" text-anchor="middle" class="small mono">8</text><rect class="box" x="174" y="54" width="32" height="32" rx="16"/><text x="190" y="75" text-anchor="middle" class="mono">2</text><rect class="box path" x="244" y="54" width="32" height="32" rx="16"/><text x="260" y="75" text-anchor="middle" class="mono">3</text><text x="155" y="108" text-anchor="middle" class="small mono">2 + 6 + 8 = 16</text>
+<path class="edge" d="M66 170 L104 170"/><text x="85" y="162" text-anchor="middle" class="small mono">9</text><rect class="box" x="34" y="154" width="32" height="32" rx="16"/><text x="50" y="175" text-anchor="middle" class="mono">0</text><path class="edge" d="M136 170 L174 170"/><text x="155" y="162" text-anchor="middle" class="small mono">6</text><rect class="box" x="104" y="154" width="32" height="32" rx="16"/><text x="120" y="175" text-anchor="middle" class="mono">2</text><path class="edge" d="M206 170 L244 170"/><text x="225" y="162" text-anchor="middle" class="small mono">4</text><rect class="box" x="174" y="154" width="32" height="32" rx="16"/><text x="190" y="175" text-anchor="middle" class="mono">1</text><rect class="box bad" x="244" y="154" width="32" height="32" rx="16"/><text x="260" y="175" text-anchor="middle" class="mono">3</text><text x="155" y="208" text-anchor="middle" class="small mono">9 + 6 + 4 = 19</text>
+<path class="edge path" d="M282 70 L366 108" marker-end="url(#dp-bitmask-digit-f2-path)"/>
+<path class="edge bad dash" d="M282 170 L366 142" marker-end="url(#dp-bitmask-digit-f2-bad)"/>
+<rect class="box accent" x="370" y="84" width="250" height="82" rx="7"/>
+<text x="495" y="108" text-anchor="middle" class="mono">visited = {0, 1, 2, 3}</text>
+<text x="495" y="128" text-anchor="middle" class="mono">standing at city 3</text>
+<text x="495" y="152" text-anchor="middle" class="mono">dp = min(16, 19) = 16</text>
+<text x="495" y="194" text-anchor="middle" class="small">Same set, same city, so the same future:</text>
+<text x="495" y="212" text-anchor="middle" class="small">the 19 route can never beat the 16 route.</text>
+</svg>
+<figcaption>With the visualizer's matrix, 0 → 1 → 2 → 3 costs 16 and 0 → 2 → 1 → 3 costs 19. Both have visited {0, 1, 2, 3} and stand at 3, so every way to finish one route also finishes the other at the same extra cost. The DP keeps one number per (set, city): that is how n! orders shrink to n·2ⁿ states.</figcaption>
+</figure>
+
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · STATE</small><strong>dp[mask][j]</strong><p>Shortest route that starts at 0, visits exactly the cities in mask, and ends at j (j ∈ mask).</p></div>
+<div class="flow-step"><small>2 · TRANSITION</small><strong>Walk on to an unvisited k</strong><p>dp[mask | 1&lt;&lt;k][k] = min(…, dp[mask][j] + w[j][k]) for every k not in mask.</p></div>
+<div class="flow-step"><small>3 · BASE</small><strong>dp[{0}][0] = 0</strong><p>Standing at the start, nothing travelled. Everything else ∞.</p></div>
+<div class="flow-step"><small>4 · ORDER</small><strong>Increasing mask</strong><p>mask | 1&lt;&lt;k is bigger than mask, so it is filled after mask is final.</p></div>
+<div class="flow-step"><small>5 · ANSWER</small><strong>min over j of dp[FULL][j] + w[j][0]</strong><p>Come home from the last city. O(n²·2ⁿ) time, O(n·2ⁿ) memory.</p></div>
+</div>
+
+<p>The visualizer shows the table with one row per mask (only the masks that contain city 0, since every route does) and one column per last city. For each new cell it lists every predecessor <code>i</code> in the smaller mask, with the cost <code>dp[prev][i] + w[i][j]</code>, and keeps the best one. At the end it follows the stored predecessors back to draw the tour. Switch to <strong>Hamiltonian path</strong> to drop the "start at 0 and come back" rule: then every city is a possible start (<code>dp[{j}][j] = 0</code>) and every city a possible end.</p>
+<div class="viz dbd-wide" data-viz="dp-bitmask-digit-tsp"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def tsp(w: list[list[int]]) -&gt; int:
+    n = len(w)
+    FULL = (1 &lt;&lt; n) - 1
+    dp = [[inf] * n for _ in range(1 &lt;&lt; n)]   # dp[mask][j]: start at 0, visited mask, now at j
+    dp[1][0] = 0
+    for mask in range(1, 1 &lt;&lt; n):
+        if not mask &amp; 1:                       # every route contains city 0
+            continue
+        for j in range(n):
+            if dp[mask][j] == inf:
+                continue
+            for k in range(n):                 # push: walk on to an unvisited city k
+                if not mask &gt;&gt; k &amp; 1:
+                    nxt = mask | 1 &lt;&lt; k
+                    dp[nxt][k] = min(dp[nxt][k], dp[mask][j] + w[j][k])
+    return min(dp[FULL][j] + w[j][0] for j in range(1, n)) if n &gt; 1 else 0
+
+def shortest_hamiltonian_path(w: list[list[int]]) -&gt; int:
+    n = len(w)
+    dp = [[inf] * n for _ in range(1 &lt;&lt; n)]
+    for j in range(n):
+        dp[1 &lt;&lt; j][j] = 0                      # any city can be the start
+    for mask in range(1, 1 &lt;&lt; n):
+        for j in range(n):
+            if dp[mask][j] == inf:
+                continue
+            for k in range(n):
+                if not mask &gt;&gt; k &amp; 1:
+                    nxt = mask | 1 &lt;&lt; k
+                    dp[nxt][k] = min(dp[nxt][k], dp[mask][j] + w[j][k])
+    return min(dp[(1 &lt;&lt; n) - 1])               # any city can be the end
+</code></pre>
+<pre><code class="language-csharp">public int Tsp(int[][] w) {
+    int n = w.Length, FULL = (1 &lt;&lt; n) - 1, INF = int.MaxValue / 2;
+    var dp = new int[1 &lt;&lt; n, n];                     // dp[mask, j]: from 0, visited mask, at j
+    for (int m = 0; m &lt;= FULL; m++) for (int j = 0; j &lt; n; j++) dp[m, j] = INF;
+    dp[1, 0] = 0;
+    for (int mask = 1; mask &lt;= FULL; mask++) {
+        if ((mask &amp; 1) == 0) continue;               // every route contains city 0
+        for (int j = 0; j &lt; n; j++) {
+            if (dp[mask, j] == INF) continue;
+            for (int k = 0; k &lt; n; k++)              // push: walk on to unvisited k
+                if ((mask &gt;&gt; k &amp; 1) == 0) {
+                    int nxt = mask | 1 &lt;&lt; k;
+                    dp[nxt, k] = Math.Min(dp[nxt, k], dp[mask, j] + w[j][k]);
+                }
+        }
+    }
+    if (n == 1) return 0;
+    int best = INF;
+    for (int j = 1; j &lt; n; j++) best = Math.Min(best, dp[FULL, j] + w[j][0]);
+    return best;
+}
+
+public int ShortestHamiltonianPath(int[][] w) {
+    int n = w.Length, FULL = (1 &lt;&lt; n) - 1, INF = int.MaxValue / 2;
+    var dp = new int[1 &lt;&lt; n, n];
+    for (int m = 0; m &lt;= FULL; m++) for (int j = 0; j &lt; n; j++) dp[m, j] = INF;
+    for (int j = 0; j &lt; n; j++) dp[1 &lt;&lt; j, j] = 0;   // any city can be the start
+    for (int mask = 1; mask &lt;= FULL; mask++)
+        for (int j = 0; j &lt; n; j++) {
+            if (dp[mask, j] == INF) continue;
+            for (int k = 0; k &lt; n; k++)
+                if ((mask &gt;&gt; k &amp; 1) == 0) {
+                    int nxt = mask | 1 &lt;&lt; k;
+                    dp[nxt, k] = Math.Min(dp[nxt, k], dp[mask, j] + w[j][k]);
+                }
+        }
+    int best = INF;
+    for (int j = 0; j &lt; n; j++) best = Math.Min(best, dp[FULL, j]);   // any end
+    return best;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n²·2ⁿ) time, O(n·2ⁿ) memory. For n = 16 that is about 1.7·10⁷ steps (versus 1.3·10¹² routes). <code>tsp</code> on the visualizer's default matrix <code>[[0,2,9,10],[2,0,6,4],[9,6,0,8],[10,4,8,0]]</code> gives 23 (<code>0 → 1 → 3 → 2 → 0</code>: 2 + 4 + 8 + 9). To print the route, store the best predecessor <code>par[mask][k] = j</code> and walk back from the best final city.</p>
+<div class="tip">
+<p><strong>Unweighted edges? Use BFS over (node, mask).</strong> In <a href="graph-fundamentals.html#6-shortest-path-visiting-all-nodes-expert">Shortest Path Visiting All Nodes</a> every edge has length 1 and you may revisit nodes, so a plain BFS over the <code>n·2ⁿ</code> states <code>(node, visited)</code> finds the answer directly, with no relaxation order to worry about. <a href="advanced-graphs.html">Advanced Graphs</a> explains why the Hamiltonian path problem has no polynomial algorithm, which is why <code>2ⁿ</code> is the best you can hope for. <a href="https://leetcode.com/problems/find-the-shortest-superstring/">Find the Shortest Superstring</a> is TSP in disguise: cities are words and <code>w[i][j]</code> is how many letters word <code>j</code> adds after word <code>i</code>.</p>
+</div>
+<h2 id="partition-into-k-equal-subsets">Partition into k equal subsets</h2>
+<p><a href="https://leetcode.com/problems/partition-to-k-equal-sum-subsets/">Partition to K Equal Sum Subsets</a>: can <code>nums</code> (n ≤ 16) be split into <code>k</code> groups with equal sums? <a href="backtracking.html#partition-to-k-equal-sum-subsets-the-order-of-choices-matters">Backtracking</a> solves it by filling buckets, and its section <a href="backtracking.html#switch-to-bitmask-dp">Switch to bitmask DP</a> explains why the same states keep coming back. Here is that DP in full.</p>
+<p>The key observation: <strong>fill the buckets one at a time.</strong> If the set of used items is <code>mask</code>, their total is <code>sum(mask)</code>, so the number of full buckets is <code>sum(mask) // target</code> and the open bucket holds <code>sum(mask) % target</code>. The mask alone decides everything, so a mask is either reachable or it is not, and it only needs to be explored <strong>once</strong>.</p>
+<ul>
+<li><strong>State:</strong> <code>fill[mask]</code> = how full the open bucket is after using exactly the items in <code>mask</code>, or −1 if <code>mask</code> cannot be reached by filling buckets one at a time without overflowing.</li>
+<li><strong>Transition:</strong> add an unused item <code>i</code> if <code>fill[mask] + nums[i] ≤ target</code>. When the bucket hits <code>target</code> exactly, it closes and the next bucket starts at 0 (the <code>% target</code>).</li>
+<li><strong>Answer:</strong> <code>fill[FULL] == 0</code>.</li>
+</ul>
+<p>In the visualizer, the bars show the buckets for the current mask (closed buckets are full, the open one is partly filled), and the dot map shows every one of the <code>2ⁿ</code> masks: grey ones were never reached. That grey area is the work that the DP skips.</p>
+<div class="viz dbd-wide" data-viz="dp-bitmask-digit-partition"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def can_partition_k_subsets(nums: list[int], k: int) -&gt; bool:
+    total, n = sum(nums), len(nums)
+    if total % k:
+        return False
+    target = total // k
+    nums.sort()
+    fill = [-1] * (1 &lt;&lt; n)                     # fill[mask]: level of the open bucket
+    fill[0] = 0
+    for mask in range(1 &lt;&lt; n):
+        if fill[mask] &lt; 0:
+            continue
+        for i in range(n):
+            if mask &gt;&gt; i &amp; 1:
+                continue
+            if fill[mask] + nums[i] &gt; target:  # sorted: bigger items won't fit either
+                break
+            fill[mask | 1 &lt;&lt; i] = (fill[mask] + nums[i]) % target   # full bucket -&gt; 0
+    return fill[(1 &lt;&lt; n) - 1] == 0
+</code></pre>
+<pre><code class="language-csharp">public bool CanPartitionKSubsets(int[] nums, int k) {
+    int total = nums.Sum(), n = nums.Length;
+    if (total % k != 0) return false;
+    int target = total / k;
+    Array.Sort(nums);
+    var fill = new int[1 &lt;&lt; n];                      // fill[mask]: level of the open bucket
+    Array.Fill(fill, -1);
+    fill[0] = 0;
+    for (int mask = 0; mask &lt; 1 &lt;&lt; n; mask++) {
+        if (fill[mask] &lt; 0) continue;
+        for (int i = 0; i &lt; n; i++) {
+            if ((mask &gt;&gt; i &amp; 1) == 1) continue;
+            if (fill[mask] + nums[i] &gt; target) break; // sorted: bigger ones won't fit
+            fill[mask | 1 &lt;&lt; i] = (fill[mask] + nums[i]) % target;
+        }
+    }
+    return fill[(1 &lt;&lt; n) - 1] == 0;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n·2ⁿ) time, O(2ⁿ) memory. Sorting lets the inner loop <code>break</code> as soon as an item does not fit. <code>[4, 3, 2, 3, 5, 2, 1]</code> with <code>k = 4</code> is true (<code>5</code>, <code>1+4</code>, <code>2+3</code>, <code>2+3</code>); <code>[1, 2, 3, 4]</code> with <code>k = 3</code> is false.</p>
+<div class="insight">
+<p><strong>Memoising backtracking gives you bitmask DP.</strong> The backtracking version fills bucket after bucket; it is exponential because the same <strong>set</strong> of used items is reached in many different orders. Caching on that set (<code>@cache def can(mask)</code>) is the same algorithm as the table above. Whenever a backtracking search's future depends only on <strong>which</strong> choices were made, not their order, a memo keyed by the mask turns it into a DP.</p>
+</div>
+<h2 id="submask-enumeration-sub-sub-1-mask">Submask enumeration: sub = (sub − 1) &amp; mask</h2>
+<p>Many bitmask DPs split a set into <strong>one group plus the rest</strong>. "Give child number <code>c</code> some of the remaining bags", "take this semester's courses from the available ones", "the last team covers which people?". The transition loops over every <strong>submask</strong> <code>sub ⊆ mask</code>, and you want to visit exactly those, not all <code>2ⁿ</code> numbers.</p>
+<p>The loop is three lines long and worth memorising:</p>
+<pre><code class="language-python">sub = mask
+while sub:                      # visits every non-empty submask, largest first
+    ...                         # use sub (and mask ^ sub, the rest)
+    sub = (sub - 1) &amp; mask
+# handle sub = 0 here if the empty group is allowed
+</code></pre>
+<p>Why it works: <code>sub − 1</code> turns the <strong>lowest 1 of <code>sub</code> into 0 and every bit below it into 1</strong> (a borrow). <code>&amp; mask</code> then throws away the bits that are not in <code>mask</code>. The result is the next smaller number whose bits all lie inside <code>mask</code>. It is a counter that only "sees" the bits of <code>mask</code>: if you squeeze the mask's bits together, <code>sub</code> counts down from all ones to zero in plain binary. Step through it and watch the borrow:</p>
+<div class="viz dbd-wide" data-viz="dp-bitmask-digit-submask"></div>
+
+<h3 id="why-all-masks-together-cost-3n-not-4n">Why all masks together cost 3ⁿ, not 4ⁿ</h3>
+<p>If you enumerate the submasks of <strong>every</strong> mask, the total number of pairs <code>(mask, sub)</code> with <code>sub ⊆ mask</code> is <strong>3ⁿ</strong>: for each item independently there are exactly three options, "in neither", "in mask only", or "in both". There is no fourth option, because "in <code>sub</code> but not in <code>mask</code>" is impossible. For <code>n = 15</code> that is 1.4·10⁷ pairs, against 4¹⁵ ≈ 10⁹ for two independent loops.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 640 214" width="640" role="img" aria-label="Each item is in neither set, only in the mask, or in both; being only in the submask is impossible, so there are three options per item">
+<text x="20" y="22" class="title">Why all (mask, sub) pairs cost 3ⁿ</text>
+<text x="124" y="46" text-anchor="middle" class="small mono muted">item 3</text><rect class="box visit" x="100" y="54" width="48" height="34" rx="7"/><text x="124" y="76" text-anchor="middle" class="mono">1</text><rect class="box visit" x="100" y="96" width="48" height="34" rx="7"/><text x="124" y="118" text-anchor="middle" class="mono">0</text><text x="124" y="150" text-anchor="middle" class="small">mask only</text><text x="196" y="46" text-anchor="middle" class="small mono muted">item 2</text><rect class="box" x="172" y="54" width="48" height="34" rx="7"/><text x="196" y="76" text-anchor="middle" class="mono">0</text><rect class="box" x="172" y="96" width="48" height="34" rx="7"/><text x="196" y="118" text-anchor="middle" class="mono">0</text><text x="196" y="150" text-anchor="middle" class="small">neither</text><text x="268" y="46" text-anchor="middle" class="small mono muted">item 1</text><rect class="box visit" x="244" y="54" width="48" height="34" rx="7"/><text x="268" y="76" text-anchor="middle" class="mono">1</text><rect class="box visit" x="244" y="96" width="48" height="34" rx="7"/><text x="268" y="118" text-anchor="middle" class="mono">0</text><text x="268" y="150" text-anchor="middle" class="small">mask only</text><text x="340" y="46" text-anchor="middle" class="small mono muted">item 0</text><rect class="box path" x="316" y="54" width="48" height="34" rx="7"/><text x="340" y="76" text-anchor="middle" class="mono">1</text><rect class="box path" x="316" y="96" width="48" height="34" rx="7"/><text x="340" y="118" text-anchor="middle" class="mono">1</text><text x="340" y="150" text-anchor="middle" class="small">both</text>
+<text x="90" y="76" text-anchor="end" class="mono">mask</text><text x="90" y="118" text-anchor="end" class="mono">sub</text>
+<rect class="box" x="412" y="44" width="26" height="24" rx="5"/><text x="425" y="61" text-anchor="middle" class="small mono">0</text><rect class="box" x="442" y="44" width="26" height="24" rx="5"/><text x="455" y="61" text-anchor="middle" class="small mono">0</text><text x="478" y="61" class="small">neither</text>
+<rect class="box visit" x="412" y="74" width="26" height="24" rx="5"/><text x="425" y="91" text-anchor="middle" class="small mono">1</text><rect class="box visit" x="442" y="74" width="26" height="24" rx="5"/><text x="455" y="91" text-anchor="middle" class="small mono">0</text><text x="478" y="91" class="small">in mask only</text>
+<rect class="box path" x="412" y="104" width="26" height="24" rx="5"/><text x="425" y="121" text-anchor="middle" class="small mono">1</text><rect class="box path" x="442" y="104" width="26" height="24" rx="5"/><text x="455" y="121" text-anchor="middle" class="small mono">1</text><text x="478" y="121" class="small">in both</text>
+<rect class="box bad" x="412" y="134" width="26" height="24" rx="5"/><text x="425" y="151" text-anchor="middle" class="small mono">0</text><rect class="box bad" x="442" y="134" width="26" height="24" rx="5"/><text x="455" y="151" text-anchor="middle" class="small mono">1</text><text x="478" y="151" class="small">sub only: impossible</text>
+<text x="412" y="36" class="small mono muted">mask sub</text>
+<text x="320" y="182" text-anchor="middle" class="mono">3 legal options per item, chosen independently: 3ⁿ pairs in total</text>
+<text x="320" y="202" text-anchor="middle" class="small muted">n = 15: 3ⁿ ≈ 1.4·10⁷, but 2ⁿ·2ⁿ = 4ⁿ ≈ 1.1·10⁹</text>
+</svg>
+<figcaption>Each pair (mask, sub ⊆ mask) is a choice of one of three states for every item. The fourth combination, in sub but not in mask, cannot happen. That is why looping over all submasks of all masks costs 3ⁿ, as long as the inner loop is (sub − 1) &amp; mask.</figcaption>
+</figure>
+
+<div class="pitfall">
+<p><strong>The empty submask.</strong> <code>while sub:</code> stops before <code>sub = 0</code>. If the empty group is a legal choice, handle it after the loop (or use the <code>while True: … if sub == 0: break</code> form, as in the valid-words code below). Also, don't write <code>for sub in range(mask + 1): if sub &amp; mask == sub</code> "to be safe": over all masks that is 4ⁿ work, and for n = 15 it times out.</p>
+</div>
+<h3 id="distributing-bags-to-k-children">Distributing bags to k children</h3>
+<p><a href="https://leetcode.com/problems/fair-distribution-of-cookies/">Fair Distribution of Cookies</a> (n ≤ 8 bags, <code>k</code> children): minimise the largest total any child gets. Add the children one at a time:</p>
+<ul>
+<li><code>total[mask]</code> = cookies in the bags of <code>mask</code> (the subset-sum table from above).</li>
+<li><code>dp[mask]</code> with <code>c</code> children = the best possible "largest share" when those <code>c</code> children split exactly the bags in <code>mask</code>.</li>
+<li>Adding child <code>c + 1</code>: it takes some <code>sub ⊆ mask</code>, and the earlier children take <code>mask ^ sub</code>. So <code>new[mask] = min over sub of max(total[sub], dp[mask ^ sub])</code>.</li>
+</ul>
+<div class="code-tabs">
+<pre><code class="language-python">def distribute_cookies(cookies: list[int], k: int) -&gt; int:
+    n = len(cookies)
+    full = (1 &lt;&lt; n) - 1
+    total = [0] * (1 &lt;&lt; n)                     # total[mask]: cookies in that bag set
+    for mask in range(1, 1 &lt;&lt; n):
+        low = mask &amp; -mask
+        total[mask] = total[mask ^ low] + cookies[low.bit_length() - 1]
+    dp = total[:]                              # dp[mask]: best unfairness, 1 child
+    for _ in range(k - 1):                     # add one more child at a time
+        new = dp[:]
+        for mask in range(1, full + 1):
+            sub = mask
+            while sub:                         # the new child takes the bags in sub
+                new[mask] = min(new[mask], max(total[sub], dp[mask ^ sub]))
+                sub = (sub - 1) &amp; mask
+        dp = new
+    return dp[full]
+</code></pre>
+<pre><code class="language-csharp">public int DistributeCookies(int[] cookies, int k) {
+    int n = cookies.Length, full = (1 &lt;&lt; n) - 1;
+    var total = new int[1 &lt;&lt; n];                     // total[mask]: cookies in those bags
+    for (int mask = 1; mask &lt;= full; mask++) {
+        int low = mask &amp; -mask;
+        total[mask] = total[mask ^ low] + cookies[BitOperations.TrailingZeroCount(low)];
+    }
+    var dp = (int[])total.Clone();                   // one child takes everything
+    for (int child = 1; child &lt; k; child++) {
+        var nw = (int[])dp.Clone();
+        for (int mask = 1; mask &lt;= full; mask++)
+            for (int sub = mask; sub &gt; 0; sub = (sub - 1) &amp; mask)   // new child takes sub
+                nw[mask] = Math.Min(nw[mask], Math.Max(total[sub], dp[mask ^ sub]));
+        dp = nw;
+    }
+    return dp[full];
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(k·3ⁿ) time, O(2ⁿ) memory. <code>[8, 15, 10, 20, 8]</code> with <code>k = 2</code> gives 31 (<code>{8, 15, 8}</code> and <code>{10, 20}</code>). The same "one more group takes a submask" loop solves <a href="https://leetcode.com/problems/minimum-incompatibility/">Minimum Incompatibility</a> and <a href="https://leetcode.com/problems/distribute-repeating-integers/">Distribute Repeating Integers</a>.</p>
+<h3 id="counting-words-that-fit-a-puzzle">Counting words that fit a puzzle</h3>
+<p><a href="https://leetcode.com/problems/number-of-valid-words-for-each-puzzle/">Number of Valid Words for Each Puzzle</a>: a word is valid for a puzzle if it contains the puzzle's first letter and uses only letters of the puzzle. Up to 10⁵ words and 10⁴ puzzles, so comparing every pair is too slow. But a puzzle has only 7 letters, so it has only 2⁶ = 64 subsets that include its first letter.</p>
+<p>So turn each word into its <strong>letter mask</strong> and count how many words have each mask. For a puzzle, enumerate the submasks of its other 6 letters, add the first letter, and look each one up. That is 64 dictionary lookups per puzzle.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def find_num_of_valid_words(words: list[str], puzzles: list[str]) -&gt; list[int]:
+    bits = lambda s: sum(1 &lt;&lt; (ord(c) - 97) for c in set(s))
+    freq = defaultdict(int)
+    for w in words:
+        m = bits(w)
+        if m.bit_count() &lt;= 7:                 # a puzzle has 7 letters
+            freq[m] += 1
+    out = []
+    for p in puzzles:
+        first, rest = bits(p[0]), bits(p[1:]) &amp; ~bits(p[0])
+        cnt, sub = 0, rest
+        while True:                            # every subset of the other letters
+            cnt += freq.get(sub | first, 0)    # ... plus the required first letter
+            if sub == 0:
+                break
+            sub = (sub - 1) &amp; rest
+        out.append(cnt)
+    return out
+</code></pre>
+<pre><code class="language-csharp">public IList&lt;int&gt; FindNumOfValidWords(string[] words, string[] puzzles) {
+    static int Bits(string s) { int m = 0; foreach (char c in s) m |= 1 &lt;&lt; (c - 'a'); return m; }
+    var freq = new Dictionary&lt;int, int&gt;();
+    foreach (var w in words) {
+        int m = Bits(w);
+        if (BitOperations.PopCount((uint)m) &lt;= 7) freq[m] = freq.GetValueOrDefault(m) + 1;
+    }
+    var res = new List&lt;int&gt;();
+    foreach (var p in puzzles) {
+        int first = 1 &lt;&lt; (p[0] - 'a'), rest = Bits(p[1..]) &amp; ~first, cnt = 0;
+        for (int sub = rest; ; sub = (sub - 1) &amp; rest) {   // every subset of the others
+            cnt += freq.GetValueOrDefault(sub | first);     // plus the first letter
+            if (sub == 0) break;
+        }
+        res.Add(cnt);
+    }
+    return res;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(W·L + P·2⁶) time, where W·L is the total length of the words. <code>words = ["aaaa","asas","able","ability","actt","actor","access"]</code> with puzzles <code>["aboveyz","abrodyz","abslute","absoryz","actresz","gaswxyz"]</code> gives <code>[1,1,3,2,4,0]</code>.</p>
+<h2 id="sos-dp-sum-over-subsets-at-a-glance">SOS DP: sum over subsets at a glance</h2>
+<p>Some problems need, <strong>for every mask at once</strong>, the sum (or count, max, OR, …) of <code>A[sub]</code> over all <code>sub ⊆ mask</code>. Submask enumeration does this in 3ⁿ. <strong>Sum over subsets (SOS) DP</strong> does it in <strong>n·2ⁿ</strong>: for n = 20, that is 2·10⁷ steps instead of 3.5·10⁹.</p>
+<p>The idea is to grow the "allowed difference" one bit at a time. After pass <code>b</code>, <code>F[mask]</code> holds the sum of <code>A[sub]</code> over every <code>sub ⊆ mask</code> that <strong>agrees with mask on all bits above b</strong>. In pass <code>b</code>, every mask that has bit <code>b</code> set picks up its twin <code>mask ^ (1 &lt;&lt; b)</code>. That twin already covers every way to differ in the lower bits, so adding it extends the coverage to bit <code>b</code> too. After the last pass, every bit is allowed to differ, and <code>F[mask]</code> is the full subset sum.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 640 244" width="640" role="img" aria-label="Three cubes of the eight 3-bit masks; after pass 0, 1 and 2 the mask 111 covers 2, 4 and then all 8 of its submasks">
+<text x="20" y="22" class="title">SOS DP on 3 bits: what F[111] contains after each pass</text>
+<text x="110" y="46" text-anchor="middle" class="small">after pass 0 (bit 0)</text>
+<path class="edge active" d="M50 162 L130 162"/><path class="edge dash" d="M50 162 L50 92"/><path class="edge dash" d="M50 162 L90 132"/><path class="edge dash" d="M130 162 L130 92"/><path class="edge dash" d="M130 162 L170 132"/><path class="edge active" d="M50 92 L130 92"/><path class="edge dash" d="M50 92 L90 62"/><path class="edge dash" d="M130 92 L170 62"/><path class="edge active" d="M90 132 L170 132"/><path class="edge dash" d="M90 132 L90 62"/><path class="edge dash" d="M170 132 L170 62"/><path class="edge active" d="M90 62 L170 62"/>
+<rect class="box" x="30" y="150" width="40" height="24" rx="5"/><text x="50" y="167" text-anchor="middle" class="small mono">000</text><rect class="box" x="110" y="150" width="40" height="24" rx="5"/><text x="130" y="167" text-anchor="middle" class="small mono">001</text><rect class="box" x="30" y="80" width="40" height="24" rx="5"/><text x="50" y="97" text-anchor="middle" class="small mono">010</text><rect class="box" x="110" y="80" width="40" height="24" rx="5"/><text x="130" y="97" text-anchor="middle" class="small mono">011</text><rect class="box" x="70" y="120" width="40" height="24" rx="5"/><text x="90" y="137" text-anchor="middle" class="small mono">100</text><rect class="box" x="150" y="120" width="40" height="24" rx="5"/><text x="170" y="137" text-anchor="middle" class="small mono">101</text><rect class="box done" x="70" y="50" width="40" height="24" rx="5"/><text x="90" y="67" text-anchor="middle" class="small mono">110</text><rect class="box accent" x="150" y="50" width="40" height="24" rx="5"/><text x="170" y="67" text-anchor="middle" class="small mono">111</text>
+<text x="110" y="206" text-anchor="middle" class="small mono">F[111] covers 2 of 8</text>
+<text x="320" y="46" text-anchor="middle" class="small">after pass 1 (bit 1)</text>
+<path class="edge done" d="M260 162 L340 162"/><path class="edge active" d="M260 162 L260 92"/><path class="edge dash" d="M260 162 L300 132"/><path class="edge active" d="M340 162 L340 92"/><path class="edge dash" d="M340 162 L380 132"/><path class="edge done" d="M260 92 L340 92"/><path class="edge dash" d="M260 92 L300 62"/><path class="edge dash" d="M340 92 L380 62"/><path class="edge done" d="M300 132 L380 132"/><path class="edge active" d="M300 132 L300 62"/><path class="edge active" d="M380 132 L380 62"/><path class="edge done" d="M300 62 L380 62"/>
+<rect class="box" x="240" y="150" width="40" height="24" rx="5"/><text x="260" y="167" text-anchor="middle" class="small mono">000</text><rect class="box" x="320" y="150" width="40" height="24" rx="5"/><text x="340" y="167" text-anchor="middle" class="small mono">001</text><rect class="box" x="240" y="80" width="40" height="24" rx="5"/><text x="260" y="97" text-anchor="middle" class="small mono">010</text><rect class="box" x="320" y="80" width="40" height="24" rx="5"/><text x="340" y="97" text-anchor="middle" class="small mono">011</text><rect class="box done" x="280" y="120" width="40" height="24" rx="5"/><text x="300" y="137" text-anchor="middle" class="small mono">100</text><rect class="box done" x="360" y="120" width="40" height="24" rx="5"/><text x="380" y="137" text-anchor="middle" class="small mono">101</text><rect class="box done" x="280" y="50" width="40" height="24" rx="5"/><text x="300" y="67" text-anchor="middle" class="small mono">110</text><rect class="box accent" x="360" y="50" width="40" height="24" rx="5"/><text x="380" y="67" text-anchor="middle" class="small mono">111</text>
+<text x="320" y="206" text-anchor="middle" class="small mono">F[111] covers 4 of 8</text>
+<text x="530" y="46" text-anchor="middle" class="small">after pass 2 (bit 2)</text>
+<path class="edge done" d="M470 162 L550 162"/><path class="edge done" d="M470 162 L470 92"/><path class="edge active" d="M470 162 L510 132"/><path class="edge done" d="M550 162 L550 92"/><path class="edge active" d="M550 162 L590 132"/><path class="edge done" d="M470 92 L550 92"/><path class="edge active" d="M470 92 L510 62"/><path class="edge active" d="M550 92 L590 62"/><path class="edge done" d="M510 132 L590 132"/><path class="edge done" d="M510 132 L510 62"/><path class="edge done" d="M590 132 L590 62"/><path class="edge done" d="M510 62 L590 62"/>
+<rect class="box done" x="450" y="150" width="40" height="24" rx="5"/><text x="470" y="167" text-anchor="middle" class="small mono">000</text><rect class="box done" x="530" y="150" width="40" height="24" rx="5"/><text x="550" y="167" text-anchor="middle" class="small mono">001</text><rect class="box done" x="450" y="80" width="40" height="24" rx="5"/><text x="470" y="97" text-anchor="middle" class="small mono">010</text><rect class="box done" x="530" y="80" width="40" height="24" rx="5"/><text x="550" y="97" text-anchor="middle" class="small mono">011</text><rect class="box done" x="490" y="120" width="40" height="24" rx="5"/><text x="510" y="137" text-anchor="middle" class="small mono">100</text><rect class="box done" x="570" y="120" width="40" height="24" rx="5"/><text x="590" y="137" text-anchor="middle" class="small mono">101</text><rect class="box done" x="490" y="50" width="40" height="24" rx="5"/><text x="510" y="67" text-anchor="middle" class="small mono">110</text><rect class="box accent" x="570" y="50" width="40" height="24" rx="5"/><text x="590" y="67" text-anchor="middle" class="small mono">111</text>
+<text x="530" y="206" text-anchor="middle" class="small mono">F[111] covers 8 of 8</text>
+<text x="320" y="232" text-anchor="middle" class="small muted">pass b: every mask with bit b set adds its twin mask ^ (1 &lt;&lt; b), which already covers the lower bits</text>
+</svg>
+<figcaption>The 2ⁿ masks are the corners of an n-dimensional cube, and pass b adds along the edges of direction b (solid). After pass b, F[mask] covers every submask that differs only in bits 0..b, so the coverage doubles with each pass: n passes of 2ⁿ additions instead of 3ⁿ.</figcaption>
+</figure>
+
+<p>Each pass touches every mask once, so there are n passes of 2ⁿ steps. In the visualizer, each cell lists <strong>which</strong> <code>A[sub]</code> it currently contains, so you can watch the coverage double with every pass:</p>
+<div class="viz dbd-wide" data-viz="dp-bitmask-digit-sos"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def sum_over_subsets(A: list[int]) -&gt; list[int]:
+    n = (len(A) - 1).bit_length()              # len(A) == 2**n
+    F = A[:]
+    for b in range(n):                         # free up one bit per pass
+        for mask in range(1 &lt;&lt; n):
+            if mask &gt;&gt; b &amp; 1:
+                F[mask] += F[mask ^ (1 &lt;&lt; b)]
+    return F                                   # F[mask] = sum of A[sub], sub ⊆ mask
+</code></pre>
+<pre><code class="language-csharp">public long[] SumOverSubsets(long[] A) {
+    int n = BitOperations.Log2((uint)A.Length);      // A.Length == 2^n
+    var F = (long[])A.Clone();
+    for (int b = 0; b &lt; n; b++)                      // free up one bit per pass
+        for (int mask = 0; mask &lt; 1 &lt;&lt; n; mask++)
+            if ((mask &gt;&gt; b &amp; 1) == 1) F[mask] += F[mask ^ (1 &lt;&lt; b)];
+    return F;                                        // F[mask] = sum of A[sub], sub ⊆ mask
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n·2ⁿ) time, O(2ⁿ) memory, in place. Reversed, the same loop (<code>F[mask ^ bit] += F[mask]</code> when the bit is set) gives sums over <strong>supersets</strong>. Replacing <code>+=</code> with <code>-=</code> undoes the transform (inclusion-exclusion, the <strong>Möbius</strong> inverse). Typical uses: "for every mask, how many array values are submasks of it?" (count of <code>x</code> with <code>x &amp; m == x</code>), <a href="https://codeforces.com/problemset/problem/165/E">Compatible Numbers</a> (for each <code>x</code>, find some <code>y</code> with <code>x &amp; y = 0</code>: look up any value that is a submask of <code>~x</code>), and the "pairs whose OR / AND / XOR is a given set" problems on Codeforces. LeetCode rarely needs it, but when the constraint is <code>2²⁰</code> values and "subset" appears in the statement, this is the tool.</p>
+<div class="callout">
+<p><strong>Bit order trick.</strong> The passes can run over the bits in any order, but the inner loop must complete one bit before the next starts. Swapping the loops (<code>for mask: for b:</code>) is wrong: then a mask can collect a submask's contribution twice. The bit is the outer loop.</p>
+</div>
+<h2 id="broken-profile-dp-tiling-a-grid">Broken profile DP: tiling a grid</h2>
+<p>How many ways can you tile an <code>R × C</code> board with 1×2 dominoes? For <code>R ≤ 10</code> or so, scan the cells one at a time, column by column and top to bottom. The only thing the future needs to know is the <strong>frontier</strong>: for each row, is the next undecided cell already covered by a horizontal domino that poked in from the left? That is one bit per row, <code>R</code> bits in total. This is called the <strong>profile</strong>, and since the frontier has a step in it (rows above the current cell are already in the next column), it is a <strong>broken</strong> profile.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 640 252" width="640" role="img" aria-label="A 3 by 4 board partly tiled with dominoes; a staircase frontier separates the decided cells from the rest, and the profile has bit 0 set because a domino sticks into column 3">
+<defs><marker id="dp-bitmask-digit-f5-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="20" y="22" class="title">Broken profile: the frontier when we reach cell (1, 2)</text>
+<rect class="box" x="42" y="52" width="40" height="40" rx="5"/><rect class="box" x="86" y="52" width="40" height="40" rx="5"/><rect class="box" x="130" y="52" width="40" height="40" rx="5"/><rect class="box" x="174" y="52" width="40" height="40" rx="5"/><rect class="box" x="42" y="96" width="40" height="40" rx="5"/><rect class="box" x="86" y="96" width="40" height="40" rx="5"/><rect class="box" x="130" y="96" width="40" height="40" rx="5"/><rect class="box" x="174" y="96" width="40" height="40" rx="5"/><rect class="box" x="42" y="140" width="40" height="40" rx="5"/><rect class="box" x="86" y="140" width="40" height="40" rx="5"/><rect class="box" x="130" y="140" width="40" height="40" rx="5"/><rect class="box" x="174" y="140" width="40" height="40" rx="5"/>
+<rect class="box done" x="44" y="54" width="80" height="36" rx="9"/><rect class="box done" x="44" y="98" width="36" height="80" rx="9"/><rect class="box done" x="88" y="98" width="36" height="80" rx="9"/><rect class="box path" x="132" y="54" width="80" height="36" rx="9"/>
+<rect class="box active" x="132" y="98" width="36" height="36" rx="9"/><text x="150" y="121" text-anchor="middle" class="mono">?</text>
+<path class="edge accent dash" d="M172 42 L172 94 L128 94 L128 190"/>
+<text x="176" y="38" class="small">frontier</text>
+<text x="62" y="204" text-anchor="middle" class="small mono muted">c0</text>
+<text x="106" y="204" text-anchor="middle" class="small mono muted">c1</text>
+<text x="150" y="204" text-anchor="middle" class="small mono muted">c2</text>
+<text x="194" y="204" text-anchor="middle" class="small mono muted">c3</text>
+<text x="250" y="54" class="small">profile = one bit per row</text>
+<text x="250" y="84" class="mono">bit 0 = 1</text><text x="340" y="84" class="small">(0, 3) is pre-filled from (0, 2)</text>
+<text x="250" y="128" class="mono">bit 1 = 0</text><text x="340" y="128" class="small">(1, 2) is the current cell, still empty</text>
+<text x="250" y="172" class="mono">bit 2 = 0</text><text x="340" y="172" class="small">(2, 2) is still empty</text>
+<rect class="box visit" x="250" y="196" width="175" height="44" rx="7"/><text x="337" y="214" text-anchor="middle" class="small">horizontal →</text><text x="337" y="231" text-anchor="middle" class="small mono">set bit 1 (pokes into c3)</text>
+<rect class="box visit" x="440" y="196" width="180" height="44" rx="7"/><text x="530" y="214" text-anchor="middle" class="small">vertical ↓</text><text x="530" y="231" text-anchor="middle" class="small mono">set bit 2: (2, 2) covered</text>
+</svg>
+<figcaption>Cells are decided column by column, top to bottom. Everything left of the staircase is settled; the only thing the future needs is which cells just right of it are already covered (the profile, 3 bits). The empty current cell can take a horizontal domino (setting its own bit for the next column) or a vertical one (setting the bit of the cell below, which is visited next).</figcaption>
+</figure>
+
+<p>At cell <code>(r, c)</code>, for each profile:</p>
+<ul>
+<li><strong>Bit <code>r</code> is 1</strong>: a horizontal domino from the left already covers this cell. Clear the bit and move on.</li>
+<li><strong>Bit <code>r</code> is 0</strong>, and the cell is empty, so place a domino:</li>
+<li><strong>horizontal</strong>: it covers <code>(r, c)</code> and <code>(r, c + 1)</code>. Set bit <code>r</code>, so the cell in the next column is marked as covered. Only if <code>c + 1 &lt; C</code>.</li>
+<li><strong>vertical</strong>: it covers <code>(r, c)</code> and <code>(r + 1, c)</code>. Set bit <code>r + 1</code>: the next cell visited is <code>(r + 1, c)</code>, and it must find itself covered. Only if <code>r + 1 &lt; R</code> and that bit is 0.</li>
+</ul>
+<p>A real tiling ends with <strong>nothing poking out of the board</strong>: profile 0. Each state is a dictionary entry <code>profile → number of ways</code>. The visualizer shows the board with the current cell, and the profile table before and after that cell:</p>
+<div class="viz dbd-wide" data-viz="dp-bitmask-digit-profile"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def domino_tilings(R: int, C: int) -&gt; int:
+    ways = {0: 1}                              # profile -&gt; count; bit r = (r, c) pre-filled
+    for c in range(C):
+        for r in range(R):                     # cell (r, c), column by column
+            nxt = defaultdict(int)
+            for mask, w in ways.items():
+                if mask &gt;&gt; r &amp; 1:              # covered by a domino from the left
+                    nxt[mask &amp; ~(1 &lt;&lt; r)] += w
+                    continue
+                if c + 1 &lt; C:                  # horizontal: pokes into column c+1
+                    nxt[mask | 1 &lt;&lt; r] += w
+                if r + 1 &lt; R and not mask &gt;&gt; (r + 1) &amp; 1:
+                    nxt[mask | 1 &lt;&lt; (r + 1)] += w   # vertical: covers (r+1, c) too
+            ways = nxt
+    return ways.get(0, 0)
+</code></pre>
+<pre><code class="language-csharp">public long DominoTilings(int R, int C) {
+    var ways = new long[1 &lt;&lt; R];                     // ways[profile]; bit r = (r, c) pre-filled
+    ways[0] = 1;
+    for (int c = 0; c &lt; C; c++)
+        for (int r = 0; r &lt; R; r++) {                // cell (r, c), column by column
+            var nxt = new long[1 &lt;&lt; R];
+            for (int mask = 0; mask &lt; 1 &lt;&lt; R; mask++) {
+                long w = ways[mask];
+                if (w == 0) continue;
+                if ((mask &gt;&gt; r &amp; 1) == 1) { nxt[mask &amp; ~(1 &lt;&lt; r)] += w; continue; }
+                if (c + 1 &lt; C) nxt[mask | 1 &lt;&lt; r] += w;          // horizontal
+                if (r + 1 &lt; R &amp;&amp; (mask &gt;&gt; (r + 1) &amp; 1) == 0)
+                    nxt[mask | 1 &lt;&lt; (r + 1)] += w;               // vertical
+            }
+            ways = nxt;
+        }
+    return ways[0];
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(R·C·2ᴿ) time, O(2ᴿ) memory. Put the <strong>smaller</strong> dimension in the profile. 2×3 gives 3, 3×4 gives 11, 4×4 gives 36, and the 8×8 chessboard has 12,988,816 tilings. <a href="https://leetcode.com/problems/domino-and-tromino-tiling/">Domino and Tromino Tiling</a> is the 2-row case, small enough to write as a linear recurrence.</p>
+<h3 id="row-by-row-masks-seats-colours-cells">Row-by-row masks: seats, colours, cells</h3>
+<p>A simpler version of the same idea: process the grid <strong>one full row at a time</strong>, and let the state be <strong>the mask of the previous row</strong>. It works whenever a row only interacts with the row directly above it.</p>
+<ul>
+<li><a href="#5-maximum-students-taking-exam-the-previous-row-is-the-state">Maximum Students Taking Exam</a> (worked below): a student may not sit next to another or diagonally in front of one. Valid row masks are the good-seat submasks with no two adjacent bits (<code>sub &amp; sub &lt;&lt; 1 == 0</code>), and a pair of rows is compatible if neither row's student sits diagonally from the other's (<code>sub &amp; prev &lt;&lt; 1 == 0</code> and <code>sub &amp; prev &gt;&gt; 1 == 0</code>).</li>
+<li><a href="https://leetcode.com/problems/painting-a-grid-with-three-different-colors/">Painting a Grid With Three Different Colors</a>: the "mask" of a column is a base-3 colouring (at most 3⁵ = 243 of them, only 48 of which are valid). Precompute which pairs of columns are compatible, then it is a walk of length <code>n</code> on that compatibility graph.</li>
+<li><a href="https://leetcode.com/problems/number-of-ways-to-paint-n-3-grid/">Number of Ways to Paint N × 3 Grid</a>: the same with width 3, where only two kinds of rows exist (ABA and ABC), so the DP collapses to two numbers.</li>
+</ul>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 640 216" width="640" role="img" aria-label="Two pairs of consecutive classroom rows; on the left the students are directly behind each other, which is allowed; on the right a student sits diagonally behind another, which is a conflict">
+<defs><marker id="dp-bitmask-digit-f6-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker></defs>
+<text x="20" y="22" class="title">Row masks in Maximum Students: only the row above matters</text>
+<text x="30" y="74" text-anchor="end" class="small mono">prev</text><text x="30" y="140" text-anchor="end" class="small mono">sub</text>
+<rect class="box" x="40" y="52" width="36" height="34" rx="6"/><rect class="box" x="40" y="118" width="36" height="34" rx="6"/><rect class="box visit" x="82" y="52" width="36" height="34" rx="6"/><text x="100" y="74" text-anchor="middle" class="mono">S</text><rect class="box path" x="82" y="118" width="36" height="34" rx="6"/><text x="100" y="140" text-anchor="middle" class="mono">S</text><rect class="box" x="124" y="52" width="36" height="34" rx="6"/><rect class="box" x="124" y="118" width="36" height="34" rx="6"/><rect class="box" x="166" y="52" width="36" height="34" rx="6"/><rect class="box" x="166" y="118" width="36" height="34" rx="6"/><rect class="box visit" x="208" y="52" width="36" height="34" rx="6"/><text x="226" y="74" text-anchor="middle" class="mono">S</text><rect class="box path" x="208" y="118" width="36" height="34" rx="6"/><text x="226" y="140" text-anchor="middle" class="mono">S</text><rect class="box" x="250" y="52" width="36" height="34" rx="6"/><rect class="box" x="250" y="118" width="36" height="34" rx="6"/><path class="edge dash" d="M100 116 L58 90"/><path class="edge dash" d="M100 116 L142 90"/><path class="edge dash" d="M226 116 L184 90"/><path class="edge dash" d="M226 116 L268 90"/><text x="163" y="176" text-anchor="middle" class="small mono">diagonals free: compatible ✓</text>
+<rect class="box" x="350" y="52" width="36" height="34" rx="6"/><rect class="box" x="350" y="118" width="36" height="34" rx="6"/><rect class="box visit" x="392" y="52" width="36" height="34" rx="6"/><text x="410" y="74" text-anchor="middle" class="mono">S</text><rect class="box" x="392" y="118" width="36" height="34" rx="6"/><rect class="box" x="434" y="52" width="36" height="34" rx="6"/><rect class="box bad" x="434" y="118" width="36" height="34" rx="6"/><text x="452" y="140" text-anchor="middle" class="mono">S</text><rect class="box" x="476" y="52" width="36" height="34" rx="6"/><rect class="box" x="476" y="118" width="36" height="34" rx="6"/><rect class="box visit" x="518" y="52" width="36" height="34" rx="6"/><text x="536" y="74" text-anchor="middle" class="mono">S</text><rect class="box path" x="518" y="118" width="36" height="34" rx="6"/><text x="536" y="140" text-anchor="middle" class="mono">S</text><rect class="box" x="560" y="52" width="36" height="34" rx="6"/><rect class="box" x="560" y="118" width="36" height="34" rx="6"/><path class="edge bad" d="M452 116 L410 90" marker-end="url(#dp-bitmask-digit-f6-bad)"/><path class="edge dash" d="M452 116 L494 90"/><path class="edge dash" d="M536 116 L494 90"/><path class="edge dash" d="M536 116 L578 90"/><text x="473" y="176" text-anchor="middle" class="small mono">seat 2 sees seat 1: ✗</text>
+<text x="320" y="204" text-anchor="middle" class="small mono">valid: sub &amp; (sub &lt;&lt; 1) == 0, sub &amp; (prev &lt;&lt; 1) == 0, sub &amp; (prev &gt;&gt; 1) == 0</text>
+</svg>
+<figcaption>A student can see the seats to the left, right, upper left and upper right. Directly in front is fine (left). A diagonal neighbour in the row above is not (right). Because only the row above can conflict, the previous row's mask is the whole state.</figcaption>
+</figure>
+
+<div class="tip">
+<p><strong>Precompute the valid row masks.</strong> In a row of width 10, only 144 of the 1024 masks have no two adjacent bits. Listing them once and listing the compatible pairs once turns the inner loops into a few thousand checks per row.</p>
+</div>
+<h2 id="digit-dp-count-numbers-without-listing-them">Digit DP: count numbers without listing them</h2>
+<p>"How many integers in <code>[1, N]</code> have all different digits?" With <code>N = 10¹⁸</code> you cannot check them one by one. But every such question has the same structure: <strong>write the numbers with the same number of digits as <code>N</code></strong> (pad with leading zeros), and build them <strong>one digit at a time from the left</strong>.</p>
+<h3 id="warm-up-counting-by-hand">Warm-up: counting by hand</h3>
+<p><a href="https://leetcode.com/problems/count-numbers-with-unique-digits/">Count Numbers with Unique Digits</a> asks the question for <code>0 ≤ x &lt; 10ⁿ</code>, which is every number with at most <code>n</code> digits. No upper bound gets in the way, so plain counting works. A <code>k</code>-digit number with distinct digits has 9 choices for the first digit (not 0), then 9, 8, 7, … for the rest.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def count_numbers_with_unique_digits(n: int) -&gt; int:
+    total, ways = 1, 9                         # &quot;0&quot;, then the 9 one-digit numbers 1..9
+    for length in range(1, n + 1):
+        total += ways                          # numbers with exactly `length` digits
+        ways *= 10 - length                    # next place: 9, 8, 7, … choices left
+    return total
+</code></pre>
+<pre><code class="language-csharp">public int CountNumbersWithUniqueDigits(int n) {
+    int total = 1, ways = 9;                         // &quot;0&quot;, then 9 one-digit numbers
+    for (int len = 1; len &lt;= n; len++) {
+        total += ways;                               // exactly len digits
+        ways *= 10 - len;                            // 9, 8, 7, ... choices left
+    }
+    return total;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n). For <code>n = 8</code> it gives 2,345,851. This is easy because every digit position is unconstrained. Now make the bound arbitrary, say <code>N = 2731</code>. The first digit can be 0, 1 or 2; but if it is 2, the second digit can only go up to 7, and if that is 7, the third can only go up to 3. The bound is what needs a DP.</p>
+<h3 id="tight-and-free">Tight and free</h3>
+<p>Compare a prefix of <code>x</code> with the prefix of <code>N</code> of the same length. There are only two situations:</p>
+<ul>
+<li><strong>Tight</strong>: the prefix of <code>x</code> <strong>equals</strong> the prefix of <code>N</code> (for example <code>27</code> when <code>N = 2731</code>). The next digit can only go up to <code>N</code>'s next digit, or <code>x</code> would exceed <code>N</code>. <strong>There is exactly one tight prefix of each length</strong>: <code>N</code>'s own.</li>
+<li><strong>Free</strong>: the prefix of <code>x</code> is already <strong>smaller</strong> than <code>N</code>'s prefix (for example <code>26</code>, or <code>1</code>). Then <code>x &lt; N</code> no matter what comes next, so every remaining digit can be anything from 0 to 9.</li>
+</ul>
+<p>A free prefix stays free forever. A tight prefix becomes free as soon as it takes a digit smaller than <code>N</code>'s digit, and stays tight only by copying <code>N</code>'s digit. So the numbers <code>≤ N</code> form a tree: <strong>one tight path running down <code>N</code>'s digits</strong>, with <strong>free subtrees hanging off it</strong> to the left.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 640 360" width="640" role="img" aria-label="A tree of digit choices for N = 2731: the tight path 2, 27, 273, 2731 on the right, and free blocks of 2000, 700, 30 and 1 numbers branching to the left">
+<defs><marker id="dp-bitmask-digit-f7-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="dp-bitmask-digit-f7-done" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker></defs>
+<text x="20" y="22" class="title">N = 2731: one tight path, free subtrees hanging off it</text>
+<rect class="box accent" x="430" y="40" width="90" height="32" rx="7"/><text x="475" y="61" text-anchor="middle" class="mono">(empty)</text>
+<path class="edge accent" d="M475 72 L475 100" marker-end="url(#dp-bitmask-digit-f7-accent)"/><text x="483" y="94" class="small mono">= 2</text>
+<text x="530" y="61" class="small mono muted">next ≤ 2</text>
+<rect class="box accent" x="430" y="102" width="90" height="32" rx="7"/><text x="475" y="123" text-anchor="middle" class="mono">2</text>
+<path class="edge accent" d="M475 134 L475 162" marker-end="url(#dp-bitmask-digit-f7-accent)"/><text x="483" y="156" class="small mono">= 7</text>
+<text x="530" y="123" class="small mono muted">next ≤ 7</text>
+<path class="edge done" d="M430 60 L362 110" marker-end="url(#dp-bitmask-digit-f7-done)"/>
+<rect class="box done" x="60" y="100" width="300" height="36" rx="7"/><text x="76" y="123" class="mono">0···, 1···</text><text x="344" y="123" text-anchor="end" class="small mono">2 × 10³ = 2000</text>
+<text x="392" y="78" text-anchor="end" class="small mono">d &lt; 2</text>
+<rect class="box accent" x="430" y="164" width="90" height="32" rx="7"/><text x="475" y="185" text-anchor="middle" class="mono">27</text>
+<path class="edge accent" d="M475 196 L475 224" marker-end="url(#dp-bitmask-digit-f7-accent)"/><text x="483" y="218" class="small mono">= 3</text>
+<text x="530" y="185" class="small mono muted">next ≤ 3</text>
+<path class="edge done" d="M430 122 L362 172" marker-end="url(#dp-bitmask-digit-f7-done)"/>
+<rect class="box done" x="60" y="162" width="300" height="36" rx="7"/><text x="76" y="185" class="mono">20··–26··</text><text x="344" y="185" text-anchor="end" class="small mono">7 × 10² = 700</text>
+<text x="392" y="140" text-anchor="end" class="small mono">d &lt; 7</text>
+<rect class="box accent" x="430" y="226" width="90" height="32" rx="7"/><text x="475" y="247" text-anchor="middle" class="mono">273</text>
+<path class="edge accent" d="M475 258 L475 286" marker-end="url(#dp-bitmask-digit-f7-accent)"/><text x="483" y="280" class="small mono">= 1</text>
+<text x="530" y="247" class="small mono muted">next ≤ 1</text>
+<path class="edge done" d="M430 184 L362 234" marker-end="url(#dp-bitmask-digit-f7-done)"/>
+<rect class="box done" x="60" y="224" width="300" height="36" rx="7"/><text x="76" y="247" class="mono">270·–272·</text><text x="344" y="247" text-anchor="end" class="small mono">3 × 10 = 30</text>
+<text x="392" y="202" text-anchor="end" class="small mono">d &lt; 3</text>
+<rect class="box accent" x="430" y="288" width="90" height="32" rx="7"/><text x="475" y="309" text-anchor="middle" class="mono">2731</text>
+<path class="edge done" d="M430 246 L362 296" marker-end="url(#dp-bitmask-digit-f7-done)"/>
+<rect class="box done" x="60" y="286" width="300" height="36" rx="7"/><text x="76" y="309" class="mono">2730</text><text x="344" y="309" text-anchor="end" class="small mono">1</text>
+<text x="392" y="264" text-anchor="end" class="small mono">d &lt; 1</text>
+<text x="530" y="309" class="small mono muted">= N: 1</text>
+<text x="320" y="348" text-anchor="middle" class="mono">2000 + 700 + 30 + 1 + 1 = 2732 numbers in 0..2731</text>
+</svg>
+<figcaption>At each tight prefix, a digit smaller than N's digit leaves N behind for good: everything below it is free, and only its count matters (a free block). Copying N's digit stays tight. The free blocks plus N itself cover every number from 0 to N exactly once, and a digit DP just counts, inside each free block, the numbers with the property.</figcaption>
+</figure>
+
+<p>Now the key insight: <strong>two free prefixes of the same length behave identically</strong>, as long as they agree on whatever the property needs to remember (the digits used, the digit sum, the remainder, …). Their futures are the same set of suffixes. So the count for a free subtree depends only on <code>(position, state)</code>, and can be memoised. That is why digit DP is fast: there are only <code>len(N) × (number of states)</code> free subproblems, and the tight path adds just one more state per position.</p>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · STATE</small><strong>f(pos, state, tight, started)</strong><p>How many ways to finish the number from position pos, given what the prefix needs to remember.</p></div>
+<div class="flow-step"><small>2 · TRANSITION</small><strong>Try every digit d ≤ hi</strong><p>hi = N[pos] if tight else 9. Tight stays tight only if d == hi. Skip digits the rule forbids.</p></div>
+<div class="flow-step"><small>3 · BASE</small><strong>pos == len(N)</strong><p>The number is complete: return 1 if it has the property (and is not "empty"), else 0.</p></div>
+<div class="flow-step"><small>4 · ORDER</small><strong>Memoised recursion</strong><p>Each call only needs pos + 1. Or iterate forward position by position (the table view below).</p></div>
+<div class="flow-step"><small>5 · ANSWER</small><strong>f(0, initial, True, False)</strong><p>O(len(N) · states · 10) time. For N ≤ 10¹⁸ the length is at most 19.</p></div>
+</div>
+
+<h3 id="watch-the-walk-count-special-integers">Watch the walk: count special integers</h3>
+<p><a href="https://leetcode.com/problems/count-special-integers/">Count Special Integers</a>: how many <code>x</code> in <code>[1, N]</code> have all distinct digits? The state needs the <strong>set of digits used so far</strong>, a 10-bit mask. This is bitmask DP inside digit DP.</p>
+<p>The visualizer walks down <code>N</code>'s digits. At each position it lists every digit choice: the ones <strong>smaller</strong> than <code>N</code>'s digit open a free subtree (it shows how many numbers that subtree holds), the digit <strong>equal</strong> to <code>N</code>'s digit continues the tight path, and the ones that break the rule are crossed out. Then the counts return up the tight path. Switch to <strong>digits from a set</strong> for <a href="#6-numbers-at-most-n-given-digit-set-an-empty-place-is-not-a-zero">Numbers At Most N Given Digit Set</a> (worked below).</p>
+<div class="viz dbd-wide" data-viz="dp-bitmask-digit-walk"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def count_special(n: int) -&gt; int:
+    s = str(n)
+    @cache
+    def f(pos: int, mask: int, tight: bool, started: bool) -&gt; int:
+        if pos == len(s):
+            return int(started)                # 0 is not a positive integer
+        hi = int(s[pos]) if tight else 9       # tight: stay at or below n's digit
+        total = 0
+        for d in range(hi + 1):
+            if not started and d == 0:         # still a leading zero: no digit used
+                total += f(pos + 1, mask, tight and d == hi, False)
+            elif not mask &gt;&gt; d &amp; 1:            # d not used yet
+                total += f(pos + 1, mask | 1 &lt;&lt; d, tight and d == hi, True)
+        return total
+    return f(0, 0, True, False)
+
+def num_dup_digits_at_most_n(n: int) -&gt; int:
+    return n - count_special(n)                # LeetCode 1012: the complement
+</code></pre>
+<pre><code class="language-csharp">public int CountSpecialNumbers(int n) {
+    string s = n.ToString();
+    var memo = new Dictionary&lt;(int, int, bool), int&gt;();   // free states only
+    int F(int pos, int mask, bool tight, bool started) {
+        if (pos == s.Length) return started ? 1 : 0;
+        if (!tight &amp;&amp; memo.TryGetValue((pos, mask, started), out int v)) return v;
+        int hi = tight ? s[pos] - '0' : 9, total = 0;
+        for (int d = 0; d &lt;= hi; d++) {
+            if (!started &amp;&amp; d == 0) total += F(pos + 1, mask, tight &amp;&amp; d == hi, false);
+            else if ((mask &gt;&gt; d &amp; 1) == 0) total += F(pos + 1, mask | 1 &lt;&lt; d, tight &amp;&amp; d == hi, true);
+        }
+        if (!tight) memo[(pos, mask, started)] = total;
+        return total;
+    }
+    return F(0, 0, true, false);
+}
+
+public int NumDupDigitsAtMostN(int n) =&gt; n - CountSpecialNumbers(n);   // LeetCode 1012
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(L · 2¹⁰ · 10) time with <code>L = len(str(N))</code>, though only a small fraction of the masks is reachable. <code>count_special(135) = 110</code>. <a href="https://leetcode.com/problems/numbers-with-repeated-digits/">Numbers With Repeated Digits</a> is the complement, <code>N − count_special(N)</code>: for <code>N = 1000</code>, 262.</p>
+<div class="insight">
+<p><strong>Only free states are worth caching.</strong> There is exactly one tight state per position, so it is visited once anyway. Python's <code>@cache</code> stores it too, which is harmless. The C# version memoises only the free states (<code>if (!tight &amp;&amp; memo.TryGetValue(…))</code>), so its memo key does not need the <code>tight</code> flag at all, and the memo stays small.</p>
+</div>
+<h3 id="the-leading-zero-flag">The leading-zero flag</h3>
+<p><code>started</code> says whether a non-zero digit has been placed yet. You need it whenever a <strong>leading zero would change the answer</strong>:</p>
+<ul>
+<li><strong>Distinct digits</strong>: <code>0012</code> has two zeros, but it really is <code>12</code>, which is fine. While <code>started</code> is false, a 0 is padding and must not go into the mask.</li>
+<li><strong>Digits from a set without 0</strong>: padding zeros are "empty places", not the digit 0.</li>
+<li><strong>Counting <code>[1, N]</code></strong>: the all-zero number <code>000</code> is not a positive integer, so the base case returns <code>int(started)</code>.</li>
+<li><strong>Digit sum, count of 1s, remainder</strong>: leading zeros add 0, so they <strong>don't</strong> change anything, and you can drop the flag.</li>
+</ul>
+<div class="pitfall">
+<p><strong>Forgetting the flag is the most common digit-DP bug.</strong> It usually shows up as an off-by-one (counting 0), or as an undercount when a rule like "distinct digits" sees the padding zeros as real zeros. When in doubt, check <code>f</code> for <code>N = 9</code>, <code>N = 10</code> and <code>N = 100</code> against a loop.</p>
+</div>
+<h3 id="the-table-view-free-counts-move-forward">The table view: free counts move forward</h3>
+<p>The recursion is the usual way to write digit DP, but it helps to see the same computation <strong>forward</strong>. Keep <code>free[state]</code> = how many free prefixes of the current length have that state, plus the one tight prefix. For each digit of <code>N</code>:</p>
+<ol>
+<li><strong>free → free</strong>: every free prefix takes every digit 0..9.</li>
+<li><strong>tight → free</strong>: the tight prefix takes every digit <strong>smaller</strong> than <code>N</code>'s digit; those prefixes become free.</li>
+<li><strong>tight → tight</strong>: it takes <code>N</code>'s digit and stays tight (or dies, if that digit is not allowed).</li>
+</ol>
+<p>At the end, the answer is the sum of <code>free[s]</code> over the good states <code>s</code>, plus 1 if the tight prefix (<code>N</code> itself) is good. The visualizer does this for three problems: digit sum equal to <code>S</code>, the number of times digit <code>d</code> appears in <code>0..N</code> (<a href="#7-number-of-digit-one-count-occurrences-not-numbers">Number of Digit One</a>), and binary numbers without two adjacent 1s.</p>
+<div class="viz dbd-wide" data-viz="dp-bitmask-digit-table"></div>
+
+<h3 id="binary-digits-non-negative-integers-without-consecutive-ones">Binary digits: non-negative integers without consecutive ones</h3>
+<p><a href="https://leetcode.com/problems/non-negative-integers-without-consecutive-ones/">Non-negative Integers without Consecutive Ones</a>: count <code>x</code> in <code>[0, n]</code> whose binary form has no <code>11</code>. Same machinery, base 2, and the state is the <strong>previous bit</strong>. No <code>started</code> flag is needed: leading zeros never create <code>11</code>, and 0 counts.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def find_integers(n: int) -&gt; int:
+    s = bin(n)[2:]
+    @cache
+    def f(pos: int, last: int, tight: bool) -&gt; int:
+        if pos == len(s):
+            return 1                           # 0 counts too: [0, n]
+        hi = int(s[pos]) if tight else 1
+        total = 0
+        for b in range(hi + 1):
+            if b == 1 and last == 1:           # would create &quot;11&quot;
+                continue
+            total += f(pos + 1, b, tight and b == hi)
+        return total
+    return f(0, 0, True)
+</code></pre>
+<pre><code class="language-csharp">public int FindIntegers(int n) {
+    string s = Convert.ToString(n, 2);
+    var memo = new Dictionary&lt;(int, int), int&gt;();
+    int F(int pos, int last, bool tight) {
+        if (pos == s.Length) return 1;               // 0 counts too: [0, n]
+        if (!tight &amp;&amp; memo.TryGetValue((pos, last), out int v)) return v;
+        int hi = tight ? s[pos] - '0' : 1, total = 0;
+        for (int b = 0; b &lt;= hi; b++) {
+            if (b == 1 &amp;&amp; last == 1) continue;       // would create &quot;11&quot;
+            total += F(pos + 1, b, tight &amp;&amp; b == hi);
+        }
+        if (!tight) memo[(pos, last)] = total;
+        return total;
+    }
+    return F(0, 0, true);
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(log n) states, 2 digits each. <code>find_integers(5) = 5</code> (0, 1, 2, 4, 5). The free count with <code>k</code> bits left is a Fibonacci number, which is the famous closed-form solution; the DP finds it without needing to see that.</p>
+<h3 id="ranges-fr-fl-1">Ranges: f(R) − f(L − 1)</h3>
+<p>Most digit-DP problems ask about a range <code>[L, R]</code>. Count <code>[0, R]</code> and subtract <code>[0, L − 1]</code>. When <code>L</code> is given as a long <strong>string</strong> (up to 10²² in <a href="#8-count-of-integers-two-bounds-and-a-pruned-sum">Count of Integers</a>), subtracting 1 is fiddly, so compute <code>f(R) − f(L)</code> and add 1 back if <code>L</code> itself qualifies.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 640 212" width="640" role="img" aria-label="A number line from 0 to R: f of R covers 0 to R, f of L minus 1 covers 0 to L minus 1, and their difference is exactly L to R">
+<text x="20" y="22" class="title">A range is a difference of two prefixes</text>
+<rect class="box visit" x="40" y="40" width="520" height="26" rx="7"/><text x="300" y="58" text-anchor="middle" class="small mono">f(R): every x in 0..R</text>
+<rect class="box bad" x="40" y="74" width="210" height="26" rx="7"/><text x="145" y="92" text-anchor="middle" class="small mono">f(L − 1): 0..L − 1</text>
+<path class="edge" d="M30 120 L610 120"/>
+<path class="edge" d="M40 113 L40 127"/><text x="40" y="142" text-anchor="middle" class="small mono">0</text>
+<path class="edge" d="M250 113 L250 127"/><text x="250" y="142" text-anchor="middle" class="small mono">L − 1</text>
+<path class="edge" d="M280 113 L280 127"/><text x="280" y="142" text-anchor="middle" class="small mono">L</text>
+<path class="edge" d="M560 113 L560 127"/><text x="560" y="142" text-anchor="middle" class="small mono">R</text>
+<rect class="box path" x="280" y="150" width="280" height="26" rx="7"/><text x="420" y="168" text-anchor="middle" class="small mono">[L, R] = f(R) − f(L − 1)</text>
+<text x="320" y="200" text-anchor="middle" class="small muted">string bounds: f(R) − f(L) + (1 if L itself qualifies), no need to compute L − 1</text>
+</svg>
+<figcaption>Digit DP counts prefixes of the number line, [0, N]. Any range is the difference of two of them. With huge string bounds, counting [0, L] and adding L back if it qualifies avoids string subtraction.</figcaption>
+</figure>
+
+<h3 id="what-goes-in-the-state">What goes in the state?</h3>
+<p>The state is "whatever the rule needs to know about the prefix". Spotting it is the whole problem:</p>
+<table>
+<thead>
+<tr>
+<th>Property of x</th>
+<th>Extra state</th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>all digits distinct</td>
+<td>mask of digits used</td>
+<td>2¹⁰</td>
+</tr>
+<tr>
+<td>digit sum = S, ≤ S, in a range</td>
+<td>sum so far (prune once it is too big)</td>
+<td>9·L + 1</td>
+</tr>
+<tr>
+<td>divisible by k</td>
+<td><code>x mod k</code> so far: <code>(r·10 + d) % k</code></td>
+<td>k</td>
+</tr>
+<tr>
+<td>no two equal adjacent digits, "stepping" numbers</td>
+<td>the last digit</td>
+<td>10</td>
+</tr>
+<tr>
+<td>counts of each parity, "beautiful" numbers</td>
+<td>(even − odd) and the remainder</td>
+<td>L · k</td>
+</tr>
+<tr>
+<td>how many times digit d appears (sum over all x)</td>
+<td>the count so far, returned at the end</td>
+<td>L</td>
+</tr>
+<tr>
+<td>digits never decrease</td>
+<td>the last digit</td>
+<td>10</td>
+</tr>
+<tr>
+<td>no <code>11</code> in binary</td>
+<td>the last bit</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<div class="tip">
+<p><strong>"Count of something over all x" is still a count.</strong> In Number of Digit One you don't count numbers, you count <strong>ones across all numbers</strong>. Carry the number of ones so far in the state and return it at the base case, so each finished number contributes its own count. The alternative is to return a pair <code>(numbers, total)</code> from each call, which avoids the extra state.</p>
+</div>
+<h2 id="recognize-it-cost-it-avoid-the-traps">Recognize it, cost it, avoid the traps</h2>
+<div class="recognize">
+<p><strong>Reach for bitmask DP when:</strong></p>
+<ul>
+<li>one dimension of the input is <strong>tiny</strong> (n ≤ 20, often ≤ 16 or ≤ 12) while the others may be large;</li>
+<li>the brute force tries <strong>orderings</strong> or <strong>subsets</strong> of those few items, and the future depends only on <strong>which</strong> items are used, not their order;</li>
+<li>the statement says "each … exactly once", "visit all", "cover every skill / requirement", "assign", "split into groups";</li>
+<li>a grid is <strong>narrow</strong> (width ≤ 10) and each row only interacts with the row above (row masks, broken profile).</li>
+</ul>
+<p><strong>Reach for digit DP when:</strong></p>
+<ul>
+<li>you must <strong>count</strong> integers in <code>[L, R]</code> (or sum something over them), and <code>R</code> is up to 10⁹, 10¹⁸ or given as a string;</li>
+<li>the property is about the <strong>digits</strong> (sum, distinct, adjacent digits, a digit's count, divisibility, binary pattern);</li>
+<li>an answer "mod 10⁹+7" over a huge numeric range appears.</li>
+</ul>
+</div>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>State</th>
+<th>Transition</th>
+<th>Time</th>
+<th>Memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subset table (sums, OR, validity)</td>
+<td><code>s[mask]</code></td>
+<td>drop the lowest bit</td>
+<td>O(2ⁿ)</td>
+<td>O(2ⁿ)</td>
+</tr>
+<tr>
+<td>Assignment (people ↔ tasks)</td>
+<td><code>dp[mask]</code>, person = popcount</td>
+<td>free task</td>
+<td>O(n·2ⁿ)</td>
+<td>O(2ⁿ)</td>
+</tr>
+<tr>
+<td>TSP / Hamiltonian path</td>
+<td><code>dp[mask][last]</code></td>
+<td>next unvisited</td>
+<td>O(n²·2ⁿ)</td>
+<td>O(n·2ⁿ)</td>
+</tr>
+<tr>
+<td>Items into k buckets one at a time</td>
+<td><code>fill[mask]</code></td>
+<td>next item that fits</td>
+<td>O(n·2ⁿ)</td>
+<td>O(2ⁿ)</td>
+</tr>
+<tr>
+<td>One group takes a submask</td>
+<td><code>dp[mask]</code> per group</td>
+<td><code>sub ⊆ mask</code></td>
+<td>O(3ⁿ) per layer</td>
+<td>O(2ⁿ)</td>
+</tr>
+<tr>
+<td>Sum over subsets</td>
+<td><code>F[mask]</code></td>
+<td>one bit per pass</td>
+<td>O(n·2ⁿ)</td>
+<td>O(2ⁿ)</td>
+</tr>
+<tr>
+<td>Row masks</td>
+<td><code>dp[row][mask]</code></td>
+<td>compatible previous mask</td>
+<td>O(rows·4ʷ) or less</td>
+<td>O(2ʷ)</td>
+</tr>
+<tr>
+<td>Broken profile</td>
+<td><code>ways[profile]</code> per cell</td>
+<td>1–2 placements</td>
+<td>O(R·C·2ᴿ)</td>
+<td>O(2ᴿ)</td>
+</tr>
+<tr>
+<td>Digit DP</td>
+<td><code>f(pos, state, tight, started)</code></td>
+<td>digit 0..hi</td>
+<td>O(L·states·10)</td>
+<td>O(L·states)</td>
+</tr>
+</tbody>
+</table>
+<div class="pitfall">
+<p><strong>The traps that cost the most time:</strong></p>
+<ul>
+<li><strong>Operator precedence.</strong> <code>mask &amp; 1 &lt;&lt; i == 0</code> means <code>mask &amp; ((1 &lt;&lt; i) == 0)</code> in C#, Java and C++. Write <code>(mask &gt;&gt; i &amp; 1) == 0</code>.</li>
+<li><strong>Item 0 is the rightmost bit.</strong> When you draw a mask, read it right to left.</li>
+<li><strong>A mask over the wrong side.</strong> Put the <strong>smaller</strong> group in the mask (40 hats vs 10 people: the people go in the mask).</li>
+<li><strong>0/1 vs unbounded.</strong> When the items are the outer loop and you update <code>dp</code> in place, iterate masks from <strong>high to low</strong> (or loop over a snapshot), or the same item gets used twice.</li>
+<li><strong>4ⁿ instead of 3ⁿ.</strong> Enumerate submasks with <code>(sub − 1) &amp; mask</code>, never by testing every number.</li>
+<li><strong>Digit DP without <code>started</code>.</strong> Leading zeros are padding: they must not count as digit 0 for "distinct digits" or "digits from a set", and the all-zero number may need excluding.</li>
+<li><strong>Caching across different N.</strong> In Python, a <code>@cache</code> defined inside the function is fresh for each call; a global one would reuse answers computed for a different <code>N</code> and return garbage.</li>
+<li><strong>Range arithmetic.</strong> <code>[L, R] = f(R) − f(L − 1)</code>. With string bounds, use <code>f(R) − f(L) + [L is good]</code>, and take the result mod 10⁹+7 <strong>after</strong> the subtraction (add MOD before <code>%</code> in C#).</li>
+</ul>
+</div>
+<h2 id="worked-problems">Worked problems</h2>
+<p>Each problem is solved in Python and C#. The solutions were checked against a brute force (every assignment, ordering or subset for the bitmask problems; a plain loop over every number for the digit problems) on thousands of random small inputs, plus the official examples. The Python snippets assume <code>from functools import cache</code>, <code>from collections import defaultdict</code>, <code>inf = float("inf")</code> and <code>MOD = 10**9 + 7</code>. The C# methods assume <code>using System.Linq;</code> and <code>using System.Numerics;</code> (for <code>BitOperations.PopCount</code>) and <code>const int MOD = 1_000_000_007</code>.</p>
+<h3 id="1-smallest-sufficient-team-the-skills-are-the-mask">1. Smallest Sufficient Team: the skills are the mask</h3>
+<p><a href="https://leetcode.com/problems/smallest-sufficient-team/">LeetCode 1125</a> <span class="diff hard">Hard</span>. There are up to 16 required skills and up to 60 people, each with some of the skills. Return a smallest team whose skills together cover every required skill.</p>
+<p><strong>Key insight.</strong> 60 people is far too many for a mask, but 16 skills is perfect. Map each skill to a bit, so each person becomes a skills mask <code>have[i]</code>. Then it is a 0/1 knapsack over people where the "weight" is a set union: <code>team[mask | have[i]]</code> can be reached from <code>team[mask]</code> by adding person <code>i</code>. Keep, for each covered set, the smallest team found. Loop over a <strong>snapshot</strong> of the current entries, so each person is added at most once per round.</p>
+<details class="solution">
+<p><summary>Solution: dp over the covered-skills mask, O(people · 2ᵐ)</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def smallest_sufficient_team(req_skills: list[str], people: list[list[str]]) -&gt; list[int]:
+    idx = {s: i for i, s in enumerate(req_skills)}
+    m = len(req_skills)
+    have = [sum(1 &lt;&lt; idx[s] for s in p) for p in people]
+    team = {0: []}                             # skills mask -&gt; smallest team found
+    for i, h in enumerate(have):
+        if h == 0:
+            continue
+        for mask, t in list(team.items()):     # snapshot: person i used at most once
+            nxt = mask | h
+            if nxt not in team or len(team[nxt]) &gt; len(t) + 1:
+                team[nxt] = t + [i]
+    return team[(1 &lt;&lt; m) - 1]
+</code></pre>
+<pre><code class="language-csharp">public int[] SmallestSufficientTeam(string[] req_skills, IList&lt;IList&lt;string&gt;&gt; people) {
+    var idx = new Dictionary&lt;string, int&gt;();
+    for (int i = 0; i &lt; req_skills.Length; i++) idx[req_skills[i]] = i;
+    var team = new Dictionary&lt;int, List&lt;int&gt;&gt; { [0] = new() };   // skills mask -&gt; team
+    for (int i = 0; i &lt; people.Count; i++) {
+        int h = 0;
+        foreach (var s in people[i]) h |= 1 &lt;&lt; idx[s];
+        if (h == 0) continue;
+        foreach (var (mask, t) in team.ToList()) {   // snapshot: person i used once
+            int nxt = mask | h;
+            if (!team.TryGetValue(nxt, out var cur) || cur.Count &gt; t.Count + 1)
+                team[nxt] = new List&lt;int&gt;(t) { i };
+        }
+    }
+    return team[(1 &lt;&lt; req_skills.Length) - 1].ToArray();
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(P · 2ᵐ) time and O(2ᵐ · m) memory with <code>m</code> skills, <code>P</code> people. Storing a whole list per mask is fine for m ≤ 16; to save memory, store only the size and the last person and the previous mask, then walk back. Pruning helps a lot: drop people whose skills are a subset of someone else's.</p>
+</details>
+<h3 id="2-parallel-courses-ii-pick-exactly-k-from-the-available-courses">2. Parallel Courses II: pick exactly k from the available courses</h3>
+<p><a href="https://leetcode.com/problems/parallel-courses-ii/">LeetCode 1494</a> <span class="diff hard">Hard</span>. <code>n ≤ 15</code> courses with prerequisites, and at most <code>k</code> courses per semester. Find the minimum number of semesters to take them all.</p>
+<p><strong>Key insight.</strong> The state is the set of courses already taken. From it, the <strong>available</strong> courses (not taken, all prerequisites taken) are fixed. If at most <code>k</code> are available, take them all: taking more never hurts. If more than <code>k</code> are available, <strong>greedy choices fail</strong> (which courses unlock the most later is not a local question), so try every submask of the available courses with exactly <code>k</code> bits. Submask enumeration keeps the whole DP within 3ⁿ.</p>
+<details class="solution">
+<p><summary>Solution: dp[taken] with k-sized submasks of the available set, O(3ⁿ)</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def min_number_of_semesters(n: int, relations: list[list[int]], k: int) -&gt; int:
+    pre = [0] * n
+    for a, b in relations:
+        pre[b - 1] |= 1 &lt;&lt; (a - 1)             # course b needs course a
+    FULL = (1 &lt;&lt; n) - 1
+    dp = [inf] * (1 &lt;&lt; n)                      # dp[taken]: fewest semesters
+    dp[0] = 0
+    for taken in range(1 &lt;&lt; n):
+        if dp[taken] == inf:
+            continue
+        avail = 0
+        for c in range(n):                     # not taken yet, prerequisites done
+            if not taken &gt;&gt; c &amp; 1 and pre[c] &amp; taken == pre[c]:
+                avail |= 1 &lt;&lt; c
+        if avail.bit_count() &lt;= k:             # take them all: never worse
+            dp[taken | avail] = min(dp[taken | avail], dp[taken] + 1)
+            continue
+        sub = avail
+        while sub:                             # choose exactly k of them
+            if sub.bit_count() == k:
+                dp[taken | sub] = min(dp[taken | sub], dp[taken] + 1)
+            sub = (sub - 1) &amp; avail
+    return dp[FULL]
+</code></pre>
+<pre><code class="language-csharp">public int MinNumberOfSemesters(int n, int[][] relations, int k) {
+    var pre = new int[n];
+    foreach (var r in relations) pre[r[1] - 1] |= 1 &lt;&lt; (r[0] - 1);
+    int FULL = (1 &lt;&lt; n) - 1;
+    var dp = new int[1 &lt;&lt; n];
+    Array.Fill(dp, int.MaxValue);
+    dp[0] = 0;
+    for (int taken = 0; taken &lt;= FULL; taken++) {
+        if (dp[taken] == int.MaxValue) continue;
+        int avail = 0;
+        for (int c = 0; c &lt; n; c++)
+            if ((taken &gt;&gt; c &amp; 1) == 0 &amp;&amp; (pre[c] &amp; taken) == pre[c]) avail |= 1 &lt;&lt; c;
+        if (BitOperations.PopCount((uint)avail) &lt;= k) {   // take them all
+            dp[taken | avail] = Math.Min(dp[taken | avail], dp[taken] + 1);
+            continue;
+        }
+        for (int sub = avail; sub &gt; 0; sub = (sub - 1) &amp; avail)   // exactly k of them
+            if (BitOperations.PopCount((uint)sub) == k)
+                dp[taken | sub] = Math.Min(dp[taken | sub], dp[taken] + 1);
+    }
+    return dp[FULL];
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(3ⁿ + n·2ⁿ) time, O(2ⁿ) memory. For <code>n = 4</code>, <code>relations = [[2,1],[3,1],[1,4]]</code>, <code>k = 2</code>, the answer is 3 (<code>{2, 3}</code>, then <code>{1}</code>, then <code>{4}</code>). A popular wrong answer picks the <code>k</code> available courses with the most dependants (or the longest chain behind them). Such greedy rules fail on some inputs, which is why the DP tries every <code>k</code>-subset.</p>
+</details>
+<h3 id="3-number-of-ways-to-wear-different-hats-flip-which-side-is-the-mask">3. Number of Ways to Wear Different Hats: flip which side is the mask</h3>
+<p><a href="https://leetcode.com/problems/number-of-ways-to-wear-different-hats-to-each-other/">LeetCode 1434</a> <span class="diff hard">Hard</span>. <code>n ≤ 10</code> people and 40 kinds of hats. Each person likes some hats. Count the ways to give every person a hat they like, with no two people wearing the same hat (mod 10⁹+7).</p>
+<p><strong>Key insight.</strong> The obvious state, "which hats are used", needs 2⁴⁰ masks. But there are only 10 people. So <strong>loop over the hats</strong> (the items, one at a time) and keep a <strong>mask of the people who already have a hat</strong>. For hat <code>h</code>, either nobody takes it, or one person who likes it and has no hat yet takes it. Iterate masks <strong>from high to low</strong> so that hat <code>h</code> is given at most once within its own round (the 0/1 knapsack trick). The visualizer shows each hat's round:</p>
+<div class="viz dbd-wide" data-viz="dp-bitmask-digit-assign" data-opts='{"mode":"wear different hats (1434)"}'></div>
+
+<details class="solution">
+<p><summary>Solution: hats as items, mask over people, O(40 · n · 2ⁿ)</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def number_ways(hats: list[list[int]]) -&gt; int:
+    n = len(hats)
+    likes = defaultdict(list)                  # hat -&gt; people who like it
+    for p, hs in enumerate(hats):
+        for h in hs:
+            likes[h].append(p)
+    dp = [0] * (1 &lt;&lt; n)                        # dp[mask]: people in mask have a hat
+    dp[0] = 1
+    for h in range(1, 41):                     # hats are the items, one by one
+        for mask in range((1 &lt;&lt; n) - 1, -1, -1):   # high to low: hat h used once
+            if not dp[mask]:
+                continue
+            for p in likes[h]:
+                if not mask &gt;&gt; p &amp; 1:
+                    nxt = mask | 1 &lt;&lt; p
+                    dp[nxt] = (dp[nxt] + dp[mask]) % MOD
+    return dp[(1 &lt;&lt; n) - 1]
+</code></pre>
+<pre><code class="language-csharp">public int NumberWays(IList&lt;IList&lt;int&gt;&gt; hats) {
+    int n = hats.Count;
+    var likes = new List&lt;int&gt;[41];                   // hat -&gt; people who like it
+    for (int h = 0; h &lt;= 40; h++) likes[h] = new();
+    for (int p = 0; p &lt; n; p++) foreach (int h in hats[p]) likes[h].Add(p);
+    var dp = new long[1 &lt;&lt; n];                       // dp[mask]: these people have hats
+    dp[0] = 1;
+    for (int h = 1; h &lt;= 40; h++)                    // hats are the items
+        for (int mask = (1 &lt;&lt; n) - 1; mask &gt;= 0; mask--) {   // high to low: hat h once
+            if (dp[mask] == 0) continue;
+            foreach (int p in likes[h])
+                if ((mask &gt;&gt; p &amp; 1) == 0) {
+                    int nxt = mask | 1 &lt;&lt; p;
+                    dp[nxt] = (dp[nxt] + dp[mask]) % MOD;
+                }
+        }
+    return (int)dp[(1 &lt;&lt; n) - 1];
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(40 · n · 2ⁿ) time, O(2ⁿ) memory: about 4·10⁵ steps for n = 10. <code>[[3,5,1],[3,5]]</code> gives 4, and <code>[[3,4],[4,5],[5]]</code> gives 1. Rule of thumb: when the two sides of a matching have very different sizes, <strong>the small side is the mask and the large side is the loop</strong>.</p>
+</details>
+<h3 id="4-minimum-cost-to-connect-two-groups-of-points-one-partner-each-then-patch-the-rest">4. Minimum Cost to Connect Two Groups of Points: one partner each, then patch the rest</h3>
+<p><a href="https://leetcode.com/problems/minimum-cost-to-connect-two-groups-of-points/">LeetCode 1595</a> <span class="diff hard">Hard</span>. Group 1 has <code>size1</code> points and group 2 has <code>size2 ≤ size1 ≤ 12</code> points. Connecting <code>i</code> and <code>j</code> costs <code>cost[i][j]</code>. Every point of both groups must have at least one connection. Minimise the total cost.</p>
+<p><strong>Key insight.</strong> In an optimal solution, look at each group-1 point. It needs at least one edge. Any <strong>extra</strong> edges it has only exist to cover some group-2 point, and that point could instead use <strong>its own cheapest edge</strong> at no greater cost. So, without loss: every group-1 point picks <strong>exactly one</strong> partner (a row-by-row assignment with a mask over group 2, like the assignment DP but partners may repeat), and at the end every group-2 point still uncovered adds its cheapest edge.</p>
+<details class="solution">
+<p><summary>Solution: rows pick one partner, mask over group 2, then patch, O(size1 · size2 · 2^size2)</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def connect_two_groups(cost: list[list[int]]) -&gt; int:
+    n1, n2 = len(cost), len(cost[0])           # mask over the smaller group 2
+    cheapest = [min(cost[i][j] for i in range(n1)) for j in range(n2)]
+    dp = [inf] * (1 &lt;&lt; n2)                     # dp[mask]: group-1 rows so far, mask touched
+    dp[0] = 0
+    for i in range(n1):                        # each group-1 point picks one partner
+        new = [inf] * (1 &lt;&lt; n2)
+        for mask in range(1 &lt;&lt; n2):
+            if dp[mask] == inf:
+                continue
+            for j in range(n2):
+                nxt = mask | 1 &lt;&lt; j
+                new[nxt] = min(new[nxt], dp[mask] + cost[i][j])
+        dp = new
+    best = inf
+    for mask in range(1 &lt;&lt; n2):                # leftover group-2 points: cheapest edge
+        extra = sum(cheapest[j] for j in range(n2) if not mask &gt;&gt; j &amp; 1)
+        best = min(best, dp[mask] + extra)
+    return best
+</code></pre>
+<pre><code class="language-csharp">public int ConnectTwoGroups(IList&lt;IList&lt;int&gt;&gt; cost) {
+    int n1 = cost.Count, n2 = cost[0].Count, INF = int.MaxValue / 2;
+    var cheapest = new int[n2];
+    for (int j = 0; j &lt; n2; j++) { cheapest[j] = INF; for (int i = 0; i &lt; n1; i++) cheapest[j] = Math.Min(cheapest[j], cost[i][j]); }
+    var dp = new int[1 &lt;&lt; n2];                       // dp[mask]: group-2 points touched
+    Array.Fill(dp, INF);
+    dp[0] = 0;
+    for (int i = 0; i &lt; n1; i++) {                   // each group-1 point picks a partner
+        var nw = new int[1 &lt;&lt; n2];
+        Array.Fill(nw, INF);
+        for (int mask = 0; mask &lt; 1 &lt;&lt; n2; mask++) {
+            if (dp[mask] == INF) continue;
+            for (int j = 0; j &lt; n2; j++)
+                nw[mask | 1 &lt;&lt; j] = Math.Min(nw[mask | 1 &lt;&lt; j], dp[mask] + cost[i][j]);
+        }
+        dp = nw;
+    }
+    int best = INF;
+    for (int mask = 0; mask &lt; 1 &lt;&lt; n2; mask++) {     // leftovers take their cheapest edge
+        int extra = 0;
+        for (int j = 0; j &lt; n2; j++) if ((mask &gt;&gt; j &amp; 1) == 0) extra += cheapest[j];
+        best = Math.Min(best, dp[mask] + extra);
+    }
+    return best;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n₁ · n₂ · 2ⁿ²) time, O(2ⁿ²) memory. The official examples give 17, 4 and 10. The mask goes over the <strong>smaller</strong> group, which keeps it at 2¹² = 4096 states.</p>
+</details>
+<h3 id="5-maximum-students-taking-exam-the-previous-row-is-the-state">5. Maximum Students Taking Exam: the previous row is the state</h3>
+<p><a href="https://leetcode.com/problems/maximum-students-taking-exam/">LeetCode 1349</a> <span class="diff hard">Hard</span>. A classroom of <code>m × n ≤ 8 × 8</code> seats, some broken (<code>#</code>). A student can see the answers of anyone to the left, right, upper left and upper right. Seat as many students as possible so that nobody can cheat.</p>
+<p><strong>Key insight.</strong> Process the rows top to bottom. The only thing row <code>i</code> needs to know about the past is <strong>which seats of row <code>i − 1</code> are taken</strong>, so <code>dp[mask]</code> = the best total with the previous row seated as <code>mask</code>. A row mask is valid if it uses only good seats and has no two neighbours (<code>sub &amp; sub &lt;&lt; 1 == 0</code>). Two consecutive rows are compatible if no student is diagonally in front of another: <code>sub &amp; prev &lt;&lt; 1 == 0</code> and <code>sub &amp; prev &gt;&gt; 1 == 0</code>. Enumerate only the submasks of the row's good seats.</p>
+<details class="solution">
+<p><summary>Solution: row-by-row mask DP, O(m · 4ⁿ)</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def max_students(seats: list[list[str]]) -&gt; int:
+    m, n = len(seats), len(seats[0])
+    good = [sum(1 &lt;&lt; j for j in range(n) if row[j] == &quot;.&quot;) for row in seats]
+    dp = {0: 0}                                # previous row's mask -&gt; best total
+    for i in range(m):
+        new = {}
+        sub = good[i]
+        while True:                            # every subset of this row's good seats
+            if not sub &amp; (sub &lt;&lt; 1):           # no two neighbours side by side
+                best = -1
+                for prev, val in dp.items():   # nobody diagonally in front
+                    if not sub &amp; (prev &lt;&lt; 1) and not sub &amp; (prev &gt;&gt; 1):
+                        best = max(best, val)
+                if best &gt;= 0:
+                    new[sub] = best + sub.bit_count()
+            if sub == 0:
+                break
+            sub = (sub - 1) &amp; good[i]
+        dp = new
+    return max(dp.values())
+</code></pre>
+<pre><code class="language-csharp">public int MaxStudents(char[][] seats) {
+    int m = seats.Length, n = seats[0].Length;
+    var dp = new Dictionary&lt;int, int&gt; { [0] = 0 };   // previous row's mask -&gt; best
+    for (int i = 0; i &lt; m; i++) {
+        int good = 0;
+        for (int j = 0; j &lt; n; j++) if (seats[i][j] == '.') good |= 1 &lt;&lt; j;
+        var nw = new Dictionary&lt;int, int&gt;();
+        for (int sub = good; ; sub = (sub - 1) &amp; good) {
+            if ((sub &amp; (sub &lt;&lt; 1)) == 0) {           // no side-by-side neighbours
+                int best = -1;
+                foreach (var (prev, val) in dp)      // nobody diagonally in front
+                    if ((sub &amp; (prev &lt;&lt; 1)) == 0 &amp;&amp; (sub &amp; (prev &gt;&gt; 1)) == 0) best = Math.Max(best, val);
+                if (best &gt;= 0) nw[sub] = best + BitOperations.PopCount((uint)sub);
+            }
+            if (sub == 0) break;
+        }
+        dp = nw;
+    }
+    return dp.Values.Max();
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(m · 4ⁿ) time in the worst case, much less in practice, since only masks without adjacent bits survive (55 of 256 for width 8). O(2ⁿ) memory. The official examples give 4 and 3. This problem also has a max-flow solution (it is a maximum independent set in a bipartite graph), but the mask DP is the one to write in an interview.</p>
+</details>
+<h3 id="6-numbers-at-most-n-given-digit-set-an-empty-place-is-not-a-zero">6. Numbers At Most N Given Digit Set: an empty place is not a zero</h3>
+<p><a href="https://leetcode.com/problems/numbers-at-most-n-given-digit-set/">LeetCode 902</a> <span class="diff hard">Hard</span>. Given a set of digits from <code>1–9</code> (no 0) and <code>N ≤ 10⁹</code>, how many positive integers <code>≤ N</code> can be written using only those digits (each digit any number of times)?</p>
+<p><strong>Key insight.</strong> A number shorter than <code>N</code> is written with leading <strong>empty</strong> places. Since 0 is not in the set, you can't pretend those places are zeros: model them with <code>started = False</code>, where the only option is "leave this place empty too", which is automatically free (a shorter number is always smaller). Once started, only digits from the set are allowed, up to <code>hi</code>. Use the <strong>digits from a set</strong> mode of the walk visualizer above to watch the empty branch and the set digits.</p>
+<details class="solution">
+<p><summary>Solution: digit DP with an "empty place" branch, O(len(N) · |D|)</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def at_most_n_given_digit_set(digits: list[str], n: int) -&gt; int:
+    s = str(n)
+    D = sorted(int(d) for d in digits)
+    @cache
+    def f(pos: int, tight: bool, started: bool) -&gt; int:
+        if pos == len(s):
+            return int(started)
+        hi = int(s[pos]) if tight else 9
+        total = 0
+        if not started:                        # leave this place empty (shorter number)
+            total += f(pos + 1, False, False)
+        for d in D:
+            if d &gt; hi:
+                break
+            total += f(pos + 1, tight and d == hi, True)
+        return total
+    return f(0, True, False)
+</code></pre>
+<pre><code class="language-csharp">public int AtMostNGivenDigitSet(string[] digits, int n) {
+    string s = n.ToString();
+    var D = digits.Select(int.Parse).OrderBy(x =&gt; x).ToArray();
+    var memo = new Dictionary&lt;(int, bool), int&gt;();
+    int F(int pos, bool tight, bool started) {
+        if (pos == s.Length) return started ? 1 : 0;
+        if (!tight &amp;&amp; memo.TryGetValue((pos, started), out int v)) return v;
+        int hi = tight ? s[pos] - '0' : 9, total = 0;
+        if (!started) total += F(pos + 1, false, false);  // leave this place empty
+        foreach (int d in D) {
+            if (d &gt; hi) break;
+            total += F(pos + 1, tight &amp;&amp; d == hi, true);
+        }
+        if (!tight) memo[(pos, started)] = total;
+        return total;
+    }
+    return F(0, true, false);
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(L · |D|) time and O(L) memory. <code>["1","3","5","7"]</code> with <code>N = 100</code> gives 20, and <code>["1","4","9"]</code> with <code>N = 10⁹</code> gives 29523. The closed form is "all shorter numbers, <code>|D| + |D|² + … + |D|^(L−1)</code>, plus the tight walk", which is exactly what the free subtrees of the DP add up to.</p>
+</details>
+<h3 id="7-number-of-digit-one-count-occurrences-not-numbers">7. Number of Digit One: count occurrences, not numbers</h3>
+<p><a href="https://leetcode.com/problems/number-of-digit-one/">LeetCode 233</a> <span class="diff hard">Hard</span>. Count the total number of digit <code>1</code> appearing in all integers from 0 to <code>n ≤ 10⁹</code>.</p>
+<p><strong>Key insight.</strong> This sums a quantity over all <code>x ≤ n</code> instead of counting the <code>x</code>. Put "how many 1s so far" into the state and return it at the end: every finished number then contributes its own count of 1s. Leading zeros don't add 1s, so no <code>started</code> flag is needed. The <strong>count digit d</strong> mode of the table visualizer shows the same count, kept forward as "free prefixes with <code>c</code> ones so far".</p>
+<details class="solution">
+<p><summary>Solution: digit DP carrying the count of 1s, O(L² · 10)</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def count_digit_one(n: int) -&gt; int:
+    s = str(n)
+    @cache
+    def f(pos: int, ones: int, tight: bool) -&gt; int:
+        if pos == len(s):
+            return ones                        # each finished number adds its 1s
+        hi = int(s[pos]) if tight else 9
+        return sum(f(pos + 1, ones + (d == 1), tight and d == hi)
+                   for d in range(hi + 1))
+    return f(0, 0, True)
+</code></pre>
+<pre><code class="language-csharp">public int CountDigitOne(int n) {
+    string s = n.ToString();
+    var memo = new Dictionary&lt;(int, int), int&gt;();
+    int F(int pos, int ones, bool tight) {
+        if (pos == s.Length) return ones;            // each number adds its 1s
+        if (!tight &amp;&amp; memo.TryGetValue((pos, ones), out int v)) return v;
+        int hi = tight ? s[pos] - '0' : 9, total = 0;
+        for (int d = 0; d &lt;= hi; d++) total += F(pos + 1, ones + (d == 1 ? 1 : 0), tight &amp;&amp; d == hi);
+        if (!tight) memo[(pos, ones)] = total;
+        return total;
+    }
+    return F(0, 0, true);
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(L² · 10) time (positions × counts × digits), O(L²) memory. <code>n = 13</code> gives 6 (1, 10, 11 twice, 12, 13), and <code>n = 10⁹</code> gives 900,000,001. <a href="https://leetcode.com/problems/digit-count-in-range/">Digit Count in Range</a> (LeetCode 1067, premium) is the same with any digit <code>d</code> and a range: compare <code>d</code> instead of 1, and use <code>f(high) − f(low − 1)</code>. Careful with <code>d = 0</code>: then leading zeros <strong>would</strong> be counted, so you need the <code>started</code> flag again.</p>
+</details>
+<h3 id="8-count-of-integers-two-bounds-and-a-pruned-sum">8. Count of Integers: two bounds and a pruned sum</h3>
+<p><a href="https://leetcode.com/problems/count-of-integers/">LeetCode 2719</a> <span class="diff hard">Hard</span>. Given two numeric strings <code>num1 ≤ num2</code> (up to 10²²) and <code>min_sum ≤ max_sum ≤ 400</code>, count the <code>x</code> in <code>[num1, num2]</code> whose digit sum lies in <code>[min_sum, max_sum]</code>, mod 10⁹+7.</p>
+<p><strong>Key insight.</strong> The state is <code>(pos, sum so far, tight)</code>, and a sum above <code>max_sum</code> can be cut off at once, because sums only grow. For the range, count <code>[0, num2]</code> and <code>[0, num1]</code>, subtract, and add 1 back if <code>num1</code> itself qualifies. That avoids computing <code>num1 − 1</code> on a string.</p>
+<details class="solution">
+<p><summary>Solution: digit DP on the digit sum, with f(R) − f(L) + [L ok], O(L · S · 10)</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def count(num1: str, num2: str, min_sum: int, max_sum: int) -&gt; int:
+    def upto(s: str) -&gt; int:                   # x in [0, s] with digit sum in range
+        @cache
+        def f(pos: int, total: int, tight: bool) -&gt; int:
+            if total &gt; max_sum:
+                return 0                       # prune: sums only grow
+            if pos == len(s):
+                return int(total &gt;= min_sum)
+            hi = int(s[pos]) if tight else 9
+            return sum(f(pos + 1, total + d, tight and d == hi)
+                       for d in range(hi + 1)) % MOD
+        return f(0, 0, True)
+    own = int(min_sum &lt;= sum(map(int, num1)) &lt;= max_sum)
+    return (upto(num2) - upto(num1) + own) % MOD   # [num1, num2] = f(num2) - f(num1 - 1)
+</code></pre>
+<pre><code class="language-csharp">public int Count(string num1, string num2, int min_sum, int max_sum) {
+    long Upto(string s) {                            // x in [0, s], digit sum in range
+        var memo = new Dictionary&lt;(int, int), long&gt;();
+        long F(int pos, int total, bool tight) {
+            if (total &gt; max_sum) return 0;           // prune: sums only grow
+            if (pos == s.Length) return total &gt;= min_sum ? 1 : 0;
+            if (!tight &amp;&amp; memo.TryGetValue((pos, total), out long v)) return v;
+            int hi = tight ? s[pos] - '0' : 9;
+            long res = 0;
+            for (int d = 0; d &lt;= hi; d++) res = (res + F(pos + 1, total + d, tight &amp;&amp; d == hi)) % MOD;
+            if (!tight) memo[(pos, total)] = res;
+            return res;
+        }
+        return F(0, 0, true);
+    }
+    int own = num1.Sum(c =&gt; c - '0');
+    long ans = Upto(num2) - Upto(num1) + (min_sum &lt;= own &amp;&amp; own &lt;= max_sum ? 1 : 0);
+    return (int)(((ans % MOD) + MOD) % MOD);
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(L · S · 10) time, with <code>L ≤ 23</code> digits and <code>S ≤ 400</code>: about 10⁵ steps. <code>count("1", "12", 1, 8)</code> gives 11 (1–8, 10, 11, 12). In C#, <code>(a − b) % MOD</code> can be negative, so the code returns <code>((ans % MOD) + MOD) % MOD</code>.</p>
+</details>
+<h2 id="problem-ladder">Problem ladder</h2>
+<p>Work down the list. The right-hand column is the one idea to notice. If you can say it before you start coding, you are ready for the problem.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Difficulty</th>
+<th>The DP idea to notice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://leetcode.com/problems/beautiful-arrangement/">Beautiful Arrangement</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>position = popcount(mask) + 1; the mask holds the numbers placed</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://leetcode.com/problems/can-i-win/">Can I Win</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>game over the mask of used numbers; the total is implied by the mask</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://leetcode.com/problems/partition-to-k-equal-sum-subsets/">Partition to K Equal Sum Subsets</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>fill buckets one at a time: <code>fill[mask] = sum(mask) % target</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://leetcode.com/problems/fair-distribution-of-cookies/">Fair Distribution of Cookies</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>one more child takes a submask: <code>max(total[sub], dp[mask ^ sub])</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://leetcode.com/problems/minimum-number-of-work-sessions-to-finish-the-tasks/">Minimum Number of Work Sessions to Finish the Tasks</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td><code>dp[mask] = (sessions, time used in the last one)</code>, compared as a pair</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://leetcode.com/problems/count-numbers-with-unique-digits/">Count Numbers with Unique Digits</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>no bound, so just multiply 9 · 9 · 8 · 7 …</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://leetcode.com/problems/minimum-xor-sum-of-two-arrays/">Minimum XOR Sum of Two Arrays</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>assignment DP with cost <code>a[p] ^ b[t]</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://leetcode.com/problems/maximum-and-sum-of-array/">Maximum AND Sum of Array</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>each slot holds two numbers: two bits per slot (or base 3)</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://leetcode.com/problems/shortest-path-visiting-all-nodes/">Shortest Path Visiting All Nodes</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>BFS over <code>(node, visited mask)</code>, all start nodes at once</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://leetcode.com/problems/find-the-shortest-superstring/">Find the Shortest Superstring</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>TSP where <code>w[i][j]</code> = letters word <code>j</code> adds after word <code>i</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://leetcode.com/problems/smallest-sufficient-team/">Smallest Sufficient Team</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>mask over <strong>skills</strong>, people are knapsack items (worked 1)</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://leetcode.com/problems/parallel-courses-ii/">Parallel Courses II</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>k-sized submasks of the available courses (worked 2)</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://leetcode.com/problems/number-of-ways-to-wear-different-hats-to-each-other/">Number of Ways to Wear Different Hats to Each Other</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>loop over hats, mask over people (worked 3)</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="https://leetcode.com/problems/minimum-cost-to-connect-two-groups-of-points/">Minimum Cost to Connect Two Groups of Points</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>one partner per row, then patch with cheapest edges (worked 4)</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="https://leetcode.com/problems/maximum-students-taking-exam/">Maximum Students Taking Exam</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>the previous row's mask is the state (worked 5)</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="https://leetcode.com/problems/painting-a-grid-with-three-different-colors/">Painting a Grid With Three Different Colors</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>base-3 column masks + a compatibility graph</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="https://leetcode.com/problems/number-of-valid-words-for-each-puzzle/">Number of Valid Words for Each Puzzle</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>2⁶ submasks of the puzzle per query, counted by word mask</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="https://leetcode.com/problems/non-negative-integers-without-consecutive-ones/">Non-negative Integers without Consecutive Ones</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>binary digit DP, state = previous bit</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="https://leetcode.com/problems/numbers-at-most-n-given-digit-set/">Numbers At Most N Given Digit Set</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>an empty place is not a zero (worked 6)</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="https://leetcode.com/problems/number-of-digit-one/">Number of Digit One</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>carry the count of 1s and return it (worked 7)</td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="https://leetcode.com/problems/count-special-integers/">Count Special Integers</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>digit DP with a 10-bit mask of used digits</td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="https://leetcode.com/problems/numbers-with-repeated-digits/">Numbers With Repeated Digits</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>the complement: <code>n − count_special(n)</code></td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="https://leetcode.com/problems/count-of-integers/">Count of Integers</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td><code>f(R) − f(L) + [L ok]</code> with a pruned sum (worked 8)</td>
+</tr>
+<tr>
+<td>24</td>
+<td><a href="https://leetcode.com/problems/count-stepping-numbers-in-range/">Count Stepping Numbers in Range</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>state = last digit, <code>started</code> matters for the first digit</td>
+</tr>
+<tr>
+<td>25</td>
+<td><a href="https://leetcode.com/problems/number-of-beautiful-integers-in-the-range/">Number of Beautiful Integers in the Range</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>state = (even − odd count, remainder mod k, started)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="check-yourself">Check yourself</h2>
+<details class="quiz">
+<p><summary>1. Why is the TSP state dp[mask][last] and not just dp[mask]?</summary></p>
+<p>The cost of the next step, <code>w[last][k]</code>, depends on <strong>where you are standing</strong>. Two routes over the same set that end at different cities have different futures, so they cannot share a state. Two routes over the same set that end at the <strong>same</strong> city do have the same future, and that is the merge that cuts <code>n!</code> down to <code>n²·2ⁿ</code>.</p>
+</details>
+<details class="quiz">
+<p><summary>2. In the assignment DP, the state does not say whose turn it is. Why is that safe?</summary></p>
+<p>The people are served in a fixed order: 0, 1, 2, … So if <code>k</code> tasks are taken, persons <code>0 … k−1</code> have been served, and it is person <code>k = popcount(mask)</code>'s turn. The state already implies it. Any information that <strong>can be computed from the state</strong> never needs its own dimension.</p>
+</details>
+<details class="quiz">
+<p><summary>3. List the submasks visited by sub = (sub − 1) &amp; mask for mask = 0b1010.</summary></p>
+<p><code>1010 → 1000 → 0010 → 0000</code>. From <code>1010</code>, minus 1 is <code>1001</code>, and <code>&amp; 1010</code> gives <code>1000</code>. Minus 1 is <code>0111</code>, <code>&amp; 1010</code> gives <code>0010</code>. Minus 1 is <code>0001</code>, <code>&amp; 1010</code> gives <code>0000</code>. That is 2² = 4 submasks, in decreasing order, which is exactly binary counting on the two bits of the mask.</p>
+</details>
+<details class="quiz">
+<p><summary>4. Why does enumerating the submasks of every mask of n bits take 3ⁿ steps?</summary></p>
+<p>Each step is a pair <code>(mask, sub)</code> with <code>sub ⊆ mask</code>. Look at one item: it can be in neither, in <code>mask</code> only, or in both. It cannot be in <code>sub</code> without being in <code>mask</code>. Three independent choices for each of <code>n</code> items give 3ⁿ pairs.</p>
+</details>
+<details class="quiz">
+<p><summary>5. N = 2731. Which prefixes of length 2 are tight and which are free?</summary></p>
+<p>Only <code>27</code> is tight. The free ones are <code>00</code>–<code>19</code> (first digit below 2, any second digit: 20 prefixes) and <code>20</code>–<code>26</code> (first digit tight, second digit below 7: 7 prefixes), so 27 free prefixes. Every free prefix can be completed with any two digits, which is why their counts only depend on the state, not on the prefix itself.</p>
+</details>
+<details class="quiz">
+<p><summary>6. When do you need the started (leading-zero) flag, and when can you drop it?</summary></p>
+<p>You need it whenever a padding zero would be mistaken for a real 0: distinct digits (0 would be marked as used), digit sets without 0, counting the digit 0, or "stepping numbers" where the first real digit has no predecessor. You also need it to exclude 0 when counting positive integers. You can drop it when leading zeros cannot change the property: digit sums, remainders, counting 1s, no <code>11</code> in binary.</p>
+</details>
+<details class="quiz">
+<p><summary>7. In Number of Ways to Wear Different Hats, why do the masks go from high to low?</summary></p>
+<p>Within the round for hat <code>h</code>, <code>dp</code> is updated in place: <code>dp[mask | 1 &lt;&lt; p] += dp[mask]</code>. The target is a larger mask. Going from high to low means a mask is read <strong>before</strong> it can be written in this round, so its value still comes from the previous hats only, and hat <code>h</code> is handed out at most once. Going low to high would let the same hat go to a second person, the same mistake as an unbounded knapsack loop in a 0/1 problem.</p>
+</details>
+<details class="quiz">
+<p><summary>8. What is the state for "count x in [1, N] divisible by 7 whose digit sum is also divisible by 7"?</summary></p>
+<p><code>(pos, x mod 7, digit sum mod 7, tight)</code>. Appending digit <code>d</code> maps the remainder <code>r</code> to <code>(10·r + d) % 7</code> and the sum <code>s</code> to <code>(s + d) % 7</code>. Leading zeros change neither, but 0 itself has both equal to 0, so subtract it (or use <code>started</code>). That is L · 7 · 7 · 10 steps.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Mask moves</strong>test mask &gt;&gt; i &amp; 1, add mask | 1 &lt;&lt; i, remove mask &amp; ~(1 &lt;&lt; i), lowest mask &amp; -mask</div>
+<div><strong>Fill order</strong>for mask in range(1 &lt;&lt; n): removing a bit gives a smaller number</div>
+<div><strong>Budget</strong>n·2ⁿ to n ≈ 20, n²·2ⁿ to n ≈ 16, 3ⁿ to n ≈ 15</div>
+<div><strong>Assignment</strong>dp[mask], next person = popcount(mask)</div>
+<div><strong>TSP</strong>dp[mask][last] = min dp[mask ^ 1&lt;&lt;last][prev] + w[prev][last]</div>
+<div><strong>Groups one at a time</strong>fill[mask] = sum(mask) % target, or dp over submasks per group</div>
+<div><strong>Submasks</strong>sub = (sub − 1) &amp; mask; all masks together cost 3ⁿ</div>
+<div><strong>SOS</strong>for b: for mask: if bit b set, F[mask] += F[mask ^ 1&lt;&lt;b]</div>
+<div><strong>Small side in the mask</strong>loop over the big side (hats), mask the small side (people)</div>
+<div><strong>Grids</strong>row masks dp[prev row mask], or a broken profile of R bits per cell</div>
+<div><strong>Digit DP</strong>f(pos, state, tight, started); hi = N[pos] if tight else 9</div>
+<div><strong>Tight</strong>stays tight only with d == hi; exactly one tight state per position</div>
+<div><strong>Started</strong>needed when a padding zero would look like a real 0</div>
+<div><strong>Ranges</strong>f(R) − f(L − 1), or f(R) − f(L) + [L ok] for string bounds</div>
+</div>
+<h2 id="where-to-go-next">Where to go next</h2>
+<ul>
+<li><a href="dp-intervals-trees.html">Interval &amp; Tree DP</a>: the other "state that is not a prefix": pieces <code>i..j</code> and subtrees.</li>
+<li><a href="dp-advanced.html">Advanced DP</a>: optimisations that shave a factor off a DP, plus more profile and state-compression tricks.</li>
+<li><a href="bit-manipulation.html">Bit Manipulation</a>: the bit operations behind every mask, with XOR tricks and Gray codes.</li>
+<li><a href="advanced-graphs.html">Advanced Graphs</a>: Hamiltonian paths and why <code>2ⁿ</code> is the best known.</li>
+<li><a href="backtracking.html">Backtracking</a>: the search that bitmask DP memoises.</li>
+<li><a href="graph-fundamentals.html">Graph Fundamentals</a>: BFS over <code>(node, mask)</code> for shortest paths that visit every node.</li>
+<li><a href="dp-knapsack.html">Knapsack DP</a>: the 0/1 vs unbounded loop direction, which comes back in the hats problem.</li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="dp-intervals-trees.html"><small>&larr; PREVIOUS</small>Interval &amp; Tree DP</a><a class="next" href="dp-advanced.html"><small>NEXT &rarr;</small>State Machines &amp; DP Optimisations</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#where-this-page-fits">Where this page fits</a></li>
+<li><a href="#bitmask-dp-a-set-is-a-number">Bitmask DP: a set is a number</a><ul>
+<li><a href="#the-five-moves-you-need">The five moves you need</a></li>
+<li><a href="#every-mask-reuses-a-smaller-mask">Every mask reuses a smaller mask</a></li>
+<li><a href="#how-big-can-n-be">How big can n be?</a></li>
+</ul>
+</li>
+<li><a href="#assignment-the-person-is-popcountmask">Assignment: the person is popcount(mask)</a></li>
+<li><a href="#tsp-and-hamiltonian-paths-dpmasklast">TSP and Hamiltonian paths: dp[mask][last]</a></li>
+<li><a href="#partition-into-k-equal-subsets">Partition into k equal subsets</a></li>
+<li><a href="#submask-enumeration-sub-sub-1-mask">Submask enumeration: sub = (sub − 1) &amp; mask</a><ul>
+<li><a href="#why-all-masks-together-cost-3n-not-4n">Why all masks together cost 3ⁿ, not 4ⁿ</a></li>
+<li><a href="#distributing-bags-to-k-children">Distributing bags to k children</a></li>
+<li><a href="#counting-words-that-fit-a-puzzle">Counting words that fit a puzzle</a></li>
+</ul>
+</li>
+<li><a href="#sos-dp-sum-over-subsets-at-a-glance">SOS DP: sum over subsets at a glance</a></li>
+<li><a href="#broken-profile-dp-tiling-a-grid">Broken profile DP: tiling a grid</a><ul>
+<li><a href="#row-by-row-masks-seats-colours-cells">Row-by-row masks: seats, colours, cells</a></li>
+</ul>
+</li>
+<li><a href="#digit-dp-count-numbers-without-listing-them">Digit DP: count numbers without listing them</a><ul>
+<li><a href="#warm-up-counting-by-hand">Warm-up: counting by hand</a></li>
+<li><a href="#tight-and-free">Tight and free</a></li>
+<li><a href="#watch-the-walk-count-special-integers">Watch the walk: count special integers</a></li>
+<li><a href="#the-leading-zero-flag">The leading-zero flag</a></li>
+<li><a href="#the-table-view-free-counts-move-forward">The table view: free counts move forward</a></li>
+<li><a href="#binary-digits-non-negative-integers-without-consecutive-ones">Binary digits: non-negative integers without consecutive ones</a></li>
+<li><a href="#ranges-fr-fl-1">Ranges: f(R) − f(L − 1)</a></li>
+<li><a href="#what-goes-in-the-state">What goes in the state?</a></li>
+</ul>
+</li>
+<li><a href="#recognize-it-cost-it-avoid-the-traps">Recognize it, cost it, avoid the traps</a></li>
+<li><a href="#worked-problems">Worked problems</a><ul>
+<li><a href="#1-smallest-sufficient-team-the-skills-are-the-mask">1. Smallest Sufficient Team: the skills are the mask</a></li>
+<li><a href="#2-parallel-courses-ii-pick-exactly-k-from-the-available-courses">2. Parallel Courses II: pick exactly k from the available courses</a></li>
+<li><a href="#3-number-of-ways-to-wear-different-hats-flip-which-side-is-the-mask">3. Number of Ways to Wear Different Hats: flip which side is the mask</a></li>
+<li><a href="#4-minimum-cost-to-connect-two-groups-of-points-one-partner-each-then-patch-the-rest">4. Minimum Cost to Connect Two Groups of Points: one partner each, then patch the rest</a></li>
+<li><a href="#5-maximum-students-taking-exam-the-previous-row-is-the-state">5. Maximum Students Taking Exam: the previous row is the state</a></li>
+<li><a href="#6-numbers-at-most-n-given-digit-set-an-empty-place-is-not-a-zero">6. Numbers At Most N Given Digit Set: an empty place is not a zero</a></li>
+<li><a href="#7-number-of-digit-one-count-occurrences-not-numbers">7. Number of Digit One: count occurrences, not numbers</a></li>
+<li><a href="#8-count-of-integers-two-bounds-and-a-pruned-sum">8. Count of Integers: two bounds and a pruned sum</a></li>
+</ul>
+</li>
+<li><a href="#problem-ladder">Problem ladder</a></li>
+<li><a href="#check-yourself">Check yourself</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#where-to-go-next">Where to go next</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

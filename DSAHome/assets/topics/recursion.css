@@ -1,0 +1,52 @@
+/* Recursion: topic-only styles. Colours come from shared CSS variables only. */
+
+/* Wide visualizers: stage on top, code + variables side by side underneath */
+.viz.rc-wide .viz-body.with-code { grid-template-columns: minmax(0, 1fr); }
+.viz.rc-wide .viz-side { border-left: 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(200px, 1fr); }
+.viz.rc-wide .viz-vars { border-top: 0; border-left: 1px solid var(--line); align-content: start; }
+@media (max-width: 720px) {
+  .viz.rc-wide .viz-side { grid-template-columns: minmax(0, 1fr); }
+  .viz.rc-wide .viz-vars { border-left: 0; border-top: 1px solid var(--line); }
+}
+
+/* Call stack: frames as cards, newest on top, resting on the caller */
+.rc-stack { display: flex; flex-direction: column; gap: 5px; width: 260px; max-width: 100%; }
+.rc-stack.rc-narrow { width: 150px; }
+.rc-frame {
+  border: 1.5px solid var(--line); border-radius: 8px; padding: 5px 9px;
+  background: var(--surface); font-size: 13px; line-height: 1.35;
+  transition: background .2s, border-color .2s;
+}
+.rc-frame.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.rc-frame.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.rc-frame.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.rc-fhead { display: flex; justify-content: space-between; gap: 10px; font-family: "Cascadia Code", Consolas, monospace; }
+.rc-fhead span { color: var(--muted); font-size: 12px; white-space: nowrap; }
+.rc-fpend { font-size: 12.5px; color: var(--text); margin-top: 2px; overflow-wrap: anywhere; }
+.rc-dim { color: var(--muted); font-size: 12.5px; }
+.rc-more { color: var(--muted); font-size: 12px; text-align: center; padding: 4px; border: 1px dashed var(--line); border-radius: 8px; }
+.rc-floor {
+  margin-top: 2px; padding: 4px; text-align: center; font-size: 12px; color: var(--muted);
+  border-top: 3px double var(--line); letter-spacing: .03em;
+}
+
+/* Log of returned values */
+.rc-log { display: flex; flex-direction: column; gap: 3px; min-width: 170px; font-family: "Cascadia Code", Consolas, monospace; font-size: 13px; }
+.rc-log > div { padding: 2px 8px; border-radius: 6px; border-left: 3px solid var(--line); }
+.rc-log > div.rc-new { border-left-color: var(--v-done); background: var(--v-done-soft); font-weight: 600; }
+.rc-log > div.rc-dim { border-left: 0; font-family: inherit; }
+
+/* Stacked column wrapper */
+.rc-col { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; }
+
+/* Recursion tree: nodes not yet called stay in the layout but are hidden */
+.n.rc-hide, .e.rc-hide, svg .rc-hide { visibility: hidden; }
+
+/* Merge sort split/merge tree */
+svg.rc-ms { max-width: 100%; height: auto; }
+svg.dg .rc-sep { stroke: var(--line); stroke-width: 1; stroke-dasharray: 3 4; }
+
+/* Linked list reversal */
+svg.rc-list { max-width: 100%; height: auto; overflow: visible; }
+svg.dg .rc-ahead { fill: var(--muted); }
+svg.dg .rc-ahead.done { fill: var(--v-done); }

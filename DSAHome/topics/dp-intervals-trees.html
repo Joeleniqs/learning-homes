@@ -1,0 +1,1552 @@
+<!doctype html>
+<html lang="en" data-home="dsa-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Interval &amp; Tree DP | DSA Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#4f46e5;--accent-soft:#eef0ff;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#a5b4fc;--accent-soft:#252a5c;}}:root[data-theme=dark]{--accent:#a5b4fc;--accent-soft:#252a5c;}</style>
+  <link rel="stylesheet" href="../assets/topics/dp-intervals-trees.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/dp-intervals-trees.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="DSA Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">DS</span>DSA Home</a>
+    <p class="sidebar-caption">Data structures &amp; algorithms, seen.<br>Every idea animated, every pattern drilled.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations</summary><ul class="topic-list"><li data-search="The Problem-Solving Playbook Foundations A visual decision map from input size, shape and question type to the right technique, plus a repeatable interview/contest workflow. pattern recognition constraints approach interview" data-slug="problem-solving-playbook"><a href="../topics/problem-solving-playbook.html">The Problem-Solving Playbook</a></li><li data-search="Complexity Analysis Foundations Big-O growth you can see, amortized cost, recursion trees and the Master theorem, and what 10^8 operations per second really buys you. big o amortized master theorem time space" data-slug="complexity-analysis"><a href="../topics/complexity-analysis.html">Complexity Analysis</a></li><li data-search="Recursion &amp; the Call Stack Foundations Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from. call stack recursion tree divide and conquer" data-slug="recursion"><a href="../topics/recursion.html">Recursion &amp; the Call Stack</a></li></ul></details><details class="nav-track"><summary>Arrays &amp; Strings</summary><ul class="topic-list"><li data-search="Two Pointers Arrays &amp; Strings Opposite-end, same-direction and fast/slow pointers: why moving one pointer is safe, with partitioning and k-sum. pair sum partition dutch flag 3sum" data-slug="two-pointers"><a href="../topics/two-pointers.html">Two Pointers</a></li><li data-search="Sliding Window Arrays &amp; Strings Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows. substring subarray window at most k" data-slug="sliding-window"><a href="../topics/sliding-window.html">Sliding Window</a></li><li data-search="Prefix Sums &amp; Difference Arrays Arrays &amp; Strings 1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR. subarray sum equals k range sum 2d prefix difference array" data-slug="prefix-sums"><a href="../topics/prefix-sums.html">Prefix Sums &amp; Difference Arrays</a></li><li data-search="Binary Search Arrays &amp; Strings One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection. lower bound upper bound search on answer rotated monotonic predicate" data-slug="binary-search"><a href="../topics/binary-search.html">Binary Search</a></li><li data-search="Sorting Algorithms Arrays &amp; Strings Animated bubble, insertion, merge, quick, heap, counting and radix sorts; stability, quickselect and custom comparators. merge sort quick sort quickselect counting sort inversions" data-slug="sorting"><a href="../topics/sorting.html">Sorting Algorithms</a></li><li data-search="Hashing Patterns Arrays &amp; Strings How hash tables work inside, then frequency maps, grouping by canonical keys, complement lookups and rolling hashes. hash map hash set anagram two sum collision" data-slug="hashing"><a href="../topics/hashing.html">Hashing Patterns</a></li><li data-search="Monotonic Stack &amp; Queue Arrays &amp; Strings Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight. next greater largest rectangle deque trapping rain water" data-slug="monotonic-stack-queue"><a href="../topics/monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a></li><li data-search="Intervals &amp; Sweep Line Arrays &amp; Strings Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline. merge intervals meeting rooms events skyline" data-slug="intervals-sweep-line"><a href="../topics/intervals-sweep-line.html">Intervals &amp; Sweep Line</a></li><li data-search="String Algorithms Arrays &amp; Strings KMP failure function, Z-algorithm, Rabin–Karp, Manacher&#x27;s palindromes and string hashing, each animated character by character. kmp z algorithm rabin karp manacher palindrome pattern matching" data-slug="string-algorithms"><a href="../topics/string-algorithms.html">String Algorithms</a></li></ul></details><details class="nav-track"><summary>Linked Lists, Stacks, Queues &amp; Heaps</summary><ul class="topic-list"><li data-search="Linked Lists Linked Lists, Stacks, Queues &amp; Heaps Pointer rewiring you can watch: reversal, dummy heads, fast/slow cycle detection, merging, and LRU cache design. reverse floyd cycle merge lru" data-slug="linked-lists"><a href="../topics/linked-lists.html">Linked Lists</a></li><li data-search="Stacks &amp; Queues Linked Lists, Stacks, Queues &amp; Heaps Balanced brackets, expression evaluation, min-stack, queues from stacks, deques and BFS queues. parentheses calculator deque min stack" data-slug="stacks-queues"><a href="../topics/stacks-queues.html">Stacks &amp; Queues</a></li><li data-search="Heaps &amp; Priority Queues Linked Lists, Stacks, Queues &amp; Heaps Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling. heap top k median k way merge priority queue" data-slug="heaps-priority-queues"><a href="../topics/heaps-priority-queues.html">Heaps &amp; Priority Queues</a></li></ul></details><details class="nav-track"><summary>Trees</summary><ul class="topic-list"><li data-search="Tree Traversals Trees Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees. dfs bfs inorder level order morris" data-slug="tree-traversals"><a href="../topics/tree-traversals.html">Tree Traversals</a></li><li data-search="Binary Search Trees Trees Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters. bst validate successor avl red black" data-slug="binary-search-trees"><a href="../topics/binary-search-trees.html">Binary Search Trees</a></li><li data-search="Tree Problem Patterns Trees Return-value recursion (diameter, max path sum), top-down state, LCA, serialization, and binary lifting. lca diameter path sum binary lifting serialize" data-slug="tree-patterns"><a href="../topics/tree-patterns.html">Tree Problem Patterns</a></li><li data-search="Tries Trees Prefix trees animated insert by insert: autocomplete, word search on boards, and bitwise tries for max XOR. prefix tree autocomplete word search xor trie" data-slug="tries"><a href="../topics/tries.html">Tries</a></li><li data-search="Segment Trees, Fenwick Trees &amp; Sparse Tables Trees Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables. segment tree lazy propagation fenwick bit rmq" data-slug="segment-fenwick-trees"><a href="../topics/segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a></li></ul></details><details class="nav-track"><summary>Graphs</summary><ul class="topic-list"><li data-search="Graph Fundamentals: BFS &amp; DFS Graphs Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS. bfs dfs grid islands connected components cycle" data-slug="graph-fundamentals"><a href="../topics/graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></li><li data-search="Topological Sort &amp; DAGs Graphs Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs. kahn course schedule dag dependency order" data-slug="topological-sort"><a href="../topics/topological-sort.html">Topological Sort &amp; DAGs</a></li><li data-search="Union-Find (Disjoint Set Union) Graphs Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries. dsu disjoint set path compression connectivity" data-slug="union-find"><a href="../topics/union-find.html">Union-Find (Disjoint Set Union)</a></li><li data-search="Shortest Paths Graphs BFS, 0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall and A* animated, and a chart to pick the right one every time. dijkstra bellman ford floyd warshall a star 0-1 bfs" data-slug="shortest-paths"><a href="../topics/shortest-paths.html">Shortest Paths</a></li><li data-search="Minimum Spanning Trees Graphs Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems. kruskal prim mst cut property" data-slug="minimum-spanning-trees"><a href="../topics/minimum-spanning-trees.html">Minimum Spanning Trees</a></li><li data-search="Advanced Graph Algorithms Graphs Strongly connected components, bridges and articulation points, bipartite checks, Euler paths, and max-flow / matching. tarjan kosaraju scc bridges euler max flow bipartite matching" data-slug="advanced-graphs"><a href="../topics/advanced-graphs.html">Advanced Graph Algorithms</a></li></ul></details><details class="nav-track"><summary>Backtracking &amp; Greedy</summary><ul class="topic-list"><li data-search="Backtracking Backtracking &amp; Greedy The choose/explore/un-choose template animated on a decision tree: subsets, permutations, combinations, N-Queens, Sudoku and pruning. subsets permutations n queens sudoku pruning" data-slug="backtracking"><a href="../topics/backtracking.html">Backtracking</a></li><li data-search="Greedy Algorithms Backtracking &amp; Greedy When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding. exchange argument interval scheduling jump game huffman" data-slug="greedy"><a href="../topics/greedy.html">Greedy Algorithms</a></li></ul></details><details class="nav-track" open><summary>Dynamic Programming</summary><ul class="topic-list"><li data-search="The DP Framework Dynamic Programming Recursion → memoization → tabulation → space optimisation, visualised on one problem; how to design state and transitions. memoization tabulation state transition overlapping subproblems" data-slug="dp-framework"><a href="../topics/dp-framework.html">The DP Framework</a></li><li data-search="1D &amp; Grid DP Dynamic Programming Climbing stairs, house robber, decode ways, unique paths, min path sum, maximal square and dungeon game with animated tables. house robber unique paths grid dp maximal square" data-slug="dp-linear-grid"><a href="../topics/dp-linear-grid.html">1D &amp; Grid DP</a></li><li data-search="Knapsack Family Dynamic Programming 0/1 vs unbounded vs bounded knapsack, why loop direction matters, coin change, subset sum and target sum. knapsack coin change subset sum partition" data-slug="dp-knapsack"><a href="../topics/dp-knapsack.html">Knapsack Family</a></li><li data-search="Sequence &amp; String DP Dynamic Programming LIS with patience sorting, LCS, edit distance, palindromic subsequences, regex/wildcard matching and distinct subsequences. lis lcs edit distance regex matching palindrome" data-slug="dp-sequences-strings"><a href="../topics/dp-sequences-strings.html">Sequence &amp; String DP</a></li><li data-search="Interval &amp; Tree DP Dynamic Programming Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting). interval dp burst balloons matrix chain tree dp rerooting" data-slug="dp-intervals-trees"><a href="../topics/dp-intervals-trees.html" aria-current="page">Interval &amp; Tree DP</a></li><li data-search="Bitmask &amp; Digit DP Dynamic Programming Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints. bitmask tsp digit dp subset dp" data-slug="dp-bitmask-digit"><a href="../topics/dp-bitmask-digit.html">Bitmask &amp; Digit DP</a></li><li data-search="State Machines &amp; DP Optimisations Dynamic Programming Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth. stock state machine convex hull trick knuth optimisation" data-slug="dp-advanced"><a href="../topics/dp-advanced.html">State Machines &amp; DP Optimisations</a></li></ul></details><details class="nav-track"><summary>Bits &amp; Math</summary><ul class="topic-list"><li data-search="Bit Manipulation Bits &amp; Math Bits drawn as switches: masks, XOR tricks, counting bits, subset enumeration and Gray codes. xor mask single number popcount subsets" data-slug="bit-manipulation"><a href="../topics/bit-manipulation.html">Bit Manipulation</a></li><li data-search="Math, Number Theory &amp; Combinatorics Bits &amp; Math GCD, sieves, fast power, modular inverses, nCr mod p, inclusion–exclusion, and the geometry primitives you need. gcd sieve modular fast exponentiation combinatorics geometry" data-slug="math-number-theory"><a href="../topics/math-number-theory.html">Math, Number Theory &amp; Combinatorics</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../CodeExcellenceHome/index.html">Code Excellence Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>DSA Home / Interval &amp; Tree DP</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">DYNAMIC PROGRAMMING</p><h1>Interval &amp; Tree DP</h1><p class="lede">Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting).</p><div class="meta"><span class="level level-advanced">Advanced → Expert</span><span>~60 min study</span><span>Builds on: <a href="dp-framework.html">The DP Framework</a>, <a href="tree-patterns.html">Tree Problem Patterns</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="dp-intervals-trees" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="where-this-page-fits">Where this page fits</h2>
+<p><a href="dp-framework.html">The DP Framework</a> gave you the five-step recipe (<strong>state, transition, base cases, order, answer</strong>). <a href="dp-linear-grid.html">1D &amp; Grid DP</a>, <a href="dp-knapsack.html">Knapsack DP</a> and <a href="dp-sequences-strings.html">Sequence &amp; String DP</a> applied it to things you walk through <strong>from left to right</strong>: a prefix, a capacity, a pair of prefixes. This page covers the two shapes where "left to right" stops working:</p>
+<ul>
+<li><strong>Interval DP.</strong> The subproblem is a contiguous <strong>piece</strong> <code>a[i..j]</code>, and the piece is solved by choosing <strong>where to split it</strong> or <strong>which element acts last</strong>. Matrix chains, bursting balloons, cutting a stick, merging stones, optimal games on a row, strange printers, removing boxes.</li>
+<li><strong>Tree DP</strong> (and its cousin, <strong>DP on a DAG</strong>). The subproblem is a <strong>subtree</strong>, solved after all of its children (post-order). Each node hands its parent a small <strong>tuple</strong> that sums up everything the parent needs to know. House Robber III, Binary Tree Cameras, picking k connected nodes, and rerooting to get an answer for <strong>every</strong> root in O(n).</li>
+</ul>
+<div class="rule">
+<p><strong>Interval DP: <code>dp[i][j]</code> is the answer for the contiguous piece <code>i..j</code>, built from two strictly shorter pieces around a split or "last action" <code>k</code>, so you fill the table by increasing length. Tree DP: <code>dp[v]</code> is a tuple describing <code>v</code>'s subtree, built from the children's tuples, so you fill it in post-order.</strong> In both, the fill order is a property of the shape (short before long, children before parent), not of the array index.</p>
+</div>
+<p>If you have not read <a href="tree-traversals.html">Tree Traversals</a> and <a href="tree-patterns.html">Tree Patterns</a>, skim their post-order sections first. Tree DP <em>is</em> post-order traversal, with a richer return value.</p>
+<h2 id="interval-dp-the-shape">Interval DP: the shape</h2>
+<p>Take a row of things: matrices to multiply, stones to merge, balloons to burst, letters to print. Every problem in this family has the same feature: <strong>an operation on the row only ever touches a contiguous block, and once it has been done, the block to its left and the block to its right can be solved separately.</strong> So the natural subproblem is "the best I can do with exactly the piece <code>i..j</code>", and the natural transition is "which <code>k</code> splits the piece into two independent smaller pieces?"</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 640 232" width="640" role="img" aria-label="An interval i..j split after position k into a left piece i..k and a right piece k+1..j, each already solved, joined at a cost">
+<defs><marker id="dp-intervals-trees-f1-active" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-active"/></marker></defs>
+<text x="20" y="22" class="title">One piece i..j, one split point k</text>
+<rect class="box visit" x="70" y="50" width="64" height="40" rx="7"/><text x="102" y="75" text-anchor="middle" class="mono">i</text><rect class="box visit" x="142" y="50" width="64" height="40" rx="7"/><text x="174" y="75" text-anchor="middle" class="mono">i+1</text><rect class="box visit" x="214" y="50" width="64" height="40" rx="7"/><text x="246" y="75" text-anchor="middle" class="mono">…</text><rect class="box visit" x="286" y="50" width="64" height="40" rx="7"/><text x="318" y="75" text-anchor="middle" class="mono">k</text><rect class="box path" x="358" y="50" width="64" height="40" rx="7"/><text x="390" y="75" text-anchor="middle" class="mono">k+1</text><rect class="box path" x="430" y="50" width="64" height="40" rx="7"/><text x="462" y="75" text-anchor="middle" class="mono">…</text><rect class="box path" x="502" y="50" width="64" height="40" rx="7"/><text x="534" y="75" text-anchor="middle" class="mono">j</text>
+<path class="edge dash active" d="M354 40 L354 100"/><text x="354" y="36" text-anchor="middle" class="small">split after k</text>
+<path class="edge visit" d="M70 104 L70 110 L346 110 L346 104"/><path class="edge path" d="M362 104 L362 110 L566 110 L566 104"/>
+<text x="208" y="128" text-anchor="middle" class="small">dp[i][k]: best for the left piece</text><text x="464" y="128" text-anchor="middle" class="small">dp[k+1][j]: best for the right piece</text>
+<text x="208" y="144" text-anchor="middle" class="small muted">already solved (shorter)</text><text x="464" y="144" text-anchor="middle" class="small muted">already solved (shorter)</text>
+<path class="edge active" d="M208 152 L300 184" marker-end="url(#dp-intervals-trees-f1-active)"/><path class="edge active" d="M464 152 L372 184" marker-end="url(#dp-intervals-trees-f1-active)"/>
+<rect class="box active" x="186" y="188" width="300" height="32" rx="7"/><text x="336" y="209" text-anchor="middle" class="mono">+ cost(i, k, j) to join them</text>
+</svg>
+<figcaption>dp[i][j] = best over every k of dp[i][k] + dp[k+1][j] + cost(i, k, j). Both pieces are strictly shorter than i..j, so if you fill the table by increasing length, they are ready when you need them.</figcaption>
+</figure>
+
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · STATE</small><strong>dp[i][j]</strong><p>The best answer (min cost, max score, number of ways…) for the contiguous piece i..j only.</p></div>
+<div class="flow-step"><small>2 · TRANSITION</small><strong>Try every split / last action k</strong><p>dp[i][j] = best over k of dp[i][k] ⊕ dp[k+1][j] ⊕ cost(i, k, j). Some problems use (i, k) and (k, j) with k shared.</p></div>
+<div class="flow-step"><small>3 · BASE CASES</small><strong>The shortest pieces</strong><p>Length 1 (one matrix, one letter) or the empty piece. Usually 0 or 1.</p></div>
+<div class="flow-step"><small>4 · ORDER</small><strong>By increasing length</strong><p>Both pieces are shorter than i..j. Fill diagonal by diagonal, or i from n−1 down to 0 with j going up.</p></div>
+<div class="flow-step"><small>5 · ANSWER</small><strong>dp[0][n−1]</strong><p>The whole row. O(n²) states × O(n) split points = O(n³) time, O(n²) memory.</p></div>
+</div>
+
+<h3 id="the-fill-order-is-the-diagonal-not-the-row">The fill order is the diagonal, not the row</h3>
+<p>This is the part that feels strange the first time. The table is square, but only the upper triangle (<code>i ≤ j</code>) means anything, and you <strong>cannot</strong> fill it row 0 first: <code>dp[0][5]</code> needs <code>dp[1][5]</code>, which is in a later row. What every cell needs is cells that are <strong>shorter</strong>: some in its own row to the left (<code>dp[i][k]</code>, the left piece), and some in its own column below it (<code>dp[k+1][j]</code>, the right piece).</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 680 344" width="680" role="img" aria-label="Left: a 6 by 6 upper-triangular table where each cell shows its length; lengths 1 to 3 are finished and length 4 is being filled. Right: cell dp[1][4] reads the cells to its left in row 1 and the cells below it in column 4, paired by the same k">
+<text x="60" y="24" class="title">Fill order: one diagonal (length) at a time</text>
+<text x="380" y="24" class="title">What dp[1][4] reads</text>
+<text x="80" y="52" text-anchor="middle" class="small mono muted">j=0</text>
+<text x="124" y="52" text-anchor="middle" class="small mono muted">j=1</text>
+<text x="168" y="52" text-anchor="middle" class="small mono muted">j=2</text>
+<text x="212" y="52" text-anchor="middle" class="small mono muted">j=3</text>
+<text x="256" y="52" text-anchor="middle" class="small mono muted">j=4</text>
+<text x="300" y="52" text-anchor="middle" class="small mono muted">j=5</text>
+<text x="54" y="85" text-anchor="end" class="small mono muted">i=0</text>
+<text x="54" y="129" text-anchor="end" class="small mono muted">i=1</text>
+<text x="54" y="173" text-anchor="end" class="small mono muted">i=2</text>
+<text x="54" y="217" text-anchor="end" class="small mono muted">i=3</text>
+<text x="54" y="261" text-anchor="end" class="small mono muted">i=4</text>
+<text x="54" y="305" text-anchor="end" class="small mono muted">i=5</text>
+<rect class="box done" x="60" y="60" width="40" height="40" rx="6"/><text x="80" y="85" text-anchor="middle" class="mono">1</text><rect class="box done" x="104" y="60" width="40" height="40" rx="6"/><text x="124" y="85" text-anchor="middle" class="mono">2</text><rect class="box done" x="148" y="60" width="40" height="40" rx="6"/><text x="168" y="85" text-anchor="middle" class="mono">3</text><rect class="box accent" x="192" y="60" width="40" height="40" rx="6"/><text x="212" y="85" text-anchor="middle" class="mono">4</text><rect class="box" x="236" y="60" width="40" height="40" rx="6"/><text x="256" y="85" text-anchor="middle" class="mono muted">5</text><rect class="box" x="280" y="60" width="40" height="40" rx="6"/><text x="300" y="85" text-anchor="middle" class="mono muted">6</text><rect class="box done" x="104" y="104" width="40" height="40" rx="6"/><text x="124" y="129" text-anchor="middle" class="mono">1</text><rect class="box done" x="148" y="104" width="40" height="40" rx="6"/><text x="168" y="129" text-anchor="middle" class="mono">2</text><rect class="box done" x="192" y="104" width="40" height="40" rx="6"/><text x="212" y="129" text-anchor="middle" class="mono">3</text><rect class="box accent" x="236" y="104" width="40" height="40" rx="6"/><text x="256" y="129" text-anchor="middle" class="mono">4</text><rect class="box" x="280" y="104" width="40" height="40" rx="6"/><text x="300" y="129" text-anchor="middle" class="mono muted">5</text><rect class="box done" x="148" y="148" width="40" height="40" rx="6"/><text x="168" y="173" text-anchor="middle" class="mono">1</text><rect class="box done" x="192" y="148" width="40" height="40" rx="6"/><text x="212" y="173" text-anchor="middle" class="mono">2</text><rect class="box done" x="236" y="148" width="40" height="40" rx="6"/><text x="256" y="173" text-anchor="middle" class="mono">3</text><rect class="box accent" x="280" y="148" width="40" height="40" rx="6"/><text x="300" y="173" text-anchor="middle" class="mono">4</text><rect class="box done" x="192" y="192" width="40" height="40" rx="6"/><text x="212" y="217" text-anchor="middle" class="mono">1</text><rect class="box done" x="236" y="192" width="40" height="40" rx="6"/><text x="256" y="217" text-anchor="middle" class="mono">2</text><rect class="box done" x="280" y="192" width="40" height="40" rx="6"/><text x="300" y="217" text-anchor="middle" class="mono">3</text><rect class="box done" x="236" y="236" width="40" height="40" rx="6"/><text x="256" y="261" text-anchor="middle" class="mono">1</text><rect class="box done" x="280" y="236" width="40" height="40" rx="6"/><text x="300" y="261" text-anchor="middle" class="mono">2</text><rect class="box done" x="280" y="280" width="40" height="40" rx="6"/><text x="300" y="305" text-anchor="middle" class="mono">1</text>
+<text x="400" y="52" text-anchor="middle" class="small mono muted">j=0</text>
+<text x="444" y="52" text-anchor="middle" class="small mono muted">j=1</text>
+<text x="488" y="52" text-anchor="middle" class="small mono muted">j=2</text>
+<text x="532" y="52" text-anchor="middle" class="small mono muted">j=3</text>
+<text x="576" y="52" text-anchor="middle" class="small mono muted">j=4</text>
+<text x="620" y="52" text-anchor="middle" class="small mono muted">j=5</text>
+<text x="374" y="85" text-anchor="end" class="small mono muted">i=0</text>
+<text x="374" y="129" text-anchor="end" class="small mono muted">i=1</text>
+<text x="374" y="173" text-anchor="end" class="small mono muted">i=2</text>
+<text x="374" y="217" text-anchor="end" class="small mono muted">i=3</text>
+<text x="374" y="261" text-anchor="end" class="small mono muted">i=4</text>
+<text x="374" y="305" text-anchor="end" class="small mono muted">i=5</text>
+<rect class="box" x="380" y="60" width="40" height="40" rx="6"/><rect class="box" x="424" y="60" width="40" height="40" rx="6"/><rect class="box" x="468" y="60" width="40" height="40" rx="6"/><rect class="box" x="512" y="60" width="40" height="40" rx="6"/><rect class="box" x="556" y="60" width="40" height="40" rx="6"/><rect class="box" x="600" y="60" width="40" height="40" rx="6"/><rect class="box visit" x="424" y="104" width="40" height="40" rx="6"/><text x="444" y="128" text-anchor="middle" class="small mono">k=1</text><rect class="box visit" x="468" y="104" width="40" height="40" rx="6"/><text x="488" y="128" text-anchor="middle" class="small mono">k=2</text><rect class="box visit" x="512" y="104" width="40" height="40" rx="6"/><text x="532" y="128" text-anchor="middle" class="small mono">k=3</text><rect class="box active" x="556" y="104" width="40" height="40" rx="6"/><text x="576" y="128" text-anchor="middle" class="mono">?</text><rect class="box" x="600" y="104" width="40" height="40" rx="6"/><rect class="box" x="468" y="148" width="40" height="40" rx="6"/><rect class="box" x="512" y="148" width="40" height="40" rx="6"/><rect class="box path" x="556" y="148" width="40" height="40" rx="6"/><text x="576" y="172" text-anchor="middle" class="small mono">k=1</text><rect class="box" x="600" y="148" width="40" height="40" rx="6"/><rect class="box" x="512" y="192" width="40" height="40" rx="6"/><rect class="box path" x="556" y="192" width="40" height="40" rx="6"/><text x="576" y="216" text-anchor="middle" class="small mono">k=2</text><rect class="box" x="600" y="192" width="40" height="40" rx="6"/><rect class="box path" x="556" y="236" width="40" height="40" rx="6"/><text x="576" y="260" text-anchor="middle" class="small mono">k=3</text><rect class="box" x="600" y="236" width="40" height="40" rx="6"/><rect class="box" x="600" y="280" width="40" height="40" rx="6"/>
+<text x="60" y="332" class="small muted">number = length j − i + 1; finished · current diagonal · later</text>
+<text x="380" y="332" class="small muted">same row, left: dp[i][k] · same column, below: dp[k+1][j]</text>
+</svg>
+<figcaption>Left: the table is filled one diagonal at a time, because every cell on a diagonal has the same length. Right: dp[1][4] pairs dp[1][k] (same row, to the left) with dp[k+1][4] (same column, below) for k = 1, 2, 3. Every one of those cells is on an earlier diagonal.</figcaption>
+</figure>
+
+<p>Two loop orders both satisfy "everything shorter is ready":</p>
+<ul>
+<li><strong>By length:</strong> <code>for length in 2..n: for i: j = i + length − 1</code>. This walks the diagonals, as in the picture. It is the easiest to reason about.</li>
+<li><strong>By row from the bottom:</strong> <code>for i from n−1 down to 0: for j from i+1 up to n−1</code>. Row <code>i+1</code> (which holds every right piece <code>dp[k+1][j]</code>) is finished before row <code>i</code> starts, and inside row <code>i</code> the left pieces <code>dp[i][k]</code> with <code>k &lt; j</code> are already done. It produces the same table, and it is often shorter to write.</li>
+</ul>
+<p>Memoised recursion (<code>@cache def f(i, j)</code>) needs no order at all, and it is a perfectly good first version in an interview. Write the loops when you need the speed, or when you want to roll rows away.</p>
+<h3 id="watch-it-try-every-split-point">Watch it: try every split point</h3>
+<p>The visualizer fills the table <strong>by length</strong>. For each cell it scans every <code>k</code>: the left piece is outlined in one colour, the right piece in another, and the running best is kept. Switch the problem in the drop-down. Four different-looking problems use <strong>the same loops</strong>; only the cost of joining changes:</p>
+<ul>
+<li><strong>matrix chain multiplication:</strong> <code>p</code> lists the dimensions; matrix <code>t</code> is <code>p[t] × p[t+1]</code>. Joining costs <code>p[i]·p[k+1]·p[j+1]</code>.</li>
+<li><strong>merge adjacent stones:</strong> merging two neighbouring piles costs their total size. Joining costs <code>sum(i..j)</code> whatever <code>k</code> is.</li>
+<li><strong>cut a stick (1547):</strong> written as <code>n; cuts</code>. The DP runs over the sorted cut points with <strong>shared</strong> endpoints. Joining costs the length of the stick being cut.</li>
+<li><strong>polygon triangulation (1039):</strong> the vertices of a convex polygon. The DP runs over vertices with shared endpoints. Joining costs <code>v[i]·v[k]·v[j]</code>, the triangle on edge <code>(i, j)</code>.</li>
+</ul>
+<div class="viz dit-wide" data-viz="dp-intervals-trees-split"></div>
+
+<div class="insight">
+<p><strong>"Split point" and "last operation" are the same idea.</strong> In a matrix chain, <code>k</code> says where the <strong>final</strong> multiplication happens: <code>(A_i…A_k) × (A_k+1…A_j)</code>. In merging stones, <code>k</code> says which two piles are merged <strong>last</strong>. In a stick, the first cut splits the stick, and in a polygon, the triangle on edge <code>(i, j)</code> splits it. Whenever you are stuck on an interval problem, ask: <em>what is the first or last thing that happens to the whole piece, and what does it leave behind?</em></p>
+</div>
+<h3 id="template-split-point-interval-dp">Template: split-point interval DP</h3>
+<div class="code-tabs">
+<pre><code class="language-python">def matrix_chain(p: list[int]) -&gt; int:
+    n = len(p) - 1                          # matrix t has shape p[t] x p[t+1]
+    dp = [[0] * n for _ in range(n)]        # dp[i][i] = 0: one matrix, no work
+    for length in range(2, n + 1):          # shorter intervals first
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = min(dp[i][k] + dp[k + 1][j] + p[i] * p[k + 1] * p[j + 1]
+                           for k in range(i, j))   # k = where the LAST multiply splits
+    return dp[0][n - 1]
+</code></pre>
+<pre><code class="language-csharp">public int MatrixChain(int[] p) {
+    int n = p.Length - 1;                       // matrix t has shape p[t] x p[t+1]
+    var dp = new int[n, n];                     // dp[i,i] = 0
+    for (int len = 2; len &lt;= n; len++)
+        for (int i = 0; i + len - 1 &lt; n; i++) {
+            int j = i + len - 1;
+            dp[i, j] = int.MaxValue;
+            for (int k = i; k &lt; j; k++)         // k = where the LAST multiply splits
+                dp[i, j] = Math.Min(dp[i, j], dp[i, k] + dp[k + 1, j] + p[i] * p[k + 1] * p[j + 1]);
+        }
+    return dp[0, n - 1];
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n³) time (n²/2 cells, up to n split points each), O(n²) memory. <code>matrix_chain([30, 35, 15, 5, 10, 20])</code> is 11875. To print the bracketing, store the winning <code>k</code> in <code>split[i][j]</code> and recurse: <code>"(" + show(i, k) + show(k+1, j) + ")"</code>.</p>
+<h3 id="cut-a-stick-the-dp-runs-over-cut-points-not-centimetres">Cut a stick: the DP runs over cut points, not centimetres</h3>
+<p><a href="https://leetcode.com/problems/minimum-cost-to-cut-a-stick/">LeetCode 1547</a> gives a stick of length <code>n</code> (up to 10⁶) and a list of up to 100 cut positions. Each cut costs the length of the piece being cut, and you choose the order. An interval over centimetres would be far too big. The trick is that <strong>only the cut positions matter</strong>: sort them and add both ends, <code>pts = [0, c1, c2, …, n]</code>. Then <code>dp[i][j]</code> is the cheapest way to make every cut strictly between <code>pts[i]</code> and <code>pts[j]</code>, and the endpoints are <strong>shared</strong> between the two pieces (<code>dp[i][k]</code> and <code>dp[k][j]</code>), because the cut at <code>pts[k]</code> becomes an end of both.</p>
+<div class="viz dit-wide" data-viz="dp-intervals-trees-split" data-opts='{"mode":"cut a stick (1547)"}'></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def min_cost_cut(n: int, cuts: list[int]) -&gt; int:
+    pts = [0] + sorted(cuts) + [n]
+    m = len(pts)
+    dp = [[0] * m for _ in range(m)]        # dp[i][j]: cost to make every cut strictly between pts[i] and pts[j]
+    for length in range(2, m):
+        for i in range(m - length):
+            j = i + length
+            dp[i][j] = pts[j] - pts[i] + min(dp[i][k] + dp[k][j] for k in range(i + 1, j))
+    return dp[0][m - 1]
+</code></pre>
+<pre><code class="language-csharp">public int MinCost(int n, int[] cuts) {
+    var pts = new List&lt;int&gt; { 0, n };
+    pts.AddRange(cuts);
+    pts.Sort();
+    int m = pts.Count;
+    var dp = new int[m, m];                     // dp[i,j]: cost of every cut strictly between pts[i] and pts[j]
+    for (int len = 2; len &lt; m; len++)
+        for (int i = 0; i + len &lt; m; i++) {
+            int j = i + len, best = int.MaxValue;
+            for (int k = i + 1; k &lt; j; k++) best = Math.Min(best, dp[i, k] + dp[k, j]);
+            dp[i, j] = pts[j] - pts[i] + best;
+        }
+    return dp[0, m - 1];
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(m³) with m = number of cuts + 2. <code>min_cost_cut(7, [1, 3, 4, 5])</code> is 16. Polygon triangulation (<a href="https://leetcode.com/problems/minimum-score-triangulation-of-polygon/">LeetCode 1039</a>) is the same code with <code>pts[j] − pts[i]</code> replaced by <code>v[i]·v[k]·v[j]</code> moved inside the <code>min</code>: the triangle <code>(i, k, j)</code> sits on the edge <code>(i, j)</code>, and the two leftover polygons are <code>i..k</code> and <code>k..j</code>.</p>
+<div class="tip">
+<p><strong>Shared or not shared?</strong> If the element at <code>k</code> belongs to <strong>both</strong> pieces after the split (a cut point, a polygon vertex, a balloon that is still standing), use <code>dp[i][k]</code> and <code>dp[k][j]</code>, with length-1 pieces (<code>j = i + 1</code>) as the empty base case. If <code>k</code> ends the left piece and <code>k + 1</code> starts the right one (matrices, piles), use <code>dp[i][k]</code> and <code>dp[k+1][j]</code>, with length-1 pieces (<code>i = j</code>) as the base. Getting this wrong is the most common off-by-one on this page.</p>
+</div>
+<h2 id="burst-balloons-think-about-the-last-balloon-not-the-first">Burst Balloons: think about the last balloon, not the first</h2>
+<p><a href="https://leetcode.com/problems/burst-balloons/">LeetCode 312</a> <span class="diff hard">Hard</span>. Bursting balloon <code>k</code> earns <code>left · nums[k] · right</code>, where <code>left</code> and <code>right</code> are its <strong>current</strong> neighbours (or 1 past either end). Burst them all; maximise the coins.</p>
+<p>The obvious state, "which balloon do I burst <strong>first</strong>?", does not split. After <code>k</code> is gone, its two neighbours touch, so the left side's coins depend on the right side's balloons. The fix is to turn the question around: <strong>which balloon in the piece is burst last?</strong> While everything else in <code>(i, j)</code> is being burst, that last balloon <code>k</code> is still standing, so it acts as a <strong>wall</strong>: the left side <code>(i, k)</code> and the right side <code>(k, j)</code> never see each other. When <code>k</code> finally goes, everything between <code>i</code> and <code>j</code> is gone, so its neighbours are exactly <code>i</code> and <code>j</code>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 680 276" width="680" role="img" aria-label="Top: bursting a middle balloon first makes its neighbours adjacent, coupling the two sides. Bottom: choosing the balloon that bursts last makes it a wall between two independent sides, and its final neighbours are the walls i and j">
+<defs><marker id="dp-intervals-trees-f3-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker></defs>
+<rect class="box accent" x="60" y="40" width="44" height="44" rx="22"/><text x="82" y="67" text-anchor="middle" class="mono">1</text><rect class="box" x="124" y="40" width="44" height="44" rx="22"/><text x="146" y="67" text-anchor="middle" class="mono">3</text><rect class="box bad" x="188" y="40" width="44" height="44" rx="22"/><text x="210" y="67" text-anchor="middle" class="mono">1</text><rect class="box" x="252" y="40" width="44" height="44" rx="22"/><text x="274" y="67" text-anchor="middle" class="mono">5</text><rect class="box" x="316" y="40" width="44" height="44" rx="22"/><text x="338" y="67" text-anchor="middle" class="mono">8</text><rect class="box accent" x="380" y="40" width="44" height="44" rx="22"/><text x="402" y="67" text-anchor="middle" class="mono">1</text>
+<path class="edge bad dash" d="M146 38 Q210 2 274 38" marker-end="url(#dp-intervals-trees-f3-bad)"/><text x="210" y="14" text-anchor="middle" class="small">now neighbours</text>
+<text x="82" y="102" text-anchor="middle" class="small muted">wall</text><text x="210" y="102" text-anchor="middle" class="small">burst first</text><text x="402" y="102" text-anchor="middle" class="small muted">wall</text>
+<text x="450" y="46" class="title">Burst k FIRST</text><text x="450" y="66" class="small">3 and 5 become neighbours, so</text><text x="450" y="82" class="small">coins on the left now depend on</text><text x="450" y="98" class="small">balloons on the right: no clean split.</text>
+<path class="edge dash" d="M20 124 L660 124"/>
+<text x="82" y="160" text-anchor="middle" class="small mono">i</text><text x="274" y="160" text-anchor="middle" class="small mono">k (last)</text><text x="402" y="160" text-anchor="middle" class="small mono">j</text>
+<rect class="box accent" x="60" y="168" width="44" height="44" rx="22"/><text x="82" y="195" text-anchor="middle" class="mono">1</text><rect class="box visit" x="124" y="168" width="44" height="44" rx="22"/><text x="146" y="195" text-anchor="middle" class="mono">3</text><rect class="box visit" x="188" y="168" width="44" height="44" rx="22"/><text x="210" y="195" text-anchor="middle" class="mono">1</text><rect class="box active" x="252" y="168" width="44" height="44" rx="22"/><text x="274" y="195" text-anchor="middle" class="mono">5</text><rect class="box path" x="316" y="168" width="44" height="44" rx="22"/><text x="338" y="195" text-anchor="middle" class="mono">8</text><rect class="box accent" x="380" y="168" width="44" height="44" rx="22"/><text x="402" y="195" text-anchor="middle" class="mono">1</text>
+<path class="edge visit" d="M82 226 L82 232 L270 232 L270 226"/><path class="edge path" d="M278 226 L278 240 L402 240 L402 226"/>
+<text x="176" y="252" text-anchor="middle" class="small">dp[i][k]: k is its right wall</text><text x="340" y="262" text-anchor="middle" class="small">dp[k][j]</text>
+<text x="450" y="174" class="title">Burst k LAST</text><text x="450" y="194" class="small">While k stands it is a wall, so the</text><text x="450" y="210" class="small">two sides never meet. When k goes,</text><text x="450" y="226" class="small">its neighbours are exactly i and j:</text><text x="450" y="242" class="small">it earns v[i]·v[k]·v[j] = 1·5·1.</text>
+</svg>
+<figcaption>Top: choosing the first balloon couples the two sides. Bottom: choosing the last balloon k splits (i, j) into (i, k) and (k, j), which are solved independently while k still stands. The padded 1s at both ends are walls that are never burst.</figcaption>
+</figure>
+
+<p>So pad the row with a 1 on each side (two walls that are never burst), and let <code>dp[i][j]</code> be the best total for bursting everything <strong>strictly between</strong> <code>i</code> and <code>j</code>:</p>
+<p><code>dp[i][j] = max over i &lt; k &lt; j of dp[i][k] + v[i]·v[k]·v[j] + dp[k][j]</code></p>
+<p>This is the "shared endpoint" pattern from the stick: the walls <code>i</code>, <code>j</code> and the last balloon <code>k</code> belong to both sides.</p>
+<div class="viz dit-wide" data-viz="dp-intervals-trees-balloons"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def max_coins(nums: list[int]) -&gt; int:
+    v = [1] + nums + [1]                    # walls that are never burst
+    n = len(v)
+    dp = [[0] * n for _ in range(n)]        # dp[i][j]: best for the OPEN interval (i, j)
+    for length in range(2, n):
+        for i in range(n - length):
+            j = i + length
+            for k in range(i + 1, j):       # k is the LAST balloon burst between i and j
+                dp[i][j] = max(dp[i][j], dp[i][k] + v[i] * v[k] * v[j] + dp[k][j])
+    return dp[0][n - 1]
+</code></pre>
+<pre><code class="language-csharp">public int MaxCoins(int[] nums) {
+    int n = nums.Length + 2;
+    var v = new int[n];
+    v[0] = v[n - 1] = 1;                        // walls that are never burst
+    for (int t = 0; t &lt; nums.Length; t++) v[t + 1] = nums[t];
+    var dp = new int[n, n];                     // dp[i,j]: best for the OPEN interval (i, j)
+    for (int len = 2; len &lt; n; len++)
+        for (int i = 0; i + len &lt; n; i++) {
+            int j = i + len;
+            for (int k = i + 1; k &lt; j; k++)     // k is the LAST balloon burst between i and j
+                dp[i, j] = Math.Max(dp[i, j], dp[i, k] + v[i] * v[k] * v[j] + dp[k, j]);
+        }
+    return dp[0, n - 1];
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n³) time, O(n²) memory. <code>max_coins([3, 1, 5, 8])</code> is 167: burst 1, then 5, then 3, then 8.</p>
+<div class="insight">
+<p><strong>The "last action" trick is the most reusable idea on this page.</strong> Whenever doing something to element <code>k</code> changes its neighbours' future (balloons, removing boxes, Zuma), choosing <code>k</code> <strong>first</strong> couples the two sides, and choosing it <strong>last</strong> decouples them. The last action freezes <code>k</code> in place as a wall while both sides are solved independently.</p>
+</div>
+<h2 id="games-on-a-row-store-the-score-difference">Games on a row: store the score difference</h2>
+<p>Two players take turns removing a number from <strong>either end</strong> of a row, and both play perfectly. <a href="https://leetcode.com/problems/predict-the-winner/">Predict the Winner (486)</a> asks whether player 1 can win. This looks like it needs two tables (my score and your score), plus whose turn it is. The trick that makes it a plain interval DP is to store <strong>one</strong> number:</p>
+<p><code>dp[i][j]</code> = (the mover's total) − (the other player's total), playing optimally on <code>a[i..j]</code>.</p>
+<p>Whoever moves takes an end and then becomes the <strong>other</strong> player on the piece that is left, so their lead on that smaller piece is subtracted:</p>
+<p><code>dp[i][j] = max(a[i] − dp[i+1][j], a[j] − dp[i][j−1])</code></p>
+<p>The minus sign does all the minimax work. There is no turn flag, because the state is "the person about to move", whoever that is. Player 1 wins (or ties) exactly when <code>dp[0][n−1] ≥ 0</code>.</p>
+<p><a href="https://leetcode.com/problems/stone-game-vii/">Stone Game VII (1690)</a> changes only the reward: removing an end stone scores the <strong>sum of the stones that remain</strong>. Use a prefix sum so each reward costs O(1). Switch modes in the visualizer and watch the two candidate moves (<code>take left</code>, <code>take right</code>) in each cell. Each candidate reads one neighbour: the cell <strong>below</strong> (<code>i+1</code>) or the cell to the <strong>left</strong> (<code>j−1</code>).</p>
+<div class="viz dit-wide" data-viz="dp-intervals-trees-game"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def predict_the_winner(nums: list[int]) -&gt; bool:
+    n = len(nums)
+    dp = nums[:]                            # dp[j] = dp[i][j] for the row i being built
+    for i in range(n - 2, -1, -1):
+        for j in range(i + 1, n):           # dp[j] still holds dp[i+1][j]; dp[j-1] is already dp[i][j-1]
+            dp[j] = max(nums[i] - dp[j], nums[j] - dp[j - 1])
+    return dp[n - 1] &gt;= 0
+
+def stone_game_vii(stones: list[int]) -&gt; int:
+    n = len(stones)
+    pre = list(accumulate(stones, initial=0))
+    dp = [[0] * n for _ in range(n)]        # dp[i][j]: mover's best lead on stones[i..j]
+    for i in range(n - 2, -1, -1):
+        for j in range(i + 1, n):
+            take_left = pre[j + 1] - pre[i + 1] - dp[i + 1][j]
+            take_right = pre[j] - pre[i] - dp[i][j - 1]
+            dp[i][j] = max(take_left, take_right)
+    return dp[0][n - 1]
+</code></pre>
+<pre><code class="language-csharp">public bool PredictTheWinner(int[] nums) {
+    int n = nums.Length;
+    var dp = (int[])nums.Clone();               // dp[j] = dp[i,j] for the row i being built
+    for (int i = n - 2; i &gt;= 0; i--)
+        for (int j = i + 1; j &lt; n; j++)
+            dp[j] = Math.Max(nums[i] - dp[j], nums[j] - dp[j - 1]);
+    return dp[n - 1] &gt;= 0;
+}
+
+public int StoneGameVII(int[] stones) {
+    int n = stones.Length;
+    var pre = new int[n + 1];
+    for (int t = 0; t &lt; n; t++) pre[t + 1] = pre[t] + stones[t];
+    var dp = new int[n, n];                     // dp[i,j]: mover's best lead on stones[i..j]
+    for (int i = n - 2; i &gt;= 0; i--)
+        for (int j = i + 1; j &lt; n; j++) {
+            int takeLeft = pre[j + 1] - pre[i + 1] - dp[i + 1, j];
+            int takeRight = pre[j] - pre[i] - dp[i, j - 1];
+            dp[i, j] = Math.Max(takeLeft, takeRight);
+        }
+    return dp[0, n - 1];
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n²) time. Predict the Winner rolls the table into one row, O(n) memory, because each cell reads only the row below (<code>dp[j]</code> before it is overwritten) and the cell to its left (<code>dp[j−1]</code>, already overwritten with the current row). That is the same trick as the one-row grid DP in <a href="dp-linear-grid.html">1D &amp; Grid DP</a>. The Python uses <code>from itertools import accumulate</code>.</p>
+<div class="callout">
+<p><strong>The rest of the Stone Game family.</strong> <a href="https://leetcode.com/problems/stone-game/">Stone Game (877)</a> is this exact DP, although with an even number of piles the first player can always win by parity, so <code>return True</code> passes. Stone Game II, III and IV take from <strong>one</strong> end only, so their state is a suffix (<code>dp[i]</code>, plus <code>M</code> in II), not an interval. They belong with <a href="dp-linear-grid.html">1D &amp; Grid DP</a>, but the "score difference, subtract the opponent's best" trick carries over unchanged.</p>
+</div>
+<h2 id="when-ij-is-not-enough-remove-boxes">When <code>[i][j]</code> is not enough: Remove Boxes</h2>
+<p><a href="https://leetcode.com/problems/remove-boxes/">LeetCode 546</a> <span class="diff expert">Expert</span>. Remove a group of <code>t</code> adjacent boxes of one colour and earn <code>t²</code>. Maximise the total.</p>
+<p>Try <code>dp[i][j]</code> and it breaks: the best way to clear <code>i..j</code> depends on what lies <strong>outside</strong> it. If three more boxes of the colour <code>boxes[i]</code> are waiting to be glued on from the left, removing <code>boxes[i]</code> early wastes them. The fix is to put that outside information into the state:</p>
+<p><code>dp(l, r, k)</code> = the best score for <code>boxes[l..r]</code> when <code>k</code> extra boxes of colour <code>boxes[l]</code> are already glued to the <strong>left</strong> of <code>l</code>.</p>
+<p>Now there are only two things box <code>l</code> (with its <code>k</code> passengers) can do:</p>
+<ol>
+<li><strong>Leave now.</strong> Remove the group of <code>k + 1</code> boxes: <code>(k + 1)² + dp(l + 1, r, 0)</code>.</li>
+<li><strong>Wait for a partner.</strong> Choose a later box <code>m</code> with the same colour. First clear everything strictly between them (<code>dp(l + 1, m − 1, 0)</code>), so that <code>l</code> and its passengers slide over and glue onto <code>m</code>: <code>dp(m, r, k + 1)</code>.</li>
+</ol>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 680 292" width="680" role="img" aria-label="Remove Boxes state: two ghost A boxes glued to the left of box l in the row A B A C A. Option 1 removes l with its ghosts for 9 points. Option 2 clears the B between l and the next A at m, so the glued group grows to 3 at m">
+<defs><marker id="dp-intervals-trees-f6-active" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-active"/></marker></defs>
+<text x="20" y="22" class="title">State dp(l, r, k): k = 2 boxes of colour A already glued to the left of l</text>
+<rect class="edge dash" x="20" y="34" width="40" height="36" rx="6"/><text x="40" y="57" text-anchor="middle" class="mono">A</text><rect class="edge dash" x="66" y="34" width="40" height="36" rx="6"/><text x="86" y="57" text-anchor="middle" class="mono">A</text><rect class="box visit" x="130" y="34" width="40" height="36" rx="6"/><text x="150" y="57" text-anchor="middle" class="mono">A</text><rect class="box" x="176" y="34" width="40" height="36" rx="6"/><text x="196" y="57" text-anchor="middle" class="mono">B</text><rect class="box visit" x="222" y="34" width="40" height="36" rx="6"/><text x="242" y="57" text-anchor="middle" class="mono">A</text><rect class="box" x="268" y="34" width="40" height="36" rx="6"/><text x="288" y="57" text-anchor="middle" class="mono">C</text><rect class="box visit" x="314" y="34" width="40" height="36" rx="6"/><text x="334" y="57" text-anchor="middle" class="mono">A</text>
+<text x="63" y="88" text-anchor="middle" class="small muted">glued, k = 2</text><text x="150" y="88" text-anchor="middle" class="small mono">l</text><text x="242" y="88" text-anchor="middle" class="small mono">m</text><text x="334" y="88" text-anchor="middle" class="small mono">r</text>
+<text x="20" y="118">Option 1: remove l with its glued boxes now (3 boxes)</text>
+<rect class="box bad" x="20" y="130" width="40" height="36" rx="6"/><text x="40" y="153" text-anchor="middle" class="mono">A</text><rect class="box bad" x="66" y="130" width="40" height="36" rx="6"/><text x="86" y="153" text-anchor="middle" class="mono">A</text><rect class="box bad" x="130" y="130" width="40" height="36" rx="6"/><text x="150" y="153" text-anchor="middle" class="mono">A</text><rect class="box" x="176" y="130" width="40" height="36" rx="6"/><text x="196" y="153" text-anchor="middle" class="mono">B</text><rect class="box visit" x="222" y="130" width="40" height="36" rx="6"/><text x="242" y="153" text-anchor="middle" class="mono">A</text><rect class="box" x="268" y="130" width="40" height="36" rx="6"/><text x="288" y="153" text-anchor="middle" class="mono">C</text><rect class="box visit" x="314" y="130" width="40" height="36" rx="6"/><text x="334" y="153" text-anchor="middle" class="mono">A</text>
+<text x="380" y="153" class="mono">(k+1)² = 9  +  dp(l+1, r, 0)</text>
+<text x="20" y="200">Option 2: clear the B first, so l and its passengers glue onto m</text>
+<rect class="edge dash" x="20" y="226" width="40" height="36" rx="6"/><text x="40" y="249" text-anchor="middle" class="mono">A</text><rect class="edge dash" x="66" y="226" width="40" height="36" rx="6"/><text x="86" y="249" text-anchor="middle" class="mono">A</text><rect class="box visit" x="130" y="226" width="40" height="36" rx="6"/><text x="150" y="249" text-anchor="middle" class="mono">A</text><rect class="box path" x="176" y="226" width="40" height="36" rx="6"/><text x="196" y="249" text-anchor="middle" class="mono">B</text><rect class="box visit" x="222" y="226" width="40" height="36" rx="6"/><text x="242" y="249" text-anchor="middle" class="mono">A</text><rect class="box" x="268" y="226" width="40" height="36" rx="6"/><text x="288" y="249" text-anchor="middle" class="mono">C</text><rect class="box visit" x="314" y="226" width="40" height="36" rx="6"/><text x="334" y="249" text-anchor="middle" class="mono">A</text>
+<path class="edge active" d="M150 224 Q196 200 236 222" marker-end="url(#dp-intervals-trees-f6-active)"/>
+<text x="196" y="280" text-anchor="middle" class="small mono">dp(l+1, m−1, 0)</text>
+<text x="380" y="249" class="mono">dp(l+1, m−1, 0)  +  dp(m, r, k+1)</text><text x="380" y="268" class="small muted">now 3 A's are glued to box m</text>
+</svg>
+<figcaption>The third index k carries the outside in. From any state, box l either leaves now with its k passengers, or waits: clear everything between l and a later box m of the same colour, and l joins m's group, so k grows by one.</figcaption>
+</figure>
+
+<div class="viz dit-wide" data-viz="dp-intervals-trees-boxes"></div>
+
+<p>The visualizer runs the memoised recursion on a small row. Each frame shows the call stack and the current <code>(l, r, k)</code>, and <strong>memo hits</strong> light up when a state is reused. The state count stays tiny next to the brute force, which tries every order of removals. The code is worked problem 5 below. It costs O(n⁴) time in the worst case (n³ states, O(n) choices of <code>m</code> each) and O(n³) memory, which is fine for n ≤ 100.</p>
+<div class="tip">
+<p><strong>The general lesson: if the answer for a piece depends on its surroundings, add the surroundings to the state.</strong> Here the surroundings are "how many matching boxes are glued on". Other problems use "the colour of the last thing printed" or "how many open brackets are waiting". Keep the extra dimension as small as possible: a count is fine, a full list never is.</p>
+</div>
+<h2 id="match-the-endpoint-strange-printer-and-palindrome-removal">Match the endpoint: Strange Printer and palindrome removal</h2>
+<p>Some interval problems are not "split anywhere". They are "<strong><code>s[j]</code> (or <code>s[i]</code>) pairs up with an equal element <code>s[k]</code> somewhere inside</strong>". The pairing is what saves an operation.</p>
+<p><strong>Strange Printer</strong> (<a href="https://leetcode.com/problems/strange-printer/">LeetCode 664</a>): each turn prints a run of one character over any range, overwriting what is there. Print <code>s</code> in the fewest turns. Look at the last character, <code>s[j]</code>. Either it gets its own turn (<code>dp[i][j−1] + 1</code>), or it is printed <strong>by the same turn that prints some earlier equal character</strong> <code>s[k]</code>. That turn simply stretches from <code>k</code> to <code>j</code>, and whatever lies between them (<code>k+1..j−1</code>) is printed on top of it later, at a cost of <code>dp[k+1][j−1]</code>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 640 164" width="640" role="img" aria-label="Strange printer prints aba in two turns: first a over all three positions, then b over the middle">
+<text x="20" y="44">turn 1: print a over 0..2</text><rect class="box visit" x="220" y="22" width="40" height="34" rx="6"/><text x="240" y="44" text-anchor="middle" class="mono">a</text><rect class="box visit" x="268" y="22" width="40" height="34" rx="6"/><text x="288" y="44" text-anchor="middle" class="mono">a</text><rect class="box visit" x="316" y="22" width="40" height="34" rx="6"/><text x="336" y="44" text-anchor="middle" class="mono">a</text>
+<text x="20" y="92">turn 2: print b over 1..1</text><rect class="edge dash" x="220" y="70" width="40" height="34" rx="6"/><rect class="box path" x="268" y="70" width="40" height="34" rx="6"/><text x="288" y="92" text-anchor="middle" class="mono">b</text><rect class="edge dash" x="316" y="70" width="40" height="34" rx="6"/>
+<text x="20" y="140">result s = aba</text><rect class="box done" x="220" y="118" width="40" height="34" rx="6"/><text x="240" y="140" text-anchor="middle" class="mono">a</text><rect class="box done" x="268" y="118" width="40" height="34" rx="6"/><text x="288" y="140" text-anchor="middle" class="mono">b</text><rect class="box done" x="316" y="118" width="40" height="34" rx="6"/><text x="336" y="140" text-anchor="middle" class="mono">a</text>
+<text x="400" y="46" class="small">s[2] = a rides on the turn that</text><text x="400" y="62" class="small">printed s[0] = a, so it is free:</text>
+<text x="400" y="94" class="mono">dp[0][2] = dp[0][0] + dp[1][1]</text><text x="400" y="114" class="mono">= 1 + 1 = 2 turns</text>
+<text x="400" y="146" class="small muted">instead of dp[0][1] + 1 = 3</text>
+</svg>
+<figcaption>Matching the endpoint: the last a is printed by the same turn as the first a, which simply stretches to cover it. The middle b is printed on top afterwards, and costs dp[1][1].</figcaption>
+</figure>
+
+<p><strong>Palindrome Removal</strong> (<a href="https://leetcode.com/problems/palindrome-removal/">LeetCode 1246</a>, the Zuma-style member of the family): one move deletes a palindromic subarray, and the pieces close up. Look at <code>arr[i]</code>. Either it leaves on its own (<code>1 + dp[i+1][j]</code>), or the last palindrome removed inside <code>i+1..k−1</code> can be <strong>wrapped</strong> by <code>arr[i]</code> and an equal <code>arr[k]</code> and leave in the same move (<code>dp[i+1][k−1] + dp[k+1][j]</code>). Both problems are worked in full below (problems 2 and 4).</p>
+<div class="pitfall">
+<p><strong>Zuma Game (488) is not this DP.</strong> In Zuma you insert balls from a hand and groups of three or more vanish, triggering chain reactions. The hand turns it into a search over (board, hand) states with memoisation, not a clean <code>dp[i][j]</code>. Palindrome Removal and Remove Boxes are the interval-DP members of the "remove a block, the ends close up" family.</p>
+</div>
+<div class="callout">
+<p><strong>Palindrome Partitioning II lives on the strings page.</strong> <a href="dp-sequences-strings.html">Sequence &amp; String DP</a> builds the interval table <code>isPal[i][j]</code> (by length, from <code>isPal[i+1][j−1]</code>) and then runs a <strong>1D</strong> DP on top of it: <code>cuts[j] = min(cuts[i−1] + 1)</code> over every palindrome <code>s[i..j]</code>. That is a common combination: an interval table that <strong>answers a question about every piece</strong>, used by a linear DP that <strong>chooses pieces</strong>.</p>
+</div>
+<h2 id="knuths-optimisation-at-a-glance">Knuth's optimisation at a glance</h2>
+<p>The split-point DP costs O(n³) because every cell tries every <code>k</code>. For some cost functions, the best split point is <strong>monotone</strong>:</p>
+<p><code>opt[i][j−1] ≤ opt[i][j] ≤ opt[i+1][j]</code></p>
+<p>Widening the piece by one on the right never moves the best split to the left, and widening it on the left never moves it to the right. If that holds, cell <code>(i, j)</code> only has to try <code>k</code> in that window. Summed along one diagonal, the window sizes <strong>telescope</strong>: <code>Σ (opt[i+1][j] − opt[i][j−1] + 1)</code> is at most about <code>n + n</code>. So each diagonal costs O(n), and the whole table costs <strong>O(n²)</strong>.</p>
+<p>When does it hold? A sufficient condition is that the cost satisfies the <strong>quadrangle inequality</strong>, <code>w(a, c) + w(b, d) ≤ w(a, d) + w(b, c)</code> for <code>a ≤ b ≤ c ≤ d</code>, and is monotone (a piece never costs more than a piece containing it). <code>w(i, j) = sum(i..j)</code>, as in "merge adjacent stones" and optimal binary search trees, satisfies both. The matrix-chain cost <code>p[i]·p[k+1]·p[j+1]</code> depends on <code>k</code>, so this test does not apply to it.</p>
+<div class="viz dit-wide" data-viz="dp-intervals-trees-knuth"></div>
+
+<p>The visualizer runs merge-adjacent-stones with Knuth's window. For each cell it shades the <code>k</code> range it actually tries, and the meter compares the total <code>k</code> evaluations against the plain O(n³) loop.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def merge_stones_knuth(a: list[int]) -&gt; int:
+    n = len(a)
+    pre = list(accumulate(a, initial=0))
+    dp = [[0] * n for _ in range(n)]
+    opt = [[i] * n for i in range(n)]       # opt[i][i] = i
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = inf
+            for k in range(opt[i][j - 1], min(opt[i + 1][j], j - 1) + 1):
+                if dp[i][k] + dp[k + 1][j] &lt; dp[i][j]:
+                    dp[i][j], opt[i][j] = dp[i][k] + dp[k + 1][j], k
+            dp[i][j] += pre[j + 1] - pre[i]
+    return dp[0][n - 1]
+</code></pre>
+<pre><code class="language-csharp">public long MergeStonesKnuth(int[] a) {
+    int n = a.Length;
+    var pre = new long[n + 1];
+    for (int t = 0; t &lt; n; t++) pre[t + 1] = pre[t] + a[t];
+    var dp = new long[n, n];
+    var opt = new int[n, n];
+    for (int i = 0; i &lt; n; i++) opt[i, i] = i;
+    for (int len = 2; len &lt;= n; len++)
+        for (int i = 0; i + len - 1 &lt; n; i++) {
+            int j = i + len - 1;
+            dp[i, j] = long.MaxValue;
+            for (int k = opt[i, j - 1]; k &lt;= Math.Min(opt[i + 1, j], j - 1); k++)
+                if (dp[i, k] + dp[k + 1, j] &lt; dp[i, j]) { dp[i, j] = dp[i, k] + dp[k + 1, j]; opt[i, j] = k; }
+            dp[i, j] += pre[j + 1] - pre[i];
+        }
+    return dp[0, n - 1];
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n²) time, O(n²) memory. <code>inf</code> is <code>float("inf")</code>. In an interview, write the plain O(n³) version first, then mention Knuth as the follow-up. The proof, and the related divide-and-conquer and convex hull tricks, are in <a href="dp-advanced.html">Advanced DP</a>.</p>
+<h2 id="tree-dp-every-node-returns-a-tuple">Tree DP: every node returns a tuple</h2>
+<p>In a tree, the natural subproblem is "the best answer <strong>inside the subtree of <code>v</code></strong>". A subtree is built from its children's subtrees, so you solve the children first. That is post-order traversal, the same recursion as computing a height in <a href="tree-traversals.html">Tree Traversals</a>. The new part is <strong>what the recursion returns</strong>.</p>
+<p>A single number is rarely enough, because the parent has a <strong>constraint that involves the child itself</strong> ("you may not rob a child if you rob me", "I am covered if a child has a camera"). So the child returns <strong>one value per situation the parent might need</strong>: a small tuple. The parent combines its children's tuples into its own tuple, and the answer comes out of the root's tuple.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 680 268" width="680" role="img" aria-label="House Robber III on the tree 3, 4, 5, 1, 3, null, 1: each node returns a rob and skip pair to its parent; the root gets rob 8 and skip 9, so the answer is 9">
+<defs><marker id="dp-intervals-trees-f4-done" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker></defs>
+<path class="edge done" d="M110 206 L190 158" marker-end="url(#dp-intervals-trees-f4-done)"/>
+<path class="edge done" d="M270 206 L190 158" marker-end="url(#dp-intervals-trees-f4-done)"/>
+<path class="edge done" d="M550 206 L470 158" marker-end="url(#dp-intervals-trees-f4-done)"/>
+<path class="edge done" d="M190 124 L330 74" marker-end="url(#dp-intervals-trees-f4-done)"/>
+<path class="edge done" d="M470 124 L330 74" marker-end="url(#dp-intervals-trees-f4-done)"/>
+<rect class="box active" x="305" y="40" width="50" height="32" rx="16"/><text x="330" y="61" text-anchor="middle" class="mono">3</text><rect class="box visit" x="165" y="124" width="50" height="32" rx="16"/><text x="190" y="145" text-anchor="middle" class="mono">4</text><rect class="box visit" x="445" y="124" width="50" height="32" rx="16"/><text x="470" y="145" text-anchor="middle" class="mono">5</text><rect class="box done" x="85" y="206" width="50" height="32" rx="16"/><text x="110" y="227" text-anchor="middle" class="mono">1</text><rect class="box done" x="245" y="206" width="50" height="32" rx="16"/><text x="270" y="227" text-anchor="middle" class="mono">3</text><rect class="box done" x="525" y="206" width="50" height="32" rx="16"/><text x="550" y="227" text-anchor="middle" class="mono">1</text>
+<text x="296" y="22" text-anchor="end" class="small mono">rob = 3 + 4 + 1 = 8</text><text x="296" y="38" text-anchor="end" class="small mono">skip = max(4,4) + max(5,1) = 9</text>
+<text x="364" y="30" class="small mono">answer = max(8, 9) = 9</text>
+<text x="156" y="136" text-anchor="end" class="small mono">rob = 4 + 0 + 0 = 4</text><text x="156" y="152" text-anchor="end" class="small mono">skip = 1 + 3 = 4</text>
+<text x="504" y="136" class="small mono">rob = 5 + 0 = 5</text><text x="504" y="152" class="small mono">skip = max(1,0) = 1</text>
+<text x="110" y="256" text-anchor="middle" class="small mono">(rob 1, skip 0)</text><text x="270" y="256" text-anchor="middle" class="small mono">(rob 3, skip 0)</text><text x="550" y="256" text-anchor="middle" class="small mono">(rob 1, skip 0)</text>
+</svg>
+<figcaption>Post-order: the leaves report (rob, skip) first, and each parent builds its pair from its children's pairs. Robbing a node uses its children's skip values. Skipping it lets each child take its own max. The root's pair (8, 9) gives the answer 9.</figcaption>
+</figure>
+
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · STATE</small><strong>dp[v][s]</strong><p>Best answer inside v's subtree, given that v is in situation s (robbed / not, camera / covered / waiting…).</p></div>
+<div class="flow-step"><small>2 · TRANSITION</small><strong>Combine the children</strong><p>For each situation of v, pick for each child the best situation that is compatible with it, and add them up.</p></div>
+<div class="flow-step"><small>3 · BASE CASES</small><strong>null or leaf</strong><p>Return the tuple of an empty subtree. Use ∞ for situations that are impossible.</p></div>
+<div class="flow-step"><small>4 · ORDER</small><strong>Post-order</strong><p>Children before parent. The recursion does it for you; use an explicit order for very deep trees.</p></div>
+<div class="flow-step"><small>5 · ANSWER</small><strong>Read the root's tuple</strong><p>Usually the best situation at the root, excluding any that need a parent (the root has none).</p></div>
+</div>
+
+<h3 id="house-robber-iii-the-rob-skip-pair">House Robber III: the (rob, skip) pair</h3>
+<p><a href="https://leetcode.com/problems/house-robber-iii/">LeetCode 337</a> <span class="diff medium">Medium</span>. Houses form a binary tree, and you may not rob a house together with its parent. A single number per node ("the best for this subtree") is not enough: the parent cannot tell whether that best already used the child, which would forbid robbing the parent. So return both:</p>
+<ul>
+<li><code>rob</code> = the best for the subtree <strong>with</strong> this node robbed = <code>val + left.skip + right.skip</code>.</li>
+<li><code>skip</code> = the best for the subtree <strong>without</strong> this node = <code>max(left) + max(right)</code>. Each child is free to do whichever is better.</li>
+</ul>
+<p>Step through it: the pair for each node lights up as the post-order reaches it, and the arrows carry the two numbers to the parent.</p>
+<div class="viz dit-wide" data-viz="dp-intervals-trees-robber"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def rob(root: TreeNode | None) -&gt; int:
+    def go(node):                           # -&gt; (best if node robbed, best if node skipped)
+        if not node:
+            return (0, 0)
+        lr, ls = go(node.left)
+        rr, rs = go(node.right)
+        return (node.val + ls + rs,         # robbed: children must be skipped
+                max(lr, ls) + max(rr, rs))  # skipped: children choose freely
+    return max(go(root))
+</code></pre>
+<pre><code class="language-csharp">public int Rob(TreeNode? root) {
+    (int robbed, int skipped) Go(TreeNode? node) {
+        if (node == null) return (0, 0);
+        var l = Go(node.left);
+        var r = Go(node.right);
+        return (node.val + l.skipped + r.skipped,                                   // children must be skipped
+                Math.Max(l.robbed, l.skipped) + Math.Max(r.robbed, r.skipped));     // children choose freely
+    }
+    var (a, b) = Go(root);
+    return Math.Max(a, b);
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n) time, O(h) stack. Compare it with the linear <a href="dp-linear-grid.html">House Robber</a>, where <code>dp[i] = max(dp[i−1], dp[i−2] + a[i])</code>. The "previous two houses" become "the child's two situations". The plain memoised version (<code>f(node) = max(val + grandchildren, children)</code>) is also O(n), but the tuple is shorter and never touches grandchildren.</p>
+<h3 id="binary-tree-cameras-three-situations">Binary Tree Cameras: three situations</h3>
+<p><a href="https://leetcode.com/problems/binary-tree-cameras/">LeetCode 968</a> <span class="diff hard">Hard</span>. A camera watches its node, its parent and its children. Find the fewest cameras that watch every node. Each node can be in exactly one of three situations:</p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Meaning</th>
+<th>Value from the children's tuples <code>l</code>, <code>r</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cam</code></td>
+<td>a camera sits on this node</td>
+<td><code>1 + min(l) + min(r)</code>. Each child is happy in any situation, because my camera covers it.</td>
+</tr>
+<tr>
+<td><code>cov</code></td>
+<td>no camera here, but a child's camera covers me</td>
+<td><code>min(l.cam + min(r.cam, r.cov), min(l.cam, l.cov) + r.cam)</code>. At least one child has a camera, and neither child is left waiting.</td>
+</tr>
+<tr>
+<td><code>unc</code></td>
+<td>no camera, not covered yet: <strong>my parent must</strong> place one</td>
+<td><code>l.cov + r.cov</code>. My children are covered without me, and neither has a camera (or I would be <code>cov</code>).</td>
+</tr>
+</tbody>
+</table>
+<p>The empty subtree returns <code>(cam = ∞, cov = 0, unc = ∞)</code>: it cannot hold a camera, it needs nothing, and it never makes its parent wait. At the root, <code>unc</code> is not allowed (nobody is above it), so the answer is <code>min(root.cam, root.cov)</code>.</p>
+<div class="viz dit-wide" data-viz="dp-intervals-trees-cameras"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def min_camera_cover(root: TreeNode | None) -&gt; int:
+    INF = float(&quot;inf&quot;)
+    def go(node):                           # -&gt; (cam, cov, unc) for this subtree
+        if not node:
+            return (INF, 0, INF)            # nothing to cover; no camera can sit here
+        l, r = go(node.left), go(node.right)
+        cam = 1 + min(l) + min(r)                                   # my camera covers both children
+        cov = min(l[0] + min(r[0], r[1]), min(l[0], l[1]) + r[0])   # a child's camera covers me
+        unc = l[1] + r[1]                                           # wait for my parent's camera
+        return (cam, cov, unc)
+    cam, cov, _ = go(root)
+    return min(cam, cov)                    # the root has no parent to cover it
+</code></pre>
+<pre><code class="language-csharp">public int MinCameraCover(TreeNode? root) {
+    const int INF = 1_000_000;
+    (int cam, int cov, int unc) Go(TreeNode? node) {
+        if (node == null) return (INF, 0, INF);         // nothing to cover; no camera can sit here
+        var l = Go(node.left);
+        var r = Go(node.right);
+        int lMin = Math.Min(l.cam, Math.Min(l.cov, l.unc));
+        int rMin = Math.Min(r.cam, Math.Min(r.cov, r.unc));
+        int cam = 1 + lMin + rMin;                                                 // my camera covers both children
+        int cov = Math.Min(l.cam + Math.Min(r.cam, r.cov), Math.Min(l.cam, l.cov) + r.cam); // a child's camera covers me
+        int unc = l.cov + r.cov;                                                   // wait for my parent's camera
+        return (cam, cov, unc);
+    }
+    var s = Go(root);
+    return Math.Min(s.cam, s.cov);                      // the root has no parent to cover it
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n) time, O(h) stack. There is also a well-known <strong>greedy</strong> (put cameras on the parents of leaves, bottom-up). It is correct, but it is hard to prove under pressure. The 3-state DP is mechanical: list the situations, write each one's compatibility rule, and the code follows.</p>
+<div class="insight">
+<p><strong>How to find the situations.</strong> Ask: "when the parent decides about itself, what does it need to know about this child?" For the robber, it is "was the child robbed?" (2 states). For cameras, it is "does the child have a camera (which covers me)? and if not, does the child need <strong>me</strong> to have one?" (3 states). For <a href="https://leetcode.com/problems/maximum-sum-bst-in-binary-tree/">Maximum Sum BST</a> (worked problem 6), it is "is it a BST, and what are its min, max and sum?". The tuple is exactly the parent's questions.</p>
+</div>
+<h3 id="return-value-vs-global-answer-diameter-and-max-path-sum">Return value vs global answer: diameter and max path sum</h3>
+<p>Some tree problems return <strong>one</strong> thing to the parent but <strong>record</strong> a different thing. In <a href="https://leetcode.com/problems/diameter-of-binary-tree/">Diameter of Binary Tree</a> and <a href="https://leetcode.com/problems/binary-tree-maximum-path-sum/">Binary Tree Maximum Path Sum</a>, the best path may <strong>bend</strong> at a node (go down both sides). A bent path cannot be extended by the parent, so it is <strong>recorded in a global best</strong>, while the function returns only the best <strong>straight</strong> path going down one side.</p>
+<div class="compare">
+<div class="good">
+<p><strong>Returned to the parent (can be extended)</strong></p>
+<ul>
+<li>the longest one-sided downward path, <code>1 + max(left, right)</code></li>
+<li>for max path sum: <code>val + max(0, left, right)</code></li>
+</ul>
+</div>
+<div class="warn">
+<p><strong>Recorded at the node (cannot be extended)</strong></p>
+<ul>
+<li>the bent path through this node, <code>left + right</code></li>
+<li>for max path sum: <code>val + max(0, left) + max(0, right)</code></li>
+</ul>
+</div>
+</div>
+<p><a href="tree-patterns.html">Tree Patterns</a> walks through this "bend" pattern step by step. In tree DP language, the return value is the tuple the parent needs, and the global best is a separate answer you collect along the way.</p>
+<h3 id="tree-knapsack-choose-k-connected-nodes">Tree knapsack: choose k connected nodes</h3>
+<p>Now each node returns a <strong>whole array</strong>. The problem: a rooted tree has a value on every node. Choose exactly <code>k</code> nodes that include the root and are <strong>connected</strong> (if you take a node, you take its parent). Maximise the total. It is the shape of "courses with prerequisites and a budget", or "keep k cities and the roads between them".</p>
+<p><code>dp[v][t]</code> = the best total using exactly <code>t</code> nodes from <code>v</code>'s subtree, <code>v</code> included. Start with <code>dp[v] = [−∞, val[v]]</code> (only <code>v</code>). Then fold in each child <code>c</code> like a <strong>group knapsack</strong>: give <code>c</code> some number <code>b</code> of the slots (<code>b = 0</code> means "take nothing from <code>c</code>") and keep the best total for each new size <code>a + b</code>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 700 248" width="700" role="img" aria-label="Tree knapsack merge: dp of v so far is minus infinity, 9, 14, 16; the child's array is 0, 6, 10; the merged array is minus infinity, 9, 15, 20, 24, 26, where entry 3 comes from 14 plus 6">
+<defs><marker id="dp-intervals-trees-f7-visit" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-visit"/></marker><marker id="dp-intervals-trees-f7-path" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker></defs>
+<text x="190" y="52" text-anchor="end">dp[v] so far</text><text x="226" y="25" text-anchor="middle" class="small mono muted">0</text><rect class="box" x="200" y="30" width="52" height="34" rx="6"/><text x="226" y="52" text-anchor="middle" class="mono">−∞</text><text x="284" y="25" text-anchor="middle" class="small mono muted">1</text><rect class="box" x="258" y="30" width="52" height="34" rx="6"/><text x="284" y="52" text-anchor="middle" class="mono">9</text><text x="342" y="25" text-anchor="middle" class="small mono muted">2</text><rect class="box visit" x="316" y="30" width="52" height="34" rx="6"/><text x="342" y="52" text-anchor="middle" class="mono">14</text><text x="400" y="25" text-anchor="middle" class="small mono muted">3</text><rect class="box" x="374" y="30" width="52" height="34" rx="6"/><text x="400" y="52" text-anchor="middle" class="mono">16</text>
+<text x="190" y="120" text-anchor="end">dp[c], child</text><text x="226" y="93" text-anchor="middle" class="small mono muted">0</text><rect class="box" x="200" y="98" width="52" height="34" rx="6"/><text x="226" y="120" text-anchor="middle" class="mono">0</text><text x="284" y="93" text-anchor="middle" class="small mono muted">1</text><rect class="box path" x="258" y="98" width="52" height="34" rx="6"/><text x="284" y="120" text-anchor="middle" class="mono">6</text><text x="342" y="93" text-anchor="middle" class="small mono muted">2</text><rect class="box" x="316" y="98" width="52" height="34" rx="6"/><text x="342" y="120" text-anchor="middle" class="mono">10</text>
+<text x="190" y="200" text-anchor="end">after merging c</text><text x="226" y="173" text-anchor="middle" class="small mono muted">0</text><rect class="box done" x="200" y="178" width="52" height="34" rx="6"/><text x="226" y="200" text-anchor="middle" class="mono">−∞</text><text x="284" y="173" text-anchor="middle" class="small mono muted">1</text><rect class="box done" x="258" y="178" width="52" height="34" rx="6"/><text x="284" y="200" text-anchor="middle" class="mono">9</text><text x="342" y="173" text-anchor="middle" class="small mono muted">2</text><rect class="box done" x="316" y="178" width="52" height="34" rx="6"/><text x="342" y="200" text-anchor="middle" class="mono">15</text><text x="400" y="173" text-anchor="middle" class="small mono muted">3</text><rect class="box active" x="374" y="178" width="52" height="34" rx="6"/><text x="400" y="200" text-anchor="middle" class="mono">20</text><text x="458" y="173" text-anchor="middle" class="small mono muted">4</text><rect class="box done" x="432" y="178" width="52" height="34" rx="6"/><text x="458" y="200" text-anchor="middle" class="mono">24</text><text x="516" y="173" text-anchor="middle" class="small mono muted">5</text><rect class="box done" x="490" y="178" width="52" height="34" rx="6"/><text x="516" y="200" text-anchor="middle" class="mono">26</text>
+<path class="edge visit" d="M342 64 L418 180" marker-end="url(#dp-intervals-trees-f7-visit)"/><path class="edge path" d="M284 132 L382 181" marker-end="url(#dp-intervals-trees-f7-path)"/>
+<text x="560" y="50" class="small">a nodes from v's part</text><text x="560" y="66" class="small">+ b nodes from c</text><text x="560" y="82" class="small">= a + b nodes</text>
+<text x="200" y="236" class="small mono">new[3] = max(16 + 0, 14 + 6, 9 + 10) = 20   (b = 0 means: take nothing from c)</text>
+</svg>
+<figcaption>Folding one child into v is a small knapsack over sizes: every way to split t nodes between "v's part so far" (a ≥ 1, since v itself is taken) and "the child's subtree" (b ≥ 0). Index 0 of v's array stays −∞, because v must be taken.</figcaption>
+</figure>
+
+<div class="viz dit-wide" data-viz="dp-intervals-trees-knap"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def best_k_connected(parent: list[int], val: list[int], k: int) -&gt; float:
+    n = len(val)
+    children = [[] for _ in range(n)]
+    for v in range(1, n):
+        children[parent[v]].append(v)
+    NEG = float(&quot;-inf&quot;)
+    def go(v):                              # dp[t]: best sum, t nodes of v's subtree, v included
+        dp = [NEG, val[v]]
+        for c in children[v]:
+            dc = go(c)
+            dc[0] = 0                       # taking nothing from c is allowed
+            new = [NEG] * min(k + 1, len(dp) + len(dc) - 1)
+            for a in range(1, len(dp)):     # loops bounded by sizes: O(n * k) overall
+                for b in range(len(dc)):
+                    if a + b &lt; len(new):
+                        new[a + b] = max(new[a + b], dp[a] + dc[b])
+            dp = new
+        return dp
+    dp = go(0)
+    return dp[k] if k &lt; len(dp) else NEG
+</code></pre>
+<pre><code class="language-csharp">public long BestKConnected(int[] parent, int[] val, int k) {
+    int n = val.Length;
+    var children = new List&lt;int&gt;[n];
+    for (int v = 0; v &lt; n; v++) children[v] = new List&lt;int&gt;();
+    for (int v = 1; v &lt; n; v++) children[parent[v]].Add(v);
+    const long NEG = long.MinValue / 4;
+    long[] Go(int v) {                                  // dp[t]: best sum, t nodes of v's subtree, v included
+        var dp = new long[] { NEG, val[v] };
+        foreach (int c in children[v]) {
+            var dc = Go(c);
+            dc[0] = 0;                                  // taking nothing from c is allowed
+            var nw = new long[Math.Min(k + 1, dp.Length + dc.Length - 1)];
+            Array.Fill(nw, NEG);
+            for (int a = 1; a &lt; dp.Length; a++)
+                for (int b = 0; b &lt; dc.Length &amp;&amp; a + b &lt; nw.Length; b++)
+                    nw[a + b] = Math.Max(nw[a + b], dp[a] + dc[b]);
+            dp = nw;
+        }
+        return dp;
+    }
+    var res = Go(0);
+    return k &lt; res.Length ? res[k] : NEG;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n·k) time. That is not obvious, since it looks like O(n·k²). The key is that the arrays are <strong>only as long as the subtree</strong> (capped at <code>k + 1</code>). Without the cap, merging two arrays of sizes <code>s1</code> and <code>s2</code> costs <code>s1·s2</code>, which is the number of node pairs that meet for the first time at <code>v</code>. Every pair of nodes meets exactly once, at its lowest common ancestor, so the total is O(n²). With the cap at <code>k</code> the same argument gives O(n·k). If you allocate full <code>k + 1</code> arrays everywhere, you lose this bound.</p>
+<div class="pitfall">
+<p><strong>Mind the <code>−∞</code> and the <code>0</code>.</strong> <code>dp[c][0]</code> ("take nothing from this child") must be 0, not <code>−∞</code>, or every node would be forced to take something from every child. But <code>dp[v][0]</code> for the node itself must stay <code>−∞</code>, because a non-empty selection inside <code>v</code>'s subtree must include <code>v</code> (connectedness). Mixing these up silently gives answers that are too large.</p>
+</div>
+<h3 id="rerooting-an-answer-for-every-root-in-on">Rerooting: an answer for every root in O(n)</h3>
+<p><a href="https://leetcode.com/problems/sum-of-distances-in-tree/">Sum of Distances in Tree (834)</a> <span class="diff hard">Hard</span> wants, for <strong>every</strong> node, the sum of its distances to all other nodes. Running the tree DP once per root is O(n²). Rerooting does all roots in <strong>two passes</strong>:</p>
+<ol>
+<li><strong>Pass 1, down (post-order):</strong> root the tree at 0 and compute subtree facts: <code>size[v]</code> and <code>down[v]</code>, the sum of distances from <code>v</code> to the nodes <strong>in its subtree</strong>: <code>down[p] = Σ (down[c] + size[c])</code>. Each child's nodes are one edge farther from <code>p</code> than from <code>c</code>.</li>
+<li><strong>Pass 2, up (pre-order):</strong> compute <code>up[v]</code>, the same quantity for the nodes <strong>outside</strong> <code>v</code>'s subtree, from the parent's answers: <code>up[v] = up[p] + (down[p] − down[v] − size[v]) + (n − size[v])</code>. Take everything <code>p</code> sees except <code>v</code>'s branch, and add 1 for each of the <code>n − size[v]</code> outside nodes, which are one step farther from <code>v</code> than from <code>p</code>.</li>
+</ol>
+<p>The answer for <code>v</code> is <code>down[v] + up[v]</code>. The famous one-line form, <code>ans[v] = ans[p] − size[v] + (n − size[v])</code>, is the same algebra: moving the root across one edge brings <code>size[v]</code> nodes one step closer and pushes the other <code>n − size[v]</code> one step farther.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 640 282" width="640" role="img" aria-label="Rerooting from p to its child v: the 4 nodes in v's subtree each get one step closer and the 4 nodes outside each get one step farther">
+<defs><marker id="dp-intervals-trees-f5-active" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-active"/></marker></defs>
+<rect class="edge dash" x="40" y="20" width="270" height="200" rx="14"/><rect class="edge dash" x="350" y="40" width="260" height="180" rx="14"/>
+<path class="edge" d="M160 50 L260 95"/>
+<path class="edge" d="M160 140 L260 95"/>
+<path class="edge" d="M80 190 L160 140"/>
+<path class="edge" d="M420 95 L390 185"/>
+<path class="edge" d="M420 95 L480 185"/>
+<path class="edge" d="M420 95 L560 120"/>
+<path class="edge active" d="M281 95 L396 95" marker-end="url(#dp-intervals-trees-f5-active)"/><text x="340" y="84" text-anchor="middle" class="small">root moves</text>
+<rect class="box" x="140" y="34" width="40" height="32" rx="16"/><text x="160" y="55" text-anchor="middle" class="mono">a</text><rect class="box" x="140" y="124" width="40" height="32" rx="16"/><text x="160" y="145" text-anchor="middle" class="mono">b</text><rect class="box" x="60" y="174" width="40" height="32" rx="16"/><text x="80" y="195" text-anchor="middle" class="mono">c</text><rect class="box visit" x="240" y="79" width="40" height="32" rx="16"/><text x="260" y="100" text-anchor="middle" class="mono">p</text><rect class="box active" x="400" y="79" width="40" height="32" rx="16"/><text x="420" y="100" text-anchor="middle" class="mono">v</text><rect class="box path" x="370" y="169" width="40" height="32" rx="16"/><text x="390" y="190" text-anchor="middle" class="mono">d</text><rect class="box path" x="460" y="169" width="40" height="32" rx="16"/><text x="480" y="190" text-anchor="middle" class="mono">e</text><rect class="box path" x="540" y="104" width="40" height="32" rx="16"/><text x="560" y="125" text-anchor="middle" class="mono">f</text>
+<text x="175" y="240" text-anchor="middle" class="small">outside: n − size[v] = 4 nodes, each +1</text><text x="480" y="240" text-anchor="middle" class="small">v's subtree: size[v] = 4 nodes, each −1</text>
+<text x="330" y="270" text-anchor="middle" class="mono">ans[v] = ans[p] − size[v] + (n − size[v])</text>
+</svg>
+<figcaption>Moving the root across one edge changes every distance by exactly ±1. Nodes in v's subtree (dashed, right) are one step closer to v than to p, and everything else (dashed, left) is one step farther. So each new answer costs O(1), and all n answers cost O(n).</figcaption>
+</figure>
+
+<p>The visualizer shows both passes. In the first, values bubble <strong>up</strong> from the leaves. In the second, they flow <strong>down</strong> from the root, and each node becomes "the root" for a moment. The second mode, "farthest node from each root", shows that rerooting works for <strong>max</strong> as well as sum. That needs the <strong>top two</strong> child heights, because when you go down into the child that <strong>gave</strong> the best height, the parent must offer its second best.</p>
+<div class="viz dit-wide" data-viz="dp-intervals-trees-reroot"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def sum_of_distances_in_tree(n: int, edges: list[list[int]]) -&gt; list[int]:
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v); adj[v].append(u)
+    parent, order = [-1] * n, [0]
+    for v in order:                         # BFS order: every parent before its children
+        for c in adj[v]:
+            if c != parent[v]:
+                parent[c] = v; order.append(c)
+    size, down, up = [1] * n, [0] * n, [0] * n
+    for v in reversed(order[1:]):           # pass 1, children first: look down
+        p = parent[v]
+        size[p] += size[v]
+        down[p] += down[v] + size[v]
+    for v in order[1:]:                     # pass 2, parents first: bring the outside in
+        p = parent[v]
+        up[v] = up[p] + down[p] - (down[v] + size[v]) + (n - size[v])
+    return [down[v] + up[v] for v in range(n)]
+
+def height_from_every_root(n: int, edges: list[list[int]]) -&gt; list[int]:
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v); adj[v].append(u)
+    parent, order = [-1] * n, [0]
+    for v in order:
+        for c in adj[v]:
+            if c != parent[v]:
+                parent[c] = v; order.append(c)
+    down, up = [0] * n, [0] * n
+    best1, best2 = [0] * n, [0] * n         # top two values of down[child] + 1
+    for v in reversed(order[1:]):
+        p, h = parent[v], down[v] + 1
+        if h &gt; best1[p]:
+            best1[p], best2[p] = h, best1[p]
+        elif h &gt; best2[p]:
+            best2[p] = h
+        down[p] = best1[p]
+    for v in order[1:]:
+        p = parent[v]
+        other = best2[p] if down[v] + 1 == best1[p] else best1[p]   # best route from p avoiding v
+        up[v] = 1 + max(up[p], other)
+    return [max(down[v], up[v]) for v in range(n)]
+</code></pre>
+<pre><code class="language-csharp">public int[] SumOfDistancesInTree(int n, int[][] edges) {
+    var adj = new List&lt;int&gt;[n];
+    for (int v = 0; v &lt; n; v++) adj[v] = new List&lt;int&gt;();
+    foreach (var e in edges) { adj[e[0]].Add(e[1]); adj[e[1]].Add(e[0]); }
+    var parent = new int[n];
+    Array.Fill(parent, -1);
+    var order = new List&lt;int&gt; { 0 };
+    for (int t = 0; t &lt; order.Count; t++)               // BFS order: every parent before its children
+        foreach (int c in adj[order[t]])
+            if (c != parent[order[t]]) { parent[c] = order[t]; order.Add(c); }
+    var size = new int[n]; var down = new int[n]; var up = new int[n];
+    Array.Fill(size, 1);
+    for (int t = n - 1; t &gt;= 1; t--) {                  // pass 1, children first: look down
+        int v = order[t], p = parent[v];
+        size[p] += size[v];
+        down[p] += down[v] + size[v];
+    }
+    for (int t = 1; t &lt; n; t++) {                       // pass 2, parents first: bring the outside in
+        int v = order[t], p = parent[v];
+        up[v] = up[p] + down[p] - (down[v] + size[v]) + (n - size[v]);
+    }
+    var ans = new int[n];
+    for (int v = 0; v &lt; n; v++) ans[v] = down[v] + up[v];
+    return ans;
+}
+
+public int[] HeightFromEveryRoot(int n, int[][] edges) {
+    var adj = new List&lt;int&gt;[n];
+    for (int v = 0; v &lt; n; v++) adj[v] = new List&lt;int&gt;();
+    foreach (var e in edges) { adj[e[0]].Add(e[1]); adj[e[1]].Add(e[0]); }
+    var parent = new int[n];
+    Array.Fill(parent, -1);
+    var order = new List&lt;int&gt; { 0 };
+    for (int t = 0; t &lt; order.Count; t++)
+        foreach (int c in adj[order[t]])
+            if (c != parent[order[t]]) { parent[c] = order[t]; order.Add(c); }
+    var down = new int[n]; var up = new int[n];
+    var best1 = new int[n]; var best2 = new int[n];     // top two values of down[child] + 1
+    for (int t = n - 1; t &gt;= 1; t--) {
+        int v = order[t], p = parent[v], h = down[v] + 1;
+        if (h &gt; best1[p]) { best2[p] = best1[p]; best1[p] = h; }
+        else if (h &gt; best2[p]) best2[p] = h;
+        down[p] = best1[p];
+    }
+    for (int t = 1; t &lt; n; t++) {
+        int v = order[t], p = parent[v];
+        int other = down[v] + 1 == best1[p] ? best2[p] : best1[p];   // best route from p avoiding v
+        up[v] = 1 + Math.Max(up[p], other);
+    }
+    var ans = new int[n];
+    for (int v = 0; v &lt; n; v++) ans[v] = Math.Max(down[v], up[v]);
+    return ans;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n) time and memory for both. Both passes are <strong>iterative</strong> over a BFS order (reversed for pass 1), so a path-shaped tree with 3·10⁴ nodes cannot overflow the recursion stack. <code>height_from_every_root</code> gives each node's eccentricity: the nodes where it is smallest are the centres used by <a href="https://leetcode.com/problems/minimum-height-trees/">Minimum Height Trees (310)</a>.</p>
+<div class="recognize">
+<p><strong>Rerooting recipe.</strong> You need it when the question says "for <strong>every</strong> node as the root" (or "for each node, over the whole tree") and one root costs O(n).</p>
+<ol>
+<li>Solve it for root 0 with a normal tree DP (<code>down</code>).</li>
+<li>Write how a node's answer changes when the root <strong>moves across one edge</strong> <code>p → v</code>. Usually that is "remove <code>v</code>'s contribution from <code>p</code>, add <code>p</code>'s remaining side to <code>v</code>".</li>
+<li>If "remove <code>v</code>'s contribution" is not a subtraction (max, min, gcd), keep the <strong>top two</strong> (or prefix and suffix aggregates over the children) so you can exclude one child in O(1).</li>
+</ol>
+</div>
+<h2 id="dp-on-a-dag-topological-order-is-the-fill-order">DP on a DAG: topological order is the fill order</h2>
+<p>Every DP is secretly a graph: states are nodes, and "this state reads that state" is an edge. The fill order is <strong>any topological order</strong> of that graph (<a href="dp-framework.html">The DP Framework</a> draws this explicitly). Interval DP uses "by length", and tree DP uses post-order, both because those are topological orders of their dependency graphs. When the problem hands you a DAG directly, use <a href="topological-sort.html">Kahn's algorithm</a> as the loop:</p>
+<ul>
+<li><strong>Longest path:</strong> <code>best[v] = max(best[u] + 1)</code> over edges <code>u → v</code>. A node is processed only when its in-degree reaches 0, so all of its predecessors are final.</li>
+<li><strong>Count paths <code>s → t</code>:</strong> <code>ways[v] = Σ ways[u]</code>, starting from <code>ways[s] = 1</code>.</li>
+<li><strong>Cycle check for free:</strong> if fewer than <code>n</code> nodes are ever popped, the graph has a cycle, and "longest path" is undefined (worked problem 8 relies on this).</li>
+</ul>
+<div class="viz dit-wide" data-viz="dp-intervals-trees-dag"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def longest_path_dag(n: int, edges: list[list[int]]) -&gt; int:
+    adj, indeg = [[] for _ in range(n)], [0] * n
+    for u, v in edges:
+        adj[u].append(v); indeg[v] += 1
+    q = deque(v for v in range(n) if indeg[v] == 0)
+    best = [0] * n                          # edges on the longest path ending at v
+    while q:
+        u = q.popleft()                     # every predecessor of u is already final
+        for v in adj[u]:
+            best[v] = max(best[v], best[u] + 1)
+            indeg[v] -= 1
+            if indeg[v] == 0:
+                q.append(v)
+    return max(best)
+
+def count_paths_dag(n: int, edges: list[list[int]], s: int, t: int) -&gt; int:
+    adj, indeg = [[] for _ in range(n)], [0] * n
+    for u, v in edges:
+        adj[u].append(v); indeg[v] += 1
+    q = deque(v for v in range(n) if indeg[v] == 0)
+    ways = [0] * n
+    ways[s] = 1
+    while q:
+        u = q.popleft()
+        for v in adj[u]:
+            ways[v] += ways[u]
+            indeg[v] -= 1
+            if indeg[v] == 0:
+                q.append(v)
+    return ways[t]
+</code></pre>
+<pre><code class="language-csharp">public int LongestPathDag(int n, int[][] edges) {
+    var adj = new List&lt;int&gt;[n];
+    for (int v = 0; v &lt; n; v++) adj[v] = new List&lt;int&gt;();
+    var indeg = new int[n];
+    foreach (var e in edges) { adj[e[0]].Add(e[1]); indeg[e[1]]++; }
+    var q = new Queue&lt;int&gt;();
+    for (int v = 0; v &lt; n; v++) if (indeg[v] == 0) q.Enqueue(v);
+    var best = new int[n];                              // edges on the longest path ending at v
+    while (q.Count &gt; 0) {
+        int u = q.Dequeue();                            // every predecessor of u is already final
+        foreach (int v in adj[u]) {
+            best[v] = Math.Max(best[v], best[u] + 1);
+            if (--indeg[v] == 0) q.Enqueue(v);
+        }
+    }
+    return best.Max();
+}
+
+public long CountPathsDag(int n, int[][] edges, int s, int t) {
+    var adj = new List&lt;int&gt;[n];
+    for (int v = 0; v &lt; n; v++) adj[v] = new List&lt;int&gt;();
+    var indeg = new int[n];
+    foreach (var e in edges) { adj[e[0]].Add(e[1]); indeg[e[1]]++; }
+    var q = new Queue&lt;int&gt;();
+    for (int v = 0; v &lt; n; v++) if (indeg[v] == 0) q.Enqueue(v);
+    var ways = new long[n];
+    ways[s] = 1;
+    while (q.Count &gt; 0) {
+        int u = q.Dequeue();
+        foreach (int v in adj[u]) {
+            ways[v] += ways[u];
+            if (--indeg[v] == 0) q.Enqueue(v);
+        }
+    }
+    return ways[t];
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(V + E) time and memory. The Python uses <code>from collections import deque</code>. Longest path is NP-hard in a general graph, but on a DAG it is this easy, because the order removes every cycle. The same loop works for <strong>weighted</strong> longest or shortest paths: replace <code>+ 1</code> with <code>+ w</code>. The C# <code>best.Max()</code> needs <code>using System.Linq;</code>.</p>
+<h2 id="recognize-it-cost-it-avoid-the-traps">Recognize it, cost it, avoid the traps</h2>
+<div class="recognize">
+<p><strong>Reach for interval DP when:</strong></p>
+<ul>
+<li>the operation always acts on a <strong>contiguous block</strong>, and afterwards the left and right sides <strong>close up</strong> or stay <strong>independent</strong> (merge, burst, cut, print, remove a palindrome);</li>
+<li>the input is small (n ≤ 500 for O(n³), n ≤ 100 for O(n⁴)), which is a strong hint on its own;</li>
+<li>two players take from <strong>either end</strong> of a row;</li>
+<li>the statement says "bracket", "parenthesise", "triangulate", or "in any order" about neighbours.</li>
+</ul>
+<p><strong>Reach for tree DP when:</strong></p>
+<ul>
+<li>the input is a tree, and a choice at a node <strong>constrains</strong> its parent or children (no adjacent picks, coverage, colouring);</li>
+<li>you need "the best subtree / path / selection" and the brute force enumerates subsets of nodes;</li>
+<li>"for every node as the root" appears (rerooting);</li>
+<li>the graph is a DAG (or the state graph is), and you need longest, shortest or count of paths.</li>
+</ul>
+</div>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>State</th>
+<th>Transition</th>
+<th>Time</th>
+<th>Memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Split point (matrix chain, merge stones, stick)</td>
+<td><code>dp[i][j]</code></td>
+<td>every <code>k</code> in <code>i..j</code></td>
+<td>O(n³)</td>
+<td>O(n²)</td>
+</tr>
+<tr>
+<td>Last action (burst balloons)</td>
+<td><code>dp[i][j]</code>, open interval</td>
+<td>every last <code>k</code></td>
+<td>O(n³)</td>
+<td>O(n²)</td>
+</tr>
+<tr>
+<td>End-removal game</td>
+<td><code>dp[i][j]</code> = mover's lead</td>
+<td>2 choices</td>
+<td>O(n²)</td>
+<td>O(n) rolled</td>
+</tr>
+<tr>
+<td>Match the endpoint (printer, palindrome removal)</td>
+<td><code>dp[i][j]</code></td>
+<td>every equal <code>s[k]</code></td>
+<td>O(n³)</td>
+<td>O(n²)</td>
+</tr>
+<tr>
+<td>Extra context (remove boxes)</td>
+<td><code>dp[l][r][k]</code></td>
+<td>every equal <code>m</code></td>
+<td>O(n⁴)</td>
+<td>O(n³)</td>
+</tr>
+<tr>
+<td>Knuth-optimised split</td>
+<td><code>dp[i][j]</code> + <code>opt[i][j]</code></td>
+<td><code>k</code> in an <code>opt</code> window</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+</tr>
+<tr>
+<td>Tree tuple (robber, cameras)</td>
+<td><code>dp[v][s]</code>, s small</td>
+<td>combine children</td>
+<td>O(n·s²)</td>
+<td>O(h) stack</td>
+</tr>
+<tr>
+<td>Tree knapsack</td>
+<td><code>dp[v][t]</code>, t ≤ k</td>
+<td>merge child arrays</td>
+<td>O(n·k)</td>
+<td>O(n·k)</td>
+</tr>
+<tr>
+<td>Rerooting</td>
+<td><code>down[v]</code>, <code>up[v]</code></td>
+<td>two passes</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>DAG paths</td>
+<td><code>best[v]</code> / <code>ways[v]</code></td>
+<td>over in-edges, topological order</td>
+<td>O(V + E)</td>
+<td>O(V)</td>
+</tr>
+</tbody>
+</table>
+<div class="pitfall">
+<p><strong>The traps that cost the most time:</strong></p>
+<ul>
+<li><strong>Filling row 0 first.</strong> <code>dp[0][j]</code> needs row <code>k + 1 &gt; 0</code>. Fill by length, or <code>i</code> from the bottom.</li>
+<li><strong>Shared vs separate endpoints.</strong> <code>dp[i][k] + dp[k][j]</code> (cut points, walls, polygon vertices) vs <code>dp[i][k] + dp[k+1][j]</code> (matrices, piles). Each has a different base case and a different <code>k</code> range.</li>
+<li><strong>Thinking "first" when you need "last".</strong> If removing <code>k</code> changes its neighbours, choose the last one.</li>
+<li><strong>A state that ignores the surroundings.</strong> If the best for <code>i..j</code> depends on what is glued on outside, add that to the state (Remove Boxes).</li>
+<li><strong>A tree tuple that is missing a situation.</strong> If you find yourself checking a grandchild, the child's tuple is too small.</li>
+<li><strong>Recursion depth.</strong> Trees and DAGs with 10⁵ nodes can be paths. Use an explicit BFS order, or raise the recursion limit (Python) and test a path.</li>
+<li><strong>Rerooting with max.</strong> You cannot "subtract" a max: keep the top two.</li>
+</ul>
+</div>
+<h2 id="worked-problems">Worked problems</h2>
+<p>Each problem is solved in Python and C#. The solutions were checked against a brute force (trying every order, subset or root) on random small inputs. The Python snippets assume <code>from functools import cache</code>, <code>from itertools import accumulate</code>, <code>from collections import deque</code> and <code>inf = float("inf")</code>.</p>
+<h3 id="1-minimum-cost-tree-from-leaf-values-a-split-dp-in-disguise">1. Minimum Cost Tree From Leaf Values: a split DP in disguise</h3>
+<p><a href="https://leetcode.com/problems/minimum-cost-tree-from-leaf-values/">LeetCode 1130</a> <span class="diff medium">Medium</span>. Build a binary tree whose in-order leaves are <code>arr</code>. Every internal node's value is (largest leaf on its left) × (largest leaf on its right). Minimise the sum of the internal nodes.</p>
+<p><strong>Key insight.</strong> The root splits <code>arr</code> into a left block <code>arr[i..k]</code> and a right block <code>arr[k+1..j]</code>, and each block is again a tree. That is exactly the matrix-chain bracketing. The cost of joining is <code>max(i..k) · max(k+1..j)</code>, so precompute <code>mx[i][j]</code> once.</p>
+<details class="solution">
+<p><summary>Solution: split DP with a range-max table, O(n³)</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def mct_from_leaf_values(arr: list[int]) -&gt; int:
+    n = len(arr)
+    mx = [[0] * n for _ in range(n)]        # mx[i][j] = max(arr[i..j])
+    for i in range(n):
+        mx[i][i] = arr[i]
+        for j in range(i + 1, n):
+            mx[i][j] = max(mx[i][j - 1], arr[j])
+    dp = [[0] * n for _ in range(n)]
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = min(dp[i][k] + dp[k + 1][j] + mx[i][k] * mx[k + 1][j]
+                           for k in range(i, j))
+    return dp[0][n - 1]
+</code></pre>
+<pre><code class="language-csharp">public int MctFromLeafValues(int[] arr) {
+    int n = arr.Length;
+    var mx = new int[n, n];                             // mx[i,j] = max(arr[i..j])
+    for (int i = 0; i &lt; n; i++) {
+        mx[i, i] = arr[i];
+        for (int j = i + 1; j &lt; n; j++) mx[i, j] = Math.Max(mx[i, j - 1], arr[j]);
+    }
+    var dp = new int[n, n];
+    for (int len = 2; len &lt;= n; len++)
+        for (int i = 0; i + len - 1 &lt; n; i++) {
+            int j = i + len - 1;
+            dp[i, j] = int.MaxValue;
+            for (int k = i; k &lt; j; k++)
+                dp[i, j] = Math.Min(dp[i, j], dp[i, k] + dp[k + 1, j] + mx[i, k] * mx[k + 1, j]);
+        }
+    return dp[0, n - 1];
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n³) time, O(n²) memory. For <code>[6, 2, 4]</code> the answer is 32. There is also an O(n) greedy with a decreasing monotonic stack: always pair the smallest leaf with its smaller neighbour. It makes a good follow-up, but the DP is the version you can derive under pressure.</p>
+</details>
+<h3 id="2-strange-printer-sj-rides-along-with-an-earlier-equal-letter">2. Strange Printer: s[j] rides along with an earlier equal letter</h3>
+<p><a href="https://leetcode.com/problems/strange-printer/">LeetCode 664</a> <span class="diff hard">Hard</span>. The printer prints a run of one character over any range, overwriting. Find the fewest turns that print <code>s</code>.</p>
+<p><strong>Key insight.</strong> Look at the last character <code>s[j]</code>. Either it costs its own turn (<code>dp[i][j−1] + 1</code>), or the turn that prints some equal <code>s[k]</code> (with <code>i ≤ k &lt; j</code>) is simply stretched to reach <code>j</code>. Then <code>s[k+1..j−1]</code> is printed later on top of it, independently: <code>dp[i][k] + dp[k+1][j−1]</code>. Duplicate neighbours are handled automatically.</p>
+<details class="solution">
+<p><summary>Solution: interval DP matching s[j] with an equal s[k], O(n³)</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def strange_printer(s: str) -&gt; int:
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n - 1, -1, -1):
+        dp[i][i] = 1
+        for j in range(i + 1, n):
+            dp[i][j] = dp[i][j - 1] + 1                     # s[j] gets its own turn
+            for k in range(i, j):
+                if s[k] == s[j]:                            # s[j] rides on the turn that prints s[k]
+                    inner = dp[k + 1][j - 1] if k + 1 &lt;= j - 1 else 0
+                    dp[i][j] = min(dp[i][j], dp[i][k] + inner)
+    return dp[0][n - 1]
+</code></pre>
+<pre><code class="language-csharp">public int StrangePrinter(string s) {
+    int n = s.Length;
+    var dp = new int[n, n];
+    for (int i = n - 1; i &gt;= 0; i--) {
+        dp[i, i] = 1;
+        for (int j = i + 1; j &lt; n; j++) {
+            dp[i, j] = dp[i, j - 1] + 1;                // s[j] gets its own turn
+            for (int k = i; k &lt; j; k++)
+                if (s[k] == s[j]) {                     // s[j] rides on the turn that prints s[k]
+                    int inner = k + 1 &lt;= j - 1 ? dp[k + 1, j - 1] : 0;
+                    dp[i, j] = Math.Min(dp[i, j], dp[i, k] + inner);
+                }
+        }
+    }
+    return dp[0, n - 1];
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n³) time, O(n²) memory. <code>"aaabbb"</code> takes 2 turns and <code>"aba"</code> takes 2. The brute force used for checking is a BFS over every partially printed string.</p>
+</details>
+<h3 id="3-minimum-cost-to-merge-stones-when-a-split-must-leave-exactly-one-pile">3. Minimum Cost to Merge Stones: when a split must leave exactly one pile</h3>
+<p><a href="https://leetcode.com/problems/minimum-cost-to-merge-stones/">LeetCode 1000</a> <span class="diff hard">Hard</span>. Each move merges exactly <code>K</code> <strong>consecutive</strong> piles into one, costing their total. Find the minimum cost to end with one pile, or −1 if that is impossible.</p>
+<p><strong>Key insight.</strong> Each merge removes <code>K − 1</code> piles, so <code>n</code> piles can become one only if <code>(n − 1) % (K − 1) == 0</code>. Let <code>dp[i][j]</code> be the cheapest way to squeeze <code>i..j</code> into <strong>as few piles as possible</strong> (that number is fixed by the length). Split so that the <strong>left part becomes exactly one pile</strong>: its length must be <code>1, K, 2K − 1, …</code>, so <code>m</code> steps by <code>K − 1</code>. When <code>i..j</code> itself can become one pile, add the final merge, which costs <code>sum(i..j)</code> whatever happened before.</p>
+<details class="solution">
+<p><summary>Solution: split with step K − 1, O(n³ / K)</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def merge_stones(stones: list[int], K: int) -&gt; int:
+    n = len(stones)
+    if (n - 1) % (K - 1):
+        return -1
+    pre = list(accumulate(stones, initial=0))
+    dp = [[0] * n for _ in range(n)]        # dp[i][j]: min cost to squeeze i..j into as few piles as possible
+    for length in range(K, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = min(dp[i][m] + dp[m + 1][j] for m in range(i, j, K - 1))
+            if (j - i) % (K - 1) == 0:      # i..j can now become ONE pile: pay its sum
+                dp[i][j] += pre[j + 1] - pre[i]
+    return dp[0][n - 1]
+</code></pre>
+<pre><code class="language-csharp">public int MergeStones(int[] stones, int K) {
+    int n = stones.Length;
+    if ((n - 1) % (K - 1) != 0) return -1;
+    var pre = new int[n + 1];
+    for (int t = 0; t &lt; n; t++) pre[t + 1] = pre[t] + stones[t];
+    var dp = new int[n, n];                             // min cost to squeeze i..j into as few piles as possible
+    for (int len = K; len &lt;= n; len++)
+        for (int i = 0; i + len - 1 &lt; n; i++) {
+            int j = i + len - 1;
+            dp[i, j] = int.MaxValue;
+            for (int m = i; m &lt; j; m += K - 1)
+                dp[i, j] = Math.Min(dp[i, j], dp[i, m] + dp[m + 1, j]);
+            if ((j - i) % (K - 1) == 0) dp[i, j] += pre[j + 1] - pre[i];   // i..j becomes ONE pile
+        }
+    return dp[0, n - 1];
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n³ / K) time, O(n²) memory. <code>[3, 2, 4, 1]</code> with K = 2 costs 20, and <code>[3, 5, 1, 2, 6]</code> with K = 3 costs 25. Pieces shorter than <code>K</code> cost 0, since they cannot merge at all, and the loops start at length <code>K</code>. With K = 2 this is the "merge adjacent stones" mode of the split visualizer.</p>
+</details>
+<h3 id="4-palindrome-removal-arri-wraps-the-last-palindrome-inside">4. Palindrome Removal: arr[i] wraps the last palindrome inside</h3>
+<p><a href="https://leetcode.com/problems/palindrome-removal/">LeetCode 1246</a> <span class="diff hard">Hard</span>. One move removes a palindromic subarray, and the neighbours close up. Find the fewest moves that empty the array.</p>
+<p><strong>Key insight.</strong> Follow <code>arr[i]</code>. It leaves either on its own (<code>1 + dp[i+1][j]</code>), or together with its twin when <code>arr[i+1]</code> is equal (<code>1 + dp[i+2][j]</code>), or as the <strong>outer layer</strong> of some palindrome: if <code>arr[k] == arr[i]</code>, clear <code>i+1..k−1</code> so that its <strong>last</strong> move removes a palindrome <code>P</code>. Then <code>arr[i] P arr[k]</code> is also a palindrome, and it leaves in that same move, for free. Cost: <code>dp[i+1][k−1] + dp[k+1][j]</code>.</p>
+<details class="solution">
+<p><summary>Solution: interval DP wrapping with equal ends, O(n³)</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def minimum_moves(arr: list[int]) -&gt; int:
+    n = len(arr)
+    dp = [[0] * (n + 1) for _ in range(n + 1)]   # dp[i][j] for arr[i..j]; empty ranges are 0
+    for i in range(n - 1, -1, -1):
+        for j in range(i, n):
+            best = 1 + dp[i + 1][j]                  # arr[i] removed on its own
+            if i + 1 &lt;= j and arr[i] == arr[i + 1]:
+                best = min(best, 1 + dp[i + 2][j])   # &quot;x x&quot; removed together
+            for k in range(i + 2, j + 1):
+                if arr[i] == arr[k]:                 # arr[i], arr[k] wrap the last palindrome removed inside
+                    best = min(best, dp[i + 1][k - 1] + dp[k + 1][j])
+            dp[i][j] = best
+    return dp[0][n - 1]
+</code></pre>
+<pre><code class="language-csharp">public int MinimumMoves(int[] arr) {
+    int n = arr.Length;
+    var dp = new int[n + 1, n + 1];                     // dp[i,j] for arr[i..j]; empty ranges are 0
+    for (int i = n - 1; i &gt;= 0; i--)
+        for (int j = i; j &lt; n; j++) {
+            int best = 1 + dp[i + 1, j];                // arr[i] removed on its own
+            if (i + 1 &lt;= j &amp;&amp; arr[i] == arr[i + 1])
+                best = Math.Min(best, 1 + dp[i + 2, j]);   // &quot;x x&quot; removed together
+            for (int k = i + 2; k &lt;= j; k++)
+                if (arr[i] == arr[k])                   // arr[i], arr[k] wrap the last palindrome removed inside
+                    best = Math.Min(best, dp[i + 1, k - 1] + dp[k + 1, j]);
+            dp[i, j] = best;
+        }
+    return dp[0, n - 1];
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n³) time, O(n²) memory. <code>[1, 3, 4, 1, 5]</code> takes 3 moves: remove <code>4</code>, then <code>1 3 1</code>, then <code>5</code>. The table has an extra row and column so that <code>dp[i+2][j]</code> and <code>dp[k+1][j]</code> can point past the end and read 0. Note that wrapping costs <strong>no</strong> extra move, because the wrapped palindrome was going to be removed anyway.</p>
+</details>
+<h3 id="5-remove-boxes-carry-the-glued-boxes-in-the-state">5. Remove Boxes: carry the glued boxes in the state</h3>
+<p><a href="https://leetcode.com/problems/remove-boxes/">LeetCode 546</a> <span class="diff expert">Expert</span>. Remove <code>t</code> adjacent boxes of the same colour for <code>t²</code> points. Maximise the total.</p>
+<p><strong>Key insight.</strong> This is the third dimension from the Remove Boxes section above. <code>dp(l, r, k)</code> says <code>k</code> boxes of colour <code>boxes[l]</code> are glued on the left. Two moves: remove the group now, or clear <code>l+1..m−1</code> to join a later box <code>m</code> of the same colour. Before branching, absorb the run of equal boxes that starts at <code>l</code> into <code>k</code>. That one <code>while</code> loop removes most of the duplicate states.</p>
+<details class="solution">
+<p><summary>Solution: memoised dp(l, r, k), O(n⁴) worst case</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def remove_boxes(boxes: list[int]) -&gt; int:
+    @cache
+    def dp(l: int, r: int, k: int) -&gt; int:  # k extra boxes equal to boxes[l] glued on the left
+        if l &gt; r:
+            return 0
+        while l &lt; r and boxes[l + 1] == boxes[l]:
+            l += 1; k += 1
+        best = (k + 1) ** 2 + dp(l + 1, r, 0)            # remove the group now
+        for m in range(l + 1, r + 1):
+            if boxes[m] == boxes[l]:                       # clear l+1..m-1, then join boxes[m]
+                best = max(best, dp(l + 1, m - 1, 0) + dp(m, r, k + 1))
+        return best
+    return dp(0, len(boxes) - 1, 0)
+</code></pre>
+<pre><code class="language-csharp">public int RemoveBoxes(int[] boxes) {
+    int n = boxes.Length;
+    var memo = new int[n, n, n];                        // 0 = not computed yet (every real answer is &gt;= 1)
+    int Dp(int l, int r, int k) {                       // k extra boxes equal to boxes[l] glued on the left
+        if (l &gt; r) return 0;
+        while (l &lt; r &amp;&amp; boxes[l + 1] == boxes[l]) { l++; k++; }
+        if (memo[l, r, k] != 0) return memo[l, r, k];
+        int best = (k + 1) * (k + 1) + Dp(l + 1, r, 0);           // remove the group now
+        for (int m = l + 1; m &lt;= r; m++)
+            if (boxes[m] == boxes[l])                              // clear l+1..m-1, then join boxes[m]
+                best = Math.Max(best, Dp(l + 1, m - 1, 0) + Dp(m, r, k + 1));
+        return memo[l, r, k] = best;
+    }
+    return Dp(0, n - 1, 0);
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n³) states and O(n) work each, so O(n⁴) worst case, but far less in practice. <code>[1, 3, 2, 2, 2, 3, 4, 3, 1]</code> scores 23. In Python, <code>@cache</code> on a 100³ state space is fine. In C#, the flat <code>int[n, n, n]</code> array beats a dictionary by a wide margin.</p>
+</details>
+<h3 id="6-maximum-sum-bst-in-binary-tree-a-four-field-tuple">6. Maximum Sum BST in Binary Tree: a four-field tuple</h3>
+<p><a href="https://leetcode.com/problems/maximum-sum-bst-in-binary-tree/">LeetCode 1373</a> <span class="diff hard">Hard</span>. Find the largest sum of keys of any subtree that is a valid BST. The empty BST counts, so the answer is at least 0.</p>
+<p><strong>Key insight.</strong> To decide whether <code>v</code>'s subtree is a BST, the parent's question is "are both children BSTs, and does <code>left.max &lt; v &lt; right.min</code>?". So each child returns <code>(is_bst, min, max, sum)</code>. An empty child returns <code>(True, +∞, −∞, 0)</code>, so the comparisons pass without special cases. Record each valid sum in a global best.</p>
+<details class="solution">
+<p><summary>Solution: post-order tuple, O(n)</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def max_sum_bst(root: TreeNode | None) -&gt; int:
+    best = 0
+    def go(node):                           # -&gt; (is_bst, min, max, sum) of the subtree
+        nonlocal best
+        if not node:
+            return (True, inf, -inf, 0)
+        lb, llo, lhi, ls = go(node.left)
+        rb, rlo, rhi, rs = go(node.right)
+        if lb and rb and lhi &lt; node.val &lt; rlo:
+            total = ls + rs + node.val
+            best = max(best, total)
+            return (True, min(llo, node.val), max(rhi, node.val), total)
+        return (False, 0, 0, 0)             # values do not matter once it is not a BST
+    go(root)
+    return best
+</code></pre>
+<pre><code class="language-csharp">public int MaxSumBST(TreeNode? root) {
+    int best = 0;
+    (bool bst, int lo, int hi, int sum) Go(TreeNode? node) {
+        if (node == null) return (true, int.MaxValue, int.MinValue, 0);
+        var l = Go(node.left);
+        var r = Go(node.right);
+        if (l.bst &amp;&amp; r.bst &amp;&amp; l.hi &lt; node.val &amp;&amp; node.val &lt; r.lo) {
+            int total = l.sum + r.sum + node.val;
+            best = Math.Max(best, total);
+            return (true, Math.Min(l.lo, node.val), Math.Max(r.hi, node.val), total);
+        }
+        return (false, 0, 0, 0);                        // values do not matter once it is not a BST
+    }
+    Go(root);
+    return best;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n) time, O(h) stack. Notice <code>min(llo, node.val)</code>: when the left child is empty, <code>llo</code> is <code>+∞</code>, and the subtree's minimum is the node itself. The sum can be negative, which is why <code>best</code> starts at 0 (the empty tree) and not at the root's sum.</p>
+</details>
+<h3 id="7-count-number-of-possible-root-nodes-rerooting-a-count">7. Count Number of Possible Root Nodes: rerooting a count</h3>
+<p><a href="https://leetcode.com/problems/count-number-of-possible-root-nodes/">LeetCode 2581</a> <span class="diff hard">Hard</span>. Bob guesses pairs "<code>u</code> is the parent of <code>v</code>". For how many choices of root are at least <code>k</code> guesses correct?</p>
+<p><strong>Key insight.</strong> Count the correct guesses for root 0 with one traversal. Moving the root from <code>p</code> to its child <code>v</code> flips <strong>only</strong> the edge <code>p–v</code>: the guess <code>(p, v)</code> stops being true and the guess <code>(v, p)</code> starts being true. Every other parent relation is unchanged. So <code>correct[v] = correct[p] − [(p,v) guessed] + [(v,p) guessed]</code>, in O(1) per node.</p>
+<details class="solution">
+<p><summary>Solution: rerooting with a hash set of guesses, O(n + g)</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def root_count(edges: list[list[int]], guesses: list[list[int]], k: int) -&gt; int:
+    n = len(edges) + 1
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v); adj[v].append(u)
+    g = {(u, v) for u, v in guesses}
+    parent, order = [-1] * n, [0]
+    for v in order:
+        for c in adj[v]:
+            if c != parent[v]:
+                parent[c] = v; order.append(c)
+    correct = [0] * n
+    correct[0] = sum((parent[v], v) in g for v in order[1:])   # one full count for root 0
+    for v in order[1:]:                     # move the root across edge (p, v)
+        p = parent[v]
+        correct[v] = correct[p] - ((p, v) in g) + ((v, p) in g)
+    return sum(c &gt;= k for c in correct)
+</code></pre>
+<pre><code class="language-csharp">public int RootCount(int[][] edges, int[][] guesses, int k) {
+    int n = edges.Length + 1;
+    var adj = new List&lt;int&gt;[n];
+    for (int v = 0; v &lt; n; v++) adj[v] = new List&lt;int&gt;();
+    foreach (var e in edges) { adj[e[0]].Add(e[1]); adj[e[1]].Add(e[0]); }
+    var g = new HashSet&lt;long&gt;();
+    foreach (var x in guesses) g.Add((long)x[0] * n + x[1]);
+    var parent = new int[n];
+    Array.Fill(parent, -1);
+    var order = new List&lt;int&gt; { 0 };
+    for (int t = 0; t &lt; order.Count; t++)
+        foreach (int c in adj[order[t]])
+            if (c != parent[order[t]]) { parent[c] = order[t]; order.Add(c); }
+    var correct = new int[n];
+    for (int t = 1; t &lt; n; t++)                         // one full count for root 0
+        if (g.Contains((long)parent[order[t]] * n + order[t])) correct[0]++;
+    int res = correct[0] &gt;= k ? 1 : 0;
+    for (int t = 1; t &lt; n; t++) {                       // move the root across edge (p, v)
+        int v = order[t], p = parent[v];
+        correct[v] = correct[p] - (g.Contains((long)p * n + v) ? 1 : 0) + (g.Contains((long)v * n + p) ? 1 : 0);
+        if (correct[v] &gt;= k) res++;
+    }
+    return res;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n + g) time and memory. Both passes are iterative over a BFS order. This is the cleanest example of the rerooting rule "<strong>write what changes when the root crosses one edge</strong>": here only one edge changes direction.</p>
+</details>
+<h3 id="8-largest-color-value-in-a-directed-graph-dp-over-a-topological-order">8. Largest Color Value in a Directed Graph: DP over a topological order</h3>
+<p><a href="https://leetcode.com/problems/largest-color-value-in-a-directed-graph/">LeetCode 1857</a> <span class="diff hard">Hard</span>. Every node has a colour <code>a</code>–<code>z</code>. A path's colour value is the count of its most frequent colour. Return the largest colour value over all paths, or −1 if the graph has a cycle.</p>
+<p><strong>Key insight.</strong> Run "longest path on a DAG" <strong>26 times at once</strong>: <code>cnt[v][c]</code> = the most nodes of colour <code>c</code> on any path that ends at <code>v</code>. Kahn's algorithm gives the order (every predecessor is final before <code>v</code> is popped), and it also detects the cycle: if some node is never popped, there is one.</p>
+<details class="solution">
+<p><summary>Solution: Kahn's order with a 26-wide DP row, O(26 · (V + E))</summary></p>
+<div class="code-tabs">
+<pre><code class="language-python">def largest_path_value(colors: str, edges: list[list[int]]) -&gt; int:
+    n = len(colors)
+    adj, indeg = [[] for _ in range(n)], [0] * n
+    for u, v in edges:
+        adj[u].append(v); indeg[v] += 1
+    cnt = [[0] * 26 for _ in range(n)]      # cnt[v][c]: most c-coloured nodes on a path ending at v
+    q = deque(v for v in range(n) if indeg[v] == 0)
+    seen = best = 0
+    while q:
+        u = q.popleft(); seen += 1
+        cnt[u][ord(colors[u]) - 97] += 1
+        best = max(best, max(cnt[u]))
+        for v in adj[u]:
+            for c in range(26):
+                cnt[v][c] = max(cnt[v][c], cnt[u][c])
+            indeg[v] -= 1
+            if indeg[v] == 0:
+                q.append(v)
+    return best if seen == n else -1        # some node never reached in-degree 0: cycle
+</code></pre>
+<pre><code class="language-csharp">public int LargestPathValue(string colors, int[][] edges) {
+    int n = colors.Length;
+    var adj = new List&lt;int&gt;[n];
+    for (int v = 0; v &lt; n; v++) adj[v] = new List&lt;int&gt;();
+    var indeg = new int[n];
+    foreach (var e in edges) { adj[e[0]].Add(e[1]); indeg[e[1]]++; }
+    var cnt = new int[n, 26];                           // most c-coloured nodes on a path ending at v
+    var q = new Queue&lt;int&gt;();
+    for (int v = 0; v &lt; n; v++) if (indeg[v] == 0) q.Enqueue(v);
+    int seen = 0, best = 0;
+    while (q.Count &gt; 0) {
+        int u = q.Dequeue(); seen++;
+        best = Math.Max(best, ++cnt[u, colors[u] - 'a']);
+        foreach (int v in adj[u]) {
+            for (int c = 0; c &lt; 26; c++) cnt[v, c] = Math.Max(cnt[v, c], cnt[u, c]);
+            if (--indeg[v] == 0) q.Enqueue(v);
+        }
+    }
+    return seen == n ? best : -1;                       // a node never reached in-degree 0: cycle
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(26·(V + E)) time, O(26·V) memory. <code>"abaca"</code> with edges <code>0→1, 0→2, 2→3, 3→4</code> gives 3 (path <code>0→2→3→4</code> has three <code>a</code>s). A self-loop <code>0→0</code> gives −1. Taking the max <strong>per colour</strong> independently is safe, because each colour's best path can be different, and the answer only needs the best over all colours.</p>
+</details>
+<h2 id="problem-ladder">Problem ladder</h2>
+<p>Work down the list. The right-hand column is the one idea to notice. If you can say it before you start coding, you are ready for the problem.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Difficulty</th>
+<th>The DP idea to notice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://leetcode.com/problems/predict-the-winner/">Predict the Winner</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td><code>dp[i][j]</code> = mover's lead; subtract the opponent's best</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://leetcode.com/problems/house-robber-iii/">House Robber III</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>return <code>(rob, skip)</code> per node</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://leetcode.com/problems/longest-palindromic-subsequence/">Longest Palindromic Subsequence</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td><code>dp[i][j]</code> from the two ends, filled from the bottom row</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://leetcode.com/problems/unique-binary-search-trees/">Unique Binary Search Trees</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>the root <code>k</code> splits <code>1..n</code> into two independent ranges (Catalan)</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://leetcode.com/problems/minimum-score-triangulation-of-polygon/">Minimum Score Triangulation of Polygon</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>triangle <code>(i, k, j)</code> on edge <code>(i, j)</code>, shared endpoints</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://leetcode.com/problems/minimum-cost-tree-from-leaf-values/">Minimum Cost Tree From Leaf Values</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>bracketing with a range-max cost (worked 1)</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://leetcode.com/problems/stone-game-vii/">Stone Game VII</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>score difference with a prefix-sum reward</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://leetcode.com/problems/guess-number-higher-or-lower-ii/">Guess Number Higher or Lower II</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>minimax split: <code>k + max(dp[i][k−1], dp[k+1][j])</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://leetcode.com/problems/longest-increasing-path-in-a-matrix/">Longest Increasing Path in a Matrix</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>the grid is a DAG; memoised DFS is its topological DP</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://leetcode.com/problems/minimum-cost-to-cut-a-stick/">Minimum Cost to Cut a Stick</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>DP over sorted cut points, not over length</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://leetcode.com/problems/burst-balloons/">Burst Balloons</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>choose the <strong>last</strong> balloon; it is a wall for both sides</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://leetcode.com/problems/binary-tree-cameras/">Binary Tree Cameras</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>three situations: camera, covered, waiting</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://leetcode.com/problems/binary-tree-maximum-path-sum/">Binary Tree Maximum Path Sum</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>return the straight path, record the bent one</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="https://leetcode.com/problems/maximum-sum-bst-in-binary-tree/">Maximum Sum BST in Binary Tree</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>tuple <code>(is_bst, min, max, sum)</code> (worked 6)</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="https://leetcode.com/problems/strange-printer/">Strange Printer</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td><code>s[j]</code> rides on the turn of an equal <code>s[k]</code> (worked 2)</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="https://leetcode.com/problems/sum-of-distances-in-tree/">Sum of Distances in Tree</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>rerooting: <code>−size[v] + (n − size[v])</code></td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="https://leetcode.com/problems/count-number-of-possible-root-nodes/">Count Number of Possible Root Nodes</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>rerooting where one edge flips (worked 7)</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="https://leetcode.com/problems/largest-color-value-in-a-directed-graph/">Largest Color Value in a Directed Graph</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>26 DAG DPs at once, plus Kahn's cycle check (worked 8)</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="https://leetcode.com/problems/minimum-cost-to-merge-stones/">Minimum Cost to Merge Stones</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>the left part must become exactly one pile: step <code>K − 1</code> (worked 3)</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="https://leetcode.com/problems/difference-between-maximum-and-minimum-price-sum/">Difference Between Maximum and Minimum Price Sum</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>rerooting a max: keep the top two child paths</td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="https://leetcode.com/problems/palindrome-removal/">Palindrome Removal</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td><code>arr[i]</code> wraps the last palindrome removed inside (worked 4)</td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="https://leetcode.com/problems/count-different-palindromic-subsequences/">Count Different Palindromic Subsequences</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>interval counting with inclusion–exclusion on the inner duplicates</td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="https://leetcode.com/problems/remove-boxes/">Remove Boxes</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>add "boxes glued on the left" as a third dimension (worked 5)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="check-yourself">Check yourself</h2>
+<details class="quiz">
+<p><summary>1. Why can't you fill the interval table row by row starting at row 0?</summary></p>
+<p><code>dp[0][j]</code> needs the right pieces <code>dp[k+1][j]</code>, which sit in <strong>later</strong> rows (<code>k + 1 &gt; 0</code>). Every cell depends on cells to its left in the same row and <strong>below</strong> it in the same column. So fill by length (diagonal by diagonal), or run <code>i</code> from <code>n − 1</code> down to 0 with <code>j</code> going up. Both finish every shorter piece first.</p>
+</details>
+<details class="quiz">
+<p><summary>2. In Burst Balloons, what goes wrong if k is the first balloon to burst in (i, j)?</summary></p>
+<p>After <code>k</code> bursts, its neighbours <code>k − 1</code> and <code>k + 1</code> become adjacent, so later coins on the left depend on balloons on the right. The two sides are no longer independent subproblems. If <code>k</code> is the <strong>last</strong> to burst, it stays as a wall while both sides are cleared, and when it finally goes, its neighbours are exactly the walls <code>i</code> and <code>j</code>, so its coins <code>v[i]·v[k]·v[j]</code> are known.</p>
+</details>
+<details class="quiz">
+<p><summary>3. In Cut a Stick, what are dp[i][i + 1] and the k range, and why?</summary></p>
+<p><code>dp[i][i + 1] = 0</code>: there is no cut point strictly between two neighbouring points, so there is nothing to do. The range is <code>i &lt; k &lt; j</code>, because <code>pts[k]</code> is the <strong>first</strong> cut made in the piece. It becomes an endpoint of <strong>both</strong> remaining pieces, which is why the transition is <code>dp[i][k] + dp[k][j]</code> (shared <code>k</code>), not <code>dp[k+1][j]</code>.</p>
+</details>
+<details class="quiz">
+<p><summary>4. Why does House Robber III fail if each node returns only "the best for my subtree"?</summary></p>
+<p>The parent cannot tell whether that best <strong>robbed the child</strong>. If it did, the parent cannot be robbed on top of it. If it did not, it can. Example: a root of 5 with a single child of 4, whose child is 10. The child's best is 10 (skip 4, rob 10), but whether the root can add itself depends on whether the child's best used the child (it did not, so 5 + 10 = 15). Returning <code>(rob, skip)</code> gives the parent exactly that information.</p>
+</details>
+<details class="quiz">
+<p><summary>5. In Binary Tree Cameras, why does the empty subtree return (∞, 0, ∞), and why is unc not allowed at the root?</summary></p>
+<p>An empty subtree cannot hold a camera (<code>cam = ∞</code>). It needs no coverage (<code>cov = 0</code>, and that value makes a leaf's <code>unc = 0 + 0</code> work). It must never force its parent to place a camera (<code>unc = ∞</code>). At the root, <code>unc</code> means "my parent will cover me", but the root has no parent, so the answer is <code>min(cam, cov)</code>.</p>
+</details>
+<details class="quiz">
+<p><summary>6. Tree knapsack looks like O(n · k²). Why is it O(n · k)?</summary></p>
+<p>The merge at <code>v</code> costs (size of what is merged so far) × (size of the child's array), and every array is only as long as its subtree, capped at <code>k + 1</code>. Without the cap, the product counts the pairs of nodes whose lowest common ancestor is <code>v</code>, so the total over all nodes is the number of pairs, O(n²). With the cap, a standard refinement of the same counting gives O(n·k). Pre-allocating full <code>k + 1</code> arrays everywhere breaks the argument and really does cost O(n·k²).</p>
+</details>
+<details class="quiz">
+<p><summary>7. When rerooting a max (farthest node), why keep the top two child heights?</summary></p>
+<p>When the root moves from <code>p</code> down to <code>v</code>, <code>v</code> needs "the best route out of <code>p</code> that does <strong>not</strong> go back into <code>v</code>". If <code>v</code>'s branch gave <code>p</code> its best height, that best is useless to <code>v</code>, and you need the <strong>second</strong> best. A max cannot be "un-added" the way a sum can be subtracted, so you keep the top two (or prefix and suffix maxima over the children).</p>
+</details>
+<details class="quiz">
+<p><summary>8. Merge Stones with K = 3 and 4 piles: what is the answer, and why?</summary></p>
+<p>−1. Each merge turns 3 piles into 1, removing 2 piles, so the pile count goes 4 → 2 and can never reach 1. In general one pile is reachable only if <code>(n − 1) % (K − 1) == 0</code>.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Interval state</strong>dp[i][j] = the answer for the contiguous piece i..j</div>
+<div><strong>Fill order</strong>by length, or i from n−1 down to 0 with j up; or memoise f(i, j)</div>
+<div><strong>Split point</strong>min over k of dp[i][k] + dp[k+1][j] + cost(i, k, j)</div>
+<div><strong>Shared endpoint</strong>dp[i][k] + dp[k][j] for cut points, walls, polygon vertices; base j = i + 1</div>
+<div><strong>Last action</strong>if acting on k changes its neighbours, let k act last: it is a wall for both sides</div>
+<div><strong>Game on a row</strong>dp[i][j] = max(a[i] − dp[i+1][j], a[j] − dp[i][j−1])</div>
+<div><strong>Match the endpoint</strong>s[j] (or s[i]) teams up with an equal s[k]: printer, palindrome removal</div>
+<div><strong>Extra context</strong>if the outside matters, put it in the state: dp[l][r][k glued boxes]</div>
+<div><strong>Knuth</strong>opt[i][j−1] ≤ opt[i][j] ≤ opt[i+1][j] makes O(n³) into O(n²) for quadrangle costs</div>
+<div><strong>Tree tuple</strong>return one value per situation the parent needs to know about</div>
+<div><strong>Bend vs return</strong>return the straight path to the parent, record the bent one globally</div>
+<div><strong>Tree knapsack</strong>merge child arrays sized by subtree (cap k): O(n·k)</div>
+<div><strong>Rerooting</strong>down pass (post-order) + up pass (pre-order); for max, keep the top two</div>
+<div><strong>DAG DP</strong>Kahn's order is the fill order; fewer than n popped means a cycle</div>
+</div>
+<h2 id="where-to-go-next">Where to go next</h2>
+<ul>
+<li><a href="dp-bitmask-digit.html">Bitmask &amp; Digit DP</a>: the state becomes a <strong>set</strong> (as bits) or a <strong>digit position with a "tight" flag</strong>. That is the other way to make a DP state out of something that is not an index.</li>
+<li><a href="dp-advanced.html">Advanced DP</a>: Knuth, divide and conquer, and convex hull optimisations, with proofs.</li>
+<li><a href="tree-patterns.html">Tree Patterns</a>: the post-order patterns this page builds on (heights, bends, LCA, rerooting).</li>
+<li><a href="topological-sort.html">Topological Sort</a>: Kahn's algorithm and DFS order, the backbone of DAG DP.</li>
+<li><a href="dp-sequences-strings.html">Sequence &amp; String DP</a>: palindrome tables, LCS and edit distance, which are close cousins of interval DP.</li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="dp-sequences-strings.html"><small>&larr; PREVIOUS</small>Sequence &amp; String DP</a><a class="next" href="dp-bitmask-digit.html"><small>NEXT &rarr;</small>Bitmask &amp; Digit DP</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#where-this-page-fits">Where this page fits</a></li>
+<li><a href="#interval-dp-the-shape">Interval DP: the shape</a><ul>
+<li><a href="#the-fill-order-is-the-diagonal-not-the-row">The fill order is the diagonal, not the row</a></li>
+<li><a href="#watch-it-try-every-split-point">Watch it: try every split point</a></li>
+<li><a href="#template-split-point-interval-dp">Template: split-point interval DP</a></li>
+<li><a href="#cut-a-stick-the-dp-runs-over-cut-points-not-centimetres">Cut a stick: the DP runs over cut points, not centimetres</a></li>
+</ul>
+</li>
+<li><a href="#burst-balloons-think-about-the-last-balloon-not-the-first">Burst Balloons: think about the last balloon, not the first</a></li>
+<li><a href="#games-on-a-row-store-the-score-difference">Games on a row: store the score difference</a></li>
+<li><a href="#when-ij-is-not-enough-remove-boxes">When [i][j] is not enough: Remove Boxes</a></li>
+<li><a href="#match-the-endpoint-strange-printer-and-palindrome-removal">Match the endpoint: Strange Printer and palindrome removal</a></li>
+<li><a href="#knuths-optimisation-at-a-glance">Knuth's optimisation at a glance</a></li>
+<li><a href="#tree-dp-every-node-returns-a-tuple">Tree DP: every node returns a tuple</a><ul>
+<li><a href="#house-robber-iii-the-rob-skip-pair">House Robber III: the (rob, skip) pair</a></li>
+<li><a href="#binary-tree-cameras-three-situations">Binary Tree Cameras: three situations</a></li>
+<li><a href="#return-value-vs-global-answer-diameter-and-max-path-sum">Return value vs global answer: diameter and max path sum</a></li>
+<li><a href="#tree-knapsack-choose-k-connected-nodes">Tree knapsack: choose k connected nodes</a></li>
+<li><a href="#rerooting-an-answer-for-every-root-in-on">Rerooting: an answer for every root in O(n)</a></li>
+</ul>
+</li>
+<li><a href="#dp-on-a-dag-topological-order-is-the-fill-order">DP on a DAG: topological order is the fill order</a></li>
+<li><a href="#recognize-it-cost-it-avoid-the-traps">Recognize it, cost it, avoid the traps</a></li>
+<li><a href="#worked-problems">Worked problems</a><ul>
+<li><a href="#1-minimum-cost-tree-from-leaf-values-a-split-dp-in-disguise">1. Minimum Cost Tree From Leaf Values: a split DP in disguise</a></li>
+<li><a href="#2-strange-printer-sj-rides-along-with-an-earlier-equal-letter">2. Strange Printer: s[j] rides along with an earlier equal letter</a></li>
+<li><a href="#3-minimum-cost-to-merge-stones-when-a-split-must-leave-exactly-one-pile">3. Minimum Cost to Merge Stones: when a split must leave exactly one pile</a></li>
+<li><a href="#4-palindrome-removal-arri-wraps-the-last-palindrome-inside">4. Palindrome Removal: arr[i] wraps the last palindrome inside</a></li>
+<li><a href="#5-remove-boxes-carry-the-glued-boxes-in-the-state">5. Remove Boxes: carry the glued boxes in the state</a></li>
+<li><a href="#6-maximum-sum-bst-in-binary-tree-a-four-field-tuple">6. Maximum Sum BST in Binary Tree: a four-field tuple</a></li>
+<li><a href="#7-count-number-of-possible-root-nodes-rerooting-a-count">7. Count Number of Possible Root Nodes: rerooting a count</a></li>
+<li><a href="#8-largest-color-value-in-a-directed-graph-dp-over-a-topological-order">8. Largest Color Value in a Directed Graph: DP over a topological order</a></li>
+</ul>
+</li>
+<li><a href="#problem-ladder">Problem ladder</a></li>
+<li><a href="#check-yourself">Check yourself</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#where-to-go-next">Where to go next</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1952 @@
+<!doctype html>
+<html lang="en" data-home="dsa-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Union-Find (Disjoint Set Union) | DSA Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#4f46e5;--accent-soft:#eef0ff;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#a5b4fc;--accent-soft:#252a5c;}}:root[data-theme=dark]{--accent:#a5b4fc;--accent-soft:#252a5c;}</style>
+  <link rel="stylesheet" href="../assets/topics/union-find.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/union-find.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="DSA Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">DS</span>DSA Home</a>
+    <p class="sidebar-caption">Data structures &amp; algorithms, seen.<br>Every idea animated, every pattern drilled.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations</summary><ul class="topic-list"><li data-search="The Problem-Solving Playbook Foundations A visual decision map from input size, shape and question type to the right technique, plus a repeatable interview/contest workflow. pattern recognition constraints approach interview" data-slug="problem-solving-playbook"><a href="../topics/problem-solving-playbook.html">The Problem-Solving Playbook</a></li><li data-search="Complexity Analysis Foundations Big-O growth you can see, amortized cost, recursion trees and the Master theorem, and what 10^8 operations per second really buys you. big o amortized master theorem time space" data-slug="complexity-analysis"><a href="../topics/complexity-analysis.html">Complexity Analysis</a></li><li data-search="Recursion &amp; the Call Stack Foundations Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from. call stack recursion tree divide and conquer" data-slug="recursion"><a href="../topics/recursion.html">Recursion &amp; the Call Stack</a></li></ul></details><details class="nav-track"><summary>Arrays &amp; Strings</summary><ul class="topic-list"><li data-search="Two Pointers Arrays &amp; Strings Opposite-end, same-direction and fast/slow pointers: why moving one pointer is safe, with partitioning and k-sum. pair sum partition dutch flag 3sum" data-slug="two-pointers"><a href="../topics/two-pointers.html">Two Pointers</a></li><li data-search="Sliding Window Arrays &amp; Strings Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows. substring subarray window at most k" data-slug="sliding-window"><a href="../topics/sliding-window.html">Sliding Window</a></li><li data-search="Prefix Sums &amp; Difference Arrays Arrays &amp; Strings 1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR. subarray sum equals k range sum 2d prefix difference array" data-slug="prefix-sums"><a href="../topics/prefix-sums.html">Prefix Sums &amp; Difference Arrays</a></li><li data-search="Binary Search Arrays &amp; Strings One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection. lower bound upper bound search on answer rotated monotonic predicate" data-slug="binary-search"><a href="../topics/binary-search.html">Binary Search</a></li><li data-search="Sorting Algorithms Arrays &amp; Strings Animated bubble, insertion, merge, quick, heap, counting and radix sorts; stability, quickselect and custom comparators. merge sort quick sort quickselect counting sort inversions" data-slug="sorting"><a href="../topics/sorting.html">Sorting Algorithms</a></li><li data-search="Hashing Patterns Arrays &amp; Strings How hash tables work inside, then frequency maps, grouping by canonical keys, complement lookups and rolling hashes. hash map hash set anagram two sum collision" data-slug="hashing"><a href="../topics/hashing.html">Hashing Patterns</a></li><li data-search="Monotonic Stack &amp; Queue Arrays &amp; Strings Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight. next greater largest rectangle deque trapping rain water" data-slug="monotonic-stack-queue"><a href="../topics/monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a></li><li data-search="Intervals &amp; Sweep Line Arrays &amp; Strings Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline. merge intervals meeting rooms events skyline" data-slug="intervals-sweep-line"><a href="../topics/intervals-sweep-line.html">Intervals &amp; Sweep Line</a></li><li data-search="String Algorithms Arrays &amp; Strings KMP failure function, Z-algorithm, Rabin–Karp, Manacher&#x27;s palindromes and string hashing, each animated character by character. kmp z algorithm rabin karp manacher palindrome pattern matching" data-slug="string-algorithms"><a href="../topics/string-algorithms.html">String Algorithms</a></li></ul></details><details class="nav-track"><summary>Linked Lists, Stacks, Queues &amp; Heaps</summary><ul class="topic-list"><li data-search="Linked Lists Linked Lists, Stacks, Queues &amp; Heaps Pointer rewiring you can watch: reversal, dummy heads, fast/slow cycle detection, merging, and LRU cache design. reverse floyd cycle merge lru" data-slug="linked-lists"><a href="../topics/linked-lists.html">Linked Lists</a></li><li data-search="Stacks &amp; Queues Linked Lists, Stacks, Queues &amp; Heaps Balanced brackets, expression evaluation, min-stack, queues from stacks, deques and BFS queues. parentheses calculator deque min stack" data-slug="stacks-queues"><a href="../topics/stacks-queues.html">Stacks &amp; Queues</a></li><li data-search="Heaps &amp; Priority Queues Linked Lists, Stacks, Queues &amp; Heaps Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling. heap top k median k way merge priority queue" data-slug="heaps-priority-queues"><a href="../topics/heaps-priority-queues.html">Heaps &amp; Priority Queues</a></li></ul></details><details class="nav-track"><summary>Trees</summary><ul class="topic-list"><li data-search="Tree Traversals Trees Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees. dfs bfs inorder level order morris" data-slug="tree-traversals"><a href="../topics/tree-traversals.html">Tree Traversals</a></li><li data-search="Binary Search Trees Trees Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters. bst validate successor avl red black" data-slug="binary-search-trees"><a href="../topics/binary-search-trees.html">Binary Search Trees</a></li><li data-search="Tree Problem Patterns Trees Return-value recursion (diameter, max path sum), top-down state, LCA, serialization, and binary lifting. lca diameter path sum binary lifting serialize" data-slug="tree-patterns"><a href="../topics/tree-patterns.html">Tree Problem Patterns</a></li><li data-search="Tries Trees Prefix trees animated insert by insert: autocomplete, word search on boards, and bitwise tries for max XOR. prefix tree autocomplete word search xor trie" data-slug="tries"><a href="../topics/tries.html">Tries</a></li><li data-search="Segment Trees, Fenwick Trees &amp; Sparse Tables Trees Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables. segment tree lazy propagation fenwick bit rmq" data-slug="segment-fenwick-trees"><a href="../topics/segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a></li></ul></details><details class="nav-track" open><summary>Graphs</summary><ul class="topic-list"><li data-search="Graph Fundamentals: BFS &amp; DFS Graphs Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS. bfs dfs grid islands connected components cycle" data-slug="graph-fundamentals"><a href="../topics/graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></li><li data-search="Topological Sort &amp; DAGs Graphs Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs. kahn course schedule dag dependency order" data-slug="topological-sort"><a href="../topics/topological-sort.html">Topological Sort &amp; DAGs</a></li><li data-search="Union-Find (Disjoint Set Union) Graphs Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries. dsu disjoint set path compression connectivity" data-slug="union-find"><a href="../topics/union-find.html" aria-current="page">Union-Find (Disjoint Set Union)</a></li><li data-search="Shortest Paths Graphs BFS, 0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall and A* animated, and a chart to pick the right one every time. dijkstra bellman ford floyd warshall a star 0-1 bfs" data-slug="shortest-paths"><a href="../topics/shortest-paths.html">Shortest Paths</a></li><li data-search="Minimum Spanning Trees Graphs Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems. kruskal prim mst cut property" data-slug="minimum-spanning-trees"><a href="../topics/minimum-spanning-trees.html">Minimum Spanning Trees</a></li><li data-search="Advanced Graph Algorithms Graphs Strongly connected components, bridges and articulation points, bipartite checks, Euler paths, and max-flow / matching. tarjan kosaraju scc bridges euler max flow bipartite matching" data-slug="advanced-graphs"><a href="../topics/advanced-graphs.html">Advanced Graph Algorithms</a></li></ul></details><details class="nav-track"><summary>Backtracking &amp; Greedy</summary><ul class="topic-list"><li data-search="Backtracking Backtracking &amp; Greedy The choose/explore/un-choose template animated on a decision tree: subsets, permutations, combinations, N-Queens, Sudoku and pruning. subsets permutations n queens sudoku pruning" data-slug="backtracking"><a href="../topics/backtracking.html">Backtracking</a></li><li data-search="Greedy Algorithms Backtracking &amp; Greedy When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding. exchange argument interval scheduling jump game huffman" data-slug="greedy"><a href="../topics/greedy.html">Greedy Algorithms</a></li></ul></details><details class="nav-track"><summary>Dynamic Programming</summary><ul class="topic-list"><li data-search="The DP Framework Dynamic Programming Recursion → memoization → tabulation → space optimisation, visualised on one problem; how to design state and transitions. memoization tabulation state transition overlapping subproblems" data-slug="dp-framework"><a href="../topics/dp-framework.html">The DP Framework</a></li><li data-search="1D &amp; Grid DP Dynamic Programming Climbing stairs, house robber, decode ways, unique paths, min path sum, maximal square and dungeon game with animated tables. house robber unique paths grid dp maximal square" data-slug="dp-linear-grid"><a href="../topics/dp-linear-grid.html">1D &amp; Grid DP</a></li><li data-search="Knapsack Family Dynamic Programming 0/1 vs unbounded vs bounded knapsack, why loop direction matters, coin change, subset sum and target sum. knapsack coin change subset sum partition" data-slug="dp-knapsack"><a href="../topics/dp-knapsack.html">Knapsack Family</a></li><li data-search="Sequence &amp; String DP Dynamic Programming LIS with patience sorting, LCS, edit distance, palindromic subsequences, regex/wildcard matching and distinct subsequences. lis lcs edit distance regex matching palindrome" data-slug="dp-sequences-strings"><a href="../topics/dp-sequences-strings.html">Sequence &amp; String DP</a></li><li data-search="Interval &amp; Tree DP Dynamic Programming Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting). interval dp burst balloons matrix chain tree dp rerooting" data-slug="dp-intervals-trees"><a href="../topics/dp-intervals-trees.html">Interval &amp; Tree DP</a></li><li data-search="Bitmask &amp; Digit DP Dynamic Programming Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints. bitmask tsp digit dp subset dp" data-slug="dp-bitmask-digit"><a href="../topics/dp-bitmask-digit.html">Bitmask &amp; Digit DP</a></li><li data-search="State Machines &amp; DP Optimisations Dynamic Programming Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth. stock state machine convex hull trick knuth optimisation" data-slug="dp-advanced"><a href="../topics/dp-advanced.html">State Machines &amp; DP Optimisations</a></li></ul></details><details class="nav-track"><summary>Bits &amp; Math</summary><ul class="topic-list"><li data-search="Bit Manipulation Bits &amp; Math Bits drawn as switches: masks, XOR tricks, counting bits, subset enumeration and Gray codes. xor mask single number popcount subsets" data-slug="bit-manipulation"><a href="../topics/bit-manipulation.html">Bit Manipulation</a></li><li data-search="Math, Number Theory &amp; Combinatorics Bits &amp; Math GCD, sieves, fast power, modular inverses, nCr mod p, inclusion–exclusion, and the geometry primitives you need. gcd sieve modular fast exponentiation combinatorics geometry" data-slug="math-number-theory"><a href="../topics/math-number-theory.html">Math, Number Theory &amp; Combinatorics</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../CodeExcellenceHome/index.html">Code Excellence Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>DSA Home / Union-Find (Disjoint Set Union)</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">GRAPHS</p><h1>Union-Find (Disjoint Set Union)</h1><p class="lede">Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries.</p><div class="meta"><span class="level level-intermediate">Intermediate → Advanced</span><span>~45 min study</span><span>Builds on: <a href="graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="union-find" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="why-union-find-exists">Why union-find exists</h2>
+<p>Some problems are only about <strong>who is connected to whom</strong>. Which computers share a network? Which accounts belong to one person? After this road opens, can city A reach city B? Which edge closes a cycle? You don't need paths, distances or orders. You need two operations, asked thousands of times while edges keep arriving:</p>
+<ul>
+<li><code>union(a, b)</code>: from now on a and b are in the same group (and so are their whole groups);</li>
+<li><code>find(x)</code>: which group is x in? Two items are connected exactly when <code>find</code> gives the same answer for both.</li>
+</ul>
+<p><a href="graph-fundamentals.html">Graph Fundamentals</a> already counts components with BFS or DFS, and that is the right tool when the whole graph is given up front and asked about once. Union-find (also called a <strong>disjoint-set union</strong>, or DSU) wins when edges <strong>arrive over time</strong>, when the same question is asked after every edge, or when you only care about connectivity and don't want to build an adjacency list at all. Both operations run in <strong>effectively constant</strong> time, and the whole structure is one integer array.</p>
+<div class="rule">
+<p><strong>The union-find invariant.</strong> Every set is a tree stored in <code>parent[]</code>, and its <strong>root</strong> (the node with <code>parent[r] == r</code>) is the set's name. Two items are in the same set <strong>if and only if <code>find</code> walks them to the same root</strong>. <code>union</code> only ever links one root under another, so the invariant survives every operation, and with <strong>union by size (or rank)</strong> plus <strong>path compression</strong>, any sequence of m operations on n items costs O(m·α(n)), where α(n) ≤ 4 for any n you will ever meet.</p>
+</div>
+<h3 id="the-picture-a-forest-in-one-array">The picture: a forest in one array</h3>
+<p>Each set is a tree whose arrows point <strong>up</strong>, from a child to its parent. Nothing points down, so there are no child lists to maintain. Storing the arrow for node i at <code>parent[i]</code> gives the whole forest in a single array.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 300" width="860" role="img" aria-label="Three trees drawn as arrows from child to parent, next to the parent array that stores them; find(3) follows 3 to 2 to 0">
+<defs><marker id="union-find-f1-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="union-find-f1-ar-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="union-find-f1-ar-path" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker></defs>
+<text x="10" y="22" class="title">The forest: each arrow points from a child to its parent</text>
+<path class="edge accent dash" d="M272.0,95.0 Q201.0,61.0 130.0,95.0" marker-end="url(#union-find-f1-ar-accent)"/>
+<text x="200" y="52" text-anchor="middle" class="small muted">union(3, 6) adds this one link</text>
+<line class="edge" x1="69.0" y1="160.6" x2="99.9" y2="111.1" marker-end="url(#union-find-f1-ar)"/>
+<line class="edge path" x1="151.0" y1="160.6" x2="120.1" y2="111.1" marker-end="url(#union-find-f1-ar-path)"/>
+<line class="edge path" x1="160.0" y1="238.0" x2="160.0" y2="194.0" marker-end="url(#union-find-f1-ar-path)"/>
+<line class="edge" x1="290.0" y1="158.0" x2="290.0" y2="114.0" marker-end="url(#union-find-f1-ar)"/>
+<line class="edge" x1="290.0" y1="238.0" x2="290.0" y2="194.0" marker-end="url(#union-find-f1-ar)"/>
+<circle class="box accent" cx="110" cy="95" r="17"/>
+<text x="110" y="100" text-anchor="middle" class="mono">0</text>
+<circle class="box" cx="60" cy="175" r="17"/>
+<text x="60" y="180" text-anchor="middle" class="mono">1</text>
+<circle class="box path" cx="160" cy="175" r="17"/>
+<text x="160" y="180" text-anchor="middle" class="mono">2</text>
+<circle class="box path" cx="160" cy="255" r="17"/>
+<text x="160" y="260" text-anchor="middle" class="mono">3</text>
+<circle class="box accent" cx="290" cy="95" r="17"/>
+<text x="290" y="100" text-anchor="middle" class="mono">4</text>
+<circle class="box" cx="290" cy="175" r="17"/>
+<text x="290" y="180" text-anchor="middle" class="mono">5</text>
+<circle class="box" cx="290" cy="255" r="17"/>
+<text x="290" y="260" text-anchor="middle" class="mono">6</text>
+<circle class="box accent" cx="400" cy="95" r="17"/>
+<text x="400" y="100" text-anchor="middle" class="mono">7</text>
+<text x="132" y="81" class="small muted">root</text>
+<text x="312" y="81" class="small muted">root</text>
+<text x="422" y="81" class="small muted">root</text>
+<text x="480" y="22" class="title">The same forest as one array</text>
+<text x="474" y="73" text-anchor="end" class="small muted">i</text>
+<text x="474" y="101" text-anchor="end" class="small muted">parent</text>
+<rect class="box accent" x="480" y="80" width="42" height="32" rx="3"/>
+<text x="501" y="100.5" text-anchor="middle" class="mono">0</text>
+<text x="501" y="73" text-anchor="middle" class="small muted">0</text>
+<rect class="box" x="522" y="80" width="42" height="32" rx="3"/>
+<text x="543" y="100.5" text-anchor="middle" class="mono">0</text>
+<text x="543" y="73" text-anchor="middle" class="small muted">1</text>
+<rect class="box path" x="564" y="80" width="42" height="32" rx="3"/>
+<text x="585" y="100.5" text-anchor="middle" class="mono">0</text>
+<text x="585" y="73" text-anchor="middle" class="small muted">2</text>
+<rect class="box path" x="606" y="80" width="42" height="32" rx="3"/>
+<text x="627" y="100.5" text-anchor="middle" class="mono">2</text>
+<text x="627" y="73" text-anchor="middle" class="small muted">3</text>
+<rect class="box accent" x="648" y="80" width="42" height="32" rx="3"/>
+<text x="669" y="100.5" text-anchor="middle" class="mono">4</text>
+<text x="669" y="73" text-anchor="middle" class="small muted">4</text>
+<rect class="box" x="690" y="80" width="42" height="32" rx="3"/>
+<text x="711" y="100.5" text-anchor="middle" class="mono">4</text>
+<text x="711" y="73" text-anchor="middle" class="small muted">5</text>
+<rect class="box" x="732" y="80" width="42" height="32" rx="3"/>
+<text x="753" y="100.5" text-anchor="middle" class="mono">5</text>
+<text x="753" y="73" text-anchor="middle" class="small muted">6</text>
+<rect class="box accent" x="774" y="80" width="42" height="32" rx="3"/>
+<text x="795" y="100.5" text-anchor="middle" class="mono">7</text>
+<text x="795" y="73" text-anchor="middle" class="small muted">7</text>
+<text x="480" y="150" class="small mono">find(3): 3 → parent[3] = 2 → parent[2] = 0 → parent[0] = 0, stop.</text>
+<text x="480" y="172" class="small mono">find(6): 6 → 5 → 4 → parent[4] = 4, stop.</text>
+<text x="480" y="194" class="small mono">connected(3, 6)? roots 0 ≠ 4, so no.</text>
+<text x="480" y="228" class="small">union(3, 6): parent[4] = 0. One write merges</text>
+<text x="480" y="246" class="small">two whole sets, no matter how big they are.</text>
+<text x="480" y="276" class="small muted">A root is its own parent: parent[i] == i.</text>
+</svg>
+<figcaption>A disjoint-set forest is just <code>parent[]</code>. Accent cells are roots (they point at themselves); the highlighted path is <code>find(3)</code>. Every set is named by its root.</figcaption>
+</figure>
+
+<p>Three consequences fall straight out of the picture:</p>
+<ol>
+<li><strong>Every node starts as its own root.</strong> <code>parent = [0, 1, 2, …, n−1]</code> means n singleton sets.</li>
+<li><strong><code>find(x)</code> is a walk upward</strong> until a node points at itself. Its cost is the depth of x.</li>
+<li><strong><code>union(a, b)</code> writes one pointer.</strong> Find both roots; if they differ, make one root the parent of the other. Every member of the lower set now reaches the new root through its old root, so nothing else needs touching. If the roots are equal, a and b were already connected, and in a graph that means <strong>the edge a–b closes a cycle</strong>. That single boolean powers half the problems on this page.</li>
+</ol>
+<h3 id="step-through-find-and-union">Step through find and union</h3>
+<p>Type any sequence of <code>union a b</code>, <code>find x</code> and <code>connected a b</code> operations. The forest and the arrays update together; the dashed node is the one <code>find</code> is currently standing on. Switch the union rule to <strong>naive</strong> and the find rule to <strong>no compression</strong> to watch the trees grow tall, then switch both back and run the same operations.</p>
+<div class="viz" data-viz="union-find-ops"></div>
+
+<h2 id="keeping-the-trees-short">Keeping the trees short</h2>
+<p>The only thing that can make union-find slow is a tall tree, because <code>find</code> costs the depth of the node. Two independent ideas keep trees short, and they combine.</p>
+<h3 id="idea-1-union-by-size-or-by-rank">Idea 1: union by size (or by rank)</h3>
+<p>When linking two roots, put the <strong>smaller</strong> tree under the <strong>larger</strong> one. A node's depth only increases when its tree is the smaller side of a union, which means the size of the tree containing it at least doubles. A tree can only double log₂ n times before it holds all n nodes, so <strong>no node is ever deeper than log₂ n</strong>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 320" width="860" role="img" aria-label="Naive union builds a chain of height 4; union by size builds a star of height 1; a node's tree at least doubles every time it gets deeper, so depth is at most log2 n">
+<defs><marker id="union-find-f2-ar-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker><marker id="union-find-f2-ar-done" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker></defs>
+<text x="10" y="22" class="title">Naive: parent[ra] = rb</text>
+<text x="10" y="42" class="small muted mono">union(0,1) … union(3,4)</text>
+<line class="edge bad" x1="120.0" y1="259.0" x2="120.0" y2="243.0" marker-end="url(#union-find-f2-ar-bad)"/>
+<line class="edge bad" x1="120.0" y1="209.0" x2="120.0" y2="193.0" marker-end="url(#union-find-f2-ar-bad)"/>
+<line class="edge bad" x1="120.0" y1="159.0" x2="120.0" y2="143.0" marker-end="url(#union-find-f2-ar-bad)"/>
+<line class="edge bad" x1="120.0" y1="109.0" x2="120.0" y2="93.0" marker-end="url(#union-find-f2-ar-bad)"/>
+<circle class="box accent" cx="120" cy="75" r="16"/>
+<text x="120" y="80" text-anchor="middle" class="mono">4</text>
+<circle class="box" cx="120" cy="125" r="16"/>
+<text x="120" y="130" text-anchor="middle" class="mono">3</text>
+<circle class="box" cx="120" cy="175" r="16"/>
+<text x="120" y="180" text-anchor="middle" class="mono">2</text>
+<circle class="box" cx="120" cy="225" r="16"/>
+<text x="120" y="230" text-anchor="middle" class="mono">1</text>
+<circle class="box bad" cx="120" cy="275" r="16"/>
+<text x="120" y="280" text-anchor="middle" class="mono">0</text>
+<text x="150" y="275" class="small mono">find(0): 4 hops</text>
+<text x="150" y="125" class="small">height n − 1</text>
+<line class="edge dash" x1="283" y1="10" x2="283" y2="310"/>
+<text x="300" y="22" class="title">By size: small root under big</text>
+<text x="300" y="42" class="small muted">the same four calls</text>
+<circle class="box accent" cx="430" cy="95" r="16"/>
+<text x="430" y="100" text-anchor="middle" class="mono">0</text>
+<text x="430" y="71" text-anchor="middle" class="small muted">size 5</text>
+<line class="edge done" x1="370.7" y1="172.3" x2="419.0" y2="109.3" marker-end="url(#union-find-f2-ar-done)"/>
+<circle class="box done" cx="361" cy="185" r="16"/>
+<text x="361" y="190" text-anchor="middle" class="mono">1</text>
+<line class="edge done" x1="411.0" y1="169.5" x2="425.5" y2="112.4" marker-end="url(#union-find-f2-ar-done)"/>
+<circle class="box done" cx="407" cy="185" r="16"/>
+<text x="407" y="190" text-anchor="middle" class="mono">2</text>
+<line class="edge done" x1="449.0" y1="169.5" x2="434.5" y2="112.4" marker-end="url(#union-find-f2-ar-done)"/>
+<circle class="box done" cx="453" cy="185" r="16"/>
+<text x="453" y="190" text-anchor="middle" class="mono">3</text>
+<line class="edge done" x1="489.3" y1="172.3" x2="441.0" y2="109.3" marker-end="url(#union-find-f2-ar-done)"/>
+<circle class="box done" cx="499" cy="185" r="16"/>
+<text x="499" y="190" text-anchor="middle" class="mono">4</text>
+<text x="430" y="238" text-anchor="middle" class="small">height 1: every find is ≤ 1 hop</text>
+<text x="430" y="260" text-anchor="middle" class="small muted mono">union(1, 2): size[0] = 2 &gt; size[2] = 1,</text>
+<text x="430" y="278" text-anchor="middle" class="small muted">so 2 hangs under 0, not the other way</text>
+<line class="edge dash" x1="583" y1="10" x2="583" y2="310"/>
+<text x="600" y="22" class="title">Why depth ≤ log₂ n</text>
+<text x="600" y="46" class="small">x gets one level deeper only when its</text>
+<text x="600" y="62" class="small">tree is the smaller side of a union:</text>
+<rect class="box" x="600" y="82" width="13" height="24" rx="6"/>
+<text x="621" y="98" class="small mono">depth 0: size ≥ 1</text>
+<rect class="box visit" x="600" y="120" width="26" height="24" rx="6"/>
+<text x="634" y="136" class="small mono">depth 1: size ≥ 2</text>
+<rect class="box path" x="600" y="158" width="52" height="24" rx="6"/>
+<text x="660" y="174" class="small mono">depth 2: size ≥ 4</text>
+<rect class="box done" x="600" y="196" width="104" height="24" rx="6"/>
+<text x="712" y="212" class="small mono">depth 3: size ≥ 8</text>
+<text x="600" y="254" class="small">each step at least doubles the size,</text>
+<text x="600" y="272" class="small">and size ≤ n, so at most log₂ n steps.</text>
+<text x="600" y="298" class="small muted">⇒ find costs O(log n) even with no compression</text>
+</svg>
+<figcaption>Linking roots blindly can build a chain, so a single <code>find</code> walks n − 1 parents. Linking the smaller tree under the larger caps the height at log₂ n, and with the size rule the doubling argument is short enough to remember.</figcaption>
+</figure>
+
+<p><strong>Union by rank</strong> is the same idea with a different bookkeeping number. Instead of the exact size, each root keeps a <strong>rank</strong>, an upper bound on its height. Link the lower-rank root under the higher one; only when the ranks tie does the winner's rank go up by one.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 250" width="860" role="img" aria-label="Union by rank: equal ranks produce a root whose rank grows by one; unequal ranks hang the lower-rank root under the higher one and no rank changes">
+<defs><marker id="union-find-f3-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="union-find-f3-ar-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="union-find-f3-ar-done" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker></defs>
+<text x="10" y="22" class="title">Equal ranks: the winner's rank grows by 1</text>
+<circle class="box accent" cx="60" cy="85" r="17"/>
+<text x="60" y="90" text-anchor="middle" class="mono">a</text>
+<text x="60" y="61" text-anchor="middle" class="small muted">rank 1</text>
+<circle class="box" cx="60" cy="160" r="17"/>
+<text x="60" y="165" text-anchor="middle" class="mono">a1</text>
+<line class="edge" x1="60.0" y1="143.0" x2="60.0" y2="104.0" marker-end="url(#union-find-f3-ar)"/>
+<circle class="box accent" cx="150" cy="85" r="17"/>
+<text x="150" y="90" text-anchor="middle" class="mono">b</text>
+<text x="150" y="61" text-anchor="middle" class="small muted">rank 1</text>
+<circle class="box" cx="150" cy="160" r="17"/>
+<text x="150" y="165" text-anchor="middle" class="mono">b1</text>
+<line class="edge" x1="150.0" y1="143.0" x2="150.0" y2="104.0" marker-end="url(#union-find-f3-ar)"/>
+<text x="200" y="128" text-anchor="middle" class="small muted">union</text>
+<line class="edge accent" x1="185.0" y1="140.0" x2="223.0" y2="140.0" marker-end="url(#union-find-f3-ar-accent)"/>
+<circle class="box accent" cx="300" cy="85" r="17"/>
+<text x="300" y="90" text-anchor="middle" class="mono">a</text>
+<text x="300" y="61" text-anchor="middle" class="small muted">rank 2</text>
+<circle class="box" cx="255" cy="155" r="17"/>
+<text x="255" y="160" text-anchor="middle" class="mono">a1</text>
+<circle class="box done" cx="345" cy="155" r="17"/>
+<text x="345" y="160" text-anchor="middle" class="mono">b</text>
+<text x="368" y="150" class="small muted">rank 1</text>
+<circle class="box" cx="345" cy="220" r="17"/>
+<text x="345" y="225" text-anchor="middle" class="mono">b1</text>
+<line class="edge" x1="264.2" y1="140.7" x2="289.7" y2="101.0" marker-end="url(#union-find-f3-ar)"/>
+<line class="edge done" x1="335.8" y1="140.7" x2="310.3" y2="101.0" marker-end="url(#union-find-f3-ar-done)"/>
+<line class="edge" x1="345.0" y1="203.0" x2="345.0" y2="174.0" marker-end="url(#union-find-f3-ar)"/>
+<line class="edge dash" x1="430" y1="10" x2="430" y2="240"/>
+<text x="450" y="22" class="title">Unequal ranks: the lower root hangs below; no change</text>
+<circle class="box accent" cx="490" cy="85" r="17"/>
+<text x="490" y="90" text-anchor="middle" class="mono">c</text>
+<text x="490" y="61" text-anchor="middle" class="small muted">rank 2</text>
+<circle class="box" cx="490" cy="150" r="17"/>
+<text x="490" y="155" text-anchor="middle" class="mono">c1</text>
+<circle class="box" cx="490" cy="215" r="17"/>
+<text x="490" y="220" text-anchor="middle" class="mono">c2</text>
+<line class="edge" x1="490.0" y1="133.0" x2="490.0" y2="104.0" marker-end="url(#union-find-f3-ar)"/>
+<line class="edge" x1="490.0" y1="198.0" x2="490.0" y2="169.0" marker-end="url(#union-find-f3-ar)"/>
+<circle class="box accent" cx="570" cy="85" r="17"/>
+<text x="570" y="90" text-anchor="middle" class="mono">d</text>
+<text x="570" y="61" text-anchor="middle" class="small muted">rank 0</text>
+<text x="625" y="128" text-anchor="middle" class="small muted">union</text>
+<line class="edge accent" x1="605.0" y1="140.0" x2="643.0" y2="140.0" marker-end="url(#union-find-f3-ar-accent)"/>
+<circle class="box accent" cx="730" cy="85" r="17"/>
+<text x="730" y="90" text-anchor="middle" class="mono">c</text>
+<text x="730" y="61" text-anchor="middle" class="small muted">rank 2</text>
+<circle class="box" cx="700" cy="150" r="17"/>
+<text x="700" y="155" text-anchor="middle" class="mono">c1</text>
+<circle class="box" cx="700" cy="215" r="17"/>
+<text x="700" y="220" text-anchor="middle" class="mono">c2</text>
+<circle class="box done" cx="770" cy="150" r="17"/>
+<text x="770" y="155" text-anchor="middle" class="mono">d</text>
+<line class="edge" x1="707.1" y1="134.6" x2="722.0" y2="102.3" marker-end="url(#union-find-f3-ar)"/>
+<line class="edge" x1="700.0" y1="198.0" x2="700.0" y2="169.0" marker-end="url(#union-find-f3-ar)"/>
+<line class="edge done" x1="761.1" y1="135.5" x2="740.0" y2="101.2" marker-end="url(#union-find-f3-ar-done)"/>
+<text x="800" y="205" text-anchor="middle" class="small muted">height stays 2</text>
+</svg>
+<figcaption>Rank is an upper bound on the tree's height. Only a tie makes it grow, so a rank-r root has at least 2<sup>r</sup> nodes, the same log₂ n bound as union by size. Path compression can shrink a tree without lowering its rank; the bound is still valid, so nobody updates it.</figcaption>
+</figure>
+
+<p>Size or rank? They give identical guarantees. <strong>Size</strong> is usually more useful in interviews because problems often ask for the size of a group ("largest island after one flip", "number of pairs in the same group", "sum of <code>c·(c−1)/2</code>"), and it is right there in <code>size[find(x)]</code>. Rank fits in a byte, which matters only in very memory-tight settings.</p>
+<h3 id="idea-2-path-compression">Idea 2: path compression</h3>
+<p>A <code>find</code> walks the whole path to the root anyway, so it might as well leave the path better than it found it: after locating the root, point <strong>every node on the path directly at the root</strong>. The cost of this find doubles at most, and every later find on those nodes (and on everything hanging below them) is shorter.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 340" width="860" role="img" aria-label="Path compression: before find(4) the path is 4, 3, 2, 1, 0; afterwards 1, 2, 3 and 4 all point straight at root 0, and node 5 rides along with 2">
+<defs><marker id="union-find-f4-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="union-find-f4-ar-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="union-find-f4-ar-done" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker><marker id="union-find-f4-ar-path" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker></defs>
+<text x="10" y="22" class="title">Before find(4): 4 hops</text>
+<line class="edge path" x1="100.0" y1="113.0" x2="100.0" y2="89.0" marker-end="url(#union-find-f4-ar-path)"/>
+<line class="edge path" x1="100.0" y1="173.0" x2="100.0" y2="149.0" marker-end="url(#union-find-f4-ar-path)"/>
+<line class="edge path" x1="100.0" y1="233.0" x2="100.0" y2="209.0" marker-end="url(#union-find-f4-ar-path)"/>
+<line class="edge path" x1="100.0" y1="293.0" x2="100.0" y2="269.0" marker-end="url(#union-find-f4-ar-path)"/>
+<line class="edge" x1="161.7" y1="239.4" x2="114.8" y2="201.9" marker-end="url(#union-find-f4-ar)"/>
+<circle class="box accent" cx="100" cy="70" r="17"/>
+<text x="100" y="75" text-anchor="middle" class="mono">0</text>
+<circle class="box path" cx="100" cy="130" r="17"/>
+<text x="100" y="135" text-anchor="middle" class="mono">1</text>
+<circle class="box path" cx="100" cy="190" r="17"/>
+<text x="100" y="195" text-anchor="middle" class="mono">2</text>
+<circle class="box path" cx="100" cy="250" r="17"/>
+<text x="100" y="255" text-anchor="middle" class="mono">3</text>
+<circle class="box path" cx="100" cy="310" r="17"/>
+<text x="100" y="315" text-anchor="middle" class="mono">4</text>
+<circle class="box" cx="175" cy="250" r="17"/>
+<text x="175" y="255" text-anchor="middle" class="mono">5</text>
+<text x="200" y="160" text-anchor="middle" class="small mono">find(4)</text>
+<line class="edge accent" x1="205.0" y1="175.0" x2="288.0" y2="175.0" marker-end="url(#union-find-f4-ar-accent)"/>
+<text x="300" y="22" class="title">After: the whole path points at the root</text>
+<line class="edge" x1="341.4" y1="167.4" x2="407.3" y2="94.1" marker-end="url(#union-find-f4-ar)"/>
+<line class="edge done" x1="394.9" y1="163.7" x2="414.5" y2="98.2" marker-end="url(#union-find-f4-ar-done)"/>
+<line class="edge done" x1="445.1" y1="163.7" x2="425.5" y2="98.2" marker-end="url(#union-find-f4-ar-done)"/>
+<line class="edge done" x1="498.6" y1="167.4" x2="432.7" y2="94.1" marker-end="url(#union-find-f4-ar-done)"/>
+<line class="edge" x1="390.0" y1="253.0" x2="390.0" y2="199.0" marker-end="url(#union-find-f4-ar)"/>
+<circle class="box accent" cx="420" cy="80" r="17"/>
+<text x="420" y="85" text-anchor="middle" class="mono">0</text>
+<circle class="box" cx="330" cy="180" r="17"/>
+<text x="330" y="185" text-anchor="middle" class="mono">1</text>
+<circle class="box done" cx="390" cy="180" r="17"/>
+<text x="390" y="185" text-anchor="middle" class="mono">2</text>
+<circle class="box done" cx="450" cy="180" r="17"/>
+<text x="450" y="185" text-anchor="middle" class="mono">3</text>
+<circle class="box done" cx="510" cy="180" r="17"/>
+<text x="510" y="185" text-anchor="middle" class="mono">4</text>
+<circle class="box" cx="390" cy="270" r="17"/>
+<text x="390" y="275" text-anchor="middle" class="mono">5</text>
+<text x="420" y="322" text-anchor="middle" class="small">the next find(4) is 1 hop</text>
+<line class="edge dash" x1="570" y1="10" x2="570" y2="330"/>
+<text x="590" y="22" class="title">In the array</text>
+<text x="590" y="64" class="small muted">parent before</text>
+<rect class="box accent" x="605" y="84" width="40" height="30" rx="3"/>
+<text x="625" y="103.5" text-anchor="middle" class="mono">0</text>
+<text x="625" y="77" text-anchor="middle" class="small muted">0</text>
+<rect class="box path" x="645" y="84" width="40" height="30" rx="3"/>
+<text x="665" y="103.5" text-anchor="middle" class="mono">0</text>
+<text x="665" y="77" text-anchor="middle" class="small muted">1</text>
+<rect class="box path" x="685" y="84" width="40" height="30" rx="3"/>
+<text x="705" y="103.5" text-anchor="middle" class="mono">1</text>
+<text x="705" y="77" text-anchor="middle" class="small muted">2</text>
+<rect class="box path" x="725" y="84" width="40" height="30" rx="3"/>
+<text x="745" y="103.5" text-anchor="middle" class="mono">2</text>
+<text x="745" y="77" text-anchor="middle" class="small muted">3</text>
+<rect class="box path" x="765" y="84" width="40" height="30" rx="3"/>
+<text x="785" y="103.5" text-anchor="middle" class="mono">3</text>
+<text x="785" y="77" text-anchor="middle" class="small muted">4</text>
+<rect class="box" x="805" y="84" width="40" height="30" rx="3"/>
+<text x="825" y="103.5" text-anchor="middle" class="mono">2</text>
+<text x="825" y="77" text-anchor="middle" class="small muted">5</text>
+<text x="590" y="150" class="small muted">parent after</text>
+<rect class="box accent" x="605" y="170" width="40" height="30" rx="3"/>
+<text x="625" y="189.5" text-anchor="middle" class="mono">0</text>
+<text x="625" y="163" text-anchor="middle" class="small muted">0</text>
+<rect class="box" x="645" y="170" width="40" height="30" rx="3"/>
+<text x="665" y="189.5" text-anchor="middle" class="mono">0</text>
+<text x="665" y="163" text-anchor="middle" class="small muted">1</text>
+<rect class="box done" x="685" y="170" width="40" height="30" rx="3"/>
+<text x="705" y="189.5" text-anchor="middle" class="mono">0</text>
+<text x="705" y="163" text-anchor="middle" class="small muted">2</text>
+<rect class="box done" x="725" y="170" width="40" height="30" rx="3"/>
+<text x="745" y="189.5" text-anchor="middle" class="mono">0</text>
+<text x="745" y="163" text-anchor="middle" class="small muted">3</text>
+<rect class="box done" x="765" y="170" width="40" height="30" rx="3"/>
+<text x="785" y="189.5" text-anchor="middle" class="mono">0</text>
+<text x="785" y="163" text-anchor="middle" class="small muted">4</text>
+<rect class="box" x="805" y="170" width="40" height="30" rx="3"/>
+<text x="825" y="189.5" text-anchor="middle" class="mono">2</text>
+<text x="825" y="163" text-anchor="middle" class="small muted">5</text>
+<text x="590" y="236" class="small">3 writes. 1 already pointed at 0.</text>
+<text x="590" y="262" class="small">5 was not on the path, but it rides</text>
+<text x="590" y="280" class="small">along with 2: its depth falls 3 → 2.</text>
+<text x="590" y="310" class="small muted">Only roots matter; any set member</text>
+<text x="590" y="328" class="small muted">may be re-parented to the root.</text>
+</svg>
+<figcaption>Path compression makes the walk pay for itself: after finding the root, re-point every node on the path at it. The sets don't change (only roots name sets), but the next <code>find</code> on any of them is one hop.</figcaption>
+</figure>
+
+<p>There are three common ways to write it, and they are interchangeable for correctness:</p>
+<ul>
+<li><strong>Two-pass compression</strong> (used in the templates below): walk up to find the root, then walk the path again re-pointing each node. Iterative, so no recursion limit.</li>
+<li><strong>Recursive compression</strong>: <code>parent[x] = find(parent[x]); return parent[x]</code>. The shortest to type, but on a long chain before any compression has happened it recurses n deep. With union by size the depth is at most log₂ n, so recursion is safe <em>if</em> you also balance.</li>
+<li><strong>Path halving</strong>: in one pass, point each visited node at its grandparent: <code>parent[x] = parent[parent[x]]; x = parent[x]</code>. Each find only halves the path, but the amortized bound is the same, and it is a single tiny loop.</li>
+</ul>
+<p>Give the visualizer a deliberately tall tree (the default parent array is a chain plus a side branch) and compare the three methods' hop counts. Notice that <strong>two-pass compression</strong> flattens the whole path at once while <strong>halving</strong> needs a couple of finds to get there.</p>
+<div class="viz" data-viz="union-find-compress"></div>
+
+<h3 id="how-fast-is-almost-constant">How fast is “almost constant”?</h3>
+<p>With <strong>both</strong> ideas, a sequence of m finds and unions on n items costs O(m·α(n)), where α is the inverse of the Ackermann function. The Ackermann function grows so absurdly fast that its inverse is at most 4 for every input that fits in the universe. You don't need the proof (it is one of the most famous amortized analyses in computer science); you need the table:</p>
+<table>
+<thead>
+<tr>
+<th>What you use</th>
+<th>Cost of one find (worst / amortized)</th>
+<th>n = 10⁶ in practice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Naive links, no compression</td>
+<td>O(n) worst case, every time</td>
+<td>a chain: up to 10⁶ hops</td>
+</tr>
+<tr>
+<td>Path compression only</td>
+<td>O(log n) amortized</td>
+<td>a handful of hops</td>
+</tr>
+<tr>
+<td>Union by size or rank only</td>
+<td>O(log n) worst case</td>
+<td>≤ 20 hops</td>
+</tr>
+<tr>
+<td>Both</td>
+<td>O(α(n)) amortized, α(n) ≤ 4</td>
+<td>1 or 2 hops</td>
+</tr>
+</tbody>
+</table>
+<p>Run the race below. It applies the same unions to four structures and plots the tallest tree and the total pointer hops. The pattern <code>union(i, i+1)</code> is the killer for naive linking; watch how a single strategy rescues it and how the two together make the hop count nearly equal to the number of operations.</p>
+<div class="viz" data-viz="union-find-race"></div>
+
+<h2 id="the-template">The template</h2>
+<p>This is the version to memorize. It is iterative (no recursion limit), keeps sizes (more useful than ranks), counts the number of sets, and <code>union</code> <strong>returns whether it merged anything</strong>, which is the cycle test for free.</p>
+<div class="code-tabs">
+<pre><code class="language-python">class DSU:
+    def __init__(self, n: int):
+        self.parent = list(range(n))
+        self.size = [1] * n
+        self.count = n                          # number of disjoint sets
+
+    def find(self, x: int) -&gt; int:
+        root = x
+        while self.parent[root] != root:        # 1. walk up to the root
+            root = self.parent[root]
+        while self.parent[x] != root:           # 2. point the whole path at it
+            self.parent[x], x = root, self.parent[x]
+        return root
+
+    def union(self, a: int, b: int) -&gt; bool:
+        ra, rb = self.find(a), self.find(b)
+        if ra == rb:
+            return False                        # already in one set
+        if self.size[ra] &lt; self.size[rb]:
+            ra, rb = rb, ra                     # ra is the bigger tree
+        self.parent[rb] = ra
+        self.size[ra] += self.size[rb]
+        self.count -= 1
+        return True
+
+    def connected(self, a: int, b: int) -&gt; bool:
+        return self.find(a) == self.find(b)
+
+    def set_size(self, x: int) -&gt; int:
+        return self.size[self.find(x)]
+</code></pre>
+<pre><code class="language-csharp">public class DSU
+{
+    private readonly int[] parent, size;
+    public int Count { get; private set; }            // number of disjoint sets
+
+    public DSU(int n)
+    {
+        parent = new int[n];
+        size = new int[n];
+        for (int i = 0; i &lt; n; i++) { parent[i] = i; size[i] = 1; }
+        Count = n;
+    }
+
+    public int Find(int x)
+    {
+        int root = x;
+        while (parent[root] != root) root = parent[root];          // 1. walk up
+        while (parent[x] != root) { int next = parent[x]; parent[x] = root; x = next; } // 2. compress
+        return root;
+    }
+
+    public bool Union(int a, int b)
+    {
+        int ra = Find(a), rb = Find(b);
+        if (ra == rb) return false;                                // already in one set
+        if (size[ra] &lt; size[rb]) (ra, rb) = (rb, ra);              // ra is the bigger tree
+        parent[rb] = ra;
+        size[ra] += size[rb];
+        Count--;
+        return true;
+    }
+
+    public bool Connected(int a, int b) =&gt; Find(a) == Find(b);
+    public int SetSize(int x) =&gt; size[Find(x)];
+}
+</code></pre>
+</div>
+<p>A few lines deserve a second look:</p>
+<ul>
+<li><code>self.parent[x], x = root, self.parent[x]</code> is safe in Python because the right-hand side is evaluated first: it saves the old parent, then assigns <code>parent[x] = root</code> and moves <code>x</code> to the saved parent. In C# the explicit <code>next</code> does the same.</li>
+<li><code>union</code> swaps so that <code>ra</code> is always the bigger root. Writing the two cases separately is a classic place to update the wrong <code>size</code>.</li>
+<li><code>size</code> is only meaningful <strong>at roots</strong>. <code>size[x]</code> for a non-root is a stale number from before x was linked; always read <code>size[find(x)]</code>.</li>
+</ul>
+<h3 id="variant-union-by-rank-with-path-halving">Variant: union by rank with path halving</h3>
+<p>The other textbook form. Same guarantees, the find is one loop, and <code>rank</code> never decreases even when compression flattens a tree.</p>
+<div class="code-tabs">
+<pre><code class="language-python">class RankDSU:
+    def __init__(self, n: int):
+        self.parent = list(range(n))
+        self.rank = [0] * n                     # upper bound on tree height
+
+    def find(self, x: int) -&gt; int:
+        while self.parent[x] != x:
+            self.parent[x] = self.parent[self.parent[x]]   # path halving
+            x = self.parent[x]
+        return x
+
+    def union(self, a: int, b: int) -&gt; bool:
+        ra, rb = self.find(a), self.find(b)
+        if ra == rb:
+            return False
+        if self.rank[ra] &lt; self.rank[rb]:
+            ra, rb = rb, ra
+        self.parent[rb] = ra
+        if self.rank[ra] == self.rank[rb]:
+            self.rank[ra] += 1                  # only equal ranks grow
+        return True
+</code></pre>
+<pre><code class="language-csharp">public class RankDSU
+{
+    private readonly int[] parent;
+    private readonly byte[] rank;                     // upper bound on tree height (≤ 31)
+
+    public RankDSU(int n)
+    {
+        parent = new int[n];
+        rank = new byte[n];
+        for (int i = 0; i &lt; n; i++) parent[i] = i;
+    }
+
+    public int Find(int x)
+    {
+        while (parent[x] != x)
+        {
+            parent[x] = parent[parent[x]];            // path halving
+            x = parent[x];
+        }
+        return x;
+    }
+
+    public bool Union(int a, int b)
+    {
+        int ra = Find(a), rb = Find(b);
+        if (ra == rb) return false;
+        if (rank[ra] &lt; rank[rb]) (ra, rb) = (rb, ra);
+        parent[rb] = ra;
+        if (rank[ra] == rank[rb]) rank[ra]++;         // only equal ranks grow
+        return true;
+    }
+}
+</code></pre>
+</div>
+<h3 id="variant-keys-that-are-not-0-n1">Variant: keys that are not 0 … n−1</h3>
+<p>When the items are strings, coordinates or huge integers, swap the array for a dictionary and create each item the first time <code>find</code> sees it. This skips the "map everything to an index first" step and is the natural shape for Accounts Merge, Most Stones Removed and Similar String Groups. Without sizes the trees are only kept short by compression, which is amortized O(log n), more than fast enough; add a <code>size</code> dictionary if you need group sizes.</p>
+<div class="code-tabs">
+<pre><code class="language-python">class KeyedDSU:
+    def __init__(self):
+        self.parent = {}
+
+    def find(self, x):
+        self.parent.setdefault(x, x)            # first sight: a new singleton
+        root = x
+        while self.parent[root] != root:
+            root = self.parent[root]
+        while self.parent[x] != root:
+            self.parent[x], x = root, self.parent[x]
+        return root
+
+    def union(self, a, b) -&gt; bool:
+        ra, rb = self.find(a), self.find(b)
+        if ra == rb:
+            return False
+        self.parent[ra] = rb
+        return True
+
+
+def remove_stones(stones):
+    &quot;&quot;&quot;Most Stones Removed: a stone links its row and its column.&quot;&quot;&quot;
+    dsu = KeyedDSU()
+    for r, c in stones:
+        dsu.union((&quot;r&quot;, r), (&quot;c&quot;, c))           # tag rows and columns apart
+    groups = {dsu.find((&quot;r&quot;, r)) for r, c in stones}
+    return len(stones) - len(groups)            # each group keeps one stone
+</code></pre>
+<pre><code class="language-csharp">public class KeyedDSU&lt;T&gt; where T : notnull
+{
+    private readonly Dictionary&lt;T, T&gt; parent = new();
+
+    public T Find(T x)
+    {
+        if (!parent.ContainsKey(x)) parent[x] = x;              // first sight: a singleton
+        T root = x;
+        while (!EqualityComparer&lt;T&gt;.Default.Equals(parent[root], root)) root = parent[root];
+        while (!EqualityComparer&lt;T&gt;.Default.Equals(parent[x], root))
+        {
+            T next = parent[x]; parent[x] = root; x = next;
+        }
+        return root;
+    }
+
+    public bool Union(T a, T b)
+    {
+        T ra = Find(a), rb = Find(b);
+        if (EqualityComparer&lt;T&gt;.Default.Equals(ra, rb)) return false;
+        parent[ra] = rb;
+        return true;
+    }
+}
+
+public int RemoveStones(int[][] stones)
+{
+    var dsu = new KeyedDSU&lt;(char, int)&gt;();
+    foreach (var s in stones) dsu.Union(('r', s[0]), ('c', s[1]));  // tag rows and columns apart
+    var groups = new HashSet&lt;(char, int)&gt;();
+    foreach (var s in stones) groups.Add(dsu.Find(('r', s[0])));
+    return stones.Length - groups.Count;                            // each group keeps one stone
+}
+</code></pre>
+</div>
+<h2 id="connectivity-as-edges-arrive">Connectivity as edges arrive</h2>
+<p>Most union-find problems are this loop: <strong>for each edge, <code>union</code> it, and react to the return value</strong>. <code>True</code> means two components merged (the component count drops by one). <code>False</code> means both ends were already connected, so the edge is <strong>redundant</strong>: it closes a cycle, and a spanning tree doesn't need it.</p>
+<p>Step through it: each node is coloured by its current component, the small forest on the right is the DSU itself, and an edge turns red when <code>union</code> returns <code>False</code>.</p>
+<div class="viz" data-viz="union-find-components"></div>
+
+<p>That one loop answers a surprising number of questions:</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>What to read from the loop</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>How many connected components / provinces / friend circles?</td>
+<td><code>dsu.count</code> at the end (start at n, minus one per successful union).</td>
+</tr>
+<tr>
+<td>Is this graph a tree? (<a href="https://leetcode.com/problems/graph-valid-tree/">Graph Valid Tree</a>)</td>
+<td>Exactly n − 1 edges <strong>and</strong> no <code>union</code> returned <code>False</code>.</td>
+</tr>
+<tr>
+<td>Which edge can be removed to leave a tree? (<a href="https://leetcode.com/problems/redundant-connection/">Redundant Connection</a>)</td>
+<td>The first edge whose <code>union</code> returns <code>False</code>.</td>
+</tr>
+<tr>
+<td>Fewest cable moves to connect every computer?</td>
+<td>Needs ≥ n − 1 cables; then the answer is <code>count − 1</code> (each redundant cable can bridge two components).</td>
+</tr>
+<tr>
+<td>When did everyone first become connected?</td>
+<td>Sort events by time; the first moment <code>count == 1</code>.</td>
+</tr>
+<tr>
+<td>Largest group / number of pairs in the same group?</td>
+<td><code>size[find(x)]</code>; pairs = Σ size·(size − 1)/2 over roots.</td>
+</tr>
+</tbody>
+</table>
+<p>Number of Provinces is the loop over an adjacency matrix:</p>
+<div class="code-tabs">
+<pre><code class="language-python">def find_circle_num(is_connected):
+    n = len(is_connected)
+    dsu = DSU(n)
+    for i in range(n):
+        for j in range(i + 1, n):               # the matrix is symmetric
+            if is_connected[i][j]:
+                dsu.union(i, j)
+    return dsu.count
+</code></pre>
+<pre><code class="language-csharp">public int FindCircleNum(int[][] isConnected)
+{
+    int n = isConnected.Length;
+    var dsu = new DSU(n);
+    for (int i = 0; i &lt; n; i++)
+        for (int j = i + 1; j &lt; n; j++)               // the matrix is symmetric
+            if (isConnected[i][j] == 1) dsu.Union(i, j);
+    return dsu.Count;
+}
+</code></pre>
+</div>
+<h3 id="when-dsu-when-bfsdfs">When DSU, when BFS/DFS?</h3>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Better tool</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Whole graph given, one question ("how many components?")</td>
+<td>Either; BFS/DFS is just as good</td>
+<td>Both O(V + E).</td>
+</tr>
+<tr>
+<td>Edges arrive one at a time; answer after each</td>
+<td><strong>DSU</strong></td>
+<td>BFS would recompute from scratch after every edge.</td>
+</tr>
+<tr>
+<td>"Which edge closes a cycle?" in an undirected graph</td>
+<td><strong>DSU</strong></td>
+<td><code>union</code> returning <code>False</code> <em>is</em> the test.</td>
+</tr>
+<tr>
+<td>Groups defined by a shared key (email, row, letter)</td>
+<td><strong>DSU</strong></td>
+<td>No adjacency list needed; union on the key.</td>
+</tr>
+<tr>
+<td>Need a path, a distance or a BFS layer</td>
+<td><strong>BFS/DFS</strong></td>
+<td>DSU forgets <em>how</em> things are connected.</td>
+</tr>
+<tr>
+<td>Edges are <strong>deleted</strong></td>
+<td>Neither directly</td>
+<td>Reverse time (below), or rebuild.</td>
+</tr>
+<tr>
+<td>Directed reachability, strongly connected components</td>
+<td><strong>DFS</strong> (<a href="advanced-graphs.html">Advanced Graphs</a>)</td>
+<td>Union is symmetric; it cannot represent "a reaches b but not back".</td>
+</tr>
+</tbody>
+</table>
+<h2 id="grids-cell-ids-virtual-nodes-and-online-islands">Grids: cell ids, virtual nodes and online islands</h2>
+<p>Grid problems are graph problems with implicit edges between neighbouring cells. Give cell (r, c) the id <code>r·C + c</code> and the DSU doesn't know or care that it was a grid. A second trick: add <strong>one extra id</strong> that stands for a whole region ("the border", "the roof", "the outside water") and union the relevant cells with it; then "is this cell connected to the border?" is <code>connected(cell, V)</code>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 290" width="860" role="img" aria-label="Left: a 3 by 4 grid where cell (r, c) gets id r times 4 plus c. Right: Surrounded Regions, where border O cells are joined to one extra virtual node">
+<defs><marker id="union-find-f5-ar-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="10" y="22" class="title">Cell (r, c) becomes the integer r·C + c</text>
+<rect class="box" x="40" y="50" width="56" height="44" rx="2"/>
+<text x="68" y="76.5" text-anchor="middle" class="mono">0</text>
+<rect class="box" x="96" y="50" width="56" height="44" rx="2"/>
+<text x="124" y="76.5" text-anchor="middle" class="mono">1</text>
+<rect class="box visit" x="152" y="50" width="56" height="44" rx="2"/>
+<text x="180" y="76.5" text-anchor="middle" class="mono">2</text>
+<rect class="box" x="208" y="50" width="56" height="44" rx="2"/>
+<text x="236" y="76.5" text-anchor="middle" class="mono">3</text>
+<rect class="box" x="40" y="94" width="56" height="44" rx="2"/>
+<text x="68" y="120.5" text-anchor="middle" class="mono">4</text>
+<rect class="box visit" x="96" y="94" width="56" height="44" rx="2"/>
+<text x="124" y="120.5" text-anchor="middle" class="mono">5</text>
+<rect class="box active" x="152" y="94" width="56" height="44" rx="2"/>
+<text x="180" y="120.5" text-anchor="middle" class="mono">6</text>
+<rect class="box visit" x="208" y="94" width="56" height="44" rx="2"/>
+<text x="236" y="120.5" text-anchor="middle" class="mono">7</text>
+<rect class="box" x="40" y="138" width="56" height="44" rx="2"/>
+<text x="68" y="164.5" text-anchor="middle" class="mono">8</text>
+<rect class="box" x="96" y="138" width="56" height="44" rx="2"/>
+<text x="124" y="164.5" text-anchor="middle" class="mono">9</text>
+<rect class="box visit" x="152" y="138" width="56" height="44" rx="2"/>
+<text x="180" y="164.5" text-anchor="middle" class="mono">10</text>
+<rect class="box" x="208" y="138" width="56" height="44" rx="2"/>
+<text x="236" y="164.5" text-anchor="middle" class="mono">11</text>
+<text x="68" y="44" text-anchor="middle" class="small muted">c=0</text>
+<text x="124" y="44" text-anchor="middle" class="small muted">c=1</text>
+<text x="180" y="44" text-anchor="middle" class="small muted">c=2</text>
+<text x="236" y="44" text-anchor="middle" class="small muted">c=3</text>
+<text x="34" y="76" text-anchor="end" class="small muted">r=0</text>
+<text x="34" y="120" text-anchor="end" class="small muted">r=1</text>
+<text x="34" y="164" text-anchor="end" class="small muted">r=2</text>
+<text x="40" y="214" class="small mono">R = 3, C = 4: ids 0 … 11</text>
+<text x="40" y="236" class="small mono">(1, 2) → 1·4 + 2 = 6</text>
+<text x="40" y="258" class="small mono">neighbours: 6 − C, 6 − 1, 6 + 1, 6 + C</text>
+<text x="40" y="280" class="small muted">(check the column before using ±1)</text>
+<line class="edge dash" x1="400" y1="10" x2="400" y2="280"/>
+<text x="420" y="22" class="title">One extra id R·C: a virtual “border” node</text>
+<rect class="box" x="440" y="50" width="40" height="34" rx="2"/>
+<text x="460" y="71.5" text-anchor="middle" class="mono">X</text>
+<rect class="box" x="480" y="50" width="40" height="34" rx="2"/>
+<text x="500" y="71.5" text-anchor="middle" class="mono">X</text>
+<rect class="box" x="520" y="50" width="40" height="34" rx="2"/>
+<text x="540" y="71.5" text-anchor="middle" class="mono">X</text>
+<rect class="box" x="560" y="50" width="40" height="34" rx="2"/>
+<text x="580" y="71.5" text-anchor="middle" class="mono">X</text>
+<rect class="box" x="600" y="50" width="40" height="34" rx="2"/>
+<text x="620" y="71.5" text-anchor="middle" class="mono">X</text>
+<rect class="box" x="440" y="84" width="40" height="34" rx="2"/>
+<text x="460" y="105.5" text-anchor="middle" class="mono">X</text>
+<rect class="box bad" x="480" y="84" width="40" height="34" rx="2"/>
+<text x="500" y="105.5" text-anchor="middle" class="mono">O</text>
+<rect class="box bad" x="520" y="84" width="40" height="34" rx="2"/>
+<text x="540" y="105.5" text-anchor="middle" class="mono">O</text>
+<rect class="box" x="560" y="84" width="40" height="34" rx="2"/>
+<text x="580" y="105.5" text-anchor="middle" class="mono">X</text>
+<rect class="box" x="600" y="84" width="40" height="34" rx="2"/>
+<text x="620" y="105.5" text-anchor="middle" class="mono">X</text>
+<rect class="box" x="440" y="118" width="40" height="34" rx="2"/>
+<text x="460" y="139.5" text-anchor="middle" class="mono">X</text>
+<rect class="box" x="480" y="118" width="40" height="34" rx="2"/>
+<text x="500" y="139.5" text-anchor="middle" class="mono">X</text>
+<rect class="box bad" x="520" y="118" width="40" height="34" rx="2"/>
+<text x="540" y="139.5" text-anchor="middle" class="mono">O</text>
+<rect class="box" x="560" y="118" width="40" height="34" rx="2"/>
+<text x="580" y="139.5" text-anchor="middle" class="mono">X</text>
+<rect class="box done" x="600" y="118" width="40" height="34" rx="2"/>
+<text x="620" y="139.5" text-anchor="middle" class="mono">O</text>
+<rect class="box" x="440" y="152" width="40" height="34" rx="2"/>
+<text x="460" y="173.5" text-anchor="middle" class="mono">X</text>
+<rect class="box done" x="480" y="152" width="40" height="34" rx="2"/>
+<text x="500" y="173.5" text-anchor="middle" class="mono">O</text>
+<rect class="box" x="520" y="152" width="40" height="34" rx="2"/>
+<text x="540" y="173.5" text-anchor="middle" class="mono">X</text>
+<rect class="box" x="560" y="152" width="40" height="34" rx="2"/>
+<text x="580" y="173.5" text-anchor="middle" class="mono">X</text>
+<rect class="box done" x="600" y="152" width="40" height="34" rx="2"/>
+<text x="620" y="173.5" text-anchor="middle" class="mono">O</text>
+<line class="edge accent dash" x1="663.8" y1="136.4" x2="750.3" y2="167.8" marker-end="url(#union-find-f5-ar-accent)"/>
+<line class="edge accent dash" x1="664.0" y1="169.2" x2="749.0" y2="173.9" marker-end="url(#union-find-f5-ar-accent)"/>
+<path class="edge accent dash" d="M502.0,187.9 Q628.4,241.9 749.0,176.0" marker-end="url(#union-find-f5-ar-accent)"/>
+<circle class="box accent" cx="770" cy="175" r="19"/>
+<text x="770" y="180" text-anchor="middle" class="mono">V</text>
+<text x="770" y="214" text-anchor="middle" class="small mono">id = R·C = 20</text>
+<text x="440" y="248" class="small">Border O cells are unioned with V; O–O neighbours are unioned too.</text>
+<text x="440" y="268" class="small">Finally every O with find(cell) ≠ find(V) is surrounded: flip it.</text>
+</svg>
+<figcaption>Two grid tricks you will use constantly: number the cells <code>r·C + c</code> so a 2-D grid becomes DSU indices, and add one <strong>virtual node</strong> for “touches the border” (or “the water”, or “the roof” in Bricks Falling When Hit), so a property becomes a connectivity question.</figcaption>
+</figure>
+
+<p>The online version is <a href="https://leetcode.com/problems/number-of-islands-ii/">Number of Islands II</a>: land appears one cell at a time and you must report the number of islands after each addition. Running a fresh BFS after every addition costs O(k·R·C). With a DSU, each addition is "+1 island, then −1 for every neighbouring land cell whose <code>union</code> succeeds". The <code>union</code> success check matters: two neighbours may already be the same island (they are when the new cell fills in a corner), and that must not be subtracted twice.</p>
+<p>Each land cell below shows the cell id of its root, so you can watch two islands keep different names until a bridging cell arrives, and then share one.</p>
+<div class="viz" data-viz="union-find-islands"></div>
+
+<h2 id="grouping-by-shared-keys">Grouping by shared keys</h2>
+<p>A large family of problems never mentions a graph: "accounts that share an email are the same person", "stones that share a row or a column", "strings that are similar", "letters declared equivalent". The graph is there anyway: <strong>items are nodes and a shared key is an edge</strong>. Comparing all pairs is O(n²); a dictionary from <strong>key → first item that had it</strong> turns each repeated key into one <code>union</code> instead.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 290" width="860" role="img" aria-label="Accounts Merge: accounts 0 and 2 share the email b@x, so the owner map unions them; the result is three people">
+<text x="30" y="22" class="title">Accounts</text>
+<text x="330" y="22" class="title">Emails</text>
+<line class="edge" x1="200" y1="62" x2="330" y2="55"/>
+<line class="edge accent" x1="200" y1="62" x2="330" y2="107"/>
+<line class="edge" x1="200" y1="132" x2="330" y2="159"/>
+<line class="edge accent" x1="200" y1="202" x2="330" y2="107"/>
+<line class="edge" x1="200" y1="202" x2="330" y2="211"/>
+<line class="edge" x1="200" y1="262" x2="330" y2="263"/>
+<rect class="box done" x="30" y="45" width="170" height="34" rx="6"/>
+<text x="115" y="66.5" text-anchor="middle" class="mono">0: John</text>
+<rect class="box" x="30" y="115" width="170" height="34" rx="6"/>
+<text x="115" y="136.5" text-anchor="middle" class="mono">1: John</text>
+<rect class="box done" x="30" y="185" width="170" height="34" rx="6"/>
+<text x="115" y="206.5" text-anchor="middle" class="mono">2: John</text>
+<rect class="box" x="30" y="245" width="170" height="34" rx="6"/>
+<text x="115" y="266.5" text-anchor="middle" class="mono">3: Mary</text>
+<rect class="box" x="330" y="40" width="110" height="30" rx="6"/>
+<text x="385" y="59.5" text-anchor="middle" class="mono">a@x</text>
+<rect class="box accent" x="330" y="92" width="110" height="30" rx="6"/>
+<text x="385" y="111.5" text-anchor="middle" class="mono">b@x</text>
+<rect class="box" x="330" y="144" width="110" height="30" rx="6"/>
+<text x="385" y="163.5" text-anchor="middle" class="mono">c@x</text>
+<rect class="box" x="330" y="196" width="110" height="30" rx="6"/>
+<text x="385" y="215.5" text-anchor="middle" class="mono">d@x</text>
+<rect class="box" x="330" y="248" width="110" height="30" rx="6"/>
+<text x="385" y="267.5" text-anchor="middle" class="mono">m@x</text>
+<line class="edge dash" x1="470" y1="10" x2="470" y2="280"/>
+<text x="490" y="22" class="title">Union accounts, not emails</text>
+<text x="490" y="50" class="small">owner[email] = first account that listed it</text>
+<text x="490" y="72" class="small mono">a@x→0  b@x→0  c@x→1  d@x→2  m@x→3</text>
+<text x="490" y="96" class="small">account 2 lists b@x, already owned by 0</text>
+<text x="490" y="116" class="small mono">⇒ union(2, 0)</text>
+<rect class="box done" x="490" y="140" width="350" height="32" rx="6"/>
+<text x="665" y="160.5" text-anchor="middle" class="mono">{0, 2}  John  a@x b@x d@x</text>
+<rect class="box" x="490" y="182" width="350" height="32" rx="6"/>
+<text x="665" y="202.5" text-anchor="middle" class="mono">{1}  John  c@x</text>
+<rect class="box" x="490" y="224" width="350" height="32" rx="6"/>
+<text x="665" y="244.5" text-anchor="middle" class="mono">{3}  Mary  m@x</text>
+<text x="490" y="278" class="small muted">Group emails by find(owner[email]), then sort.</text>
+</svg>
+<figcaption>“Shares a key” problems hide a graph: an account is a node, and a shared email is an edge. The owner map turns every repeated key into one <code>union</code>, so you never compare accounts pairwise.</figcaption>
+</figure>
+
+<p>Two practical patterns:</p>
+<ul>
+<li><strong>Union items, keep an owner map</strong> (Accounts Merge): <code>owner[email] = i</code> on first sight, <code>union(i, owner[email])</code> on every later sight. Afterwards, group by <code>find(owner[email])</code>.</li>
+<li><strong>Make the keys themselves nodes</strong> (Most Stones Removed, the keyed template above): union a stone's row with its column, so stones sharing either end up together. Tag the two kinds of key (<code>("r", 3)</code> vs <code>("c", 3)</code>) so row 3 and column 3 don't collide.</li>
+</ul>
+<h2 id="equalities-first-then-inequalities">Equalities first, then inequalities</h2>
+<p><a href="https://leetcode.com/problems/satisfiability-of-equality-equations/">Satisfiability of Equality Equations</a> gives constraints like <code>a==b</code> and <code>b!=c</code>. Equality is <strong>transitive</strong>, which is exactly what sets capture; inequality is not (a ≠ b and b ≠ c says nothing about a and c), so it cannot be stored in a DSU. The fix is ordering: <strong>union every <code>==</code> first</strong>, so the sets are final, then check that every <code>!=</code> joins two <strong>different</strong> sets. Checking <code>!=</code> while still merging is a bug: a later <code>==</code> can join two variables that an earlier <code>!=</code> already "approved".</p>
+<div class="viz" data-viz="union-find-equations"></div>
+
+<p>The same two-pass pattern solves anything shaped like "merge by the transitive relation, then validate the non-transitive one".</p>
+<h2 id="weighted-union-find-storing-a-value-relative-to-the-parent">Weighted union-find: storing a value relative to the parent</h2>
+<p>Plain union-find knows <em>whether</em> two items are related. A <strong>weighted</strong> (or <em>potential</em>) DSU also knows <em>how</em>: each node stores a value relative to its parent, so after <code>find</code> (with compression) it holds its value <strong>relative to the root</strong>. Comparing two nodes with the same root is then one subtraction (or division, or XOR).</p>
+<ul>
+<li><strong>Ratios</strong> (<a href="https://leetcode.com/problems/evaluate-division/">Evaluate Division</a>): <code>w[x] = x / parent[x]</code>; a query is <code>w[a] / w[b]</code>.</li>
+<li><strong>Differences</strong> (relative positions, "is this set of <code>x − y = d</code> statements consistent?"): <code>d[x] = value[x] − value[parent[x]]</code>; a query is <code>d[a] − d[b]</code>.</li>
+<li><strong>Parity</strong> (bipartite checks online, "x and y are on different teams"): <code>p[x] = colour[x] XOR colour[parent[x]]</code>; a contradiction is two nodes in one set whose parities disagree with the claim.</li>
+</ul>
+<p>The only delicate line is <code>union</code>: the two given nodes are usually <em>not</em> roots, so the weight of the new root-to-root link has to be solved from a little square of relations.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 300" width="860" role="img" aria-label="Weighted union-find: a, b and their roots form a square of ratios; the new link from ra to rb gets weight v times w[b] divided by w[a]. A query divides two weights that share a root">
+<defs><marker id="union-find-f7-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="union-find-f7-ar-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker><marker id="union-find-f7-ar-done" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker></defs>
+<text x="10" y="22" class="title">Union(a, b, v): the four ratios form a square</text>
+<line class="edge" x1="90.0" y1="212.0" x2="90.0" y2="95.0" marker-end="url(#union-find-f7-ar)"/>
+<line class="edge" x1="360.0" y1="212.0" x2="360.0" y2="95.0" marker-end="url(#union-find-f7-ar)"/>
+<line class="edge accent dash" x1="108.0" y1="230.0" x2="340.0" y2="230.0" marker-end="url(#union-find-f7-ar-accent)"/>
+<line class="edge done" x1="108.0" y1="75.0" x2="340.0" y2="75.0" marker-end="url(#union-find-f7-ar-done)"/>
+<circle class="box" cx="90" cy="230" r="18"/>
+<text x="90" y="235" text-anchor="middle" class="mono">a</text>
+<circle class="box accent" cx="90" cy="75" r="18"/>
+<text x="90" y="80" text-anchor="middle" class="mono">ra</text>
+<circle class="box" cx="360" cy="230" r="18"/>
+<text x="360" y="235" text-anchor="middle" class="mono">b</text>
+<circle class="box accent" cx="360" cy="75" r="18"/>
+<text x="360" y="80" text-anchor="middle" class="mono">rb</text>
+<text x="100" y="158" class="small mono">w[a] = a / ra</text>
+<text x="350" y="158" text-anchor="end" class="small mono">w[b] = b / rb</text>
+<text x="225" y="222" text-anchor="middle" class="small mono">given: a / b = v</text>
+<text x="225" y="100" text-anchor="middle" class="small mono">new: w[ra] = ra / rb = v · w[b] / w[a]</text>
+<text x="10" y="285" class="small mono">ra / rb = (a / w[a]) ÷ (b / w[b]) = v · w[b] / w[a]</text>
+<line class="edge dash" x1="450" y1="10" x2="450" y2="290"/>
+<text x="470" y="22" class="title">Query a / b: same root ⇒ divide two weights</text>
+<line class="edge" x1="570.2" y1="190.2" x2="638.6" y2="91.4" marker-end="url(#union-find-f7-ar)"/>
+<line class="edge" x1="729.8" y1="190.2" x2="661.4" y2="91.4" marker-end="url(#union-find-f7-ar)"/>
+<circle class="box accent" cx="650" cy="75" r="18"/>
+<text x="650" y="80" text-anchor="middle" class="mono">r</text>
+<circle class="box path" cx="560" cy="205" r="18"/>
+<text x="560" y="210" text-anchor="middle" class="mono">a</text>
+<circle class="box path" cx="740" cy="205" r="18"/>
+<text x="740" y="210" text-anchor="middle" class="mono">b</text>
+<text x="590" y="135" text-anchor="end" class="small mono">a / r</text>
+<text x="710" y="135" class="small mono">b / r</text>
+<text x="650" y="254" text-anchor="middle" class="small mono">a / b = (a / r) ÷ (b / r) = w[a] / w[b]</text>
+<text x="650" y="278" text-anchor="middle" class="small muted">different roots ⇒ unrelated ⇒ −1.0</text>
+</svg>
+<figcaption>Each node stores its ratio to its parent; after <code>find</code> with compression, the ratio to the root. The same picture works with <strong>differences</strong> (<code>x − root</code>) for relative positions and with <strong>XOR</strong> for parity constraints.</figcaption>
+</figure>
+
+<p>Step through Evaluate Division. Every edge label is the node's ratio to its current parent; watch compression rewrite those ratios so they become ratios to the root.</p>
+<div class="viz" data-viz="union-find-weighted"></div>
+
+<p>The general template with differences (swap <code>+</code>/<code>−</code> for <code>*</code>/<code>/</code> to get ratios, or for <code>^</code> to get parity):</p>
+<div class="code-tabs">
+<pre><code class="language-python">class PotentialDSU:
+    &quot;&quot;&quot;Tracks value[x] - value[root]. union(a, b, d) asserts value[a] - value[b] == d.&quot;&quot;&quot;
+
+    def __init__(self, n: int):
+        self.parent = list(range(n))
+        self.diff = [0] * n                     # value[x] - value[parent[x]]
+
+    def find(self, x: int) -&gt; int:
+        path = []
+        while self.parent[x] != x:
+            path.append(x)
+            x = self.parent[x]
+        acc = 0
+        for y in reversed(path):                # nearest the root first
+            acc += self.diff[y]                 # acc = value[y] - value[root]
+            self.parent[y], self.diff[y] = x, acc
+        return x
+
+    def union(self, a: int, b: int, d: int) -&gt; bool:
+        ra, rb = self.find(a), self.find(b)
+        if ra == rb:
+            return self.diff[a] - self.diff[b] == d   # consistent with what we know?
+        self.parent[ra] = rb
+        self.diff[ra] = d + self.diff[b] - self.diff[a]
+        return True
+
+    def delta(self, a: int, b: int):
+        &quot;&quot;&quot;value[a] - value[b], or None if a and b are unrelated.&quot;&quot;&quot;
+        if self.find(a) != self.find(b):
+            return None
+        return self.diff[a] - self.diff[b]
+</code></pre>
+<pre><code class="language-csharp">public class PotentialDSU
+{
+    private readonly int[] parent;
+    private readonly long[] diff;                     // value[x] - value[parent[x]]
+
+    public PotentialDSU(int n)
+    {
+        parent = new int[n];
+        diff = new long[n];
+        for (int i = 0; i &lt; n; i++) parent[i] = i;
+    }
+
+    public int Find(int x)
+    {
+        var path = new List&lt;int&gt;();
+        while (parent[x] != x) { path.Add(x); x = parent[x]; }
+        long acc = 0;
+        for (int i = path.Count - 1; i &gt;= 0; i--)     // nearest the root first
+        {
+            int y = path[i];
+            acc += diff[y];                           // acc = value[y] - value[root]
+            parent[y] = x;
+            diff[y] = acc;
+        }
+        return x;
+    }
+
+    // Asserts value[a] - value[b] == d; returns false on a contradiction.
+    public bool Union(int a, int b, long d)
+    {
+        int ra = Find(a), rb = Find(b);
+        if (ra == rb) return diff[a] - diff[b] == d;
+        parent[ra] = rb;
+        diff[ra] = d + diff[b] - diff[a];
+        return true;
+    }
+
+    public long? Delta(int a, int b) =&gt; Find(a) == Find(b) ? diff[a] - diff[b] : null;
+}
+</code></pre>
+</div>
+<p>Why <code>diff[ra] = d + diff[b] − diff[a]</code>: after the two finds, <code>diff[a] = a − ra</code> and <code>diff[b] = b − rb</code>. We want <code>ra − rb = (a − diff[a]) − (b − diff[b]) = d − diff[a] + diff[b]</code>. Draw the square every time you are unsure; it is faster than guessing signs.</p>
+<h2 id="offline-queries-and-running-time-backwards">Offline queries and running time backwards</h2>
+<p>A DSU can only <strong>add</strong> edges. That sounds limiting, but when all the queries are known in advance (<strong>offline</strong>), you can choose the order in which you answer them, and a good order turns everything into additions.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 330" width="860" role="img" aria-label="Top: edges and queries sorted on one weight axis; edges with weight below a query's limit are already in the DSU when the query is answered. Bottom: deletions processed backwards become additions">
+<defs><marker id="union-find-f8-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="union-find-f8-ar-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="10" y="22" class="title">Offline: sort both lists by the threshold, then sweep once</text>
+<line class="edge" x1="40" y1="92" x2="800" y2="92"/>
+<line class="edge" x1="40" y1="88" x2="40" y2="96"/>
+<text x="40" y="112" text-anchor="middle" class="small muted">0</text>
+<line class="edge" x1="116" y1="88" x2="116" y2="96"/>
+<text x="116" y="112" text-anchor="middle" class="small muted">1</text>
+<line class="edge" x1="192" y1="88" x2="192" y2="96"/>
+<text x="192" y="112" text-anchor="middle" class="small muted">2</text>
+<line class="edge" x1="268" y1="88" x2="268" y2="96"/>
+<text x="268" y="112" text-anchor="middle" class="small muted">3</text>
+<line class="edge" x1="344" y1="88" x2="344" y2="96"/>
+<text x="344" y="112" text-anchor="middle" class="small muted">4</text>
+<line class="edge" x1="420" y1="88" x2="420" y2="96"/>
+<text x="420" y="112" text-anchor="middle" class="small muted">5</text>
+<line class="edge" x1="496" y1="88" x2="496" y2="96"/>
+<text x="496" y="112" text-anchor="middle" class="small muted">6</text>
+<line class="edge" x1="572" y1="88" x2="572" y2="96"/>
+<text x="572" y="112" text-anchor="middle" class="small muted">7</text>
+<line class="edge" x1="648" y1="88" x2="648" y2="96"/>
+<text x="648" y="112" text-anchor="middle" class="small muted">8</text>
+<line class="edge" x1="724" y1="88" x2="724" y2="96"/>
+<text x="724" y="112" text-anchor="middle" class="small muted">9</text>
+<line class="edge" x1="800" y1="88" x2="800" y2="96"/>
+<text x="800" y="112" text-anchor="middle" class="small muted">10</text>
+<line class="edge accent dash" x1="420" y1="40" x2="420" y2="152"/>
+<rect class="box done" x="92" y="50" width="48" height="26" rx="6"/>
+<text x="116" y="67.5" text-anchor="middle" class="mono">4-5</text>
+<rect class="box done" x="168" y="50" width="48" height="26" rx="6"/>
+<text x="192" y="67.5" text-anchor="middle" class="mono">0-1</text>
+<rect class="box done" x="244" y="50" width="48" height="26" rx="6"/>
+<text x="268" y="67.5" text-anchor="middle" class="mono">2-3</text>
+<rect class="box done" x="320" y="50" width="48" height="26" rx="6"/>
+<text x="344" y="67.5" text-anchor="middle" class="mono">1-2</text>
+<rect class="box" x="548" y="50" width="48" height="26" rx="6"/>
+<text x="572" y="67.5" text-anchor="middle" class="mono">1-5</text>
+<rect class="box" x="624" y="50" width="48" height="26" rx="6"/>
+<text x="648" y="67.5" text-anchor="middle" class="mono">2-4</text>
+<rect class="box" x="700" y="50" width="48" height="26" rx="6"/>
+<text x="724" y="67.5" text-anchor="middle" class="mono">3-4</text>
+<rect class="box" x="235" y="122" width="66" height="26" rx="6"/>
+<text x="268" y="139.5" text-anchor="middle" class="mono">0-5 &lt;3</text>
+<rect class="box accent" x="387" y="122" width="66" height="26" rx="6"/>
+<text x="420" y="139.5" text-anchor="middle" class="mono">0-2 &lt;5</text>
+<rect class="box" x="539" y="122" width="66" height="26" rx="6"/>
+<text x="572" y="139.5" text-anchor="middle" class="mono">0-4 &lt;7</text>
+<rect class="box" x="615" y="122" width="66" height="26" rx="6"/>
+<text x="648" y="139.5" text-anchor="middle" class="mono">3-5 &lt;8</text>
+<text x="426" y="168" class="small">query limit 5: edges 1, 2, 3, 4 are already unioned; strict “&lt;”</text>
+<line class="edge dash" x1="10" y1="186" x2="850" y2="186"/>
+<text x="10" y="212" class="title">Deletions: run time backwards, so each deletion becomes an addition</text>
+<rect class="box" x="40" y="228" width="160" height="30" rx="6"/>
+<text x="120" y="247.5" text-anchor="middle" class="mono">full graph</text>
+<rect class="box" x="245" y="228" width="160" height="30" rx="6"/>
+<text x="325" y="247.5" text-anchor="middle" class="mono">delete e3</text>
+<line class="edge" x1="200.0" y1="243.0" x2="243.0" y2="243.0" marker-end="url(#union-find-f8-ar)"/>
+<rect class="box" x="450" y="228" width="160" height="30" rx="6"/>
+<text x="530" y="247.5" text-anchor="middle" class="mono">delete e1</text>
+<line class="edge" x1="405.0" y1="243.0" x2="448.0" y2="243.0" marker-end="url(#union-find-f8-ar)"/>
+<rect class="box" x="655" y="228" width="160" height="30" rx="6"/>
+<text x="735" y="247.5" text-anchor="middle" class="mono">delete e5</text>
+<line class="edge" x1="610.0" y1="243.0" x2="653.0" y2="243.0" marker-end="url(#union-find-f8-ar)"/>
+<rect class="box accent" x="40" y="278" width="160" height="30" rx="6"/>
+<text x="120" y="297.5" text-anchor="middle" class="mono">+ e3: answer</text>
+<rect class="box accent" x="245" y="278" width="160" height="30" rx="6"/>
+<text x="325" y="297.5" text-anchor="middle" class="mono">+ e1: answer</text>
+<line class="edge accent" x1="245.0" y1="293.0" x2="202.0" y2="293.0" marker-end="url(#union-find-f8-ar-accent)"/>
+<rect class="box accent" x="450" y="278" width="160" height="30" rx="6"/>
+<text x="530" y="297.5" text-anchor="middle" class="mono">+ e5: answer</text>
+<line class="edge accent" x1="450.0" y1="293.0" x2="407.0" y2="293.0" marker-end="url(#union-find-f8-ar-accent)"/>
+<rect class="box done" x="655" y="278" width="160" height="30" rx="6"/>
+<text x="735" y="297.5" text-anchor="middle" class="mono">start: final graph</text>
+<line class="edge accent" x1="655.0" y1="293.0" x2="612.0" y2="293.0" marker-end="url(#union-find-f8-ar-accent)"/>
+<text x="430" y="326" text-anchor="middle" class="small muted">Build the final graph first, add the deleted edges back in reverse, record answers, then reverse the answer list.</text>
+</svg>
+<figcaption>Union-find can only <em>add</em>. Two offline tricks make that enough: answer threshold queries in sorted order (a pointer adds every edge below the current limit), and turn a stream of deletions into a stream of additions by running it backwards.</figcaption>
+</figure>
+
+<p><strong>Threshold queries.</strong> <a href="https://leetcode.com/problems/checking-existence-of-edge-length-limited-paths/">Checking Existence of Edge Length Limited Paths</a> asks, for many (p, q, limit), whether p and q are connected using only edges <strong>shorter than</strong> limit. Each query sees a different graph, but the graphs are nested: a bigger limit only ever adds edges. Sort the edges by weight, sort the query <em>indices</em> by limit, and sweep: before answering a query, union every edge below its limit. Each edge is added once overall, and the answers are written back at the query's <strong>original</strong> index.</p>
+<div class="viz" data-viz="union-find-offline"></div>
+
+<p>The same sweep solves "number of good paths" (open the nodes in increasing value), "minimum effort / swim in rising water" (open cells or edges in increasing height until start meets end), and Kruskal's algorithm in <a href="minimum-spanning-trees.html">Minimum Spanning Trees</a>, which is the sweep with the queries replaced by "keep the edge if it merged two sets".</p>
+<p><strong>Deletions.</strong> <a href="https://leetcode.com/problems/bricks-falling-when-hit/">Bricks Falling When Hit</a> removes bricks one at a time and asks how many fall each time. Run it backwards: remove all the hit bricks first, build the DSU of what is left (with a virtual "roof" node), then add the hits back <strong>in reverse order</strong>. The number of bricks that newly join the roof's set when a brick returns is the number that fell when it was removed.</p>
+<h2 id="undo-union-find-with-rollback">Undo: union-find with rollback</h2>
+<p>Sometimes you need to undo unions in <strong>stack order</strong>: backtracking searches, divide-and-conquer over time ("offline dynamic connectivity": each edge lives during an interval of queries, and a segment tree over time adds it on entry and undoes it on exit), or trying an edge and taking it back. Union changes exactly one parent pointer and one size, so remember which root moved and undo is O(1).</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 240" width="860" role="img" aria-label="DSU with rollback: union pushes the root it re-parented onto a history stack, and rollback pops it and restores the parent and size">
+<text x="20" y="22" class="title">after union(0,1), union(2,3)</text>
+<text x="20" y="52" class="small muted">parent</text>
+<rect class="box accent" x="70" y="62" width="40" height="30" rx="3"/>
+<text x="90" y="81.5" text-anchor="middle" class="mono">0</text>
+<text x="90" y="55" text-anchor="middle" class="small muted">0</text>
+<rect class="box" x="110" y="62" width="40" height="30" rx="3"/>
+<text x="130" y="81.5" text-anchor="middle" class="mono">0</text>
+<text x="130" y="55" text-anchor="middle" class="small muted">1</text>
+<rect class="box accent" x="150" y="62" width="40" height="30" rx="3"/>
+<text x="170" y="81.5" text-anchor="middle" class="mono">2</text>
+<text x="170" y="55" text-anchor="middle" class="small muted">2</text>
+<rect class="box" x="190" y="62" width="40" height="30" rx="3"/>
+<text x="210" y="81.5" text-anchor="middle" class="mono">2</text>
+<text x="210" y="55" text-anchor="middle" class="small muted">3</text>
+<text x="20" y="130" class="small muted">history</text>
+<rect class="box" x="70" y="112" width="34" height="28" rx="3"/>
+<text x="87" y="130.5" text-anchor="middle" class="mono">1</text>
+<rect class="box" x="104" y="112" width="34" height="28" rx="3"/>
+<text x="121" y="130.5" text-anchor="middle" class="mono">3</text>
+<text x="20" y="168" class="small mono"></text>
+<line class="edge dash" x1="290" y1="10" x2="290" y2="180"/>
+<text x="305" y="22" class="title">union(1, 3): root 2 under 0</text>
+<text x="305" y="52" class="small muted">parent</text>
+<rect class="box accent" x="355" y="62" width="40" height="30" rx="3"/>
+<text x="375" y="81.5" text-anchor="middle" class="mono">0</text>
+<text x="375" y="55" text-anchor="middle" class="small muted">0</text>
+<rect class="box" x="395" y="62" width="40" height="30" rx="3"/>
+<text x="415" y="81.5" text-anchor="middle" class="mono">0</text>
+<text x="415" y="55" text-anchor="middle" class="small muted">1</text>
+<rect class="box active" x="435" y="62" width="40" height="30" rx="3"/>
+<text x="455" y="81.5" text-anchor="middle" class="mono">0</text>
+<text x="455" y="55" text-anchor="middle" class="small muted">2</text>
+<rect class="box" x="475" y="62" width="40" height="30" rx="3"/>
+<text x="495" y="81.5" text-anchor="middle" class="mono">2</text>
+<text x="495" y="55" text-anchor="middle" class="small muted">3</text>
+<text x="305" y="130" class="small muted">history</text>
+<rect class="box" x="355" y="112" width="34" height="28" rx="3"/>
+<text x="372" y="130.5" text-anchor="middle" class="mono">1</text>
+<rect class="box" x="389" y="112" width="34" height="28" rx="3"/>
+<text x="406" y="130.5" text-anchor="middle" class="mono">3</text>
+<rect class="box active" x="423" y="112" width="34" height="28" rx="3"/>
+<text x="440" y="130.5" text-anchor="middle" class="mono">2</text>
+<text x="305" y="168" class="small mono">push 2</text>
+<line class="edge dash" x1="575" y1="10" x2="575" y2="180"/>
+<text x="590" y="22" class="title">rollback(): pop 2</text>
+<text x="590" y="52" class="small muted">parent</text>
+<rect class="box accent" x="640" y="62" width="40" height="30" rx="3"/>
+<text x="660" y="81.5" text-anchor="middle" class="mono">0</text>
+<text x="660" y="55" text-anchor="middle" class="small muted">0</text>
+<rect class="box" x="680" y="62" width="40" height="30" rx="3"/>
+<text x="700" y="81.5" text-anchor="middle" class="mono">0</text>
+<text x="700" y="55" text-anchor="middle" class="small muted">1</text>
+<rect class="box done" x="720" y="62" width="40" height="30" rx="3"/>
+<text x="740" y="81.5" text-anchor="middle" class="mono">2</text>
+<text x="740" y="55" text-anchor="middle" class="small muted">2</text>
+<rect class="box" x="760" y="62" width="40" height="30" rx="3"/>
+<text x="780" y="81.5" text-anchor="middle" class="mono">2</text>
+<text x="780" y="55" text-anchor="middle" class="small muted">3</text>
+<text x="590" y="130" class="small muted">history</text>
+<rect class="box" x="640" y="112" width="34" height="28" rx="3"/>
+<text x="657" y="130.5" text-anchor="middle" class="mono">1</text>
+<rect class="box" x="674" y="112" width="34" height="28" rx="3"/>
+<text x="691" y="130.5" text-anchor="middle" class="mono">3</text>
+<text x="590" y="168" class="small mono">parent[2] = 2, size[0] −= size[2]</text>
+<text x="20" y="206" class="small">No path compression: compression rewrites parents that the stack never recorded, so they could not be undone.</text>
+<text x="20" y="226" class="small">Union by size alone keeps every find at O(log n), and each rollback is O(1).</text>
+</svg>
+<figcaption>Rollback works because union changes exactly one parent pointer (and one size). Record which root moved, and undoing the last union is two writes. This is the engine behind offline dynamic connectivity and backtracking searches over unions.</figcaption>
+</figure>
+
+<p>The one rule: <strong>no path compression</strong>. Compression rewrites pointers during <code>find</code>, and those writes are not on the history stack, so <code>rollback</code> would leave the forest in a state that never existed. Union by size alone already bounds every find by O(log n).</p>
+<div class="code-tabs">
+<pre><code class="language-python">class RollbackDSU:
+    def __init__(self, n: int):
+        self.parent = list(range(n))
+        self.size = [1] * n
+        self.history = []                       # one entry per union call
+
+    def find(self, x: int) -&gt; int:
+        while self.parent[x] != x:              # NO path compression
+            x = self.parent[x]
+        return x
+
+    def union(self, a: int, b: int) -&gt; bool:
+        ra, rb = self.find(a), self.find(b)
+        if ra == rb:
+            self.history.append(-1)             # record &quot;nothing changed&quot;
+            return False
+        if self.size[ra] &lt; self.size[rb]:
+            ra, rb = rb, ra
+        self.parent[rb] = ra
+        self.size[ra] += self.size[rb]
+        self.history.append(rb)
+        return True
+
+    def rollback(self) -&gt; None:                 # undo the most recent union call
+        rb = self.history.pop()
+        if rb == -1:
+            return
+        ra = self.parent[rb]
+        self.size[ra] -= self.size[rb]
+        self.parent[rb] = rb
+</code></pre>
+<pre><code class="language-csharp">public class RollbackDSU
+{
+    private readonly int[] parent, size;
+    private readonly Stack&lt;int&gt; history = new();      // one entry per Union call
+
+    public RollbackDSU(int n)
+    {
+        parent = new int[n];
+        size = new int[n];
+        for (int i = 0; i &lt; n; i++) { parent[i] = i; size[i] = 1; }
+    }
+
+    public int Find(int x)
+    {
+        while (parent[x] != x) x = parent[x];         // NO path compression
+        return x;
+    }
+
+    public bool Union(int a, int b)
+    {
+        int ra = Find(a), rb = Find(b);
+        if (ra == rb) { history.Push(-1); return false; }   // record &quot;nothing changed&quot;
+        if (size[ra] &lt; size[rb]) (ra, rb) = (rb, ra);
+        parent[rb] = ra;
+        size[ra] += size[rb];
+        history.Push(rb);
+        return true;
+    }
+
+    public void Rollback()                            // undo the most recent Union call
+    {
+        int rb = history.Pop();
+        if (rb == -1) return;
+        int ra = parent[rb];
+        size[ra] -= size[rb];
+        parent[rb] = rb;
+    }
+}
+</code></pre>
+</div>
+<p>Pushing <code>-1</code> for a failed union keeps <code>union</code> and <code>rollback</code> calls paired one-to-one, so callers never have to remember which unions "counted".</p>
+<h2 id="recognize-it-when">Recognize it when</h2>
+<div class="recognize">
+<p><strong>Recognize union-find when</strong></p>
+<ul>
+<li>The question is about <strong>groups, components, or "are these connected?"</strong>, and paths or distances don't matter.</li>
+<li>Edges or relations <strong>arrive over time</strong> and you answer after each one (islands appearing, friends meeting, roads opening).</li>
+<li>You must find the edge that <strong>closes a cycle</strong> in an undirected graph, or decide whether edges form a <strong>tree</strong>.</li>
+<li>Items are related by a <strong>shared key</strong> (same email, same row or column, same letter class) and the relation is <strong>transitive</strong>.</li>
+<li>Constraints mix a transitive relation (<code>==</code>, "same team") with checks against it (<code>!=</code>), or carry a <strong>ratio, difference or parity</strong> between items.</li>
+<li>Queries have a <strong>threshold</strong> ("using only edges below L", "with values at most v") and can be answered offline in sorted order.</li>
+<li>Something is <strong>removed</strong> over time, but all removals are known up front: reverse time and add instead.</li>
+<li>You are building a <strong>minimum spanning tree</strong> (Kruskal), or a "minimax" path whose answer is the smallest threshold that connects s and t.</li>
+</ul>
+</div>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Time</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>find</code>, <code>union</code> with size/rank <strong>and</strong> compression</td>
+<td>O(α(n)) amortized</td>
+<td>α(n) ≤ 4 in practice</td>
+</tr>
+<tr>
+<td>With only one of the two</td>
+<td>O(log n)</td>
+<td>amortized (compression) or worst case (size/rank)</td>
+</tr>
+<tr>
+<td>Neither</td>
+<td>O(n) per operation</td>
+<td>a chain; never ship this</td>
+</tr>
+<tr>
+<td>Build + process m edges</td>
+<td>O(n + m·α(n))</td>
+<td>O(n) memory: two int arrays</td>
+</tr>
+<tr>
+<td>Rollback DSU: <code>find</code> / <code>union</code> / <code>rollback</code></td>
+<td>O(log n) / O(log n) / O(1)</td>
+<td>no compression allowed</td>
+</tr>
+<tr>
+<td>Weighted DSU</td>
+<td>same as plain</td>
+<td>one extra array of weights</td>
+</tr>
+<tr>
+<td>Offline threshold sweep</td>
+<td>O(E log E + Q log Q + (E + Q)·α(n))</td>
+<td>the sorting dominates</td>
+</tr>
+<tr>
+<td>Keyed (dictionary) DSU</td>
+<td>O(α(n)) expected per op, with hashing</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="pitfall">
+<p><strong>Pitfalls: the actual bug and its fix</strong></p>
+<ol>
+<li><strong>Linking the items instead of their roots.</strong> <code>parent[a] = b</code> cuts <code>a</code> out of its old tree and leaves the rest of that tree behind, so the sets silently split. <em>Fix:</em> always <code>parent[find(a)] = find(b)</code>, and only after checking the roots differ.</li>
+<li><strong>Comparing <code>parent[a] == parent[b]</code></strong> to test connectivity. Two nodes in the same set can have different parents (depth 2 vs depth 1). <em>Fix:</em> compare <code>find(a) == find(b)</code>.</li>
+<li><strong>Reading <code>size[x]</code> for a non-root.</strong> It is a stale number from before x was linked. <em>Fix:</em> <code>size[find(x)]</code>.</li>
+<li><strong>Recursive <code>find</code> without union by size.</strong> The first <code>find</code> on a 10⁵-long chain recurses 10⁵ deep: <code>RecursionError</code> in Python, <code>StackOverflowException</code> in C#. <em>Fix:</em> the iterative two-pass find, or balance the unions.</li>
+<li><strong>Off-by-one node ids.</strong> Redundant Connection numbers nodes 1 … n; <code>DSU(n)</code> then indexes <code>parent[n]</code> out of range. <em>Fix:</em> <code>DSU(n + 1)</code> and ignore 0, or subtract 1 on the way in.</li>
+<li><strong>Subtracting islands twice.</strong> In Number of Islands II, two neighbours of a new cell may already share a root. <em>Fix:</em> decrement the count only when <code>union</code> returns <code>True</code>, and skip a cell that is already land.</li>
+<li><strong>Checking <code>!=</code> constraints while still merging.</strong> A later <code>==</code> can connect two variables after their <code>!=</code> was checked. <em>Fix:</em> union every equality first, then check every inequality.</li>
+<li><strong>Weighted union with the wrong formula.</strong> Using <code>w[ra] = v</code> (forgetting that a and b are not roots) gives wrong ratios that only show up on deeper trees. <em>Fix:</em> call <code>find</code> on both first, then <code>w[ra] = v · w[b] / w[a]</code> (or <code>d + diff[b] − diff[a]</code>); re-derive from the square.</li>
+<li><strong>Path compression in a rollback DSU.</strong> Compression writes are not recorded, so <code>rollback</code> restores a forest that never existed. <em>Fix:</em> union by size, no compression.</li>
+<li><strong>Answering offline queries in sorted order but returning them sorted.</strong> <em>Fix:</em> sort the query <strong>indices</strong>, and write <code>ans[original_index]</code>.</li>
+<li><strong>Strict vs non-strict thresholds.</strong> "Strictly less than limit" means the edge pointer advances while <code>w &lt; limit</code>, not <code>&lt;=</code>. <em>Fix:</em> read the inequality twice; test a query whose limit equals an edge weight.</li>
+</ol>
+</div>
+<h2 id="worked-problems">Worked problems</h2>
+<h3 id="1-redundant-connection-medium">1. Redundant Connection <span class="diff medium">Medium</span></h3>
+<p>A tree with n nodes (labelled 1 … n) had one extra edge added. Return an edge that can be removed so that the rest is a tree; if there are several, return the one that appears last in the input.</p>
+<p><strong>Key insight.</strong> Process the edges in order. The first edge whose ends are <strong>already connected</strong> closes the (only) cycle. Every other cycle edge came earlier, so this is also the cycle edge that appears <strong>last</strong>, exactly what the problem asks for.</p>
+<details class="solution">
+<summary>Solution: the first union that fails</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def find_redundant_connection(edges):
+    dsu = DSU(len(edges) + 1)                   # nodes are 1..n, and n == len(edges)
+    for u, v in edges:
+        if not dsu.union(u, v):
+            return [u, v]                       # u and v were already connected
+    return []
+</code></pre>
+<pre><code class="language-csharp">public int[] FindRedundantConnection(int[][] edges)
+{
+    var dsu = new DSU(edges.Length + 1);              // nodes are 1..n, and n == edges.Length
+    foreach (var e in edges)
+        if (!dsu.Union(e[0], e[1])) return e;         // e[0] and e[1] were already connected
+    return Array.Empty&lt;int&gt;();
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n·α(n)) time, O(n) memory. The directed version, Redundant Connection II, adds a twist: a node may have two parents. Find that node's two incoming edges, try skipping the later one, and fall back to the earlier one (or the cycle edge) if a cycle remains.</p>
+</details>
+<h3 id="2-accounts-merge-medium">2. Accounts Merge <span class="diff medium">Medium</span></h3>
+<p>Each account is <code>[name, email1, email2, …]</code>. Two accounts belong to the same person if they share any email. Merge them and return each person as <code>[name, sorted emails…]</code>.</p>
+<p><strong>Key insight.</strong> Union <strong>accounts</strong> through an owner map (email → first account that had it); you never compare accounts pairwise. Then bucket emails by <code>find(owner[email])</code>. Names are not keys: two different Johns stay separate unless they share an email.</p>
+<details class="solution">
+<summary>Solution: owner map, union, then group</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import defaultdict
+
+def accounts_merge(accounts):
+    dsu = DSU(len(accounts))
+    owner = {}                                  # email -&gt; first account that had it
+    for i, acc in enumerate(accounts):
+        for email in acc[1:]:
+            if email in owner:
+                dsu.union(i, owner[email])      # shared email: same person
+            else:
+                owner[email] = i
+    groups = defaultdict(list)
+    for email, i in owner.items():
+        groups[dsu.find(i)].append(email)
+    return [[accounts[root][0]] + sorted(emails) for root, emails in groups.items()]
+</code></pre>
+<pre><code class="language-csharp">public IList&lt;IList&lt;string&gt;&gt; AccountsMerge(IList&lt;IList&lt;string&gt;&gt; accounts)
+{
+    var dsu = new DSU(accounts.Count);
+    var owner = new Dictionary&lt;string, int&gt;();        // email -&gt; first account that had it
+    for (int i = 0; i &lt; accounts.Count; i++)
+        for (int k = 1; k &lt; accounts[i].Count; k++)
+        {
+            string email = accounts[i][k];
+            if (owner.TryGetValue(email, out int j)) dsu.Union(i, j);   // shared email
+            else owner[email] = i;
+        }
+
+    var groups = new Dictionary&lt;int, List&lt;string&gt;&gt;();
+    foreach (var (email, i) in owner)
+    {
+        int root = dsu.Find(i);
+        if (!groups.TryGetValue(root, out var list)) groups[root] = list = new List&lt;string&gt;();
+        list.Add(email);
+    }
+    var result = new List&lt;IList&lt;string&gt;&gt;();
+    foreach (var (root, emails) in groups)
+    {
+        emails.Sort(StringComparer.Ordinal);
+        var row = new List&lt;string&gt; { accounts[root][0] };
+        row.AddRange(emails);
+        result.Add(row);
+    }
+    return result;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(E log E) for E emails in total (the sorting dominates; the DSU part is O(E·α(n))). Use <code>StringComparer.Ordinal</code> in C#: the default culture-aware sort can order emails differently from the expected answer.</p>
+</details>
+<h3 id="3-satisfiability-of-equality-equations-medium">3. Satisfiability of Equality Equations <span class="diff medium">Medium</span></h3>
+<p>Each equation is <code>"x==y"</code> or <code>"x!=y"</code> over the letters a–z. Can all of them hold at once?</p>
+<p><strong>Key insight.</strong> Equality is transitive, inequality is not. Union every <code>==</code> first so the classes are final, then each <code>!=</code> must join two different classes.</p>
+<details class="solution">
+<summary>Solution: two passes over 26 letters</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def equations_possible(equations):
+    dsu = DSU(26)
+    idx = lambda ch: ord(ch) - ord(&quot;a&quot;)
+    for e in equations:                         # pass 1: every ==
+        if e[1] == &quot;=&quot;:
+            dsu.union(idx(e[0]), idx(e[3]))
+    for e in equations:                         # pass 2: every !=
+        if e[1] == &quot;!&quot; and dsu.connected(idx(e[0]), idx(e[3])):
+            return False
+    return True
+</code></pre>
+<pre><code class="language-csharp">public bool EquationsPossible(string[] equations)
+{
+    var dsu = new DSU(26);
+    foreach (var e in equations)                      // pass 1: every ==
+        if (e[1] == '=') dsu.Union(e[0] - 'a', e[3] - 'a');
+    foreach (var e in equations)                      // pass 2: every !=
+        if (e[1] == '!' &amp;&amp; dsu.Connected(e[0] - 'a', e[3] - 'a')) return false;
+    return true;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n·α(26)), effectively O(n). <code>"a!=a"</code> is handled for free: a is connected to itself.</p>
+</details>
+<h3 id="4-smallest-string-with-swaps-medium">4. Smallest String With Swaps <span class="diff medium">Medium</span></h3>
+<p>You may swap the characters at any pair <code>[a, b]</code> in <code>pairs</code>, any number of times. Return the lexicographically smallest string you can reach.</p>
+<p><strong>Key insight.</strong> Swaps compose: if you can swap (0, 1) and (1, 2), you can realise <strong>any permutation</strong> of positions 0, 1, 2 (adjacent transpositions generate every permutation). So each connected component of positions is a bag whose letters can be arranged freely. Sort each bag and deal the smallest letters to the leftmost positions of that component.</p>
+<details class="solution">
+<summary>Solution: components, then sort inside each one</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import defaultdict
+
+def smallest_string_with_swaps(s, pairs):
+    dsu = DSU(len(s))
+    for a, b in pairs:
+        dsu.union(a, b)
+    groups = defaultdict(list)
+    for i in range(len(s)):                     # indices arrive in increasing order
+        groups[dsu.find(i)].append(i)
+    out = list(s)
+    for idx in groups.values():
+        for i, ch in zip(idx, sorted(s[i] for i in idx)):
+            out[i] = ch                         # smallest letters to the leftmost slots
+    return &quot;&quot;.join(out)
+</code></pre>
+<pre><code class="language-csharp">public string SmallestStringWithSwaps(string s, IList&lt;IList&lt;int&gt;&gt; pairs)
+{
+    var dsu = new DSU(s.Length);
+    foreach (var p in pairs) dsu.Union(p[0], p[1]);
+    var groups = new Dictionary&lt;int, List&lt;int&gt;&gt;();
+    for (int i = 0; i &lt; s.Length; i++)                // indices arrive in increasing order
+    {
+        int r = dsu.Find(i);
+        if (!groups.TryGetValue(r, out var list)) groups[r] = list = new List&lt;int&gt;();
+        list.Add(i);
+    }
+    var res = new char[s.Length];
+    foreach (var idx in groups.Values)
+    {
+        var chars = idx.Select(i =&gt; s[i]).OrderBy(c =&gt; c).ToArray();
+        for (int k = 0; k &lt; idx.Count; k++) res[idx[k]] = chars[k];   // smallest to the left
+    }
+    return new string(res);
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n log n + p·α(n)). <a href="https://leetcode.com/problems/lexicographically-smallest-equivalent-string/">Lexicographically Smallest Equivalent String</a> is the same idea on 26 letters, with one twist: always make the <strong>smaller letter the root</strong>, so <code>find(c)</code> is directly the smallest equivalent letter.</p>
+</details>
+<h3 id="5-evaluate-division-medium">5. Evaluate Division <span class="diff medium">Medium</span></h3>
+<p>Given equations like <code>a / b = 2.0</code> and queries like <code>a / c</code>, return each query's value, or <code>-1.0</code> if it cannot be determined.</p>
+<p><strong>Key insight.</strong> A weighted DSU on ratios. Each variable stores <code>w[x] = x / parent[x]</code>; after <code>find</code> it holds <code>x / root</code>. Variables with the same root are related, and <code>a / b = w[a] / w[b]</code>. Unknown variables and different roots give −1. (A BFS over a graph of ratios also works, at O(V + E) per query.)</p>
+<details class="solution">
+<summary>Solution: weighted union-find on ratios</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def calc_equation(equations, values, queries):
+    parent, weight = {}, {}                     # weight[x] = x / parent[x]
+
+    def find(x):
+        path = []
+        while parent[x] != x:
+            path.append(x)
+            x = parent[x]
+        acc = 1.0
+        for y in reversed(path):                # nearest the root first
+            acc *= weight[y]                    # acc = y / root
+            parent[y], weight[y] = x, acc
+        return x
+
+    for (a, b), val in zip(equations, values):
+        for v in (a, b):
+            if v not in parent:
+                parent[v], weight[v] = v, 1.0
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[ra] = rb
+            weight[ra] = val * weight[b] / weight[a]   # ra / rb
+    out = []
+    for a, b in queries:
+        if a not in parent or b not in parent or find(a) != find(b):
+            out.append(-1.0)
+        else:
+            out.append(weight[a] / weight[b])
+    return out
+</code></pre>
+<pre><code class="language-csharp">public double[] CalcEquation(IList&lt;IList&lt;string&gt;&gt; equations, double[] values, IList&lt;IList&lt;string&gt;&gt; queries)
+{
+    var parent = new Dictionary&lt;string, string&gt;();
+    var weight = new Dictionary&lt;string, double&gt;();    // weight[x] = x / parent[x]
+
+    string Find(string x)
+    {
+        var path = new List&lt;string&gt;();
+        while (parent[x] != x) { path.Add(x); x = parent[x]; }
+        double acc = 1.0;
+        for (int i = path.Count - 1; i &gt;= 0; i--)     // nearest the root first
+        {
+            string y = path[i];
+            acc *= weight[y];                         // acc = y / root
+            parent[y] = x;
+            weight[y] = acc;
+        }
+        return x;
+    }
+
+    for (int i = 0; i &lt; equations.Count; i++)
+    {
+        string a = equations[i][0], b = equations[i][1];
+        foreach (var v in new[] { a, b })
+            if (!parent.ContainsKey(v)) { parent[v] = v; weight[v] = 1.0; }
+        string ra = Find(a), rb = Find(b);
+        if (ra != rb) { parent[ra] = rb; weight[ra] = values[i] * weight[b] / weight[a]; }  // ra / rb
+    }
+    var res = new double[queries.Count];
+    for (int i = 0; i &lt; queries.Count; i++)
+    {
+        string a = queries[i][0], b = queries[i][1];
+        res[i] = parent.ContainsKey(a) &amp;&amp; parent.ContainsKey(b) &amp;&amp; Find(a) == Find(b)
+            ? weight[a] / weight[b]
+            : -1.0;
+    }
+    return res;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O((E + Q)·α(V)) with hashing. Note <code>x / x</code> for a known x is 1.0, but for an unknown x it is −1.0, and the membership check handles both.</p>
+</details>
+<h3 id="6-number-of-islands-ii-hard">6. Number of Islands II <span class="diff hard">Hard</span></h3>
+<p>An m × n grid starts as all water. <code>positions[i] = [r, c]</code> turns that cell into land. Return the number of islands after each addition.</p>
+<p><strong>Key insight.</strong> Online connectivity: each new land cell is +1 island, then −1 for every land neighbour whose <code>union</code> actually merges two sets. A repeated position changes nothing.</p>
+<details class="solution">
+<summary>Solution: +1, then −1 per successful union</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def num_islands2(m, n, positions):
+    dsu = DSU(m * n)
+    land = [False] * (m * n)
+    count, out = 0, []
+    for r, c in positions:
+        cell = r * n + c
+        if land[cell]:
+            out.append(count)                   # duplicate addition
+            continue
+        land[cell] = True
+        count += 1
+        for nr, nc in ((r - 1, c), (r + 1, c), (r, c - 1), (r, c + 1)):
+            if 0 &lt;= nr &lt; m and 0 &lt;= nc &lt; n and land[nr * n + nc]:
+                if dsu.union(cell, nr * n + nc):
+                    count -= 1                  # two islands just became one
+        out.append(count)
+    return out
+</code></pre>
+<pre><code class="language-csharp">public IList&lt;int&gt; NumIslands2(int m, int n, int[][] positions)
+{
+    var dsu = new DSU(m * n);
+    var land = new bool[m * n];
+    int[] dr = { -1, 1, 0, 0 }, dc = { 0, 0, -1, 1 };
+    int count = 0;
+    var res = new List&lt;int&gt;();
+    foreach (var p in positions)
+    {
+        int r = p[0], c = p[1], cell = r * n + c;
+        if (!land[cell])                              // a duplicate changes nothing
+        {
+            land[cell] = true;
+            count++;
+            for (int d = 0; d &lt; 4; d++)
+            {
+                int nr = r + dr[d], nc = c + dc[d];
+                if (nr &gt;= 0 &amp;&amp; nr &lt; m &amp;&amp; nc &gt;= 0 &amp;&amp; nc &lt; n &amp;&amp; land[nr * n + nc]
+                    &amp;&amp; dsu.Union(cell, nr * n + nc))
+                    count--;                          // two islands just became one
+            }
+        }
+        res.Add(count);
+    }
+    return res;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(m·n + k·α(m·n)) for k positions. If the grid is huge and sparse, use the keyed DSU with <code>(r, c)</code> keys instead of allocating m·n.</p>
+</details>
+<h3 id="7-checking-existence-of-edge-length-limited-paths-hard">7. Checking Existence of Edge Length Limited Paths <span class="diff hard">Hard</span></h3>
+<p>Given an undirected weighted graph and queries <code>[p, q, limit]</code>, decide for each query whether some path from p to q uses only edges with weight <strong>strictly less than</strong> <code>limit</code>.</p>
+<p><strong>Key insight.</strong> Offline sweep. Sort edges by weight and query indices by limit; before answering a query, union every edge with weight below its limit. The DSU then holds exactly that query's graph.</p>
+<details class="solution">
+<summary>Solution: sort both, sweep with one pointer</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def distance_limited_paths_exist(n, edge_list, queries):
+    edge_list.sort(key=lambda e: e[2])
+    order = sorted(range(len(queries)), key=lambda i: queries[i][2])
+    dsu = DSU(n)
+    ans = [False] * len(queries)
+    j = 0
+    for i in order:
+        p, q, limit = queries[i]
+        while j &lt; len(edge_list) and edge_list[j][2] &lt; limit:   # strictly less
+            dsu.union(edge_list[j][0], edge_list[j][1])
+            j += 1
+        ans[i] = dsu.connected(p, q)            # written at the original index
+    return ans
+</code></pre>
+<pre><code class="language-csharp">public bool[] DistanceLimitedPathsExist(int n, int[][] edgeList, int[][] queries)
+{
+    Array.Sort(edgeList, (x, y) =&gt; x[2].CompareTo(y[2]));
+    var order = Enumerable.Range(0, queries.Length).ToArray();
+    Array.Sort(order, (x, y) =&gt; queries[x][2].CompareTo(queries[y][2]));
+    var dsu = new DSU(n);
+    var ans = new bool[queries.Length];
+    int j = 0;
+    foreach (int i in order)
+    {
+        int limit = queries[i][2];
+        while (j &lt; edgeList.Length &amp;&amp; edgeList[j][2] &lt; limit)        // strictly less
+        {
+            dsu.Union(edgeList[j][0], edgeList[j][1]);
+            j++;
+        }
+        ans[i] = dsu.Connected(queries[i][0], queries[i][1]);         // original index
+    }
+    return ans;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(E log E + Q log Q + (E + Q)·α(n)). If the queries arrived <strong>online</strong> (each answer needed before the next query is shown), you would build the minimum spanning forest once and answer "maximum edge on the tree path ≤ limit" with binary lifting, a natural follow-up to <a href="minimum-spanning-trees.html">Minimum Spanning Trees</a>.</p>
+</details>
+<h3 id="8-number-of-good-paths-hard">8. Number of Good Paths <span class="diff hard">Hard</span></h3>
+<p>A tree has a value on each node. A <strong>good path</strong> starts and ends at nodes with the same value, and no node on it has a larger value (a single node counts). Count the good paths.</p>
+<p><strong>Key insight.</strong> Open the nodes in <strong>increasing value</strong>. When the nodes with value v are opened, union each with every neighbour whose value is ≤ v (already open). Now any two value-v nodes in the same component are joined by a path whose maximum is v, which is exactly a good path. If a component holds c nodes of value v, it contributes c·(c + 1)/2 paths (pairs plus singles). Earlier components can't contain value-v nodes, so nothing is counted twice.</p>
+<details class="solution">
+<summary>Solution: increasing-value sweep with a DSU</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import Counter, defaultdict
+
+def number_of_good_paths(vals, edges):
+    n = len(vals)
+    adj = [[] for _ in range(n)]
+    for a, b in edges:
+        adj[a].append(b)
+        adj[b].append(a)
+    by_val = defaultdict(list)
+    for i, v in enumerate(vals):
+        by_val[v].append(i)
+    dsu = DSU(n)
+    good = 0
+    for v in sorted(by_val):
+        for u in by_val[v]:                     # open the nodes with value v
+            for w in adj[u]:
+                if vals[w] &lt;= v:                # only through nodes already open
+                    dsu.union(u, w)
+        cnt = Counter(dsu.find(u) for u in by_val[v])
+        good += sum(c * (c + 1) // 2 for c in cnt.values())
+    return good
+</code></pre>
+<pre><code class="language-csharp">public int NumberOfGoodPaths(int[] vals, int[][] edges)
+{
+    int n = vals.Length;
+    var adj = new List&lt;int&gt;[n];
+    for (int i = 0; i &lt; n; i++) adj[i] = new List&lt;int&gt;();
+    foreach (var e in edges) { adj[e[0]].Add(e[1]); adj[e[1]].Add(e[0]); }
+    var nodes = Enumerable.Range(0, n).OrderBy(i =&gt; vals[i]).ToArray();
+    var dsu = new DSU(n);
+    int good = 0;
+    for (int s = 0; s &lt; n; )
+    {
+        int e = s;
+        while (e &lt; n &amp;&amp; vals[nodes[e]] == vals[nodes[s]]) e++;   // nodes[s..e) share one value
+        for (int k = s; k &lt; e; k++)
+            foreach (int w in adj[nodes[k]])
+                if (vals[w] &lt;= vals[nodes[k]]) dsu.Union(nodes[k], w);   // only open nodes
+        var cnt = new Dictionary&lt;int, int&gt;();
+        for (int k = s; k &lt; e; k++)
+        {
+            int r = dsu.Find(nodes[k]);
+            cnt[r] = cnt.GetValueOrDefault(r) + 1;
+        }
+        foreach (int c in cnt.Values) good += c * (c + 1) / 2;
+        s = e;
+    }
+    return good;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n log n) for the sort plus O(n·α(n)) for the unions. This "activate in sorted order and count inside components" pattern is the threshold sweep from the offline section, with nodes instead of edges.</p>
+</details>
+<h2 id="problem-ladder">Problem ladder</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Level</th>
+<th>The key idea</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://leetcode.com/problems/find-if-path-exists-in-graph/">Find if Path Exists in Graph</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Union every edge, then <code>connected(source, destination)</code>.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://leetcode.com/problems/number-of-provinces/">Number of Provinces</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Union over the adjacency matrix; the answer is the set count.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/">Number of Connected Components in an Undirected Graph</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Start at n, subtract one per successful union.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://leetcode.com/problems/graph-valid-tree/">Graph Valid Tree</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Exactly n − 1 edges and no union returns false.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://leetcode.com/problems/redundant-connection/">Redundant Connection</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>The first edge whose ends are already connected.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://leetcode.com/problems/number-of-operations-to-make-network-connected/">Number of Operations to Make Network Connected</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Needs ≥ n − 1 cables; then the answer is components − 1.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://leetcode.com/problems/satisfiability-of-equality-equations/">Satisfiability of Equality Equations</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>All <code>==</code> first, then every <code>!=</code> must cross two sets.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://leetcode.com/problems/lexicographically-smallest-equivalent-string/">Lexicographically Smallest Equivalent String</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>26 letters; always make the smaller letter the root.</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://leetcode.com/problems/smallest-string-with-swaps/">Smallest String With Swaps</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Components of positions are freely permutable; sort each one.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://leetcode.com/problems/accounts-merge/">Accounts Merge</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Owner map email → account; union accounts, group by root.</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/">Most Stones Removed with Same Row or Column</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Union a stone's row with its column; answer = stones − components.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://leetcode.com/problems/surrounded-regions/">Surrounded Regions</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Virtual border node; flip every O not connected to it.</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://leetcode.com/problems/longest-consecutive-sequence/">Longest Consecutive Sequence</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Union x with x + 1 when both exist; the largest set size. (A hash set walk is simpler.)</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="https://leetcode.com/problems/evaluate-division/">Evaluate Division</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Weighted DSU on ratios: <code>a / b = w[a] / w[b]</code> under one root.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="https://leetcode.com/problems/regions-cut-by-slashes/">Regions Cut by Slashes</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Split each cell into 4 triangles; <code>/</code> and <code>\</code> decide which pairs union.</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="https://leetcode.com/problems/similar-string-groups/">Similar String Groups</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Union every pair that differs in exactly 0 or 2 positions; count sets.</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="https://leetcode.com/problems/making-a-large-island/">Making a Large Island</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Label islands with sizes; for each water cell add the sizes of its <em>distinct</em> neighbouring roots + 1.</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="https://leetcode.com/problems/remove-max-number-of-edges-to-keep-graph-fully-traversable/">Remove Max Number of Edges to Keep Graph Fully Traversable</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Two DSUs; shared edges first (they serve both), then each person's own.</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="https://leetcode.com/problems/number-of-islands-ii/">Number of Islands II</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>+1 per new land cell, −1 per successful union with a neighbour.</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="https://leetcode.com/problems/redundant-connection-ii/">Redundant Connection II</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Directed: handle the node with two parents first, then the cycle.</td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="https://leetcode.com/problems/checking-existence-of-edge-length-limited-paths/">Checking Existence of Edge Length Limited Paths</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Offline: sort edges and queries by threshold, sweep once.</td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="https://leetcode.com/problems/swim-in-rising-water/">Swim in Rising Water</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Open cells in increasing height until the corners connect (or Dijkstra on the max).</td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="https://leetcode.com/problems/number-of-good-paths/">Number of Good Paths</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Open nodes by increasing value; c same-valued nodes per component give c·(c + 1)/2.</td>
+</tr>
+<tr>
+<td>24</td>
+<td><a href="https://leetcode.com/problems/bricks-falling-when-hit/">Bricks Falling When Hit</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Reverse time with a virtual roof node; the roof set's growth is the answer.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>Why is <code>parent[a] = b</code> wrong as a union, even when a and b are in different sets?</summary>
+<p>It moves <strong>a</strong> (and the subtree hanging below a) into b's set, but a's old root and every other branch of a's old tree stay where they were. The old set is split in two, and nothing reports an error. A union has to merge <strong>whole sets</strong>, and the only node that represents a whole set is its root: <code>parent[find(a)] = find(b)</code>.</p>
+</details>
+<details class="quiz">
+<summary>You use path compression but naive linking. Is that fast enough for 10⁵ operations?</summary>
+<p>Yes in practice. Compression alone gives O(log n) amortized per operation, so 10⁵ operations cost a few million steps. What you lose is the worst-case bound on a single <code>find</code> (the first <code>find</code> on a long chain still walks all of it), and a recursive <code>find</code> can overflow the stack on that first walk. Adding union by size costs two lines and gives α(n) amortized, so there is no reason not to.</p>
+</details>
+<details class="quiz">
+<summary>Path compression changes tree heights. Why doesn't union by rank need to update ranks afterwards?</summary>
+<p>Rank is only used as an <strong>upper bound</strong> on height, to decide which root goes underneath. Compression can only lower the true height, so the bound stays valid. The guarantee "a root of rank r has at least 2<sup>r</sup> nodes" is about sizes, which compression doesn't change. Keeping exact heights would cost work on every <code>find</code> and buy nothing.</p>
+</details>
+<details class="quiz">
+<summary>Redundant Connection asks for the answer that occurs last in the input. Why is the first failing union that edge?</summary>
+<p>A tree plus one edge has <strong>exactly one cycle</strong>, and only cycle edges are valid answers (removing any other edge disconnects the graph). While the edges arrive in order, the cycle cannot close until its last edge arrives, and that is the moment its ends are first already connected. So the first failing union is the cycle edge that appears latest.</p>
+</details>
+<details class="quiz">
+<summary>Can a DSU find strongly connected components or answer “can a reach b?” in a directed graph?</summary>
+<p>No. <code>union</code> is symmetric: after union(a, b), a and b are interchangeable. Directed reachability is not symmetric (a → b doesn't give b → a), and SCCs need the structure of cycles, which DSU throws away. Use Tarjan's or Kosaraju's DFS from <a href="advanced-graphs.html">Advanced Graphs</a>. DSU still helps in a few directed problems (Redundant Connection II), but only for the undirected skeleton.</p>
+</details>
+<details class="quiz">
+<summary>A problem deletes edges between queries. What are your options with union-find?</summary>
+<ol>
+<li>If all deletions are known up front and nothing is re-added: <strong>reverse time</strong>. Start from the final graph and add the deleted edges back in reverse order, recording answers backwards.</li>
+<li>If edges come and go arbitrarily but offline: <strong>offline dynamic connectivity</strong>. Each edge is alive during intervals of time; insert it into a segment tree over time, DFS the tree, union on the way down and <strong>rollback</strong> on the way up (rollback DSU, no compression), giving O((n + q) log q log n).</li>
+<li>If it must be online with deletions, a DSU is the wrong tool (link-cut trees or rebuilding are the options).</li>
+</ol>
+</details>
+<details class="quiz">
+<summary>In Evaluate Division, why must <code>find</code> be called on both a and b before setting <code>weight[ra]</code>?</summary>
+<p>The formula <code>weight[ra] = v · weight[b] / weight[a]</code> needs <code>weight[a] = a / ra</code> and <code>weight[b] = b / rb</code>, i.e. ratios <strong>to the roots</strong>. Before <code>find</code>, <code>weight[a]</code> is only the ratio to a's current parent, which may be several levels below the root. <code>find</code> with compression rewrites both into root ratios, and only then does the square of relations give the correct new link.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Invariant</strong>Same set ⇔ same root; a root has <code>parent[r] == r</code></div>
+<div><strong>Init</strong><code>parent = [0..n−1]</code>, <code>size = [1]*n</code>, <code>count = n</code></div>
+<div><strong>find</strong>Walk up to the root, then re-point the path at it (iterative)</div>
+<div><strong>union</strong>Find both roots; equal ⇒ <code>False</code> (cycle!); else small under big</div>
+<div><strong>Speed</strong>Size/rank + compression: O(α(n)) amortized, α ≤ 4</div>
+<div><strong>Components</strong><code>count</code> starts at n, −1 per successful union</div>
+<div><strong>Tree?</strong>n − 1 edges and no failed union</div>
+<div><strong>Group size</strong><code>size[find(x)]</code>, never <code>size[x]</code></div>
+<div><strong>Grid</strong>id = <code>r·C + c</code>; one extra id for border/roof/water</div>
+<div><strong>Shared keys</strong>owner map key → first item; union on repeats</div>
+<div><strong>== and !=</strong>Union all equalities first, then check inequalities</div>
+<div><strong>Weighted</strong>Store value relative to parent: ratio, difference or XOR</div>
+<div><strong>Offline</strong>Sort edges and query indices by threshold; one sweep</div>
+<div><strong>Deletions</strong>Reverse time; or rollback DSU (no compression)</div>
+<div><strong>Not for</strong>Paths, distances, directed reachability, SCCs</div>
+</div><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="topological-sort.html"><small>&larr; PREVIOUS</small>Topological Sort &amp; DAGs</a><a class="next" href="shortest-paths.html"><small>NEXT &rarr;</small>Shortest Paths</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#why-union-find-exists">Why union-find exists</a><ul>
+<li><a href="#the-picture-a-forest-in-one-array">The picture: a forest in one array</a></li>
+<li><a href="#step-through-find-and-union">Step through find and union</a></li>
+</ul>
+</li>
+<li><a href="#keeping-the-trees-short">Keeping the trees short</a><ul>
+<li><a href="#idea-1-union-by-size-or-by-rank">Idea 1: union by size (or by rank)</a></li>
+<li><a href="#idea-2-path-compression">Idea 2: path compression</a></li>
+<li><a href="#how-fast-is-almost-constant">How fast is “almost constant”?</a></li>
+</ul>
+</li>
+<li><a href="#the-template">The template</a><ul>
+<li><a href="#variant-union-by-rank-with-path-halving">Variant: union by rank with path halving</a></li>
+<li><a href="#variant-keys-that-are-not-0-n1">Variant: keys that are not 0 … n−1</a></li>
+</ul>
+</li>
+<li><a href="#connectivity-as-edges-arrive">Connectivity as edges arrive</a><ul>
+<li><a href="#when-dsu-when-bfsdfs">When DSU, when BFS/DFS?</a></li>
+</ul>
+</li>
+<li><a href="#grids-cell-ids-virtual-nodes-and-online-islands">Grids: cell ids, virtual nodes and online islands</a></li>
+<li><a href="#grouping-by-shared-keys">Grouping by shared keys</a></li>
+<li><a href="#equalities-first-then-inequalities">Equalities first, then inequalities</a></li>
+<li><a href="#weighted-union-find-storing-a-value-relative-to-the-parent">Weighted union-find: storing a value relative to the parent</a></li>
+<li><a href="#offline-queries-and-running-time-backwards">Offline queries and running time backwards</a></li>
+<li><a href="#undo-union-find-with-rollback">Undo: union-find with rollback</a></li>
+<li><a href="#recognize-it-when">Recognize it when</a></li>
+<li><a href="#worked-problems">Worked problems</a><ul>
+<li><a href="#1-redundant-connection-medium">1. Redundant Connection Medium</a></li>
+<li><a href="#2-accounts-merge-medium">2. Accounts Merge Medium</a></li>
+<li><a href="#3-satisfiability-of-equality-equations-medium">3. Satisfiability of Equality Equations Medium</a></li>
+<li><a href="#4-smallest-string-with-swaps-medium">4. Smallest String With Swaps Medium</a></li>
+<li><a href="#5-evaluate-division-medium">5. Evaluate Division Medium</a></li>
+<li><a href="#6-number-of-islands-ii-hard">6. Number of Islands II Hard</a></li>
+<li><a href="#7-checking-existence-of-edge-length-limited-paths-hard">7. Checking Existence of Edge Length Limited Paths Hard</a></li>
+<li><a href="#8-number-of-good-paths-hard">8. Number of Good Paths Hard</a></li>
+</ul>
+</li>
+<li><a href="#problem-ladder">Problem ladder</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

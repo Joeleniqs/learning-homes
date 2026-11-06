@@ -1,0 +1,144 @@
+/* Anti-patterns topic: visualizer and figure styles. Colours come only from theme variables. */
+.viz[data-viz^="anti-patterns-"] .viz-stage { padding: 16px 14px; gap: 12px; }
+.viz[data-viz^="anti-patterns-"] .viz-code li { font-size: 12px; }
+.viz[data-viz^="anti-patterns-"] .viz-legend .lg-accent::before { border-color: var(--accent); background: var(--accent-soft); }
+
+/* svg text helpers (inside svg.dg) */
+svg.dg .ap-t { font-size: 12.5px; font-weight: 650; }
+svg.dg .ap-s { font-size: 10.5px; fill: var(--muted); }
+svg.dg .ap-lbl, svg.dg .ap-chip-t { font: 11px "Cascadia Code", Consolas, monospace; paint-order: stroke; stroke: var(--surface); stroke-width: 6px; stroke-linejoin: round; }
+svg.dg .ap-chip-t { font-size: 13px; font-weight: 700; fill: var(--v-active); }
+svg.dg text.ap-bad { fill: var(--v-bad); font-weight: 700; }
+svg.dg .ap-dim { opacity: .38; }
+svg.dg .edge.ap-dimline { opacity: .3; }
+svg.ap-svg { flex: 0 1 auto; }
+
+/* layout */
+.ap-split { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; justify-content: center; width: 100%; }
+.ap-split-l { flex: 1 1 420px; min-width: 0; display: flex; justify-content: center; }
+.ap-split-r { flex: 0 1 260px; display: flex; flex-direction: column; gap: 10px; }
+.ap-col { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; }
+.ap-col .v-cells { flex-wrap: wrap; }
+.ap-muted { color: var(--muted); font-style: italic; }
+
+/* key/value panels and stat chips */
+.ap-kv { border: 1px solid var(--line); border-radius: 8px; min-width: 190px; background: var(--surface); font: 12px "Cascadia Code", Consolas, monospace; overflow: hidden; }
+.ap-kv-h { padding: 4px 10px; font: 700 10.5px "Segoe UI", system-ui, sans-serif; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line); background: var(--code); }
+.ap-kv-r { display: flex; justify-content: space-between; gap: 14px; padding: 3px 10px; border-left: 3px solid transparent; }
+.ap-kv-r > span:first-child { font-weight: 650; }
+.ap-kv-r.done { border-left-color: var(--v-done); background: var(--v-done-soft); }
+.ap-kv-r.bad { border-left-color: var(--v-bad); background: var(--v-bad-soft); }
+.ap-kv-r.active { border-left-color: var(--v-active); background: var(--v-active-soft); }
+.ap-kv-r.path { border-left-color: var(--v-path); background: var(--v-path-soft); }
+.ap-kv-r.cur { box-shadow: inset 0 0 0 1.5px var(--v-active); }
+.ap-kv-r.empty { color: var(--muted); }
+.ap-stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-content: flex-start; }
+.ap-stat { border: 1.5px solid var(--line); border-radius: 8px; padding: 5px 12px; text-align: center; background: var(--surface); min-width: 92px; }
+.ap-stat b { display: block; font: 700 15px "Cascadia Code", Consolas, monospace; }
+.ap-stat span { font-size: 10.5px; color: var(--muted); }
+.ap-stat.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.ap-stat.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.ap-stat.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.ap-stat.path { border-color: var(--v-path); background: var(--v-path-soft); }
+
+/* in-stage code panel (used when the code depends on a select) */
+.ap-codebox { width: 100%; max-width: 900px; border: 1px solid var(--line); border-radius: 8px; background: var(--code); overflow: hidden; }
+.ap-codebox .ap-kv-h { background: var(--surface); }
+.ap-code { margin: 0; padding: 8px 0; list-style: none; counter-reset: apln; overflow-x: auto; font: 12px/1.6 "Cascadia Code", Consolas, monospace; }
+.prose .ap-code li, .ap-code li { margin: 0; padding: 0 12px 0 6px; white-space: pre; counter-increment: apln; border-left: 3px solid transparent; font-size: 12px; line-height: 1.6; }
+.ap-code li::before { content: counter(apln); display: inline-block; width: 22px; color: var(--muted); opacity: .6; font-size: 10.5px; }
+.ap-code li.cur { background: var(--v-active-soft); border-left-color: var(--v-active); }
+
+/* document, output, tables */
+.ap-doc { min-width: 220px; max-width: 340px; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--bg); font: 15px "Cascadia Code", Consolas, monospace; white-space: pre-wrap; word-break: break-all; }
+.ap-caret { display: inline-block; width: 2px; height: 1.1em; vertical-align: -3px; margin-left: 1px; background: var(--accent); }
+.prose pre.ap-out, pre.ap-out { margin: 0; min-width: 220px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--code); font: 12px/1.55 "Cascadia Code", Consolas, monospace; white-space: pre; }
+pre.ap-sql { margin-top: 10px; border-color: var(--v-done); }
+.prose table.ap-tbl, table.ap-tbl { border-collapse: collapse; margin: 6px 0 0; font: 12px "Cascadia Code", Consolas, monospace; width: auto; display: table; }
+.prose table.ap-tbl th, .prose table.ap-tbl td, table.ap-tbl th, table.ap-tbl td { border: 1px solid var(--line); padding: 3px 6px; min-width: 0; text-align: center; background: var(--surface); }
+.prose table.ap-tbl th, table.ap-tbl th { font: 700 10px "Segoe UI", system-ui, sans-serif; letter-spacing: .2px; text-transform: uppercase; color: var(--muted); background: var(--code); }
+table.ap-tbl tr.cur td { background: var(--v-active-soft); font-weight: 700; }
+table.ap-tbl td.ok { background: var(--v-done-soft); color: var(--text); font-weight: 700; }
+table.ap-tbl td.no { background: var(--v-bad-soft); color: var(--text); }
+
+.ap-scroll { max-width: 100%; overflow-x: auto; align-self: stretch; }
+.ap-scroll > table.ap-tbl { margin: 6px auto 0; }
+.ap-scroll > pre.ap-out { margin: 10px auto 0; width: fit-content; max-width: 100%; }
+
+pre.ap-out.ap-sql { white-space: pre-wrap; }
+
+/* status variants used by this topic */
+.ap-stat.ok { border-color: var(--v-done); background: var(--v-done-soft); }
+.ap-stat.warn { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.ap-kv-r.no { border-left-color: var(--v-bad); background: var(--v-bad-soft); }
+svg.dg .box.dim { opacity: .4; }
+svg.v-graph .e.dash { stroke-dasharray: 5 4; opacity: .7; }
+svg.v-graph .n.dim { opacity: .55; }
+svg.v-graph .n.dim circle { stroke-dasharray: 4 3; }
+
+
+.viz[data-viz^="anti-patterns-"] .viz-legend .lg-dim::before { border-style: dashed; opacity: .55; }
+.ap-split > .ap-codebox { flex: 1 1 420px; width: auto; }
+.ap-split > .ap-stats { flex: 0 1 240px; }
+
+/* colour groups (god object clusters) */
+table.ap-tbl td.ap-g0, .ap-grp.ap-g0 { background: var(--v-done-soft); border-color: var(--v-done); }
+table.ap-tbl td.ap-g1, .ap-grp.ap-g1 { background: var(--v-path-soft); border-color: var(--v-path); }
+table.ap-tbl td.ap-g2, .ap-grp.ap-g2 { background: var(--v-visit-soft); border-color: var(--v-visit); }
+table.ap-tbl td.ap-g3, .ap-grp.ap-g3 { background: var(--accent-soft); border-color: var(--accent); }
+table.ap-tbl td.ap-g0, table.ap-tbl td.ap-g1, table.ap-tbl td.ap-g2, table.ap-tbl td.ap-g3 { font-weight: 700; color: var(--text); }
+table.ap-tbl tr.ap-pending td { opacity: .45; }
+.prose table.ap-tbl td.ap-mname, table.ap-tbl td.ap-mname { text-align: left; font-weight: 700; white-space: nowrap; background: var(--code); }
+table.ap-tbl td.ap-use { color: var(--muted); }
+table.ap-matrix th { writing-mode: horizontal-tb; }
+.ap-groups { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 100%; }
+.ap-grp { border: 1.5px solid var(--line); border-radius: 8px; padding: 6px 12px; min-width: 180px; max-width: 300px; font: 12px "Cascadia Code", Consolas, monospace; }
+.ap-grp b { display: block; font: 700 12px "Segoe UI", system-ui, sans-serif; margin-bottom: 3px; }
+.ap-grp span { font: 700 10px "Segoe UI", system-ui, sans-serif; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
+
+/* lanes (global state interleaving) */
+table.ap-lanes th.on { color: var(--v-active); box-shadow: inset 0 -2px 0 var(--v-active); }
+table.ap-lanes td.cur { background: var(--v-active-soft); box-shadow: inset 0 0 0 1.5px var(--v-active); font-weight: 700; }
+table.ap-lanes td.ap-shared { background: var(--v-path-soft); }
+table.ap-lanes td.ap-shared.hot { box-shadow: inset 0 0 0 2px var(--v-path); font-weight: 700; }
+table.ap-lanes td { white-space: nowrap; }
+
+/* gantt (thread pool) */
+.prose table.ap-gantt th, .prose table.ap-gantt td, table.ap-gantt th, table.ap-gantt td { padding: 2px 2px; min-width: 22px; font-size: 10px; }
+table.ap-gantt th.on { color: var(--v-active); box-shadow: inset 0 -2px 0 var(--v-active); }
+table.ap-gantt td.ap-g-S { background: var(--v-active-soft); }
+table.ap-gantt td.ap-g-C { background: var(--v-done-soft); }
+table.ap-gantt td.ap-g-B { background: var(--v-bad-soft); }
+table.ap-gantt td.ap-g-i { background: var(--surface); }
+
+/* queue / stack chips */
+.ap-queue { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font: 12px "Cascadia Code", Consolas, monospace; }
+.ap-queue > span { font: 700 10.5px "Segoe UI", system-ui, sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-right: 4px; }
+.ap-queue em { color: var(--muted); }
+.ap-queue b { padding: 2px 8px; border-radius: 5px; border: 1.5px solid var(--line); }
+.ap-queue b.ap-q-S { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.ap-queue b.ap-q-C { border-color: var(--v-done); background: var(--v-done-soft); }
+
+/* dependency graph (mud) */
+.ap-graph { max-width: 100%; overflow-x: auto; display: flex; justify-content: center; }
+
+/* N+1 orders and SQL log */
+.ap-cells { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.ap-cell { border: 1.5px solid var(--line); border-radius: 6px; padding: 3px 10px; text-align: center; font: 600 13px "Cascadia Code", Consolas, monospace; background: var(--surface); }
+.ap-cell small { display: block; font-size: 10px; font-weight: 400; color: var(--muted); }
+.ap-cell.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.ap-cell.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.ap-cell.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.prose pre.ap-sql, pre.ap-sql { margin: 0 auto; width: fit-content; max-width: 100%; min-width: 300px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--code); font: 11.5px/1.55 "Cascadia Code", Consolas, monospace; white-space: pre-wrap; }
+
+/* flag combinations */
+.ap-combos { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; max-width: 900px; }
+.ap-combo { border: 1.5px solid var(--line); border-radius: 6px; padding: 3px 8px; min-width: 96px; text-align: center; background: var(--surface); font-size: 11px; }
+.ap-combo code { display: block; font: 700 13px "Cascadia Code", Consolas, monospace; background: none; padding: 0; letter-spacing: 2px; }
+.ap-combo span { color: var(--muted); font-size: 10.5px; }
+.ap-combo.active { border-color: var(--v-active); background: var(--v-active-soft); box-shadow: 0 0 0 2px var(--v-active); }
+.ap-combo.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.ap-combo.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.ap-combo.bad code { text-decoration: line-through; }
+.ap-combo.ap-pending { opacity: .45; border-style: dashed; }
+.ap-combo.done span, .ap-combo.bad span, .ap-combo.active span { color: var(--text); }

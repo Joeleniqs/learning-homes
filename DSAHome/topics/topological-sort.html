@@ -1,0 +1,1446 @@
+<!doctype html>
+<html lang="en" data-home="dsa-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Topological Sort &amp; DAGs | DSA Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#4f46e5;--accent-soft:#eef0ff;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#a5b4fc;--accent-soft:#252a5c;}}:root[data-theme=dark]{--accent:#a5b4fc;--accent-soft:#252a5c;}</style>
+  <link rel="stylesheet" href="../assets/topics/topological-sort.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/topological-sort.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="DSA Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">DS</span>DSA Home</a>
+    <p class="sidebar-caption">Data structures &amp; algorithms, seen.<br>Every idea animated, every pattern drilled.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations</summary><ul class="topic-list"><li data-search="The Problem-Solving Playbook Foundations A visual decision map from input size, shape and question type to the right technique, plus a repeatable interview/contest workflow. pattern recognition constraints approach interview" data-slug="problem-solving-playbook"><a href="../topics/problem-solving-playbook.html">The Problem-Solving Playbook</a></li><li data-search="Complexity Analysis Foundations Big-O growth you can see, amortized cost, recursion trees and the Master theorem, and what 10^8 operations per second really buys you. big o amortized master theorem time space" data-slug="complexity-analysis"><a href="../topics/complexity-analysis.html">Complexity Analysis</a></li><li data-search="Recursion &amp; the Call Stack Foundations Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from. call stack recursion tree divide and conquer" data-slug="recursion"><a href="../topics/recursion.html">Recursion &amp; the Call Stack</a></li></ul></details><details class="nav-track"><summary>Arrays &amp; Strings</summary><ul class="topic-list"><li data-search="Two Pointers Arrays &amp; Strings Opposite-end, same-direction and fast/slow pointers: why moving one pointer is safe, with partitioning and k-sum. pair sum partition dutch flag 3sum" data-slug="two-pointers"><a href="../topics/two-pointers.html">Two Pointers</a></li><li data-search="Sliding Window Arrays &amp; Strings Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows. substring subarray window at most k" data-slug="sliding-window"><a href="../topics/sliding-window.html">Sliding Window</a></li><li data-search="Prefix Sums &amp; Difference Arrays Arrays &amp; Strings 1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR. subarray sum equals k range sum 2d prefix difference array" data-slug="prefix-sums"><a href="../topics/prefix-sums.html">Prefix Sums &amp; Difference Arrays</a></li><li data-search="Binary Search Arrays &amp; Strings One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection. lower bound upper bound search on answer rotated monotonic predicate" data-slug="binary-search"><a href="../topics/binary-search.html">Binary Search</a></li><li data-search="Sorting Algorithms Arrays &amp; Strings Animated bubble, insertion, merge, quick, heap, counting and radix sorts; stability, quickselect and custom comparators. merge sort quick sort quickselect counting sort inversions" data-slug="sorting"><a href="../topics/sorting.html">Sorting Algorithms</a></li><li data-search="Hashing Patterns Arrays &amp; Strings How hash tables work inside, then frequency maps, grouping by canonical keys, complement lookups and rolling hashes. hash map hash set anagram two sum collision" data-slug="hashing"><a href="../topics/hashing.html">Hashing Patterns</a></li><li data-search="Monotonic Stack &amp; Queue Arrays &amp; Strings Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight. next greater largest rectangle deque trapping rain water" data-slug="monotonic-stack-queue"><a href="../topics/monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a></li><li data-search="Intervals &amp; Sweep Line Arrays &amp; Strings Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline. merge intervals meeting rooms events skyline" data-slug="intervals-sweep-line"><a href="../topics/intervals-sweep-line.html">Intervals &amp; Sweep Line</a></li><li data-search="String Algorithms Arrays &amp; Strings KMP failure function, Z-algorithm, Rabin–Karp, Manacher&#x27;s palindromes and string hashing, each animated character by character. kmp z algorithm rabin karp manacher palindrome pattern matching" data-slug="string-algorithms"><a href="../topics/string-algorithms.html">String Algorithms</a></li></ul></details><details class="nav-track"><summary>Linked Lists, Stacks, Queues &amp; Heaps</summary><ul class="topic-list"><li data-search="Linked Lists Linked Lists, Stacks, Queues &amp; Heaps Pointer rewiring you can watch: reversal, dummy heads, fast/slow cycle detection, merging, and LRU cache design. reverse floyd cycle merge lru" data-slug="linked-lists"><a href="../topics/linked-lists.html">Linked Lists</a></li><li data-search="Stacks &amp; Queues Linked Lists, Stacks, Queues &amp; Heaps Balanced brackets, expression evaluation, min-stack, queues from stacks, deques and BFS queues. parentheses calculator deque min stack" data-slug="stacks-queues"><a href="../topics/stacks-queues.html">Stacks &amp; Queues</a></li><li data-search="Heaps &amp; Priority Queues Linked Lists, Stacks, Queues &amp; Heaps Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling. heap top k median k way merge priority queue" data-slug="heaps-priority-queues"><a href="../topics/heaps-priority-queues.html">Heaps &amp; Priority Queues</a></li></ul></details><details class="nav-track"><summary>Trees</summary><ul class="topic-list"><li data-search="Tree Traversals Trees Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees. dfs bfs inorder level order morris" data-slug="tree-traversals"><a href="../topics/tree-traversals.html">Tree Traversals</a></li><li data-search="Binary Search Trees Trees Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters. bst validate successor avl red black" data-slug="binary-search-trees"><a href="../topics/binary-search-trees.html">Binary Search Trees</a></li><li data-search="Tree Problem Patterns Trees Return-value recursion (diameter, max path sum), top-down state, LCA, serialization, and binary lifting. lca diameter path sum binary lifting serialize" data-slug="tree-patterns"><a href="../topics/tree-patterns.html">Tree Problem Patterns</a></li><li data-search="Tries Trees Prefix trees animated insert by insert: autocomplete, word search on boards, and bitwise tries for max XOR. prefix tree autocomplete word search xor trie" data-slug="tries"><a href="../topics/tries.html">Tries</a></li><li data-search="Segment Trees, Fenwick Trees &amp; Sparse Tables Trees Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables. segment tree lazy propagation fenwick bit rmq" data-slug="segment-fenwick-trees"><a href="../topics/segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a></li></ul></details><details class="nav-track" open><summary>Graphs</summary><ul class="topic-list"><li data-search="Graph Fundamentals: BFS &amp; DFS Graphs Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS. bfs dfs grid islands connected components cycle" data-slug="graph-fundamentals"><a href="../topics/graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></li><li data-search="Topological Sort &amp; DAGs Graphs Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs. kahn course schedule dag dependency order" data-slug="topological-sort"><a href="../topics/topological-sort.html" aria-current="page">Topological Sort &amp; DAGs</a></li><li data-search="Union-Find (Disjoint Set Union) Graphs Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries. dsu disjoint set path compression connectivity" data-slug="union-find"><a href="../topics/union-find.html">Union-Find (Disjoint Set Union)</a></li><li data-search="Shortest Paths Graphs BFS, 0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall and A* animated, and a chart to pick the right one every time. dijkstra bellman ford floyd warshall a star 0-1 bfs" data-slug="shortest-paths"><a href="../topics/shortest-paths.html">Shortest Paths</a></li><li data-search="Minimum Spanning Trees Graphs Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems. kruskal prim mst cut property" data-slug="minimum-spanning-trees"><a href="../topics/minimum-spanning-trees.html">Minimum Spanning Trees</a></li><li data-search="Advanced Graph Algorithms Graphs Strongly connected components, bridges and articulation points, bipartite checks, Euler paths, and max-flow / matching. tarjan kosaraju scc bridges euler max flow bipartite matching" data-slug="advanced-graphs"><a href="../topics/advanced-graphs.html">Advanced Graph Algorithms</a></li></ul></details><details class="nav-track"><summary>Backtracking &amp; Greedy</summary><ul class="topic-list"><li data-search="Backtracking Backtracking &amp; Greedy The choose/explore/un-choose template animated on a decision tree: subsets, permutations, combinations, N-Queens, Sudoku and pruning. subsets permutations n queens sudoku pruning" data-slug="backtracking"><a href="../topics/backtracking.html">Backtracking</a></li><li data-search="Greedy Algorithms Backtracking &amp; Greedy When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding. exchange argument interval scheduling jump game huffman" data-slug="greedy"><a href="../topics/greedy.html">Greedy Algorithms</a></li></ul></details><details class="nav-track"><summary>Dynamic Programming</summary><ul class="topic-list"><li data-search="The DP Framework Dynamic Programming Recursion → memoization → tabulation → space optimisation, visualised on one problem; how to design state and transitions. memoization tabulation state transition overlapping subproblems" data-slug="dp-framework"><a href="../topics/dp-framework.html">The DP Framework</a></li><li data-search="1D &amp; Grid DP Dynamic Programming Climbing stairs, house robber, decode ways, unique paths, min path sum, maximal square and dungeon game with animated tables. house robber unique paths grid dp maximal square" data-slug="dp-linear-grid"><a href="../topics/dp-linear-grid.html">1D &amp; Grid DP</a></li><li data-search="Knapsack Family Dynamic Programming 0/1 vs unbounded vs bounded knapsack, why loop direction matters, coin change, subset sum and target sum. knapsack coin change subset sum partition" data-slug="dp-knapsack"><a href="../topics/dp-knapsack.html">Knapsack Family</a></li><li data-search="Sequence &amp; String DP Dynamic Programming LIS with patience sorting, LCS, edit distance, palindromic subsequences, regex/wildcard matching and distinct subsequences. lis lcs edit distance regex matching palindrome" data-slug="dp-sequences-strings"><a href="../topics/dp-sequences-strings.html">Sequence &amp; String DP</a></li><li data-search="Interval &amp; Tree DP Dynamic Programming Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting). interval dp burst balloons matrix chain tree dp rerooting" data-slug="dp-intervals-trees"><a href="../topics/dp-intervals-trees.html">Interval &amp; Tree DP</a></li><li data-search="Bitmask &amp; Digit DP Dynamic Programming Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints. bitmask tsp digit dp subset dp" data-slug="dp-bitmask-digit"><a href="../topics/dp-bitmask-digit.html">Bitmask &amp; Digit DP</a></li><li data-search="State Machines &amp; DP Optimisations Dynamic Programming Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth. stock state machine convex hull trick knuth optimisation" data-slug="dp-advanced"><a href="../topics/dp-advanced.html">State Machines &amp; DP Optimisations</a></li></ul></details><details class="nav-track"><summary>Bits &amp; Math</summary><ul class="topic-list"><li data-search="Bit Manipulation Bits &amp; Math Bits drawn as switches: masks, XOR tricks, counting bits, subset enumeration and Gray codes. xor mask single number popcount subsets" data-slug="bit-manipulation"><a href="../topics/bit-manipulation.html">Bit Manipulation</a></li><li data-search="Math, Number Theory &amp; Combinatorics Bits &amp; Math GCD, sieves, fast power, modular inverses, nCr mod p, inclusion–exclusion, and the geometry primitives you need. gcd sieve modular fast exponentiation combinatorics geometry" data-slug="math-number-theory"><a href="../topics/math-number-theory.html">Math, Number Theory &amp; Combinatorics</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../CodeExcellenceHome/index.html">Code Excellence Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>DSA Home / Topological Sort &amp; DAGs</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">GRAPHS</p><h1>Topological Sort &amp; DAGs</h1><p class="lede">Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs.</p><div class="meta"><span class="level level-intermediate">Intermediate → Advanced</span><span>~45 min study</span><span>Builds on: <a href="graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="topological-sort" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="what-a-topological-order-is">What a topological order is</h2>
+<p>Plenty of problems come with "this before that" rules. A course needs its prerequisites, a build target needs the libraries it links, a spreadsheet cell needs the cells its formula reads, and socks go on before shoes. Draw every rule "a must come before b" as an arrow <strong>a → b</strong>, and the question becomes a graph question: <em>list all the nodes so that every arrow points forward</em>. That list is a <strong>topological order</strong>, and a directed graph with no directed cycle is a <strong>DAG</strong> (directed acyclic graph).</p>
+<p>This page builds directly on <a href="graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a>. Kahn's algorithm is a BFS that uses in-degree counts instead of a seen set, and the DFS method is the three-colour DFS from that page plus one extra line.</p>
+<div class="rule">
+<p><strong>The topological invariant.</strong> An order is valid exactly when <strong>every edge u → v has u before v</strong>, and a valid order exists <strong>if and only if the graph has no directed cycle</strong>. Both algorithms on this page build an order in O(V + E), and both notice the cycle when there isn't one.</p>
+</div>
+<h3 id="the-picture-straighten-the-graph-into-a-line">The picture: straighten the graph into a line</h3>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 480" width="860" role="img" aria-label="Getting dressed as a dependency graph, then the same graph laid out in one topological order with every arrow pointing right">
+<defs><marker id="ts-ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="ts-ar1d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker></defs>
+<text x="10" y="22" class="title">The dependencies (an arrow u → v means “u before v”)</text>
+<line class="edge" x1="136.7" y1="76.0" x2="216.4" y2="103.4" marker-end="url(#ts-ar1)"/>
+<line class="edge" x1="108.7" y1="76.0" x2="244.8" y2="192.7" marker-end="url(#ts-ar1)"/>
+<line class="edge" x1="265.0" y1="136.0" x2="265.0" y2="192.0" marker-end="url(#ts-ar1)"/>
+<line class="edge" x1="317.0" y1="125.9" x2="476.0" y2="143.9" marker-end="url(#ts-ar1)"/>
+<line class="edge" x1="142.0" y1="203.0" x2="211.0" y2="206.9" marker-end="url(#ts-ar1)"/>
+<line class="edge" x1="446.0" y1="66.0" x2="512.6" y2="132.6" marker-end="url(#ts-ar1)"/>
+<line class="edge" x1="482.0" y1="50.0" x2="566.0" y2="50.0" marker-end="url(#ts-ar1)"/>
+<line class="edge" x1="655.4" y1="66.0" x2="737.7" y2="103.2" marker-end="url(#ts-ar1)"/>
+<line class="edge" x1="582.0" y1="143.6" x2="721.0" y2="126.6" marker-end="url(#ts-ar1)"/>
+<rect class="box" x="38.0" y="44.0" width="104" height="32" rx="7"/><text x="90" y="65" text-anchor="middle" class="mono">undershorts</text>
+<rect class="box" x="38.0" y="184.0" width="104" height="32" rx="7"/><text x="90" y="205" text-anchor="middle" class="mono">socks</text>
+<rect class="box" x="213.0" y="104.0" width="104" height="32" rx="7"/><text x="265" y="125" text-anchor="middle" class="mono">pants</text>
+<rect class="box" x="213.0" y="194.0" width="104" height="32" rx="7"/><text x="265" y="215" text-anchor="middle" class="mono">shoes</text>
+<rect class="box" x="378.0" y="34.0" width="104" height="32" rx="7"/><text x="430" y="55" text-anchor="middle" class="mono">shirt</text>
+<rect class="box" x="478.0" y="134.0" width="104" height="32" rx="7"/><text x="530" y="155" text-anchor="middle" class="mono">belt</text>
+<rect class="box" x="568.0" y="34.0" width="104" height="32" rx="7"/><text x="620" y="55" text-anchor="middle" class="mono">tie</text>
+<rect class="box" x="723.0" y="104.0" width="104" height="32" rx="7"/><text x="775" y="125" text-anchor="middle" class="mono">jacket</text>
+<line x1="10" y1="250" x2="850" y2="250" class="edge dash"/>
+<text x="10" y="278" class="title">One topological order: the same arrows, all pointing right</text>
+<path class="edge done" d="M388.0,414 Q430.0,360 472.0,412" marker-end="url(#ts-ar1d)"/>
+<path class="edge done" d="M388.0,414 Q586.0,282 784.0,412" marker-end="url(#ts-ar1d)"/>
+<path class="edge done" d="M492.0,414 Q638.0,308 784.0,412" marker-end="url(#ts-ar1d)"/>
+<path class="edge done" d="M492.0,414 Q534.0,360 576.0,412" marker-end="url(#ts-ar1d)"/>
+<path class="edge done" d="M284.0,414 Q534.0,256 784.0,412" marker-end="url(#ts-ar1d)"/>
+<path class="edge done" d="M76.0,414 Q326.0,256 576.0,412" marker-end="url(#ts-ar1d)"/>
+<path class="edge done" d="M76.0,414 Q118.0,360 160.0,412" marker-end="url(#ts-ar1d)"/>
+<path class="edge done" d="M180.0,414 Q430.0,256 680.0,412" marker-end="url(#ts-ar1d)"/>
+<path class="edge done" d="M596.0,414 Q638.0,360 680.0,412" marker-end="url(#ts-ar1d)"/>
+<rect class="box done" x="20.0" y="414.0" width="92" height="32" rx="7"/><text x="66.0" y="435" text-anchor="middle" class="mono">shirt</text>
+<text x="66.0" y="464" text-anchor="middle" class="small mono muted">#0</text>
+<rect class="box done" x="124.0" y="414.0" width="92" height="32" rx="7"/><text x="170.0" y="435" text-anchor="middle" class="mono">tie</text>
+<text x="170.0" y="464" text-anchor="middle" class="small mono muted">#1</text>
+<rect class="box done" x="228.0" y="414.0" width="92" height="32" rx="7"/><text x="274.0" y="435" text-anchor="middle" class="mono">socks</text>
+<text x="274.0" y="464" text-anchor="middle" class="small mono muted">#2</text>
+<rect class="box done" x="332.0" y="414.0" width="92" height="32" rx="7"/><text x="378.0" y="435" text-anchor="middle" class="mono">undershorts</text>
+<text x="378.0" y="464" text-anchor="middle" class="small mono muted">#3</text>
+<rect class="box done" x="436.0" y="414.0" width="92" height="32" rx="7"/><text x="482.0" y="435" text-anchor="middle" class="mono">pants</text>
+<text x="482.0" y="464" text-anchor="middle" class="small mono muted">#4</text>
+<rect class="box done" x="540.0" y="414.0" width="92" height="32" rx="7"/><text x="586.0" y="435" text-anchor="middle" class="mono">belt</text>
+<text x="586.0" y="464" text-anchor="middle" class="small mono muted">#5</text>
+<rect class="box done" x="644.0" y="414.0" width="92" height="32" rx="7"/><text x="690.0" y="435" text-anchor="middle" class="mono">jacket</text>
+<text x="690.0" y="464" text-anchor="middle" class="small mono muted">#6</text>
+<rect class="box done" x="748.0" y="414.0" width="92" height="32" rx="7"/><text x="794.0" y="435" text-anchor="middle" class="mono">shoes</text>
+<text x="794.0" y="464" text-anchor="middle" class="small mono muted">#7</text>
+</svg>
+<figcaption>A topological order is a way to lay the nodes on a line so that every arrow points forward. Many orders exist here (socks could go first, for example): the graph only forbids some orders, it does not pick one.</figcaption>
+</figure>
+
+<p>Vocabulary used on this page:</p>
+<ul>
+<li><strong>In-degree</strong> of v: the number of arrows into v, that is, how many things must happen before v. A node with in-degree 0 is a <strong>source</strong>; nothing has to happen before it.</li>
+<li><strong>Out-degree</strong> of u: the number of arrows leaving u. A node with out-degree 0 is a <strong>sink</strong>; nothing waits for it.</li>
+<li><strong>Direction convention:</strong> on this page u → v always means "u comes <strong>before</strong> v" ("u is a prerequisite of v", "v depends on u"). Inputs often state it the other way round; translate them once, when you build the graph.</li>
+</ul>
+<h3 id="why-no-cycle-is-exactly-the-condition">Why "no cycle" is exactly the condition</h3>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 800 240" width="800" role="img" aria-label="Left: a DAG always has a node with in-degree 0. Right: in a cycle every node waits for another, so nothing can go first">
+<defs><marker id="ts-ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="ts-ar2b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker></defs>
+<text x="10" y="22" class="title">DAG: walk backwards and you must stop</text>
+<line class="edge" x1="76.4" y1="112.6" x2="151.8" y2="78.3" marker-end="url(#ts-ar2)"/>
+<line class="edge" x1="76.4" y1="127.4" x2="151.8" y2="161.7" marker-end="url(#ts-ar2)"/>
+<line class="edge" x1="186.6" y1="76.9" x2="271.5" y2="112.3" marker-end="url(#ts-ar2)"/>
+<line class="edge" x1="186.6" y1="163.1" x2="271.5" y2="127.7" marker-end="url(#ts-ar2)"/>
+<line class="edge" x1="170.0" y1="88.0" x2="170.0" y2="150.0" marker-end="url(#ts-ar2)"/>
+<circle class="box done" cx="60" cy="120" r="18"/><text x="60" y="125" text-anchor="middle" class="mono">a</text>
+<text x="60" y="153" text-anchor="middle" class="small mono muted">in 0</text>
+<circle class="box" cx="170" cy="70" r="18"/><text x="170" y="75" text-anchor="middle" class="mono">b</text>
+<text x="170" y="45" text-anchor="middle" class="small mono muted">in 1</text>
+<circle class="box" cx="170" cy="170" r="18"/><text x="170" y="175" text-anchor="middle" class="mono">c</text>
+<text x="170" y="203" text-anchor="middle" class="small mono muted">in 2</text>
+<circle class="box" cx="290" cy="120" r="18"/><text x="290" y="125" text-anchor="middle" class="mono">d</text>
+<text x="290" y="95" text-anchor="middle" class="small mono muted">in 2</text>
+<text x="10" y="222" class="small">d ← b ← a, then stop: <tspan class="fill-done">a has nothing before it, so it can go first</tspan></text>
+<line x1="400" y1="30" x2="400" y2="225" class="edge dash"/>
+<text x="420" y="22" class="title">Cycle: every node waits for another</text>
+<line class="edge bad" x1="498.0" y1="75.0" x2="580.0" y2="75.0" marker-end="url(#ts-ar2b)"/>
+<line class="edge bad" x1="590.4" y1="90.2" x2="550.7" y2="153.1" marker-end="url(#ts-ar2b)"/>
+<line class="edge bad" x1="530.4" y1="154.8" x2="490.7" y2="91.9" marker-end="url(#ts-ar2b)"/>
+<line class="edge" x1="558.0" y1="170.0" x2="680.0" y2="170.0" marker-end="url(#ts-ar2)"/>
+<circle class="box bad" cx="480" cy="75" r="18"/><text x="480" y="80" text-anchor="middle" class="mono">x</text>
+<text x="480" y="50" text-anchor="middle" class="small mono muted">in 1</text>
+<circle class="box bad" cx="600" cy="75" r="18"/><text x="600" y="80" text-anchor="middle" class="mono">y</text>
+<text x="600" y="50" text-anchor="middle" class="small mono muted">in 1</text>
+<circle class="box bad" cx="540" cy="170" r="18"/><text x="540" y="175" text-anchor="middle" class="mono">z</text>
+<text x="540" y="203" text-anchor="middle" class="small mono muted">in 1</text>
+<circle class="box" cx="700" cy="170" r="18"/><text x="700" y="175" text-anchor="middle" class="mono">w</text>
+<text x="700" y="203" text-anchor="middle" class="small mono muted">in 1</text>
+<text x="420" y="222" class="small">x needs z, z needs y, y needs x: <tspan class="fill-bad">nobody can start</tspan>, and w is stuck behind them</text>
+</svg>
+<figcaption>Why “a topological order exists” is the same as “there is no directed cycle”. Every node on a cycle has to come before itself, so no order is possible. Without a cycle, walking backwards along arrows can never repeat a node, so it must end at a node with in-degree 0: that node can go first. Remove it and repeat. That loop <em>is</em> Kahn’s algorithm.</figcaption>
+</figure>
+
+<p>Both directions of the "if and only if" are short, and the second one <em>is</em> an algorithm:</p>
+<ol>
+<li><strong>A cycle makes an order impossible.</strong> On a cycle a → b → c → a, a must come before b, b before c, and c before a, so a comes before itself.</li>
+<li><strong>Without a cycle, an order always exists.</strong> First, some node has in-degree 0: start anywhere and keep walking <em>backwards</em> along an incoming arrow. Without a cycle the walk never repeats a node, so after at most V steps it reaches a node with no incoming arrow. Put that node first. Deleting it (and its arrows) cannot create a cycle among the rest, so repeat on the smaller graph until nothing is left.</li>
+</ol>
+<div class="insight">
+<p><strong>Insight: an order, not the order</strong></p>
+<p>A DAG usually has many valid orders; the arrows only <em>forbid</em> some of them. The order is unique only when the graph contains a path through all the nodes, so that each consecutive pair is forced by an arrow. That is why problems either accept "any valid order", or add a tie-break such as "lexicographically smallest" (a heap, below), or ask you to <em>count</em> the orders (a much harder problem, also below).</p>
+</div>
+<h2 id="kahns-algorithm-repeatedly-take-what-is-ready">Kahn's algorithm: repeatedly take what is ready</h2>
+<p>Kahn's algorithm runs the proof above as code. Keep <code>indeg[v]</code> = the number of v's prerequisites <strong>not yet placed</strong>. A node is <strong>ready</strong> when its count reaches 0, and ready nodes wait in a queue. Pop a ready node, append it to the order, and "delete" its outgoing arrows by decrementing each target's count; any target that drops to 0 becomes ready.</p>
+<p>Why it is correct: a node is only placed once its count is 0, and the count only drops when a prerequisite is placed, so <strong>every prerequisite of v is already in the order when v is appended</strong>. Why it is O(V + E): each node's count reaches 0 at most once, so each node is queued at most once, and each arrow is deleted exactly once, when its tail is popped.</p>
+<div class="viz" data-viz="topological-sort-kahn"></div>
+
+<p>Try adding <code>6&gt;0</code> to the edge list. It closes the cycle 0 → 2 → 4 → 6 → 0, and you can watch the queue run dry with four nodes still waiting.</p>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def topo_sort(n, edges):
+    &quot;&quot;&quot;Nodes 0..n-1; (u, v) means u must come before v.
+    Returns a topological order, or [] if the graph has a cycle.&quot;&quot;&quot;
+    adj = [[] for _ in range(n)]
+    indeg = [0] * n
+    for u, v in edges:
+        adj[u].append(v)
+        indeg[v] += 1
+    q = deque(u for u in range(n) if indeg[u] == 0)
+    order = []
+    while q:
+        u = q.popleft()
+        order.append(u)
+        for v in adj[u]:              # delete u's outgoing arrows
+            indeg[v] -= 1
+            if indeg[v] == 0:         # last prerequisite of v just got placed
+                q.append(v)
+    return order if len(order) == n else []
+</code></pre>
+<pre><code class="language-csharp">public static int[] TopoSort(int n, int[][] edges)
+{
+    var adj = new List&lt;int&gt;[n];
+    for (int i = 0; i &lt; n; i++) adj[i] = new List&lt;int&gt;();
+    var indeg = new int[n];
+    foreach (var e in edges) { adj[e[0]].Add(e[1]); indeg[e[1]]++; }
+
+    var q = new Queue&lt;int&gt;();
+    for (int u = 0; u &lt; n; u++) if (indeg[u] == 0) q.Enqueue(u);
+    var order = new List&lt;int&gt;(n);
+    while (q.Count &gt; 0)
+    {
+        int u = q.Dequeue();
+        order.Add(u);
+        foreach (int v in adj[u])             // delete u's outgoing arrows
+            if (--indeg[v] == 0) q.Enqueue(v); // last prerequisite of v just got placed
+    }
+    return order.Count == n ? order.ToArray() : Array.Empty&lt;int&gt;();
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(V + E) time and O(V + E) memory for the adjacency list. Duplicate edges are harmless as long as <code>adj</code> and <code>indeg</code> see them the same number of times: each copy adds 1 to the count and each copy is deleted once.</p>
+<div class="tip">
+<p><strong>Tip: the queue is a choice, and the layers are free</strong></p>
+<p>Any ready node may go next, so the queue could be a stack or a heap and the result would still be valid. A FIFO queue gives a useful extra: if you process it <strong>one whole layer at a time</strong> (<code>for _ in range(len(q))</code>, as in level-order BFS), the layer number of a node is the length of the longest chain of prerequisites ending at it. That is the earliest semester in which a course can be taken, the minimum number of build rounds, or the depth of a task in a parallel schedule.</p>
+</div>
+<h2 id="dfs-finishing-order-reverse-the-post-order">DFS finishing order: reverse the post-order</h2>
+<p>The second method needs no counts. Run the three-colour DFS from <a href="graph-fundamentals.html#dfs-go-deep-then-back-up">Graph Fundamentals</a> and record each node at the moment it <strong>finishes</strong> (turns BLACK), which is the post-order. The key fact is: <strong>a node finishes only after everything it can reach has finished.</strong> So in post-order every arrow points <em>backwards</em>, and reversing the list makes every arrow point forward.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 870 250" width="870" role="img" aria-label="The three states v can be in when DFS examines the edge u to v, with the discovery and finish intervals of u and v">
+<defs><marker id="ts-ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="ts-ar3b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker></defs>
+<text x="10" y="22" class="title">v is WHITE</text>
+<text x="10" y="42" class="small muted">dfs(v) runs inside dfs(u)</text>
+<line class="edge" x1="98.0" y1="85.0" x2="190.0" y2="85.0" marker-end="url(#ts-ar3)"/>
+<circle class="box active" cx="80" cy="85" r="18"/><text x="80" y="90" text-anchor="middle" class="mono">u</text>
+<circle class="box" cx="210" cy="85" r="18"/><text x="210" y="90" text-anchor="middle" class="mono">v</text>
+<line x1="20" y1="214" x2="285" y2="214" class="edge"/>
+<text x="285" y="232" text-anchor="end" class="small muted">time →</text>
+<rect class="box visit" x="30" y="134" width="240" height="22" rx="5"/>
+<text x="38" y="150" class="small mono">d[u]</text><text x="262" y="150" text-anchor="end" class="small mono">f[u]</text>
+<rect class="box done" x="100" y="168" width="110" height="22" rx="5"/>
+<text x="108" y="184" class="small mono">d[v]</text><text x="202" y="184" text-anchor="end" class="small mono">f[v]</text>
+<text x="10" y="248" class="small fill-done">v finishes first ✓</text>
+<text x="300" y="22" class="title">v is BLACK</text>
+<text x="300" y="42" class="small muted">v finished earlier</text>
+<line class="edge" x1="388.0" y1="85.0" x2="480.0" y2="85.0" marker-end="url(#ts-ar3)"/>
+<circle class="box active" cx="370" cy="85" r="18"/><text x="370" y="90" text-anchor="middle" class="mono">u</text>
+<circle class="box done" cx="500" cy="85" r="18"/><text x="500" y="90" text-anchor="middle" class="mono">v</text>
+<line x1="310" y1="214" x2="575" y2="214" class="edge"/>
+<text x="575" y="232" text-anchor="end" class="small muted">time →</text>
+<rect class="box done" x="320" y="134" width="90" height="22" rx="5"/>
+<text x="328" y="150" class="small mono">d[v]</text><text x="402" y="150" text-anchor="end" class="small mono">f[v]</text>
+<rect class="box visit" x="450" y="168" width="110" height="22" rx="5"/>
+<text x="458" y="184" class="small mono">d[u]</text><text x="552" y="184" text-anchor="end" class="small mono">f[u]</text>
+<text x="300" y="248" class="small fill-done">v finishes first ✓</text>
+<text x="590" y="22" class="title">v is GREY</text>
+<text x="590" y="42" class="small muted">v is an ancestor of u</text>
+<line class="edge bad" x1="678.0" y1="85.0" x2="770.0" y2="85.0" marker-end="url(#ts-ar3b)"/>
+<circle class="box active" cx="660" cy="85" r="18"/><text x="660" y="90" text-anchor="middle" class="mono">u</text>
+<circle class="box visit" cx="790" cy="85" r="18"/><text x="790" y="90" text-anchor="middle" class="mono">v</text>
+<line x1="600" y1="214" x2="865" y2="214" class="edge"/>
+<text x="865" y="232" text-anchor="end" class="small muted">time →</text>
+<rect class="box visit" x="610" y="134" width="240" height="22" rx="5"/>
+<text x="618" y="150" class="small mono">d[v]</text><text x="842" y="150" text-anchor="end" class="small mono">f[v]</text>
+<rect class="box bad" x="680" y="168" width="110" height="22" rx="5"/>
+<text x="688" y="184" class="small mono">d[u]</text><text x="782" y="184" text-anchor="end" class="small mono">f[u]</text>
+<text x="590" y="248" class="small fill-bad">u→v closes a cycle ✗</text>
+</svg>
+<figcaption>When DFS is at u and looks along u → v, v is in one of three states. WHITE: v is explored and finished <em>inside</em> u’s call. BLACK: v already finished. Either way f[v] &lt; f[u], so in <strong>reversed</strong> finishing order u comes before v, exactly as the arrow demands. GREY is the only case where it fails, and GREY means v is still on the call stack: the arrow closes a cycle.</figcaption>
+</figure>
+
+<p>The figure is the whole proof. Take any edge u → v and look at v's colour at the moment DFS examines that edge from u:</p>
+<ul>
+<li><strong>WHITE:</strong> DFS goes into v now, so v finishes before u does.</li>
+<li><strong>BLACK:</strong> v has finished already, so again before u.</li>
+<li><strong>GREY:</strong> v is an ancestor of u on the current call stack. The edge u → v plus the stack path v → … → u is a <strong>cycle</strong>, so no order exists, and the DFS reports it.</li>
+</ul>
+<p>In the two valid cases f[v] &lt; f[u], so u comes before v once the post-order is reversed. Watch the "post" list fill from the deepest nodes outwards:</p>
+<div class="viz" data-viz="topological-sort-dfs"></div>
+
+<p>Recursion is the clearest way to write it, but a long chain of 10⁵ prerequisites will overflow Python's recursion limit and C#'s stack. The template below keeps an explicit stack of <code>(node, index of the next edge to try)</code> pairs, so it behaves exactly like the recursive version, including the moment each node finishes.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def topo_sort_dfs(n, edges):
+    &quot;&quot;&quot;Reversed DFS post-order. Returns [] if the graph has a cycle.&quot;&quot;&quot;
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+    WHITE, GREY, BLACK = 0, 1, 2
+    state = [WHITE] * n
+    post = []
+    for s in range(n):
+        if state[s] != WHITE:
+            continue
+        state[s] = GREY
+        stack = [(s, 0)]                  # (node, index of the next edge to try)
+        while stack:
+            u, i = stack[-1]
+            if i &lt; len(adj[u]):
+                stack[-1] = (u, i + 1)
+                v = adj[u][i]
+                if state[v] == GREY:      # back edge into the current path
+                    return []
+                if state[v] == WHITE:
+                    state[v] = GREY
+                    stack.append((v, 0))
+            else:                         # every edge of u is done: u finishes
+                stack.pop()
+                state[u] = BLACK
+                post.append(u)
+    return post[::-1]
+</code></pre>
+<pre><code class="language-csharp">public static int[] TopoSortDfs(int n, int[][] edges)
+{
+    var adj = new List&lt;int&gt;[n];
+    for (int i = 0; i &lt; n; i++) adj[i] = new List&lt;int&gt;();
+    foreach (var e in edges) adj[e[0]].Add(e[1]);
+
+    const int White = 0, Grey = 1, Black = 2;
+    var state = new int[n];
+    var post = new List&lt;int&gt;(n);
+    var stack = new Stack&lt;(int U, int Next)&gt;();
+    for (int s = 0; s &lt; n; s++)
+    {
+        if (state[s] != White) continue;
+        state[s] = Grey;
+        stack.Push((s, 0));                   // (node, index of the next edge to try)
+        while (stack.Count &gt; 0)
+        {
+            var (u, i) = stack.Pop();
+            if (i &lt; adj[u].Count)
+            {
+                stack.Push((u, i + 1));
+                int v = adj[u][i];
+                if (state[v] == Grey) return Array.Empty&lt;int&gt;(); // back edge: cycle
+                if (state[v] == White) { state[v] = Grey; stack.Push((v, 0)); }
+            }
+            else                              // every edge of u is done: u finishes
+            {
+                state[u] = Black;
+                post.Add(u);
+            }
+        }
+    }
+    post.Reverse();
+    return post.ToArray();
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(V + E) time, O(V + E) memory. Every node is pushed once and every edge is examined once.</p>
+<div class="compare">
+<div class="good">
+<h4 id="kahn-in-degree-queue">Kahn (in-degree queue)</h4>
+<p>Iterative by nature, so there is no recursion depth to worry about. It reports a cycle by counting (<code>len(order) &lt; n</code>). The queue can be swapped for a <strong>heap</strong> (smallest order) or processed <strong>layer by layer</strong> (semesters, rounds), and "the queue held two nodes at once" tells you the order is not unique. Choose it for scheduling questions.</p>
+</div>
+<div class="good">
+<h4 id="dfs-reversed-finishing-order">DFS (reversed finishing order)</h4>
+<p>One traversal with no in-degree array. A cycle shows up as a concrete <strong>back edge</strong>, and the stack holds the cycle itself. Post-order is exactly the order in which <strong>memoised recursion</strong> completes, so DP on a DAG written top-down is this algorithm in disguise. The same finishing times drive Kosaraju's strongly connected components in <a href="advanced-graphs.html">Advanced Graph Algorithms</a>.</p>
+</div>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: pre-order is not a topological order</strong></p>
+<p>Recording a node when DFS <em>enters</em> it looks tempting, but it fails as soon as a later DFS root points into an earlier tree. With edges 0 → 1 and 2 → 0, DFS from 0 visits 0, 1, and then a new DFS from 2 visits 2: the pre-order 0, 1, 2 puts 2 after 0, against the arrow 2 → 0. The post-order is 1, 0, 2, and reversed it is 2, 0, 1, which is correct. Reversal is not optional either: the un-reversed post-order has every arrow pointing backwards.</p>
+</div>
+<h2 id="when-no-order-exists">When no order exists</h2>
+<p>Every way of asking "can all of this be done?" (can I finish all courses, can this be built, is this spreadsheet free of circular references) is the same question: <strong>does the directed graph have a cycle?</strong> Both algorithms answer it as a by-product.</p>
+<ul>
+<li><strong>Kahn:</strong> the queue runs dry before all nodes are placed. Those leftover nodes are not a random set. Arrows from placed nodes were deleted, so <strong>every arrow still counted points from one leftover node to another</strong>, and every leftover node has at least one. Start at any leftover node and keep walking backwards along those arrows: the walk can never stop and the set is finite, so it must repeat a node. That repetition is a cycle.</li>
+<li><strong>DFS:</strong> the back edge u → v into a GREY node <em>is</em> the cycle: v → … → u along the call stack, then the edge back to v.</li>
+</ul>
+<p>Not every leftover node is <em>on</em> a cycle; some only sit <em>behind</em> one, waiting for a node that waits forever. Here node 4 is behind the cycle 1 → 2 → 3, and node 0 is placed normally:</p>
+<div class="viz" data-viz="topological-sort-cycle"></div>
+
+<p>When a problem asks you to <em>show</em> the cycle (a build tool reporting "circular dependency: a → b → c → a"), run Kahn, then walk backwards through the leftovers:</p>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def find_cycle(n, edges):
+    &quot;&quot;&quot;One directed cycle as a list [a, b, ..., z] meaning a -&gt; b -&gt; ... -&gt; z -&gt; a,
+    or [] if the graph is a DAG.&quot;&quot;&quot;
+    adj = [[] for _ in range(n)]
+    indeg = [0] * n
+    for u, v in edges:
+        adj[u].append(v)
+        indeg[v] += 1
+    q = deque(u for u in range(n) if indeg[u] == 0)
+    while q:
+        u = q.popleft()
+        for v in adj[u]:
+            indeg[v] -= 1
+            if indeg[v] == 0:
+                q.append(v)
+    pred = {}                                  # leftover node -&gt; a leftover predecessor
+    for u, v in edges:
+        if indeg[u] &gt; 0 and indeg[v] &gt; 0:
+            pred[v] = u
+    if not pred:
+        return []
+    x, pos, walk = next(iter(pred)), {}, []
+    while x not in pos:                        # walk backwards until a node repeats
+        pos[x] = len(walk)
+        walk.append(x)
+        x = pred[x]
+    return walk[pos[x]:][::-1]                 # we walked backwards, so reverse
+</code></pre>
+<pre><code class="language-csharp">public static List&lt;int&gt; FindCycle(int n, int[][] edges)
+{
+    var adj = new List&lt;int&gt;[n];
+    for (int i = 0; i &lt; n; i++) adj[i] = new List&lt;int&gt;();
+    var indeg = new int[n];
+    foreach (var e in edges) { adj[e[0]].Add(e[1]); indeg[e[1]]++; }
+    var q = new Queue&lt;int&gt;();
+    for (int u = 0; u &lt; n; u++) if (indeg[u] == 0) q.Enqueue(u);
+    while (q.Count &gt; 0)
+        foreach (int v in adj[q.Dequeue()])
+            if (--indeg[v] == 0) q.Enqueue(v);
+
+    var pred = new int[n];
+    Array.Fill(pred, -1);
+    int start = -1;
+    foreach (var e in edges)                   // leftover node -&gt; a leftover predecessor
+        if (indeg[e[0]] &gt; 0 &amp;&amp; indeg[e[1]] &gt; 0) { pred[e[1]] = e[0]; start = e[1]; }
+    if (start == -1) return new List&lt;int&gt;();
+
+    var pos = new Dictionary&lt;int, int&gt;();
+    var walk = new List&lt;int&gt;();
+    int x = start;
+    while (!pos.ContainsKey(x))                // walk backwards until a node repeats
+    {
+        pos[x] = walk.Count;
+        walk.Add(x);
+        x = pred[x];
+    }
+    var cycle = walk.GetRange(pos[x], walk.Count - pos[x]);
+    cycle.Reverse();                           // we walked backwards, so reverse
+    return cycle;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(V + E). A node's count is still positive after Kahn exactly when it was never queued, which is why <code>indeg[x] &gt; 0</code> identifies the leftovers.</p>
+<h2 id="course-schedule-i-ii-the-template-with-one-trap">Course Schedule I &amp; II: the template, with one trap</h2>
+<p><a href="https://leetcode.com/problems/course-schedule/">Course Schedule</a> asks whether all n courses can be finished, and <a href="https://leetcode.com/problems/course-schedule-ii/">Course Schedule II</a> asks for an order. They are the two outputs of Kahn's algorithm: <code>len(order) == n</code>, and <code>order</code> itself. The only real difficulty is the input format.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 800 200" width="800" role="img" aria-label="prerequisites pair [a, b] means b must come before a, so the arrow goes from b to a">
+<defs><marker id="ts-ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="ts-ar4d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker><marker id="ts-ar4b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker></defs>
+<text x="10" y="24" class="title">prerequisites = [[1, 0], [2, 1], [3, 1]]</text>
+<text x="10" y="50" class="small">[a, b] reads “to take <tspan class="mono">a</tspan> you must first take <tspan class="mono">b</tspan>”, so the arrow is <tspan class="mono fill-done">b → a</tspan> and indeg[a] += 1</text>
+<line class="edge done" x1="78.0" y1="130.0" x2="150.0" y2="130.0" marker-end="url(#ts-ar4d)"/>
+<line class="edge done" x1="186.9" y1="123.8" x2="261.2" y2="96.8" marker-end="url(#ts-ar4d)"/>
+<line class="edge done" x1="186.9" y1="136.2" x2="261.2" y2="163.2" marker-end="url(#ts-ar4d)"/>
+<circle class="box done" cx="60" cy="130" r="18"/><text x="60" y="135" text-anchor="middle" class="mono">0</text>
+<circle class="box done" cx="170" cy="130" r="18"/><text x="170" y="135" text-anchor="middle" class="mono">1</text>
+<circle class="box done" cx="280" cy="90" r="18"/><text x="280" y="95" text-anchor="middle" class="mono">2</text>
+<circle class="box done" cx="280" cy="170" r="18"/><text x="280" y="175" text-anchor="middle" class="mono">3</text>
+<text x="60" y="166" text-anchor="middle" class="small fill-done">take first</text>
+<line x1="390" y1="70" x2="390" y2="195" class="edge dash"/>
+<text x="420" y="90" class="small">Course Schedule I (can you finish?): direction</text>
+<text x="420" y="108" class="small">does not matter. A graph has a cycle exactly</text>
+<text x="420" y="126" class="small">when its reverse does.</text>
+<text x="420" y="156" class="small">Course Schedule II (give the order): the wrong</text>
+<text x="420" y="174" class="small">direction returns the order <tspan class="fill-bad">exactly backwards</tspan>:</text>
+<text x="420" y="192" class="small mono">[3, 2, 1, 0] instead of [0, 1, 2, 3]</text>
+</svg>
+<figcaption>The most common bug in course-schedule problems is the arrow direction. Decide once what an arrow means (“before”) and translate the input into it.</figcaption>
+</figure>
+
+<p>A pair <code>[a, b]</code> means "to take a you must first take b", so b comes <strong>before</strong> a and the arrow is <strong>b → a</strong>. If you build a → b instead, Course Schedule I still passes, because reversing every arrow keeps cycles as cycles, so the bug hides. Course Schedule II then returns the order exactly backwards. The full solutions are in <a href="#worked-problems">Worked problems</a>.</p>
+<div class="tip">
+<p><strong>Tip: "is x a prerequisite of y?" for many queries</strong></p>
+<p><a href="https://leetcode.com/problems/course-schedule-iv/">Course Schedule IV</a> asks many reachability queries. Process the nodes in topological order and give each node the set of its ancestors: <code>anc[v] |= anc[u] | {u}</code> for every arrow u → v. Every predecessor is finished before v is processed, so one pass is enough. Python integers work as bitsets (<code>anc[v] |= anc[u] | (1 &lt;&lt; u)</code>), so with n = 100 that is about E big-integer ORs, and each query is a single bit test.</p>
+</div>
+<h2 id="alien-dictionary-building-the-graph-is-the-problem">Alien dictionary: building the graph is the problem</h2>
+<p>A list of words is sorted in an unknown alphabet; recover an alphabet order. The topological sort part is the template. The insight is how to read rules out of the words:</p>
+<ul>
+<li>Compare <strong>adjacent</strong> words only. At the <strong>first</strong> position where they differ, <code>w1[i] &lt; w2[i]</code> in the alien alphabet, which gives one arrow. Nothing after that position tells you anything, just as "apple" &lt; "banana" says nothing about whether p comes before a.</li>
+<li>Adjacent pairs are enough. If every adjacent pair is in order then the whole list is in order, so the pair (w1, w3) can never add a rule that (w1, w2) and (w2, w3) don't already imply.</li>
+<li><strong>The prefix case.</strong> If w2 is a proper prefix of w1 (<code>"abc"</code> before <code>"ab"</code>), no alphabet can sort them, so the answer is "". Missing this check is the most common wrong answer.</li>
+<li>Every letter that appears is a node, <strong>including letters that appear in no rule</strong>. They are sources, and they must be in the output.</li>
+</ul>
+<div class="viz" data-viz="topological-sort-alien"></div>
+
+<p>The edge from "wrf" to "er" ignores everything after the first letter: w &lt; e. Rules can repeat (two different pairs may both say t &lt; f), so store each rule once in a set, or count it in the in-degree as often as you add it to the adjacency list. Mixing the two leaves a letter waiting forever. Try <code>abc,ab</code> to see the prefix case.</p>
+<h2 id="choosing-among-valid-orders">Choosing among valid orders</h2>
+<h3 id="smallest-order-replace-the-queue-with-a-heap">Smallest order: replace the queue with a heap</h3>
+<p>When the problem wants the <strong>lexicographically smallest</strong> valid order (or "if several tasks are ready, do the one with the smallest id first"), keep the ready nodes in a <strong>min-heap</strong> instead of a FIFO queue. At every step the smallest ready node is placed next.</p>
+<p>Why greedy is safe: the first position can hold any source, and the smallest source s is the best possible first element. Placing s never blocks anything: every valid order of the remaining nodes is still available. So the smallest order starts with the smallest ready node, and by the same argument applied to the rest, every later position does too.</p>
+<div class="viz" data-viz="topological-sort-lexi"></div>
+
+<p>Switch the mode to "FIFO queue" to see the difference. Both orders are valid, but FIFO places 6 before 2 simply because 6 became ready earlier, while the heap waits for whichever ready node is smallest.</p>
+<div class="code-tabs">
+<pre><code class="language-python">import heapq
+
+def smallest_topo_order(n, edges):
+    adj = [[] for _ in range(n)]
+    indeg = [0] * n
+    for u, v in edges:
+        adj[u].append(v)
+        indeg[v] += 1
+    heap = [u for u in range(n) if indeg[u] == 0]
+    heapq.heapify(heap)
+    order = []
+    while heap:
+        u = heapq.heappop(heap)          # the smallest node that is ready
+        order.append(u)
+        for v in adj[u]:
+            indeg[v] -= 1
+            if indeg[v] == 0:
+                heapq.heappush(heap, v)
+    return order if len(order) == n else []
+</code></pre>
+<pre><code class="language-csharp">public static int[] SmallestTopoOrder(int n, int[][] edges)
+{
+    var adj = new List&lt;int&gt;[n];
+    for (int i = 0; i &lt; n; i++) adj[i] = new List&lt;int&gt;();
+    var indeg = new int[n];
+    foreach (var e in edges) { adj[e[0]].Add(e[1]); indeg[e[1]]++; }
+
+    var heap = new PriorityQueue&lt;int, int&gt;();
+    for (int u = 0; u &lt; n; u++) if (indeg[u] == 0) heap.Enqueue(u, u);
+    var order = new List&lt;int&gt;(n);
+    while (heap.Count &gt; 0)
+    {
+        int u = heap.Dequeue();               // the smallest node that is ready
+        order.Add(u);
+        foreach (int v in adj[u])
+            if (--indeg[v] == 0) heap.Enqueue(v, v);
+    }
+    return order.Count == n ? order.ToArray() : Array.Empty&lt;int&gt;();
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(V log V + E): each node is pushed and popped once at O(log V) each. See <a href="heaps-priority-queues.html">Heaps &amp; Priority Queues</a> for the heap itself.</p>
+<div class="pitfall">
+<p><strong>Pitfall: "smallest order" is not "small labels as early as possible"</strong></p>
+<p>Some problems ask for something different: put node 0 as early as possible, then node 1 as early as possible, and so on. The min-heap greedy gets that wrong. With nodes 0, 1, 2 and the single arrow 2 → 0, the smallest order is <strong>1, 2, 0</strong>, but the order that puts 0 earliest is <strong>2, 0, 1</strong>. <em>Fix:</em> reverse every arrow, run Kahn with a <strong>max</strong>-heap, and reverse the result. Building the order from the back and placing the largest label last keeps the small labels free to move forward.</p>
+</div>
+<h3 id="is-the-order-unique">Is the order unique?</h3>
+<p>Kahn's algorithm gives a precise test: the order is <strong>unique exactly when the queue never holds more than one node</strong>. If two nodes are ready at once, neither depends on the other, so they can be swapped. If the queue always holds exactly one node, each placed node was the only possible choice. Equivalently, consecutive nodes of the order are joined by arrows, so the order is a path through the whole graph. <a href="https://leetcode.com/problems/sequence-reconstruction/">Sequence Reconstruction</a> is this test.</p>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def unique_topo_order(n, edges):
+    &quot;&quot;&quot;The topological order if it is unique, else None (several orders, or a cycle).&quot;&quot;&quot;
+    adj = [[] for _ in range(n)]
+    indeg = [0] * n
+    for u, v in edges:
+        adj[u].append(v)
+        indeg[v] += 1
+    q = deque(u for u in range(n) if indeg[u] == 0)
+    order = []
+    while q:
+        if len(q) &gt; 1:                # two ready nodes could be swapped
+            return None
+        u = q.popleft()
+        order.append(u)
+        for v in adj[u]:
+            indeg[v] -= 1
+            if indeg[v] == 0:
+                q.append(v)
+    return order if len(order) == n else None
+</code></pre>
+<pre><code class="language-csharp">public static int[]? UniqueTopoOrder(int n, int[][] edges)
+{
+    var adj = new List&lt;int&gt;[n];
+    for (int i = 0; i &lt; n; i++) adj[i] = new List&lt;int&gt;();
+    var indeg = new int[n];
+    foreach (var e in edges) { adj[e[0]].Add(e[1]); indeg[e[1]]++; }
+
+    var q = new Queue&lt;int&gt;();
+    for (int u = 0; u &lt; n; u++) if (indeg[u] == 0) q.Enqueue(u);
+    var order = new List&lt;int&gt;(n);
+    while (q.Count &gt; 0)
+    {
+        if (q.Count &gt; 1) return null;         // two ready nodes could be swapped
+        int u = q.Dequeue();
+        order.Add(u);
+        foreach (int v in adj[u])
+            if (--indeg[v] == 0) q.Enqueue(v);
+    }
+    return order.Count == n ? order.ToArray() : null;
+}
+</code></pre>
+</div>
+<h3 id="how-many-orders-are-there-concept">How many orders are there? (concept)</h3>
+<p>Finding one order is linear, but <strong>counting</strong> them is a different kind of problem. For a general DAG it is #P-complete (Brightwell and Winkler, 1991), so no polynomial algorithm is expected. Two things still work in practice:</p>
+<ul>
+<li><strong>Small n (up to about 20): DP over subsets.</strong> Let <code>ways[S]</code> be the number of ways to place exactly the set S first. A node v can be placed next when all its predecessors are in S, so <code>ways[S ∪ {v}] += ways[S]</code>. That is O(2ⁿ · n) with a precomputed predecessor mask per node, the same machinery as <a href="dp-bitmask-digit.html">bitmask DP</a>.</li>
+<li><strong>Trees: a closed formula.</strong> When the arrows form a rooted tree (each node has one parent that must come first), the count is <strong>n! / ∏ size(v)</strong> over all subtrees. Each node must come first within its own subtree, which happens in exactly 1/size(v) of all n! arrangements, and for a tree these events are independent.</li>
+</ul>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 800 244" width="800" role="img" aria-label="Counting topological orders of a rooted tree with the formula n factorial divided by the product of subtree sizes">
+<defs><marker id="ts-ar5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker></defs>
+<text x="10" y="24" class="title">A rooted tree (arrows point away from the root)</text>
+<line class="edge" x1="138.3" y1="73.7" x2="103.0" y2="114.8" marker-end="url(#ts-ar5)"/>
+<line class="edge" x1="162.7" y1="72.7" x2="205.9" y2="115.9" marker-end="url(#ts-ar5)"/>
+<line class="edge" x1="81.1" y1="145.6" x2="59.9" y2="182.6" marker-end="url(#ts-ar5)"/>
+<line class="edge" x1="98.9" y1="145.6" x2="120.1" y2="182.6" marker-end="url(#ts-ar5)"/>
+<circle class="box visit" cx="150" cy="60" r="18"/><text x="150" y="65" text-anchor="middle" class="mono">r</text>
+<text x="176" y="64" class="small mono muted">size 5</text>
+<circle class="box visit" cx="90" cy="130" r="18"/><text x="90" y="135" text-anchor="middle" class="mono">a</text>
+<text x="64" y="134" text-anchor="end" class="small mono muted">size 3</text>
+<circle class="box" cx="220" cy="130" r="18"/><text x="220" y="135" text-anchor="middle" class="mono">b</text>
+<text x="246" y="134" class="small mono muted">size 1</text>
+<circle class="box" cx="50" cy="200" r="18"/><text x="50" y="205" text-anchor="middle" class="mono">c</text>
+<text x="50" y="236" text-anchor="middle" class="small mono muted">size 1</text>
+<circle class="box" cx="130" cy="200" r="18"/><text x="130" y="205" text-anchor="middle" class="mono">d</text>
+<text x="130" y="236" text-anchor="middle" class="small mono muted">size 1</text>
+<text x="330" y="60" class="small">Shuffle all 5 nodes at random: 5! = 120 arrangements.</text>
+<text x="330" y="84" class="small">r must be first of its subtree of 5: probability 1/5.</text>
+<text x="330" y="108" class="small">a must be first of its subtree of 3: probability 1/3.</text>
+<text x="330" y="132" class="small">These constraints are independent, so</text>
+<text x="330" y="164" class="mono fill-accent">#orders = n! / ∏ size(v) = 120 / (5·3·1·1·1) = 8</text>
+<text x="330" y="200" class="small muted">A general DAG has no such formula: counting is #P-complete,</text>
+<text x="330" y="218" class="small muted">so use a DP over subsets, O(2ⁿ · n), for n up to about 20.</text>
+</svg>
+<figcaption>Counting orders is a different problem from finding one. For trees there is a closed formula (used, with modular arithmetic, in “Count Ways to Build Rooms in an Ant Colony”); for general DAGs only exponential methods are known.</figcaption>
+</figure>
+
+<p><a href="https://leetcode.com/problems/count-ways-to-build-rooms-in-an-ant-colony/">Count Ways to Build Rooms in an Ant Colony</a> is exactly the tree formula, computed modulo 10⁹ + 7 with modular inverses.</p>
+<h2 id="dp-on-a-dag">DP on a DAG</h2>
+<p>A topological order has one property that makes it the backbone of dynamic programming: <strong>when you reach v, every node with an arrow into v has already been processed.</strong> So any recurrence of the form</p>
+<p><code>best[v] = combine( f(best[u], u → v) for every arrow u → v )</code></p>
+<p>can be evaluated in one pass over the order, each value final the moment it is computed. Longest path, shortest path, number of paths, earliest finish time and "largest colour count along a path" are all this one loop. It is also why DP needs its subproblems to form a DAG (<a href="dp-framework.html">The DP Framework</a>): tabulation fills the table in <em>some</em> topological order of the subproblems, and memoised recursion finishes them in DFS post-order.</p>
+<p>The classic example is a project plan. Course v takes <code>time[v]</code> months and can start only when all its prerequisites have finished, with as many courses in parallel as you like. Its earliest finish is <code>finish[v] = time[v] + max(finish[u] for u → v)</code>, and the whole project takes <code>max(finish)</code>. The chain of arrows that achieves the maximum is the <strong>critical path</strong>: delaying any task on it delays the project, and the tasks off it have slack.</p>
+<div class="viz" data-viz="topological-sort-dag-dp"></div>
+
+<p>Switch the measure to "semesters" to get <a href="https://leetcode.com/problems/parallel-courses/">Parallel Courses</a> (LC 1136): every course takes one semester, so the answer is the number of nodes on the longest chain, which is also the number of Kahn layers.</p>
+<p>The general template computes the heaviest path when the <strong>edges</strong> carry weights, which may be negative:</p>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def longest_path(n, edges):
+    &quot;&quot;&quot;edges: (u, v, w). Heaviest path in a DAG as (weight, [nodes]).
+    A single node is a path of weight 0. Raises ValueError on a cycle.&quot;&quot;&quot;
+    adj = [[] for _ in range(n)]
+    indeg = [0] * n
+    for u, v, w in edges:
+        adj[u].append((v, w))
+        indeg[v] += 1
+    best = [0] * n                  # heaviest path that ends at v
+    parent = [-1] * n
+    q = deque(u for u in range(n) if indeg[u] == 0)
+    placed = 0
+    while q:
+        u = q.popleft()             # best[u] is final: all its predecessors are done
+        placed += 1
+        for v, w in adj[u]:
+            if best[u] + w &gt; best[v]:
+                best[v] = best[u] + w
+                parent[v] = u
+            indeg[v] -= 1
+            if indeg[v] == 0:
+                q.append(v)
+    if placed &lt; n:
+        raise ValueError(&quot;not a DAG&quot;)
+    end = max(range(n), key=best.__getitem__)
+    path = []
+    while end != -1:
+        path.append(end)
+        end = parent[end]
+    return best[path[0]], path[::-1]
+</code></pre>
+<pre><code class="language-csharp">public static (long Weight, List&lt;int&gt; Path) LongestPath(int n, int[][] edges)
+{
+    var adj = new List&lt;(int V, int W)&gt;[n];
+    for (int i = 0; i &lt; n; i++) adj[i] = new List&lt;(int, int)&gt;();
+    var indeg = new int[n];
+    foreach (var e in edges) { adj[e[0]].Add((e[1], e[2])); indeg[e[1]]++; }
+
+    var best = new long[n];                   // heaviest path that ends at v
+    var parent = new int[n];
+    Array.Fill(parent, -1);
+    var q = new Queue&lt;int&gt;();
+    for (int u = 0; u &lt; n; u++) if (indeg[u] == 0) q.Enqueue(u);
+    int placed = 0;
+    while (q.Count &gt; 0)
+    {
+        int u = q.Dequeue();                  // best[u] is final: all its predecessors are done
+        placed++;
+        foreach (var (v, w) in adj[u])
+        {
+            if (best[u] + w &gt; best[v]) { best[v] = best[u] + w; parent[v] = u; }
+            if (--indeg[v] == 0) q.Enqueue(v);
+        }
+    }
+    if (placed &lt; n) throw new InvalidOperationException(&quot;not a DAG&quot;);
+
+    int end = 0;
+    for (int v = 1; v &lt; n; v++) if (best[v] &gt; best[end]) end = v;
+    var path = new List&lt;int&gt;();
+    for (int x = end; x != -1; x = parent[x]) path.Add(x);
+    path.Reverse();
+    return (best[end], path);
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(V + E) time and memory. Change <code>&gt;</code> to <code>&lt;</code> for the <strong>shortest</strong> path. On a DAG this is correct even with negative weights, where Dijkstra fails, and it is faster than Bellman-Ford's O(V·E). Change the update to <code>count[v] += count[u]</code> to count paths. On a general graph the longest simple path is NP-hard; the absence of cycles is what makes it linear.</p>
+<div class="insight">
+<p><strong>Insight: the DAG is often hidden</strong></p>
+<p>Many "DP on a grid" or "DP on states" problems are DAG DP where the order is implicit. Strictly increasing values, increasing time, a shrinking set or a growing prefix can only move one way, so they cannot cycle. When that monotone quantity is easy to sort by, you can skip the graph entirely and process the states in sorted order: sort the cells by value, the intervals by end, or the words by length (<a href="https://leetcode.com/problems/longest-string-chain/">Longest String Chain</a>).</p>
+</div>
+<h3 id="longest-increasing-path-in-a-matrix">Longest increasing path in a matrix</h3>
+<p>In <a href="https://leetcode.com/problems/longest-increasing-path-in-a-matrix/">Longest Increasing Path in a Matrix</a>, draw an arrow from each cell to every neighbour with a <strong>strictly larger</strong> value. Values strictly increase along every arrow, so no arrow sequence can return to its start: the grid is a DAG, and the answer is the number of nodes on its longest path. There are two equally good ways to compute it:</p>
+<ul>
+<li><strong>Memoised DFS:</strong> <code>lip(cell) = 1 + max(lip(bigger neighbour))</code>. This is DP in DFS finishing order.</li>
+<li><strong>Kahn's peeling:</strong> cells with no smaller neighbour are the sources. Peel them layer by layer; the number of layers is the longest chain. No recursion at all.</li>
+</ul>
+<div class="viz" data-viz="topological-sort-lip"></div>
+
+<h2 id="peeling-from-the-other-end">Peeling from the other end</h2>
+<p>Kahn's idea, "repeatedly remove whatever has nothing left to wait for", is more general than sorting. Two classic problems run it from the <strong>sink</strong> end or on an undirected tree:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 820 250" width="820" role="img" aria-label="Left: eventual safe states found by peeling from terminal nodes backwards. Right: minimum height trees found by peeling leaves">
+<defs><marker id="ts-ar6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="ts-ar6b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker><marker id="ts-ar6d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker></defs>
+<text x="10" y="22" class="title">Safe states: peel from the sinks</text>
+<line class="edge bad" x1="76.1" y1="112.0" x2="142.1" y2="78.9" marker-end="url(#ts-ar6b)"/>
+<line class="edge bad" x1="160.0" y1="88.0" x2="160.0" y2="155.0" marker-end="url(#ts-ar6b)"/>
+<line class="edge bad" x1="144.2" y1="166.3" x2="77.5" y2="129.6" marker-end="url(#ts-ar6b)"/>
+<line class="edge" x1="78.0" y1="120.0" x2="250.0" y2="120.0" marker-end="url(#ts-ar6)"/>
+<line class="edge" x1="176.4" y1="77.4" x2="251.8" y2="111.7" marker-end="url(#ts-ar6)"/>
+<line class="edge done" x1="288.0" y1="120.0" x2="350.0" y2="120.0" marker-end="url(#ts-ar6d)"/>
+<line class="edge done" x1="284.1" y1="188.8" x2="354.4" y2="132.5" marker-end="url(#ts-ar6d)"/>
+<circle class="box bad" cx="60" cy="120" r="18"/><text x="60" y="125" text-anchor="middle" class="mono">0</text>
+<circle class="box bad" cx="160" cy="70" r="18"/><text x="160" y="75" text-anchor="middle" class="mono">1</text>
+<circle class="box bad" cx="160" cy="175" r="18"/><text x="160" y="180" text-anchor="middle" class="mono">3</text>
+<circle class="box done" cx="270" cy="120" r="18"/><text x="270" y="125" text-anchor="middle" class="mono">2</text>
+<text x="270" y="95" text-anchor="middle" class="small mono muted">round 1</text>
+<circle class="box done" cx="370" cy="120" r="18"/><text x="370" y="125" text-anchor="middle" class="mono">5</text>
+<text x="370" y="95" text-anchor="middle" class="small mono muted">round 0</text>
+<circle class="box done" cx="270" cy="200" r="18"/><text x="270" y="205" text-anchor="middle" class="mono">4</text>
+<text x="270" y="175" text-anchor="middle" class="small mono muted">round 1</text>
+<circle class="box done" cx="370" cy="200" r="18"/><text x="370" y="205" text-anchor="middle" class="mono">6</text>
+<text x="370" y="175" text-anchor="middle" class="small mono muted">round 0</text>
+<text x="10" y="242" class="small">Reverse the arrows, start from out-degree 0: <tspan class="fill-done">2 4 5 6 safe</tspan>, <tspan class="fill-bad">0 1 3 never freed</tspan></text>
+<line x1="435" y1="30" x2="435" y2="230" class="edge dash"/>
+<text x="455" y="22" class="title">Tree centres: peel the leaves</text>
+<line class="edge" x1="498.0" y1="110.0" x2="532.0" y2="110.0"/>
+<line class="edge" x1="568.0" y1="110.0" x2="602.0" y2="110.0"/>
+<line class="edge" x1="638.0" y1="110.0" x2="672.0" y2="110.0"/>
+<line class="edge" x1="708.0" y1="110.0" x2="742.0" y2="110.0"/>
+<line class="edge" x1="620.0" y1="128.0" x2="620.0" y2="167.0"/>
+<circle class="box visit" cx="480" cy="110" r="18"/><text x="480" y="115" text-anchor="middle" class="mono">0</text>
+<text x="480" y="85" text-anchor="middle" class="small mono muted">round 1</text>
+<circle class="box active" cx="550" cy="110" r="18"/><text x="550" y="115" text-anchor="middle" class="mono">1</text>
+<text x="550" y="85" text-anchor="middle" class="small mono muted">round 2</text>
+<circle class="box path" cx="620" cy="110" r="18"/><text x="620" y="115" text-anchor="middle" class="mono">2</text>
+<text x="620" y="85" text-anchor="middle" class="small mono muted">centre</text>
+<circle class="box active" cx="690" cy="110" r="18"/><text x="690" y="115" text-anchor="middle" class="mono">3</text>
+<text x="690" y="85" text-anchor="middle" class="small mono muted">round 2</text>
+<circle class="box visit" cx="760" cy="110" r="18"/><text x="760" y="115" text-anchor="middle" class="mono">4</text>
+<text x="760" y="85" text-anchor="middle" class="small mono muted">round 1</text>
+<circle class="box visit" cx="620" cy="185" r="18"/><text x="620" y="190" text-anchor="middle" class="mono">5</text>
+<text x="620" y="218" text-anchor="middle" class="small mono muted">round 1</text>
+<text x="455" y="242" class="small">Strip leaves round by round; the last 1–2 are the centres</text>
+</svg>
+<figcaption>Kahn’s idea, “repeatedly remove what has nothing left to wait for”, works from either end. Peeling backwards from terminal nodes finds the nodes that can never reach a cycle; peeling leaves off an undirected tree finds its centre.</figcaption>
+</figure>
+
+<ul>
+<li><strong><a href="https://leetcode.com/problems/find-eventual-safe-states/">Find Eventual Safe States</a>:</strong> a node is safe when every path from it ends at a terminal node (out-degree 0). Terminal nodes are safe; a node becomes safe once <strong>all</strong> its out-arrows lead to safe nodes. That is Kahn on the <strong>reversed</strong> graph, counting out-degrees instead of in-degrees. Whatever never peels can reach a cycle.</li>
+<li><strong><a href="https://leetcode.com/problems/minimum-height-trees/">Minimum Height Trees</a>:</strong> in an undirected tree, repeatedly strip all current leaves (degree 1). The last one or two nodes standing are the centres of the longest path, and rooting the tree there minimises its height.</li>
+</ul>
+<div class="callout">
+<p><strong>When the scheduler has a capacity.</strong> <a href="https://leetcode.com/problems/parallel-courses-ii/">Parallel Courses II</a> allows at most k courses per semester. It looks like Kahn with a cap, but no greedy rule for <em>which</em> k ready courses to take is always right: taking the course with the longest chain behind it can still lose. With n ≤ 15 the intended solution is DP over the subset of finished courses (<a href="dp-bitmask-digit.html">bitmask DP</a>). Recognise the cap as the signal that topological sort alone is no longer enough.</p>
+</div>
+<h2 id="recognize-it-when">Recognize it when</h2>
+<div class="recognize">
+<p><strong>Recognize a topological sort when</strong></p>
+<ul>
+<li>The input is a set of <strong>"before" / "depends on" / "prerequisite" / "must happen after"</strong> relations: courses, build steps, recipes and supplies, task dependencies, or ordering constraints on rows and columns.</li>
+<li>The question is <strong>"is it possible to do all of them?"</strong> (a cycle test), <strong>"in what order?"</strong>, or <strong>"how long at minimum?"</strong> with unlimited parallelism (the longest path).</li>
+<li>An <strong>order is hidden in sorted data</strong>: adjacent words in a dictionary, or rankings that must agree.</li>
+<li>You need a DP whose states have an obvious <strong>one-way</strong> dependency (strictly increasing values, time, subset growth) but no obvious loop order.</li>
+<li>Something is <strong>peeled</strong> from the outside in: leaves of a tree, terminal nodes, nodes that "become safe" once all their neighbours are.</li>
+</ul>
+</div>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Time</th>
+<th>Extra memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kahn's algorithm (queue) or DFS finishing order</td>
+<td>O(V + E)</td>
+<td>O(V + E)</td>
+</tr>
+<tr>
+<td>Cycle detection, or showing one cycle</td>
+<td>O(V + E)</td>
+<td>O(V)</td>
+</tr>
+<tr>
+<td>Lexicographically smallest order (heap)</td>
+<td>O(V log V + E)</td>
+<td>O(V)</td>
+</tr>
+<tr>
+<td>Is the order unique?</td>
+<td>O(V + E)</td>
+<td>O(V)</td>
+</tr>
+<tr>
+<td>Longest / shortest / counted paths in a DAG</td>
+<td>O(V + E)</td>
+<td>O(V)</td>
+</tr>
+<tr>
+<td>Alien dictionary (C = total characters, Σ = alphabet)</td>
+<td>O(C + Σ²) worst case</td>
+<td>O(Σ²)</td>
+</tr>
+<tr>
+<td>All-pairs reachability with bitsets</td>
+<td>O(V · E / 64)</td>
+<td>O(V² / 64)</td>
+</tr>
+<tr>
+<td>Counting all topological orders</td>
+<td>O(2ⁿ · n) (subset DP)</td>
+<td>O(2ⁿ)</td>
+</tr>
+</tbody>
+</table>
+<div class="pitfall">
+<p><strong>Pitfalls: the actual bug and its fix</strong></p>
+<ol>
+<li><strong>Arrow direction reversed.</strong> <code>[a, b]</code> means b before a, but the code adds a → b. Cycle tests still pass, and every returned order is backwards. <em>Fix:</em> write the meaning next to the line that builds the graph (<code># b before a</code>) and test one tiny case by hand.</li>
+<li><strong>Rules counted twice in one place and once in the other.</strong> The alien dictionary yields "t &lt; f" twice; the adjacency set stores it once while <code>indeg[f]</code> is incremented twice, so f never reaches 0. <em>Fix:</em> only increment the in-degree when the set actually gained the edge.</li>
+<li><strong>Missing the prefix case.</strong> <code>["abc", "ab"]</code> has no valid alphabet, but the pair loop finds no differing letter and moves on. <em>Fix:</em> if no position differs and <code>len(w1) &gt; len(w2)</code>, return "".</li>
+<li><strong>Forgetting isolated nodes.</strong> Letters that appear in no rule, or courses with no prerequisites and no dependants, never appear in the edge list. <em>Fix:</em> create a node for <strong>every</strong> item, and seed the queue from all nodes, not just those seen in edges.</li>
+<li><strong>A DFS "visited" set as the cycle test.</strong> In a diamond 0 → 1 → 3, 0 → 2 → 3, node 3 is visited twice without any cycle. <em>Fix:</em> three colours, and only an edge into a GREY node is a cycle.</li>
+<li><strong>Not reversing the DFS post-order,</strong> or using pre-order. <em>Fix:</em> <code>post[::-1]</code>. Check that the first node in the answer has in-degree 0.</li>
+<li><strong>Recursive DFS on a 10⁵-long chain.</strong> <code>RecursionError</code> in Python, and an uncatchable <code>StackOverflowException</code> in C#. <em>Fix:</em> Kahn, or the explicit <code>(node, next index)</code> stack.</li>
+<li><strong>A BFS seen-set instead of in-degrees.</strong> Marking a node when it is <em>first</em> reached places it before its other prerequisites. <em>Fix:</em> a node joins the queue when its count reaches <strong>0</strong>, not when it is first touched.</li>
+<li><strong>Not checking <code>len(order) == n</code>.</strong> On a cyclic input the loop simply stops and a partial order is returned as if it were an answer. <em>Fix:</em> always compare against n.</li>
+</ol>
+</div>
+<h2 id="worked-problems">Worked problems</h2>
+<h3 id="1-course-schedule-ii-medium">1. Course Schedule II <span class="diff medium">Medium</span></h3>
+<p>There are <code>numCourses</code> courses, and <code>[a, b]</code> means b must be taken before a. Return any order that takes all of them, or <code>[]</code> if that is impossible.</p>
+<p><strong>Key insight.</strong> This is the Kahn template with the arrow drawn as <strong>b → a</strong>. The impossible case is a cycle, which Kahn reports by placing fewer than n courses.</p>
+<details class="solution">
+<summary>Solution: Kahn's algorithm</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def find_order(num_courses, prerequisites):
+    adj = [[] for _ in range(num_courses)]
+    indeg = [0] * num_courses
+    for a, b in prerequisites:            # b before a
+        adj[b].append(a)
+        indeg[a] += 1
+    q = deque(c for c in range(num_courses) if indeg[c] == 0)
+    order = []
+    while q:
+        u = q.popleft()
+        order.append(u)
+        for v in adj[u]:
+            indeg[v] -= 1
+            if indeg[v] == 0:
+                q.append(v)
+    return order if len(order) == num_courses else []
+</code></pre>
+<pre><code class="language-csharp">public int[] FindOrder(int numCourses, int[][] prerequisites)
+{
+    var adj = new List&lt;int&gt;[numCourses];
+    for (int i = 0; i &lt; numCourses; i++) adj[i] = new List&lt;int&gt;();
+    var indeg = new int[numCourses];
+    foreach (var p in prerequisites) { adj[p[1]].Add(p[0]); indeg[p[0]]++; } // p[1] before p[0]
+
+    var q = new Queue&lt;int&gt;();
+    for (int c = 0; c &lt; numCourses; c++) if (indeg[c] == 0) q.Enqueue(c);
+    var order = new List&lt;int&gt;(numCourses);
+    while (q.Count &gt; 0)
+    {
+        int u = q.Dequeue();
+        order.Add(u);
+        foreach (int v in adj[u])
+            if (--indeg[v] == 0) q.Enqueue(v);
+    }
+    return order.Count == numCourses ? order.ToArray() : Array.Empty&lt;int&gt;();
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(V + E) time and memory. Course Schedule I is the same code returning <code>len(order) == num_courses</code>.</p>
+</details>
+<h3 id="2-alien-dictionary-hard">2. Alien Dictionary <span class="diff hard">Hard</span></h3>
+<p>Words are sorted in an unknown alphabet. Return any alphabet order consistent with them, or <code>""</code> if none exists.</p>
+<p><strong>Key insight.</strong> Each adjacent pair of words gives at most one rule, from the first differing letter. A pair where the longer word comes first and the shorter one is its prefix is a contradiction on its own. Every letter is a node, even if no rule mentions it. Then sort topologically; a cycle means "". Step through it in the <a href="#alien-dictionary-building-the-graph-is-the-problem">visualizer above</a>.</p>
+<details class="solution">
+<summary>Solution: rules from adjacent pairs, then Kahn</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def alien_order(words):
+    adj = {c: set() for w in words for c in w}      # every letter is a node
+    indeg = {c: 0 for c in adj}
+    for w1, w2 in zip(words, words[1:]):
+        for a, b in zip(w1, w2):
+            if a != b:                                # the first difference decides
+                if b not in adj[a]:                   # count each rule once
+                    adj[a].add(b)
+                    indeg[b] += 1
+                break
+        else:
+            if len(w1) &gt; len(w2):                     # &quot;abc&quot; before &quot;ab&quot;: impossible
+                return &quot;&quot;
+    q = deque(c for c in indeg if indeg[c] == 0)
+    order = []
+    while q:
+        c = q.popleft()
+        order.append(c)
+        for d in adj[c]:
+            indeg[d] -= 1
+            if indeg[d] == 0:
+                q.append(d)
+    return &quot;&quot;.join(order) if len(order) == len(indeg) else &quot;&quot;
+</code></pre>
+<pre><code class="language-csharp">public string AlienOrder(string[] words)
+{
+    var adj = new Dictionary&lt;char, HashSet&lt;char&gt;&gt;();   // every letter is a node
+    var indeg = new Dictionary&lt;char, int&gt;();
+    foreach (var w in words)
+        foreach (char c in w)
+            if (!adj.ContainsKey(c)) { adj[c] = new HashSet&lt;char&gt;(); indeg[c] = 0; }
+
+    for (int k = 0; k + 1 &lt; words.Length; k++)
+    {
+        string w1 = words[k], w2 = words[k + 1];
+        int len = Math.Min(w1.Length, w2.Length), i = 0;
+        while (i &lt; len &amp;&amp; w1[i] == w2[i]) i++;
+        if (i &lt; len)                                    // the first difference decides
+        {
+            if (adj[w1[i]].Add(w2[i])) indeg[w2[i]]++;  // count each rule once
+        }
+        else if (w1.Length &gt; w2.Length) return &quot;&quot;;      // &quot;abc&quot; before &quot;ab&quot;: impossible
+    }
+
+    var q = new Queue&lt;char&gt;();
+    foreach (var (c, d) in indeg) if (d == 0) q.Enqueue(c);
+    var sb = new StringBuilder();
+    while (q.Count &gt; 0)
+    {
+        char c = q.Dequeue();
+        sb.Append(c);
+        foreach (char d in adj[c])
+            if (--indeg[d] == 0) q.Enqueue(d);
+    }
+    return sb.Length == indeg.Count ? sb.ToString() : &quot;&quot;;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(C) to compare the words, where C is the total number of characters, plus O(Σ + R) for the sort, with Σ ≤ 26 letters and R ≤ Σ² distinct rules.</p>
+</details>
+<h3 id="3-parallel-courses-iii-hard">3. Parallel Courses III <span class="diff hard">Hard</span></h3>
+<p>Course i takes <code>time[i]</code> months, <code>[prev, next]</code> relations must be respected, and any number of courses can run at the same time. Return the minimum number of months to finish everything (the graph is a DAG).</p>
+<p><strong>Key insight.</strong> A course starts when its <strong>last</strong> prerequisite finishes, so <code>start[v] = max(finish[u])</code> over its prerequisites and <code>finish[v] = start[v] + time[v]</code>. Kahn guarantees every prerequisite's finish is final before v is popped. The answer is the largest finish time: the length of the critical path in the <a href="#dp-on-a-dag">DP-on-a-DAG visualizer</a>.</p>
+<details class="solution">
+<summary>Solution: longest path in Kahn order</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def minimum_time(n, relations, time):
+    adj = [[] for _ in range(n)]
+    indeg = [0] * n
+    for prev, nxt in relations:                   # courses are 1-indexed
+        adj[prev - 1].append(nxt - 1)
+        indeg[nxt - 1] += 1
+    start = [0] * n                               # latest finish among prerequisites
+    q = deque(i for i in range(n) if indeg[i] == 0)
+    ans = 0
+    while q:
+        u = q.popleft()
+        finish = start[u] + time[u]
+        ans = max(ans, finish)
+        for v in adj[u]:
+            start[v] = max(start[v], finish)
+            indeg[v] -= 1
+            if indeg[v] == 0:
+                q.append(v)
+    return ans
+</code></pre>
+<pre><code class="language-csharp">public int MinimumTime(int n, int[][] relations, int[] time)
+{
+    var adj = new List&lt;int&gt;[n];
+    for (int i = 0; i &lt; n; i++) adj[i] = new List&lt;int&gt;();
+    var indeg = new int[n];
+    foreach (var r in relations) { adj[r[0] - 1].Add(r[1] - 1); indeg[r[1] - 1]++; } // 1-indexed
+
+    var start = new int[n];                       // latest finish among prerequisites
+    var q = new Queue&lt;int&gt;();
+    for (int i = 0; i &lt; n; i++) if (indeg[i] == 0) q.Enqueue(i);
+    int ans = 0;
+    while (q.Count &gt; 0)
+    {
+        int u = q.Dequeue();
+        int finish = start[u] + time[u];
+        ans = Math.Max(ans, finish);
+        foreach (int v in adj[u])
+        {
+            start[v] = Math.Max(start[v], finish);
+            if (--indeg[v] == 0) q.Enqueue(v);
+        }
+    }
+    return ans;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n + E) time and memory.</p>
+</details>
+<h3 id="4-longest-increasing-path-in-a-matrix-hard">4. Longest Increasing Path in a Matrix <span class="diff hard">Hard</span></h3>
+<p>Return the length of the longest strictly increasing path in a grid, moving up, down, left or right.</p>
+<p><strong>Key insight.</strong> "Strictly larger neighbour" arrows form a DAG, since values only go up along a path. Give each cell an in-degree equal to its number of strictly smaller neighbours, then peel Kahn layers from the local minima: the number of layers is the longest path. Unlike memoised DFS, this cannot hit the recursion limit on a 200 × 200 snake. See the <a href="#longest-increasing-path-in-a-matrix">visualizer above</a>.</p>
+<details class="solution">
+<summary>Solution: Kahn layers on the implicit DAG</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def longest_increasing_path(matrix):
+    R, C = len(matrix), len(matrix[0])
+    DIRS = ((1, 0), (-1, 0), (0, 1), (0, -1))
+    indeg = [[0] * C for _ in range(R)]           # number of strictly smaller neighbours
+    for r in range(R):
+        for c in range(C):
+            for dr, dc in DIRS:
+                nr, nc = r + dr, c + dc
+                if 0 &lt;= nr &lt; R and 0 &lt;= nc &lt; C and matrix[nr][nc] &lt; matrix[r][c]:
+                    indeg[r][c] += 1
+    layer = [(r, c) for r in range(R) for c in range(C) if indeg[r][c] == 0]
+    length = 0
+    while layer:
+        length += 1                               # one more cell on the longest chain
+        nxt = []
+        for r, c in layer:
+            for dr, dc in DIRS:
+                nr, nc = r + dr, c + dc
+                if 0 &lt;= nr &lt; R and 0 &lt;= nc &lt; C and matrix[nr][nc] &gt; matrix[r][c]:
+                    indeg[nr][nc] -= 1
+                    if indeg[nr][nc] == 0:
+                        nxt.append((nr, nc))
+        layer = nxt
+    return length
+</code></pre>
+<pre><code class="language-csharp">public int LongestIncreasingPath(int[][] matrix)
+{
+    int rows = matrix.Length, cols = matrix[0].Length;
+    int[] dr = { 1, -1, 0, 0 }, dc = { 0, 0, 1, -1 };
+    var indeg = new int[rows, cols];              // number of strictly smaller neighbours
+    for (int r = 0; r &lt; rows; r++)
+        for (int c = 0; c &lt; cols; c++)
+            for (int k = 0; k &lt; 4; k++)
+            {
+                int nr = r + dr[k], nc = c + dc[k];
+                if (nr &gt;= 0 &amp;&amp; nr &lt; rows &amp;&amp; nc &gt;= 0 &amp;&amp; nc &lt; cols &amp;&amp; matrix[nr][nc] &lt; matrix[r][c])
+                    indeg[r, c]++;
+            }
+
+    var layer = new List&lt;(int, int)&gt;();
+    for (int r = 0; r &lt; rows; r++)
+        for (int c = 0; c &lt; cols; c++)
+            if (indeg[r, c] == 0) layer.Add((r, c));
+    int length = 0;
+    while (layer.Count &gt; 0)
+    {
+        length++;                                 // one more cell on the longest chain
+        var next = new List&lt;(int, int)&gt;();
+        foreach (var (r, c) in layer)
+            for (int k = 0; k &lt; 4; k++)
+            {
+                int nr = r + dr[k], nc = c + dc[k];
+                if (nr &gt;= 0 &amp;&amp; nr &lt; rows &amp;&amp; nc &gt;= 0 &amp;&amp; nc &lt; cols
+                    &amp;&amp; matrix[nr][nc] &gt; matrix[r][c] &amp;&amp; --indeg[nr, nc] == 0)
+                    next.Add((nr, nc));
+            }
+        layer = next;
+    }
+    return length;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(R · C) time and memory: each cell has at most four arrows.</p>
+</details>
+<h3 id="5-find-eventual-safe-states-medium">5. Find Eventual Safe States <span class="diff medium">Medium</span></h3>
+<p>A node is safe if every path starting from it ends at a terminal node (one with no outgoing edges). Return all safe nodes in increasing order.</p>
+<p><strong>Key insight.</strong> Safety flows <strong>backwards</strong>: a terminal node is safe, and a node is safe once all of its out-arrows lead to safe nodes. That is Kahn on the reversed graph with out-degrees as the counters. Nodes that never reach 0 can reach a cycle. (The DFS alternative: a node is safe exactly when its three-colour DFS finishes BLACK without meeting a GREY node.)</p>
+<details class="solution">
+<summary>Solution: reverse Kahn from the terminal nodes</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def eventual_safe_nodes(graph):
+    n = len(graph)
+    rev = [[] for _ in range(n)]
+    out = [len(graph[u]) for u in range(n)]        # arrows not yet known to be safe
+    for u in range(n):
+        for v in graph[u]:
+            rev[v].append(u)
+    q = deque(u for u in range(n) if out[u] == 0)  # terminal nodes
+    safe = [False] * n
+    while q:
+        v = q.popleft()
+        safe[v] = True
+        for u in rev[v]:                           # u -&gt; v just became a safe arrow
+            out[u] -= 1
+            if out[u] == 0:
+                q.append(u)
+    return [u for u in range(n) if safe[u]]
+</code></pre>
+<pre><code class="language-csharp">public IList&lt;int&gt; EventualSafeNodes(int[][] graph)
+{
+    int n = graph.Length;
+    var rev = new List&lt;int&gt;[n];
+    for (int i = 0; i &lt; n; i++) rev[i] = new List&lt;int&gt;();
+    var outdeg = new int[n];                      // arrows not yet known to be safe
+    var q = new Queue&lt;int&gt;();
+    for (int u = 0; u &lt; n; u++)
+    {
+        outdeg[u] = graph[u].Length;
+        foreach (int v in graph[u]) rev[v].Add(u);
+        if (outdeg[u] == 0) q.Enqueue(u);         // terminal nodes
+    }
+    var safe = new bool[n];
+    while (q.Count &gt; 0)
+    {
+        int v = q.Dequeue();
+        safe[v] = true;
+        foreach (int u in rev[v])                 // u -&gt; v just became a safe arrow
+            if (--outdeg[u] == 0) q.Enqueue(u);
+    }
+    var result = new List&lt;int&gt;();
+    for (int u = 0; u &lt; n; u++) if (safe[u]) result.Add(u);
+    return result;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(V + E) time and memory.</p>
+</details>
+<h3 id="6-sort-items-by-groups-respecting-dependencies-hard">6. Sort Items by Groups Respecting Dependencies <span class="diff hard">Hard</span></h3>
+<p>n items, each in one of m groups or in none (<code>-1</code>). Order the items so that the items of each group are <strong>contiguous</strong> and every <code>beforeItems[i]</code> comes before i. Return <code>[]</code> if that is impossible.</p>
+<p><strong>Key insight.</strong> It is two topological sorts, one inside the other. Give each ungrouped item a new group of its own. An item edge u → v whose ends lie in different groups is also a <strong>group</strong> edge group(u) → group(v). Sort the groups to decide which block goes first, and sort the items to decide the order inside each block. Bucket the items by group in item order, then concatenate the buckets in group order. A cycle in either graph means <code>[]</code>.</p>
+<details class="solution">
+<summary>Solution: a group-level sort and an item-level sort</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def sort_items(n, m, group, before_items):
+    def topo(k, edges):
+        adj = [[] for _ in range(k)]
+        indeg = [0] * k
+        for u, v in edges:
+            adj[u].append(v)
+            indeg[v] += 1
+        q = deque(u for u in range(k) if indeg[u] == 0)
+        order = []
+        while q:
+            u = q.popleft()
+            order.append(u)
+            for v in adj[u]:
+                indeg[v] -= 1
+                if indeg[v] == 0:
+                    q.append(v)
+        return order if len(order) == k else None
+
+    group = group[:]
+    for i in range(n):
+        if group[i] == -1:                        # an ungrouped item is its own group
+            group[i] = m
+            m += 1
+    item_edges, group_edges = [], []
+    for v in range(n):
+        for u in before_items[v]:                 # u before v
+            item_edges.append((u, v))
+            if group[u] != group[v]:
+                group_edges.append((group[u], group[v]))
+    item_order, group_order = topo(n, item_edges), topo(m, group_edges)
+    if item_order is None or group_order is None:
+        return []
+    members = [[] for _ in range(m)]
+    for i in item_order:                          # each bucket keeps the item order
+        members[group[i]].append(i)
+    return [i for g in group_order for i in members[g]]
+</code></pre>
+<pre><code class="language-csharp">public int[] SortItems(int n, int m, int[] group, IList&lt;IList&lt;int&gt;&gt; beforeItems)
+{
+    var g = (int[])group.Clone();
+    for (int i = 0; i &lt; n; i++) if (g[i] == -1) g[i] = m++;  // an ungrouped item is its own group
+    var itemEdges = new List&lt;(int, int)&gt;();
+    var groupEdges = new List&lt;(int, int)&gt;();
+    for (int v = 0; v &lt; n; v++)
+        foreach (int u in beforeItems[v])                     // u before v
+        {
+            itemEdges.Add((u, v));
+            if (g[u] != g[v]) groupEdges.Add((g[u], g[v]));
+        }
+    var itemOrder = Topo(n, itemEdges);
+    var groupOrder = Topo(m, groupEdges);
+    if (itemOrder == null || groupOrder == null) return Array.Empty&lt;int&gt;();
+
+    var members = new List&lt;int&gt;[m];
+    for (int k = 0; k &lt; m; k++) members[k] = new List&lt;int&gt;();
+    foreach (int i in itemOrder) members[g[i]].Add(i);         // each bucket keeps the item order
+    var result = new List&lt;int&gt;(n);
+    foreach (int k in groupOrder) result.AddRange(members[k]);
+    return result.ToArray();
+}
+
+static List&lt;int&gt;? Topo(int k, List&lt;(int U, int V)&gt; edges)
+{
+    var adj = new List&lt;int&gt;[k];
+    for (int i = 0; i &lt; k; i++) adj[i] = new List&lt;int&gt;();
+    var indeg = new int[k];
+    foreach (var (u, v) in edges) { adj[u].Add(v); indeg[v]++; }
+    var q = new Queue&lt;int&gt;();
+    for (int u = 0; u &lt; k; u++) if (indeg[u] == 0) q.Enqueue(u);
+    var order = new List&lt;int&gt;(k);
+    while (q.Count &gt; 0)
+    {
+        int u = q.Dequeue();
+        order.Add(u);
+        foreach (int v in adj[u])
+            if (--indeg[v] == 0) q.Enqueue(v);
+    }
+    return order.Count == k ? order : null;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n + m + E) time and memory, where E is the total length of <code>beforeItems</code>. Why it is correct: inside one bucket the items keep their relative item order, so intra-group edges are respected; an edge between groups is respected because its groups appear in group order.</p>
+</details>
+<h2 id="problem-ladder">Problem ladder</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Level</th>
+<th>The key idea</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://leetcode.com/problems/find-the-town-judge/">Find the Town Judge</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>In-degree and out-degree are enough: the judge has in-degree n − 1 and out-degree 0.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://leetcode.com/problems/destination-city/">Destination City</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>The sink of a path: the only city with out-degree 0.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://leetcode.com/problems/minimum-number-of-vertices-to-reach-all-nodes/">Minimum Number of Vertices to Reach All Nodes</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Exactly the sources: nothing reaches an in-degree-0 node, and every other node is reached from one.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://leetcode.com/problems/course-schedule/">Course Schedule</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Kahn, then <code>len(order) == n</code>; a cycle is the only obstacle.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://leetcode.com/problems/course-schedule-ii/">Course Schedule II</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Return Kahn's order; draw <code>[a, b]</code> as b → a.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://leetcode.com/problems/find-eventual-safe-states/">Find Eventual Safe States</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Reverse Kahn on out-degrees, or three-colour DFS.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://leetcode.com/problems/minimum-height-trees/">Minimum Height Trees</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Peel leaves layer by layer; the last one or two nodes are the centres.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://leetcode.com/problems/parallel-courses/">Parallel Courses</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Number of Kahn layers = longest chain; −1 on a cycle.</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://leetcode.com/problems/course-schedule-iv/">Course Schedule IV</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Propagate ancestor bitsets in topological order; each query is a bit test.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://leetcode.com/problems/all-ancestors-of-a-node-in-a-directed-acyclic-graph/">All Ancestors of a Node in a Directed Acyclic Graph</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>The same ancestor propagation, returned as sorted lists.</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://leetcode.com/problems/find-all-possible-recipes-from-given-supplies/">Find All Possible Recipes from Given Supplies</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Supplies are the sources; a recipe is makeable when its in-degree reaches 0.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://leetcode.com/problems/loud-and-rich/">Loud and Rich</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>DP on a DAG: the quietest person among you and everyone richer, pushed along "richer → poorer" arrows.</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://leetcode.com/problems/sequence-reconstruction/">Sequence Reconstruction</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Unique order ⇔ the Kahn queue never holds two nodes.</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="https://leetcode.com/problems/alien-dictionary/">Alien Dictionary</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>One rule per adjacent pair, the prefix case, every letter is a node.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="https://leetcode.com/problems/longest-increasing-path-in-a-matrix/">Longest Increasing Path in a Matrix</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Strictly increasing arrows form a DAG; count Kahn layers or memoise DFS.</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="https://leetcode.com/problems/parallel-courses-iii/">Parallel Courses III</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>finish[v] = time[v] + max finish of prerequisites; answer = max.</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="https://leetcode.com/problems/build-a-matrix-with-conditions/">Build a Matrix With Conditions</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Two independent topological sorts: one gives each number's row, the other its column.</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="https://leetcode.com/problems/largest-color-value-in-a-directed-graph/">Largest Color Value in a Directed Graph</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>DAG DP with 26 counts per node: <code>cnt[v][c] = max(cnt[u][c])</code>, plus 1 for v's own colour; a cycle gives −1.</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="https://leetcode.com/problems/sort-items-by-groups-respecting-dependencies/">Sort Items by Groups Respecting Dependencies</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>A group-level sort and an item-level sort, then bucket.</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="https://leetcode.com/problems/strange-printer-ii/">Strange Printer II</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Each colour's bounding box: a colour seen inside another's box must be printed later. Cycle ⇒ false.</td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="https://leetcode.com/problems/parallel-courses-ii/">Parallel Courses II</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>A cap of k per semester breaks greedy; bitmask DP over finished courses.</td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="https://leetcode.com/problems/count-ways-to-build-rooms-in-an-ant-colony/">Count Ways to Build Rooms in an Ant Colony</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Counting orders of a tree: n! / ∏ subtree sizes, modulo 10⁹ + 7.</td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="https://leetcode.com/problems/maximum-employees-to-be-invited-to-a-meeting/">Maximum Employees to Be Invited to a Meeting</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>A functional graph: peel the in-degree-0 tails with Kahn while recording the longest chain into each node, then handle cycles (length-2 cycles take both tails).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>Kahn's queue runs dry with 4 of 9 nodes unplaced. Why must there be a cycle, and is every unplaced node on it?</summary>
+<p>Every unplaced node still has in-degree ≥ 1, and because the arrows from placed nodes were all deleted, each of those remaining arrows comes from another <strong>unplaced</strong> node. Walking backwards along them from any unplaced node never stops, and there are only 4 nodes, so the walk repeats a node: that is a cycle. Not every unplaced node is on it, though. A node can sit <em>downstream</em> of the cycle, waiting for a node that waits forever (node 4 in the <a href="#when-no-order-exists">cycle visualizer</a>).</p>
+</details>
+<details class="quiz">
+<summary>You build the arrows for Course Schedule backwards (a → b instead of b → a). Which of Course Schedule I and II still pass?</summary>
+<p><strong>I still passes, II fails.</strong> Reversing every arrow turns each cycle into a cycle and each DAG into a DAG, so "can all courses be finished?" has the same answer. But a topological order of the reversed graph is the original order <strong>backwards</strong>, so every course appears before its prerequisites. This is exactly why the bug survives the first problem and surprises you on the second.</p>
+</details>
+<details class="quiz">
+<summary>Why does reversed post-order work but pre-order does not?</summary>
+<p>A node finishes only after everything reachable from it has finished, so for every edge u → v, v finishes first (either inside u's call or before it). Reversing puts u first. Pre-order only tells you when a node was <em>entered</em>, and a node entered early can still have an arrow coming <em>into</em> it from a node in a later DFS tree: with 0 → 1 and 2 → 0, pre-order gives 0, 1, 2, but 2 must come before 0.</p>
+</details>
+<details class="quiz">
+<summary>How can you tell whether a DAG has exactly one topological order, in O(V + E)?</summary>
+<p>Run Kahn and check whether the queue <strong>ever holds two or more nodes</strong>. Two ready nodes don't depend on each other (directly or indirectly), so they could be placed in either order. If the queue always holds exactly one node, every step was forced. Equivalently, each consecutive pair in the order is joined by an arrow, so the order is a path through every node.</p>
+</details>
+<details class="quiz">
+<summary>A weighted DAG has negative edges. How do you find shortest paths from s, and why not Dijkstra?</summary>
+<p>Relax the edges in topological order: <code>dist[v] = min(dist[v], dist[u] + w)</code> for each arrow u → v, processing u only after all its predecessors. When u is processed, every path into u has already been considered, so <code>dist[u]</code> is final, whatever the signs of the weights. That is O(V + E). Dijkstra assumes that a popped node can never be improved later, which a negative edge can break. On a DAG you don't need that assumption at all.</p>
+</details>
+<details class="quiz">
+<summary>For "lexicographically smallest order", why does taking the smallest ready node always work?</summary>
+<p>The first element must be a source, and the smallest source is the best possible first element. Placing it never removes options: any order of the remaining nodes that was valid before is still valid, because a source has no prerequisites to violate. The same argument repeats on the remaining graph. Note that this is <strong>not</strong> the right greedy for "put small labels as early as possible", which needs the reversed graph and a max-heap.</p>
+</details>
+<details class="quiz">
+<summary>Why does Parallel Courses II (at most k courses per semester) not fall to Kahn plus a greedy rule?</summary>
+<p>With unlimited parallelism the answer is the longest chain, and the Kahn layers achieve it. With a cap of k, you must choose <em>which</em> k ready courses to take, and that choice affects which courses are ready later. Every simple rule (most dependants, longest chain behind it) has counterexamples. With n ≤ 15, the intended solution is DP over the 2ⁿ subsets of finished courses, trying the subsets of size ≤ k of the currently ready courses.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Arrow</strong>u → v means u <em>before</em> v; translate <code>[a, b]</code> inputs once</div>
+<div><strong>Exists?</strong>An order exists ⇔ no directed cycle (it is a DAG)</div>
+<div><strong>Kahn</strong>Queue the in-degree-0 nodes; pop, append, decrement; O(V + E)</div>
+<div><strong>Cycle (Kahn)</strong><code>len(order) &lt; n</code>; the leftovers contain the cycle</div>
+<div><strong>DFS order</strong>Append on finish, then <code>post[::-1]</code>; GREY target = cycle</div>
+<div><strong>Layers</strong>Process the queue one layer at a time: semesters, rounds, longest chain</div>
+<div><strong>Smallest</strong>Min-heap of ready nodes · O(V log V + E)</div>
+<div><strong>Unique?</strong>The queue never holds two nodes</div>
+<div><strong>DAG DP</strong><code>best[v] = f(best[u])</code> over u → v, in topological order</div>
+<div><strong>Paths</strong>Longest, shortest (negative weights OK), or counted, all O(V + E)</div>
+<div><strong>Alien</strong>Adjacent pairs, first difference, the prefix case, every letter a node</div>
+<div><strong>Peel</strong>Reverse Kahn from sinks (safe states); strip leaves (tree centres)</div>
+<div><strong>Count orders</strong>Subset DP O(2ⁿ·n); trees: n! / ∏ subtree sizes</div>
+<div><strong>Capacity k</strong>Kahn alone is not enough: bitmask DP</div>
+</div><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="graph-fundamentals.html"><small>&larr; PREVIOUS</small>Graph Fundamentals: BFS &amp; DFS</a><a class="next" href="union-find.html"><small>NEXT &rarr;</small>Union-Find (Disjoint Set Union)</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#what-a-topological-order-is">What a topological order is</a><ul>
+<li><a href="#the-picture-straighten-the-graph-into-a-line">The picture: straighten the graph into a line</a></li>
+<li><a href="#why-no-cycle-is-exactly-the-condition">Why "no cycle" is exactly the condition</a></li>
+</ul>
+</li>
+<li><a href="#kahns-algorithm-repeatedly-take-what-is-ready">Kahn's algorithm: repeatedly take what is ready</a></li>
+<li><a href="#dfs-finishing-order-reverse-the-post-order">DFS finishing order: reverse the post-order</a></li>
+<li><a href="#when-no-order-exists">When no order exists</a></li>
+<li><a href="#course-schedule-i-ii-the-template-with-one-trap">Course Schedule I &amp; II: the template, with one trap</a></li>
+<li><a href="#alien-dictionary-building-the-graph-is-the-problem">Alien dictionary: building the graph is the problem</a></li>
+<li><a href="#choosing-among-valid-orders">Choosing among valid orders</a><ul>
+<li><a href="#smallest-order-replace-the-queue-with-a-heap">Smallest order: replace the queue with a heap</a></li>
+<li><a href="#is-the-order-unique">Is the order unique?</a></li>
+<li><a href="#how-many-orders-are-there-concept">How many orders are there? (concept)</a></li>
+</ul>
+</li>
+<li><a href="#dp-on-a-dag">DP on a DAG</a><ul>
+<li><a href="#longest-increasing-path-in-a-matrix">Longest increasing path in a matrix</a></li>
+</ul>
+</li>
+<li><a href="#peeling-from-the-other-end">Peeling from the other end</a></li>
+<li><a href="#recognize-it-when">Recognize it when</a></li>
+<li><a href="#worked-problems">Worked problems</a><ul>
+<li><a href="#1-course-schedule-ii-medium">1. Course Schedule II Medium</a></li>
+<li><a href="#2-alien-dictionary-hard">2. Alien Dictionary Hard</a></li>
+<li><a href="#3-parallel-courses-iii-hard">3. Parallel Courses III Hard</a></li>
+<li><a href="#4-longest-increasing-path-in-a-matrix-hard">4. Longest Increasing Path in a Matrix Hard</a></li>
+<li><a href="#5-find-eventual-safe-states-medium">5. Find Eventual Safe States Medium</a></li>
+<li><a href="#6-sort-items-by-groups-respecting-dependencies-hard">6. Sort Items by Groups Respecting Dependencies Hard</a></li>
+</ul>
+</li>
+<li><a href="#problem-ladder">Problem ladder</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

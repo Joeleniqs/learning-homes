@@ -1,0 +1,130 @@
+/* Greedy: topic-only styles. Colours come from shared CSS variables only. */
+
+/* Wide visualizers: stage on top, code + variables side by side underneath */
+.viz.gr-wide .viz-body.with-code { grid-template-columns: minmax(0, 1fr); }
+.viz.gr-wide .viz-side { border-left: 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(200px, 1fr); }
+.viz.gr-wide .viz-vars { border-top: 0; border-left: 1px solid var(--line); align-content: start; }
+@media (max-width: 720px) {
+  .viz.gr-wide .viz-side { grid-template-columns: minmax(0, 1fr); }
+  .viz.gr-wide .viz-vars { border-left: 0; border-top: 1px solid var(--line); }
+}
+
+.gr-col { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; }
+svg.gr-svg { max-width: 100%; height: auto; overflow: visible; }
+.gr-svg text { font: 600 12px "Cascadia Code", Consolas, monospace; fill: var(--text); text-anchor: middle; }
+.gr-svg text.gr-sm { font-size: 10.5px; font-weight: 500; fill: var(--muted); }
+.gr-svg text.gr-l { text-anchor: start; }
+.gr-svg text.gr-r { text-anchor: end; }
+.gr-svg text.gr-muted { fill: var(--muted); opacity: .8; }
+.gr-svg text.gr-st { font-weight: 700; fill: var(--text); }
+
+/* Shared state fills for SVG shapes */
+.gr-seg rect, .gr-cell rect { fill: var(--v-node); stroke: var(--line); stroke-width: 1.5; transition: fill .2s, stroke .2s; }
+.gr-seg.active rect, .gr-cell.active rect { fill: var(--v-active-soft); stroke: var(--v-active); stroke-width: 2.5; }
+.gr-seg.visit rect, .gr-cell.visit rect { fill: var(--v-visit-soft); stroke: var(--v-visit); }
+.gr-seg.done rect, .gr-cell.done rect { fill: var(--v-done-soft); stroke: var(--v-done); }
+.gr-seg.bad rect, .gr-cell.bad rect { fill: var(--v-bad-soft); stroke: var(--v-bad); stroke-width: 2.5; }
+.gr-seg.path rect, .gr-cell.path rect { fill: var(--v-path-soft); stroke: var(--v-path); }
+.gr-cell.dim { opacity: .4; }
+.gr-cell text { font: 700 14px "Cascadia Code", Consolas, monospace; fill: var(--text); text-anchor: middle; dominant-baseline: central; }
+.gr-tick { stroke: var(--muted); stroke-width: 1.2; }
+
+/* Jump game */
+.gr-arc { fill: none; stroke: var(--muted); stroke-width: 1.5; opacity: .55; }
+.gr-arc.active { stroke: var(--v-active); stroke-width: 2.5; opacity: 1; }
+.gr-arc.done { stroke: var(--v-done); opacity: .9; }
+.gr-arc.path { stroke: var(--v-path); stroke-width: 2.5; opacity: 1; }
+.gr-arc.visit { stroke: var(--v-visit); opacity: .9; }
+.gr-arcend { fill: var(--muted); opacity: .55; }
+.gr-arcend.active { fill: var(--v-active); opacity: 1; }
+.gr-arcend.path { fill: var(--v-path); opacity: 1; }
+.gr-arcend.done, .gr-arcend.visit { opacity: .9; }
+.gr-svg text.gr-ptr { font-size: 11px; font-weight: 700; fill: var(--accent); }
+.gr-svg text.gr-lv { font-weight: 700; fill: var(--v-path); }
+
+/* Knapsack capacity bars */
+.gr-capwrap { width: min(640px, 100%); }
+.gr-cap { display: flex; width: 100%; height: 34px; border: 2px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--bg); }
+.gr-capseg { display: grid; place-items: center; min-width: 0; overflow: hidden; border-right: 2px solid var(--surface); background: var(--v-node); transition: width .25s; }
+.gr-capseg span { font: 600 11.5px "Cascadia Code", Consolas, monospace; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 4px; }
+.gr-capseg.visit { background: var(--v-visit-soft); }
+.gr-capseg.done { background: var(--v-done-soft); }
+.gr-capseg.path { background: var(--v-path-soft); }
+.gr-capseg.active { background: var(--v-active-soft); }
+.gr-capseg.bad { background: var(--v-bad-soft); }
+.gr-capseg.gr-frac { background-image: repeating-linear-gradient(135deg, transparent 0 6px, var(--line) 6px 8px); }
+
+/* Coins */
+.gr-coins { display: flex; flex-wrap: wrap; gap: 6px; min-height: 34px; align-items: center; }
+.gr-coin { display: inline-grid; place-items: center; min-width: 32px; height: 32px; padding: 0 6px; border-radius: 999px; border: 2px solid var(--line); background: var(--v-node); font: 700 13px "Cascadia Code", Consolas, monospace; color: var(--text); }
+.gr-coin.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.gr-coin.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.gr-coin.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.gr-none { color: var(--muted); font-size: 12.5px; font-style: italic; }
+
+/* Gas station */
+.gr-zero { stroke: var(--muted); stroke-width: 1.2; }
+.gr-grid { stroke: var(--line); stroke-width: 1; stroke-dasharray: 2 4; }
+.gr-bar { fill: var(--v-node); stroke: var(--line); stroke-width: 1.2; }
+.gr-bar.done { fill: var(--v-done-soft); stroke: var(--v-done); }
+.gr-bar.bad { fill: var(--v-bad-soft); stroke: var(--v-bad); }
+.gr-bar.active { fill: var(--v-active-soft); stroke: var(--v-active); stroke-width: 2.5; }
+.gr-bar.dim { opacity: .35; }
+.gr-pline { fill: none; stroke: var(--muted); stroke-width: 2; stroke-dasharray: 6 4; }
+.gr-pdot { fill: var(--muted); }
+.gr-pdot.gr-min { fill: none; stroke: var(--v-path); stroke-width: 3; }
+.gr-tline { stroke: var(--v-visit); stroke-width: 3; }
+.gr-tline.bad { stroke: var(--v-bad); }
+.gr-tdot { fill: var(--v-visit); }
+.gr-tdot.bad { fill: var(--v-bad); }
+.gr-reset { stroke: var(--v-bad); stroke-width: 1.5; stroke-dasharray: 3 3; }
+.gr-svg text.gr-startlab { fill: var(--v-path); font-weight: 800; font-size: 11.5px; }
+
+/* Course schedule timeline */
+.gr-over { fill: var(--v-bad-soft); stroke: var(--v-bad); stroke-dasharray: 4 3; }
+.gr-dead { stroke: var(--v-bad); stroke-width: 2; stroke-dasharray: 5 3; }
+
+/* IPO capital line */
+.gr-reach { fill: var(--v-done-soft); stroke: var(--v-done); stroke-width: 1.5; }
+.gr-proj { fill: var(--v-node); stroke: var(--muted); stroke-width: 1.5; }
+.gr-proj.dim { fill: var(--surface); stroke: var(--muted); stroke-dasharray: 2 2; }
+.gr-proj.visit { fill: var(--v-visit-soft); stroke: var(--v-visit); stroke-width: 2.5; }
+.gr-proj.active { fill: var(--v-active); stroke: var(--v-active); }
+.gr-proj.done { fill: var(--v-done); stroke: var(--v-done); }
+
+/* Huffman forest */
+.gr-hedge { stroke: var(--muted); stroke-width: 1.6; }
+.gr-hnode circle { fill: var(--v-node); stroke: var(--line); stroke-width: 1.8; transition: fill .2s, stroke .2s; }
+.gr-hnode.done circle { fill: var(--v-done-soft); stroke: var(--v-done); }
+.gr-hnode.visit circle { fill: var(--v-visit-soft); stroke: var(--v-visit); stroke-width: 3; }
+.gr-hnode.active circle { fill: var(--v-active-soft); stroke: var(--v-active); stroke-width: 3; }
+.gr-hnode text.gr-st { dominant-baseline: auto; }
+.gr-svg text.gr-sym { font-size: 13px; font-weight: 800; fill: var(--v-done); }
+.gr-svg text.gr-bit { font-size: 11px; font-weight: 800; fill: var(--accent); paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; dominant-baseline: central; }
+.gr-codes { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.gr-codes > div { display: grid; grid-template-columns: auto auto; gap: 0 8px; align-items: center; padding: 5px 10px; border: 1.5px solid var(--v-done); border-radius: 8px; background: var(--v-done-soft); font: 12.5px "Cascadia Code", Consolas, monospace; }
+.gr-codes span { color: var(--muted); text-align: right; }
+.gr-codes code { grid-column: 1 / -1; font-weight: 700; color: var(--text); background: none; padding: 0; }
+
+/* Patching array */
+.gr-covold { fill: var(--v-visit-soft); stroke: var(--v-visit); stroke-width: 1; }
+.gr-cov.done { fill: var(--v-done-soft); stroke: var(--v-done); stroke-width: 1.5; }
+.gr-cov.path { fill: var(--v-path-soft); stroke: var(--v-path); stroke-width: 1.5; }
+.gr-cov.cur { stroke-width: 3; }
+
+/* Little stats box */
+.gr-stats { display: grid; gap: 3px; font: 13px "Cascadia Code", Consolas, monospace; padding: 6px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); min-width: 170px; }
+.gr-stats > div { display: flex; justify-content: space-between; gap: 14px; }
+.gr-stats span { color: var(--muted); }
+.gr-stats b.done { color: var(--v-done); }
+.gr-stats b.bad { color: var(--v-bad); }
+.gr-stats b.active { color: var(--v-active); }
+.gr-stats b.path { color: var(--v-path); }
+
+/* Static figures */
+svg.gr-fig { max-width: 100%; height: auto; }
+
+/* Partition Labels: up to 26 letters must fit the stage */
+.gr-part .v-cells { gap: 3px; }
+.gr-part .v-cell { min-width: 28px; height: 32px; padding: 0 3px; font-size: 13px; border-radius: 6px; }
+.gr-part .v-col { min-width: 28px; }

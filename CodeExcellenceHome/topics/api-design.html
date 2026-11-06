@@ -1,0 +1,1851 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>REST API Design | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/api-design.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/api-design.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track" open><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html" aria-current="page">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / REST API Design</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">API DEVELOPMENT</p><h1>REST API Design</h1><p class="lede">Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients.</p><div class="meta"><span class="level level-beginner">Beginner → Advanced</span><span>~65 min study</span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="api-design" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-an-api-is-a-promise-you-cant-take-back">The problem: an API is a promise you can't take back</h2>
+<p>Here is an orders API that a team shipped in a sprint. It works. The demo went fine. Then the first mobile release went out, a partner integrated, and every one of these decisions became permanent:</p>
+<div class="code-tabs" data-labels="Before: it works on my machine,After: designed for clients you'll never meet">
+<pre><code class="language-text">POST /api/getOrders                         ← a verb in the URL; reads via POST, so nothing caches it
+{ &quot;customerId&quot;: 42, &quot;page&quot;: 3 }
+
+200 OK                                      ← 200 even when it failed
+{ &quot;success&quot;: false, &quot;error&quot;: &quot;NOT_FOUND&quot; }  ← clients must parse the body to learn it failed
+
+POST /api/createOrder                       ← the network times out; the client retries…
+{ &quot;items&quot;: [{ &quot;sku&quot;: &quot;pen&quot;, &quot;qty&quot;: 2 }] }   ← …and the customer is charged twice
+
+POST /api/updateOrder                       ← two people edit the same order;
+{ &quot;id&quot;: 7, &quot;status&quot;: &quot;shipped&quot;, ... }       ← the second save silently erases the first
+
+GET /api/orders?page=3                      ← someone inserts a row; page 3 now repeats an order from page 2
+</code></pre>
+<pre><code class="language-text">GET /v1/customers/42/orders?status=open&amp;sort=-createdAt&amp;maxpagesize=20
+200 OK                                       { &quot;value&quot;: [...], &quot;nextLink&quot;: &quot;/v1/customers/42/orders?cursor=eyJ0Ijo...&quot; }
+
+GET /v1/orders/7
+404 Not Found                                Content-Type: application/problem+json
+{ &quot;type&quot;: &quot;https://api.contoso.com/problems/not-found&quot;, &quot;title&quot;: &quot;Order not found&quot;, &quot;status&quot;: 404, &quot;detail&quot;: &quot;No order 7.&quot; }
+
+POST /v1/orders                              Idempotency-Key: 9f2c6c1e-3c1b-4d5e-9a0b-6e2f1d8c7b10
+201 Created                                  Location: /v1/orders/8        ← a retry with the same key replays this
+
+PUT /v1/orders/8                             If-Match: &quot;3&quot;
+412 Precondition Failed                      ← someone changed it since you read version 3: re-read, re-apply
+
+GET /v1/orders?cursor=…                       ← keyset cursor: inserts and deletes never shift the pages
+</code></pre>
+</div>
+<p>Every line on the left is a bug that <strong>no unit test catches</strong>, because each one only appears when a second client, a flaky network or a concurrent user shows up. And none of them can be fixed later without breaking the clients that already depend on the broken behaviour. That's what makes API design different from the rest of your code: your internal classes can be refactored tomorrow; your public contract is frozen the moment someone else's code depends on it.</p>
+<div class="rule">
+<p><strong>Design the contract for the client that retries, races, caches, pages while data changes and upgrades a year after you.</strong> Use nouns for resources, HTTP methods for their real semantics, status codes that machines can act on, and only make changes that old clients survive.</p>
+</div>
+<p>This page teaches the mechanics with simulations you can break: retrying requests, paging a table that changes under you, double-submitting a payment, two users saving the same document, and running real client code against a "harmless" schema change. It builds on <a href="request-pipeline.html">Request Pipelines</a> and <a href="middleware-patterns.html">Middleware Patterns</a> (where cross-cutting API concerns live), and leads into <a href="api-security.html">API Security</a>, <a href="caching.html#http-caching-let-someone-else-store-it">Caching</a> (ETags and <code>Cache-Control</code>), <a href="resilience.html">Resilience Patterns</a> (the client side of retries) and <a href="api-protocols.html">API Protocols</a> (when REST is the wrong choice).</p>
+<h2 id="resources-model-nouns-not-procedures">Resources: model nouns, not procedures</h2>
+<p>REST is "transfer representations of resources". In practice, that means one thing: <strong>the URL names a thing, and the HTTP method says what you're doing to it.</strong> Once you hold that line, the rest of the design falls out. Caches know <code>GET</code> is safe to store, proxies know <code>PUT</code> is safe to retry, and every HTTP client library in every language already understands your API.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 890 150" width="890" role="img" aria-label="Anatomy of a resource URL: host, version, collection, identifier, sub-collection, then query parameters for filter, sort and page size"><line class="edge" x1="164" y1="36" x2="454" y2="36"/><line class="edge" x1="164" y1="31" x2="164" y2="41"/><line class="edge" x1="454" y1="31" x2="454" y2="41"/><text class="small" x="309" y="26" text-anchor="middle">path: which resource</text><line class="edge accent" x1="458" y1="36" x2="880" y2="36"/><line class="edge accent" x1="458" y1="31" x2="458" y2="41"/><line class="edge accent" x1="880" y1="31" x2="880" y2="41"/><text class="small" x="669" y="26" text-anchor="middle">query: which slice, in what order, how much</text><rect class="box" x="10" y="48" width="150" height="34" rx="6"/><text class="mono" x="85" y="70" text-anchor="middle">api.contoso.com</text><rect class="box visit" x="164" y="48" width="50" height="34" rx="6"/><text class="mono" x="189" y="70" text-anchor="middle">/v1</text><rect class="box accent" x="218" y="48" width="104" height="34" rx="6"/><text class="mono" x="270" y="70" text-anchor="middle">/customers</text><rect class="box active" x="326" y="48" width="44" height="34" rx="6"/><text class="mono" x="348" y="70" text-anchor="middle">/42</text><rect class="box accent" x="374" y="48" width="80" height="34" rx="6"/><text class="mono" x="414" y="70" text-anchor="middle">/orders</text><rect class="box done" x="458" y="48" width="118" height="34" rx="6"/><text class="mono" x="517" y="70" text-anchor="middle">?status=open</text><rect class="box done" x="580" y="48" width="146" height="34" rx="6"/><text class="mono" x="653" y="70" text-anchor="middle">&amp;sort=-createdAt</text><rect class="box path" x="730" y="48" width="150" height="34" rx="6"/><text class="mono" x="805" y="70" text-anchor="middle">&amp;maxpagesize=20</text><text class="small" x="85" y="104" text-anchor="middle">host</text><text class="small muted" x="85" y="120" text-anchor="middle">one per API</text><text class="small" x="189" y="104" text-anchor="middle">version</text><text class="small muted" x="189" y="120" text-anchor="middle">major only</text><text class="small" x="270" y="104" text-anchor="middle">collection</text><text class="small muted" x="270" y="120" text-anchor="middle">plural noun</text><text class="small" x="348" y="104" text-anchor="middle">id</text><text class="small muted" x="348" y="120" text-anchor="middle">opaque</text><text class="small" x="414" y="104" text-anchor="middle">sub-collection</text><text class="small muted" x="414" y="120" text-anchor="middle">≤ 2 levels</text><text class="small" x="517" y="104" text-anchor="middle">filter</text><text class="small muted" x="517" y="120" text-anchor="middle">field=value</text><text class="small" x="653" y="104" text-anchor="middle">sort</text><text class="small muted" x="653" y="120" text-anchor="middle">"-" = descending</text><text class="small" x="805" y="104" text-anchor="middle">page size</text><text class="small muted" x="805" y="120" text-anchor="middle">a hint; server caps it</text><text class="small muted" x="445" y="144" text-anchor="middle">The path identifies; the query shapes. Nothing in the URL says what you're doing: that's the method's job.</text></svg>
+<figcaption>Anatomy of a resource URL. Collections are plural nouns, identifiers are opaque, and nesting stops at the point where the child stops making sense without its parent.</figcaption>
+</figure>
+
+<h3 id="modelling-rules-that-survive-contact-with-real-clients">Modelling rules that survive contact with real clients</h3>
+<ul>
+<li><strong>Collections are plural nouns; items are <code>collection/{id}</code>.</strong> <code>/orders</code>, <code>/orders/7</code>, <code>/orders/7/items/3</code>. Never <code>/getOrder</code>, <code>/order/list</code> or <code>/orders/delete/7</code>.</li>
+<li><strong>Nest only for true ownership, and at most two levels.</strong> <code>/customers/42/orders</code> is a useful <em>view</em> ("this customer's orders"), but an order also has a canonical home, <code>/orders/7</code>. Deep nesting (<code>/regions/eu/stores/9/customers/42/orders/7/items/3</code>) forces clients to know the whole ancestry just to fetch one item.</li>
+<li><strong>IDs are opaque strings to clients</strong>, even if they're integers to you. Then you can move to GUIDs, snowflakes or prefixed IDs (<code>ord_8Kx2</code>) later. Sequential integers also invite enumeration attacks (see <a href="api-security.html">BOLA in API Security</a>).</li>
+<li><strong>Pick one case convention and never mix them.</strong> Microsoft and Google both use <code>camelCase</code> JSON properties; paths are lowercase, often <code>kebab-case</code> for multi-word segments (<code>/payment-methods</code>). Consistency matters more than which one you pick.</li>
+<li><strong>Actions that aren't CRUD are still modelled as resources when possible.</strong> "Cancel an order" can be <code>POST /orders/7/cancellation</code> (create a cancellation) or a state change, <code>PATCH /orders/7 {"status": "cancelled"}</code>. When neither reads naturally, Google's AIP-136 custom methods are an honest escape hatch: <code>POST /orders/7:cancel</code>. Use it rarely and deliberately.</li>
+<li><strong>Don't leak your database.</strong> The resource is the <em>client's</em> model. Table names, join tables, internal flags and audit columns don't belong in it. A <code>Customer</code> resource can be assembled from five tables, and one table can back three resources.</li>
+</ul>
+<div class="compare">
+<div class="bad">
+<h4 id="rpc-over-http-avoid">RPC over HTTP (avoid)</h4>
+<ul>
+<li><code>POST /api/getCustomerOrders</code></li>
+<li><code>GET /api/deleteOrder?id=7</code> (a crawler or link prefetcher deletes data)</li>
+<li><code>POST /api/orders/updateStatus</code></li>
+<li><code>GET /api/Orders/List?CustomerID=42</code></li>
+<li>Every response is <code>200</code> with <code>{"success": false}</code></li>
+</ul>
+</div>
+<div class="good">
+<h4 id="resource-oriented">Resource-oriented</h4>
+<ul>
+<li><code>GET /customers/42/orders</code></li>
+<li><code>DELETE /orders/7</code></li>
+<li><code>PATCH /orders/7</code> with <code>{"status": "shipped"}</code></li>
+<li><code>GET /orders?customerId=42</code></li>
+<li>Status codes carry the outcome; bodies carry details</li>
+</ul>
+</div>
+</div>
+<div class="insight">
+<p><strong>Insight: REST maturity is about what intermediaries can do for you</strong>
+Using real nouns and real methods isn't purity. It's what lets a CDN cache your <code>GET</code>s, a load balancer retry your <code>PUT</code>s, an HTTP client follow your <code>Location</code> headers, and a gateway apply per-route rate limits, all without knowing anything about your domain. An RPC-over-POST API opts out of all of that.</p>
+</div>
+<h2 id="methods-safe-idempotent-or-neither">Methods: safe, idempotent, or neither</h2>
+<p>HTTP defines two properties for each method (RFC 9110 §9.2). Everything that retries (browsers, proxies, Polly, Resilience4j, <code>urllib3</code>, service meshes) makes decisions based on them, so your handlers must honour them.</p>
+<ul>
+<li><strong>Safe</strong>: the request doesn't change server state, as far as the client is concerned. Logging and metrics don't count. Crawlers, prefetchers and caches assume they can send safe requests freely.</li>
+<li><strong>Idempotent</strong>: sending the request N times has the <strong>same effect on the server</strong> as sending it once. The <em>response</em> may differ (the second <code>DELETE</code> gets <code>404</code>), but the <em>state</em> doesn't.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Meaning</th>
+<th style="text-align: center;">Safe</th>
+<th style="text-align: center;">Idempotent</th>
+<th>Typical success</th>
+<th style="text-align: center;">Request body</th>
+<th style="text-align: center;">Cacheable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td>Read a representation</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td><code>200</code>, <code>304</code></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td><code>HEAD</code></td>
+<td><code>GET</code> without the body</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td><code>200</code></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr>
+<td><code>OPTIONS</code></td>
+<td>What's allowed here (also CORS preflight)</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td><code>204</code></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td>Replace the whole resource at this URL (create if absent, when the client picks the id)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td><code>200</code>, <code>201</code>, <code>204</code></td>
+<td style="text-align: center;">full</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td>Remove it</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✓</td>
+<td><code>204</code>, <code>202</code></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td>Create a subordinate resource, or "process this"</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✗</td>
+<td><code>201</code> + <code>Location</code>, <code>202</code>, <code>200</code></td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;">rarely</td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td>Partial update</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✗ (unless designed so)</td>
+<td><code>200</code>, <code>204</code></td>
+<td style="text-align: center;">partial</td>
+<td style="text-align: center;">no</td>
+</tr>
+</tbody>
+</table>
+<p>The table is easy to memorise and easy to violate. <code>PUT /items/7 {"qty": 3}</code> is idempotent because "set qty to 3" lands in the same place every time. <code>PATCH /items/7 {"op": "increment", "qty": 1}</code> isn't, because each copy adds one more. <code>POST /items</code> creates a new row on every send. Don't take my word for it: run them.</p>
+<div class="viz" data-viz="api-design-methods"></div>
+
+<p>Pick <code>POST</code>, then <code>PATCH</code> with an increment, then <code>PUT</code>, and compare the final state after one send with the state after three. That difference is the difference between "retry safely" and "charge the customer twice". Two practical consequences:</p>
+<ol>
+<li><strong>Make <code>PATCH</code> idempotent by design when you can.</strong> JSON Merge Patch (RFC 7396, <code>application/merge-patch+json</code>) only <em>sets</em> fields, so it's naturally idempotent. JSON Patch (RFC 6902) can <code>add</code> to arrays, which isn't. Combine either with <code>If-Match</code> (below) and even non-idempotent patches become safe to retry, because the retry fails its precondition.</li>
+<li><strong><code>POST</code> needs help to be retry-safe.</strong> That help is an idempotency key, which gets its own section below.</li>
+</ol>
+<div class="pitfall">
+<p><strong>Pitfall: state changes behind GET</strong>
+<code>GET /orders/7/approve</code>, <code>GET /unsubscribe?u=42</code>, <code>GET /cart/add?sku=pen</code>. Link prefetchers, antivirus URL scanners, chat-app link previews and search crawlers all issue <code>GET</code>s on their own. Teams have lost data to Slack unfurling a "delete" link. If it changes state, it isn't a <code>GET</code>.</p>
+</div>
+<h2 id="status-codes-a-decision-chain-not-a-lookup-table">Status codes: a decision chain, not a lookup table</h2>
+<p>A status code is the one part of the response that every client, proxy, retry policy and dashboard reads. Its job is to tell a <em>machine</em> what to do next: retry later (<code>429</code>, <code>503</code>), re-authenticate (<code>401</code>), stop and fix the request (<code>400</code>, <code>422</code>), reload and try again (<code>412</code>), or follow a link (<code>201</code>, <code>202</code>, <code>303</code>). That's why "200 with <code>success: false</code>" is so harmful: every generic tool now believes the call succeeded.</p>
+<p>The useful way to choose a code is to ask questions <strong>in the order your pipeline evaluates them</strong>. Rate limiting runs before authentication (it's cheaper), authentication before routing details, validation before you touch the database, and so on. The first "yes" decides the answer.</p>
+<div class="viz" data-viz="api-design-status"></div>
+
+<p>The ordering encodes real decisions:</p>
+<ul>
+<li><strong><code>401</code> vs <code>403</code>.</strong> <code>401 Unauthorized</code> really means <em>unauthenticated</em>: "I don't know who you are; send credentials". It must carry <code>WWW-Authenticate</code>. <code>403 Forbidden</code> means "I know who you are, and the answer is no"; re-authenticating won't help.</li>
+<li><strong><code>403</code> vs <code>404</code> for things you may not see.</strong> If a caller can't access order 7, answering <code>403</code> confirms that order 7 exists. For per-object access, answer <code>404</code>. That's why the chain checks authorization on the object only <em>after</em> it knows the object exists, and then hides the difference.</li>
+<li><strong><code>400</code> vs <code>422</code>.</strong> <code>400</code> for a request you can't parse (bad JSON, wrong types); <code>422 Unprocessable Content</code> for one you can parse whose values break the rules. Many stacks use <code>400</code> for both (ASP.NET Core's <code>[ApiController]</code>), and FastAPI uses <code>422</code> for both. Either is fine; consistency is what matters, plus a problem-details body listing <em>every</em> invalid field.</li>
+<li><strong><code>409</code> vs <code>412</code>.</strong> <code>409 Conflict</code> is about the resource's state ("this order is already shipped", "this email is taken"). <code>412 Precondition Failed</code> is specifically "your <code>If-Match</code>/<code>If-Unmodified-Since</code> didn't hold": you're working from a stale copy.</li>
+<li><strong><code>5xx</code> is the server admitting fault.</strong> <code>500</code> is a bug. <code>502</code>/<code>504</code> mean an upstream failed or timed out. <code>503</code> means "overloaded or in maintenance, come back" (add <code>Retry-After</code>). Never return <code>5xx</code> for bad input: clients retry <code>5xx</code>s, and your error dashboards and SLOs count them as <em>your</em> failures.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Use it when</th>
+<th>Headers that matter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>200 OK</code></td>
+<td>Success with a body</td>
+<td><code>ETag</code>, <code>Cache-Control</code></td>
+</tr>
+<tr>
+<td><code>201 Created</code></td>
+<td><code>POST</code>/<code>PUT</code> created a resource</td>
+<td><code>Location</code>, <code>ETag</code></td>
+</tr>
+<tr>
+<td><code>202 Accepted</code></td>
+<td>Work will finish later</td>
+<td><code>Location</code>/<code>Operation-Location</code>, <code>Retry-After</code></td>
+</tr>
+<tr>
+<td><code>204 No Content</code></td>
+<td>Success, nothing to return (<code>DELETE</code>, some <code>PUT</code>s)</td>
+<td><code>ETag</code></td>
+</tr>
+<tr>
+<td><code>304 Not Modified</code></td>
+<td>Conditional <code>GET</code> and the client's copy is current</td>
+<td><code>ETag</code></td>
+</tr>
+<tr>
+<td><code>400 Bad Request</code></td>
+<td>Malformed syntax, unparseable body</td>
+<td></td>
+</tr>
+<tr>
+<td><code>401 Unauthorized</code></td>
+<td>Missing, expired or invalid credentials</td>
+<td><code>WWW-Authenticate</code></td>
+</tr>
+<tr>
+<td><code>403 Forbidden</code></td>
+<td>Authenticated, not permitted</td>
+<td></td>
+</tr>
+<tr>
+<td><code>404 Not Found</code></td>
+<td>No such resource (or "none that you may see")</td>
+<td></td>
+</tr>
+<tr>
+<td><code>405 Method Not Allowed</code></td>
+<td>Path exists, method doesn't</td>
+<td><code>Allow</code></td>
+</tr>
+<tr>
+<td><code>409 Conflict</code></td>
+<td>Violates current state or uniqueness</td>
+<td></td>
+</tr>
+<tr>
+<td><code>410 Gone</code></td>
+<td>Deliberately and permanently removed</td>
+<td></td>
+</tr>
+<tr>
+<td><code>412 Precondition Failed</code></td>
+<td><code>If-Match</code> didn't match</td>
+<td><code>ETag</code> (current)</td>
+</tr>
+<tr>
+<td><code>415 Unsupported Media Type</code></td>
+<td>Wrong <code>Content-Type</code></td>
+<td><code>Accept-Post</code>/<code>Accept-Patch</code></td>
+</tr>
+<tr>
+<td><code>422 Unprocessable Content</code></td>
+<td>Parseable but semantically invalid</td>
+<td></td>
+</tr>
+<tr>
+<td><code>428 Precondition Required</code></td>
+<td>You demand <code>If-Match</code> and it's missing</td>
+<td></td>
+</tr>
+<tr>
+<td><code>429 Too Many Requests</code></td>
+<td>Rate limit or quota</td>
+<td><code>Retry-After</code>, <code>RateLimit-*</code></td>
+</tr>
+<tr>
+<td><code>500</code> / <code>502</code> / <code>503</code> / <code>504</code></td>
+<td>Bug / bad upstream / unavailable / upstream timeout</td>
+<td><code>Retry-After</code> on <code>503</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="errors-problem-details-rfc-9457">Errors: problem details (RFC 9457)</h2>
+<p>Once the status code has said <em>what kind</em> of failure it was, the body says <em>exactly what</em> went wrong, in a format every client can parse without reading your docs. RFC 9457 (which obsoletes RFC 7807) defines <code>application/problem+json</code>:</p>
+<pre><code class="language-json">HTTP/1.1 422 Unprocessable Content
+Content-Type: application/problem+json
+
+{
+  &quot;type&quot;: &quot;https://api.contoso.com/problems/validation&quot;,
+  &quot;title&quot;: &quot;Your request has invalid fields.&quot;,
+  &quot;status&quot;: 422,
+  &quot;detail&quot;: &quot;2 fields failed validation.&quot;,
+  &quot;instance&quot;: &quot;/v1/orders&quot;,
+  &quot;traceId&quot;: &quot;00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01&quot;,
+  &quot;errors&quot;: [
+    { &quot;pointer&quot;: &quot;#/items/0/qty&quot;, &quot;detail&quot;: &quot;must be between 1 and 100&quot; },
+    { &quot;pointer&quot;: &quot;#/items/1/sku&quot;, &quot;detail&quot;: &quot;unknown sku \&quot;ghost\&quot;&quot; }
+  ]
+}
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>What it's for</th>
+<th>Rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type</code></td>
+<td>A URI that identifies the <em>kind</em> of problem. Clients branch on this, not on <code>title</code></td>
+<td>Stable forever. Ideally it resolves to human docs. Default <code>about:blank</code> means "just the status code"</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>A short human summary of the type</td>
+<td>Same for every occurrence of this type; may be localised</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>The HTTP status, repeated for convenience</td>
+<td>Must match the real status line</td>
+</tr>
+<tr>
+<td><code>detail</code></td>
+<td>Human explanation of <em>this</em> occurrence</td>
+<td>For people, never for parsing</td>
+</tr>
+<tr>
+<td><code>instance</code></td>
+<td>A URI for this occurrence</td>
+<td>Often the request path or an error id</td>
+</tr>
+<tr>
+<td><em>extensions</em></td>
+<td>Anything else: <code>errors</code>, <code>traceId</code>, <code>balance</code>, <code>retryAfter</code></td>
+<td>Document them per <code>type</code></td>
+</tr>
+</tbody>
+</table>
+<div class="tip">
+<p><strong>Tip: put a trace id in every error</strong>
+Add the W3C <code>traceparent</code> trace id (see <a href="observability.html">Observability</a>) as an extension member. When a customer sends you a screenshot of an error, that one string takes you straight to the distributed trace. Never put stack traces, SQL, connection strings or internal hostnames in <code>detail</code>: that's free reconnaissance for an attacker.</p>
+</div>
+<p>Every major stack now produces problem details natively, so there's no excuse for a hand-rolled <code>{"error": ...}</code> shape:</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// ASP.NET Core 8+: one line turns every error into problem+json
+builder.Services.AddProblemDetails(o =&gt; o.CustomizeProblemDetails = ctx =&gt;
+    ctx.ProblemDetails.Extensions[&quot;traceId&quot;] = Activity.Current?.Id ?? ctx.HttpContext.TraceIdentifier);
+
+app.UseExceptionHandler();     // unhandled exceptions → 500 problem details (no stack trace)
+app.UseStatusCodePages();      // bare 404/405 etc. → problem details
+
+// Return one explicitly:
+return TypedResults.Problem(
+    type: &quot;https://api.contoso.com/problems/out-of-stock&quot;,
+    title: &quot;Item is out of stock&quot;,
+    statusCode: StatusCodes.Status409Conflict,
+    detail: $&quot;Only {available} of {sku} left.&quot;,
+    extensions: new Dictionary&lt;string, object?&gt; { [&quot;available&quot;] = available });
+</code></pre>
+<pre><code class="language-java">// Spring Framework 6+: ProblemDetail is built in.
+// application.properties: spring.mvc.problemdetails.enabled=true  (framework exceptions → problem+json)
+@RestControllerAdvice
+class ProblemHandlers {
+    @ExceptionHandler(OutOfStockException.class)
+    ProblemDetail outOfStock(OutOfStockException e) {
+        ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT,
+                &quot;Only &quot; + e.available() + &quot; of &quot; + e.sku() + &quot; left.&quot;);
+        pd.setType(URI.create(&quot;https://api.contoso.com/problems/out-of-stock&quot;));
+        pd.setTitle(&quot;Item is out of stock&quot;);
+        pd.setProperty(&quot;available&quot;, e.available());   // extension member
+        return pd;                                     // served as application/problem+json
+    }
+}
+</code></pre>
+<pre><code class="language-python"># FastAPI: HTTPException returns {&quot;detail&quot;: ...} by default; map it to RFC 9457 once.
+from http import HTTPStatus
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import JSONResponse
+
+app = FastAPI()
+
+class Problem(HTTPException):
+    def __init__(self, status: int, detail: str, type_: str = &quot;about:blank&quot;, **ext):
+        super().__init__(status_code=status, detail=detail)
+        self.type_, self.ext = type_, ext
+
+@app.exception_handler(HTTPException)
+async def problem_details(request: Request, exc: HTTPException) -&gt; JSONResponse:
+    body = {
+        &quot;type&quot;: getattr(exc, &quot;type_&quot;, &quot;about:blank&quot;),
+        &quot;title&quot;: HTTPStatus(exc.status_code).phrase,
+        &quot;status&quot;: exc.status_code,
+        &quot;detail&quot;: exc.detail,
+        &quot;instance&quot;: request.url.path,
+        **getattr(exc, &quot;ext&quot;, {}),
+    }
+    return JSONResponse(body, status_code=exc.status_code, media_type=&quot;application/problem+json&quot;)
+
+# raise Problem(409, &quot;Only 2 of pen left.&quot;, &quot;https://api.contoso.com/problems/out-of-stock&quot;, available=2)
+</code></pre>
+<pre><code class="language-go">// net/http: a tiny helper is all it takes.
+type Problem struct {
+    Type     string         `json:&quot;type&quot;`
+    Title    string         `json:&quot;title&quot;`
+    Status   int            `json:&quot;status&quot;`
+    Detail   string         `json:&quot;detail,omitempty&quot;`
+    Instance string         `json:&quot;instance,omitempty&quot;`
+    Ext      map[string]any `json:&quot;-&quot;`
+}
+
+func writeProblem(w http.ResponseWriter, r *http.Request, p Problem) {
+    if p.Type == &quot;&quot; {
+        p.Type = &quot;about:blank&quot;
+    }
+    if p.Title == &quot;&quot; {
+        p.Title = http.StatusText(p.Status)
+    }
+    p.Instance = r.URL.Path
+    body := map[string]any{&quot;type&quot;: p.Type, &quot;title&quot;: p.Title, &quot;status&quot;: p.Status, &quot;detail&quot;: p.Detail, &quot;instance&quot;: p.Instance}
+    for k, v := range p.Ext {
+        body[k] = v // extension members sit at the top level
+    }
+    w.Header().Set(&quot;Content-Type&quot;, &quot;application/problem+json&quot;)
+    w.WriteHeader(p.Status)
+    _ = json.NewEncoder(w).Encode(body)
+}
+</code></pre>
+<pre><code class="language-typescript">// Express: one error type + one error-handling middleware (4 arguments).
+import { STATUS_CODES } from &quot;node:http&quot;;
+import type { Request, Response, NextFunction } from &quot;express&quot;;
+
+export class Problem extends Error {
+  constructor(public status: number, public detail: string,
+              public type = &quot;about:blank&quot;, public ext: Record&lt;string, unknown&gt; = {}) {
+    super(detail);
+  }
+}
+
+export function problemDetails(err: unknown, req: Request, res: Response, _next: NextFunction) {
+  const p = err instanceof Problem ? err : new Problem(500, &quot;An unexpected error occurred.&quot;);
+  res.status(p.status).type(&quot;application/problem+json&quot;).json({
+    type: p.type, title: STATUS_CODES[p.status], status: p.status,
+    detail: p.detail, instance: req.originalUrl, ...p.ext,
+  });
+}
+// app.use(problemDetails) after all routes. NestJS: an ExceptionFilter does the same job.
+</code></pre>
+</div>
+<h2 id="pagination-offset-drifts-cursors-dont">Pagination: offset drifts, cursors don't</h2>
+<p>Any collection that can grow needs paging from day one. Adding it later is a breaking change, because clients that expected "everything" now silently get page 1. There are two families:</p>
+<ul>
+<li><strong>Offset</strong> (<code>?offset=40&amp;limit=20</code>, or <code>?page=3</code>). The server runs <code>ORDER BY … OFFSET 40 LIMIT 20</code>. Easy to build, and it lets users jump to page 37.</li>
+<li><strong>Keyset / cursor</strong> (<code>?cursor=eyJ0Ijo…</code>). The cursor encodes the sort key of the last row the client saw, and the server runs <code>WHERE (createdAt, id) &lt; (:t, :id) ORDER BY createdAt DESC, id DESC LIMIT 20</code>. It's opaque to the client, and it only moves forward (or backward with a second cursor).</li>
+</ul>
+<p>Offset has two problems that keyset doesn't. The first is <strong>correctness</strong>: an offset is a <em>position</em>, and positions shift when rows are inserted or deleted ahead of you. Watch two clients page through the same table while other users write to it:</p>
+<div class="viz" data-viz="api-design-drift"></div>
+
+<p>Every insert above the reader's position pushes rows <em>down</em> into the next page, so the reader sees them twice. Every delete pulls rows <em>up</em> past the boundary, so the reader never sees them at all. For a UI, that's a duplicate in an infinite scroll. For a sync job, an export or a billing run, a skipped row is silent data loss. Keyset doesn't care, because "everything older than order 9" means the same thing whatever happens above it.</p>
+<p>The second problem is <strong>cost</strong>. The database can't jump to row 10,000; it walks the index and throws rows away:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 170" width="760" role="img" aria-label="Offset pagination reads and discards ten thousand rows to return twenty; keyset pagination seeks directly to the cursor and reads twenty"><text class="mono" x="10" y="30">OFFSET 10000 LIMIT 20</text><rect class="box bad" x="10" y="40" width="690" height="30" rx="5"/><text class="small" x="355" y="60" text-anchor="middle">10,000 index entries read, then thrown away</text><rect class="box done" x="704" y="40" width="46" height="30" rx="5"/><text class="small" x="727" y="60" text-anchor="middle">20</text><text class="mono" x="10" y="104">WHERE (created_at, id) &lt; (:t, :id) LIMIT 20</text><line class="edge dash" x1="14" y1="129" x2="694" y2="129"/><polygon class="fill-done" points="702,129 692,124 692,134"/><text class="small muted" x="355" y="122" text-anchor="middle">B-tree seek straight to the cursor: about log₂(n) ≈ 20 steps for a million rows</text><rect class="box done" x="704" y="114" width="46" height="30" rx="5"/><text class="small" x="727" y="134" text-anchor="middle">20</text><text class="small muted" x="380" y="162" text-anchor="middle">Offset costs O(offset + limit), so page 500 is 500× slower than page 1. Keyset costs O(log n + limit) on every page.</text></svg>
+<figcaption>Deep offset pages get slower in proportion to their depth, which is exactly what crawlers and "export everything" jobs ask for. Keyset pages cost the same at any depth, provided an index matches the sort.</figcaption>
+</figure>
+
+<h3 id="the-cursor-must-name-a-unique-position">The cursor must name a unique position</h3>
+<p>Keyset has one classic bug. If the sort key isn't unique, "everything after the last price I saw" either skips rows that share that price (<code>&gt;</code>) or returns them forever (<code>&gt;=</code>). The fix is to make the sort key unique by <strong>adding the primary key as the last sort column</strong> and comparing the tuple:</p>
+<div class="viz" data-viz="api-design-ties"></div>
+
+<p>Row-value comparison <code>(price, id) &gt; (:p, :id)</code> is supported natively by PostgreSQL, MySQL 8, SQLite and Oracle. For SQL Server and ORMs that don't translate it, expand it: <code>price &gt; :p OR (price = :p AND id &gt; :id)</code>. You need a composite index on <code>(price, id)</code> for either form to seek.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// EF Core: expanded tuple comparison, fetch one extra row to learn whether there's a next page.
+public sealed record CursorData(DateTime At, long Id)
+{
+    public string Encode() =&gt; Base64Url.EncodeToString(JsonSerializer.SerializeToUtf8Bytes(this));
+    public static CursorData Decode(string s) =&gt;
+        JsonSerializer.Deserialize&lt;CursorData&gt;(Base64Url.DecodeFromChars(s)) ?? throw new FormatException();
+}
+
+public async Task&lt;Page&lt;OrderDto&gt;&gt; ListAsync(int maxPageSize, string? cursor, CancellationToken ct)
+{
+    var size = Math.Clamp(maxPageSize, 1, 100);                  // the client's size is a hint; cap it
+    IQueryable&lt;Order&gt; q = db.Orders.AsNoTracking();
+    if (cursor is not null)
+    {
+        var c = CursorData.Decode(cursor);                         // FormatException → 400 problem details
+        q = q.Where(o =&gt; o.CreatedAt &lt; c.At || (o.CreatedAt == c.At &amp;&amp; o.Id &lt; c.Id));
+    }
+    var rows = await q.OrderByDescending(o =&gt; o.CreatedAt).ThenByDescending(o =&gt; o.Id)
+        .Take(size + 1)
+        .Select(o =&gt; new OrderDto(o.Id, o.CreatedAt, o.Status))
+        .ToListAsync(ct);
+    var more = rows.Count &gt; size;
+    if (more) rows.RemoveAt(size);
+    return new Page&lt;OrderDto&gt;(rows, more ? new CursorData(rows[^1].CreatedAt, rows[^1].Id).Encode() : null);
+}
+</code></pre>
+<pre><code class="language-java">// Spring Data 3.1+: keyset scrolling is built in. Window&lt;T&gt; carries the position of every row.
+interface OrderRepository extends Repository&lt;Order, Long&gt; {
+    Window&lt;Order&gt; findFirst20ByOrderByCreatedAtDescIdDesc(ScrollPosition position);
+}
+
+Window&lt;Order&gt; first = repo.findFirst20ByOrderByCreatedAtDescIdDesc(ScrollPosition.keyset());
+if (first.hasNext()) {
+    // KeysetScrollPosition holds {createdAt, id} of the last row. Serialize its keys into an
+    // opaque cursor for the client and rebuild it with ScrollPosition.forward(keys) on the next call.
+    KeysetScrollPosition next = (KeysetScrollPosition) first.positionAt(first.size() - 1);
+    String cursor = cursors.encode(next.getKeys());
+}
+</code></pre>
+<pre><code class="language-python">import base64, json
+
+def encode_cursor(created_at: str, id_: int) -&gt; str:
+    raw = json.dumps([created_at, id_], separators=(&quot;,&quot;, &quot;:&quot;)).encode()
+    return base64.urlsafe_b64encode(raw).decode().rstrip(&quot;=&quot;)
+
+def decode_cursor(cursor: str) -&gt; tuple[str, int]:
+    pad = &quot;=&quot; * (-len(cursor) % 4)
+    created_at, id_ = json.loads(base64.urlsafe_b64decode(cursor + pad))  # ValueError → 400
+    return str(created_at), int(id_)
+
+def list_orders(db, max_page_size: int = 20, cursor: str | None = None) -&gt; dict:
+    size = max(1, min(max_page_size, 100))
+    sql, args = &quot;SELECT id, created_at, status FROM orders&quot;, []
+    if cursor:
+        sql += &quot; WHERE (created_at, id) &lt; (?, ?)&quot;            # row-value comparison: a unique position
+        args += decode_cursor(cursor)
+    sql += &quot; ORDER BY created_at DESC, id DESC LIMIT ?&quot;
+    rows = db.execute(sql, [*args, size + 1]).fetchall()    # one extra row tells us if there's more
+    page, more = rows[:size], len(rows) &gt; size
+    return {
+        &quot;value&quot;: [{&quot;id&quot;: r[0], &quot;createdAt&quot;: r[1], &quot;status&quot;: r[2]} for r in page],
+        &quot;nextCursor&quot;: encode_cursor(page[-1][1], page[-1][0]) if more else None,
+    }
+</code></pre>
+<pre><code class="language-go">type cursor struct {
+    At time.Time `json:&quot;t&quot;`
+    ID int64     `json:&quot;i&quot;`
+}
+
+func (c cursor) encode() string { b, _ := json.Marshal(c); return base64.RawURLEncoding.EncodeToString(b) }
+
+func decodeCursor(s string) (c cursor, err error) {
+    b, err := base64.RawURLEncoding.DecodeString(s)
+    if err == nil {
+        err = json.Unmarshal(b, &amp;c)
+    }
+    return c, err
+}
+
+func (s *Store) ListOrders(ctx context.Context, maxPageSize int, after string) ([]Order, string, error) {
+    size := min(max(maxPageSize, 1), 100)
+    q, args := `SELECT id, created_at, status FROM orders`, []any{}
+    if after != &quot;&quot; {
+        c, err := decodeCursor(after)
+        if err != nil {
+            return nil, &quot;&quot;, ErrBadCursor // → 400
+        }
+        q += ` WHERE (created_at, id) &lt; ($1, $2)`
+        args = append(args, c.At, c.ID)
+    }
+    q += fmt.Sprintf(` ORDER BY created_at DESC, id DESC LIMIT %d`, size+1) // an int, never user text
+    rows, err := s.db.QueryContext(ctx, q, args...)
+    if err != nil {
+        return nil, &quot;&quot;, err
+    }
+    defer rows.Close()
+    var out []Order
+    for rows.Next() {
+        var o Order
+        if err := rows.Scan(&amp;o.ID, &amp;o.CreatedAt, &amp;o.Status); err != nil {
+            return nil, &quot;&quot;, err
+        }
+        out = append(out, o)
+    }
+    next := &quot;&quot;
+    if len(out) &gt; size {
+        out = out[:size]
+        next = cursor{At: out[size-1].CreatedAt, ID: out[size-1].ID}.encode()
+    }
+    return out, next, rows.Err()
+}
+</code></pre>
+<pre><code class="language-typescript">// node-postgres. The cursor is base64url JSON; validate it like any other input.
+const encode = (c: { t: string; i: number }) =&gt; Buffer.from(JSON.stringify(c)).toString(&quot;base64url&quot;);
+const decode = (s: string) =&gt; {
+  const c = JSON.parse(Buffer.from(s, &quot;base64url&quot;).toString());
+  if (typeof c?.t !== &quot;string&quot; || !Number.isInteger(c?.i)) throw new Problem(400, &quot;Invalid cursor&quot;);
+  return c as { t: string; i: number };
+};
+
+app.get(&quot;/v1/orders&quot;, async (req, res) =&gt; {
+  const size = Math.min(Math.max(Number(req.query.maxpagesize) || 20, 1), 100);
+  const c = typeof req.query.cursor === &quot;string&quot; ? decode(req.query.cursor) : null;
+  const { rows } = await pool.query(
+    `SELECT id, created_at, status FROM orders
+     WHERE ($1::timestamptz IS NULL OR (created_at, id) &lt; ($1, $2))
+     ORDER BY created_at DESC, id DESC LIMIT $3`,
+    [c?.t ?? null, c?.i ?? null, size + 1]);
+  const page = rows.slice(0, size), last = page[page.length - 1];
+  const nextLink = rows.length &gt; size
+    ? `/v1/orders?maxpagesize=${size}&amp;cursor=${encode({ t: last.created_at.toISOString(), i: last.id })}`
+    : undefined;
+  res.json({ value: page, nextLink });
+});
+</code></pre>
+</div>
+<h3 id="response-shape-and-the-rules-around-it">Response shape and the rules around it</h3>
+<table>
+<thead>
+<tr>
+<th>Convention</th>
+<th>Shape</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft REST / Azure guidelines</td>
+<td><code>{ "value": [...], "nextLink": "https://…" }</code></td>
+<td><code>nextLink</code> is a full URL that already contains the cursor and every filter; clients just follow it. Absent on the last page.</td>
+</tr>
+<tr>
+<td>Google AIP-158</td>
+<td><code>{ "orders": [...], "nextPageToken": "…" }</code></td>
+<td>The client sends <code>pageToken</code> and <code>pageSize</code>. An empty token means the end.</td>
+</tr>
+<tr>
+<td>RFC 8288 <code>Link</code> header</td>
+<td><code>Link: &lt;…?cursor=abc&gt;; rel="next"</code></td>
+<td>Keeps the body a plain array. GitHub's API uses it.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>The page size is a maximum, not a promise.</strong> The server may return fewer items (even zero) and still have a next page, for example when filtering on top of a scan. Clients must loop until there's no next link, not until a page comes back short.</li>
+<li><strong>Cursors are opaque.</strong> Base64 stops clients from depending on the format, not attackers from reading it. If a cursor contains anything sensitive or abusable, encrypt or sign it. Always validate it as untrusted input.</li>
+<li><strong>Cursors must carry the query.</strong> If page 2 is requested with a different filter or sort than page 1, reject it (<code>400</code>), or embed the filter in the cursor and ignore the new parameters.</li>
+<li><strong>Total counts are expensive.</strong> <code>COUNT(*)</code> over a big filtered table can cost more than the page itself. Make it opt-in (<code>?count=true</code>), approximate, or leave it out.</li>
+<li><strong>Offset is still fine</strong> for small, slowly changing collections that a human pages through and wants "jump to page 7" (an admin grid of 300 rows). Use keyset for anything large, fast-changing or machine-consumed.</li>
+</ul>
+<h2 id="filtering-sorting-and-field-selection">Filtering, sorting and field selection</h2>
+<p>Filters are query parameters on the collection. Keep the grammar boring and predictable:</p>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Common convention</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Equality filter</td>
+<td><code>field=value</code></td>
+<td><code>?status=open&amp;customerId=42</code></td>
+</tr>
+<tr>
+<td>Range</td>
+<td>suffixed names or operators</td>
+<td><code>?createdAfter=2026-01-01T00:00:00Z</code>, <code>?total.gte=100</code></td>
+</tr>
+<tr>
+<td>Rich expressions</td>
+<td>OData <code>$filter</code>, Google AIP-160 <code>filter</code></td>
+<td><code>?$filter=status eq 'open' and total gt 100</code></td>
+</tr>
+<tr>
+<td>Sorting</td>
+<td>comma list, <code>-</code> for descending</td>
+<td><code>?sort=-createdAt,id</code> (OData: <code>$orderby=createdAt desc</code>)</td>
+</tr>
+<tr>
+<td>Sparse fields</td>
+<td><code>fields</code> / <code>$select</code> / <code>read_mask</code></td>
+<td><code>?fields=id,status,total</code></td>
+</tr>
+<tr>
+<td>Embedding related data</td>
+<td><code>expand</code> / <code>$expand</code></td>
+<td><code>?expand=customer</code></td>
+</tr>
+</tbody>
+</table>
+<p>Every filterable and sortable field is a <strong>promise of an index</strong>. A free-form <code>sort</code> parameter lets any client ask for <code>ORDER BY notes</code> on 50 million rows. So: allow-list fields explicitly, map public names to columns (never interpolate the parameter into SQL), and reject unknown fields with <code>400</code> rather than ignoring them, so a typo like <code>?staus=open</code> doesn't silently return everything.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">static readonly Dictionary&lt;string, Expression&lt;Func&lt;Order, object&gt;&gt;&gt; Sortable = new(StringComparer.OrdinalIgnoreCase)
+{
+    [&quot;createdAt&quot;] = o =&gt; o.CreatedAt,
+    [&quot;total&quot;] = o =&gt; o.Total,
+};
+
+static IOrderedQueryable&lt;Order&gt; ApplySort(IQueryable&lt;Order&gt; q, string? sort)
+{
+    var field = (sort ?? &quot;-createdAt&quot;).TrimStart('-');
+    if (!Sortable.TryGetValue(field, out var key))
+        throw new BadRequestException($&quot;Can't sort by '{field}'. Allowed: {string.Join(&quot;, &quot;, Sortable.Keys)}.&quot;);
+    var sorted = sort?.StartsWith('-') != false ? q.OrderByDescending(key) : q.OrderBy(key);
+    return sorted.ThenByDescending(o =&gt; o.Id);       // unique tie-breaker, always last
+}
+</code></pre>
+<pre><code class="language-python">SORTABLE = {&quot;createdAt&quot;: &quot;created_at&quot;, &quot;total&quot;: &quot;total&quot;}   # public name → column
+
+def order_by(sort: str | None) -&gt; str:
+    sort = sort or &quot;-createdAt&quot;
+    desc, field = sort.startswith(&quot;-&quot;), sort.lstrip(&quot;-&quot;)
+    column = SORTABLE.get(field)
+    if column is None:
+        raise Problem(400, f&quot;Can't sort by {field!r}. Allowed: {', '.join(SORTABLE)}.&quot;)
+    direction = &quot;DESC&quot; if desc else &quot;ASC&quot;
+    return f&quot;ORDER BY {column} {direction}, id {direction}&quot;   # only allow-listed text reaches SQL
+</code></pre>
+<pre><code class="language-typescript">const SORTABLE = { createdAt: &quot;created_at&quot;, total: &quot;total&quot; } as const;
+
+function orderBy(sort = &quot;-createdAt&quot;): string {
+  const desc = sort.startsWith(&quot;-&quot;);
+  const field = sort.replace(/^-/, &quot;&quot;);
+  if (!Object.hasOwn(SORTABLE, field)) {
+    throw new Problem(400, `Can't sort by '${field}'. Allowed: ${Object.keys(SORTABLE).join(&quot;, &quot;)}.`);
+  }
+  const dir = desc ? &quot;DESC&quot; : &quot;ASC&quot;;
+  return `ORDER BY ${SORTABLE[field as keyof typeof SORTABLE]} ${dir}, id ${dir}`;
+}
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: filters that leak or explode</strong>
+A generic <code>$filter</code> over your ORM can let a client filter on fields it's not allowed to <em>see</em> (<code>?$filter=salary gt 100000</code> reveals salaries one bit at a time), or build a query that scans the whole table. Expose generic filtering only through a vetted library with field-level allow-lists and query cost limits, and always apply the caller's tenant/owner filter <em>in addition to</em> theirs, never instead of it.</p>
+</div>
+<h2 id="idempotency-keys-making-post-safe-to-retry">Idempotency keys: making POST safe to retry</h2>
+<p><code>POST</code> is the one method that clients most need to retry (create the order, charge the card) and the one that HTTP says isn't safe to retry. A timeout doesn't tell the client whether the server never got the request or processed it and lost the response. Retrying risks a duplicate; not retrying risks losing the order.</p>
+<p>The fix, popularised by Stripe and now an IETF draft (the <code>Idempotency-Key</code> header), is for the client to generate a unique key per <em>intended operation</em> and send it with every attempt. The server remembers the key with a fingerprint of the request and the response it produced:</p>
+<ol>
+<li><strong>First time it sees the key</strong>: atomically record it as "in progress", do the work, store the response.</li>
+<li><strong>Key seen, finished, same fingerprint</strong>: replay the stored response. Don't do the work again.</li>
+<li><strong>Key seen, still in progress</strong>: <code>409 Conflict</code>. Two attempts are racing (double-click, aggressive retry).</li>
+<li><strong>Key seen with a different request body</strong>: <code>422 Unprocessable Content</code>. The client reused a key for a different operation, which is a client bug worth surfacing loudly.</li>
+</ol>
+<div class="viz" data-viz="api-design-idempotency"></div>
+
+<p>Run all three scenarios with the key off, then on. Without a key, the "lost response" scenario creates two orders and charges twice. With one, the retry gets the original <code>201</code> back byte for byte, and the payment provider is called once. The design details are where implementations go wrong:</p>
+<ul>
+<li><strong>The claim must be atomic.</strong> "Check if the key exists, then insert" races. Use <code>SET key value NX EX ttl</code> in Redis, or an <code>INSERT</code> that relies on a unique constraint in SQL.</li>
+<li><strong>Scope keys to the caller.</strong> Store <code>account:key</code>, never just <code>key</code>, or one customer can replay another customer's response.</li>
+<li><strong>Fingerprint the request</strong> (method, path, canonical body) so a reused key with a different payload is detected instead of silently replaying the wrong order.</li>
+<li><strong>Keep the record for longer than any client retries</strong>: 24 hours is the usual choice.</li>
+<li><strong>Store the key in the same transaction as the business write</strong> when they share a database. Otherwise a crash between "order committed" and "key marked done" leaves a key stuck in progress, or, worse, a forgotten key that permits a duplicate.</li>
+<li><strong>Failures before any side effect release the key</strong> so the client can retry. Failures <em>after</em> a side effect must be stored and replayed like successes.</li>
+</ul>
+<div class="code-tabs">
+<pre><code class="language-csharp">// StackExchange.Redis for the atomic claim; the order service does the real work.
+public sealed class IdempotentOrders(IDatabase redis, OrderService orders)
+{
+    static readonly TimeSpan Ttl = TimeSpan.FromHours(24);
+    sealed record Entry(string Fingerprint, string State, string? Location, OrderDto? Order);
+
+    public async Task&lt;IResult&gt; CreateAsync(string account, string key, CreateOrder body)
+    {
+        var scope = $&quot;idem:{account}:{key}&quot;;                       // per caller, never global
+        var fp = Convert.ToHexString(SHA256.HashData(JsonSerializer.SerializeToUtf8Bytes(body)));
+        var claim = JsonSerializer.Serialize(new Entry(fp, &quot;in_progress&quot;, null, null));
+
+        if (!await redis.StringSetAsync(scope, claim, Ttl, When.NotExists))   // atomic: SET NX EX
+        {
+            var raw = await redis.StringGetAsync(scope);
+            if (raw.IsNull) return TypedResults.Problem(statusCode: 409, title: &quot;Please retry&quot;);
+            var e = JsonSerializer.Deserialize&lt;Entry&gt;(raw.ToString())!;
+            if (e.Fingerprint != fp)
+                return TypedResults.Problem(statusCode: 422, title: &quot;Idempotency-Key reused with a different body&quot;);
+            if (e.State == &quot;in_progress&quot;)
+                return TypedResults.Problem(statusCode: 409, title: &quot;A request with this key is in progress&quot;);
+            return TypedResults.Created(e.Location, e.Order);                   // replay the original 201
+        }
+        try
+        {
+            var order = await orders.CreateAsync(body);
+            var done = new Entry(fp, &quot;done&quot;, $&quot;/v1/orders/{order.Id}&quot;, order);
+            await redis.StringSetAsync(scope, JsonSerializer.Serialize(done), Ttl);
+            return TypedResults.Created(done.Location, order);
+        }
+        catch (ValidationException)
+        {
+            await redis.KeyDeleteAsync(scope);    // nothing happened: let the client fix and retry
+            throw;
+        }
+    }
+}
+</code></pre>
+<pre><code class="language-java">// One SQL transaction holds both the key row and the order: they commit or roll back together.
+// A concurrent request with the same key blocks on the unique index until we commit, then replays.
+@Transactional
+public ResponseEntity&lt;?&gt; create(String account, String key, CreateOrder body) throws Exception {
+    String scope = account + &quot;:&quot; + key;
+    String fp = HexFormat.of().formatHex(
+            MessageDigest.getInstance(&quot;SHA-256&quot;).digest(json.writeValueAsBytes(body)));
+    int claimed = jdbc.update(&quot;&quot;&quot;
+            INSERT INTO idempotency_keys (scope, fingerprint, state, expires_at)
+            VALUES (?, ?, 'in_progress', now() + interval '24 hours')
+            ON CONFLICT (scope) DO NOTHING&quot;&quot;&quot;, scope, fp);
+    if (claimed == 0) {
+        Map&lt;String, Object&gt; row = jdbc.queryForMap(
+                &quot;SELECT fingerprint, state, status, body FROM idempotency_keys WHERE scope = ?&quot;, scope);
+        if (!fp.equals(row.get(&quot;fingerprint&quot;)))
+            return problem(HttpStatus.UNPROCESSABLE_ENTITY, &quot;Idempotency-Key reused with a different body&quot;);
+        if (&quot;in_progress&quot;.equals(row.get(&quot;state&quot;)))
+            return problem(HttpStatus.CONFLICT, &quot;A request with this key is in progress&quot;);
+        return ResponseEntity.status((Integer) row.get(&quot;status&quot;)).body(json.readTree((String) row.get(&quot;body&quot;)));
+    }
+    OrderDto order = orders.create(body);                         // same transaction as the key row
+    jdbc.update(&quot;UPDATE idempotency_keys SET state = 'done', status = 201, body = ? WHERE scope = ?&quot;,
+            json.writeValueAsString(order), scope);
+    return ResponseEntity.created(URI.create(&quot;/v1/orders/&quot; + order.id())).body(order);
+}
+</code></pre>
+<pre><code class="language-python">import hashlib, json, threading, time
+from dataclasses import dataclass
+
+@dataclass
+class Entry:
+    fingerprint: str
+    state: str                       # &quot;in_progress&quot; | &quot;done&quot;
+    response: tuple | None = None
+    expires: float = 0.0
+
+class IdempotencyStore:
+    &quot;&quot;&quot;In-memory for clarity. Production: Redis SET NX EX, or a SQL table with a unique key.&quot;&quot;&quot;
+    def __init__(self, ttl: float = 24 * 3600):
+        self._lock, self._data, self._ttl = threading.Lock(), {}, ttl
+
+    def begin(self, scope: str, fingerprint: str):
+        now = time.monotonic()
+        with self._lock:                                   # check-and-claim is ONE atomic step
+            e = self._data.get(scope)
+            if e is None or e.expires &lt; now:
+                self._data[scope] = Entry(fingerprint, &quot;in_progress&quot;, None, now + self._ttl)
+                return &quot;new&quot;, None
+            if e.fingerprint != fingerprint:
+                return &quot;mismatch&quot;, None
+            return (&quot;busy&quot;, None) if e.state == &quot;in_progress&quot; else (&quot;replay&quot;, e.response)
+
+    def finish(self, scope: str, response: tuple) -&gt; None:
+        with self._lock:
+            e = self._data[scope]
+            e.state, e.response = &quot;done&quot;, response
+
+    def release(self, scope: str) -&gt; None:
+        with self._lock:
+            self._data.pop(scope, None)
+
+def fingerprint(method: str, path: str, body: dict) -&gt; str:
+    canonical = json.dumps(body, sort_keys=True, separators=(&quot;,&quot;, &quot;:&quot;))
+    return hashlib.sha256(f&quot;{method} {path} {canonical}&quot;.encode()).hexdigest()
+
+def create_order(store: IdempotencyStore, account: str, key: str, body: dict, create) -&gt; tuple:
+    scope = f&quot;{account}:{key}&quot;
+    state, saved = store.begin(scope, fingerprint(&quot;POST&quot;, &quot;/v1/orders&quot;, body))
+    if state == &quot;replay&quot;:
+        return saved
+    if state == &quot;busy&quot;:
+        return 409, {&quot;title&quot;: &quot;A request with this key is in progress&quot;}
+    if state == &quot;mismatch&quot;:
+        return 422, {&quot;title&quot;: &quot;Idempotency-Key reused with a different body&quot;}
+    try:
+        response = (201, create(body))
+    except ValueError:                 # validation failed before any side effect
+        store.release(scope)
+        raise
+    store.finish(scope, response)
+    return response
+</code></pre>
+<pre><code class="language-typescript">// Express middleware with ioredis. Mount it on the POST routes that need it.
+import { createHash } from &quot;node:crypto&quot;;
+
+export const idempotency = (redis: Redis) =&gt; async (req: Request, res: Response, next: NextFunction) =&gt; {
+  const key = req.get(&quot;Idempotency-Key&quot;);
+  if (!key) return next(new Problem(400, &quot;Idempotency-Key header is required&quot;));
+  const scope = `idem:${res.locals.accountId}:${key}`;
+  const fp = createHash(&quot;sha256&quot;).update(`${req.method} ${req.path} ${JSON.stringify(req.body)}`).digest(&quot;hex&quot;);
+
+  const claimed = await redis.set(scope, JSON.stringify({ fp, state: &quot;in_progress&quot; }), &quot;EX&quot;, 86_400, &quot;NX&quot;);
+  if (!claimed) {
+    const saved = JSON.parse((await redis.get(scope)) ?? &quot;null&quot;);
+    if (!saved) return next(new Problem(409, &quot;Please retry&quot;));
+    if (saved.fp !== fp) return next(new Problem(422, &quot;Idempotency-Key reused with a different body&quot;));
+    if (saved.state === &quot;in_progress&quot;) return next(new Problem(409, &quot;A request with this key is in progress&quot;));
+    if (saved.location) res.location(saved.location);
+    return res.status(saved.status).json(saved.body);              // replay
+  }
+  const json = res.json.bind(res);
+  res.json = (body: unknown) =&gt; {                                    // capture what the handler sends
+    const write = res.statusCode &gt;= 500 || res.statusCode === 400 || res.statusCode === 422
+      ? redis.del(scope)                                             // nothing happened: allow a retry
+      : redis.set(scope, JSON.stringify({ fp, state: &quot;done&quot;, status: res.statusCode,
+          location: res.get(&quot;Location&quot;), body }), &quot;EX&quot;, 86_400);
+    write.catch(() =&gt; {});
+    return json(body);
+  };
+  next();
+};
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Insight: idempotency is end to end</strong>
+An idempotency key on your API only helps if everything <em>behind</em> it is idempotent too. Pass a derived key to the payment provider (Stripe, Adyen and others accept one), make queue consumers deduplicate by message id, and use "insert if absent" for side effects. A retry that's safe at the front door but sends two emails at the back is still a bug. See <a href="resilience.html">Resilience Patterns</a> for the client side: retry only idempotent operations, with backoff and jitter.</p>
+</div>
+<h2 id="etags-and-conditional-requests-no-more-lost-updates">ETags and conditional requests: no more lost updates</h2>
+<p>Two people open the same document. Alice changes the title, Bob changes the status, and both press Save. With a plain <code>PUT</code>, the server accepts both, and whoever saves second overwrites the other's change with the stale copy they loaded. Nobody gets an error. This is the <strong>lost update</strong>, and it's the default behaviour of almost every CRUD API.</p>
+<p>HTTP's built-in fix is <strong>optimistic concurrency</strong> with entity tags:</p>
+<ol>
+<li>Every representation carries an <code>ETag</code>: an opaque version (a row version, a hash or a counter).</li>
+<li>The client sends it back on writes: <code>If-Match: "3"</code>.</li>
+<li>The server applies the write <strong>only if the current version is still <code>"3"</code></strong>; otherwise it answers <code>412 Precondition Failed</code>, and the client re-reads, re-applies its change and tries again.</li>
+</ol>
+<div class="viz" data-viz="api-design-etag"></div>
+
+<p>Compare the three modes. Last-write-wins loses Alice's title and tells her nothing. <code>If-Match</code> turns the silent loss into a <code>412</code> that Bob's client handles by re-reading and re-applying, so both changes survive. A field-level <code>PATCH</code> happens to survive here because the edits touch different fields, but it still silently overwrites when two people change the <em>same</em> field. <code>PATCH</code> plus <code>If-Match</code> is the safe default.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// The compare-and-set happens in the database, in one statement: no read-then-write race.
+orders.MapPut(&quot;/{id:int}&quot;, async Task&lt;IResult&gt; (int id, ReplaceOrder body, HttpRequest req, HttpResponse res, AppDb db) =&gt;
+{
+    if (req.Headers.IfMatch.Count == 0)
+        return TypedResults.Problem(statusCode: 428, title: &quot;If-Match is required for updates&quot;);
+    if (!uint.TryParse(req.Headers.IfMatch.ToString().Trim('&quot;'), out var version))
+        return TypedResults.Problem(statusCode: 412, title: &quot;Unknown ETag&quot;);
+
+    var rows = await db.Orders
+        .Where(o =&gt; o.Id == id &amp;&amp; o.Version == version)
+        .ExecuteUpdateAsync(s =&gt; s
+            .SetProperty(o =&gt; o.Status, body.Status)
+            .SetProperty(o =&gt; o.Notes, body.Notes)
+            .SetProperty(o =&gt; o.Version, o =&gt; o.Version + 1));
+
+    if (rows == 0)
+        return await db.Orders.AnyAsync(o =&gt; o.Id == id)
+            ? TypedResults.Problem(statusCode: 412, title: &quot;The order changed since you read it&quot;)
+            : TypedResults.NotFound();
+    res.Headers.ETag = $&quot;\&quot;{version + 1}\&quot;&quot;;
+    return TypedResults.NoContent();
+});
+// EF Core alternative: mark Version as [ConcurrencyCheck] (or a SQL Server rowversion) and
+// map DbUpdateConcurrencyException to 412.
+</code></pre>
+<pre><code class="language-java">@PutMapping(&quot;/{id}&quot;)
+ResponseEntity&lt;?&gt; replace(@PathVariable long id,
+                          @RequestHeader(value = &quot;If-Match&quot;, required = false) String ifMatch,
+                          @Valid @RequestBody ReplaceOrder body) {
+    if (ifMatch == null) return ResponseEntity.status(HttpStatus.PRECONDITION_REQUIRED).build();   // 428
+    long version;
+    try { version = Long.parseLong(ifMatch.replace(&quot;\&quot;&quot;, &quot;&quot;)); }
+    catch (NumberFormatException e) { return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).build(); }
+
+    int rows = jdbc.update(
+        &quot;UPDATE orders SET status = ?, notes = ?, version = version + 1 WHERE id = ? AND version = ?&quot;,
+        body.status(), body.notes(), id, version);
+    if (rows == 0)
+        return repo.existsById(id) ? ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).build()
+                                   : ResponseEntity.notFound().build();
+    return ResponseEntity.noContent().eTag(&quot;\&quot;&quot; + (version + 1) + &quot;\&quot;&quot;).build();
+}
+// JPA alternative: a @Version field; Spring throws OptimisticLockingFailureException → map to 412.
+</code></pre>
+<pre><code class="language-python">def replace_order(db, order_id: int, if_match: str | None, body: dict) -&gt; tuple[int, dict]:
+    if if_match is None:
+        return 428, {&quot;title&quot;: &quot;If-Match is required for updates&quot;}
+    try:
+        version = int(if_match.strip('&quot;'))
+    except ValueError:
+        return 412, {&quot;title&quot;: &quot;Unknown ETag&quot;}
+    cur = db.execute(
+        &quot;UPDATE orders SET status = ?, notes = ?, version = version + 1 WHERE id = ? AND version = ?&quot;,
+        (body[&quot;status&quot;], body[&quot;notes&quot;], order_id, version))
+    if cur.rowcount == 0:
+        exists = db.execute(&quot;SELECT 1 FROM orders WHERE id = ?&quot;, (order_id,)).fetchone()
+        return (412, {&quot;title&quot;: &quot;The order changed since you read it&quot;}) if exists else (404, {&quot;title&quot;: &quot;Not found&quot;})
+    db.commit()
+    return 204, {&quot;ETag&quot;: f'&quot;{version + 1}&quot;'}
+</code></pre>
+<pre><code class="language-go">func (h *Handler) ReplaceOrder(w http.ResponseWriter, r *http.Request) {
+    ifMatch := r.Header.Get(&quot;If-Match&quot;)
+    if ifMatch == &quot;&quot; {
+        writeProblem(w, r, Problem{Status: http.StatusPreconditionRequired, Detail: &quot;If-Match is required&quot;})
+        return
+    }
+    version, err := strconv.ParseInt(strings.Trim(ifMatch, `&quot;`), 10, 64)
+    if err != nil {
+        writeProblem(w, r, Problem{Status: http.StatusPreconditionFailed, Detail: &quot;unknown ETag&quot;})
+        return
+    }
+    var body ReplaceOrder
+    if err := json.NewDecoder(r.Body).Decode(&amp;body); err != nil {
+        writeProblem(w, r, Problem{Status: http.StatusBadRequest, Detail: &quot;malformed JSON&quot;})
+        return
+    }
+    res, err := h.db.ExecContext(r.Context(),
+        `UPDATE orders SET status = $1, notes = $2, version = version + 1 WHERE id = $3 AND version = $4`,
+        body.Status, body.Notes, r.PathValue(&quot;id&quot;), version)
+    if err != nil {
+        writeProblem(w, r, Problem{Status: http.StatusInternalServerError})
+        return
+    }
+    if n, _ := res.RowsAffected(); n == 0 {
+        writeProblem(w, r, Problem{Status: h.existsOr404(r), Detail: &quot;the order changed since you read it&quot;})
+        return
+    }
+    w.Header().Set(&quot;ETag&quot;, fmt.Sprintf(`&quot;%d&quot;`, version+1))
+    w.WriteHeader(http.StatusNoContent)
+}
+</code></pre>
+<pre><code class="language-typescript">app.put(&quot;/v1/orders/:id&quot;, async (req, res) =&gt; {
+  const ifMatch = req.get(&quot;If-Match&quot;);
+  if (!ifMatch) throw new Problem(428, &quot;If-Match is required for updates&quot;);
+  const version = Number(ifMatch.replaceAll('&quot;', &quot;&quot;));
+  if (!Number.isInteger(version)) throw new Problem(412, &quot;Unknown ETag&quot;);
+
+  const body = ReplaceOrder.parse(req.body);                 // zod: 422 on failure
+  const { rowCount } = await pool.query(
+    &quot;UPDATE orders SET status = $1, notes = $2, version = version + 1 WHERE id = $3 AND version = $4&quot;,
+    [body.status, body.notes, req.params.id, version]);
+  if (rowCount === 0) {
+    const { rowCount: exists } = await pool.query(&quot;SELECT 1 FROM orders WHERE id = $1&quot;, [req.params.id]);
+    throw exists ? new Problem(412, &quot;The order changed since you read it&quot;) : new Problem(404, &quot;Not found&quot;);
+  }
+  res.set(&quot;ETag&quot;, `&quot;${version + 1}&quot;`).status(204).end();
+});
+</code></pre>
+</div>
+<p>The same headers do double duty for caching. <code>GET</code> with <code>If-None-Match: "3"</code> returns <code>304 Not Modified</code> with no body when the version hasn't changed, which saves bandwidth and serialization on every poll. That half of the story lives in <a href="caching.html#http-caching-let-someone-else-store-it">Caching: HTTP caching</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Header</th>
+<th>Sent with</th>
+<th>Meaning</th>
+<th>Failure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>If-Match: "3"</code></td>
+<td><code>PUT</code>, <code>PATCH</code>, <code>DELETE</code></td>
+<td>Only if the current version is <code>"3"</code></td>
+<td><code>412</code></td>
+</tr>
+<tr>
+<td><code>If-Match: *</code></td>
+<td><code>PUT</code></td>
+<td>Only if it exists (update, never create)</td>
+<td><code>412</code></td>
+</tr>
+<tr>
+<td><code>If-None-Match: *</code></td>
+<td><code>PUT</code></td>
+<td>Only if it does <strong>not</strong> exist (create, never overwrite)</td>
+<td><code>412</code></td>
+</tr>
+<tr>
+<td><code>If-None-Match: "3"</code></td>
+<td><code>GET</code>, <code>HEAD</code></td>
+<td>Send it only if it changed</td>
+<td><code>304</code> (not an error)</td>
+</tr>
+<tr>
+<td><em>(missing If-Match)</em></td>
+<td>writes, when you require it</td>
+<td>You demand optimistic concurrency</td>
+<td><code>428</code></td>
+</tr>
+</tbody>
+</table>
+<div class="tip">
+<p><strong>Tip: strong vs weak ETags</strong>
+<code>W/"3"</code> is a <em>weak</em> ETag ("semantically equivalent", for example the same data with different gzip). <code>If-Match</code> uses strong comparison, so weak ETags never match it. Use strong ETags derived from a version column for anything you write against. Weak ETags generated by hashing the response body (Express does this by default) are fine for <code>304</code>s but useless for concurrency.</p>
+</div>
+<h2 id="long-running-operations-202-and-a-status-monitor">Long-running operations: 202 and a status monitor</h2>
+<p>Some requests take longer than anyone should hold an HTTP connection open for: generating a report, provisioning a VM, transcoding a video. Load balancers and gateways time out after 30–120 seconds, mobile networks drop, and a thread blocked for minutes is a thread that can't serve anyone else. The standard answer is the <strong>asynchronous request-reply</strong> pattern:</p>
+<ol>
+<li><code>POST /reports</code> validates the request, queues the work, and answers immediately with <code>202 Accepted</code> and the URL of a <strong>status monitor</strong> resource (<code>Location</code> or Azure's <code>Operation-Location</code>), plus <code>Retry-After</code>.</li>
+<li>The client polls <code>GET /operations/{id}</code>. It returns <code>200</code> with <code>{"status": "Running", "percentComplete": 40}</code> while the work runs.</li>
+<li>When the status is terminal, the monitor links to the result (<code>resourceLocation</code>) or carries an error. The client follows the link.</li>
+</ol>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 210" width="760" role="img" aria-label="Operation status lifecycle: NotStarted to Running, then to one of the terminal states Succeeded, Failed or Canceled; Succeeded links to the result"><defs><marker id="api-design-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker></defs><rect class="box visit" x="20" y="84" width="130" height="40" rx="8"/><text x="85" y="109" text-anchor="middle">NotStarted</text><rect class="box active" x="210" y="84" width="130" height="40" rx="8"/><text x="275" y="109" text-anchor="middle">Running</text><text class="small muted" x="275" y="46" text-anchor="middle">each poll: 200 {status, percentComplete}</text><path class="edge" d="M255,84 C245,56 305,56 295,84" marker-end="url(#api-design-ar)"/><rect class="box done" x="430" y="24" width="140" height="40" rx="8"/><text x="500" y="49" text-anchor="middle">Succeeded</text><rect class="box bad" x="430" y="84" width="140" height="40" rx="8"/><text x="500" y="109" text-anchor="middle">Failed</text><rect class="box" x="430" y="144" width="140" height="40" rx="8"/><text x="500" y="169" text-anchor="middle">Canceled</text><rect class="box accent" x="610" y="24" width="140" height="40" rx="8"/><text class="mono small" x="680" y="42" text-anchor="middle">GET</text><text class="mono small" x="680" y="56" text-anchor="middle">resourceLocation</text><path class="edge" d="M150,104 L206,104" marker-end="url(#api-design-ar)"/><path class="edge done" d="M340,98 L426,48" marker-end="url(#api-design-ar)"/><path class="edge bad" d="M340,104 L426,104" marker-end="url(#api-design-ar)"/><path class="edge" d="M340,110 L426,160" marker-end="url(#api-design-ar)"/><path class="edge accent" d="M570,44 L606,44" marker-end="url(#api-design-ar)"/><path class="edge dash" d="M85,124 C85,190 300,190 426,170" marker-end="url(#api-design-ar)"/><text class="small muted" x="200" y="200" text-anchor="middle">DELETE /operations/{id} or POST …:cancel</text><line class="edge dash" x1="590" y1="20" x2="590" y2="190"/><text class="small muted" x="680" y="120" text-anchor="middle">terminal states</text><text class="small muted" x="680" y="136" text-anchor="middle">never change again;</text><text class="small muted" x="680" y="152" text-anchor="middle">keep them ~24 h</text></svg>
+<figcaption>The status monitor is a resource with a small, fixed state machine (Azure's names shown; Google AIP-151 uses an Operation with <code>done</code>, <code>error</code> and <code>response</code>). A failed operation is reported with a <code>200</code> from the monitor: the poll succeeded, the work didn't.</figcaption>
+</figure>
+
+<p>Polling is a trade-off between latency (how soon the client notices) and load (how many requests it spends noticing). <code>Retry-After</code> lets the <em>server</em> choose the trade-off, which is why well-behaved clients honour it. Change the client behaviour below and watch the wasted polls and the detection delay move in opposite directions:</p>
+<div class="viz" data-viz="api-design-lro"></div>
+
+<div class="code-tabs">
+<pre><code class="language-csharp">// Server: accept, enqueue, point at the monitor.
+app.MapPost(&quot;/v1/reports&quot;, async (ReportRequest req, IOperationStore ops, Channel&lt;Job&gt; queue, HttpResponse res) =&gt;
+{
+    var op = await ops.CreateAsync(kind: &quot;report&quot;);                  // status = NotStarted
+    await queue.Writer.WriteAsync(new Job(op.Id, req));              // a BackgroundService consumes it
+    res.Headers[&quot;Operation-Location&quot;] = $&quot;/v1/operations/{op.Id}&quot;;
+    res.Headers.RetryAfter = &quot;5&quot;;
+    return TypedResults.Accepted($&quot;/v1/operations/{op.Id}&quot;, op);     // 202 + Location
+});
+
+app.MapGet(&quot;/v1/operations/{id}&quot;, async (string id, IOperationStore ops, HttpResponse res) =&gt;
+{
+    if (await ops.FindAsync(id) is not { } op) return Results.NotFound();
+    if (!op.IsTerminal) res.Headers.RetryAfter = &quot;5&quot;;
+    return Results.Ok(op);  // { id, status, percentComplete, resourceLocation?, error? }
+});
+</code></pre>
+<pre><code class="language-python"># Client: honour Retry-After, cap the total wait, follow resourceLocation.
+import time
+import httpx
+
+TERMINAL = {&quot;Succeeded&quot;, &quot;Failed&quot;, &quot;Canceled&quot;}
+
+def run_report(client: httpx.Client, body: dict, timeout_s: float = 600) -&gt; dict:
+    r = client.post(&quot;/v1/reports&quot;, json=body)
+    if r.status_code != 202:
+        r.raise_for_status()
+        return r.json()                                    # finished synchronously after all
+    monitor = r.headers.get(&quot;Operation-Location&quot;) or r.headers[&quot;Location&quot;]
+    deadline = time.monotonic() + timeout_s
+    while True:
+        time.sleep(min(float(r.headers.get(&quot;Retry-After&quot;, 5)), 60))
+        r = client.get(monitor)
+        r.raise_for_status()
+        op = r.json()
+        if op[&quot;status&quot;] in TERMINAL:
+            break
+        if time.monotonic() &gt; deadline:
+            raise TimeoutError(f&quot;operation {monitor} still {op['status']}&quot;)
+    if op[&quot;status&quot;] != &quot;Succeeded&quot;:
+        raise RuntimeError(op.get(&quot;error&quot;, op[&quot;status&quot;]))
+    return client.get(op[&quot;resourceLocation&quot;]).json()
+</code></pre>
+<pre><code class="language-go">// Client side in Go: the same loop, cancellable through the context.
+func waitForOperation(ctx context.Context, c *http.Client, monitor string) (Operation, error) {
+    delay := 5 * time.Second
+    for {
+        select {
+        case &lt;-ctx.Done():
+            return Operation{}, ctx.Err()
+        case &lt;-time.After(delay):
+        }
+        req, _ := http.NewRequestWithContext(ctx, http.MethodGet, monitor, nil)
+        resp, err := c.Do(req)
+        if err != nil {
+            return Operation{}, err
+        }
+        var op Operation
+        err = json.NewDecoder(resp.Body).Decode(&amp;op)
+        resp.Body.Close()
+        if err != nil {
+            return Operation{}, err
+        }
+        switch op.Status {
+        case &quot;Succeeded&quot;, &quot;Failed&quot;, &quot;Canceled&quot;:
+            return op, nil
+        }
+        if s, err := strconv.Atoi(resp.Header.Get(&quot;Retry-After&quot;)); err == nil &amp;&amp; s &gt; 0 {
+            delay = time.Duration(min(s, 60)) * time.Second // the server sets the pace
+        }
+    }
+}
+</code></pre>
+</div>
+<div class="recognize">
+<p><strong>Use 202 + a status monitor when</strong></p>
+<ul>
+<li>The work routinely takes longer than a few seconds, or its duration is unpredictable.</li>
+<li>The work must survive the client disconnecting (and ideally the server restarting: persist operations).</li>
+<li>Clients need progress, cancellation, or to look the result up later.</li>
+</ul>
+<p>Prefer webhooks or server-sent events on top of it when clients can receive callbacks and latency matters. Keep polling as the fallback: callbacks get lost.</p>
+</div>
+<h2 id="bulk-operations-all-or-nothing-or-per-item-results">Bulk operations: all or nothing, or per-item results</h2>
+<p>Clients that need to create 500 orders shouldn't make 500 round trips. A batch endpoint (<code>POST /orders:batch</code>, or <code>POST /orders</code> with an array) saves latency but raises a question a single request never has to answer: <strong>what happens when item 37 is invalid?</strong></p>
+<div class="viz" data-viz="api-design-bulk"></div>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Atomic (all or nothing)</th>
+<th>Partial success (per-item results)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Response</td>
+<td><code>201</code>/<code>200</code> if all succeed; <code>422</code>/<code>409</code> with problem details listing <em>every</em> bad index if any fail</td>
+<td><code>200</code> (or <code>207 Multi-Status</code>) with one result per item, each with its own status</td>
+</tr>
+<tr>
+<td>Client logic</td>
+<td>Simple: fix and resend everything</td>
+<td>Must inspect every item; retry only the failures</td>
+</tr>
+<tr>
+<td>Server cost</td>
+<td>One transaction; long transactions lock more rows</td>
+<td>Independent writes; no giant transaction</td>
+</tr>
+<tr>
+<td>Retry safety</td>
+<td>Retry the whole batch with one idempotency key</td>
+<td>Per-item keys (or the batch key plus the item index)</td>
+</tr>
+<tr>
+<td>Choose when</td>
+<td>Items belong together (an order and its lines, a ledger entry pair)</td>
+<td>Items are independent (importing contacts, sending notifications)</td>
+</tr>
+</tbody>
+</table>
+<p>Rules either way: <strong>validate every item before deciding</strong>, so the client sees all the errors in one response; <strong>cap the batch size</strong> (and document it) so one request can't hold a transaction for a minute; and <strong>return results in request order</strong> with the index, so clients can correlate them without guessing. If the batch is big enough to take a while, combine it with the long-running operation pattern.</p>
+<h2 id="versioning-and-evolution-change-without-breaking">Versioning and evolution: change without breaking</h2>
+<p>The hardest part of API design is time. Your API will change; the clients already in production won't. Every change is either <strong>compatible</strong> (old clients keep working without changes) or <strong>breaking</strong> (some old client's code now fails). The difficulty is that "breaking" depends on what the <em>client</em> code does, not on what your schema diff looks like. So run the clients:</p>
+<div class="viz" data-viz="api-design-evolve"></div>
+
+<p>Try every change in the list. Three lessons fall out:</p>
+<ol>
+<li><strong>Adding a response field is only safe if clients are tolerant readers.</strong> A strict deserializer that rejects unknown properties (Jackson's <code>FAIL_ON_UNKNOWN_PROPERTIES</code>, <code>DisallowUnknownFields</code> in Go, a <code>.strict()</code> zod schema) breaks on the most harmless change there is. That's why the Microsoft, Google and Zalando guidelines all <em>require</em> clients to ignore unknown fields. Publish that rule, and make your own SDKs follow it.</li>
+<li><strong>Adding an enum value breaks exhaustive switches.</strong> Generated SDKs and <code>switch</code> statements without a default case crash on a value they've never seen. Document enums as <em>extensible</em> from day one and give clients an <code>Unknown</code>/<code>Other</code> fallback, or treat every new value as a breaking change.</li>
+<li><strong>Some breaks don't throw.</strong> Removing an optional field parses fine and silently loses data in every client that displayed or stored it. Changing the <em>meaning</em> of a field (<code>total</code> now excludes tax) is the worst kind: every client compiles, runs and is wrong.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Compatible (usually)</th>
+<th>Breaking</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add a new endpoint or resource</td>
+<td>Remove or rename an endpoint, field or query parameter</td>
+</tr>
+<tr>
+<td>Add an <strong>optional</strong> request field or query parameter</td>
+<td>Add a <strong>required</strong> request field, or make an optional one required</td>
+</tr>
+<tr>
+<td>Add a response field (tolerant readers required)</td>
+<td>Remove a response field, or change its type or format (<code>42</code> → <code>"ord_42"</code>)</td>
+</tr>
+<tr>
+<td>Relax validation (accept a wider range)</td>
+<td>Tighten validation (reject what used to be accepted)</td>
+</tr>
+<tr>
+<td>Add an error <code>type</code> for a new condition</td>
+<td>Change the status code or error <code>type</code> for an existing condition</td>
+</tr>
+<tr>
+<td>Add an enum value, <em>if documented as extensible</em></td>
+<td>Add an enum value to a closed enum; change a default; change the meaning of a field</td>
+</tr>
+<tr>
+<td>Add a new optional header</td>
+<td>Change authentication, pagination style, or the shape of a collection response</td>
+</tr>
+</tbody>
+</table>
+<h3 id="evolve-without-a-new-version-first">Evolve without a new version first</h3>
+<p>Most changes don't need a new version at all. <strong>Expand, migrate, contract</strong> (also called <em>parallel change</em>) handles renames and type changes in place:</p>
+<ol>
+<li><strong>Expand</strong>: add <code>amount</code> next to <code>total</code>. Write both, accept either.</li>
+<li><strong>Migrate</strong>: update SDKs and docs, mark <code>total</code> as deprecated, and watch usage in your telemetry (log which clients still read or send it).</li>
+<li><strong>Contract</strong>: remove <code>total</code> only when usage is zero, or at the next major version.</li>
+</ol>
+<p>When you do have to break the contract, signal it in the protocol, not just in a blog post:</p>
+<pre><code class="language-text">HTTP/1.1 200 OK
+Deprecation: @1782864000                                    ← RFC 9745: deprecated since this date (Unix time)
+Sunset: Thu, 01 Jul 2027 00:00:00 GMT                         ← RFC 8594: stops working after this date
+Link: &lt;https://api.contoso.com/docs/migrate-v2&gt;; rel=&quot;deprecation&quot;; type=&quot;text/html&quot;
+</code></pre>
+<h3 id="where-the-version-goes">Where the version goes</h3>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Example</th>
+<th>For</th>
+<th>Against</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URL path</td>
+<td><code>/v2/orders</code></td>
+<td>Obvious, easy to route, test and cache; works in a browser</td>
+<td>Not "pure" REST (the resource didn't change, its representation did); the whole surface versions at once</td>
+</tr>
+<tr>
+<td>Query parameter</td>
+<td><code>/orders?api-version=2026-03-01</code></td>
+<td>Azure's convention; date versions say <em>when</em>; one URL per resource</td>
+<td>Easy to forget; caches must key on it</td>
+</tr>
+<tr>
+<td>Header</td>
+<td><code>api-version: 2</code></td>
+<td>Clean URLs</td>
+<td>Invisible in logs and browsers; easy for proxies to drop; caches need <code>Vary</code></td>
+</tr>
+<tr>
+<td>Media type</td>
+<td><code>Accept: application/vnd.contoso.order.v2+json</code></td>
+<td>Versions each representation independently</td>
+<td>The most complex for clients and tooling</td>
+</tr>
+</tbody>
+</table>
+<p>All four work. URL path versioning is the most common for public APIs because it's the hardest to get wrong. Whatever you choose: <strong>version only on breaking changes</strong>, use major versions (or dates) only, support at least the previous version for a published period, and never ship two versions that differ only cosmetically.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Asp.Versioning.Http (minimal APIs) — the Microsoft-maintained versioning library.
+builder.Services.AddApiVersioning(o =&gt;
+{
+    o.DefaultApiVersion = new ApiVersion(1);
+    o.ReportApiVersions = true;                                  // api-supported-versions response header
+    o.ApiVersionReader = new UrlSegmentApiVersionReader();
+});
+
+var orders = app.NewVersionedApi(&quot;Orders&quot;);
+var v1 = orders.MapGroup(&quot;/v{version:apiVersion}/orders&quot;).HasDeprecatedApiVersion(1);
+var v2 = orders.MapGroup(&quot;/v{version:apiVersion}/orders&quot;).HasApiVersion(2);
+
+v1.MapGet(&quot;/{id}&quot;, (string id, OrderService s) =&gt; s.GetV1(id));  // { total }
+v2.MapGet(&quot;/{id}&quot;, (string id, OrderService s) =&gt; s.GetV2(id));  // { amount: { value, currency } }
+</code></pre>
+<pre><code class="language-java">// Spring Framework 7 / Spring Boot 4 add first-class API versioning to request mappings.
+@Configuration
+class VersioningConfig implements WebMvcConfigurer {
+    @Override
+    public void configureApiVersioning(ApiVersionConfigurer configurer) {
+        configurer.usePathSegment(1);                // /api/{version}/orders; or useRequestHeader(&quot;API-Version&quot;)
+    }
+}
+
+@RestController
+@RequestMapping(&quot;/api/{version}/orders&quot;)
+class OrderController {
+    @GetMapping(path = &quot;/{id}&quot;, version = &quot;1&quot;)
+    OrderV1 getV1(@PathVariable String id) { return service.getV1(id); }
+
+    @GetMapping(path = &quot;/{id}&quot;, version = &quot;2&quot;)
+    OrderV2 getV2(@PathVariable String id) { return service.getV2(id); }
+}
+// Before Spring 7: separate @RequestMapping(&quot;/v1/orders&quot;) and (&quot;/v2/orders&quot;) controllers.
+</code></pre>
+<pre><code class="language-python"># FastAPI: one router per major version; shared services underneath.
+from fastapi import APIRouter, FastAPI
+
+v1 = APIRouter(prefix=&quot;/v1/orders&quot;, tags=[&quot;orders v1&quot;], deprecated=True)   # marked in OpenAPI
+v2 = APIRouter(prefix=&quot;/v2/orders&quot;, tags=[&quot;orders v2&quot;])
+
+@v1.get(&quot;/{order_id}&quot;, response_model=OrderV1)
+def get_v1(order_id: str):
+    return to_v1(service.get(order_id))
+
+@v2.get(&quot;/{order_id}&quot;, response_model=OrderV2)
+def get_v2(order_id: str):
+    return to_v2(service.get(order_id))
+
+app = FastAPI()
+app.include_router(v1)
+app.include_router(v2)
+</code></pre>
+<pre><code class="language-typescript">// NestJS has versioning built in: URI, header, media type or custom.
+// main.ts
+app.enableVersioning({ type: VersioningType.URI, defaultVersion: &quot;1&quot; });   // /v1/orders, /v2/orders
+
+@Controller(&quot;orders&quot;)
+export class OrdersController {
+  @Version(&quot;1&quot;)
+  @Get(&quot;:id&quot;)
+  getV1(@Param(&quot;id&quot;) id: string) { return this.service.getV1(id); }
+
+  @Version(&quot;2&quot;)
+  @Get(&quot;:id&quot;)
+  getV2(@Param(&quot;id&quot;) id: string) { return this.service.getV2(id); }
+}
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Insight: every version is a product you maintain</strong>
+Two live versions means two test suites, two sets of docs, and every bug fix applied twice. Teams that version casually end up running v1–v5 forever, because some partner never migrated. The cheapest version is the one you never had to ship: design for additive change, enforce tolerant readers, and run a breaking-change check in CI.</p>
+</div>
+<h2 id="contracts-openapi-contract-first-or-code-first">Contracts: OpenAPI, contract-first or code-first</h2>
+<p>An OpenAPI document describes every path, parameter, schema, status code and security scheme of your API in a machine-readable form. From it you get docs, client SDKs in every language, mock servers, request validation and, most valuably, an automated <strong>breaking-change check</strong> on every pull request. The real question is which comes first: the document or the code.</p>
+<div class="compare">
+<div class="good">
+<h4 id="contract-first-design-first">Contract-first (design-first)</h4>
+<p>Write the OpenAPI (or TypeSpec) first, review it like code, then generate server stubs and clients.</p>
+<ul>
+<li>Consumers can review and mock the API before any code exists.</li>
+<li>The contract is deliberate; implementation details can't leak into it.</li>
+<li>Best for public and partner APIs, and for several teams working in parallel.</li>
+<li>Cost: the spec and the code can drift unless CI validates the implementation against the spec.</li>
+</ul>
+</div>
+<div class="warn">
+<h4 id="code-first">Code-first</h4>
+<p>Annotate the code; the framework generates the OpenAPI document at build time or runtime.</p>
+<ul>
+<li>Fastest to start; the document always matches what the code does.</li>
+<li>Best for internal APIs owned by one team.</li>
+<li>Cost: refactoring a DTO silently changes the public contract. You <em>must</em> diff the generated document in CI to notice.</li>
+</ul>
+</div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Stack</th>
+<th>Code-first generator</th>
+<th>Contract-first / clients</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASP.NET Core</td>
+<td><code>Microsoft.AspNetCore.OpenApi</code> (<code>AddOpenApi()</code> + <code>MapOpenApi()</code>, .NET 9+); Swashbuckle, NSwag</td>
+<td>Kiota, NSwag, TypeSpec (Microsoft's API description language)</td>
+</tr>
+<tr>
+<td>Spring Boot</td>
+<td>springdoc-openapi</td>
+<td>openapi-generator (<code>spring</code> server stubs, Java clients)</td>
+</tr>
+<tr>
+<td>FastAPI</td>
+<td>Built in (<code>/openapi.json</code>, <code>/docs</code>), driven by type hints and Pydantic</td>
+<td>datamodel-code-generator, openapi-python-client</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>swaggo/swag (comments), huma</td>
+<td>oapi-codegen (server interfaces and clients from the spec)</td>
+</tr>
+<tr>
+<td>Express / NestJS</td>
+<td><code>@nestjs/swagger</code>, tsoa, zod-to-openapi</td>
+<td>openapi-typescript, orval</td>
+</tr>
+</tbody>
+</table>
+<p>Whichever direction you choose, put two checks in CI: a <strong>linter</strong> (Spectral with a style guide, so naming, pagination and error conventions are enforced, not just written down), and a <strong>diff</strong> against the last released contract (oasdiff, openapi-diff or Azure's breaking-change tooling) that fails the build on breaking changes unless the version changes too.</p>
+<h2 id="the-same-endpoint-in-five-stacks">The same endpoint in five stacks</h2>
+<p>Here is one small but complete resource in each stack: <code>GET /v1/orders/{id}</code>, which returns an <code>ETag</code>, answers <code>304</code> to a matching <code>If-None-Match</code>, and returns a problem-details <code>404</code>; and <code>POST /v1/orders</code>, which validates its input (<code>422</code> with field errors) and returns <code>201 Created</code> with <code>Location</code>. Compare how much each framework gives you for free.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// ASP.NET Core minimal API (.NET 10)
+builder.Services.AddProblemDetails();          // 404/500 bodies become application/problem+json
+builder.Services.AddValidation();              // DataAnnotations on minimal API parameters
+builder.Services.AddOpenApi();
+var app = builder.Build();
+app.MapOpenApi();
+
+var orders = app.MapGroup(&quot;/v1/orders&quot;).WithTags(&quot;Orders&quot;);
+
+orders.MapGet(&quot;/{id:long}&quot;, async Task&lt;Results&lt;Ok&lt;Order&gt;, NotFound, StatusCodeHttpResult&gt;&gt; (
+    long id, OrderStore store, HttpContext http) =&gt;
+{
+    if (await store.FindAsync(id) is not { } order) return TypedResults.NotFound();
+    var etag = $&quot;\&quot;{order.Version}\&quot;&quot;;
+    if (http.Request.Headers.IfNoneMatch == etag) return TypedResults.StatusCode(304);
+    http.Response.Headers.ETag = etag;
+    return TypedResults.Ok(order);
+}).WithName(&quot;GetOrder&quot;);
+
+orders.MapPost(&quot;/&quot;, async (CreateOrder cmd, OrderStore store) =&gt;
+{
+    var order = await store.AddAsync(cmd);     // invalid cmd never gets here: 400 problem with errors
+    return TypedResults.CreatedAtRoute(order, &quot;GetOrder&quot;, new { id = order.Id });
+});
+
+public record CreateOrder([Required, StringLength(40)] string CustomerId,
+                          [Range(1, 1000)] int Quantity, [Required] string Sku);
+</code></pre>
+<pre><code class="language-java">// Spring Boot 3
+@RestController
+@RequestMapping(&quot;/v1/orders&quot;)
+class OrderController {
+    private final OrderStore store;
+    OrderController(OrderStore store) { this.store = store; }
+
+    @GetMapping(&quot;/{id}&quot;)
+    ResponseEntity&lt;Order&gt; get(@PathVariable long id, WebRequest request) {
+        Order order = store.find(id).orElseThrow(() -&gt;
+                new ErrorResponseException(HttpStatus.NOT_FOUND));     // rendered as ProblemDetail
+        if (request.checkNotModified(&quot;\&quot;&quot; + order.version() + &quot;\&quot;&quot;)) return null;  // 304 written
+        return ResponseEntity.ok().eTag(String.valueOf(order.version())).body(order);
+    }
+
+    @PostMapping
+    ResponseEntity&lt;Order&gt; create(@Valid @RequestBody CreateOrder cmd, UriComponentsBuilder uri) {
+        Order order = store.add(cmd);
+        return ResponseEntity.created(uri.path(&quot;/v1/orders/{id}&quot;).build(order.id())).body(order);
+    }
+}
+
+record CreateOrder(@NotBlank @Size(max = 40) String customerId,
+                   @Min(1) @Max(1000) int quantity, @NotBlank String sku) {}
+// application.properties: spring.mvc.problemdetails.enabled=true
+</code></pre>
+<pre><code class="language-python"># FastAPI
+from fastapi import FastAPI, Header, HTTPException, Response, status
+from pydantic import BaseModel, Field
+
+app = FastAPI()
+
+class CreateOrder(BaseModel):
+    customer_id: str = Field(min_length=1, max_length=40)
+    quantity: int = Field(ge=1, le=1000)
+    sku: str = Field(min_length=1)
+
+@app.get(&quot;/v1/orders/{order_id}&quot;, response_model=Order)
+def get_order(order_id: int, response: Response,
+              if_none_match: str | None = Header(default=None)):
+    order = store.find(order_id)
+    if order is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, &quot;order not found&quot;)  # map to problem+json
+    etag = f'&quot;{order.version}&quot;'
+    if if_none_match == etag:
+        return Response(status_code=304)
+    response.headers[&quot;ETag&quot;] = etag
+    return order
+
+@app.post(&quot;/v1/orders&quot;, status_code=201, response_model=Order)
+def create_order(cmd: CreateOrder, response: Response):   # invalid body → 422 automatically
+    order = store.add(cmd)
+    response.headers[&quot;Location&quot;] = f&quot;/v1/orders/{order.id}&quot;
+    return order
+</code></pre>
+<pre><code class="language-go">// Go 1.22+ net/http (no framework). With chi: r.Get(&quot;/v1/orders/{id}&quot;, ...) and chi.URLParam(r, &quot;id&quot;).
+func routes(s *OrderStore) http.Handler {
+    mux := http.NewServeMux()
+    mux.HandleFunc(&quot;GET /v1/orders/{id}&quot;, func(w http.ResponseWriter, r *http.Request) {
+        id, err := strconv.ParseInt(r.PathValue(&quot;id&quot;), 10, 64)
+        if err != nil {
+            writeProblem(w, http.StatusBadRequest, &quot;invalid-id&quot;, &quot;id must be an integer&quot;)
+            return
+        }
+        order, ok := s.Find(id)
+        if !ok {
+            writeProblem(w, http.StatusNotFound, &quot;not-found&quot;, &quot;order not found&quot;)
+            return
+        }
+        etag := fmt.Sprintf(&quot;%q&quot;, strconv.Itoa(order.Version))
+        if r.Header.Get(&quot;If-None-Match&quot;) == etag {
+            w.WriteHeader(http.StatusNotModified)
+            return
+        }
+        w.Header().Set(&quot;ETag&quot;, etag)
+        writeJSON(w, http.StatusOK, order)
+    })
+    mux.HandleFunc(&quot;POST /v1/orders&quot;, func(w http.ResponseWriter, r *http.Request) {
+        var cmd CreateOrder
+        dec := json.NewDecoder(http.MaxBytesReader(w, r.Body, 1&lt;&lt;20))
+        if err := dec.Decode(&amp;cmd); err != nil {
+            writeProblem(w, http.StatusBadRequest, &quot;malformed&quot;, &quot;body is not valid JSON&quot;)
+            return
+        }
+        if errs := cmd.Validate(); len(errs) &gt; 0 {       // map[field][]message
+            writeValidationProblem(w, errs)                  // 422 with &quot;errors&quot;
+            return
+        }
+        order := s.Add(cmd)
+        w.Header().Set(&quot;Location&quot;, fmt.Sprintf(&quot;/v1/orders/%d&quot;, order.ID))
+        writeJSON(w, http.StatusCreated, order)
+    })
+    return mux
+}
+</code></pre>
+<pre><code class="language-typescript">// NestJS (Express adapter). main.ts:
+// app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }));
+export class CreateOrderDto {
+  @IsString() @Length(1, 40) customerId!: string;
+  @IsInt() @Min(1) @Max(1000) quantity!: number;
+  @IsString() @IsNotEmpty() sku!: string;
+}
+
+@Controller({ path: &quot;orders&quot;, version: &quot;1&quot; })
+export class OrdersController {
+  constructor(private readonly store: OrderStore) {}
+
+  @Get(&quot;:id&quot;)
+  async get(@Param(&quot;id&quot;, ParseIntPipe) id: number,
+            @Headers(&quot;if-none-match&quot;) inm: string | undefined,
+            @Res({ passthrough: true }) res: Response) {
+    const order = await this.store.find(id);
+    if (!order) throw new NotFoundException(&quot;order not found&quot;);
+    const etag = `&quot;${order.version}&quot;`;
+    if (inm === etag) { res.status(304); return; }
+    res.set(&quot;ETag&quot;, etag);
+    return order;
+  }
+
+  @Post()
+  async create(@Body() dto: CreateOrderDto, @Res({ passthrough: true }) res: Response) {
+    const order = await this.store.add(dto);           // POST defaults to 201 in Nest
+    res.location(`/v1/orders/${order.id}`);
+    return order;
+  }
+}
+</code></pre>
+</div>
+<p>Notice the defaults differ. FastAPI answers invalid bodies with <code>422</code> on its own; ASP.NET Core and Spring use <code>400</code>, and Nest's <code>ValidationPipe</code> also uses <code>400</code>. Nest and plain Express don't emit problem details unless you add an exception filter, and Go gives you nothing at all. Pick one convention for your organisation and enforce it in shared middleware, not in each handler.</p>
+<h3 id="minimal-apis-or-controllers-net">Minimal APIs or controllers (.NET)</h3>
+<div class="code-tabs" data-labels="Minimal API,Controller">
+<pre><code class="language-csharp">// Handlers are lambdas or static methods; filters and groups replace attributes.
+var orders = app.MapGroup(&quot;/v1/orders&quot;)
+    .RequireAuthorization(&quot;orders.read&quot;)
+    .AddEndpointFilter&lt;AuditFilter&gt;();
+
+orders.MapGet(&quot;/{id:long}&quot;, OrderHandlers.Get).WithName(&quot;GetOrder&quot;);
+orders.MapPost(&quot;/&quot;, OrderHandlers.Create);
+</code></pre>
+<pre><code class="language-csharp">[ApiController]                                   // automatic 400 problem on invalid model state
+[Route(&quot;v1/orders&quot;)]
+[Authorize(Policy = &quot;orders.read&quot;)]
+[ServiceFilter(typeof(AuditFilter))]
+public class OrdersController(OrderStore store) : ControllerBase
+{
+    [HttpGet(&quot;{id:long}&quot;, Name = &quot;GetOrder&quot;)]
+    public async Task&lt;ActionResult&lt;Order&gt;&gt; Get(long id) =&gt;
+        await store.FindAsync(id) is { } o ? o : NotFound();
+
+    [HttpPost]
+    public async Task&lt;ActionResult&lt;Order&gt;&gt; Create(CreateOrder cmd)
+    {
+        var order = await store.AddAsync(cmd);
+        return CreatedAtRoute(&quot;GetOrder&quot;, new { id = order.Id }, order);
+    }
+}
+</code></pre>
+</div>
+<p>Both run on the same routing, middleware and DI. Minimal APIs start faster, allocate less, and support Native AOT; controllers bring model-binding conventions, filters and familiar structure for large teams. New services should default to minimal APIs organised with <code>MapGroup</code> and one static class per resource. Don't rewrite a working controller codebase just to switch. See <a href="request-pipeline.html">the request pipeline</a> for where both plug in.</p>
+<h2 id="when-not-to-use-rest">When NOT to use REST</h2>
+<p>REST over HTTP + JSON is the right default for public, resource-oriented APIs that browsers, partners and caches must understand. It's the wrong tool when the interaction isn't "transfer a representation of a resource":</p>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Better fit</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Low-latency service-to-service calls, strict contracts, streaming</td>
+<td>gRPC</td>
+<td>HTTP/2, Protobuf, generated stubs, bidirectional streams</td>
+</tr>
+<tr>
+<td>Many clients that each need a different slice of a deep graph</td>
+<td>GraphQL</td>
+<td>The client picks fields; one round trip instead of N</td>
+</tr>
+<tr>
+<td>Server pushes updates to a browser</td>
+<td>Server-sent events, WebSockets</td>
+<td>Polling a REST resource wastes requests and adds latency</td>
+</tr>
+<tr>
+<td>Fire-and-forget work, fan-out, or decoupled producers and consumers</td>
+<td>A message broker (queues, topics, events)</td>
+<td>No one waits; load is levelled; consumers can be offline</td>
+</tr>
+<tr>
+<td>An action that really isn't CRUD (<code>approve</code>, <code>cancel</code>, <code>restart</code>)</td>
+<td>A REST <em>custom method</em> (<code>POST /orders/42:cancel</code>, AIP-136)</td>
+<td>Don't twist it into a fake <code>PATCH {status}</code>, and don't switch protocols just for it</td>
+</tr>
+</tbody>
+</table>
+<p><a href="api-protocols.html">API protocols</a> compares these in depth. Mixing is normal: REST at the edge, gRPC inside, events between bounded contexts.</p>
+<h2 id="common-pitfalls">Common pitfalls</h2>
+<div class="pitfall">
+<p><strong>Pitfalls that show up in every API review</strong></p>
+<ul>
+<li><strong>Returning <code>200</code> with <code>{"success": false}</code>.</strong> Proxies, retries, monitoring and SDKs all read the status code. Use the right one and a problem-details body.</li>
+<li><strong>Leaking your database.</strong> Auto-incrementing ids reveal volume and invite enumeration, and table columns become contract fields you can never rename. Map entities to DTOs.</li>
+<li><strong>Unbounded collections.</strong> A list without a page-size cap is a denial-of-service endpoint and a time bomb as data grows.</li>
+<li><strong>Retrying POST without an idempotency key.</strong> Duplicate payments come from timeouts, not from bugs in your business logic.</li>
+<li><strong>Last-write-wins updates.</strong> Without ETags, two editors silently overwrite each other.</li>
+<li><strong>Breaking changes in a "minor" release</strong>, such as renaming a field, adding a required field, or tightening validation. Run a contract diff in CI.</li>
+<li><strong>Chatty APIs</strong> that need 20 calls to render one screen. Offer composite resources, <code>expand</code>, or a backend-for-frontend.</li>
+<li><strong>Inconsistency.</strong> <code>customerId</code> here, <code>customer_id</code> there, <code>created</code> vs <code>createdAt</code>, different error shapes per team. Adopt a published guideline and lint for it.</li>
+</ul>
+</div>
+<h2 id="checklist">Checklist</h2>
+<div class="rule">
+<p><strong>Before you publish an endpoint</strong></p>
+<ul>
+<li>[ ] Plural noun resources, at most two levels of nesting, opaque string ids, one casing convention.</li>
+<li>[ ] Methods match their semantics: GET is safe; PUT and DELETE are idempotent; POST is protected with <code>Idempotency-Key</code>.</li>
+<li>[ ] Status codes come from the decision chain; every error is <code>application/problem+json</code> with a stable <code>type</code>.</li>
+<li>[ ] Collections are paginated (cursor-based for large or changing data), with a default and a maximum page size and a <code>nextLink</code>.</li>
+<li>[ ] Filter and sort fields are allow-listed and backed by indexes.</li>
+<li>[ ] Updates use <code>ETag</code> + <code>If-Match</code>; <code>412</code> on a mismatch; <code>428</code> if the precondition is required and missing.</li>
+<li>[ ] Anything slower than a few seconds returns <code>202</code> + a status monitor + <code>Retry-After</code>.</li>
+<li>[ ] Batch endpoints have a documented size cap and an explicit atomic or partial-success contract.</li>
+<li>[ ] Version strategy chosen; tolerant readers documented; <code>Deprecation</code>/<code>Sunset</code> headers before removal.</li>
+<li>[ ] OpenAPI published, linted (Spectral), and diffed against the last release in CI.</li>
+<li>[ ] Authentication, authorization, rate limits and input limits applied: see <a href="api-security.html">API security</a>.</li>
+</ul>
+</div>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>A client's PUT request times out. Is it safe to retry? What about POST?</summary>
+<p>PUT is idempotent: sending the same full representation twice leaves the same state, so it's safe to retry. POST isn't. A retry may create a second order unless the request carries an <code>Idempotency-Key</code> that the server records together with the original response.</p>
+</details>
+<details class="quiz">
+<summary>Why does offset pagination skip or repeat items, and what fixes it?</summary>
+<p><code>OFFSET</code> counts positions at query time. An insert before the current page shifts every row down, so the client sees a repeat; a delete shifts rows up, so it skips one. Keyset (cursor) pagination continues "after the last key I saw", which isn't affected by changes on earlier pages. Make the sort key unique by adding the id as a tie-breaker.</p>
+</details>
+<details class="quiz">
+<summary>User A asks for an order belonging to another tenant. Should it be 403 or 404?</summary>
+<p><code>404</code>. A <code>403</code> confirms the resource exists, which leaks information and helps enumeration (BOLA). Return <code>403</code> only when the caller is allowed to know the resource exists but not to perform this action.</p>
+</details>
+<details class="quiz">
+<summary>Two people edit the same order; the second save wins silently. Which headers prevent this?</summary>
+<p>The server returns <code>ETag</code> with every GET. Clients send it back in <code>If-Match</code> on PUT or PATCH. The server performs a compare-and-set (<code>UPDATE … WHERE version = @v</code>) and returns <code>412 Precondition Failed</code> if someone else changed the order first. The client then re-reads, merges and retries.</p>
+</details>
+<details class="quiz">
+<summary>You add a new value "OnHold" to the order status enum. Is that a breaking change?</summary>
+<p>It can be. Clients with exhaustive <code>switch</code> statements or generated enums without an unknown fallback will throw. It's compatible only if the enum was documented as extensible from day one and clients handle unknown values.</p>
+</details>
+<details class="quiz">
+<summary>An export takes about 3 minutes. Design the API.</summary>
+<p><code>POST /exports</code> returns <code>202 Accepted</code> with <code>Operation-Location: /operations/{id}</code> and <code>Retry-After: 10</code>. <code>GET /operations/{id}</code> returns <code>{status, percentComplete}</code>. When the status is <code>Succeeded</code>, it includes <code>resourceLocation</code> pointing to the file. Include a cancel action, keep terminal operations around for a while, and offer a webhook for clients that can receive one.</p>
+</details>
+<details class="quiz">
+<summary>Contract-first or code-first for a public partner API built by three teams?</summary>
+<p>Contract-first. Partners and teams review and mock the OpenAPI or TypeSpec before code exists, and CI checks the implementation against it. Code-first suits a single team's internal API, but even then the generated document should be diffed in CI.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Safe / idempotent</strong>GET, HEAD, OPTIONS are safe. PUT and DELETE are idempotent. POST and PATCH are neither; add an <code>Idempotency-Key</code>.</div>
+<div><strong>Create</strong><code>201</code> + <code>Location</code> + body. Async: <code>202</code> + monitor + <code>Retry-After</code>.</div>
+<div><strong>Errors</strong><code>application/problem+json</code>: type, title, status, detail, instance, plus <code>errors</code>.</div>
+<div><strong>400 vs 422</strong>400: can't parse. 422: parses but breaks the rules. Be consistent.</div>
+<div><strong>401 / 403 / 404</strong>401: who are you? 403: known, not allowed. 404: not found, or not yours to know about.</div>
+<div><strong>409 / 412 / 428</strong>409: state conflict. 412: <code>If-Match</code> failed. 428: <code>If-Match</code> required.</div>
+<div><strong>Pagination</strong>Cursor: <code>WHERE (k, id) &gt; (@k, @id) ORDER BY k, id LIMIT n+1</code>. Return <code>nextLink</code>.</div>
+<div><strong>Caching</strong><code>ETag</code> + <code>If-None-Match</code> → <code>304</code>; <code>Cache-Control</code>; see <a href="caching.html#http-caching-let-someone-else-store-it">HTTP caching</a>.</div>
+<div><strong>Compatible</strong>Add endpoints, optional inputs, response fields (with tolerant readers), relax validation.</div>
+<div><strong>Breaking</strong>Remove or rename, change types, add required input, tighten validation, change meaning.</div>
+<div><strong>Deprecate</strong><code>Deprecation: @epoch</code>, <code>Sunset: &lt;date&gt;</code>, <code>Link rel="deprecation"</code>.</div>
+<div><strong>Retries</strong>Clients back off with jitter and honour <code>Retry-After</code>; see <a href="resilience.html">resilience</a>.</div>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://www.rfc-editor.org/rfc/rfc9110">RFC 9110: HTTP Semantics</a> (methods, status codes, conditional requests) and <a href="https://www.rfc-editor.org/rfc/rfc9457">RFC 9457: Problem Details for HTTP APIs</a></li>
+<li><a href="https://github.com/microsoft/api-guidelines">Microsoft REST API Guidelines</a> and the <a href="https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md">Azure REST API guidelines</a></li>
+<li><a href="https://google.aip.dev/">Google API Improvement Proposals</a>: AIP-132 (List), AIP-136 (custom methods), AIP-151 (long-running operations), AIP-155 (request identification), AIP-158 (pagination), AIP-180 (backwards compatibility)</li>
+<li><a href="https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/">IETF draft: The Idempotency-Key HTTP Header Field</a>, <a href="https://www.rfc-editor.org/rfc/rfc9745">RFC 9745: Deprecation header</a>, <a href="https://www.rfc-editor.org/rfc/rfc8594">RFC 8594: Sunset header</a></li>
+<li><a href="https://learn.microsoft.com/aspnet/core/fundamentals/minimal-apis/overview">ASP.NET Core: Minimal APIs overview</a> and <a href="https://learn.microsoft.com/aspnet/core/fundamentals/openapi/overview">OpenAPI support</a></li>
+<li><a href="https://docs.spring.io/spring-framework/reference/web/webmvc.html">Spring Web MVC</a>, <a href="https://fastapi.tiangolo.com/tutorial/">FastAPI tutorial</a>, <a href="https://go.dev/blog/routing-enhancements">Go net/http routing patterns</a>, <a href="https://docs.nestjs.com/controllers">NestJS controllers</a></li>
+<li><a href="https://spec.openapis.org/oas/latest.html">OpenAPI Specification</a> and <a href="https://typespec.io/">TypeSpec</a></li>
+<li>Related topics: <a href="request-pipeline.html">request pipeline</a>, <a href="middleware-patterns.html">middleware patterns</a>, <a href="caching.html">caching</a>, <a href="resilience.html">resilience</a>, <a href="api-protocols.html">API protocols</a>, <a href="api-security.html">API security</a></li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="outbound-pipelines.html"><small>&larr; PREVIOUS</small>Outbound Pipelines &amp; Interceptors</a><a class="next" href="api-protocols.html"><small>NEXT &rarr;</small>Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-an-api-is-a-promise-you-cant-take-back">The problem: an API is a promise you can't take back</a></li>
+<li><a href="#resources-model-nouns-not-procedures">Resources: model nouns, not procedures</a><ul>
+<li><a href="#modelling-rules-that-survive-contact-with-real-clients">Modelling rules that survive contact with real clients</a></li>
+</ul>
+</li>
+<li><a href="#methods-safe-idempotent-or-neither">Methods: safe, idempotent, or neither</a></li>
+<li><a href="#status-codes-a-decision-chain-not-a-lookup-table">Status codes: a decision chain, not a lookup table</a></li>
+<li><a href="#errors-problem-details-rfc-9457">Errors: problem details (RFC 9457)</a></li>
+<li><a href="#pagination-offset-drifts-cursors-dont">Pagination: offset drifts, cursors don't</a><ul>
+<li><a href="#the-cursor-must-name-a-unique-position">The cursor must name a unique position</a></li>
+<li><a href="#response-shape-and-the-rules-around-it">Response shape and the rules around it</a></li>
+</ul>
+</li>
+<li><a href="#filtering-sorting-and-field-selection">Filtering, sorting and field selection</a></li>
+<li><a href="#idempotency-keys-making-post-safe-to-retry">Idempotency keys: making POST safe to retry</a></li>
+<li><a href="#etags-and-conditional-requests-no-more-lost-updates">ETags and conditional requests: no more lost updates</a></li>
+<li><a href="#long-running-operations-202-and-a-status-monitor">Long-running operations: 202 and a status monitor</a></li>
+<li><a href="#bulk-operations-all-or-nothing-or-per-item-results">Bulk operations: all or nothing, or per-item results</a></li>
+<li><a href="#versioning-and-evolution-change-without-breaking">Versioning and evolution: change without breaking</a><ul>
+<li><a href="#evolve-without-a-new-version-first">Evolve without a new version first</a></li>
+<li><a href="#where-the-version-goes">Where the version goes</a></li>
+</ul>
+</li>
+<li><a href="#contracts-openapi-contract-first-or-code-first">Contracts: OpenAPI, contract-first or code-first</a></li>
+<li><a href="#the-same-endpoint-in-five-stacks">The same endpoint in five stacks</a><ul>
+<li><a href="#minimal-apis-or-controllers-net">Minimal APIs or controllers (.NET)</a></li>
+</ul>
+</li>
+<li><a href="#when-not-to-use-rest">When NOT to use REST</a></li>
+<li><a href="#common-pitfalls">Common pitfalls</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1625 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Functional Patterns in Mainstream Languages | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/functional-patterns.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/functional-patterns.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track" open><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html" aria-current="page">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Functional Patterns in Mainstream Languages</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">DESIGN PATTERNS</p><h1>Functional Patterns in Mainstream Languages</h1><p class="lede">Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns.</p><div class="meta"><span class="level level-intermediate">Intermediate → Advanced</span><span>~45 min study</span><span>Builds on: <a href="types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="functional-patterns" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-code-you-cant-reason-about-locally">The problem: code you can't reason about locally</h2>
+<p>Here is a small pricing function from a real-looking codebase. Read it and predict what <code>Quote(cart)</code> returns.</p>
+<pre><code class="language-csharp">public static class Pricing
+{
+    public static decimal TaxRate = 0.2m;                     // changed by an admin endpoint at runtime
+    private static int _quotesToday;
+
+    public static decimal Quote(Cart cart)
+    {
+        _quotesToday++;                                       // hidden write
+        cart.Items.RemoveAll(i =&gt; i.Qty == 0);                // mutates the caller's object
+        var subtotal = cart.Items.Sum(i =&gt; i.Price * i.Qty);
+        if (DateTime.Now.DayOfWeek == DayOfWeek.Friday)       // hidden input: the clock
+            subtotal *= 0.9m;
+        if (_quotesToday &gt; 1000) subtotal *= 1.05m;           // hidden input: call history
+        return subtotal * (1 + TaxRate);                      // hidden input: a mutable global
+    }
+}
+</code></pre>
+<p>You can't. The answer depends on the day of the week, a global anyone can change, how many quotes ran before this one, and the call also <strong>changes the cart you passed in</strong>. To test it you need a fake clock, a reset of two statics, and a fresh cart per assertion. Running two quotes in parallel races on <code>_quotesToday</code>. Caching the result is wrong on Fridays and after quote 1000.</p>
+<p>Now the same rules as a function of its inputs:</p>
+<pre><code class="language-csharp">public static decimal Quote(IReadOnlyList&lt;Item&gt; items, DateOnly today, decimal taxRate, int quotesToday)
+{
+    var subtotal = items.Where(i =&gt; i.Qty &gt; 0).Sum(i =&gt; i.Price * i.Qty);
+    if (today.DayOfWeek == DayOfWeek.Friday) subtotal *= 0.9m;
+    if (quotesToday &gt; 1000) subtotal *= 1.05m;
+    return subtotal * (1 + taxRate);
+}
+</code></pre>
+<p>Every dependency is in the signature. The function changes nothing. The same arguments always give the same answer, so you can test it with one line per rule, run it on any thread and cache it by its arguments. The clock, the counter and the tax setting still exist, but they are read <strong>once, at the edge</strong>, by the code that calls <code>Quote</code>.</p>
+<div class="rule">
+<p><strong>Functional patterns are about making behaviour depend only on what you can see.</strong> Push effects (I/O, time, randomness, mutation) to the edges, keep the middle made of functions that take values and return values, and build bigger behaviour by combining small functions instead of subclassing.</p>
+</div>
+<p>You do not need Haskell for this. C#, Java, Python, Go and TypeScript all have lambdas, closures and immutable records, and the mainstream frameworks are already functional underneath: LINQ and Java Streams are map/filter/reduce, ASP.NET Core middleware is function composition, React components are meant to be pure functions of props, Redux reducers are <code>(state, action) =&gt; state</code>. This page names the patterns so you can use them on purpose. It builds on <a href="types-and-immutability.html">types and immutability</a> and the <a href="design-principles.html">design principles</a>, and it ends by showing which <a href="behavioral-patterns.html">behavioral patterns</a> quietly turn into a lambda.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 300" width="900" role="img" aria-label="A pure function has one way in and one way out; an impure one has hidden doors">
+<text class="title" x="20" y="28">Pure: everything goes through the signature</text>
+<text class="title" x="470" y="28">Impure: hidden doors in and out</text>
+<rect class="box accent" x="150" y="110" width="170" height="70" rx="10"/>
+<text x="235" y="140" text-anchor="middle" font-weight="700">Quote(items, today,</text>
+<text x="235" y="158" text-anchor="middle" font-weight="700">taxRate, count)</text>
+<path class="edge" d="M40,145 L144,145"/><polygon class="muted" points="150,145 141,140.5 141,149.5"/>
+<text class="small" x="40" y="136">arguments</text>
+<path class="edge" d="M320,145 L414,145"/><polygon class="muted" points="420,145 411,140.5 411,149.5"/>
+<text class="small" x="340" y="136">result</text>
+<text class="small muted" x="235" y="215" text-anchor="middle">same arguments → same result, always</text>
+<text class="small muted" x="235" y="233" text-anchor="middle">nothing else is read or changed</text>
+<rect class="box bad" x="600" y="110" width="140" height="70" rx="10"/>
+<text x="670" y="150" text-anchor="middle" font-weight="700">Quote(cart)</text>
+<path class="edge" d="M490,145 L594,145"/><polygon class="muted" points="600,145 591,140.5 591,149.5"/>
+<path class="edge" d="M740,145 L834,145"/><polygon class="muted" points="840,145 831,140.5 831,149.5"/>
+<rect class="box path" x="480" y="50" width="110" height="30" rx="6" stroke-dasharray="5 4"/><text class="small" x="535" y="70" text-anchor="middle">DateTime.Now</text>
+<rect class="box path" x="615" y="50" width="110" height="30" rx="6" stroke-dasharray="5 4"/><text class="small" x="670" y="70" text-anchor="middle">TaxRate (global)</text>
+<rect class="box path" x="750" y="50" width="120" height="30" rx="6" stroke-dasharray="5 4"/><text class="small" x="810" y="70" text-anchor="middle">_quotesToday</text>
+<path class="edge path" d="M560,80 L630,108"/><polygon class="fill-path" points="636,111 626,111.5 630,103"/>
+<path class="edge path" d="M670,80 L670,102"/><polygon class="fill-path" points="670,108 665.5,99 674.5,99"/>
+<path class="edge path" d="M790,80 L716,108"/><polygon class="fill-path" points="710,111 716,103 720,111"/>
+<rect class="box path" x="520" y="225" width="130" height="30" rx="6" stroke-dasharray="5 4"/><text class="small" x="585" y="245" text-anchor="middle">cart.Items mutated</text>
+<rect class="box path" x="690" y="225" width="150" height="30" rx="6" stroke-dasharray="5 4"/><text class="small" x="765" y="245" text-anchor="middle">_quotesToday++</text>
+<path class="edge path" d="M640,182 L600,218"/><polygon class="fill-path" points="596,223 598,213 605,219"/>
+<path class="edge path" d="M705,182 L745,218"/><polygon class="fill-path" points="749,223 739,220 745,213"/>
+</svg>
+<figcaption>Every dashed box on the right is an input or output the signature doesn't mention. Each one is a reason a test needs setup, a cache gives a stale answer, or two threads interfere.</figcaption>
+</figure>
+
+<h2 id="pure-functions-and-referential-transparency">Pure functions and referential transparency</h2>
+<p>A function is <strong>pure</strong> when two things hold:</p>
+<ol>
+<li>Its result depends <strong>only on its arguments</strong>. It doesn't read a clock, a random generator, a mutable field, a file, an environment variable or a database.</li>
+<li>It has <strong>no observable side effects</strong>. It doesn't write to anything outside itself: no mutation of arguments or globals, no logging, no I/O, no exceptions that depend on hidden state.</li>
+</ol>
+<p>The payoff has a name: <strong>referential transparency</strong>. An expression is referentially transparent when you can replace it with its value without changing the program. If <code>Price(3)</code> is <code>7.5</code>, every <code>Price(3)</code> in the program can become <code>7.5</code>. That one property is what makes memoization, parallelism, reordering, lazy evaluation and simple unit tests safe.</p>
+<p>The visualizer memoizes every call. Pick an impure version, change the global with <code>rate=4</code>, and watch the memo hand back a wrong answer. Then pick the refactored version: the hidden input became a parameter, so it is part of the cache key and the problem disappears.</p>
+<div class="viz" data-viz="functional-patterns-purity"></div>
+
+<h3 id="before-and-after">Before and after</h3>
+<div class="code-tabs" data-labels="Before (impure),After (pure core)">
+<pre><code class="language-csharp">public class LateFeeService
+{
+    private readonly AppDbContext _db;
+    public LateFeeService(AppDbContext db) =&gt; _db = db;
+
+    public decimal Apply(int invoiceId)
+    {
+        var inv = _db.Invoices.Find(invoiceId)!;          // I/O
+        var days = (DateTime.UtcNow - inv.DueDate).Days;  // clock
+        if (days &gt; 0)
+            inv.Fee = Math.Min(days * 1.5m, inv.Amount * 0.1m); // mutation
+        _db.SaveChanges();                                // I/O
+        return inv.Fee;
+    }
+}
+</code></pre>
+<pre><code class="language-csharp">// Pure: easy to test exhaustively, no database or clock needed.
+public static decimal LateFee(decimal amount, DateOnly due, DateOnly today)
+{
+    var days = today.DayNumber - due.DayNumber;
+    return days &lt;= 0 ? 0m : Math.Min(days * 1.5m, amount * 0.1m);
+}
+
+// Thin shell: does the I/O, calls the pure function, writes the result.
+public decimal Apply(int invoiceId)
+{
+    var inv = _db.Invoices.Find(invoiceId)!;
+    inv.Fee = LateFee(inv.Amount, inv.DueDate, DateOnly.FromDateTime(_clock.UtcNow));
+    _db.SaveChanges();
+    return inv.Fee;
+}
+</code></pre>
+</div>
+<p>The rule itself is now a five-line pure function. You test it with a table of <code>(amount, due, today) → fee</code> rows. The shell is so thin that one integration test covers it. This split has a name, <a href="#functional-core-imperative-shell">functional core, imperative shell</a>, and it is the single most useful functional pattern for everyday OO code.</p>
+<h3 id="the-same-idea-in-five-languages">The same idea in five languages</h3>
+<div class="code-tabs">
+<pre><code class="language-csharp">public static decimal LateFee(decimal amount, DateOnly due, DateOnly today)
+{
+    var days = today.DayNumber - due.DayNumber;
+    return days &lt;= 0 ? 0m : Math.Min(days * 1.5m, amount * 0.1m);
+}
+// Inject time with TimeProvider (.NET 8+) in the shell:
+//   var today = DateOnly.FromDateTime(timeProvider.GetUtcNow().UtcDateTime);
+// [Pure] (System.Diagnostics.Contracts) documents intent; analyzers warn when a
+// [Pure] method's result is ignored. The compiler does not enforce purity.
+</code></pre>
+<pre><code class="language-java">public static BigDecimal lateFee(BigDecimal amount, LocalDate due, LocalDate today) {
+    long days = ChronoUnit.DAYS.between(due, today);
+    if (days &lt;= 0) return BigDecimal.ZERO;
+    BigDecimal byDays = BigDecimal.valueOf(days).multiply(new BigDecimal(&quot;1.5&quot;));
+    return byDays.min(amount.multiply(new BigDecimal(&quot;0.1&quot;)));
+}
+// In the shell, take a java.time.Clock and call LocalDate.now(clock).
+// Tests pass Clock.fixed(...). BigDecimal and LocalDate are immutable, which helps.
+</code></pre>
+<pre><code class="language-python">from datetime import date
+from decimal import Decimal
+
+def late_fee(amount: Decimal, due: date, today: date) -&gt; Decimal:
+    days = (today - due).days
+    if days &lt;= 0:
+        return Decimal(&quot;0&quot;)
+    return min(days * Decimal(&quot;1.5&quot;), amount * Decimal(&quot;0.1&quot;))
+
+# In the shell: late_fee(inv.amount, inv.due, date.today())
+# functools.cache works safely ONLY on pure functions like this one.
+</code></pre>
+<pre><code class="language-go">func LateFee(amount float64, due, today time.Time) float64 {
+    days := int(today.Sub(due).Hours() / 24)
+    if days &lt;= 0 {
+        return 0
+    }
+    return math.Min(float64(days)*1.5, amount*0.1)
+}
+
+// In the shell: LateFee(inv.Amount, inv.Due, time.Now())
+// Go has no purity keyword; the convention is &quot;take values, return values&quot;,
+// and pass a func() time.Time (or a Clock interface) where time matters.
+// Use integer cents or a decimal package for real money.
+</code></pre>
+<pre><code class="language-typescript">export function lateFee(amount: number, due: Date, today: Date): number {
+  const days = Math.floor((today.getTime() - due.getTime()) / 86_400_000);
+  return days &lt;= 0 ? 0 : Math.min(days * 1.5, amount * 0.1);
+}
+
+// In the shell: lateFee(inv.amount, inv.due, new Date())
+// React relies on this property: a component must be a pure function of its
+// props and state. StrictMode renders twice in development to catch impurity.
+</code></pre>
+</div>
+<h3 id="what-counts-as-a-side-effect">What counts as a side effect?</h3>
+<table>
+<thead>
+<tr>
+<th>Effect</th>
+<th>Example</th>
+<th>Why it breaks referential transparency</th>
+<th>Where it belongs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reading the clock</td>
+<td><code>DateTime.Now</code>, <code>time.Now()</code>, <code>Date.now()</code></td>
+<td>Same call, different answer each second</td>
+<td>Pass <code>today</code> in; inject <code>TimeProvider</code> / <code>Clock</code></td>
+</tr>
+<tr>
+<td>Randomness</td>
+<td><code>Random.Shared</code>, <code>Math.random()</code></td>
+<td>Different answer every call</td>
+<td>Pass a seed or the random value in</td>
+</tr>
+<tr>
+<td>Mutable global or static</td>
+<td><code>static decimal TaxRate</code></td>
+<td>Answer changes when someone else writes it</td>
+<td>Pass it as a parameter or config value</td>
+</tr>
+<tr>
+<td>Mutating an argument</td>
+<td><code>list.Sort()</code>, <code>cart.Items.Remove(...)</code></td>
+<td>The caller's data changes under them</td>
+<td>Return a new value</td>
+</tr>
+<tr>
+<td>I/O</td>
+<td>database, HTTP, file, console, logger</td>
+<td>Can fail, is slow, changes the world</td>
+<td>The imperative shell</td>
+</tr>
+<tr>
+<td>Throwing on bad input</td>
+<td><code>throw new ArgumentException</code></td>
+<td>Arguably fine if it depends only on the input; it's a second return path</td>
+<td>Often better as a <code>Result</code> (<a href="#optionmaybe-and-resulteither">below</a>)</td>
+</tr>
+</tbody>
+</table>
+<div class="insight">
+<p><strong>Logging is a side effect, and that's usually fine.</strong> Purity is a tool, not a religion. A debug log line inside a pure calculation doesn't change its answer, so caching and testing still work. What breaks things is an effect the result <strong>depends on</strong>, or one other code <strong>observes</strong>. Be strict about those and pragmatic about tracing.</p>
+</div>
+<h4 id="real-framework-examples">Real framework examples</h4>
+<ul>
+<li><strong>Redux / NgRx / Elm-style reducers</strong>: <code>(state, action) =&gt; newState</code> must be pure. That is what makes time-travel debugging and replaying actions possible.</li>
+<li><strong>React components and <code>useMemo</code></strong>: rendering must be pure. Side effects go into <code>useEffect</code>, which is literally the imperative shell.</li>
+<li><strong>Java Streams</strong>: the docs require lambdas passed to <code>map</code>/<code>filter</code> to be <em>non-interfering</em> and <em>stateless</em>. Mutating a shared list inside <code>forEach</code> on a parallel stream is a race.</li>
+<li><strong>Spark, Flink, Beam, Kafka Streams</strong>: transformations must be deterministic so a failed partition can be recomputed on another machine and give the same result.</li>
+<li><strong>Build systems (Bazel, Nix, MSBuild incremental builds)</strong>: a build step is cached by its inputs. If a step reads an undeclared file, the cache returns stale output.</li>
+</ul>
+<h4 id="when-strict-purity-is-the-wrong-goal">When strict purity is the wrong goal</h4>
+<ul>
+<li><strong>The code is mostly I/O.</strong> A controller that loads, saves and returns has nothing to extract. Don't invent a "pure core" that just forwards arguments.</li>
+<li><strong>A local mutable variable is clearer.</strong> A <code>for</code> loop that builds a <code>StringBuilder</code> inside a function is still pure from the outside. Purity is about the function's boundary, not about banning <code>+=</code>.</li>
+<li><strong>The hot path is allocation-sensitive.</strong> Returning new objects instead of updating in place costs allocations. In a tight loop, measure first (see <a href="#when-functional-style-hurts">When functional style hurts</a>).</li>
+</ul>
+<h2 id="immutability-values-that-cant-change-under-you">Immutability: values that can't change under you</h2>
+<p>Mutation itself isn't evil. <strong>Shared</strong> mutation is: two pieces of code holding a reference to the same object, one changes it, and the other is surprised. That is aliasing, and it causes some of the hardest bugs to find.</p>
+<pre><code class="language-python">DEFAULT_TAGS = [&quot;new&quot;]
+
+def make_product(name, tags=DEFAULT_TAGS):
+    return {&quot;name&quot;: name, &quot;tags&quot;: tags}
+
+a = make_product(&quot;lamp&quot;)
+b = make_product(&quot;desk&quot;)
+a[&quot;tags&quot;].append(&quot;sale&quot;)
+print(b[&quot;tags&quot;])   # ['new', 'sale']  &lt;- b changed because a and b share one list
+</code></pre>
+<p>The same bug shows up as a cached object that a caller edits (now every future cache hit is wrong), a <code>DateTime</code>-like value type that turns out to be a reference type, or a list handed to a background thread and then cleared by the sender. If values can't change, none of this is possible: sharing becomes free.</p>
+<div class="rule">
+<p><strong>Default to immutable data; make mutation local and deliberate.</strong> A record, a frozen dataclass or a readonly type is safe to share across threads, cache, use as a dictionary key and pass to code you don't trust. When you need a change, create a new value with the change applied (<code>with</code>, <code>replace</code>, spread) and let the old one live on for whoever still holds it.</p>
+</div>
+<h3 id="immutable-records-in-five-languages">Immutable records in five languages</h3>
+<div class="code-tabs">
+<pre><code class="language-csharp">public sealed record Money(decimal Amount, string Currency);
+public sealed record Order(Guid Id, ImmutableList&lt;Line&gt; Lines, Money Total);
+
+var o2 = o1 with { Total = o1.Total with { Amount = 120m } };  // non-destructive mutation
+// Records give value equality, ToString and 'with'. Positional record properties
+// are init-only. But: an ImmutableList field is immutable; a List&lt;T&gt; field is NOT.
+// 'readonly record struct' gives a small immutable value type with no allocation.
+</code></pre>
+<pre><code class="language-java">public record Money(BigDecimal amount, String currency) {}
+public record Order(UUID id, List&lt;Line&gt; lines, Money total) {
+    public Order { lines = List.copyOf(lines); }      // defensive copy, unmodifiable
+    public Order withTotal(Money t) { return new Order(id, lines, t); }
+}
+// Records (Java 16+) are shallowly immutable: final fields, equals/hashCode.
+// There is no 'with' yet, so you write withX methods (JEP 468, &quot;derived record
+// creation&quot;, proposes one). List.copyOf gives an unmodifiable list.
+</code></pre>
+<pre><code class="language-python">from dataclasses import dataclass, replace
+
+@dataclass(frozen=True, slots=True)
+class Money:
+    amount: int          # cents
+    currency: str
+
+@dataclass(frozen=True, slots=True)
+class Order:
+    id: str
+    lines: tuple         # a tuple, not a list: frozen is shallow
+    total: Money
+
+o2 = replace(o1, total=replace(o1.total, amount=12000))
+# frozen=True raises FrozenInstanceError on assignment. NamedTuple works too.
+</code></pre>
+<pre><code class="language-go">type Money struct {
+    Amount   int64 // cents
+    Currency string
+}
+
+type Order struct {
+    ID    string
+    Lines []Line // careful: a slice header is copied, the array is shared
+    Total Money
+}
+
+func (o Order) WithTotal(t Money) Order { // value receiver: o is a copy
+    o.Total = t
+    return o
+}
+// Go has no immutability keyword. Value types (structs passed by value) give
+// copies, but slices and maps inside them still alias. Copy them explicitly:
+// o.Lines = slices.Clone(o.Lines)
+</code></pre>
+<pre><code class="language-typescript">type Money = Readonly&lt;{ amount: number; currency: string }&gt;;
+type Order = Readonly&lt;{ id: string; lines: readonly Line[]; total: Money }&gt;;
+
+const o2: Order = { ...o1, total: { ...o1.total, amount: 120 } };
+// readonly is compile-time only; Object.freeze is a shallow runtime check.
+// 'as const' makes literals deeply readonly. Immer lets you write mutating
+// code against a draft and gives you back a new, structurally shared object.
+</code></pre>
+</div>
+<p>The five languages differ in <strong>how deep</strong> the guarantee goes, and it's the main trap:</p>
+<div class="compare">
+<div class="good">
+<h4 id="deep-enough">Deep enough</h4>
+<ul>
+<li>C# record holding <code>ImmutableList&lt;T&gt;</code>, <code>ImmutableDictionary</code>, <code>FrozenDictionary</code> or other records.</li>
+<li>Java record with <code>List.copyOf</code> / <code>Map.copyOf</code> in the compact constructor.</li>
+<li>Python frozen dataclass holding tuples, <code>frozenset</code>, <code>MappingProxyType</code> or other frozen dataclasses.</li>
+<li>TypeScript <code>Readonly&lt;T&gt;</code> / <code>readonly T[]</code> all the way down, or <code>as const</code>.</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="looks-immutable-isnt">Looks immutable, isn't</h4>
+<ul>
+<li>C# <code>record Order(List&lt;Line&gt; Lines)</code>: <code>order.Lines.Add(...)</code> works fine.</li>
+<li>Java record holding an <code>ArrayList</code> passed in by the caller, who keeps a reference and edits it.</li>
+<li>Python <code>@dataclass(frozen=True)</code> with a <code>list</code> field.</li>
+<li>Go struct copied by value but containing a slice or map: both copies share the backing array.</li>
+<li><code>Object.freeze(obj)</code>: nested objects stay mutable.</li>
+</ul>
+</div>
+</div>
+<h3 id="persistent-collections-changing-a-big-structure-cheaply">Persistent collections: changing a big structure cheaply</h3>
+<p>"Create a new value" sounds expensive for a list of a million items. It isn't, because immutable collections use <strong>structural sharing</strong>: a new version reuses every part of the old one that didn't change. For a tree, an insert copies only the nodes on the path from the root to the change, about log₂(n) of them, and points the copies at the untouched subtrees.</p>
+<div class="viz" data-viz="functional-patterns-sharing"></div>
+
+<p>That is how <code>ImmutableList&lt;T&gt;</code> / <code>ImmutableDictionary</code> in .NET, Clojure's vectors and maps, Scala's collections, Immutable.js, Immer and Python's <code>pyrsistent</code> work (most use wide trees, 32-way tries, so a path is only a few nodes deep even for millions of items). The old version stays valid, which gives you three things almost for free:</p>
+<ul>
+<li><strong>Snapshots and undo</strong>: keep a reference to the previous version. Compare this with the <a href="behavioral-patterns.html#memento-save-and-restore-without-exposing-internals">memento pattern</a>, which has to copy state explicitly.</li>
+<li><strong>Lock-free reads</strong>: a reader holding version 3 never sees a half-applied update. Writers publish a new root with one atomic reference swap (<code>ImmutableInterlocked.Update</code> in .NET, <code>AtomicReference.updateAndGet</code> in Java).</li>
+<li><strong>Cheap change detection</strong>: if the reference didn't change, nothing inside changed. React, Redux and Angular <code>OnPush</code> rely on this instead of deep comparisons.</li>
+</ul>
+<div class="tip">
+<p><strong>Pick the right immutable collection in .NET.</strong> <code>ImmutableList&lt;T&gt;</code> is a tree: O(log n) for everything, slower indexed reads than <code>List&lt;T&gt;</code>. <code>ImmutableArray&lt;T&gt;</code> is a plain array wrapper: fast reads, but every "change" copies the whole array, so build it once with a builder. <code>FrozenDictionary</code> / <code>FrozenSet</code> (.NET 8+) are optimized for "build once at startup, read millions of times". Choose by your write/read ratio.</p>
+</div>
+<h4 id="when-immutability-costs-more-than-it-saves">When immutability costs more than it saves</h4>
+<ul>
+<li><strong>Large, hot, single-owner buffers</strong>: image processing, a game loop, a parser's working buffer. Nobody else sees them, so there is no aliasing to protect against, and copying would dominate the runtime.</li>
+<li><strong>Huge deep updates in a tight loop</strong>: changing one field five levels deep means rebuilding five records per change. Use a builder (<code>ImmutableList.CreateBuilder</code>, Immer's draft) or mutate a private copy and freeze it at the end.</li>
+<li><strong>ORM entities</strong>: EF Core and Hibernate track changes by mutating entity objects. Fighting that with immutable entities makes persistence painful. Keep entities mutable behind methods, and use immutable records for DTOs, events, commands and value objects (<a href="domain-driven-design.html">domain-driven design</a>).</li>
+</ul>
+<h2 id="higher-order-functions-and-pipelines">Higher-order functions and pipelines</h2>
+<p>A <strong>higher-order function</strong> takes a function as an argument or returns one. You use them constantly: <code>list.Sort(comparer)</code>, <code>button.addEventListener("click", handler)</code>, <code>retry(3, () =&gt; call())</code>, <code>app.Use(next =&gt; ...)</code>. The point is to separate <strong>the shape of a computation</strong> (loop over items, keep some, transform them, combine them) from <strong>the specific decision</strong> at each step (which items, what transformation).</p>
+<p>Three higher-order functions cover most data processing:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Takes</th>
+<th>Returns</th>
+<th>Also called</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>map</strong></td>
+<td>a collection and <code>T → U</code></td>
+<td>a collection of the same length</td>
+<td><code>Select</code> (LINQ), <code>map</code> (Streams, JS, Python), list comprehension <code>[f(x) for x in xs]</code></td>
+</tr>
+<tr>
+<td><strong>filter</strong></td>
+<td>a collection and <code>T → bool</code></td>
+<td>a collection, maybe shorter</td>
+<td><code>Where</code>, <code>filter</code>, <code>[x for x in xs if p(x)]</code></td>
+</tr>
+<tr>
+<td><strong>reduce</strong></td>
+<td>a collection, a seed and <code>(acc, T) → acc</code></td>
+<td><strong>one value</strong></td>
+<td><code>Aggregate</code>, <code>reduce</code>, <code>fold</code>, <code>functools.reduce</code>; specialised as <code>Sum</code>, <code>Count</code>, <code>Max</code>, <code>groupBy</code></td>
+</tr>
+</tbody>
+</table>
+<p>Chained, they form a <strong>pipeline</strong>: data goes in one end, each stage does one job, a result comes out the other end. Type a source and your own stages below. Then flip between <strong>eager</strong> (each stage runs over everything and builds a new array, like JavaScript's array methods) and <strong>lazy</strong> (one element travels all the way through before the next is read, like LINQ, Java Streams and Python generators). Watch the counters when a <code>take</code> is in the pipeline.</p>
+<div class="viz" data-viz="functional-patterns-pipeline"></div>
+
+<h3 id="one-pipeline-five-languages">One pipeline, five languages</h3>
+<p>The task: the total of the three largest paid orders over 100, in euros.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">var top3 = orders
+    .Where(o =&gt; o.Status == Status.Paid &amp;&amp; o.Total &gt; 100m)
+    .OrderByDescending(o =&gt; o.Total)
+    .Take(3)
+    .Sum(o =&gt; o.Total * fx.EurRate(o.Currency));
+// LINQ to Objects is lazy and fused (yield-based iterators). Against EF Core,
+// the same chain becomes an expression tree and is translated to SQL.
+// Since .NET 9 there is also CountBy / AggregateBy for group-and-reduce.
+</code></pre>
+<pre><code class="language-java">BigDecimal top3 = orders.stream()
+    .filter(o -&gt; o.status() == Status.PAID &amp;&amp; o.total().compareTo(HUNDRED) &gt; 0)
+    .sorted(Comparator.comparing(Order::total).reversed())
+    .limit(3)
+    .map(o -&gt; o.total().multiply(fx.eurRate(o.currency())))
+    .reduce(BigDecimal.ZERO, BigDecimal::add);
+// Streams are lazy and single-use. Collectors.groupingBy / toMap / joining do
+// most real-world reductions. Gatherers (final in Java 24) add custom stages.
+</code></pre>
+<pre><code class="language-python">from heapq import nlargest
+
+paid = (o for o in orders if o.status == &quot;paid&quot; and o.total &gt; 100)
+top3 = sum(o.total * fx.eur_rate(o.currency)
+           for o in nlargest(3, paid, key=lambda o: o.total))
+# Pythonic style prefers comprehensions and generator expressions over
+# map/filter with lambdas. itertools (islice, groupby, accumulate) covers
+# the rest. functools.reduce exists but a for loop is usually clearer.
+</code></pre>
+<pre><code class="language-go">paid := make([]Order, 0, len(orders))
+for _, o := range orders {
+    if o.Status == Paid &amp;&amp; o.Total &gt; 100 {
+        paid = append(paid, o)
+    }
+}
+slices.SortFunc(paid, func(a, b Order) int { return cmp.Compare(b.Total, a.Total) })
+var top3 float64
+for _, o := range paid[:min(3, len(paid))] {
+    top3 += o.Total * fx.EurRate(o.Currency)
+}
+// Idiomatic Go uses plain loops. Generics (1.18) and iterators (iter.Seq, 1.23)
+// make Map/Filter helpers possible, but the community still favours loops.
+</code></pre>
+<pre><code class="language-typescript">const top3 = orders
+  .filter(o =&gt; o.status === &quot;paid&quot; &amp;&amp; o.total &gt; 100)
+  .sort((a, b) =&gt; b.total - a.total)     // sorts in place! use toSorted() (ES2023)
+  .slice(0, 3)
+  .reduce((sum, o) =&gt; sum + o.total * fx.eurRate(o.currency), 0);
+// Array methods are eager: every stage allocates a new array. For big or
+// infinite sources, use generators or Iterator helpers (ES2025: .map/.filter/.take
+// directly on iterators, which are lazy).
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Go is the outlier on purpose.</strong> Go's designers value code that reads the same everywhere, and a <code>for</code> loop needs no knowledge of library combinators. With <code>iter.Seq</code> (Go 1.23) you <em>can</em> write lazy <code>Filter</code>/<code>Map</code> helpers, and <code>slices</code>/<code>maps</code> give you <code>Collect</code>, <code>SortFunc</code>, <code>Index</code>. Use them for reusable sequences; don't translate every LINQ chain into Go generics.</p>
+</div>
+<h3 id="eager-vs-lazy-side-by-side">Eager vs lazy, side by side</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Eager (JS arrays, Python lists, <code>ToList()</code> after each step)</th>
+<th>Lazy (LINQ, Java Streams, generators, <code>iter.Seq</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>When work happens</td>
+<td>Immediately, stage by stage</td>
+<td>When the result is consumed, element by element</td>
+</tr>
+<tr>
+<td>Intermediate collections</td>
+<td>One per stage</td>
+<td>None (stages are fused)</td>
+</tr>
+<tr>
+<td><code>take</code>/<code>first</code>/<code>any</code></td>
+<td>Every earlier stage already ran over everything</td>
+<td>Stops pulling from the source as soon as it's satisfied</td>
+</tr>
+<tr>
+<td>Infinite sources</td>
+<td>Impossible</td>
+<td>Fine, as long as something downstream stops</td>
+</tr>
+<tr>
+<td>Reusing the result</td>
+<td>Safe: it's a list</td>
+<td><strong>Danger</strong>: re-runs (C#, Go), throws (Java) or is empty (Python, TS). See <a href="#lazy-sequences-work-on-demand">lazy sequences</a></td>
+</tr>
+<tr>
+<td>Debugging</td>
+<td>Inspect each array</td>
+<td>Breakpoints jump between stages; harder to follow</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reduce-is-the-general-one">Reduce is the general one</h3>
+<p><code>map</code>, <code>filter</code>, <code>count</code>, <code>sum</code>, <code>max</code>, <code>groupBy</code> are all special cases of <code>reduce</code>. That's useful to know, and a bad thing to act on: a hand-written <code>reduce</code> is usually harder to read than the named operation.</p>
+<div class="code-tabs" data-labels="Hard to read,Clear">
+<pre><code class="language-typescript">const byCustomer = orders.reduce&lt;Record&lt;string, number&gt;&gt;(
+  (acc, o) =&gt; ({ ...acc, [o.customer]: (acc[o.customer] ?? 0) + o.total }),
+  {},
+);
+// Also O(n²): the spread copies the whole accumulator on every element.
+</code></pre>
+<pre><code class="language-typescript">const byCustomer = new Map&lt;string, number&gt;();
+for (const o of orders) {
+  byCustomer.set(o.customer, (byCustomer.get(o.customer) ?? 0) + o.total);
+}
+// Or: Object.groupBy(orders, o =&gt; o.customer) (ES2024), then sum each group.
+// A local mutable Map inside a function is still a pure function from outside.
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Side effects inside map and filter.</strong> <code>items.map(x =&gt; { audit.log(x); return f(x); })</code> looks harmless. In a lazy pipeline it runs zero times (if nothing consumes the result), several times (if it's enumerated twice), or out of order (parallel streams). Keep lambdas in pipelines pure, and put effects in a final <code>forEach</code>/<code>foreach</code> that clearly <em>does</em> something.</p>
+</div>
+<h2 id="currying-partial-application-and-composition">Currying, partial application and composition</h2>
+<p>Two techniques let you <strong>build new functions out of existing ones</strong> without writing a class.</p>
+<ul>
+<li><strong>Partial application</strong> fixes some arguments now and returns a function waiting for the rest. <code>const addTax = multiply(1.2)</code> gives a one-argument function. In C# and Java you do this with a lambda that captures the fixed value; Python has <code>functools.partial</code>.</li>
+<li><strong>Currying</strong> turns a function of several arguments into a chain of one-argument functions: <code>add(a, b)</code> becomes <code>add(a)(b)</code>. It's the default in F# and Haskell, and makes partial application automatic. In mainstream languages you rarely curry everything; you partially apply where it helps.</li>
+<li><strong>Composition</strong> glues functions end to end: <code>compose(f, g)(x) = f(g(x))</code>. <strong>pipe</strong> is the same thing in reading order: <code>pipe(g, f)(x) = f(g(x))</code>. Pipelines of named small functions are how you build behaviour from parts.</li>
+</ul>
+<p>Build a pipeline of small functions below. The first frames show the function values (closures holding their fixed argument) before any data flows. Switch between pipe and compose to see that the <strong>same list</strong> runs in opposite orders.</p>
+<div class="viz" data-viz="functional-patterns-compose"></div>
+
+<div class="code-tabs">
+<pre><code class="language-csharp">Func&lt;decimal, Func&lt;decimal, decimal&gt;&gt; multiply = factor =&gt; x =&gt; x * factor; // curried
+var addVat   = multiply(1.2m);                       // partial application
+var discount = multiply(0.9m);
+
+public static class Fn   // extension methods live in a static class
+{
+    public static Func&lt;T, V&gt; Then&lt;T, U, V&gt;(this Func&lt;T, U&gt; f, Func&lt;U, V&gt; g)
+        =&gt; x =&gt; g(f(x));
+}
+
+var finalPrice = discount.Then(addVat).Then(x =&gt; Math.Round(x, 2));
+finalPrice(100m);                                    // 108.00
+
+// Where you've seen it: ASP.NET Core middleware is Func&lt;RequestDelegate,
+// RequestDelegate&gt;, i.e. a function that takes &quot;next&quot; and returns a new handler.
+</code></pre>
+<pre><code class="language-java">Function&lt;BigDecimal, Function&lt;BigDecimal, BigDecimal&gt;&gt; multiply =
+    factor -&gt; x -&gt; x.multiply(factor);                    // curried
+Function&lt;BigDecimal, BigDecimal&gt; addVat   = multiply.apply(new BigDecimal(&quot;1.2&quot;));
+Function&lt;BigDecimal, BigDecimal&gt; discount = multiply.apply(new BigDecimal(&quot;0.9&quot;));
+
+Function&lt;BigDecimal, BigDecimal&gt; finalPrice =
+    discount.andThen(addVat).andThen(x -&gt; x.setScale(2, RoundingMode.HALF_UP));
+// andThen = pipe order, compose = maths order. Both are built into Function.
+// Comparator.comparing(...).thenComparing(...) is composition you already use.
+</code></pre>
+<pre><code class="language-python">from functools import partial, reduce
+
+def multiply(factor, x):
+    return x * factor
+
+add_vat = partial(multiply, 1.2)
+discount = partial(multiply, 0.9)
+
+def pipe(*fns):
+    return lambda x: reduce(lambda acc, f: f(acc), fns, x)
+
+final_price = pipe(discount, add_vat, lambda x: round(x, 2))
+final_price(100)        # 108.0
+# Decorators are higher-order functions too: @cache, @retry, @app.get(&quot;/&quot;).
+</code></pre>
+<pre><code class="language-go">func Multiply(factor float64) func(float64) float64 {
+    return func(x float64) float64 { return x * factor } // closure over factor
+}
+
+func Pipe[T any](fns ...func(T) T) func(T) T {
+    return func(x T) T {
+        for _, f := range fns {
+            x = f(x)
+        }
+        return x
+    }
+}
+
+finalPrice := Pipe(Multiply(0.9), Multiply(1.2), func(x float64) float64 {
+    return math.Round(x*100) / 100
+})
+// Go's net/http middleware is func(http.Handler) http.Handler: composition.
+// &quot;Functional options&quot; (WithTimeout(5*time.Second)) are partial application.
+</code></pre>
+<pre><code class="language-typescript">const multiply = (factor: number) =&gt; (x: number) =&gt; x * factor; // curried
+const addVat = multiply(1.2);
+const discount = multiply(0.9);
+
+const pipe = &lt;T&gt;(...fns: Array&lt;(x: T) =&gt; T&gt;) =&gt; (x: T) =&gt;
+  fns.reduce((acc, f) =&gt; f(acc), x);
+
+const finalPrice = pipe(discount, addVat, x =&gt; Math.round(x * 100) / 100);
+finalPrice(100); // 108
+// Redux middleware is store =&gt; next =&gt; action =&gt; ..., curried three levels.
+// Libraries: fp-ts / Effect (pipe, flow), Ramda (curry, compose).
+</code></pre>
+</div>
+<div class="recognize">
+<p><strong>You already use composition every day.</strong></p>
+<ul>
+<li><strong>Middleware pipelines</strong>: each layer is <code>next =&gt; context =&gt; ...</code>. See <a href="middleware-patterns.html">middleware patterns</a> and the <a href="request-pipeline.html">request pipeline</a>.</li>
+<li><strong>Decorators</strong>: Python's <code>@retry @cache def f()</code>, Go's <code>Logging(Auth(handler))</code>.</li>
+<li><strong>Comparators</strong>: <code>comparing(Person::last).thenComparing(Person::first)</code>.</li>
+<li><strong>Functional options</strong> in Go: <code>NewServer(WithPort(8080), WithTLS(cfg))</code>.</li>
+<li><strong>Polly / Resilience4j pipelines</strong>: retry wrapping timeout wrapping circuit breaker. See <a href="resilience.html">resilience</a>.</li>
+</ul>
+</div>
+<h4 id="use-partial-application-and-composition-when">Use partial application and composition when</h4>
+<ul>
+<li>You'd otherwise write a one-method interface plus a class just to hold one configured value (<code>new TaxCalculator(0.2m).Apply(x)</code> → <code>multiply(1.2m)</code>).</li>
+<li>The same small steps get combined in different orders for different callers (pricing rules, validation, text normalisation).</li>
+<li>You're building middleware, decorators or handler chains.</li>
+</ul>
+<h4 id="avoid-it-when">Avoid it when</h4>
+<ul>
+<li>Point-free chains hide what's going on. <code>pipe(map(prop("total")), filter(gt(__, 100)), sum)</code> is clever; <code>orders.Where(o =&gt; o.Total &gt; 100).Sum(o =&gt; o.Total)</code> is readable.</li>
+<li>The language fights you. Curried <code>Func&lt;A, Func&lt;B, Func&lt;C, D&gt;&gt;&gt;</code> in C# or Java is noisy; use a lambda that captures instead.</li>
+<li>The composed function is debugged often. Each layer is an anonymous frame in the stack trace; give the pieces names.</li>
+</ul>
+<h2 id="closures-functions-that-remember">Closures: functions that remember</h2>
+<p>A <strong>closure</strong> is a function plus the variables it captured from the scope where it was created. <code>multiply(1.2)</code> above returns a closure: the inner function keeps <code>factor</code> alive after <code>multiply</code> has returned. Closures are how lambdas carry configuration, how callbacks remember context and how a function can have private state.</p>
+<pre><code class="language-typescript">function counter() {
+  let n = 0;                    // captured: lives as long as the returned function does
+  return () =&gt; ++n;
+}
+const next = counter();
+next(); next();                 // 1, 2: state hidden inside the closure
+</code></pre>
+<p>The key fact, in every one of the five languages: <strong>a closure captures the variable, not the value</strong>. If the variable changes after the closure is created, the closure sees the new value. Usually that's what you want. Inside a loop, it's the most famous bug in the language. Pick each language below and step through it: the boxes at the top are storage cells, and the arrows show which cell each closure points to.</p>
+<div class="viz" data-viz="functional-patterns-closure"></div>
+
+<h3 id="the-loop-capture-bug-and-its-fix-in-each-language">The loop-capture bug and its fix in each language</h3>
+<div class="code-tabs">
+<pre><code class="language-csharp">var actions = new List&lt;Action&gt;();
+for (int i = 0; i &lt; 3; i++)
+{
+    int copy = i;                       // fix: a fresh variable per iteration
+    actions.Add(() =&gt; Console.Write(copy));
+}
+actions.ForEach(a =&gt; a());              // 012 (without 'copy': 333)
+// foreach has had a per-iteration variable since C# 5; 'for' never will.
+// Same bug with tasks: for (...) tasks.Add(Task.Run(() =&gt; Process(i)));
+</code></pre>
+<pre><code class="language-java">List&lt;Runnable&gt; actions = new ArrayList&lt;&gt;();
+for (int i = 0; i &lt; 3; i++) {
+    int copy = i;                       // required: lambdas capture only
+    actions.add(() -&gt; System.out.print(copy)); // effectively final locals
+}
+actions.forEach(Runnable::run);         // 012
+// Java avoids the bug by refusing to compile '() -&gt; i'. Fields are different:
+// a lambda capturing 'this.count' sees later changes, like any other language.
+</code></pre>
+<pre><code class="language-python">actions = [lambda i=i: print(i, end=&quot;&quot;) for i in range(3)]   # i=i binds now
+for a in actions:
+    a()                                  # 012 (without i=i: 222)
+
+# Clearer alternatives:
+from functools import partial
+actions = [partial(print, i, end=&quot;&quot;) for i in range(3)]
+# Python looks names up when the function RUNS (late binding), so any loop
+# variable or later reassignment is visible to closures created earlier.
+</code></pre>
+<pre><code class="language-go">var actions []func()
+for i := 0; i &lt; 3; i++ {
+    actions = append(actions, func() { fmt.Print(i) })
+}
+for _, a := range actions {
+    a() // Go 1.22+: 012.  Before 1.22: 333.
+}
+// Go 1.22 made each iteration declare a new variable (when go.mod says
+// go 1.22 or later). In older modules, write i := i inside the loop.
+// 'go vet' (loopclosure) flagged the old goroutine version of this bug.
+</code></pre>
+<pre><code class="language-typescript">const actions: Array&lt;() =&gt; void&gt; = [];
+for (let i = 0; i &lt; 3; i++) {          // let: new binding per iteration
+  actions.push(() =&gt; console.log(i));
+}
+actions.forEach(a =&gt; a());              // 0 1 2 (with var: 3 3 3)
+// ESLint no-var and no-loop-func catch the var version. In React, the related
+// bug is a &quot;stale closure&quot;: a useEffect callback capturing an old state value.
+</code></pre>
+</div>
+<h3 id="closures-have-costs-too">Closures have costs too</h3>
+<div class="compare">
+<div class="warn">
+<h4 id="lifetime-closures-keep-things-alive">Lifetime: closures keep things alive</h4>
+<p>A closure holds a reference to everything it captured. An event handler lambda that captures <code>this</code> keeps the whole page, view model or controller alive as long as the event source does. This is the same leak as the forgotten <a href="behavioral-patterns.html#the-bug-every-observer-ships-once-forgetting-to-unsubscribe">observer unsubscribe</a>. In C#, a lambda that captures one variable from a method makes <strong>all</strong> lambdas in that method share one display-class object, so a short-lived lambda can keep a big local alive.</p>
+</div>
+<div class="warn">
+<h4 id="allocation-closures-are-objects">Allocation: closures are objects</h4>
+<p>In C# and Java, a lambda that captures nothing is cached and allocated once. A lambda that captures a local allocates a closure object (and a delegate) <strong>every time the enclosing code runs</strong>. In a hot path, prefer <code>static</code> lambdas (C# 9) that can't capture, pass state explicitly (<code>dict.GetOrAdd(key, static (k, arg) =&gt; ..., arg)</code>), or hoist the lambda out of the loop. Go's escape analysis may move captured variables to the heap. See <a href="memory-and-gc.html">memory and GC</a>.</p>
+</div>
+</div>
+<h2 id="optionmaybe-and-resulteither">Option/Maybe and Result/Either</h2>
+<p>Two everyday problems hide in ordinary signatures:</p>
+<ul>
+<li><code>User FindUser(string email)</code>: what happens when there's no such user? <code>null</code>? An exception? The signature doesn't say, and the caller forgets to check. Tony Hoare called the null reference his "billion-dollar mistake".</li>
+<li><code>Order PlaceOrder(Cart cart)</code>: what happens when stock runs out, or the card is declined? An exception, probably, which the signature also doesn't mention, and which turns an expected business outcome into a stack unwind.</li>
+</ul>
+<p>Functional languages answer both with <strong>types that make absence and failure part of the return value</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Means</th>
+<th>Cases</th>
+<th>Mainstream equivalents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Option&lt;T&gt;</code> / <code>Maybe&lt;T&gt;</code></td>
+<td>there might not be a value</td>
+<td><code>Some(value)</code> or <code>None</code></td>
+<td>C# nullable reference types (<code>User?</code>), Java <code>Optional&lt;T&gt;</code>, Python <code>T \| None</code>, Go <code>(T, bool)</code>, TS <code>T \| undefined</code></td>
+</tr>
+<tr>
+<td><code>Result&lt;T, E&gt;</code> / <code>Either&lt;E, T&gt;</code></td>
+<td>the operation may fail <strong>in an expected way</strong></td>
+<td><code>Ok(value)</code> or <code>Error(reason)</code></td>
+<td>Go <code>(T, error)</code>, Rust <code>Result</code>, TS discriminated union, C#/Java/Python libraries or your own small type</td>
+</tr>
+</tbody>
+</table>
+<p>The pattern is not "wrap everything in a box". It is: <strong>the compiler, or at least the signature, forces the caller to deal with the empty or failed case</strong>, and you get combinators (<code>map</code>, <code>bind</code>) so that dealing with it doesn't mean an <code>if</code> after every line.</p>
+<h3 id="railway-oriented-programming">Railway-oriented programming</h3>
+<p>Scott Wlaschin's picture: a function returning <code>Result</code> is a railway switch with one input track and two output tracks, Ok and Error. <code>bind</code> (also called <code>flatMap</code>, <code>then</code>, <code>SelectMany</code>, <code>and_then</code>) connects two switches: if the first returned Ok, the value goes into the second; if it returned Error, the error rides the bottom track straight past every remaining step. <code>map</code> lifts a plain function that can't fail onto the Ok track.</p>
+<p>Try a bad email, <code>qty</code> of <code>0</code> or <code>two</code>, a stock lower than the quantity, or a balance under <code>qty × 12</code>. Then switch to <strong>validate all</strong>: independent checks run anyway and report every problem at once, which is what you want for form validation. Steps that need a previous step's output still have to wait for it.</p>
+<div class="viz" data-viz="functional-patterns-railway"></div>
+
+<div class="code-tabs">
+<pre><code class="language-csharp">public abstract record Result&lt;T&gt;
+{
+    public sealed record Ok(T Value) : Result&lt;T&gt;;
+    public sealed record Error(string Reason) : Result&lt;T&gt;;
+
+    public Result&lt;U&gt; Bind&lt;U&gt;(Func&lt;T, Result&lt;U&gt;&gt; next) =&gt; this switch
+    {
+        Ok ok =&gt; next(ok.Value),
+        Error e =&gt; new Result&lt;U&gt;.Error(e.Reason),
+        _ =&gt; throw new UnreachableException(),
+    };
+    public Result&lt;U&gt; Map&lt;U&gt;(Func&lt;T, U&gt; f) =&gt; Bind(v =&gt; (Result&lt;U&gt;)new Result&lt;U&gt;.Ok(f(v)));
+}
+
+var receipt = ValidateEmail(form.Email)
+    .Bind(_ =&gt; ParseQty(form.Qty))
+    .Bind(q =&gt; ReserveStock(q))
+    .Bind(q =&gt; Charge(q))
+    .Map(q =&gt; new Receipt(q, q * Price));
+
+var response = receipt switch
+{
+    Result&lt;Receipt&gt;.Ok ok =&gt; Results.Ok(ok.Value),
+    Result&lt;Receipt&gt;.Error e =&gt; Results.BadRequest(e.Reason),
+    _ =&gt; throw new UnreachableException(),
+};
+// No built-in Result in .NET. Popular choices: OneOf, FluentResults,
+// ErrorOr, LanguageExt (Option/Either/Validation). For absence, prefer
+// nullable reference types (&lt;Nullable&gt;enable&lt;/Nullable&gt;) over an Option type.
+</code></pre>
+<pre><code class="language-java">public sealed interface Result&lt;T&gt; {
+    record Ok&lt;T&gt;(T value) implements Result&lt;T&gt; {}
+    record Err&lt;T&gt;(String reason) implements Result&lt;T&gt; {}
+
+    default &lt;U&gt; Result&lt;U&gt; bind(Function&lt;T, Result&lt;U&gt;&gt; next) {
+        return switch (this) {
+            case Ok&lt;T&gt; ok -&gt; next.apply(ok.value());
+            case Err&lt;T&gt; e -&gt; new Err&lt;&gt;(e.reason());
+        };                                  // exhaustive: no default needed
+    }
+    default &lt;U&gt; Result&lt;U&gt; map(Function&lt;T, U&gt; f) { return bind(v -&gt; new Ok&lt;&gt;(f.apply(v))); }
+}
+
+Result&lt;Receipt&gt; receipt = validateEmail(form.email())
+    .bind(e -&gt; parseQty(form.qty()))
+    .bind(this::reserveStock)
+    .bind(this::charge)
+    .map(q -&gt; new Receipt(q, q * PRICE));
+// Optional&lt;T&gt; is Java's Option: use it for RETURN values only (not fields or
+// parameters), and chain with map / flatMap / orElseThrow instead of get().
+// Vavr provides Either, Try and Validation if you want a library.
+</code></pre>
+<pre><code class="language-python">from dataclasses import dataclass
+from typing import Callable, Generic, TypeVar
+
+T = TypeVar(&quot;T&quot;); U = TypeVar(&quot;U&quot;)
+
+@dataclass(frozen=True)
+class Ok(Generic[T]):
+    value: T
+
+@dataclass(frozen=True)
+class Err:
+    reason: str
+
+Result = Ok[T] | Err
+
+def bind(r: &quot;Result&quot;, f: Callable) -&gt; &quot;Result&quot;:
+    return f(r.value) if isinstance(r, Ok) else r
+
+def parse_qty(s: str) -&gt; &quot;Result&quot;:
+    if not s.isdigit():
+        return Err(f&quot;qty: {s!r} is not a number&quot;)
+    q = int(s)
+    return Ok(q) if 1 &lt;= q &lt;= 99 else Err(&quot;qty: must be 1-99&quot;)
+
+def reserve(stock: int) -&gt; Callable:
+    return lambda q: Ok(q) if q &lt;= stock else Err(f&quot;stock: only {stock} left&quot;)
+
+r = bind(bind(Ok(&quot;3&quot;), parse_qty), reserve(5))
+match r:
+    case Ok(value=q): print(&quot;reserved&quot;, q)
+    case Err(reason=why): print(&quot;failed:&quot;, why)
+# Idiomatic Python mostly raises exceptions; use Result where failure is a
+# normal outcome you want callers to handle (validation, parsing, domain rules).
+# The 'returns' library offers Result, Maybe and a pipeline helper (flow).
+</code></pre>
+<pre><code class="language-go">// Go's (value, error) return IS a result type, checked by convention.
+func PlaceOrder(email, qtyText string, stock, balance int) (Receipt, error) {
+    if err := validateEmail(email); err != nil {
+        return Receipt{}, err
+    }
+    qty, err := parseQty(qtyText)
+    if err != nil {
+        return Receipt{}, fmt.Errorf(&quot;parse qty: %w&quot;, err)
+    }
+    if qty &gt; stock {
+        return Receipt{}, ErrOutOfStock // sentinel: errors.Is(err, ErrOutOfStock)
+    }
+    if err := charge(qty*Price, balance); err != nil {
+        return Receipt{}, fmt.Errorf(&quot;charge: %w&quot;, err)
+    }
+    return Receipt{Qty: qty, Total: qty * Price}, nil
+}
+// &quot;if err != nil { return }&quot; is the railway, written by hand: verbose but
+// explicit. For &quot;validate all&quot;, collect into a slice and errors.Join(errs...).
+// For absence, Go uses the comma-ok idiom: v, ok := m[key].
+</code></pre>
+<pre><code class="language-typescript">type Result&lt;T, E = string&gt; = { ok: true; value: T } | { ok: false; error: E };
+const ok = &lt;T&gt;(value: T): Result&lt;T, never&gt; =&gt; ({ ok: true, value });
+const err = &lt;E&gt;(error: E): Result&lt;never, E&gt; =&gt; ({ ok: false, error });
+
+const bind = &lt;T, U, E&gt;(r: Result&lt;T, E&gt;, f: (v: T) =&gt; Result&lt;U, E&gt;): Result&lt;U, E&gt; =&gt;
+  r.ok ? f(r.value) : r;
+
+const parseQty = (s: string): Result&lt;number&gt; =&gt;
+  /^\d+$/.test(s) &amp;&amp; +s &gt;= 1 &amp;&amp; +s &lt;= 99 ? ok(+s) : err(`qty: &quot;${s}&quot; is invalid`);
+
+const r = bind(bind(validateEmail(form.email), () =&gt; parseQty(form.qty)), reserveStock);
+if (!r.ok) return res.status(400).json({ error: r.error });   // narrowed by r.ok
+// For absence: strictNullChecks + T | undefined, then ?. and ??.
+// Libraries: neverthrow (Result + andThen), Effect, fp-ts (Either, Option).
+// Zod's safeParse returns { success: true, data } | { success: false, error }.
+</code></pre>
+</div>
+<h3 id="exceptions-or-result">Exceptions or Result?</h3>
+<div class="compare">
+<div class="good">
+<h4 id="return-a-result-or-option-when">Return a Result (or Option) when</h4>
+<ul>
+<li>Failure is an <strong>expected business outcome</strong>: validation, "not found", "insufficient funds", "slot already booked".</li>
+<li>The caller is supposed to <strong>branch on it</strong> and show something to the user.</li>
+<li>You want to <strong>collect several errors</strong> (form validation) instead of stopping at the first.</li>
+<li>It sits on a hot path where exceptions are costly (they capture stack traces).</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="throw-an-exception-when">Throw an exception when</h4>
+<ul>
+<li>It's a <strong>bug or broken invariant</strong>: null where none is allowed, an index out of range, an impossible state.</li>
+<li>It's an <strong>infrastructure failure</strong> the immediate caller can't fix: database down, disk full. Let it travel up to a boundary handler (and <a href="resilience.html">resilience</a> policies).</li>
+<li>The ecosystem expects it: Python and Java libraries raise; fighting that everywhere makes your code foreign to its readers.</li>
+</ul>
+</div>
+</div>
+<div class="pitfall">
+<p><strong>Result everywhere becomes noise.</strong> Wrapping every method in <code>Result&lt;T&gt;</code> and threading <code>Bind</code> through code that has only one realistic failure (an exception from the database) just reinvents exceptions with more typing. Use <code>Result</code> at the edges where failures are part of the domain, and convert to HTTP responses or exceptions at the boundary. More in <a href="error-handling.html">error handling</a>.</p>
+</div>
+<div class="tip">
+<p><strong>Don't wrap Option inside nullable.</strong> In C#, turn on nullable reference types and use <code>User?</code>; in TypeScript, enable <code>strictNullChecks</code>. The compiler then does what an <code>Option</code> type would, with zero ceremony. Java's <code>Optional</code> is for return values; an <code>Optional</code> field or parameter is a well-known anti-pattern, and an <code>Optional</code> variable that is itself <code>null</code> is the worst of both worlds.</p>
+</div>
+<h2 id="pattern-matching-and-discriminated-unions">Pattern matching and discriminated unions</h2>
+<p>A <strong>discriminated union</strong> (also called a sum type, tagged union or algebraic data type) says "a value is exactly one of these cases, and each case carries its own data". A payment method is a card <em>or</em> PayPal <em>or</em> a bank transfer <em>or</em> crypto. The usual OO encodings are weak:</p>
+<ul>
+<li><strong>One class with nullable fields</strong> (<code>CardNumber</code>, <code>PayPalEmail</code>, <code>Iban</code>, <code>Type</code>): any combination is representable, including nonsense like a card payment with an IBAN and no card number.</li>
+<li><strong>An enum plus a switch in ten places</strong>: adding a case means finding all ten. The compiler might not tell you.</li>
+</ul>
+<p><strong>Pattern matching</strong> is the other half: a <code>switch</code> that destructures the value, tests its shape, binds its fields to names and, when the set of cases is closed, checks that you handled every one. Together they let you <strong>make illegal states unrepresentable</strong>: if a card payment must have a card number, put the card number only on the <code>Card</code> case.</p>
+<p>Step through a payment below. Then put the general <code>Card</code> arm before the guarded big-payment arm (the guarded arm can never run, so a 5000 payment skips review), or forget the <code>Crypto</code> case. The table shows which language catches which mistake, and when.</p>
+<div class="viz" data-viz="functional-patterns-match"></div>
+
+<div class="code-tabs">
+<pre><code class="language-csharp">public abstract record PaymentMethod;
+public sealed record Card(string Number, decimal Amount) : PaymentMethod;
+public sealed record PayPal(string Email) : PaymentMethod;
+public sealed record BankTransfer(string Iban) : PaymentMethod;
+public sealed record Crypto(string Wallet) : PaymentMethod;
+
+string Handle(PaymentMethod p) =&gt; p switch
+{
+    Card { Amount: &gt; 1000 } c =&gt; $&quot;review {c.Number[^4..]}&quot;,   // property pattern
+    Card c                    =&gt; $&quot;charge {c.Number[^4..]}&quot;,
+    PayPal { Email: var e }   =&gt; $&quot;redirect {e}&quot;,
+    BankTransfer b            =&gt; $&quot;show {b.Iban}&quot;,
+    Crypto w                  =&gt; $&quot;wallet {w.Wallet}&quot;,
+    _ =&gt; throw new UnreachableException(),  // C# can't prove the hierarchy closed
+};
+// Swap the two Card arms: error CS8510 (already handled). C# has no closed
+// unions yet (&quot;discriminated unions&quot; is an active language proposal), so the
+// discard arm is still needed; a forgotten case fails at runtime.
+</code></pre>
+<pre><code class="language-java">public sealed interface PaymentMethod permits Card, PayPal, BankTransfer, Crypto {}
+public record Card(String number, BigDecimal amount) implements PaymentMethod {}
+public record PayPal(String email) implements PaymentMethod {}
+public record BankTransfer(String iban) implements PaymentMethod {}
+public record Crypto(String wallet) implements PaymentMethod {}
+
+String handle(PaymentMethod p) {
+    return switch (p) {
+        case Card c when c.amount().compareTo(LIMIT) &gt; 0 -&gt; &quot;review &quot; + c.number();
+        case Card c                  -&gt; &quot;charge &quot; + c.number();
+        case PayPal(String email)    -&gt; &quot;redirect &quot; + email;     // record pattern
+        case BankTransfer(var iban)  -&gt; &quot;show &quot; + iban;
+        case Crypto w                -&gt; &quot;wallet &quot; + w.wallet();
+    };   // no default: the compiler proves this is exhaustive (Java 21)
+}
+// Forget Crypto: compile error. Swap the Card arms: &quot;dominated&quot; compile error.
+// Add a new permitted subtype: every switch without a default stops compiling.
+</code></pre>
+<pre><code class="language-python">from dataclasses import dataclass
+from typing import assert_never
+
+@dataclass(frozen=True)
+class Card:
+    number: str
+    amount: int
+
+@dataclass(frozen=True)
+class PayPal:
+    email: str
+
+@dataclass(frozen=True)
+class BankTransfer:
+    iban: str
+
+@dataclass(frozen=True)
+class Crypto:
+    wallet: str
+
+PaymentMethod = Card | PayPal | BankTransfer | Crypto
+
+def handle(p: PaymentMethod) -&gt; str:
+    match p:
+        case Card(amount=a) if a &gt; 1000:
+            return f&quot;review {p.number[-4:]}&quot;
+        case Card(number=n):
+            return f&quot;charge {n[-4:]}&quot;
+        case PayPal(email=e):
+            return f&quot;redirect {e}&quot;
+        case BankTransfer(iban=i):
+            return f&quot;show {i}&quot;
+        case Crypto(wallet=w):
+            return f&quot;wallet {w}&quot;
+        case _:
+            assert_never(p)     # mypy/pyright error if a case is missing
+# At runtime, an unmatched value falls through and the function returns None.
+</code></pre>
+<pre><code class="language-go">// Go has no sum types. The idiom: an interface with an unexported marker
+// method, so only this package can add cases, and a type switch.
+type PaymentMethod interface{ isPayment() }
+
+type Card struct{ Number string; Amount int }
+type PayPal struct{ Email string }
+type BankTransfer struct{ IBAN string }
+type Crypto struct{ Wallet string }
+
+func (Card) isPayment()         {}
+func (PayPal) isPayment()       {}
+func (BankTransfer) isPayment() {}
+func (Crypto) isPayment()       {}
+
+func Handle(p PaymentMethod) string {
+    switch v := p.(type) {
+    case Card:
+        if v.Amount &gt; 1000 {
+            return &quot;review &quot; + v.Number[len(v.Number)-4:]
+        }
+        return &quot;charge &quot; + v.Number[len(v.Number)-4:]
+    case PayPal:
+        return &quot;redirect &quot; + v.Email
+    case BankTransfer:
+        return &quot;show &quot; + v.IBAN
+    case Crypto:
+        return &quot;wallet &quot; + v.Wallet
+    default:
+        panic(fmt.Sprintf(&quot;unhandled payment %T&quot;, p)) // no compile-time check
+    }
+}
+// Third-party linters (e.g. go-check-sumtype) can enforce exhaustiveness.
+</code></pre>
+<pre><code class="language-typescript">type PaymentMethod =
+  | { kind: &quot;card&quot;; number: string; amount: number }
+  | { kind: &quot;paypal&quot;; email: string }
+  | { kind: &quot;bank&quot;; iban: string }
+  | { kind: &quot;crypto&quot;; wallet: string };
+
+function assertNever(x: never): never {
+  throw new Error(`Unhandled: ${JSON.stringify(x)}`);
+}
+
+function handle(p: PaymentMethod): string {
+  switch (p.kind) {                    // the discriminant narrows p in each case
+    case &quot;card&quot;:
+      return p.amount &gt; 1000 ? `review ${p.number.slice(-4)}` : `charge ${p.number.slice(-4)}`;
+    case &quot;paypal&quot;: return `redirect ${p.email}`;
+    case &quot;bank&quot;:   return `show ${p.iban}`;
+    case &quot;crypto&quot;: return `wallet ${p.wallet}`;
+    default:       return assertNever(p); // compile error if a kind is missing
+  }
+}
+// Also how Redux actions, API responses and state machines are typed in TS.
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Pattern matching replaces the visitor pattern for closed hierarchies.</strong> The <a href="behavioral-patterns.html#visitor-add-operations-without-touching-the-classes">visitor pattern</a> exists to add operations to a fixed set of types without editing them, using double dispatch. A <code>switch</code> over a sealed hierarchy does the same job in one function, and Java and TypeScript even check exhaustiveness for you. Keep visitors for open hierarchies or when a framework (Roslyn, ANTLR, JavaParser) hands you one.</p>
+</div>
+<h4 id="use-discriminated-unions-when">Use discriminated unions when</h4>
+<ul>
+<li>A value is <strong>one of a fixed set</strong> of shapes that carry different data: payment methods, API responses (<code>Loading | Loaded(data) | Failed(error)</code>), commands, events, AST nodes, state-machine states.</li>
+<li>You keep writing classes with nullable fields that are only valid "when Type == X".</li>
+<li>The operations change more often than the set of cases (new reports, new views over the same events).</li>
+</ul>
+<h4 id="prefer-polymorphism-methods-on-each-class-when">Prefer polymorphism (methods on each class) when</h4>
+<ul>
+<li>The set of cases is <strong>open</strong>: plugins, third-party providers, things other teams add.</li>
+<li>New cases arrive more often than new operations. Then each case carrying its own behaviour means adding a case touches one file, not every switch. This trade-off is the "expression problem", covered in <a href="behavioral-patterns.html#modern-languages-pattern-matching-over-a-closed-hierarchy">behavioral patterns</a>.</li>
+</ul>
+<h2 id="lazy-sequences-work-on-demand">Lazy sequences: work on demand</h2>
+<p>A lazy sequence is a <strong>recipe for producing values</strong>, not a container of values. Nothing runs until a consumer asks for the next item, and then only enough work happens to produce that one item. You met this in the <a href="#higher-order-functions-and-pipelines">pipeline visualizer</a> (lazy mode stopped reading the source once <code>take</code> was satisfied) and in <a href="behavioral-patterns.html#iterator-and-generators-pull-one-value-at-a-time">iterators and generators</a>.</p>
+<p>Laziness buys you three things: <strong>infinite or huge sources</strong> (read a 50 GB log line by line), <strong>early exit</strong> (<code>First</code>, <code>Any</code>, <code>take</code> stop the whole pipeline), and <strong>composition without intermediate collections</strong>. It also has one sharp edge that each language handles differently: <strong>what happens when you consume the same lazy sequence twice?</strong> Pick a language below and find out. Then switch to "materialize once".</p>
+<div class="viz" data-viz="functional-patterns-lazy"></div>
+
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Lazy type</th>
+<th>Consume it twice</th>
+<th>Materialize with</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C#</td>
+<td><code>IEnumerable&lt;T&gt;</code> (LINQ, <code>yield return</code>), <code>IAsyncEnumerable&lt;T&gt;</code></td>
+<td><strong>Re-runs</strong> the whole query: double database calls, possibly different data. Analyzer CA1851 warns.</td>
+<td><code>.ToList()</code>, <code>.ToArray()</code>, <code>.ToHashSet()</code></td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>Stream&lt;T&gt;</code></td>
+<td><strong>Throws</strong> <code>IllegalStateException</code>: streams are single-use</td>
+<td><code>.toList()</code> (16+), <code>collect(...)</code>; or a <code>Supplier&lt;Stream&lt;T&gt;&gt;</code> to make fresh streams</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>generators, generator expressions, <code>map</code>/<code>filter</code>/<code>zip</code> objects</td>
+<td><strong>Empty</strong> the second time, no error. Partly consumed generators resume where they stopped.</td>
+<td><code>list(...)</code>, <code>tuple(...)</code></td>
+</tr>
+<tr>
+<td>Go</td>
+<td><code>iter.Seq[T]</code> (1.23), channels</td>
+<td><code>iter.Seq</code> <strong>re-runs</strong> (it's a function). A channel is drained once and then blocks or is closed.</td>
+<td><code>slices.Collect(seq)</code></td>
+</tr>
+<tr>
+<td>TypeScript</td>
+<td>generators, iterators, Iterator helpers (ES2025)</td>
+<td><strong>Empty</strong> for a generator object; an iterable whose <code>[Symbol.iterator]()</code> builds a new generator re-runs</td>
+<td><code>[...it]</code>, <code>Array.from(it)</code></td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs">
+<pre><code class="language-csharp">static IEnumerable&lt;int&gt; Naturals()            // infinite, lazy
+{
+    for (var n = 1; ; n++) yield return n;
+}
+
+var firstSquares = Naturals().Select(n =&gt; n * n).Where(n =&gt; n % 3 == 1).Take(5).ToList();
+// [1, 4, 16, 25, 49]. Without Take, ToList would never return.
+
+IEnumerable&lt;User&gt; active = db.Users.Where(u =&gt; u.Active);     // IQueryable: nothing ran
+var list = await active.ToListAsync();                        // ONE query, here
+// Return IReadOnlyList&lt;T&gt; from methods when you've already materialized, so
+// callers don't wonder whether enumerating twice costs another round-trip.
+</code></pre>
+<pre><code class="language-java">List&lt;Integer&gt; firstSquares = Stream.iterate(1, n -&gt; n + 1)   // infinite, lazy
+    .map(n -&gt; n * n)
+    .filter(n -&gt; n % 3 == 1)
+    .limit(5)
+    .toList();                                  // [1, 4, 16, 25, 49]
+
+Supplier&lt;Stream&lt;User&gt;&gt; active = () -&gt; users.stream().filter(User::active);
+boolean any = active.get().findAny().isPresent();
+active.get().forEach(this::send);              // a fresh stream each time
+// Files.lines(path) is lazy too and holds a file handle: use try-with-resources.
+</code></pre>
+<pre><code class="language-python">from itertools import count, islice
+
+squares = (n * n for n in count(1))                     # infinite, lazy
+first = list(islice((s for s in squares if s % 3 == 1), 5))
+print(first)                                            # [1, 4, 16, 25, 49]
+
+def read_events(path):
+    with open(path) as f:
+        for line in f:                  # one line in memory at a time
+            if line.startswith(&quot;ERROR&quot;):
+                yield line.rstrip()
+# Store results you'll reuse in a list; pass generators only to code that
+# consumes them exactly once.
+</code></pre>
+<pre><code class="language-go">func Naturals() iter.Seq[int] {
+    return func(yield func(int) bool) {
+        for n := 1; ; n++ {
+            if !yield(n) { // consumer said stop (break): return
+                return
+            }
+        }
+    }
+}
+
+var first []int
+for n := range Naturals() { // range-over-func, Go 1.23
+    if sq := n * n; sq%3 == 1 {
+        first = append(first, sq)
+        if len(first) == 5 {
+            break
+        }
+    }
+}
+// [1 4 16 25 49]. bufio.Scanner is Go's classic lazy line reader.
+</code></pre>
+<pre><code class="language-typescript">function* naturals() {
+  for (let n = 1; ; n++) yield n;
+}
+
+const first: number[] = [];
+for (const n of naturals()) {
+  const sq = n * n;
+  if (sq % 3 === 1) first.push(sq);
+  if (first.length === 5) break;          // break calls the generator's return()
+}
+// [1, 4, 16, 25, 49]. With ES2025 Iterator helpers:
+// naturals().map(n =&gt; n * n).filter(n =&gt; n % 3 === 1).take(5).toArray()
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Lazy plus a closed resource.</strong> Returning a lazy query from inside a <code>using</code> / <code>try-with-resources</code> / <code>with</code> block returns a recipe that runs <strong>after</strong> the connection or file is closed. In C#, <code>return db.Users.Where(...)</code> from a method that disposed <code>db</code> throws <code>ObjectDisposedException</code> at the caller's <code>foreach</code>. Materialize before the resource closes, or keep the resource open for the consumer's whole loop.</p>
+</div>
+<h2 id="functional-core-imperative-shell">Functional core, imperative shell</h2>
+<p>This is the pattern that brings everything above into ordinary application code. Gary Bernhardt named it: put <strong>all the decisions</strong> in a core of pure functions that take data and return data (including "commands" describing what should happen), and wrap it in a <strong>thin shell</strong> that does the I/O: load, call the core, execute the commands it returned.</p>
+<p>The renewal job below decides, per account, whether to remind, charge and extend, or suspend. Compare the two designs. In the mixed version, every business rule is tangled with database, clock, payment and email calls, so testing a rule means mocking four things. In the core/shell version, the rules are a pure <code>Decide(now, accounts)</code> that returns a list of commands, and the test is one <code>Assert.Equal</code>.</p>
+<div class="viz" data-viz="functional-patterns-core-shell"></div>
+
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 230" width="900" role="img" aria-label="Imperative shell reads, the functional core decides, the shell acts">
+<rect class="box path" x="20" y="40" width="230" height="150" rx="12" stroke-dasharray="6 4"/>
+<text class="title" x="135" y="66" text-anchor="middle">Shell: read</text>
+<text x="135" y="98" text-anchor="middle">load accounts (DB)</text>
+<text x="135" y="122" text-anchor="middle">read the clock</text>
+<text x="135" y="146" text-anchor="middle">read config</text>
+<text class="small muted" x="135" y="176" text-anchor="middle">I/O, no business rules</text>
+<rect class="box accent" x="320" y="40" width="260" height="150" rx="12"/>
+<text class="title" x="450" y="66" text-anchor="middle">Core: Decide(now, accounts)</text>
+<text x="450" y="98" text-anchor="middle">all the if/else rules</text>
+<text x="450" y="122" text-anchor="middle">returns Command[] as data</text>
+<text x="450" y="146" text-anchor="middle">Remind | Charge | Suspend</text>
+<text class="small muted" x="450" y="176" text-anchor="middle">pure: unit-test with plain values</text>
+<rect class="box path" x="650" y="40" width="230" height="150" rx="12" stroke-dasharray="6 4"/>
+<text class="title" x="765" y="66" text-anchor="middle">Shell: act</text>
+<text x="765" y="98" text-anchor="middle">foreach command:</text>
+<text x="765" y="122" text-anchor="middle">charge / email / save</text>
+<text x="765" y="146" text-anchor="middle">log, retry, transaction</text>
+<text class="small muted" x="765" y="176" text-anchor="middle">I/O, no business rules</text>
+<path class="edge" d="M250,115 L312,115"/><polygon class="muted" points="318,115 309,110.5 309,119.5"/>
+<text class="small" x="284" y="106" text-anchor="middle">data</text>
+<path class="edge" d="M580,115 L642,115"/><polygon class="muted" points="648,115 639,110.5 639,119.5"/>
+<text class="small" x="614" y="106" text-anchor="middle">commands</text>
+<text class="small muted" x="450" y="218" text-anchor="middle">Many unit tests on the core, one or two integration tests on the shell.</text>
+</svg>
+<figcaption>Dependencies point inward: the core knows nothing about databases or HTTP. The shell knows nothing about business rules. Same idea as hexagonal and clean architecture, at the scale of one use case.</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-csharp">// Core: pure. Commands are data.
+public abstract record RenewalCommand;
+public sealed record Remind(string Account, int DaysLeft) : RenewalCommand;
+public sealed record Charge(string Account, decimal Amount) : RenewalCommand;
+public sealed record Suspend(string Account) : RenewalCommand;
+
+public static IEnumerable&lt;RenewalCommand&gt; Decide(DateOnly today, Account a, decimal price)
+{
+    var days = a.RenewsOn.DayNumber - today.DayNumber;
+    if (days &gt; 3) yield break;
+    if (days &gt; 0) { yield return new Remind(a.Id, days); yield break; }
+    if (a.Balance &gt;= price) yield return new Charge(a.Id, price);
+    else yield return new Suspend(a.Id);
+}
+
+// Shell: I/O only.
+public async Task RunAsync(CancellationToken ct)
+{
+    var today = DateOnly.FromDateTime(_time.GetUtcNow().UtcDateTime);
+    var accounts = await _repo.DueWithin(days: 3, ct);
+    foreach (var cmd in accounts.SelectMany(a =&gt; Decide(today, a, _price)))
+        await (cmd switch
+        {
+            Remind r  =&gt; _email.Remind(r.Account, r.DaysLeft, ct),
+            Charge c  =&gt; _payments.Charge(c.Account, c.Amount, ct),
+            Suspend s =&gt; _repo.Suspend(s.Account, ct),
+            _ =&gt; throw new UnreachableException(),
+        });
+}
+</code></pre>
+<pre><code class="language-java">sealed interface RenewalCommand permits Remind, Charge, Suspend {}
+record Remind(String account, long daysLeft) implements RenewalCommand {}
+record Charge(String account, BigDecimal amount) implements RenewalCommand {}
+record Suspend(String account) implements RenewalCommand {}
+
+static List&lt;RenewalCommand&gt; decide(LocalDate today, Account a, BigDecimal price) {
+    long days = ChronoUnit.DAYS.between(today, a.renewsOn());
+    if (days &gt; 3) return List.of();
+    if (days &gt; 0) return List.of(new Remind(a.id(), days));
+    return a.balance().compareTo(price) &gt;= 0
+        ? List.of(new Charge(a.id(), price))
+        : List.of(new Suspend(a.id()));
+}
+
+void run() {                                       // shell
+    LocalDate today = LocalDate.now(clock);
+    for (Account a : repo.dueWithin(3))
+        for (RenewalCommand c : decide(today, a, price))
+            switch (c) {
+                case Remind r  -&gt; email.remind(r.account(), r.daysLeft());
+                case Charge ch -&gt; payments.charge(ch.account(), ch.amount());
+                case Suspend s -&gt; repo.suspend(s.account());
+            }
+}
+</code></pre>
+<pre><code class="language-python">from dataclasses import dataclass
+from datetime import date
+
+@dataclass(frozen=True)
+class Remind:
+    account: str
+    days_left: int
+
+@dataclass(frozen=True)
+class Charge:
+    account: str
+    amount: int
+
+@dataclass(frozen=True)
+class Suspend:
+    account: str
+
+def decide(today: date, renews_on: date, account: str, balance: int, price: int) -&gt; list:
+    days = (renews_on - today).days
+    if days &gt; 3:
+        return []
+    if days &gt; 0:
+        return [Remind(account, days)]
+    return [Charge(account, price)] if balance &gt;= price else [Suspend(account)]
+
+# Test without mocks:
+assert decide(date(2025, 1, 1), date(2025, 1, 3), &quot;bo&quot;, 40, 10) == [Remind(&quot;bo&quot;, 2)]
+assert decide(date(2025, 1, 1), date(2024, 12, 31), &quot;di&quot;, 5, 10) == [Suspend(&quot;di&quot;)]
+</code></pre>
+<pre><code class="language-go">type Command interface{ isCommand() }
+type Remind struct{ Account string; DaysLeft int }
+type Charge struct{ Account string; Amount int64 }
+type Suspend struct{ Account string }
+
+func (Remind) isCommand()  {}
+func (Charge) isCommand()  {}
+func (Suspend) isCommand() {}
+
+func Decide(today time.Time, a Account, price int64) []Command { // pure
+    days := int(a.RenewsOn.Sub(today).Hours() / 24)
+    switch {
+    case days &gt; 3:
+        return nil
+    case days &gt; 0:
+        return []Command{Remind{a.ID, days}}
+    case a.Balance &gt;= price:
+        return []Command{Charge{a.ID, price}}
+    default:
+        return []Command{Suspend{a.ID}}
+    }
+}
+// The shell: accounts := repo.DueWithin(ctx, 3); for each Decide(...) result,
+// a type switch calls email, payments or repo.
+</code></pre>
+<pre><code class="language-typescript">type RenewalCommand =
+  | { kind: &quot;remind&quot;; account: string; daysLeft: number }
+  | { kind: &quot;charge&quot;; account: string; amount: number }
+  | { kind: &quot;suspend&quot;; account: string };
+
+export function decide(today: Date, a: Account, price: number): RenewalCommand[] {
+  const days = Math.round((a.renewsOn.getTime() - today.getTime()) / 86_400_000);
+  if (days &gt; 3) return [];
+  if (days &gt; 0) return [{ kind: &quot;remind&quot;, account: a.id, daysLeft: days }];
+  return a.balance &gt;= price
+    ? [{ kind: &quot;charge&quot;, account: a.id, amount: price }]
+    : [{ kind: &quot;suspend&quot;, account: a.id }];
+}
+
+export async function run(deps: Deps) {            // shell
+  const today = deps.now();
+  for (const a of await deps.repo.dueWithin(3))
+    for (const c of decide(today, a, deps.price))
+      await deps.exec[c.kind](c as never);
+}
+</code></pre>
+</div>
+<h4 id="where-youve-seen-it">Where you've seen it</h4>
+<ul>
+<li><strong>Redux / Elm architecture / MVU</strong>: <code>update(state, msg) → (newState, commands)</code>; the runtime executes the commands.</li>
+<li><strong>Event sourcing</strong>: <code>decide(state, command) → events</code> and <code>evolve(state, event) → state</code> are pure; the event store is the shell.</li>
+<li><strong>Domain model methods that return events</strong> instead of calling services (<a href="domain-driven-design.html">domain-driven design</a>).</li>
+<li><strong>Terraform / Kubernetes controllers</strong>: compute a plan (pure diff of desired vs actual), then apply it.</li>
+</ul>
+<h4 id="its-not-worth-it-when">It's not worth it when</h4>
+<ul>
+<li>The use case is a CRUD pass-through with no decisions. The "core" would be empty.</li>
+<li>The decision <strong>needs</strong> I/O half-way through (look up price, then decide whether to look up a discount). You can still split it into core-shell-core steps, or pass a small function in, but don't contort the code to stay pure.</li>
+</ul>
+<h2 id="functions-replace-many-oo-patterns">Functions replace many OO patterns</h2>
+<p>Several classic object-oriented patterns exist because older Java and C# had no first-class functions. With lambdas, many of them collapse to "pass a function". The <a href="behavioral-patterns.html#patterns-that-collapse-into-a-function">behavioral patterns page</a> shows each in full; this is the functional view.</p>
+<table>
+<thead>
+<tr>
+<th>OO pattern</th>
+<th>What it really is</th>
+<th>Functional form</th>
+<th>Keep the class when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="behavioral-patterns.html#strategy-choose-the-algorithm-at-runtime">Strategy</a></td>
+<td>a swappable algorithm</td>
+<td>a function parameter: <code>Func&lt;Order, decimal&gt; shipping</code></td>
+<td>the strategy has several methods, state, or needs DI</td>
+</tr>
+<tr>
+<td><a href="behavioral-patterns.html#command-turn-a-request-into-a-value">Command</a></td>
+<td>a request as a value</td>
+<td>a closure <code>() =&gt; ...</code>, or a record + a handler</td>
+<td>you need undo, serialization or a queue across processes</td>
+</tr>
+<tr>
+<td>Template method</td>
+<td>fixed steps, variable parts</td>
+<td>a higher-order function taking the variable parts</td>
+<td>a framework requires subclassing</td>
+</tr>
+<tr>
+<td><a href="behavioral-patterns.html#observer-tell-whoever-cares-without-knowing-who-they-are">Observer</a></td>
+<td>notify subscribers</td>
+<td>a list of callbacks, events, Rx <code>IObservable</code></td>
+<td>subscribers need lifecycle (unsubscribe, backpressure)</td>
+</tr>
+<tr>
+<td><a href="behavioral-patterns.html#chain-of-responsibility-pass-it-along-until-someone-handles-it">Chain of responsibility</a></td>
+<td>handlers in order</td>
+<td>function composition: <code>next =&gt; ctx =&gt; ...</code></td>
+<td>each handler has heavy dependencies (still a class, composed)</td>
+</tr>
+<tr>
+<td><a href="behavioral-patterns.html#iterator-and-generators-pull-one-value-at-a-time">Iterator</a></td>
+<td>sequential access</td>
+<td>a generator (<code>yield</code>)</td>
+<td>almost never: generators win</td>
+</tr>
+<tr>
+<td><a href="behavioral-patterns.html#visitor-add-operations-without-touching-the-classes">Visitor</a></td>
+<td>operations over a closed set of types</td>
+<td>pattern matching on a union</td>
+<td>the hierarchy is open or a framework gives you a visitor</td>
+</tr>
+<tr>
+<td>Factory (<a href="creational-patterns.html">creational patterns</a>)</td>
+<td>create objects without naming the class</td>
+<td>a <code>Func&lt;T&gt;</code> / <code>Supplier&lt;T&gt;</code> / factory function</td>
+<td>creation needs configuration, validation or pooling</td>
+</tr>
+<tr>
+<td>Decorator (<a href="structural-patterns.html">structural patterns</a>)</td>
+<td>wrap behaviour</td>
+<td>a higher-order function <code>f =&gt; x =&gt; ...</code>, Python <code>@decorator</code></td>
+<td>the wrapped interface has many methods</td>
+</tr>
+</tbody>
+</table>
+<div class="rule">
+<p><strong>One-method interface? Consider a function.</strong> If an interface has exactly one method and implementations hold little or no state, a delegate / functional interface / function type is usually simpler for callers and tests. Keep the interface when you need a name in the DI container, several related methods, or documentation that a lambda can't carry.</p>
+</div>
+<h2 id="when-functional-style-hurts">When functional style hurts</h2>
+<p>Functional patterns are tools with costs. These are the ones that bite in practice.</p>
+<div class="compare">
+<div class="warn">
+<h4 id="readability">Readability</h4>
+<ul>
+<li>Long point-free chains and nested <code>Bind</code>/<code>flatMap</code> read like puzzles to people who don't live in FP.</li>
+<li>Ten-stage LINQ queries with anonymous tuples (<code>x.Item1.Item2</code>) lose all meaning. Name the intermediate results.</li>
+<li>Currying in C#/Java produces <code>Func&lt;A, Func&lt;B, Func&lt;C, D&gt;&gt;&gt;</code> types nobody wants to read.</li>
+<li><strong>Fix:</strong> name small functions, break long chains into named steps, and prefer the language's idiom (comprehensions in Python, loops in Go).</li>
+</ul>
+</div>
+<div class="warn">
+<h4 id="allocation-and-speed">Allocation and speed</h4>
+<ul>
+<li>Every LINQ/Stream stage allocates an iterator, every capturing lambda allocates a closure, every "change" to an immutable value allocates a new one.</li>
+<li><code>reduce</code> with spread (<code>{...acc, [k]: v}</code>) is O(n²).</li>
+<li>Persistent collections are several times slower than arrays for reads and iteration.</li>
+<li><strong>Fix:</strong> keep functional style on the 95% of code that isn't hot; measure with a profiler, then use loops, <code>Span&lt;T&gt;</code>, pooled buffers or local mutation in the hot 5%. See <a href="performance-cadence.html">performance cadence</a>.</li>
+</ul>
+</div>
+<div class="warn">
+<h4 id="debugging">Debugging</h4>
+<ul>
+<li>Stack traces through lazy pipelines show framework frames (<code>MoveNext</code>, <code>ReferencePipeline$3$1.accept</code>) instead of your code.</li>
+<li>You can't easily put a breakpoint "between" <code>Where</code> and <code>Select</code>.</li>
+<li>Lazy evaluation runs your lambda later, far from where it was written, so exceptions appear at the <code>foreach</code>.</li>
+<li><strong>Fix:</strong> use the IDE's stream/LINQ debuggers, materialize temporarily, add <code>.Peek()</code> / <code>tap</code> stages, and keep lambdas short and named.</li>
+</ul>
+</div>
+<div class="warn">
+<h4 id="fighting-the-ecosystem">Fighting the ecosystem</h4>
+<ul>
+<li>ORMs want mutable entities. Logging and DI frameworks are object-oriented. Python's culture is "raise exceptions"; Go's is "write the loop".</li>
+<li>Importing a full FP library (LanguageExt, fp-ts, Vavr) changes how every file reads, and new team members need training.</li>
+<li><strong>Fix:</strong> adopt the patterns (purity, immutability, unions, core/shell), not necessarily the library. Introduce one idea at a time.</li>
+</ul>
+</div>
+</div>
+<h2 id="choosing-a-functional-tool-a-decision-guide">Choosing a functional tool: a decision guide</h2>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1</small><strong>Is there business logic mixed with I/O?</strong><p>Split it: functional core, imperative shell. Biggest win, lowest risk.</p></div>
+<div class="flow-step"><small>2</small><strong>Is data shared between components or threads?</strong><p>Make it immutable: records, frozen dataclasses, readonly types, immutable collections.</p></div>
+<div class="flow-step"><small>3</small><strong>Is a value one of a fixed set of shapes?</strong><p>Model it as a discriminated union and pattern-match, with an exhaustiveness check.</p></div>
+<div class="flow-step"><small>4</small><strong>Can the operation fail in an expected way?</strong><p>Return a Result (or Option for absence). Keep exceptions for bugs and infrastructure.</p></div>
+<div class="flow-step"><small>5</small><strong>Is there a one-method interface or a loop over a collection?</strong><p>Pass a function; use map/filter/reduce or a comprehension. Profile before replacing loops in hot code.</p></div>
+</div>
+
+<h2 id="pitfalls">Pitfalls</h2>
+<div class="pitfall">
+<p><strong>"It's immutable" (it isn't).</strong> A C# record or Java record with a <code>List&lt;T&gt;</code> field, a frozen dataclass with a <code>list</code>, a Go struct holding a slice. Someone mutates the inner collection and every holder of the "immutable" value sees it. <strong>Fix:</strong> use immutable collection types, defensive copies in constructors (<code>List.copyOf</code>, <code>tuple(...)</code>, <code>slices.Clone</code>) and <code>readonly</code> arrays in TypeScript.</p>
+</div>
+<div class="pitfall">
+<p><strong>Enumerating a lazy query twice.</strong> A dashboard ran <code>if (orders.Any())</code> then <code>foreach (var o in orders)</code> on an EF Core query: two round-trips per request, and under load the count and the list disagreed. <strong>Fix:</strong> materialize once (<code>ToList</code>), return <code>IReadOnlyList&lt;T&gt;</code> from repositories, and enable CA1851.</p>
+</div>
+<div class="pitfall">
+<p><strong>Loop variable captured by an async callback.</strong> A Go service before 1.22 launched <code>go process(item)</code> correctly but <code>go func(){ process(item) }()</code> in another place, so most goroutines processed the last item. <strong>Fix:</strong> upgrade the module to <code>go 1.22</code>+, pass values as arguments, and turn on <code>go vet</code>.</p>
+</div>
+<div class="pitfall">
+<p><strong>Side effects inside a "pure" pipeline.</strong> A Java parallel stream did <code>.map(x -&gt; { results.add(x); return x; })</code> into an <code>ArrayList</code>. Items went missing and occasionally it threw <code>ArrayIndexOutOfBoundsException</code>. <strong>Fix:</strong> never mutate shared state in stream lambdas; collect with <code>toList()</code> or a concurrent collector.</p>
+</div>
+<div class="pitfall">
+<p><strong>Memoizing an impure function.</strong> <code>@functools.cache</code> on a function that read the current user's locale returned the first user's language to everyone. <strong>Fix:</strong> only cache pure functions, and make every input that affects the result a parameter (and therefore part of the cache key).</p>
+</div>
+<div class="pitfall">
+<p><strong>Exhaustiveness bypassed by a default arm.</strong> A TypeScript <code>switch</code> with <code>default: return null</code> meant that adding a new <code>kind</code> to the union compiled cleanly and silently returned null in production. <strong>Fix:</strong> use <code>default: return assertNever(x)</code>, Java switches without <code>default</code> over sealed types, and C# arms that throw.</p>
+</div>
+<h2 id="checklist">Checklist</h2>
+<ul>
+<li>Business decisions live in pure functions that take values and return values; I/O happens at the edges.</li>
+<li>Time, randomness, configuration and the current user are <strong>parameters</strong>, not ambient reads.</li>
+<li>Data shared across threads, caches or components is immutable all the way down (no <code>List&lt;T&gt;</code> inside a record).</li>
+<li>Collections returned from methods are either materialized (<code>IReadOnlyList&lt;T&gt;</code>, <code>List</code>, <code>list</code>) or documented as single-use.</li>
+<li>No side effects inside <code>map</code>/<code>filter</code>/<code>Select</code>/<code>Where</code> lambdas.</li>
+<li>Closures in loops capture a per-iteration variable; linters (<code>no-loop-func</code>, <code>go vet</code>) are on.</li>
+<li>"One of these shapes" data is a sealed hierarchy / union with exhaustive matching, not nullable fields plus a type code.</li>
+<li>Expected failures return a <code>Result</code>/<code>Option</code>/<code>(T, error)</code>; exceptions are for bugs and infrastructure.</li>
+<li>Hot paths have been profiled before and after introducing LINQ/Streams/immutability.</li>
+<li>Long chains are broken into named steps that a newcomer can read.</li>
+</ul>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<p><summary>A function reads <code>DateTime.UtcNow</code> but never writes anything. Is it pure? What would you change?</summary></p>
+<p>No. Its result depends on a hidden input (the clock), so calling it twice with the same arguments can give different answers and it can't be memoized or tested without a fake clock. Make the time a parameter (<code>DateOnly today</code>) and read the clock once in the shell, or inject <code>TimeProvider</code> / <code>java.time.Clock</code> / a <code>func() time.Time</code>.</p>
+</details>
+<details class="quiz">
+<p><summary>In Python, <code>fs = [lambda: i for i in range(3)]</code> then <code>[f() for f in fs]</code> gives <code>[2, 2, 2]</code>. Why, and how do you fix it?</summary></p>
+<p>Python closures look up <code>i</code> when the lambda <strong>runs</strong>, and by then the loop has finished with <code>i == 2</code>. All three lambdas share the same variable. Bind the value at definition time: <code>lambda i=i: i</code>, or use <code>functools.partial(f, i)</code>.</p>
+</details>
+<details class="quiz">
+<p><summary>Your C# method returns <code>IEnumerable&lt;Order&gt;</code> built from an EF Core query. The caller calls <code>.Count()</code> and then loops. What happens?</summary></p>
+<p>The query runs twice: once for <code>Count()</code> and once for the loop, two database round-trips, and the data can change in between. Materialize with <code>ToListAsync()</code> inside the method and return <code>IReadOnlyList&lt;Order&gt;</code>, so callers can't trigger hidden re-execution.</p>
+</details>
+<details class="quiz">
+<p><summary>When would you return a <code>Result</code> instead of throwing?</summary></p>
+<p>When the failure is an expected outcome that the caller should handle: validation errors, "not found", "insufficient funds". It shows up in the signature, can be combined with <code>bind</code>, and can collect several errors. Throw for bugs (broken invariants) and infrastructure failures the caller can't handle locally.</p>
+</details>
+<details class="quiz">
+<p><summary>An immutable tree has a million nodes. How many nodes does inserting one key allocate?</summary></p>
+<p>Only the nodes on the path from the root to the insertion point, plus the new leaf: about log₂(1,000,000) ≈ 20 for a balanced binary tree, and around 4–5 for the 32-way tries used by real persistent collections. Everything else is shared with the old version, which stays valid.</p>
+</details>
+<details class="quiz">
+<p><summary>Which language turns "you forgot a case" into a compile error with no extra helper: C#, Java 21, TypeScript, Python or Go?</summary></p>
+<p>Java 21, for a <code>switch</code> without <code>default</code> over a sealed interface. TypeScript does it with the <code>assertNever(x: never)</code> helper in the default branch. Python needs a type checker plus <code>assert_never</code>. C# can't prove a class hierarchy is closed, so it warns and needs a discard arm. Go has no sum types; you rely on a <code>default</code> branch or a linter.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Pure function</strong>same args → same result, no hidden reads or writes</div>
+<div><strong>Referential transparency</strong>a call can be replaced by its value</div>
+<div><strong>Immutability</strong>change = new value; sharing becomes safe</div>
+<div><strong>Structural sharing</strong>copy the path, share the rest: O(log n) updates</div>
+<div><strong>map / filter / reduce</strong>Select / Where / Aggregate; comprehensions in Python</div>
+<div><strong>Lazy</strong>runs on demand; consume once or materialize</div>
+<div><strong>Partial application</strong>fix some args now: multiply(1.2)</div>
+<div><strong>Compose / pipe</strong>f(g(x)) vs g then f: order matters</div>
+<div><strong>Closure</strong>captures variables, not values; watch loops</div>
+<div><strong>Option</strong>absence in the type: T?, Optional, T | None</div>
+<div><strong>Result</strong>expected failure in the type; bind = railway</div>
+<div><strong>Union + match</strong>closed set of shapes, exhaustive switch</div>
+<div><strong>Core / shell</strong>pure decisions, I/O at the edges</div>
+<div><strong>When it hurts</strong>hot paths, deep chains, debugging, ORMs</div>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/dotnet/standard/linq/functional-vs-imperative-programming">Functional programming vs. imperative programming (.NET)</a></li>
+<li><a href="https://learn.microsoft.com/dotnet/csharp/fundamentals/functional/pattern-matching">C# pattern matching overview</a> and <a href="https://learn.microsoft.com/dotnet/csharp/fundamentals/types/records">records</a></li>
+<li><a href="https://learn.microsoft.com/dotnet/api/system.collections.immutable">System.Collections.Immutable</a> and <a href="https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1851">CA1851: possible multiple enumerations</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/package-summary.html">java.util.stream package docs</a> (non-interference and statelessness), <a href="https://openjdk.org/jeps/441">JEP 441: pattern matching for switch</a>, <a href="https://openjdk.org/jeps/409">JEP 409: sealed classes</a></li>
+<li><a href="https://docs.python.org/3/howto/functional.html">Python functional programming HOWTO</a>, <a href="https://peps.python.org/pep-0636/">PEP 636: structural pattern matching tutorial</a>, <a href="https://docs.python.org/3/library/itertools.html">itertools</a></li>
+<li><a href="https://go.dev/blog/range-functions">Go: range over function types</a> and <a href="https://go.dev/blog/loopvar-preview">fixing for loops in Go 1.22</a></li>
+<li><a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html">TypeScript handbook: narrowing and discriminated unions</a></li>
+<li><a href="https://react.dev/learn/keeping-components-pure">React: keeping components pure</a></li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="behavioral-patterns.html"><small>&larr; PREVIOUS</small>Behavioral Patterns</a><a class="next" href="anti-patterns.html"><small>NEXT &rarr;</small>Anti-Patterns &amp; Code Smells</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-code-you-cant-reason-about-locally">The problem: code you can't reason about locally</a></li>
+<li><a href="#pure-functions-and-referential-transparency">Pure functions and referential transparency</a><ul>
+<li><a href="#before-and-after">Before and after</a></li>
+<li><a href="#the-same-idea-in-five-languages">The same idea in five languages</a></li>
+<li><a href="#what-counts-as-a-side-effect">What counts as a side effect?</a></li>
+</ul>
+</li>
+<li><a href="#immutability-values-that-cant-change-under-you">Immutability: values that can't change under you</a><ul>
+<li><a href="#immutable-records-in-five-languages">Immutable records in five languages</a></li>
+<li><a href="#persistent-collections-changing-a-big-structure-cheaply">Persistent collections: changing a big structure cheaply</a></li>
+</ul>
+</li>
+<li><a href="#higher-order-functions-and-pipelines">Higher-order functions and pipelines</a><ul>
+<li><a href="#one-pipeline-five-languages">One pipeline, five languages</a></li>
+<li><a href="#eager-vs-lazy-side-by-side">Eager vs lazy, side by side</a></li>
+<li><a href="#reduce-is-the-general-one">Reduce is the general one</a></li>
+</ul>
+</li>
+<li><a href="#currying-partial-application-and-composition">Currying, partial application and composition</a></li>
+<li><a href="#closures-functions-that-remember">Closures: functions that remember</a><ul>
+<li><a href="#the-loop-capture-bug-and-its-fix-in-each-language">The loop-capture bug and its fix in each language</a></li>
+<li><a href="#closures-have-costs-too">Closures have costs too</a></li>
+</ul>
+</li>
+<li><a href="#optionmaybe-and-resulteither">Option/Maybe and Result/Either</a><ul>
+<li><a href="#railway-oriented-programming">Railway-oriented programming</a></li>
+<li><a href="#exceptions-or-result">Exceptions or Result?</a></li>
+</ul>
+</li>
+<li><a href="#pattern-matching-and-discriminated-unions">Pattern matching and discriminated unions</a></li>
+<li><a href="#lazy-sequences-work-on-demand">Lazy sequences: work on demand</a></li>
+<li><a href="#functional-core-imperative-shell">Functional core, imperative shell</a></li>
+<li><a href="#functions-replace-many-oo-patterns">Functions replace many OO patterns</a></li>
+<li><a href="#when-functional-style-hurts">When functional style hurts</a></li>
+<li><a href="#choosing-a-functional-tool-a-decision-guide">Choosing a functional tool: a decision guide</a></li>
+<li><a href="#pitfalls">Pitfalls</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

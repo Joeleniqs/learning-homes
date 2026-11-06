@@ -1,0 +1,171 @@
+/* Topic styles for "Memory & Garbage Collection" (prefix mg-). Colours come only from site variables. */
+.viz [class^="mg-"], .viz [class*=" mg-"] { overflow-wrap: normal; }
+.viz-legend .lg-warn::before { border-color: var(--v-active); background: var(--v-active-soft); border-style: dashed; }
+
+/* wide visualizers: the stage gets the full width, code + variables sit underneath side by side */
+.viz.mg-wide .viz-body.with-code { grid-template-columns: minmax(0, 1fr); }
+.viz.mg-wide .viz-side { border-left: 0; border-top: 1px solid var(--line); flex-direction: row; }
+.viz.mg-wide .viz-code { flex: 2.3 1 0; min-width: 0; }
+.viz.mg-wide .viz-vars { flex: 1 1 0; border-top: 0; border-left: 1px solid var(--line); align-content: start; }
+@media (max-width: 900px) { .viz.mg-wide .viz-side { flex-direction: column; } .viz.mg-wide .viz-vars { border-left: 0; border-top: 1px solid var(--line); } }
+
+.mg-mute { color: var(--muted); font-size: 11.5px; font-style: italic; }
+
+/* ---- chips ---- */
+.mg-chip { display: inline-flex; align-items: center; gap: 5px; margin: 2px 3px 2px 0; padding: 2px 8px; border: 1.6px solid var(--line); border-radius: 6px; background: var(--v-node); font: 600 11.5px "Cascadia Code", Consolas, monospace; white-space: nowrap; min-height: 22px; }
+.mg-chip small { font-size: 9.5px; font-weight: 600; color: var(--muted); }
+.mg-chip.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.mg-chip.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.mg-chip.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.mg-chip.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.mg-chip.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.mg-chip.dim { border-style: dashed; color: var(--muted); background: transparent; }
+.mg-chip.dead { border-style: dashed; border-color: var(--v-bad); background: transparent; color: var(--muted); }
+.mg-chip.slot { min-width: 34px; border-style: dashed; background: transparent; }
+.mg-chip.big { padding: 2px 16px; border-width: 2.4px; }
+.mg-chip.gone { opacity: .35; }
+
+/* ---- boxes ---- */
+.mg-box { border: 1.6px solid var(--line); border-radius: 10px; background: var(--surface); padding: 8px 10px; min-width: 0; transition: border-color .2s, background .2s; }
+.mg-box-h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+.mg-box-h b { font-size: 12.5px; }
+.mg-box-h small { font-size: 10.5px; color: var(--muted); text-align: right; }
+.mg-box-b { display: flex; flex-wrap: wrap; align-items: center; min-height: 26px; }
+.mg-box.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.mg-box.dim { border-style: dashed; opacity: .55; }
+
+.mg-stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; width: 100%; }
+.mg-stat { display: flex; flex-direction: column; align-items: center; min-width: 92px; padding: 6px 12px; border: 1.6px solid var(--line); border-radius: 10px; background: var(--surface); }
+.mg-stat b { font-size: 17px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mg-stat span { font-size: 10.5px; color: var(--muted); text-align: center; }
+.mg-stat.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.mg-stat.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.mg-stat.path { border-color: var(--v-path); background: var(--v-path-soft); }
+
+.mg-verdict { align-self: center; padding: 6px 18px; border-radius: 999px; border: 2px solid var(--line); font: 800 13px system-ui, sans-serif; letter-spacing: .5px; text-align: center; }
+.mg-verdict.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.mg-verdict.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.mg-verdict.warn { border-color: var(--v-active); background: var(--v-active-soft); border-style: dashed; }
+
+.mg-q { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; max-width: 820px; min-height: 28px; }
+.mg-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; width: min(760px, 100%); }
+.mg-arrow { color: var(--muted); font-weight: 700; margin: 0 4px 0 1px; }
+
+/* ---- stack vs heap, refcount ---- */
+.mg-sh { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 16px; width: 100%; align-items: start; }
+.mg-sh > div > .v-labeled { width: 100%; }
+.mg-col { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+.mg-frame { border-color: var(--v-visit); }
+.mg-slots { display: flex; flex-direction: column; gap: 3px; width: 100%; }
+.mg-slot { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 3px 8px; border: 1px solid var(--line); border-radius: 5px; background: var(--v-node); font: 600 11.5px "Cascadia Code", Consolas, monospace; }
+.mg-slot > span:first-child { color: var(--muted); }
+.mg-slot.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.mg-slot.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.mg-slot.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.mg-slot.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.mg-ref { color: var(--accent); font-weight: 700; }
+.mg-inl { padding: 1px 6px; border: 1.4px solid var(--v-done); border-radius: 4px; background: var(--v-done-soft); }
+.mg-val { font-weight: 700; }
+.mg-heap { display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; min-height: 60px; padding: 8px; border: 1.6px dashed var(--line); border-radius: 10px; width: 100%; box-sizing: border-box; }
+.mg-obj { display: flex; flex-direction: column; gap: 3px; min-width: 150px; padding: 6px 8px; border: 1.6px solid var(--line); border-radius: 8px; background: var(--surface); transition: border-color .2s, background .2s, opacity .2s; }
+.mg-obj-h { display: flex; align-items: baseline; gap: 6px; font-size: 12px; }
+.mg-obj-h small { margin-left: auto; color: var(--muted); font: 600 10.5px "Cascadia Code", Consolas, monospace; }
+.mg-obj.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.mg-obj.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.mg-obj.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.mg-obj.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.mg-obj.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.mg-obj.dim { border-style: dashed; border-color: var(--v-bad); opacity: .75; }
+.mg-obj.gone { opacity: .3; border-style: dashed; }
+.mg-hdr { display: flex; gap: 3px; }
+.mg-hdr i { flex: 1; padding: 1px 4px; border-radius: 3px; background: var(--line); color: var(--muted); font: italic 600 9.5px system-ui, sans-serif; text-align: center; }
+.mg-gcr { font: 600 11px "Cascadia Code", Consolas, monospace; color: var(--muted); }
+.mg-gcr b { color: var(--text); }
+.mg-console { display: flex; align-items: center; gap: 10px; padding: 6px 12px; border-radius: 8px; background: var(--code); border: 1px solid var(--line); font: 700 13px "Cascadia Code", Consolas, monospace; }
+.mg-console small { color: var(--muted); font: 600 10.5px system-ui, sans-serif; text-transform: uppercase; letter-spacing: .6px; }
+@media (max-width: 760px) { .mg-sh { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- mark-sweep, tri-colour, scavenge ---- */
+.mg-mark { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 14px; width: 100%; align-items: center; }
+.mg-mark > div:first-child { display: flex; justify-content: center; min-width: 0; }
+.mg-mark .v-graph { max-width: 100%; height: auto; }
+.mg-side { display: flex; flex-direction: column; gap: 10px; align-items: stretch; min-width: 0; }
+.mg-side .mg-q { justify-content: flex-start; }
+.mg-strip { display: flex; gap: 2px; width: 100%; height: 34px; }
+.mg-cell { display: flex; align-items: center; justify-content: center; min-width: 0; overflow: hidden; border: 1.5px solid var(--line); border-radius: 4px; background: var(--v-node); font: 700 11px "Cascadia Code", Consolas, monospace; }
+.mg-cell.free { border-style: dashed; background: transparent; color: var(--muted); font-weight: 500; font-size: 10px; }
+.mg-cell.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.mg-cell.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.mg-cell.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.mg-cell.bad { border-color: var(--v-bad); background: var(--v-bad-soft); color: var(--v-bad); }
+@media (max-width: 820px) { .mg-mark { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- character / array cells (span, slices, scavenge) ---- */
+.mg-chars { display: flex; flex-wrap: wrap; gap: 2px; justify-content: center; }
+.mg-ch { display: flex; flex-direction: column; align-items: center; min-width: 24px; padding: 2px 3px; border: 1.5px solid var(--line); border-radius: 4px; background: var(--v-node); transition: border-color .2s, background .2s; }
+.mg-ch b { font: 700 13px "Cascadia Code", Consolas, monospace; min-height: 17px; }
+.mg-ch small { font: 600 9px "Cascadia Code", Consolas, monospace; color: var(--muted); white-space: nowrap; }
+.mg-ch.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.mg-ch.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.mg-ch.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.mg-ch.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.mg-ch.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.mg-ch.dim { border-style: dashed; opacity: .55; }
+
+/* ---- generations ---- */
+.mg-gens { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+.mg-lane { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 10px; align-items: center; padding: 6px 10px; border: 1.6px solid var(--line); border-radius: 10px; background: var(--surface); transition: border-color .2s, background .2s; }
+.mg-lane.warn { border-color: var(--v-active); background: var(--v-active-soft); border-style: dashed; }
+.mg-lane-h { display: flex; flex-direction: column; }
+.mg-lane-h b { font-size: 13px; }
+.mg-lane-h small { font-size: 10px; color: var(--muted); }
+.mg-lane-b { display: flex; flex-wrap: wrap; align-items: center; min-height: 26px; }
+@media (max-width: 700px) { .mg-lane { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- leak chart ---- */
+.mg-chart { position: relative; display: flex; align-items: flex-end; gap: 2px; width: 100%; padding: 0 4px; border-bottom: 1.5px solid var(--line); box-sizing: border-box; }
+.mg-col1 { flex: 1 1 0; min-width: 3px; display: flex; flex-direction: column-reverse; }
+.mg-col1 i { display: block; }
+.mg-col1 i.l { background: var(--v-bad); border-radius: 0; }
+.mg-col1 i.l.ok { background: var(--v-done); }
+.mg-col1 i.g { background: var(--v-visit-soft); border: 1px solid var(--v-visit); border-bottom: 0; border-radius: 2px 2px 0 0; }
+.mg-col1.gc { box-shadow: 0 2px 0 0 var(--v-active); }
+.mg-col1.fut { align-self: stretch; border-left: 1px dashed var(--line); opacity: .4; }
+.mg-oom { position: absolute; left: 0; right: 0; border-top: 2px dashed var(--v-bad); }
+.mg-oom::after { content: "OOM"; position: absolute; right: 2px; top: -16px; font: 700 10px system-ui, sans-serif; color: var(--v-bad); }
+
+/* ---- pool ---- */
+.mg-pool { display: flex; flex-direction: column; gap: 6px; align-items: center; width: 100%; }
+
+/* ---- GC timeline ---- */
+.mg-tl { display: flex; flex-direction: column; gap: 2px; width: max-content; max-width: 100%; margin: 0 auto; overflow-x: auto; }
+.mg-tl-row { display: flex; align-items: flex-end; gap: 1px; }
+.mg-tl-lab { flex: 0 0 52px; font: 700 11px system-ui, sans-serif; color: var(--muted); align-self: center; }
+.mg-tc { position: relative; display: block; width: 13px; height: 18px; border-radius: 2px; border: 1px solid var(--line); background: var(--v-node); }
+.mg-tc.path { background: var(--v-path-soft); border-color: var(--v-path); }
+.mg-tc.active { background: var(--v-active); border-color: var(--v-active); }
+.mg-tc.bad { background: var(--v-bad-soft); border-color: var(--v-bad); }
+.mg-tc.warn { background: var(--v-active-soft); border: 1.5px dashed var(--v-active); }
+.mg-tc.fut { border-style: dashed; background: transparent; opacity: .45; }
+.mg-tc.tick::before { content: ""; position: absolute; left: -2px; top: -3px; bottom: -3px; width: 3px; border-radius: 2px; background: var(--v-bad); }
+.mg-hb { display: block; width: 13px; border-radius: 2px 2px 0 0; background: var(--v-visit); margin-top: 6px; }
+.mg-hb.fut { background: var(--line); opacity: .45; }
+.mg-tl-axis { flex: 1; font-size: 10px; color: var(--muted); }
+.mg-tl-axis.r { text-align: right; }
+
+/* ---- G1 regions ---- */
+.mg-rgrid { display: grid; grid-template-columns: repeat(10, 44px); gap: 4px; justify-content: center; }
+.mg-rg { position: relative; display: flex; flex-direction: column; justify-content: space-between; height: 38px; padding: 3px 4px; border: 1.6px dashed var(--line); border-radius: 5px; background: transparent; box-sizing: border-box; transition: border-color .2s, background .2s; }
+.mg-rg b { font: 800 12px "Cascadia Code", Consolas, monospace; line-height: 1; }
+.mg-rg b small { font-size: 9px; margin-left: 2px; color: var(--muted); }
+.mg-rg-bar { display: block; height: 5px; border-radius: 2px; background: var(--bg); overflow: hidden; }
+.mg-rg-bar i { display: block; height: 100%; background: var(--text); opacity: .55; }
+.mg-rg.visit, .mg-rg.active, .mg-rg.done, .mg-rg.path, .mg-rg.bad { border-style: solid; }
+.mg-rg.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.mg-rg.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.mg-rg.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.mg-rg.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.mg-rg.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.mg-rg.dead { opacity: .5; border-style: dashed; }
+.mg-rg.sel { box-shadow: 0 0 0 2.5px var(--accent); }
+@media (max-width: 620px) { .mg-rgrid { grid-template-columns: repeat(8, 38px); } }

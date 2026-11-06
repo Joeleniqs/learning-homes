@@ -1,0 +1,1913 @@
+<!doctype html>
+<html lang="en" data-home="dsa-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Prefix Sums &amp; Difference Arrays | DSA Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#4f46e5;--accent-soft:#eef0ff;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#a5b4fc;--accent-soft:#252a5c;}}:root[data-theme=dark]{--accent:#a5b4fc;--accent-soft:#252a5c;}</style>
+  <link rel="stylesheet" href="../assets/topics/prefix-sums.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/prefix-sums.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="DSA Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">DS</span>DSA Home</a>
+    <p class="sidebar-caption">Data structures &amp; algorithms, seen.<br>Every idea animated, every pattern drilled.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations</summary><ul class="topic-list"><li data-search="The Problem-Solving Playbook Foundations A visual decision map from input size, shape and question type to the right technique, plus a repeatable interview/contest workflow. pattern recognition constraints approach interview" data-slug="problem-solving-playbook"><a href="../topics/problem-solving-playbook.html">The Problem-Solving Playbook</a></li><li data-search="Complexity Analysis Foundations Big-O growth you can see, amortized cost, recursion trees and the Master theorem, and what 10^8 operations per second really buys you. big o amortized master theorem time space" data-slug="complexity-analysis"><a href="../topics/complexity-analysis.html">Complexity Analysis</a></li><li data-search="Recursion &amp; the Call Stack Foundations Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from. call stack recursion tree divide and conquer" data-slug="recursion"><a href="../topics/recursion.html">Recursion &amp; the Call Stack</a></li></ul></details><details class="nav-track" open><summary>Arrays &amp; Strings</summary><ul class="topic-list"><li data-search="Two Pointers Arrays &amp; Strings Opposite-end, same-direction and fast/slow pointers: why moving one pointer is safe, with partitioning and k-sum. pair sum partition dutch flag 3sum" data-slug="two-pointers"><a href="../topics/two-pointers.html">Two Pointers</a></li><li data-search="Sliding Window Arrays &amp; Strings Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows. substring subarray window at most k" data-slug="sliding-window"><a href="../topics/sliding-window.html">Sliding Window</a></li><li data-search="Prefix Sums &amp; Difference Arrays Arrays &amp; Strings 1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR. subarray sum equals k range sum 2d prefix difference array" data-slug="prefix-sums"><a href="../topics/prefix-sums.html" aria-current="page">Prefix Sums &amp; Difference Arrays</a></li><li data-search="Binary Search Arrays &amp; Strings One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection. lower bound upper bound search on answer rotated monotonic predicate" data-slug="binary-search"><a href="../topics/binary-search.html">Binary Search</a></li><li data-search="Sorting Algorithms Arrays &amp; Strings Animated bubble, insertion, merge, quick, heap, counting and radix sorts; stability, quickselect and custom comparators. merge sort quick sort quickselect counting sort inversions" data-slug="sorting"><a href="../topics/sorting.html">Sorting Algorithms</a></li><li data-search="Hashing Patterns Arrays &amp; Strings How hash tables work inside, then frequency maps, grouping by canonical keys, complement lookups and rolling hashes. hash map hash set anagram two sum collision" data-slug="hashing"><a href="../topics/hashing.html">Hashing Patterns</a></li><li data-search="Monotonic Stack &amp; Queue Arrays &amp; Strings Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight. next greater largest rectangle deque trapping rain water" data-slug="monotonic-stack-queue"><a href="../topics/monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a></li><li data-search="Intervals &amp; Sweep Line Arrays &amp; Strings Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline. merge intervals meeting rooms events skyline" data-slug="intervals-sweep-line"><a href="../topics/intervals-sweep-line.html">Intervals &amp; Sweep Line</a></li><li data-search="String Algorithms Arrays &amp; Strings KMP failure function, Z-algorithm, Rabin–Karp, Manacher&#x27;s palindromes and string hashing, each animated character by character. kmp z algorithm rabin karp manacher palindrome pattern matching" data-slug="string-algorithms"><a href="../topics/string-algorithms.html">String Algorithms</a></li></ul></details><details class="nav-track"><summary>Linked Lists, Stacks, Queues &amp; Heaps</summary><ul class="topic-list"><li data-search="Linked Lists Linked Lists, Stacks, Queues &amp; Heaps Pointer rewiring you can watch: reversal, dummy heads, fast/slow cycle detection, merging, and LRU cache design. reverse floyd cycle merge lru" data-slug="linked-lists"><a href="../topics/linked-lists.html">Linked Lists</a></li><li data-search="Stacks &amp; Queues Linked Lists, Stacks, Queues &amp; Heaps Balanced brackets, expression evaluation, min-stack, queues from stacks, deques and BFS queues. parentheses calculator deque min stack" data-slug="stacks-queues"><a href="../topics/stacks-queues.html">Stacks &amp; Queues</a></li><li data-search="Heaps &amp; Priority Queues Linked Lists, Stacks, Queues &amp; Heaps Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling. heap top k median k way merge priority queue" data-slug="heaps-priority-queues"><a href="../topics/heaps-priority-queues.html">Heaps &amp; Priority Queues</a></li></ul></details><details class="nav-track"><summary>Trees</summary><ul class="topic-list"><li data-search="Tree Traversals Trees Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees. dfs bfs inorder level order morris" data-slug="tree-traversals"><a href="../topics/tree-traversals.html">Tree Traversals</a></li><li data-search="Binary Search Trees Trees Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters. bst validate successor avl red black" data-slug="binary-search-trees"><a href="../topics/binary-search-trees.html">Binary Search Trees</a></li><li data-search="Tree Problem Patterns Trees Return-value recursion (diameter, max path sum), top-down state, LCA, serialization, and binary lifting. lca diameter path sum binary lifting serialize" data-slug="tree-patterns"><a href="../topics/tree-patterns.html">Tree Problem Patterns</a></li><li data-search="Tries Trees Prefix trees animated insert by insert: autocomplete, word search on boards, and bitwise tries for max XOR. prefix tree autocomplete word search xor trie" data-slug="tries"><a href="../topics/tries.html">Tries</a></li><li data-search="Segment Trees, Fenwick Trees &amp; Sparse Tables Trees Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables. segment tree lazy propagation fenwick bit rmq" data-slug="segment-fenwick-trees"><a href="../topics/segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a></li></ul></details><details class="nav-track"><summary>Graphs</summary><ul class="topic-list"><li data-search="Graph Fundamentals: BFS &amp; DFS Graphs Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS. bfs dfs grid islands connected components cycle" data-slug="graph-fundamentals"><a href="../topics/graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></li><li data-search="Topological Sort &amp; DAGs Graphs Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs. kahn course schedule dag dependency order" data-slug="topological-sort"><a href="../topics/topological-sort.html">Topological Sort &amp; DAGs</a></li><li data-search="Union-Find (Disjoint Set Union) Graphs Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries. dsu disjoint set path compression connectivity" data-slug="union-find"><a href="../topics/union-find.html">Union-Find (Disjoint Set Union)</a></li><li data-search="Shortest Paths Graphs BFS, 0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall and A* animated, and a chart to pick the right one every time. dijkstra bellman ford floyd warshall a star 0-1 bfs" data-slug="shortest-paths"><a href="../topics/shortest-paths.html">Shortest Paths</a></li><li data-search="Minimum Spanning Trees Graphs Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems. kruskal prim mst cut property" data-slug="minimum-spanning-trees"><a href="../topics/minimum-spanning-trees.html">Minimum Spanning Trees</a></li><li data-search="Advanced Graph Algorithms Graphs Strongly connected components, bridges and articulation points, bipartite checks, Euler paths, and max-flow / matching. tarjan kosaraju scc bridges euler max flow bipartite matching" data-slug="advanced-graphs"><a href="../topics/advanced-graphs.html">Advanced Graph Algorithms</a></li></ul></details><details class="nav-track"><summary>Backtracking &amp; Greedy</summary><ul class="topic-list"><li data-search="Backtracking Backtracking &amp; Greedy The choose/explore/un-choose template animated on a decision tree: subsets, permutations, combinations, N-Queens, Sudoku and pruning. subsets permutations n queens sudoku pruning" data-slug="backtracking"><a href="../topics/backtracking.html">Backtracking</a></li><li data-search="Greedy Algorithms Backtracking &amp; Greedy When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding. exchange argument interval scheduling jump game huffman" data-slug="greedy"><a href="../topics/greedy.html">Greedy Algorithms</a></li></ul></details><details class="nav-track"><summary>Dynamic Programming</summary><ul class="topic-list"><li data-search="The DP Framework Dynamic Programming Recursion → memoization → tabulation → space optimisation, visualised on one problem; how to design state and transitions. memoization tabulation state transition overlapping subproblems" data-slug="dp-framework"><a href="../topics/dp-framework.html">The DP Framework</a></li><li data-search="1D &amp; Grid DP Dynamic Programming Climbing stairs, house robber, decode ways, unique paths, min path sum, maximal square and dungeon game with animated tables. house robber unique paths grid dp maximal square" data-slug="dp-linear-grid"><a href="../topics/dp-linear-grid.html">1D &amp; Grid DP</a></li><li data-search="Knapsack Family Dynamic Programming 0/1 vs unbounded vs bounded knapsack, why loop direction matters, coin change, subset sum and target sum. knapsack coin change subset sum partition" data-slug="dp-knapsack"><a href="../topics/dp-knapsack.html">Knapsack Family</a></li><li data-search="Sequence &amp; String DP Dynamic Programming LIS with patience sorting, LCS, edit distance, palindromic subsequences, regex/wildcard matching and distinct subsequences. lis lcs edit distance regex matching palindrome" data-slug="dp-sequences-strings"><a href="../topics/dp-sequences-strings.html">Sequence &amp; String DP</a></li><li data-search="Interval &amp; Tree DP Dynamic Programming Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting). interval dp burst balloons matrix chain tree dp rerooting" data-slug="dp-intervals-trees"><a href="../topics/dp-intervals-trees.html">Interval &amp; Tree DP</a></li><li data-search="Bitmask &amp; Digit DP Dynamic Programming Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints. bitmask tsp digit dp subset dp" data-slug="dp-bitmask-digit"><a href="../topics/dp-bitmask-digit.html">Bitmask &amp; Digit DP</a></li><li data-search="State Machines &amp; DP Optimisations Dynamic Programming Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth. stock state machine convex hull trick knuth optimisation" data-slug="dp-advanced"><a href="../topics/dp-advanced.html">State Machines &amp; DP Optimisations</a></li></ul></details><details class="nav-track"><summary>Bits &amp; Math</summary><ul class="topic-list"><li data-search="Bit Manipulation Bits &amp; Math Bits drawn as switches: masks, XOR tricks, counting bits, subset enumeration and Gray codes. xor mask single number popcount subsets" data-slug="bit-manipulation"><a href="../topics/bit-manipulation.html">Bit Manipulation</a></li><li data-search="Math, Number Theory &amp; Combinatorics Bits &amp; Math GCD, sieves, fast power, modular inverses, nCr mod p, inclusion–exclusion, and the geometry primitives you need. gcd sieve modular fast exponentiation combinatorics geometry" data-slug="math-number-theory"><a href="../topics/math-number-theory.html">Math, Number Theory &amp; Combinatorics</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../CodeExcellenceHome/index.html">Code Excellence Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>DSA Home / Prefix Sums &amp; Difference Arrays</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">ARRAYS &AMP; STRINGS</p><h1>Prefix Sums &amp; Difference Arrays</h1><p class="lede">1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR.</p><div class="meta"><span class="level level-beginner">Beginner → Advanced</span><span>~50 min study</span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="prefix-sums" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="what-prefix-sums-are">What prefix sums are</h2>
+<p>You have an array and you will be asked, many times, “what is the sum of <code>nums[l…r]</code>?”. Adding the numbers each time
+costs O(length) per question. Prefix sums pay O(n) <strong>once</strong> so that every later question costs O(1). Then the same
+idea, viewed from different angles, solves a surprising range of problems: counting subarrays with a target sum,
+rectangle sums in a matrix, thousands of range updates, range XOR, and “product of everything except me”.</p>
+<div class="rule">
+<p><strong>The invariant.</strong> Let <code>P[k]</code> be the sum of the first <code>k</code> elements (<code>P[0] = 0</code>). Then the sum of any range <code>l…r</code> is <strong><code>P[r+1] − P[l]</code></strong>: two prefixes that share the same head, subtracted so the head cancels. Every technique on this page is that one subtraction, read forwards (range queries), backwards (difference arrays) or as a lookup (prefix + hash map).</p>
+</div>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 252" width="760" role="img" aria-label="nums 3 -1 4 1 5 -9 2 6 with prefix array P sitting on the fences between cells; the sum of indices 2 to 5 equals P[6] minus P[2].">
+<text x="20" y="22" class="title">A range sum is the difference of two prefixes</text>
+<text x="128" y="70" text-anchor="end" class="small muted">nums</text>
+<rect class="box" x="140" y="46" width="52" height="36" rx="6"/><text x="166" y="69" text-anchor="middle" class="mono">3</text>
+<text x="166" y="97" text-anchor="middle" class="small muted">0</text>
+<rect class="box" x="200" y="46" width="52" height="36" rx="6"/><text x="226" y="69" text-anchor="middle" class="mono">-1</text>
+<text x="226" y="97" text-anchor="middle" class="small muted">1</text>
+<rect class="box path" x="260" y="46" width="52" height="36" rx="6"/><text x="286" y="69" text-anchor="middle" class="mono">4</text>
+<text x="286" y="97" text-anchor="middle" class="small muted">2</text>
+<rect class="box path" x="320" y="46" width="52" height="36" rx="6"/><text x="346" y="69" text-anchor="middle" class="mono">1</text>
+<text x="346" y="97" text-anchor="middle" class="small muted">3</text>
+<rect class="box path" x="380" y="46" width="52" height="36" rx="6"/><text x="406" y="69" text-anchor="middle" class="mono">5</text>
+<text x="406" y="97" text-anchor="middle" class="small muted">4</text>
+<rect class="box path" x="440" y="46" width="52" height="36" rx="6"/><text x="466" y="69" text-anchor="middle" class="mono">-9</text>
+<text x="466" y="97" text-anchor="middle" class="small muted">5</text>
+<rect class="box" x="500" y="46" width="52" height="36" rx="6"/><text x="526" y="69" text-anchor="middle" class="mono">2</text>
+<text x="526" y="97" text-anchor="middle" class="small muted">6</text>
+<rect class="box" x="560" y="46" width="52" height="36" rx="6"/><text x="586" y="69" text-anchor="middle" class="mono">6</text>
+<text x="586" y="97" text-anchor="middle" class="small muted">7</text>
+<path class="edge done" d="M140 112 L140 118 L492 118 L492 112"/>
+<text x="500" y="122" class="small">P[6] = sum of nums[0…5] = 3</text>
+<path class="edge bad" d="M140 132 L140 138 L252 138 L252 132"/>
+<text x="260" y="142" class="small">P[2] = sum of nums[0…1] = 2</text>
+<text x="100" y="182" text-anchor="end" class="small muted">P</text>
+<rect class="box" x="116" y="160" width="40" height="34" rx="6"/><text x="136" y="182" text-anchor="middle" class="mono">0</text>
+<text x="136" y="210" text-anchor="middle" class="small muted">0</text>
+<rect class="box" x="176" y="160" width="40" height="34" rx="6"/><text x="196" y="182" text-anchor="middle" class="mono">3</text>
+<text x="196" y="210" text-anchor="middle" class="small muted">1</text>
+<rect class="box bad" x="236" y="160" width="40" height="34" rx="6"/><text x="256" y="182" text-anchor="middle" class="mono">2</text>
+<text x="256" y="210" text-anchor="middle" class="small muted">2</text>
+<rect class="box" x="296" y="160" width="40" height="34" rx="6"/><text x="316" y="182" text-anchor="middle" class="mono">6</text>
+<text x="316" y="210" text-anchor="middle" class="small muted">3</text>
+<rect class="box" x="356" y="160" width="40" height="34" rx="6"/><text x="376" y="182" text-anchor="middle" class="mono">7</text>
+<text x="376" y="210" text-anchor="middle" class="small muted">4</text>
+<rect class="box" x="416" y="160" width="40" height="34" rx="6"/><text x="436" y="182" text-anchor="middle" class="mono">12</text>
+<text x="436" y="210" text-anchor="middle" class="small muted">5</text>
+<rect class="box done" x="476" y="160" width="40" height="34" rx="6"/><text x="496" y="182" text-anchor="middle" class="mono">3</text>
+<text x="496" y="210" text-anchor="middle" class="small muted">6</text>
+<rect class="box" x="536" y="160" width="40" height="34" rx="6"/><text x="556" y="182" text-anchor="middle" class="mono">5</text>
+<text x="556" y="210" text-anchor="middle" class="small muted">7</text>
+<rect class="box" x="596" y="160" width="40" height="34" rx="6"/><text x="616" y="182" text-anchor="middle" class="mono">11</text>
+<text x="616" y="210" text-anchor="middle" class="small muted">8</text>
+<path class="edge dash" d="M256 42 L256 158"/>
+<path class="edge dash" d="M496 42 L496 158"/>
+<text x="380" y="238" text-anchor="middle" class="small">sum(nums[2…5]) = 4 + 1 + 5 + (-9) = 1 = P[6] − P[2] = 3 − 2</text>
+</svg>
+<figcaption>P has n + 1 entries that sit on the <em>fences</em> between cells: P[k] is everything left of fence k. A range is the stretch between two fences, so its sum is the difference of the two prefix values.</figcaption>
+</figure>
+
+<p>Three facts carry through the whole topic:</p>
+<ol>
+<li><strong>The extra slot.</strong> <code>P</code> has <code>n + 1</code> entries and <code>P[0] = 0</code> is the sum of nothing. Without it, a range starting at
+   index 0 would need a special case. With it, <code>P[r+1] − P[l]</code> works for every <code>0 ≤ l ≤ r &lt; n</code>.</li>
+<li><strong>Subtraction is the only thing you need.</strong> Any operation with an inverse works the same way: <code>+</code>/<code>−</code> for sums,
+   <code>^</code>/<code>^</code> for XOR, counts of a property (“how many vowels in <code>s[l…r]</code>”), even bitmasks of parities.</li>
+<li><strong>Prefix and difference are inverses.</strong> Taking the prefix sum of the <em>difference</em> array gives the original array
+   back. That is what turns O(length) range <em>updates</em> into O(1) each (see <a href="#difference-arrays-range-updates-in-o1">difference arrays</a>).</li>
+</ol>
+<h2 id="intuition-running-totals-and-fences">Intuition: running totals and fences</h2>
+<p>Think of <code>P</code> as the odometer of a car driving along the array: <code>P[k]</code> is the distance driven when the car passes fence
+<code>k</code>. The distance driven between two fences is the later reading minus the earlier one. Nobody re-measures the road.</p>
+<h3 id="watch-p-being-built-and-queried">Watch P being built and queried</h3>
+<p>Build <code>P</code> one cell at a time (each new value reuses the previous one), then answer a few queries. Notice that a query
+over 1 element and a query over the whole array cost exactly the same: one subtraction.</p>
+<div class="viz" data-viz="prefix-sums-build"></div>
+
+<h3 id="half-open-ranges-make-the-indices-disappear">Half-open ranges make the indices disappear</h3>
+<p>The cleanest way to remember the formula is to think in half-open ranges <code>[l, r)</code>: “from index <code>l</code> up to, but not
+including, <code>r</code>”. Then <code>sum[l, r) = P[r] − P[l]</code>, with no <code>+1</code> anywhere, and the empty range <code>[l, l)</code> gives 0 for free.
+The inclusive version <code>nums[l…r]</code> is the half-open range <code>[l, r+1)</code>, which is where <code>P[r+1]</code> comes from.</p>
+<table>
+<thead>
+<tr>
+<th>You want</th>
+<th>Formula</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sum of <code>nums[l…r]</code> (inclusive)</td>
+<td><code>P[r+1] − P[l]</code></td>
+<td>The common LeetCode form</td>
+</tr>
+<tr>
+<td>sum of <code>[l, r)</code> (half-open)</td>
+<td><code>P[r] − P[l]</code></td>
+<td>Length is <code>r − l</code></td>
+</tr>
+<tr>
+<td>sum of the first <code>k</code> elements</td>
+<td><code>P[k]</code></td>
+<td><code>P[0] = 0</code>, <code>P[n]</code> = total</td>
+</tr>
+<tr>
+<td>sum of the last <code>k</code> elements</td>
+<td><code>P[n] − P[n−k]</code></td>
+<td></td>
+</tr>
+<tr>
+<td>sum of everything except <code>l…r</code></td>
+<td><code>P[n] − (P[r+1] − P[l])</code></td>
+<td></td>
+</tr>
+<tr>
+<td>average of <code>nums[l…r]</code></td>
+<td><code>(P[r+1] − P[l]) / (r − l + 1)</code></td>
+<td>Combine with binary search on the answer for “max average” problems</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-templates">The templates</h2>
+<h3 id="1d-prefix-sums">1D prefix sums</h3>
+<div class="code-tabs">
+<pre><code class="language-python">from itertools import accumulate
+
+def build_prefix(nums: list[int]) -&gt; list[int]:
+    P = [0] * (len(nums) + 1)              # P[0] = 0: the empty prefix
+    for i, x in enumerate(nums):
+        P[i + 1] = P[i] + x                # sum of nums[0..i]
+    return P
+    # one-liner: list(accumulate(nums, initial=0))   (Python 3.8+)
+
+def range_sum(P: list[int], l: int, r: int) -&gt; int:
+    return P[r + 1] - P[l]                 # inclusive l..r
+</code></pre>
+<pre><code class="language-csharp">public static long[] BuildPrefix(int[] nums)
+{
+    var P = new long[nums.Length + 1];     // P[0] = 0: the empty prefix
+    for (int i = 0; i &lt; nums.Length; i++)
+        P[i + 1] = P[i] + nums[i];         // sum of nums[0..i]
+    return P;
+}
+
+public static long RangeSum(long[] P, int l, int r) =&gt; P[r + 1] - P[l];   // inclusive l..r
+</code></pre>
+</div>
+<p>O(n) to build, O(1) per query, O(n) extra space. In C# use <code>long</code> for the prefix array: 10⁵ values of 10⁹ overflow <code>int</code>
+long before they look suspicious. Python integers do not overflow.</p>
+<h3 id="2d-prefix-sums">2D prefix sums</h3>
+<p>In a matrix, let <code>P[r][c]</code> be the sum of the block of rows <code>0…r−1</code> and columns <code>0…c−1</code> (again one row and one column
+of zero padding). Two ideas, both pure inclusion–exclusion:</p>
+<ul>
+<li><strong>Build:</strong> the block ending at <code>(r, c)</code> is the cell itself, plus the block above, plus the block to the left. Those two
+  blocks overlap in the block up-and-left, which was therefore added twice: subtract it once.</li>
+<li><strong>Query:</strong> a rectangle is the big block to its bottom-right corner, minus the strip above, minus the strip to the left.
+  The corner where the strips overlap was subtracted twice: add it back once.</li>
+</ul>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 336" width="760" role="img" aria-label="Top row: P[3][4] equals a[2][3] plus the block above plus the block to the left minus their overlap. Bottom row: a rectangle equals the whole top-left block minus the strip above minus the strip to the left plus the doubly removed corner.">
+<text x="20" y="22" class="title">2D prefix sums: build with + up + left − corner, query with four corners</text>
+<text x="20" y="50" class="small muted">Build one cell</text>
+<rect class="box path" x="20" y="62" width="18" height="18" rx="3"/>
+<rect class="box path" x="40" y="62" width="18" height="18" rx="3"/>
+<rect class="box path" x="60" y="62" width="18" height="18" rx="3"/>
+<rect class="box path" x="80" y="62" width="18" height="18" rx="3"/>
+<rect class="box" x="100" y="62" width="18" height="18" rx="3"/>
+<rect class="box path" x="20" y="82" width="18" height="18" rx="3"/>
+<rect class="box path" x="40" y="82" width="18" height="18" rx="3"/>
+<rect class="box path" x="60" y="82" width="18" height="18" rx="3"/>
+<rect class="box path" x="80" y="82" width="18" height="18" rx="3"/>
+<rect class="box" x="100" y="82" width="18" height="18" rx="3"/>
+<rect class="box path" x="20" y="102" width="18" height="18" rx="3"/>
+<rect class="box path" x="40" y="102" width="18" height="18" rx="3"/>
+<rect class="box path" x="60" y="102" width="18" height="18" rx="3"/>
+<rect class="box path" x="80" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="100" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="20" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="40" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="60" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="80" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="100" y="122" width="18" height="18" rx="3"/>
+<text x="69" y="156" text-anchor="middle" class="small mono">P[3][4]</text>
+<text x="69" y="170" text-anchor="middle" class="small muted">target</text>
+<text x="146.75" y="108" text-anchor="middle" class="title">=</text>
+<rect class="box" x="175.5" y="62" width="18" height="18" rx="3"/>
+<rect class="box" x="195.5" y="62" width="18" height="18" rx="3"/>
+<rect class="box" x="215.5" y="62" width="18" height="18" rx="3"/>
+<rect class="box" x="235.5" y="62" width="18" height="18" rx="3"/>
+<rect class="box" x="255.5" y="62" width="18" height="18" rx="3"/>
+<rect class="box" x="175.5" y="82" width="18" height="18" rx="3"/>
+<rect class="box" x="195.5" y="82" width="18" height="18" rx="3"/>
+<rect class="box" x="215.5" y="82" width="18" height="18" rx="3"/>
+<rect class="box" x="235.5" y="82" width="18" height="18" rx="3"/>
+<rect class="box" x="255.5" y="82" width="18" height="18" rx="3"/>
+<rect class="box" x="175.5" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="195.5" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="215.5" y="102" width="18" height="18" rx="3"/>
+<rect class="box active" x="235.5" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="255.5" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="175.5" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="195.5" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="215.5" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="235.5" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="255.5" y="122" width="18" height="18" rx="3"/>
+<text x="224.5" y="156" text-anchor="middle" class="small mono">a[2][3]</text>
+<text x="224.5" y="170" text-anchor="middle" class="small muted">the cell</text>
+<text x="302.25" y="108" text-anchor="middle" class="title">+</text>
+<rect class="box visit" x="331" y="62" width="18" height="18" rx="3"/>
+<rect class="box visit" x="351" y="62" width="18" height="18" rx="3"/>
+<rect class="box visit" x="371" y="62" width="18" height="18" rx="3"/>
+<rect class="box visit" x="391" y="62" width="18" height="18" rx="3"/>
+<rect class="box" x="411" y="62" width="18" height="18" rx="3"/>
+<rect class="box visit" x="331" y="82" width="18" height="18" rx="3"/>
+<rect class="box visit" x="351" y="82" width="18" height="18" rx="3"/>
+<rect class="box visit" x="371" y="82" width="18" height="18" rx="3"/>
+<rect class="box visit" x="391" y="82" width="18" height="18" rx="3"/>
+<rect class="box" x="411" y="82" width="18" height="18" rx="3"/>
+<rect class="box" x="331" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="351" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="371" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="391" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="411" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="331" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="351" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="371" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="391" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="411" y="122" width="18" height="18" rx="3"/>
+<text x="380" y="156" text-anchor="middle" class="small mono">P[2][4]</text>
+<text x="380" y="170" text-anchor="middle" class="small muted">up</text>
+<text x="457.75" y="108" text-anchor="middle" class="title">+</text>
+<rect class="box visit" x="486.5" y="62" width="18" height="18" rx="3"/>
+<rect class="box visit" x="506.5" y="62" width="18" height="18" rx="3"/>
+<rect class="box visit" x="526.5" y="62" width="18" height="18" rx="3"/>
+<rect class="box" x="546.5" y="62" width="18" height="18" rx="3"/>
+<rect class="box" x="566.5" y="62" width="18" height="18" rx="3"/>
+<rect class="box visit" x="486.5" y="82" width="18" height="18" rx="3"/>
+<rect class="box visit" x="506.5" y="82" width="18" height="18" rx="3"/>
+<rect class="box visit" x="526.5" y="82" width="18" height="18" rx="3"/>
+<rect class="box" x="546.5" y="82" width="18" height="18" rx="3"/>
+<rect class="box" x="566.5" y="82" width="18" height="18" rx="3"/>
+<rect class="box visit" x="486.5" y="102" width="18" height="18" rx="3"/>
+<rect class="box visit" x="506.5" y="102" width="18" height="18" rx="3"/>
+<rect class="box visit" x="526.5" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="546.5" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="566.5" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="486.5" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="506.5" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="526.5" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="546.5" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="566.5" y="122" width="18" height="18" rx="3"/>
+<text x="535.5" y="156" text-anchor="middle" class="small mono">P[3][3]</text>
+<text x="535.5" y="170" text-anchor="middle" class="small muted">left</text>
+<text x="613.25" y="108" text-anchor="middle" class="title">−</text>
+<rect class="box bad" x="642" y="62" width="18" height="18" rx="3"/>
+<rect class="box bad" x="662" y="62" width="18" height="18" rx="3"/>
+<rect class="box bad" x="682" y="62" width="18" height="18" rx="3"/>
+<rect class="box" x="702" y="62" width="18" height="18" rx="3"/>
+<rect class="box" x="722" y="62" width="18" height="18" rx="3"/>
+<rect class="box bad" x="642" y="82" width="18" height="18" rx="3"/>
+<rect class="box bad" x="662" y="82" width="18" height="18" rx="3"/>
+<rect class="box bad" x="682" y="82" width="18" height="18" rx="3"/>
+<rect class="box" x="702" y="82" width="18" height="18" rx="3"/>
+<rect class="box" x="722" y="82" width="18" height="18" rx="3"/>
+<rect class="box" x="642" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="662" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="682" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="702" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="722" y="102" width="18" height="18" rx="3"/>
+<rect class="box" x="642" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="662" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="682" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="702" y="122" width="18" height="18" rx="3"/>
+<rect class="box" x="722" y="122" width="18" height="18" rx="3"/>
+<text x="691" y="156" text-anchor="middle" class="small mono">P[2][3]</text>
+<text x="691" y="170" text-anchor="middle" class="small muted">counted twice</text>
+<text x="20" y="202" class="small muted">Query any rectangle</text>
+<rect class="box" x="20" y="214" width="18" height="18" rx="3"/>
+<rect class="box" x="40" y="214" width="18" height="18" rx="3"/>
+<rect class="box" x="60" y="214" width="18" height="18" rx="3"/>
+<rect class="box" x="80" y="214" width="18" height="18" rx="3"/>
+<rect class="box" x="100" y="214" width="18" height="18" rx="3"/>
+<rect class="box" x="20" y="234" width="18" height="18" rx="3"/>
+<rect class="box" x="40" y="234" width="18" height="18" rx="3"/>
+<rect class="box done" x="60" y="234" width="18" height="18" rx="3"/>
+<rect class="box done" x="80" y="234" width="18" height="18" rx="3"/>
+<rect class="box done" x="100" y="234" width="18" height="18" rx="3"/>
+<rect class="box" x="20" y="254" width="18" height="18" rx="3"/>
+<rect class="box" x="40" y="254" width="18" height="18" rx="3"/>
+<rect class="box done" x="60" y="254" width="18" height="18" rx="3"/>
+<rect class="box done" x="80" y="254" width="18" height="18" rx="3"/>
+<rect class="box done" x="100" y="254" width="18" height="18" rx="3"/>
+<rect class="box" x="20" y="274" width="18" height="18" rx="3"/>
+<rect class="box" x="40" y="274" width="18" height="18" rx="3"/>
+<rect class="box done" x="60" y="274" width="18" height="18" rx="3"/>
+<rect class="box done" x="80" y="274" width="18" height="18" rx="3"/>
+<rect class="box done" x="100" y="274" width="18" height="18" rx="3"/>
+<text x="69" y="308" text-anchor="middle" class="small mono">region</text>
+<text x="69" y="322" text-anchor="middle" class="small muted">rows 1–3, cols 2–4</text>
+<text x="146.75" y="260" text-anchor="middle" class="title">=</text>
+<rect class="box visit" x="175.5" y="214" width="18" height="18" rx="3"/>
+<rect class="box visit" x="195.5" y="214" width="18" height="18" rx="3"/>
+<rect class="box visit" x="215.5" y="214" width="18" height="18" rx="3"/>
+<rect class="box visit" x="235.5" y="214" width="18" height="18" rx="3"/>
+<rect class="box visit" x="255.5" y="214" width="18" height="18" rx="3"/>
+<rect class="box visit" x="175.5" y="234" width="18" height="18" rx="3"/>
+<rect class="box visit" x="195.5" y="234" width="18" height="18" rx="3"/>
+<rect class="box visit" x="215.5" y="234" width="18" height="18" rx="3"/>
+<rect class="box visit" x="235.5" y="234" width="18" height="18" rx="3"/>
+<rect class="box visit" x="255.5" y="234" width="18" height="18" rx="3"/>
+<rect class="box visit" x="175.5" y="254" width="18" height="18" rx="3"/>
+<rect class="box visit" x="195.5" y="254" width="18" height="18" rx="3"/>
+<rect class="box visit" x="215.5" y="254" width="18" height="18" rx="3"/>
+<rect class="box visit" x="235.5" y="254" width="18" height="18" rx="3"/>
+<rect class="box visit" x="255.5" y="254" width="18" height="18" rx="3"/>
+<rect class="box visit" x="175.5" y="274" width="18" height="18" rx="3"/>
+<rect class="box visit" x="195.5" y="274" width="18" height="18" rx="3"/>
+<rect class="box visit" x="215.5" y="274" width="18" height="18" rx="3"/>
+<rect class="box visit" x="235.5" y="274" width="18" height="18" rx="3"/>
+<rect class="box visit" x="255.5" y="274" width="18" height="18" rx="3"/>
+<text x="224.5" y="308" text-anchor="middle" class="small mono">P[4][5]</text>
+<text x="224.5" y="322" text-anchor="middle" class="small muted">everything</text>
+<text x="302.25" y="260" text-anchor="middle" class="title">−</text>
+<rect class="box bad" x="331" y="214" width="18" height="18" rx="3"/>
+<rect class="box bad" x="351" y="214" width="18" height="18" rx="3"/>
+<rect class="box bad" x="371" y="214" width="18" height="18" rx="3"/>
+<rect class="box bad" x="391" y="214" width="18" height="18" rx="3"/>
+<rect class="box bad" x="411" y="214" width="18" height="18" rx="3"/>
+<rect class="box" x="331" y="234" width="18" height="18" rx="3"/>
+<rect class="box" x="351" y="234" width="18" height="18" rx="3"/>
+<rect class="box" x="371" y="234" width="18" height="18" rx="3"/>
+<rect class="box" x="391" y="234" width="18" height="18" rx="3"/>
+<rect class="box" x="411" y="234" width="18" height="18" rx="3"/>
+<rect class="box" x="331" y="254" width="18" height="18" rx="3"/>
+<rect class="box" x="351" y="254" width="18" height="18" rx="3"/>
+<rect class="box" x="371" y="254" width="18" height="18" rx="3"/>
+<rect class="box" x="391" y="254" width="18" height="18" rx="3"/>
+<rect class="box" x="411" y="254" width="18" height="18" rx="3"/>
+<rect class="box" x="331" y="274" width="18" height="18" rx="3"/>
+<rect class="box" x="351" y="274" width="18" height="18" rx="3"/>
+<rect class="box" x="371" y="274" width="18" height="18" rx="3"/>
+<rect class="box" x="391" y="274" width="18" height="18" rx="3"/>
+<rect class="box" x="411" y="274" width="18" height="18" rx="3"/>
+<text x="380" y="308" text-anchor="middle" class="small mono">P[1][5]</text>
+<text x="380" y="322" text-anchor="middle" class="small muted">strip above</text>
+<text x="457.75" y="260" text-anchor="middle" class="title">−</text>
+<rect class="box bad" x="486.5" y="214" width="18" height="18" rx="3"/>
+<rect class="box bad" x="506.5" y="214" width="18" height="18" rx="3"/>
+<rect class="box" x="526.5" y="214" width="18" height="18" rx="3"/>
+<rect class="box" x="546.5" y="214" width="18" height="18" rx="3"/>
+<rect class="box" x="566.5" y="214" width="18" height="18" rx="3"/>
+<rect class="box bad" x="486.5" y="234" width="18" height="18" rx="3"/>
+<rect class="box bad" x="506.5" y="234" width="18" height="18" rx="3"/>
+<rect class="box" x="526.5" y="234" width="18" height="18" rx="3"/>
+<rect class="box" x="546.5" y="234" width="18" height="18" rx="3"/>
+<rect class="box" x="566.5" y="234" width="18" height="18" rx="3"/>
+<rect class="box bad" x="486.5" y="254" width="18" height="18" rx="3"/>
+<rect class="box bad" x="506.5" y="254" width="18" height="18" rx="3"/>
+<rect class="box" x="526.5" y="254" width="18" height="18" rx="3"/>
+<rect class="box" x="546.5" y="254" width="18" height="18" rx="3"/>
+<rect class="box" x="566.5" y="254" width="18" height="18" rx="3"/>
+<rect class="box bad" x="486.5" y="274" width="18" height="18" rx="3"/>
+<rect class="box bad" x="506.5" y="274" width="18" height="18" rx="3"/>
+<rect class="box" x="526.5" y="274" width="18" height="18" rx="3"/>
+<rect class="box" x="546.5" y="274" width="18" height="18" rx="3"/>
+<rect class="box" x="566.5" y="274" width="18" height="18" rx="3"/>
+<text x="535.5" y="308" text-anchor="middle" class="small mono">P[4][2]</text>
+<text x="535.5" y="322" text-anchor="middle" class="small muted">strip left</text>
+<text x="613.25" y="260" text-anchor="middle" class="title">+</text>
+<rect class="box visit" x="642" y="214" width="18" height="18" rx="3"/>
+<rect class="box visit" x="662" y="214" width="18" height="18" rx="3"/>
+<rect class="box" x="682" y="214" width="18" height="18" rx="3"/>
+<rect class="box" x="702" y="214" width="18" height="18" rx="3"/>
+<rect class="box" x="722" y="214" width="18" height="18" rx="3"/>
+<rect class="box" x="642" y="234" width="18" height="18" rx="3"/>
+<rect class="box" x="662" y="234" width="18" height="18" rx="3"/>
+<rect class="box" x="682" y="234" width="18" height="18" rx="3"/>
+<rect class="box" x="702" y="234" width="18" height="18" rx="3"/>
+<rect class="box" x="722" y="234" width="18" height="18" rx="3"/>
+<rect class="box" x="642" y="254" width="18" height="18" rx="3"/>
+<rect class="box" x="662" y="254" width="18" height="18" rx="3"/>
+<rect class="box" x="682" y="254" width="18" height="18" rx="3"/>
+<rect class="box" x="702" y="254" width="18" height="18" rx="3"/>
+<rect class="box" x="722" y="254" width="18" height="18" rx="3"/>
+<rect class="box" x="642" y="274" width="18" height="18" rx="3"/>
+<rect class="box" x="662" y="274" width="18" height="18" rx="3"/>
+<rect class="box" x="682" y="274" width="18" height="18" rx="3"/>
+<rect class="box" x="702" y="274" width="18" height="18" rx="3"/>
+<rect class="box" x="722" y="274" width="18" height="18" rx="3"/>
+<text x="691" y="308" text-anchor="middle" class="small mono">P[1][2]</text>
+<text x="691" y="322" text-anchor="middle" class="small muted">removed twice</text>
+</svg>
+<figcaption>Inclusion–exclusion twice. Top: building one cell of P. Bottom: answering a query from four corners of P. Each panel is the same 4 × 5 matrix; shading shows which cells a term covers.</figcaption>
+</figure>
+
+<div class="viz" data-viz="prefix-sums-2d"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">class NumMatrix:                                     # LC 304
+    def __init__(self, matrix: list[list[int]]):
+        m, n = len(matrix), len(matrix[0])
+        P = [[0] * (n + 1) for _ in range(m + 1)]    # zero row and column
+        for r in range(m):
+            for c in range(n):
+                P[r + 1][c + 1] = matrix[r][c] + P[r][c + 1] + P[r + 1][c] - P[r][c]
+        self.P = P
+
+    def sum_region(self, r1: int, c1: int, r2: int, c2: int) -&gt; int:
+        P = self.P
+        return P[r2 + 1][c2 + 1] - P[r1][c2 + 1] - P[r2 + 1][c1] + P[r1][c1]
+</code></pre>
+<pre><code class="language-csharp">public class NumMatrix                               // LC 304
+{
+    private readonly int[,] P;
+
+    public NumMatrix(int[][] matrix)
+    {
+        int m = matrix.Length, n = matrix[0].Length;
+        P = new int[m + 1, n + 1];                   // zero row and column
+        for (int r = 0; r &lt; m; r++)
+            for (int c = 0; c &lt; n; c++)
+                P[r + 1, c + 1] = matrix[r][c] + P[r, c + 1] + P[r + 1, c] - P[r, c];
+    }
+
+    public int SumRegion(int r1, int c1, int r2, int c2) =&gt;
+        P[r2 + 1, c2 + 1] - P[r1, c2 + 1] - P[r2 + 1, c1] + P[r1, c1];
+}
+</code></pre>
+</div>
+<p>O(mn) to build, O(1) per rectangle. The signs follow a pattern worth memorising: the two corners on the main diagonal
+of the query (<code>(r2+1, c2+1)</code> and <code>(r1, c1)</code>) are added, the two on the anti-diagonal are subtracted. The same pattern
+appears in the 2D difference array below.</p>
+<h2 id="prefix-hash-map-subarrays-with-a-target">Prefix + hash map: subarrays with a target</h2>
+<p>“Count (or find the longest) subarray whose sum is <code>k</code>” looks like it needs all O(n²) pairs <code>(j, i)</code>. Rewrite the
+condition with prefixes:</p>
+<p><code>sum(nums[j…i]) = k</code>  ⇔  <code>P[i+1] − P[j] = k</code>  ⇔  <strong><code>P[j] = P[i+1] − k</code></strong>.</p>
+<p>So as you sweep <code>i</code> left to right, the question “how many subarrays ending at <code>i</code> sum to <code>k</code>?” becomes “how many
+<em>earlier</em> prefixes equal <code>run − k</code>?”, which a hash map answers in O(1). One pass, O(n).</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 800 282" width="800" role="img" aria-label="Prefix sums 0 1 3 4 3 6 6 8 6 plotted as a curve; points P2 and P4 at height 3 sit exactly k = 3 below the current point P5 at height 6.">
+<defs><marker id="prefix-sums-ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker></defs>
+<text x="20" y="22" class="title">Sum of nums[j…i] = k  ⇔  two points on the prefix curve whose heights differ by k</text>
+<path class="edge " d="M90 222 L690 222"/>
+<path class="edge dash" d="M90 165 L690 165"/>
+<path class="edge dash" d="M90 108 L690 108"/>
+<text x="695" y="169" class="small muted">height 3 = need</text>
+<text x="695" y="112" class="small muted">height 6 = run</text>
+<path class="edge accent" d="M110 222 L180 203 L250 165 L320 146 L390 165 L460 108 L530 108 L600 70 L670 108"/>
+<circle class="box " cx="110" cy="222" r="7"/>
+<text x="110" y="209" text-anchor="middle" class="small mono">0</text>
+<text x="110" y="242" text-anchor="middle" class="small muted">P0</text>
+<circle class="box " cx="180" cy="203" r="7"/>
+<text x="180" y="190" text-anchor="middle" class="small mono">1</text>
+<text x="180" y="242" text-anchor="middle" class="small muted">P1</text>
+<circle class="box done" cx="250" cy="165" r="7"/>
+<text x="250" y="152" text-anchor="middle" class="small mono">3</text>
+<text x="250" y="242" text-anchor="middle" class="small muted">P2</text>
+<circle class="box " cx="320" cy="146" r="7"/>
+<text x="320" y="133" text-anchor="middle" class="small mono">4</text>
+<text x="320" y="242" text-anchor="middle" class="small muted">P3</text>
+<circle class="box done" cx="390" cy="165" r="7"/>
+<text x="390" y="152" text-anchor="middle" class="small mono">3</text>
+<text x="390" y="242" text-anchor="middle" class="small muted">P4</text>
+<circle class="box active" cx="460" cy="108" r="7"/>
+<text x="460" y="95" text-anchor="middle" class="small mono">6</text>
+<text x="460" y="242" text-anchor="middle" class="small muted">P5</text>
+<circle class="box " cx="530" cy="108" r="7"/>
+<text x="530" y="95" text-anchor="middle" class="small mono">6</text>
+<text x="530" y="242" text-anchor="middle" class="small muted">P6</text>
+<circle class="box " cx="600" cy="70" r="7"/>
+<text x="600" y="57" text-anchor="middle" class="small mono">8</text>
+<text x="600" y="242" text-anchor="middle" class="small muted">P7</text>
+<circle class="box " cx="670" cy="108" r="7"/>
+<text x="670" y="95" text-anchor="middle" class="small mono">6</text>
+<text x="670" y="242" text-anchor="middle" class="small muted">P8</text>
+<path class="edge path" d="M486 165 L486 110" marker-end="url(#prefix-sums-ar1)" marker-start="url(#prefix-sums-ar1)"/>
+<text x="494" y="140.5" class="small">k = 3</text>
+<text x="380" y="270" text-anchor="middle" class="small">At i = 4, run = P5 = 6 needs an earlier prefix of 6 − 3 = 3. P2 and P4 qualify → nums[2…4] and nums[4…4] both sum to 3.</text>
+</svg>
+<figcaption>Plot the prefix sums as a curve. A subarray is the vertical distance between two points, so “sum = k” means “an earlier point exactly k lower”. The map stores how many earlier points sit at each height.</figcaption>
+</figure>
+
+<div class="viz" data-viz="prefix-sums-subarray-k"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">from collections import defaultdict
+
+def subarray_sum(nums: list[int], k: int) -&gt; int:   # LC 560
+    count, run = 0, 0
+    seen = defaultdict(int)
+    seen[0] = 1                        # the empty prefix: lets a subarray start at 0
+    for x in nums:
+        run += x                       # run = P[i + 1]
+        count += seen[run - k]         # earlier prefixes we can subtract
+        seen[run] += 1                 # only now make this prefix available
+    return count
+</code></pre>
+<pre><code class="language-csharp">public static int SubarraySum(int[] nums, int k)    // LC 560
+{
+    var seen = new Dictionary&lt;int, int&gt; { [0] = 1 };  // the empty prefix
+    int count = 0, run = 0;
+    foreach (int x in nums)
+    {
+        run += x;                                      // run = P[i + 1]
+        count += seen.GetValueOrDefault(run - k);      // earlier prefixes we can subtract
+        seen[run] = seen.GetValueOrDefault(run) + 1;   // only now make this prefix available
+    }
+    return count;
+}
+</code></pre>
+</div>
+<p>O(n) time, O(n) space. Two details decide correctness, and the visualizer shows both:</p>
+<ul>
+<li><strong><code>seen = {0: 1}</code></strong> stands for <code>P[0]</code>. Without it every subarray that starts at index 0 is missed.</li>
+<li><strong>Look up before you insert.</strong> Inserting first would let the current prefix pair with itself, which is the empty
+  subarray. With <code>k = 0</code> that silently adds one to the count per element.</li>
+</ul>
+<div class="insight">
+<p><strong>Why not a sliding window?</strong>
+A <a href="sliding-window.html">sliding window</a> needs “growing the window never decreases the sum”, which holds only for
+non-negative numbers. With negatives, a window that is too big can become right again after adding more, so no pointer
+move is ever safe. Prefix + hash map does not care about signs: it never moves a left edge, it looks every candidate
+left edge up at once.</p>
+</div>
+<h3 id="what-to-store-in-the-map">What to store in the map</h3>
+<p>The key is always the prefix value (or something derived from it). The <em>value</em> depends on the question:</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Map value</th>
+<th>Update rule</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>How many subarrays sum to k?</td>
+<td>count of each prefix</td>
+<td><code>seen[run] += 1</code> every time</td>
+<td>LC 560, 930, 1248</td>
+</tr>
+<tr>
+<td>Longest subarray with sum k?</td>
+<td><strong>first</strong> index of each prefix</td>
+<td>insert only if absent</td>
+<td>LC 525, 325</td>
+</tr>
+<tr>
+<td>Shortest subarray with sum k?</td>
+<td><strong>last</strong> index of each prefix</td>
+<td>overwrite every time</td>
+<td>LC 1590</td>
+</tr>
+<tr>
+<td>Does any subarray qualify?</td>
+<td>a set of prefixes</td>
+<td>add after the check</td>
+<td>LC 523</td>
+</tr>
+<tr>
+<td>Sum of lengths / indices</td>
+<td>sum of indices per prefix</td>
+<td>add <code>i</code></td>
+<td>“sum of distances” problems</td>
+</tr>
+</tbody>
+</table>
+<p>For the longest subarray you want the <em>earliest</em> matching left fence, so you keep the first index at which each prefix
+value appears and never overwrite it. Seed the map with <code>{0: −1}</code>: prefix 0 “happens” just before index 0.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 800 264" width="800" role="img" aria-label="Binary array mapped to plus and minus one; its prefix curve returns to height 0 at P4, so the first four elements are balanced.">
+<text x="20" y="22" class="title">Equal counts of 0 and 1: map 0 → −1, then equal prefix heights bracket a balanced subarray</text>
+<text x="138" y="56" text-anchor="end" class="small muted">bits</text>
+<rect class="box path" x="159" y="40" width="48" height="26" rx="6"/><text x="183" y="57" text-anchor="middle" class="mono small">0 → −1</text>
+<rect class="box path" x="225" y="40" width="48" height="26" rx="6"/><text x="249" y="57" text-anchor="middle" class="mono small">1 → +1</text>
+<rect class="box path" x="291" y="40" width="48" height="26" rx="6"/><text x="315" y="57" text-anchor="middle" class="mono small">1 → +1</text>
+<rect class="box path" x="357" y="40" width="48" height="26" rx="6"/><text x="381" y="57" text-anchor="middle" class="mono small">0 → −1</text>
+<rect class="box" x="423" y="40" width="48" height="26" rx="6"/><text x="447" y="57" text-anchor="middle" class="mono small">1 → +1</text>
+<rect class="box" x="489" y="40" width="48" height="26" rx="6"/><text x="513" y="57" text-anchor="middle" class="mono small">1 → +1</text>
+<rect class="box" x="555" y="40" width="48" height="26" rx="6"/><text x="579" y="57" text-anchor="middle" class="mono small">1 → +1</text>
+<rect class="box" x="621" y="40" width="48" height="26" rx="6"/><text x="645" y="57" text-anchor="middle" class="mono small">0 → −1</text>
+<path class="edge dash" d="M130 170 L698 170"/>
+<path class="edge accent" d="M150 170 L216 200 L282 170 L348 140 L414 170 L480 140 L546 110 L612 80 L678 110"/>
+<circle class="box done" cx="150" cy="170" r="7"/>
+<text x="150" y="158" text-anchor="middle" class="small mono">0</text>
+<text x="150" y="226" text-anchor="middle" class="small muted">P0</text>
+<circle class="box " cx="216" cy="200" r="7"/>
+<text x="216" y="188" text-anchor="middle" class="small mono">-1</text>
+<text x="216" y="226" text-anchor="middle" class="small muted">P1</text>
+<circle class="box " cx="282" cy="170" r="7"/>
+<text x="282" y="158" text-anchor="middle" class="small mono">0</text>
+<text x="282" y="226" text-anchor="middle" class="small muted">P2</text>
+<circle class="box " cx="348" cy="140" r="7"/>
+<text x="348" y="128" text-anchor="middle" class="small mono">1</text>
+<text x="348" y="226" text-anchor="middle" class="small muted">P3</text>
+<circle class="box done" cx="414" cy="170" r="7"/>
+<text x="414" y="158" text-anchor="middle" class="small mono">0</text>
+<text x="414" y="226" text-anchor="middle" class="small muted">P4</text>
+<circle class="box " cx="480" cy="140" r="7"/>
+<text x="480" y="128" text-anchor="middle" class="small mono">1</text>
+<text x="480" y="226" text-anchor="middle" class="small muted">P5</text>
+<circle class="box " cx="546" cy="110" r="7"/>
+<text x="546" y="98" text-anchor="middle" class="small mono">2</text>
+<text x="546" y="226" text-anchor="middle" class="small muted">P6</text>
+<circle class="box " cx="612" cy="80" r="7"/>
+<text x="612" y="68" text-anchor="middle" class="small mono">3</text>
+<text x="612" y="226" text-anchor="middle" class="small muted">P7</text>
+<circle class="box " cx="678" cy="110" r="7"/>
+<text x="678" y="98" text-anchor="middle" class="small mono">2</text>
+<text x="678" y="226" text-anchor="middle" class="small muted">P8</text>
+<path class="edge done" d="M150 206 L150 212 L414 212 L414 206"/>
+<text x="708" y="174" class="small muted">height 0: first seen at P0</text>
+<text x="380" y="252" text-anchor="middle" class="small">P0 = P4 = 0 → nums[0…3] has as many 1s as 0s. Store only the FIRST index of each height: the farthest pair is the longest.</text>
+</svg>
+<figcaption>LC 525 (Contiguous Array). Mapping 0 → −1 turns “as many 0s as 1s” into “sum = 0”, i.e. two points of the curve at the same height. The longest such subarray joins a height’s first and last appearance.</figcaption>
+</figure>
+
+<p>The same reduction (“map the property to ±1 or to a bitmask, then look for equal prefixes”) solves vowel-parity
+substrings (LC 1371), “more 1s than 0s” counts, and many string problems. The counting version even walks down trees:
+LC 437 (Path Sum III) keeps the map of root-to-node prefix sums during a DFS and removes each prefix on the way back up.</p>
+<h2 id="prefix-sums-with-modulo">Prefix sums with modulo</h2>
+<p>“Count subarrays whose sum is divisible by <code>k</code>” is the same lookup with the condition rewritten modulo <code>k</code>:</p>
+<p><code>(P[i+1] − P[j]) mod k = 0</code>  ⇔  <strong><code>P[i+1] mod k = P[j] mod k</code></strong>.</p>
+<p>Only the remainder of each prefix matters. There are just <code>k</code> possible remainders, so the “map” can be an array of <code>k</code>
+buckets, and every pair of prefixes that land in the same bucket is one divisible subarray.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 264" width="760" role="img" aria-label="nums 4 5 0 -2 -3 1; prefix remainders mod 5 are 0 4 4 4 2 4 0; bucket 0 holds two prefixes and bucket 4 holds four, giving 1 + 6 = 7 subarrays.">
+<text x="20" y="22" class="title">Divisible by 5: prefixes with the same remainder pair up (nums = 4, 5, 0, −2, −3, 1)</text>
+<text x="156" y="62" text-anchor="end" class="small muted">P</text>
+<text x="156" y="104" text-anchor="end" class="small muted">P mod 5</text>
+<rect class="box" x="170" y="40" width="50" height="32" rx="6"/><text x="195" y="61" text-anchor="middle" class="mono">0</text>
+<rect class="box done" x="170" y="82" width="50" height="32" rx="6"/><text x="195" y="103" text-anchor="middle" class="mono">0</text>
+<text x="195" y="130" text-anchor="middle" class="small muted">P0</text>
+<rect class="box" x="232" y="40" width="50" height="32" rx="6"/><text x="257" y="61" text-anchor="middle" class="mono">4</text>
+<rect class="box visit" x="232" y="82" width="50" height="32" rx="6"/><text x="257" y="103" text-anchor="middle" class="mono">4</text>
+<text x="257" y="130" text-anchor="middle" class="small muted">P1</text>
+<rect class="box" x="294" y="40" width="50" height="32" rx="6"/><text x="319" y="61" text-anchor="middle" class="mono">9</text>
+<rect class="box visit" x="294" y="82" width="50" height="32" rx="6"/><text x="319" y="103" text-anchor="middle" class="mono">4</text>
+<text x="319" y="130" text-anchor="middle" class="small muted">P2</text>
+<rect class="box" x="356" y="40" width="50" height="32" rx="6"/><text x="381" y="61" text-anchor="middle" class="mono">9</text>
+<rect class="box visit" x="356" y="82" width="50" height="32" rx="6"/><text x="381" y="103" text-anchor="middle" class="mono">4</text>
+<text x="381" y="130" text-anchor="middle" class="small muted">P3</text>
+<rect class="box" x="418" y="40" width="50" height="32" rx="6"/><text x="443" y="61" text-anchor="middle" class="mono">7</text>
+<rect class="box" x="418" y="82" width="50" height="32" rx="6"/><text x="443" y="103" text-anchor="middle" class="mono">2</text>
+<text x="443" y="130" text-anchor="middle" class="small muted">P4</text>
+<rect class="box" x="480" y="40" width="50" height="32" rx="6"/><text x="505" y="61" text-anchor="middle" class="mono">4</text>
+<rect class="box visit" x="480" y="82" width="50" height="32" rx="6"/><text x="505" y="103" text-anchor="middle" class="mono">4</text>
+<text x="505" y="130" text-anchor="middle" class="small muted">P5</text>
+<rect class="box" x="542" y="40" width="50" height="32" rx="6"/><text x="567" y="61" text-anchor="middle" class="mono">5</text>
+<rect class="box done" x="542" y="82" width="50" height="32" rx="6"/><text x="567" y="103" text-anchor="middle" class="mono">0</text>
+<text x="567" y="130" text-anchor="middle" class="small muted">P6</text>
+<rect class="box done" x="90" y="148" width="104" height="80" rx="6"/>
+<text x="142" y="167" text-anchor="middle" class="small">r = 0</text>
+<text x="142" y="192" text-anchor="middle" class="small mono">P0 P6</text>
+<text x="142" y="216" text-anchor="middle" class="small muted">C(2,2) = 1</text>
+<rect class="box" x="210" y="148" width="104" height="80" rx="6"/>
+<text x="262" y="167" text-anchor="middle" class="small">r = 1</text>
+<text x="262" y="192" text-anchor="middle" class="small mono">—</text>
+<text x="262" y="216" text-anchor="middle" class="small muted">C(0,2) = 0</text>
+<rect class="box" x="330" y="148" width="104" height="80" rx="6"/>
+<text x="382" y="167" text-anchor="middle" class="small">r = 2</text>
+<text x="382" y="192" text-anchor="middle" class="small mono">P4</text>
+<text x="382" y="216" text-anchor="middle" class="small muted">C(1,2) = 0</text>
+<rect class="box" x="450" y="148" width="104" height="80" rx="6"/>
+<text x="502" y="167" text-anchor="middle" class="small">r = 3</text>
+<text x="502" y="192" text-anchor="middle" class="small mono">—</text>
+<text x="502" y="216" text-anchor="middle" class="small muted">C(0,2) = 0</text>
+<rect class="box visit" x="570" y="148" width="104" height="80" rx="6"/>
+<text x="622" y="167" text-anchor="middle" class="small">r = 4</text>
+<text x="622" y="192" text-anchor="middle" class="small mono">P1 P2 P3 P5</text>
+<text x="622" y="216" text-anchor="middle" class="small muted">C(4,2) = 6</text>
+<text x="380" y="252" text-anchor="middle" class="small">Two prefixes in one bucket differ by a multiple of 5 → the subarray between them is divisible. 1 + 6 = 7 subarrays.</text>
+</svg>
+<figcaption>LC 974 with nums = [4, 5, 0, −2, −3, 1] and k = 5. Count pairs inside each bucket: C(c, 2) per bucket, or equivalently add the bucket size before inserting, as the code does.</figcaption>
+</figure>
+
+<div class="viz" data-viz="prefix-sums-mod"></div>
+
+<div class="pitfall">
+<p><strong>Negative remainders in C#, Java, C++ and Go</strong>
+<code>-7 % 5</code> is <code>3</code> in Python but <code>-2</code> in C#, Java, C++ and Go, so −2 and 3 land in different buckets although they are the
+same remainder. <strong>Fix:</strong> normalise with <code>((x % k) + k) % k</code>. Python’s <code>%</code> already returns a value in <code>0…k−1</code> for positive <code>k</code>.</p>
+</div>
+<p>Two classics use this, and they differ in what the map stores:</p>
+<ul>
+<li><strong>LC 974 (count divisible subarrays):</strong> counts per remainder, exactly like LC 560.</li>
+<li><strong>LC 523 (is there a subarray of length ≥ 2 with a sum that is a multiple of k?):</strong> store the <strong>first index</strong> of each
+  remainder (seeded with <code>{0: −1}</code>), and answer yes as soon as a remainder repeats at distance ≥ 2. Keeping the first
+  index maximises the distance, so a valid pair is never hidden by a later one.</li>
+</ul>
+<p>Both appear as worked problem 3 below.</p>
+<h2 id="prefix-xor">Prefix XOR</h2>
+<p>XOR has the two properties subtraction gives sums: it has an identity (<code>x ^ 0 = x</code>) and every value is its own
+inverse (<code>x ^ x = 0</code>). So with <code>X[k] = a[0] ^ … ^ a[k−1]</code>, the XOR of any range is <code>X[r+1] ^ X[l]</code>: the shared head
+appears twice and cancels.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 222" width="760" role="img" aria-label="X[5] is a0 through a4 XORed; X[2] is a0 and a1; XORing them cancels a0 and a1, leaving a2 ^ a3 ^ a4.">
+<text x="20" y="22" class="title">XOR is its own inverse, so prefix XOR answers any range XOR</text>
+<text x="206" y="66" text-anchor="end" class="small mono">X[5] =</text>
+<rect class="box" x="230" y="44" width="48" height="32" rx="6"/><text x="254" y="65" text-anchor="middle" class="mono">a0</text>
+<text x="291" y="65" text-anchor="middle" class="mono">^</text>
+<rect class="box" x="304" y="44" width="48" height="32" rx="6"/><text x="328" y="65" text-anchor="middle" class="mono">a1</text>
+<text x="365" y="65" text-anchor="middle" class="mono">^</text>
+<rect class="box" x="378" y="44" width="48" height="32" rx="6"/><text x="402" y="65" text-anchor="middle" class="mono">a2</text>
+<text x="439" y="65" text-anchor="middle" class="mono">^</text>
+<rect class="box" x="452" y="44" width="48" height="32" rx="6"/><text x="476" y="65" text-anchor="middle" class="mono">a3</text>
+<text x="513" y="65" text-anchor="middle" class="mono">^</text>
+<rect class="box" x="526" y="44" width="48" height="32" rx="6"/><text x="550" y="65" text-anchor="middle" class="mono">a4</text>
+<text x="206" y="116" text-anchor="end" class="small mono">X[2] =</text>
+<rect class="box bad" x="230" y="94" width="48" height="32" rx="6"/><text x="254" y="115" text-anchor="middle" class="mono">a0</text>
+<text x="291" y="115" text-anchor="middle" class="mono">^</text>
+<rect class="box bad" x="304" y="94" width="48" height="32" rx="6"/><text x="328" y="115" text-anchor="middle" class="mono">a1</text>
+<text x="206" y="166" text-anchor="end" class="small mono">X[5] ^ X[2] =</text>
+<rect class="box path" x="378" y="144" width="48" height="32" rx="6"/><text x="402" y="165" text-anchor="middle" class="mono">a2</text>
+<text x="439" y="165" text-anchor="middle" class="mono">^</text>
+<rect class="box path" x="452" y="144" width="48" height="32" rx="6"/><text x="476" y="165" text-anchor="middle" class="mono">a3</text>
+<text x="513" y="165" text-anchor="middle" class="mono">^</text>
+<rect class="box path" x="526" y="144" width="48" height="32" rx="6"/><text x="550" y="165" text-anchor="middle" class="mono">a4</text>
+<text x="254" y="165" text-anchor="middle" class="mono muted">0</text>
+<text x="291" y="165" text-anchor="middle" class="mono muted">^</text>
+<text x="328" y="165" text-anchor="middle" class="mono muted">0</text>
+<text x="365" y="165" text-anchor="middle" class="mono muted">^</text>
+<text x="620" y="70" class="mono">x ^ x = 0</text>
+<text x="620" y="92" class="mono">x ^ 0 = x</text>
+<text x="620" y="114" class="small muted">order does not matter</text>
+<text x="380" y="210" text-anchor="middle" class="small">a0 and a1 appear twice and cancel, leaving a2 ^ a3 ^ a4: range_xor(l, r) = X[r+1] ^ X[l].</text>
+</svg>
+<figcaption>The same fence picture as sums, with ^ playing the role of both + and −.</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-python">def xor_queries(arr: list[int], queries: list[list[int]]) -&gt; list[int]:   # LC 1310
+    X = [0]                                   # X[k] = arr[0] ^ ... ^ arr[k-1]
+    for x in arr:
+        X.append(X[-1] ^ x)
+    return [X[r + 1] ^ X[l] for l, r in queries]
+</code></pre>
+<pre><code class="language-csharp">public static int[] XorQueries(int[] arr, int[][] queries)   // LC 1310
+{
+    var X = new int[arr.Length + 1];          // X[k] = arr[0] ^ ... ^ arr[k-1]
+    for (int i = 0; i &lt; arr.Length; i++) X[i + 1] = X[i] ^ arr[i];
+    return queries.Select(q =&gt; X[q[1] + 1] ^ X[q[0]]).ToArray();
+}
+</code></pre>
+</div>
+<p>The hash-map trick carries over unchanged, with “equal prefixes” now meaning “range XOR is 0”:</p>
+<ul>
+<li><strong>LC 1442 (triplets with equal XOR):</strong> <code>a == b</code> for the split <code>i &lt; j ≤ k</code> means <code>X[i] == X[k+1]</code>, and then <em>every</em>
+  <code>j</code> between them works, so each equal pair contributes <code>k − i</code> triplets.</li>
+<li><strong>Parity masks (LC 1371, 1915):</strong> keep one bit per letter, flipped on each occurrence. Two equal masks bracket a
+  substring where every letter appears an even number of times. “At most one odd letter” means masks that differ in at
+  most one bit: look up the mask itself and the 26 masks with one bit flipped.</li>
+</ul>
+<h2 id="prefix-and-suffix-products">Prefix and suffix products</h2>
+<p>Products have no safe inverse: division fails as soon as a zero appears, and LC 238 forbids it anyway. The fix is to
+stop subtracting. Keep a <strong>prefix</strong> (everything to the left) and a <strong>suffix</strong> (everything to the right) and <em>combine</em>
+them instead.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 800 252" width="800" role="img" aria-label="For nums 2 3 1 4 5 and index 2, the left product is 6, the right product is 20, and the answer is 120.">
+<text x="20" y="22" class="title">Product except self = (product to the left) × (product to the right)</text>
+<text x="206" y="64" text-anchor="end" class="small muted">nums</text>
+<rect class="box visit" x="220" y="42" width="54" height="32" rx="6"/><text x="247" y="63" text-anchor="middle" class="mono">2</text>
+<rect class="box visit" x="286" y="42" width="54" height="32" rx="6"/><text x="313" y="63" text-anchor="middle" class="mono">3</text>
+<rect class="box active" x="352" y="42" width="54" height="32" rx="6"/><text x="379" y="63" text-anchor="middle" class="mono">1</text>
+<rect class="box done" x="418" y="42" width="54" height="32" rx="6"/><text x="445" y="63" text-anchor="middle" class="mono">4</text>
+<rect class="box done" x="484" y="42" width="54" height="32" rx="6"/><text x="511" y="63" text-anchor="middle" class="mono">5</text>
+<text x="206" y="110" text-anchor="end" class="small muted">left[i]  →</text>
+<rect class="box" x="220" y="88" width="54" height="32" rx="6"/><text x="247" y="109" text-anchor="middle" class="mono">1</text>
+<rect class="box" x="286" y="88" width="54" height="32" rx="6"/><text x="313" y="109" text-anchor="middle" class="mono">2</text>
+<rect class="box active" x="352" y="88" width="54" height="32" rx="6"/><text x="379" y="109" text-anchor="middle" class="mono">6</text>
+<rect class="box" x="418" y="88" width="54" height="32" rx="6"/><text x="445" y="109" text-anchor="middle" class="mono">6</text>
+<rect class="box" x="484" y="88" width="54" height="32" rx="6"/><text x="511" y="109" text-anchor="middle" class="mono">24</text>
+<text x="206" y="156" text-anchor="end" class="small muted">right[i]  ←</text>
+<rect class="box" x="220" y="134" width="54" height="32" rx="6"/><text x="247" y="155" text-anchor="middle" class="mono">60</text>
+<rect class="box" x="286" y="134" width="54" height="32" rx="6"/><text x="313" y="155" text-anchor="middle" class="mono">20</text>
+<rect class="box active" x="352" y="134" width="54" height="32" rx="6"/><text x="379" y="155" text-anchor="middle" class="mono">20</text>
+<rect class="box" x="418" y="134" width="54" height="32" rx="6"/><text x="445" y="155" text-anchor="middle" class="mono">5</text>
+<rect class="box" x="484" y="134" width="54" height="32" rx="6"/><text x="511" y="155" text-anchor="middle" class="mono">1</text>
+<text x="206" y="202" text-anchor="end" class="small muted">answer</text>
+<rect class="box" x="220" y="180" width="54" height="32" rx="6"/><text x="247" y="201" text-anchor="middle" class="mono">60</text>
+<rect class="box" x="286" y="180" width="54" height="32" rx="6"/><text x="313" y="201" text-anchor="middle" class="mono">40</text>
+<rect class="box path" x="352" y="180" width="54" height="32" rx="6"/><text x="379" y="201" text-anchor="middle" class="mono">120</text>
+<rect class="box" x="418" y="180" width="54" height="32" rx="6"/><text x="445" y="201" text-anchor="middle" class="mono">30</text>
+<rect class="box" x="484" y="180" width="54" height="32" rx="6"/><text x="511" y="201" text-anchor="middle" class="mono">24</text>
+<text x="558" y="64" class="small">i = 2: left part 2 × 3, right part 4 × 5</text>
+<text x="558" y="110" class="small mono">left[2] = 2 × 3 = 6</text>
+<text x="558" y="156" class="small mono">right[2] = 4 × 5 = 20</text>
+<text x="558" y="202" class="small mono">6 × 20 = 120</text>
+<text x="380" y="240" text-anchor="middle" class="small">Pass 1 fills left[] in the output array; pass 2 multiplies by a running right product. No division, O(1) extra space.</text>
+</svg>
+<figcaption>Each answer splits into a left part and a right part, and neither includes position i itself.</figcaption>
+</figure>
+
+<div class="viz" data-viz="prefix-sums-product"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def product_except_self(nums: list[int]) -&gt; list[int]:    # LC 238
+    n = len(nums)
+    out = [1] * n
+    for i in range(1, n):                     # pass 1: out[i] = product of nums[0..i-1]
+        out[i] = out[i - 1] * nums[i - 1]
+    suffix = 1                                # product of nums[i+1..n-1]
+    for i in range(n - 1, -1, -1):            # pass 2: multiply the right part in
+        out[i] *= suffix
+        suffix *= nums[i]
+    return out
+</code></pre>
+<pre><code class="language-csharp">public static int[] ProductExceptSelf(int[] nums)         // LC 238
+{
+    int n = nums.Length;
+    var output = new int[n];
+    output[0] = 1;
+    for (int i = 1; i &lt; n; i++)               // pass 1: product of nums[0..i-1]
+        output[i] = output[i - 1] * nums[i - 1];
+    int suffix = 1;                           // product of nums[i+1..n-1]
+    for (int i = n - 1; i &gt;= 0; i--)          // pass 2: multiply the right part in
+    {
+        output[i] *= suffix;
+        suffix *= nums[i];
+    }
+    return output;
+}
+</code></pre>
+</div>
+<p>O(n) time and O(1) extra space (the output array does not count). The pattern generalises to any associative operation,
+inverse or not: prefix <strong>max/min</strong> arrays answer “best value to my left” (LC 42 Trapping Rain Water stores
+<code>max_left[i]</code> and <code>max_right[i]</code>), and a prefix gcd plus a suffix gcd gives “gcd of everything except i”. What you lose
+without an inverse is arbitrary ranges <code>l…r</code>: only ranges that touch an end are O(1). For arbitrary range min/max/gcd,
+use a sparse table or a <a href="segment-fenwick-trees.html">segment tree</a>.</p>
+<h2 id="difference-arrays-range-updates-in-o1">Difference arrays: range updates in O(1)</h2>
+<p>Now flip the problem. Instead of many range <strong>queries</strong> on a fixed array, you get many range <strong>updates</strong> (“add <code>v</code> to
+every element in <code>l…r</code>”) and need the final array once at the end. Doing each update cell by cell costs O(length).</p>
+<p>Define the difference array <code>D[i] = a[i] − a[i−1]</code>. Prefix-summing <code>D</code> rebuilds <code>a</code>. Now look at what “add <code>v</code> to
+<code>a[l…r]</code>” does to <code>D</code>: inside the range, neighbours both moved by <code>v</code>, so their differences did not change. Only two
+differences change: <strong><code>D[l] += v</code></strong> (the step up into the range) and <strong><code>D[r+1] −= v</code></strong> (the step back down after it).</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 800 256" width="800" role="img" aria-label="Difference array with +3 at 1, +2 at 3, -3 at 5 and -2 at 7; its running sum is the step profile 0 3 3 5 5 2 2 0.">
+<text x="20" y="22" class="title">Difference array: +v where a range starts, −v just after it ends</text>
+<text x="98" y="62" text-anchor="end" class="small muted">D</text>
+<rect class="box" x="110" y="40" width="50" height="34" rx="6"/><text x="135" y="62" text-anchor="middle" class="mono">0</text>
+<text x="135" y="89" text-anchor="middle" class="small muted">0</text>
+<rect class="box done" x="166" y="40" width="50" height="34" rx="6"/><text x="191" y="62" text-anchor="middle" class="mono">+3</text>
+<text x="191" y="89" text-anchor="middle" class="small muted">1</text>
+<rect class="box" x="222" y="40" width="50" height="34" rx="6"/><text x="247" y="62" text-anchor="middle" class="mono">0</text>
+<text x="247" y="89" text-anchor="middle" class="small muted">2</text>
+<rect class="box done" x="278" y="40" width="50" height="34" rx="6"/><text x="303" y="62" text-anchor="middle" class="mono">+2</text>
+<text x="303" y="89" text-anchor="middle" class="small muted">3</text>
+<rect class="box" x="334" y="40" width="50" height="34" rx="6"/><text x="359" y="62" text-anchor="middle" class="mono">0</text>
+<text x="359" y="89" text-anchor="middle" class="small muted">4</text>
+<rect class="box bad" x="390" y="40" width="50" height="34" rx="6"/><text x="415" y="62" text-anchor="middle" class="mono">-3</text>
+<text x="415" y="89" text-anchor="middle" class="small muted">5</text>
+<rect class="box" x="446" y="40" width="50" height="34" rx="6"/><text x="471" y="62" text-anchor="middle" class="mono">0</text>
+<text x="471" y="89" text-anchor="middle" class="small muted">6</text>
+<rect class="box bad" x="502" y="40" width="50" height="34" rx="6"/><text x="527" y="62" text-anchor="middle" class="mono">-2</text>
+<text x="527" y="89" text-anchor="middle" class="small muted">7</text>
+<rect class="box" x="558" y="40" width="50" height="34" rx="6" stroke-dasharray="4 3"/><text x="583" y="62" text-anchor="middle" class="mono">0</text>
+<text x="583" y="89" text-anchor="middle" class="small muted">8 (spare)</text>
+<text x="618" y="52" class="small">add 3 to 1…4</text>
+<text x="618" y="70" class="small">add 2 to 3…6</text>
+<text x="98" y="222" text-anchor="end" class="small muted">out</text>
+<path class="edge " d="M104 226 L558 226"/>
+<text x="135" y="219" text-anchor="middle" class="small mono">0</text>
+<text x="135" y="242" text-anchor="middle" class="small muted">0</text>
+<rect class="box path" x="166" y="160" width="50" height="66" rx="4"/>
+<text x="191" y="153" text-anchor="middle" class="small mono">3</text>
+<text x="191" y="242" text-anchor="middle" class="small muted">1</text>
+<rect class="box path" x="222" y="160" width="50" height="66" rx="4"/>
+<text x="247" y="153" text-anchor="middle" class="small mono">3</text>
+<text x="247" y="242" text-anchor="middle" class="small muted">2</text>
+<rect class="box path" x="278" y="116" width="50" height="110" rx="4"/>
+<text x="303" y="109" text-anchor="middle" class="small mono">5</text>
+<text x="303" y="242" text-anchor="middle" class="small muted">3</text>
+<rect class="box path" x="334" y="116" width="50" height="110" rx="4"/>
+<text x="359" y="109" text-anchor="middle" class="small mono">5</text>
+<text x="359" y="242" text-anchor="middle" class="small muted">4</text>
+<rect class="box path" x="390" y="182" width="50" height="44" rx="4"/>
+<text x="415" y="175" text-anchor="middle" class="small mono">2</text>
+<text x="415" y="242" text-anchor="middle" class="small muted">5</text>
+<rect class="box path" x="446" y="182" width="50" height="44" rx="4"/>
+<text x="471" y="175" text-anchor="middle" class="small mono">2</text>
+<text x="471" y="242" text-anchor="middle" class="small muted">6</text>
+<text x="527" y="219" text-anchor="middle" class="small mono">0</text>
+<text x="527" y="242" text-anchor="middle" class="small muted">7</text>
+<text x="618" y="150" class="small mono">out[i] = D[0] + … + D[i]</text>
+<text x="618" y="168" class="small muted">starts at or before i</text>
+<text x="618" y="184" class="small muted">minus stops at or before i</text>
+</svg>
+<figcaption>Two updates, four marks. One prefix-sum pass at the end turns the marks back into values. D has one spare slot, D[n], so that an update ending at n − 1 has somewhere to put its −v.</figcaption>
+</figure>
+
+<div class="viz" data-viz="prefix-sums-diff"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">from itertools import accumulate
+
+def corp_flight_bookings(bookings: list[list[int]], n: int) -&gt; list[int]:   # LC 1109
+    D = [0] * (n + 1)                         # one spare slot for r + 1 == n
+    for first, last, seats in bookings:       # 1-indexed, inclusive
+        D[first - 1] += seats                 # step up where the range starts
+        D[last] -= seats                      # step down just after it ends
+    return list(accumulate(D[:n]))            # prefix sum materialises the array
+</code></pre>
+<pre><code class="language-csharp">public static int[] CorpFlightBookings(int[][] bookings, int n)   // LC 1109
+{
+    var D = new int[n + 1];                   // one spare slot for r + 1 == n
+    foreach (var b in bookings)               // 1-indexed, inclusive
+    {
+        D[b[0] - 1] += b[2];                  // step up where the range starts
+        D[b[1]] -= b[2];                      // step down just after it ends
+    }
+    var answer = new int[n];
+    int run = 0;
+    for (int i = 0; i &lt; n; i++)
+        answer[i] = run += D[i];              // prefix sum materialises the array
+    return answer;
+}
+</code></pre>
+</div>
+<p>O(1) per update plus one O(n) pass: O(n + q) instead of O(n · q). The same idea in different clothes:</p>
+<ul>
+<li><strong>Car Pooling (LC 1094):</strong> <code>+passengers</code> at pickup and <code>−passengers</code> at drop-off. A running total that ever exceeds
+  capacity means “no”.</li>
+<li><strong>Coordinates too large for an array?</strong> Keep the marks in a sorted map (or a sorted list of events) and sweep them in
+  order. That is exactly the <a href="intervals-sweep-line.html">sweep line</a> technique, and “max overlapping intervals” is the
+  maximum of the running sum.</li>
+<li><strong>Updates and queries interleaved?</strong> A difference array only materialises at the end. If you must read values between
+  updates, put the difference array inside a <a href="segment-fenwick-trees.html">Fenwick tree</a>: a range update becomes two point
+  updates and a point read becomes a prefix sum, both O(log n).</li>
+</ul>
+<div class="tip">
+<p><strong>Prefix and difference are inverses</strong>
+<code>diff(prefix(a)) = a</code> and <code>prefix(diff(a)) = a</code>. When a problem mixes “update ranges” and “query ranges”, ask which side
+of this pair each operation is cheap on. Range update + point query: store differences. Point update + range query:
+store values and read prefixes. Both at once: a Fenwick tree over differences, or a segment tree with lazy propagation.</p>
+</div>
+<h2 id="2d-difference-arrays">2D difference arrays</h2>
+<p>The 2D version marks four corners. <code>+v</code> at <code>(r1, c1)</code> would spread to every cell below and to the right once you take
+the 2D prefix sum. Two <code>−v</code> marks stop the spread to the right of <code>c2</code> and below <code>r2</code>. The corner <code>(r2+1, c2+1)</code> is now
+cancelled twice, so it gets <code>+v</code> back. The signs match the 2D query formula, for the same inclusion–exclusion reason.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 264" width="760" role="img" aria-label="A 4 by 5 grid plus a spare row and column; plus v at (1,1) and (3,4), minus v at (1,4) and (3,1), produce +v exactly on the rectangle rows 1 to 2, columns 1 to 3.">
+<text x="20" y="22" class="title">2D difference array: four corner marks make a rectangle</text>
+<rect class="box" x="120" y="58" width="36" height="36" rx="6"/>
+<rect class="box" x="160" y="58" width="36" height="36" rx="6"/>
+<rect class="box" x="200" y="58" width="36" height="36" rx="6"/>
+<rect class="box" x="240" y="58" width="36" height="36" rx="6"/>
+<rect class="box" x="280" y="58" width="36" height="36" rx="6"/>
+<rect class="box" x="320" y="58" width="36" height="36" rx="6" stroke-dasharray="4 3"/>
+<rect class="box" x="120" y="98" width="36" height="36" rx="6"/>
+<rect class="box done" x="160" y="98" width="36" height="36" rx="6"/><text x="178" y="121" text-anchor="middle" class="mono">+v</text>
+<rect class="box path" x="200" y="98" width="36" height="36" rx="6"/>
+<rect class="box path" x="240" y="98" width="36" height="36" rx="6"/>
+<rect class="box bad" x="280" y="98" width="36" height="36" rx="6"/><text x="298" y="121" text-anchor="middle" class="mono">−v</text>
+<rect class="box" x="320" y="98" width="36" height="36" rx="6" stroke-dasharray="4 3"/>
+<rect class="box" x="120" y="138" width="36" height="36" rx="6"/>
+<rect class="box path" x="160" y="138" width="36" height="36" rx="6"/>
+<rect class="box path" x="200" y="138" width="36" height="36" rx="6"/>
+<rect class="box path" x="240" y="138" width="36" height="36" rx="6"/>
+<rect class="box" x="280" y="138" width="36" height="36" rx="6"/>
+<rect class="box" x="320" y="138" width="36" height="36" rx="6" stroke-dasharray="4 3"/>
+<rect class="box" x="120" y="178" width="36" height="36" rx="6"/>
+<rect class="box bad" x="160" y="178" width="36" height="36" rx="6"/><text x="178" y="201" text-anchor="middle" class="mono">−v</text>
+<rect class="box" x="200" y="178" width="36" height="36" rx="6"/>
+<rect class="box" x="240" y="178" width="36" height="36" rx="6"/>
+<rect class="box done" x="280" y="178" width="36" height="36" rx="6"/><text x="298" y="201" text-anchor="middle" class="mono">+v</text>
+<rect class="box" x="320" y="178" width="36" height="36" rx="6" stroke-dasharray="4 3"/>
+<rect class="box" x="120" y="218" width="36" height="36" rx="6" stroke-dasharray="4 3"/>
+<rect class="box" x="160" y="218" width="36" height="36" rx="6" stroke-dasharray="4 3"/>
+<rect class="box" x="200" y="218" width="36" height="36" rx="6" stroke-dasharray="4 3"/>
+<rect class="box" x="240" y="218" width="36" height="36" rx="6" stroke-dasharray="4 3"/>
+<rect class="box" x="280" y="218" width="36" height="36" rx="6" stroke-dasharray="4 3"/>
+<rect class="box" x="320" y="218" width="36" height="36" rx="6" stroke-dasharray="4 3"/>
+<text x="138" y="52" text-anchor="middle" class="small muted">0</text>
+<text x="178" y="52" text-anchor="middle" class="small muted">1</text>
+<text x="218" y="52" text-anchor="middle" class="small muted">2</text>
+<text x="258" y="52" text-anchor="middle" class="small muted">3</text>
+<text x="298" y="52" text-anchor="middle" class="small muted">4</text>
+<text x="338" y="52" text-anchor="middle" class="small muted">5</text>
+<text x="110" y="80" text-anchor="end" class="small muted">0</text>
+<text x="110" y="120" text-anchor="end" class="small muted">1</text>
+<text x="110" y="160" text-anchor="end" class="small muted">2</text>
+<text x="110" y="200" text-anchor="end" class="small muted">3</text>
+<text x="110" y="240" text-anchor="end" class="small muted">4</text>
+<text x="400" y="82" class="small">+v at (r1, c1): spreads to every cell below-right</text>
+<text x="400" y="110" class="small">−v at (r1, c2+1): stops the spread to the right</text>
+<text x="400" y="138" class="small">−v at (r2+1, c1): stops the spread downward</text>
+<text x="400" y="166" class="small">+v at (r2+1, c2+1): that corner was stopped twice</text>
+<text x="400" y="202" class="small muted">After the 2D prefix sum only the shaded</text>
+<text x="400" y="218" class="small muted">rectangle (1,1)…(2,3) is +v. Dashed = spare.</text>
+</svg>
+<figcaption>Four O(1) marks per rectangle update, then one O(mn) 2D prefix pass. The array needs one spare row and one spare column.</figcaption>
+</figure>
+
+<div class="viz" data-viz="prefix-sums-2d-diff"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def range_add_queries(n: int, queries: list[list[int]]) -&gt; list[list[int]]:   # LC 2536
+    D = [[0] * (n + 1) for _ in range(n + 1)]    # spare row and column
+    for r1, c1, r2, c2 in queries:
+        D[r1][c1] += 1
+        D[r1][c2 + 1] -= 1
+        D[r2 + 1][c1] -= 1
+        D[r2 + 1][c2 + 1] += 1
+    out = [[0] * n for _ in range(n)]
+    for r in range(n):                           # 2D prefix sum of D
+        for c in range(n):
+            up = out[r - 1][c] if r else 0
+            left = out[r][c - 1] if c else 0
+            diag = out[r - 1][c - 1] if r and c else 0
+            out[r][c] = D[r][c] + up + left - diag
+    return out
+</code></pre>
+<pre><code class="language-csharp">public static int[][] RangeAddQueries(int n, int[][] queries)   // LC 2536
+{
+    var D = new int[n + 1, n + 1];                   // spare row and column
+    foreach (var q in queries)
+    {
+        int r1 = q[0], c1 = q[1], r2 = q[2], c2 = q[3];
+        D[r1, c1]++;
+        D[r1, c2 + 1]--;
+        D[r2 + 1, c1]--;
+        D[r2 + 1, c2 + 1]++;
+    }
+    var output = new int[n][];
+    for (int r = 0; r &lt; n; r++)                      // 2D prefix sum of D
+    {
+        output[r] = new int[n];
+        for (int c = 0; c &lt; n; c++)
+        {
+            int up = r &gt; 0 ? output[r - 1][c] : 0;
+            int left = c &gt; 0 ? output[r][c - 1] : 0;
+            int diag = r &gt; 0 &amp;&amp; c &gt; 0 ? output[r - 1][c - 1] : 0;
+            output[r][c] = D[r, c] + up + left - diag;
+        }
+    }
+    return output;
+}
+</code></pre>
+</div>
+<p>O(1) per rectangle and O(n²) at the end, instead of O(n²) per rectangle. Stamping Grid (LC 2132) uses both 2D tools: a
+2D prefix sum to test in O(1) whether a stamp fits at each position, then a 2D difference array to mark every cell some
+stamp covers.</p>
+<h2 id="recognize-it-when">Recognize it when</h2>
+<div class="recognize">
+<p><strong>Recognize it when</strong></p>
+<ul>
+<li><strong>Many range-sum queries</strong> on an array or matrix that does not change between queries.</li>
+<li><strong>“Number of subarrays with sum = k”</strong>, “longest subarray with sum k”, or “sum divisible by k”, especially when the
+  values <strong>can be negative</strong> (which rules out a sliding window).</li>
+<li>A property that can be counted or toggled per element: equal counts of two things (map them to ±1), even counts of
+  letters (parity bitmask), XOR of a range.</li>
+<li><strong>Many range updates</strong> (“add v to all of l…r”, bookings, passengers, overlapping intervals) and the final values are
+  needed once.</li>
+<li>“Product / max / min of everything except i”, or “best value to the left and to the right of i”.</li>
+<li>A matrix problem about sub-rectangles: fix two rows (or columns), collapse, and solve a 1D prefix problem.</li>
+</ul>
+</div>
+<table>
+<thead>
+<tr>
+<th>Use</th>
+<th>Build</th>
+<th>Per operation</th>
+<th>Space</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1D range sum</td>
+<td>O(n)</td>
+<td>O(1) query</td>
+<td>O(n)</td>
+<td>Static array only</td>
+</tr>
+<tr>
+<td>2D range sum</td>
+<td>O(mn)</td>
+<td>O(1) query</td>
+<td>O(mn)</td>
+<td>One padding row and column</td>
+</tr>
+<tr>
+<td>Prefix + hash map</td>
+<td>none</td>
+<td>O(1) amortised per element</td>
+<td>O(n)</td>
+<td>Counts, first index or set as values</td>
+</tr>
+<tr>
+<td>Prefix mod k</td>
+<td>none</td>
+<td>O(1) per element</td>
+<td>O(k) or O(n)</td>
+<td>Array of k buckets when k is small</td>
+</tr>
+<tr>
+<td>Difference array (1D)</td>
+<td>O(n) at the end</td>
+<td>O(1) update</td>
+<td>O(n)</td>
+<td>Updates first, read once</td>
+</tr>
+<tr>
+<td>Difference array (2D)</td>
+<td>O(mn) at the end</td>
+<td>O(1) update</td>
+<td>O(mn)</td>
+<td>Spare row and column</td>
+</tr>
+<tr>
+<td>Prefix/suffix (no inverse)</td>
+<td>O(n)</td>
+<td>O(1) for prefix or suffix ranges</td>
+<td>O(n) or O(1)</td>
+<td>Arbitrary ranges need a sparse table or segment tree</td>
+</tr>
+<tr>
+<td>Fenwick tree</td>
+<td>O(n)</td>
+<td>O(log n) update and query</td>
+<td>O(n)</td>
+<td>When updates and queries interleave</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pitfalls">Pitfalls</h2>
+<div class="pitfall">
+<p><strong>Off by one between P[r] and P[r+1]</strong>
+With <code>P[0] = 0</code>, the inclusive range <code>l…r</code> is <code>P[r+1] − P[l]</code>. Writing <code>P[r] − P[l]</code> drops <code>nums[r]</code>, and writing
+<code>P[r] − P[l−1]</code> reads <code>P[−1]</code> (in Python, silently the <em>last</em> element) when <code>l = 0</code>. Pick the half-open convention once
+and test with <code>l = 0</code> and <code>r = n − 1</code>.</p>
+</div>
+<div class="pitfall">
+<p><strong>Forgetting seen[0] = 1 (or first[0] = −1)</strong>
+The map must contain the empty prefix before the loop. Without it, every subarray that starts at index 0 is invisible,
+and the bug only shows up when the answer includes such a subarray.</p>
+</div>
+<div class="pitfall">
+<p><strong>Inserting before looking up</strong>
+Adding the current prefix to the map and then asking for <code>run − k</code> lets the prefix pair with itself: the empty subarray.
+For <code>k = 0</code> it adds one false match per element. Always: <strong>look up, then insert</strong>.</p>
+</div>
+<div class="pitfall">
+<p><strong>Overflow and negative remainders</strong>
+In C#, prefix sums of <code>int</code> overflow quietly: use <code>long</code> (10⁵ values of 10⁹ reach 10¹⁴). Remainders of negative
+prefixes are negative in C#, Java and C++: use <code>((x % k) + k) % k</code>. In LC 523, <code>k</code> can be close to 2³¹, so even
+<code>run + nums[i]</code> must be computed in <code>long</code>.</p>
+</div>
+<div class="pitfall">
+<p><strong>Using a sliding window on values that can be negative</strong>
+“Shrink when the sum is too big” is only correct when every element is ≥ 0. With negatives, use prefix + hash map
+(exact target) or a monotonic deque over prefix sums (LC 862, shortest subarray with sum at least k).</p>
+</div>
+<div class="pitfall">
+<p><strong>First index vs last index</strong>
+For the <strong>longest</strong> subarray keep the <em>first</em> index of each prefix (insert only if absent). Overwriting it with later
+indices shortens every answer. For the <strong>shortest</strong> subarray you want the <em>latest</em> index, so overwrite.</p>
+</div>
+<div class="pitfall">
+<p><strong>2D signs and the difference array’s spare slot</strong>
+The 2D formula is <code>+ big − top − left + corner</code>. Getting one sign wrong still passes 1-row and 1-column tests. A 1D
+difference array needs <code>n + 1</code> slots (2D: one spare row and column), or updates that end at the last index crash.</p>
+</div>
+<h2 id="worked-problems">Worked problems</h2>
+<p>Every solution follows the same three steps: <strong>write the condition as an equation between two prefixes, decide what
+to remember about earlier prefixes, and sweep once.</strong></p>
+<h3 id="1-subarray-sum-equals-k-medium">1. Subarray Sum Equals K <span class="diff medium">Medium</span></h3>
+<p>Count the contiguous subarrays of <code>nums</code> (values may be negative) whose sum is <code>k</code>.</p>
+<p><strong>Insight.</strong> <code>sum(j…i) = k ⇔ P[j] = P[i+1] − k</code>. Count earlier prefixes equal to <code>run − k</code> with a hash map, seeded with
+<code>{0: 1}</code>. This is the <a href="#prefix-hash-map-subarrays-with-a-target">prefix + hash map template</a> itself; the visualizer
+there steps through it.</p>
+<details class="solution">
+<summary>Solution: prefix + counts map</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import defaultdict
+
+def subarray_sum(nums: list[int], k: int) -&gt; int:
+    count, run = 0, 0
+    seen = defaultdict(int)
+    seen[0] = 1                        # the empty prefix
+    for x in nums:
+        run += x
+        count += seen[run - k]         # look up first ...
+        seen[run] += 1                 # ... then insert
+    return count
+</code></pre>
+<pre><code class="language-csharp">public static int SubarraySum(int[] nums, int k)
+{
+    var seen = new Dictionary&lt;int, int&gt; { [0] = 1 };  // the empty prefix
+    int count = 0, run = 0;
+    foreach (int x in nums)
+    {
+        run += x;
+        count += seen.GetValueOrDefault(run - k);      // look up first ...
+        seen[run] = seen.GetValueOrDefault(run) + 1;   // ... then insert
+    }
+    return count;
+}
+</code></pre>
+</div>
+<p>O(n) time, O(n) space.</p>
+</details>
+<h3 id="2-contiguous-array-medium">2. Contiguous Array <span class="diff medium">Medium</span></h3>
+<p>Given a binary array, return the length of the longest contiguous subarray with as many 0s as 1s.</p>
+<p><strong>Insight.</strong> Map 0 → −1 and 1 → +1. A balanced subarray has sum 0, so its two fences have equal prefix values. For the
+<em>longest</em> one, remember the <strong>first</strong> index where each prefix value occurs (see the <a href="#what-to-store-in-the-map">balanced picture</a>).</p>
+<details class="solution">
+<summary>Solution: first index of each prefix value</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def find_max_length(nums: list[int]) -&gt; int:
+    first = {0: -1}                    # prefix 0 happens just before index 0
+    best = run = 0
+    for i, x in enumerate(nums):
+        run += 1 if x == 1 else -1
+        if run in first:
+            best = max(best, i - first[run])
+        else:
+            first[run] = i             # keep the earliest index only
+    return best
+</code></pre>
+<pre><code class="language-csharp">public static int FindMaxLength(int[] nums)
+{
+    var first = new Dictionary&lt;int, int&gt; { [0] = -1 };  // prefix 0 just before index 0
+    int best = 0, run = 0;
+    for (int i = 0; i &lt; nums.Length; i++)
+    {
+        run += nums[i] == 1 ? 1 : -1;
+        if (first.TryGetValue(run, out int j))
+            best = Math.Max(best, i - j);
+        else
+            first[run] = i;                              // keep the earliest index only
+    }
+    return best;
+}
+</code></pre>
+</div>
+<p>O(n) time, O(n) space. The prefix values lie in <code>−n…n</code>, so an array of size <code>2n + 1</code> can replace the map.</p>
+</details>
+<h3 id="3-subarray-sums-divisible-by-k-and-continuous-subarray-sum-medium">3. Subarray Sums Divisible by K and Continuous Subarray Sum <span class="diff medium">Medium</span></h3>
+<p><strong>LC 974:</strong> count subarrays whose sum is divisible by <code>k</code>. <strong>LC 523:</strong> is there a subarray of length at least 2 whose sum
+is a multiple of <code>k</code> (values are non-negative, <code>k</code> up to 2³¹ − 1)?</p>
+<p><strong>Insight.</strong> Both reduce to “two prefixes with the same remainder”. Counting uses <code>k</code> buckets of counts. Existence with a
+minimum length keeps the <strong>first</strong> index of each remainder and checks the distance.</p>
+<details class="solution">
+<summary>Solution: remainder buckets / first index of each remainder</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def subarrays_div_by_k(nums: list[int], k: int) -&gt; int:     # LC 974
+    count, run = 0, 0
+    buckets = [0] * k
+    buckets[0] = 1                     # the empty prefix has remainder 0
+    for x in nums:
+        run = (run + x) % k            # Python: always 0..k-1
+        count += buckets[run]
+        buckets[run] += 1
+    return count
+
+def check_subarray_sum(nums: list[int], k: int) -&gt; bool:    # LC 523
+    first = {0: -1}
+    run = 0
+    for i, x in enumerate(nums):
+        run = (run + x) % k
+        if run in first:
+            if i - first[run] &gt;= 2:    # length i - first[run] &gt;= 2
+                return True
+        else:
+            first[run] = i             # earliest index maximises the length
+    return False
+</code></pre>
+<pre><code class="language-csharp">public static int SubarraysDivByK(int[] nums, int k)        // LC 974
+{
+    var buckets = new int[k];
+    buckets[0] = 1;                                // the empty prefix has remainder 0
+    int count = 0, run = 0;
+    foreach (int x in nums)
+    {
+        run = ((run + x) % k + k) % k;             // normalise negative remainders
+        count += buckets[run];
+        buckets[run]++;
+    }
+    return count;
+}
+
+public static bool CheckSubarraySum(int[] nums, int k)      // LC 523
+{
+    var first = new Dictionary&lt;long, int&gt; { [0] = -1 };
+    long run = 0;                                  // k can be near 2^31: avoid overflow
+    for (int i = 0; i &lt; nums.Length; i++)
+    {
+        run = (run + nums[i]) % k;
+        if (first.TryGetValue(run, out int j))
+        {
+            if (i - j &gt;= 2) return true;           // length i - j &gt;= 2
+        }
+        else first[run] = i;                       // earliest index maximises the length
+    }
+    return false;
+}
+</code></pre>
+</div>
+<p>Both O(n) time. Space O(k) for 974 (k ≤ 10⁴) and O(min(n, k)) for 523.</p>
+</details>
+<h3 id="4-corporate-flight-bookings-medium">4. Corporate Flight Bookings <span class="diff medium">Medium</span></h3>
+<p><code>bookings[i] = [first, last, seats]</code> reserves <code>seats</code> on every flight <code>first…last</code> (1-indexed). Return the total seats
+on each of the <code>n</code> flights.</p>
+<p><strong>Insight.</strong> A textbook difference array: two marks per booking, one prefix pass at the end. The code is the
+<a href="#difference-arrays-range-updates-in-o1">difference array template</a> above.</p>
+<details class="solution">
+<summary>Solution: difference array</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from itertools import accumulate
+
+def corp_flight_bookings(bookings: list[list[int]], n: int) -&gt; list[int]:
+    D = [0] * (n + 1)
+    for first, last, seats in bookings:
+        D[first - 1] += seats
+        D[last] -= seats               # index last = (last - 1) + 1 in 0-based terms
+    return list(accumulate(D[:n]))
+</code></pre>
+<pre><code class="language-csharp">public static int[] CorpFlightBookings(int[][] bookings, int n)
+{
+    var D = new int[n + 1];
+    foreach (var b in bookings)
+    {
+        D[b[0] - 1] += b[2];
+        D[b[1]] -= b[2];               // index last = (last - 1) + 1 in 0-based terms
+    }
+    var answer = new int[n];
+    int run = 0;
+    for (int i = 0; i &lt; n; i++)
+        answer[i] = run += D[i];
+    return answer;
+}
+</code></pre>
+</div>
+<p>O(n + b) time, O(n) space.</p>
+</details>
+<h3 id="5-product-of-array-except-self-medium">5. Product of Array Except Self <span class="diff medium">Medium</span></h3>
+<p>Return <code>answer[i]</code> = product of all elements except <code>nums[i]</code>, in O(n), without division.</p>
+<p><strong>Insight.</strong> <code>answer[i] = (product of nums[0…i−1]) × (product of nums[i+1…n−1])</code>. The left products fill the output
+array in one forward pass; a running suffix product multiplies the right part in on the way back. Zeros need no special
+case because nothing is ever divided.</p>
+<details class="solution">
+<summary>Solution: prefix pass, then suffix pass</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def product_except_self(nums: list[int]) -&gt; list[int]:
+    n = len(nums)
+    out = [1] * n
+    for i in range(1, n):
+        out[i] = out[i - 1] * nums[i - 1]      # left product
+    suffix = 1
+    for i in range(n - 1, -1, -1):
+        out[i] *= suffix                       # times right product
+        suffix *= nums[i]
+    return out
+</code></pre>
+<pre><code class="language-csharp">public static int[] ProductExceptSelf(int[] nums)
+{
+    int n = nums.Length;
+    var output = new int[n];
+    output[0] = 1;
+    for (int i = 1; i &lt; n; i++)
+        output[i] = output[i - 1] * nums[i - 1];   // left product
+    int suffix = 1;
+    for (int i = n - 1; i &gt;= 0; i--)
+    {
+        output[i] *= suffix;                       // times right product
+        suffix *= nums[i];
+    }
+    return output;
+}
+</code></pre>
+</div>
+<p>O(n) time, O(1) extra space.</p>
+</details>
+<h3 id="6-number-of-submatrices-that-sum-to-target-hard">6. Number of Submatrices That Sum to Target <span class="diff hard">Hard</span></h3>
+<p>Count the non-empty sub-rectangles of a matrix (values may be negative) whose sum equals <code>target</code>.</p>
+<p><strong>Insight.</strong> A rectangle is a band of rows <code>top…bottom</code> and a range of columns. Fix the band: the sum over the band of
+each column turns the band into a 1D array, and the question becomes LC 560 on that array. Grow <code>bottom</code> one row at a
+time so the column sums update in O(n).</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 248" width="760" role="img" aria-label="A 4 by 5 matrix with rows 1 and 2 highlighted, collapsed into column sums -2 3 2 1 4, which is then solved as a 1D prefix-sum problem.">
+<defs><marker id="prefix-sums-ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="20" y="22" class="title">Fix a band of rows, collapse it into column sums, solve the 1D problem</text>
+<text x="100" y="65" text-anchor="end" class="small muted">row 0</text>
+<rect class="box" x="110" y="44" width="34" height="34" rx="6"/><text x="127" y="66" text-anchor="middle" class="mono">1</text>
+<rect class="box" x="148" y="44" width="34" height="34" rx="6"/><text x="165" y="66" text-anchor="middle" class="mono">0</text>
+<rect class="box" x="186" y="44" width="34" height="34" rx="6"/><text x="203" y="66" text-anchor="middle" class="mono">1</text>
+<rect class="box" x="224" y="44" width="34" height="34" rx="6"/><text x="241" y="66" text-anchor="middle" class="mono">2</text>
+<rect class="box" x="262" y="44" width="34" height="34" rx="6"/><text x="279" y="66" text-anchor="middle" class="mono">-1</text>
+<text x="100" y="103" text-anchor="end" class="small muted">row 1</text>
+<rect class="box visit" x="110" y="82" width="34" height="34" rx="6"/><text x="127" y="104" text-anchor="middle" class="mono">0</text>
+<rect class="box visit" x="148" y="82" width="34" height="34" rx="6"/><text x="165" y="104" text-anchor="middle" class="mono">2</text>
+<rect class="box visit" x="186" y="82" width="34" height="34" rx="6"/><text x="203" y="104" text-anchor="middle" class="mono">-1</text>
+<rect class="box visit" x="224" y="82" width="34" height="34" rx="6"/><text x="241" y="104" text-anchor="middle" class="mono">1</text>
+<rect class="box visit" x="262" y="82" width="34" height="34" rx="6"/><text x="279" y="104" text-anchor="middle" class="mono">3</text>
+<text x="100" y="141" text-anchor="end" class="small muted">row 2</text>
+<rect class="box visit" x="110" y="120" width="34" height="34" rx="6"/><text x="127" y="142" text-anchor="middle" class="mono">-2</text>
+<rect class="box visit" x="148" y="120" width="34" height="34" rx="6"/><text x="165" y="142" text-anchor="middle" class="mono">1</text>
+<rect class="box visit" x="186" y="120" width="34" height="34" rx="6"/><text x="203" y="142" text-anchor="middle" class="mono">3</text>
+<rect class="box visit" x="224" y="120" width="34" height="34" rx="6"/><text x="241" y="142" text-anchor="middle" class="mono">0</text>
+<rect class="box visit" x="262" y="120" width="34" height="34" rx="6"/><text x="279" y="142" text-anchor="middle" class="mono">1</text>
+<text x="100" y="179" text-anchor="end" class="small muted">row 3</text>
+<rect class="box" x="110" y="158" width="34" height="34" rx="6"/><text x="127" y="180" text-anchor="middle" class="mono">1</text>
+<rect class="box" x="148" y="158" width="34" height="34" rx="6"/><text x="165" y="180" text-anchor="middle" class="mono">1</text>
+<rect class="box" x="186" y="158" width="34" height="34" rx="6"/><text x="203" y="180" text-anchor="middle" class="mono">0</text>
+<rect class="box" x="224" y="158" width="34" height="34" rx="6"/><text x="241" y="180" text-anchor="middle" class="mono">2</text>
+<rect class="box" x="262" y="158" width="34" height="34" rx="6"/><text x="279" y="180" text-anchor="middle" class="mono">0</text>
+<text x="203" y="212" text-anchor="middle" class="small muted">top = 1, bottom = 2</text>
+<path class="edge accent" d="M318 118.0 L378 118.0" marker-end="url(#prefix-sums-ar2)"/>
+<rect class="box path" x="398" y="101" width="36" height="34" rx="6"/><text x="416" y="123" text-anchor="middle" class="mono">-2</text>
+<rect class="box path" x="438" y="101" width="36" height="34" rx="6"/><text x="456" y="123" text-anchor="middle" class="mono">3</text>
+<rect class="box path" x="478" y="101" width="36" height="34" rx="6"/><text x="496" y="123" text-anchor="middle" class="mono">2</text>
+<rect class="box path" x="518" y="101" width="36" height="34" rx="6"/><text x="536" y="123" text-anchor="middle" class="mono">1</text>
+<rect class="box path" x="558" y="101" width="36" height="34" rx="6"/><text x="576" y="123" text-anchor="middle" class="mono">4</text>
+<text x="498" y="91" text-anchor="middle" class="small muted">column sums of rows 1…2</text>
+<text x="398" y="161" class="small">1D: subarray sum = target → prefix + hash map (LC 1074)</text>
+<text x="398" y="179" class="small">1D: max subarray sum ≤ k → prefix + sorted set (LC 363)</text>
+<text x="380" y="236" text-anchor="middle" class="small">m(m+1)/2 bands × O(n) or O(n log n) each: O(m² · n) or O(m² · n log n). Put the smaller dimension in m.</text>
+</svg>
+<figcaption>Collapsing a band of rows: every rectangle inside the band is a subarray of the collapsed row.</figcaption>
+</figure>
+
+<details class="solution">
+<summary>Solution: fix two rows, run LC 560 on column sums</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import defaultdict
+
+def num_submatrix_sum_target(matrix: list[list[int]], target: int) -&gt; int:
+    m, n = len(matrix), len(matrix[0])
+    total = 0
+    for top in range(m):
+        col = [0] * n                          # column sums of rows top..bottom
+        for bottom in range(top, m):
+            for c in range(n):
+                col[c] += matrix[bottom][c]
+            seen = defaultdict(int)            # LC 560 on col
+            seen[0] = 1
+            run = 0
+            for v in col:
+                run += v
+                total += seen[run - target]
+                seen[run] += 1
+    return total
+</code></pre>
+<pre><code class="language-csharp">public static int NumSubmatrixSumTarget(int[][] matrix, int target)
+{
+    int m = matrix.Length, n = matrix[0].Length, total = 0;
+    for (int top = 0; top &lt; m; top++)
+    {
+        var col = new int[n];                              // column sums of rows top..bottom
+        for (int bottom = top; bottom &lt; m; bottom++)
+        {
+            for (int c = 0; c &lt; n; c++) col[c] += matrix[bottom][c];
+            var seen = new Dictionary&lt;int, int&gt; { [0] = 1 };  // LC 560 on col
+            int run = 0;
+            foreach (int v in col)
+            {
+                run += v;
+                total += seen.GetValueOrDefault(run - target);
+                seen[run] = seen.GetValueOrDefault(run) + 1;
+            }
+        }
+    }
+    return total;
+}
+</code></pre>
+</div>
+<p>O(m² · n) time, O(n) space. If <code>m &gt; n</code>, transpose first (or fix columns instead) so the squared factor is the smaller side.</p>
+</details>
+<h3 id="7-count-of-range-sum-hard">7. Count of Range Sum <span class="diff hard">Hard</span></h3>
+<p>Count the pairs <code>l ≤ r</code> with <code>lower ≤ sum(nums[l…r]) ≤ upper</code>.</p>
+<p><strong>Insight.</strong> In prefix terms: count pairs <code>j &lt; i</code> of prefixes with <code>lower ≤ P[i] − P[j] ≤ upper</code>. A hash map only answers
+<em>equality</em>. For a <em>range</em> of differences you need order, so count pairs during a <strong>merge sort of P</strong>: when both halves
+are sorted, the left prefixes that match one right prefix form a contiguous window, and that window only slides right
+as the right prefix grows (see <a href="sorting.html">Sorting</a> for the inversion-count version of this idea).</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 208" width="760" role="img" aria-label="Sorted left half -2 0 1 3 5 and right half 2 4 7; for P[r] = 4 and range [1, 4], the valid left prefixes 0 1 3 form a window.">
+<text x="20" y="22" class="title">Count of Range Sum: in the merge step, each right prefix matches a window of left prefixes</text>
+<text x="110" y="90" text-anchor="end" class="small muted">left half</text>
+<rect class="box" x="120" y="68" width="48" height="34" rx="6"/><text x="144" y="90" text-anchor="middle" class="mono">-2</text>
+<text x="144" y="116" text-anchor="middle" class="small mono"></text>
+<rect class="box done" x="178" y="68" width="48" height="34" rx="6"/><text x="202" y="90" text-anchor="middle" class="mono">0</text>
+<text x="202" y="116" text-anchor="middle" class="small mono">i</text>
+<rect class="box done" x="236" y="68" width="48" height="34" rx="6"/><text x="260" y="90" text-anchor="middle" class="mono">1</text>
+<text x="260" y="116" text-anchor="middle" class="small mono"></text>
+<rect class="box done" x="294" y="68" width="48" height="34" rx="6"/><text x="318" y="90" text-anchor="middle" class="mono">3</text>
+<text x="318" y="116" text-anchor="middle" class="small mono"></text>
+<rect class="box" x="352" y="68" width="48" height="34" rx="6"/><text x="376" y="90" text-anchor="middle" class="mono">5</text>
+<text x="376" y="116" text-anchor="middle" class="small mono">j</text>
+<text x="434" y="116" text-anchor="middle" class="small mono"></text>
+<path class="edge done" d="M178 62 L178 56 L342 56 L342 62"/>
+<text x="260" y="50" text-anchor="middle" class="small">P[r] − upper ≤ P[l] ≤ P[r] − lower  →  0 ≤ P[l] ≤ 3</text>
+<text x="470" y="90" text-anchor="end" class="small muted">right half</text>
+<rect class="box" x="480" y="68" width="48" height="34" rx="6"/><text x="504" y="90" text-anchor="middle" class="mono">2</text>
+<rect class="box active" x="538" y="68" width="48" height="34" rx="6"/><text x="562" y="90" text-anchor="middle" class="mono">4</text>
+<rect class="box" x="596" y="68" width="48" height="34" rx="6"/><text x="620" y="90" text-anchor="middle" class="mono">7</text>
+<text x="562" y="116" text-anchor="middle" class="small mono">r</text>
+<text x="20" y="154" class="small">Both halves are sorted. For P[r] = 4 with [lower, upper] = [1, 4], the valid starts are P[l] ∈ [0, 3]: a contiguous window [i, j).</text>
+<text x="20" y="174" class="small">As P[r] grows, both edges of the window only move right, so one merge step counts every cross pair in O(n).</text>
+<text x="20" y="194" class="small">count += j − i = 3.  Total: O(n log n), like counting inversions.</text>
+</svg>
+<figcaption>The window [i, j) of matching left prefixes moves monotonically, so counting all cross pairs costs O(n) per merge.</figcaption>
+</figure>
+
+<details class="solution">
+<summary>Solution: merge sort over prefix sums</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def count_range_sum(nums: list[int], lower: int, upper: int) -&gt; int:
+    P = [0]
+    for x in nums:
+        P.append(P[-1] + x)
+
+    def sort_count(lo: int, hi: int) -&gt; int:     # pairs inside P[lo:hi], then sort it
+        if hi - lo &lt;= 1:
+            return 0
+        mid = (lo + hi) // 2
+        count = sort_count(lo, mid) + sort_count(mid, hi)
+        i = j = lo
+        for r in range(mid, hi):                 # right half is sorted ascending
+            while i &lt; mid and P[r] - P[i] &gt; upper:
+                i += 1                           # P[i] too small: difference too big
+            while j &lt; mid and P[r] - P[j] &gt;= lower:
+                j += 1                           # first P[j] with difference &lt; lower
+            count += j - i
+        P[lo:hi] = sorted(P[lo:hi])              # or a linear merge
+        return count
+
+    return sort_count(0, len(P))
+</code></pre>
+<pre><code class="language-csharp">public static int CountRangeSum(int[] nums, int lower, int upper)
+{
+    var P = new long[nums.Length + 1];
+    for (int i = 0; i &lt; nums.Length; i++) P[i + 1] = P[i] + nums[i];
+    return SortCount(P, 0, P.Length, lower, upper);
+}
+
+static int SortCount(long[] P, int lo, int hi, int lower, int upper)   // pairs inside [lo, hi)
+{
+    if (hi - lo &lt;= 1) return 0;
+    int mid = (lo + hi) / 2;
+    int count = SortCount(P, lo, mid, lower, upper) + SortCount(P, mid, hi, lower, upper);
+    int i = lo, j = lo;
+    for (int r = mid; r &lt; hi; r++)                     // right half is sorted ascending
+    {
+        while (i &lt; mid &amp;&amp; P[r] - P[i] &gt; upper) i++;    // difference too big
+        while (j &lt; mid &amp;&amp; P[r] - P[j] &gt;= lower) j++;   // first difference &lt; lower
+        count += j - i;
+    }
+    Array.Sort(P, lo, hi - lo);                        // or a linear merge
+    return count;
+}
+</code></pre>
+</div>
+<p>O(n log² n) with the library sort shown, O(n log n) with a hand-written linear merge; O(n) space. Sorting the right half
+does not break anything because pairs are counted only <em>across</em> the halves, and every right index is after every left
+index. Alternatives: a Fenwick tree over coordinate-compressed prefix values, or a sorted container with <code>bisect</code>.</p>
+</details>
+<h3 id="8-max-sum-of-rectangle-no-larger-than-k-expert">8. Max Sum of Rectangle No Larger Than K <span class="diff expert">Expert</span></h3>
+<p>Return the largest sum of a sub-rectangle that is <strong>at most</strong> <code>k</code>.</p>
+<p><strong>Insight.</strong> Two layers of reduction. Fix two columns and collapse the band into row sums (as in problem 6). In 1D,
+for the current prefix <code>run</code>, the best start is the <strong>smallest earlier prefix <code>≥ run − k</code></strong>: a ceiling lookup in a
+sorted set (<code>bisect</code> in Python, <code>SortedSet.GetViewBetween</code> in C#). Kadane does not work because the constraint is “at
+most k”, not “as large as possible”.</p>
+<details class="solution">
+<summary>Solution: fix two columns, sorted set of prefixes</summary>
+<div class="code-tabs">
+<pre><code class="language-python">import bisect
+
+def max_sum_submatrix(matrix: list[list[int]], k: int) -&gt; int:
+    m, n = len(matrix), len(matrix[0])
+    best = float(&quot;-inf&quot;)
+    for left in range(n):
+        row = [0] * m                            # row sums of columns left..right
+        for right in range(left, n):
+            for r in range(m):
+                row[r] += matrix[r][right]
+            seen = [0]                           # sorted earlier prefixes
+            run = 0
+            for v in row:
+                run += v
+                i = bisect.bisect_left(seen, run - k)   # smallest prefix &gt;= run - k
+                if i &lt; len(seen):
+                    best = max(best, run - seen[i])
+                bisect.insort(seen, run)
+    return best
+</code></pre>
+<pre><code class="language-csharp">public static int MaxSumSubmatrix(int[][] matrix, int k)
+{
+    int m = matrix.Length, n = matrix[0].Length, best = int.MinValue;
+    for (int left = 0; left &lt; n; left++)
+    {
+        var row = new int[m];                                // row sums of columns left..right
+        for (int right = left; right &lt; n; right++)
+        {
+            for (int r = 0; r &lt; m; r++) row[r] += matrix[r][right];
+            var seen = new SortedSet&lt;int&gt; { 0 };             // earlier prefixes
+            int run = 0;
+            foreach (int v in row)
+            {
+                run += v;
+                var view = seen.GetViewBetween(run - k, int.MaxValue);   // prefixes &gt;= run - k
+                if (view.Count &gt; 0) best = Math.Max(best, run - view.Min);
+                seen.Add(run);
+            }
+        }
+    }
+    return best;
+}
+</code></pre>
+</div>
+<p>O(n² · m log m) time with a balanced tree (C#). Python’s <code>insort</code> is O(m) per insert, so O(n² · m²) in the worst case,
+which is still fine at LeetCode’s 100 × 100; use <code>sortedcontainers.SortedList</code> for a true O(log m). Collapse along the
+larger dimension so that the squared factor is the smaller one. Prefix sums fit in <code>int</code> here; use <code>long</code> otherwise.</p>
+</details>
+<h2 id="problem-ladder">Problem ladder</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Level</th>
+<th>The key idea</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://leetcode.com/problems/running-sum-of-1d-array/">Running Sum of 1d Array</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Build P in place.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://leetcode.com/problems/range-sum-query-immutable/">Range Sum Query - Immutable</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td><code>P[r+1] − P[l]</code>.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://leetcode.com/problems/find-pivot-index/">Find Pivot Index</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Left sum = <code>P[i]</code>, right sum = total − <code>P[i+1]</code>.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://leetcode.com/problems/range-sum-query-2d-immutable/">Range Sum Query 2D - Immutable</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Four-corner inclusion–exclusion.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://leetcode.com/problems/subarray-sum-equals-k/">Subarray Sum Equals K</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Counts map, seeded <code>{0: 1}</code>.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://leetcode.com/problems/contiguous-array/">Contiguous Array</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>0 → −1, first index of each prefix.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://leetcode.com/problems/subarray-sums-divisible-by-k/">Subarray Sums Divisible by K</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>k remainder buckets; normalise negatives.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://leetcode.com/problems/continuous-subarray-sum/">Continuous Subarray Sum</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>First index per remainder, distance ≥ 2.</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://leetcode.com/problems/product-of-array-except-self/">Product of Array Except Self</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Prefix × suffix, no division.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://leetcode.com/problems/corporate-flight-bookings/">Corporate Flight Bookings</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Difference array, one prefix pass.</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://leetcode.com/problems/car-pooling/">Car Pooling</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>+p at pickup, −p at drop-off, check the running sum.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://leetcode.com/problems/xor-queries-of-a-subarray/">XOR Queries of a Subarray</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td><code>X[r+1] ^ X[l]</code>.</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://leetcode.com/problems/count-triplets-that-can-form-two-arrays-of-equal-xor/">Count Triplets That Can Form Two Arrays of Equal XOR</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Equal prefix XOR at i and k+1 → k − i triplets.</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="https://leetcode.com/problems/count-number-of-nice-subarrays/">Count Number of Nice Subarrays</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Map odd → 1, even → 0, then LC 560.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="https://leetcode.com/problems/binary-subarrays-with-sum/">Binary Subarrays With Sum</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>LC 560 on a 0/1 array.</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="https://leetcode.com/problems/path-sum-iii/">Path Sum III</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Counts map along the root path; undo on backtrack.</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="https://leetcode.com/problems/find-the-longest-substring-containing-vowels-in-even-counts/">Find the Longest Substring Containing Vowels in Even Counts</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>5-bit parity mask, first index of each mask.</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="https://leetcode.com/problems/make-sum-divisible-by-p/">Make Sum Divisible by P</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Shortest subarray with a given remainder: last index per remainder.</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="https://leetcode.com/problems/increment-submatrices-by-one/">Increment Submatrices by One</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>2D difference array.</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/">Shortest Subarray with Sum at Least K</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Monotonic deque over prefix sums (<a href="monotonic-stack-queue.html">monotonic queue</a>).</td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="https://leetcode.com/problems/number-of-submatrices-that-sum-to-target/">Number of Submatrices That Sum to Target</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Fix two rows, LC 560 on column sums.</td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="https://leetcode.com/problems/count-of-range-sum/">Count of Range Sum</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Merge sort over P; sliding window of matches.</td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="https://leetcode.com/problems/stamping-the-grid/">Stamping the Grid</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>2D prefix to test fits, 2D difference to mark coverage.</td>
+</tr>
+<tr>
+<td>24</td>
+<td><a href="https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/">Max Sum of Rectangle No Larger Than K</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Fix two columns; ceiling lookup in a sorted set.</td>
+</tr>
+<tr>
+<td>25</td>
+<td><a href="https://leetcode.com/problems/sum-of-total-strength-of-wizards/">Sum of Total Strength of Wizards</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Monotonic stack for the minimum’s span, prefix of prefix sums for the sums.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>Why does <code>P</code> have <code>n + 1</code> entries instead of <code>n</code>?</summary>
+<p><code>P[0] = 0</code> is the sum of the empty prefix. It makes <code>P[r+1] − P[l]</code> correct for <code>l = 0</code> without a special case, and in
+the hash-map pattern it is the <code>seen[0] = 1</code> seed that lets a subarray start at index 0.</p>
+</details>
+<details class="quiz">
+<summary>In LC 560, what goes wrong if you insert <code>run</code> into the map before looking up <code>run − k</code>?</summary>
+<p>When <code>k = 0</code>, <code>run − k = run</code> is found immediately: the current prefix pairs with itself, which is the empty subarray.
+Every element adds a false match. For <code>k ≠ 0</code> it happens to work, which is why the bug survives casual tests.</p>
+</details>
+<details class="quiz">
+<summary>Why can a sliding window not solve “count subarrays with sum k” when values can be negative?</summary>
+<p>The window technique needs monotonicity: extending the window must never decrease the sum, so “too big” safely means
+“move the left edge”. A negative value breaks that, so a window that is too big now may be exactly right after a
+few more elements. Prefix + hash map checks every left edge at once instead of moving one.</p>
+</details>
+<details class="quiz">
+<summary>For the <em>longest</em> subarray with sum k, do you store the first or the last index of each prefix? Why?</summary>
+<p>The first. The length is <code>i − index</code>, which is largest when <code>index</code> is smallest. Insert a prefix only if it is not yet
+in the map and seed the map with <code>{0: −1}</code>.</p>
+</details>
+<details class="quiz">
+<summary>Write the 2D query for rows <code>r1…r2</code>, columns <code>c1…c2</code>, and explain the last term.</summary>
+<p><code>P[r2+1][c2+1] − P[r1][c2+1] − P[r2+1][c1] + P[r1][c1]</code>. The two subtracted strips (above and to the left) overlap in
+the block above-left of the query, which was therefore removed twice. Adding <code>P[r1][c1]</code> puts it back once.</p>
+</details>
+<details class="quiz">
+<summary>You must add <code>v</code> to <code>a[l…r]</code> 10⁵ times and print the array once. What do you store, and why does it work?</summary>
+<p>A difference array <code>D</code> with <code>n + 1</code> slots: <code>D[l] += v</code>, <code>D[r+1] −= v</code>, then one prefix-sum pass. Inside the range all
+neighbours move together, so only the two boundary differences change; the prefix sum turns differences back into values.
+O(n + q) instead of O(n · q).</p>
+</details>
+<details class="quiz">
+<summary>Why does LC 974 count pairs of prefixes with equal remainders, and what changes in C#?</summary>
+<p><code>(P[i] − P[j]) mod k = 0</code> exactly when <code>P[i] mod k = P[j] mod k</code>. In C#, <code>%</code> of a negative number is negative, so −2
+and 3 would land in different buckets although both mean “3 mod 5”. Normalise with <code>((x % k) + k) % k</code>.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Build</strong><code>P[0] = 0</code>, <code>P[i+1] = P[i] + a[i]</code>. Python: <code>accumulate(a, initial=0)</code>. C#: <code>long[]</code>.</div>
+<div><strong>Range sum</strong><code>sum(l…r) = P[r+1] − P[l]</code>; half-open <code>[l, r) = P[r] − P[l]</code>.</div>
+<div><strong>2D</strong>build: <code>a + up + left − diag</code>. query: <code>P[r2+1][c2+1] − P[r1][c2+1] − P[r2+1][c1] + P[r1][c1]</code>.</div>
+<div><strong>Sum = k</strong>count <code>seen[run − k]</code>, then <code>seen[run] += 1</code>; seed <code>{0: 1}</code>.</div>
+<div><strong>Longest / shortest</strong>first index (seed <code>{0: −1}</code>, never overwrite) / last index (overwrite).</div>
+<div><strong>Divisible by k</strong>equal <code>P mod k</code>; buckets of size k; C#: <code>((x % k) + k) % k</code>.</div>
+<div><strong>Equal counts / parity</strong>map to ±1 or toggle a bitmask, then look for equal prefixes.</div>
+<div><strong>XOR</strong><code>X[r+1] ^ X[l]</code>; equal prefix XOR ⇔ range XOR is 0.</div>
+<div><strong>No inverse</strong>prefix × suffix (products, max, min, gcd); arbitrary ranges need a sparse table or segment tree.</div>
+<div><strong>Range update</strong><code>D[l] += v</code>, <code>D[r+1] −= v</code>, prefix once; 2D: four corners, signs <code>+ − − +</code>.</div>
+<div><strong>Sub-rectangles</strong>fix two rows, collapse to column sums, solve in 1D: O(m² n).</div>
+<div><strong>Range of sums</strong>“between lower and upper” needs order: merge sort, Fenwick tree or sorted set over P.</div>
+</div><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="sliding-window.html"><small>&larr; PREVIOUS</small>Sliding Window</a><a class="next" href="binary-search.html"><small>NEXT &rarr;</small>Binary Search</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#what-prefix-sums-are">What prefix sums are</a></li>
+<li><a href="#intuition-running-totals-and-fences">Intuition: running totals and fences</a><ul>
+<li><a href="#watch-p-being-built-and-queried">Watch P being built and queried</a></li>
+<li><a href="#half-open-ranges-make-the-indices-disappear">Half-open ranges make the indices disappear</a></li>
+</ul>
+</li>
+<li><a href="#the-templates">The templates</a><ul>
+<li><a href="#1d-prefix-sums">1D prefix sums</a></li>
+<li><a href="#2d-prefix-sums">2D prefix sums</a></li>
+</ul>
+</li>
+<li><a href="#prefix-hash-map-subarrays-with-a-target">Prefix + hash map: subarrays with a target</a><ul>
+<li><a href="#what-to-store-in-the-map">What to store in the map</a></li>
+</ul>
+</li>
+<li><a href="#prefix-sums-with-modulo">Prefix sums with modulo</a></li>
+<li><a href="#prefix-xor">Prefix XOR</a></li>
+<li><a href="#prefix-and-suffix-products">Prefix and suffix products</a></li>
+<li><a href="#difference-arrays-range-updates-in-o1">Difference arrays: range updates in O(1)</a></li>
+<li><a href="#2d-difference-arrays">2D difference arrays</a></li>
+<li><a href="#recognize-it-when">Recognize it when</a></li>
+<li><a href="#pitfalls">Pitfalls</a></li>
+<li><a href="#worked-problems">Worked problems</a><ul>
+<li><a href="#1-subarray-sum-equals-k-medium">1. Subarray Sum Equals K Medium</a></li>
+<li><a href="#2-contiguous-array-medium">2. Contiguous Array Medium</a></li>
+<li><a href="#3-subarray-sums-divisible-by-k-and-continuous-subarray-sum-medium">3. Subarray Sums Divisible by K and Continuous Subarray Sum Medium</a></li>
+<li><a href="#4-corporate-flight-bookings-medium">4. Corporate Flight Bookings Medium</a></li>
+<li><a href="#5-product-of-array-except-self-medium">5. Product of Array Except Self Medium</a></li>
+<li><a href="#6-number-of-submatrices-that-sum-to-target-hard">6. Number of Submatrices That Sum to Target Hard</a></li>
+<li><a href="#7-count-of-range-sum-hard">7. Count of Range Sum Hard</a></li>
+<li><a href="#8-max-sum-of-rectangle-no-larger-than-k-expert">8. Max Sum of Rectangle No Larger Than K Expert</a></li>
+</ul>
+</li>
+<li><a href="#problem-ladder">Problem ladder</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

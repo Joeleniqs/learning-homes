@@ -1,0 +1,1589 @@
+<!doctype html>
+<html lang="en" data-home="dsa-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Sliding Window | DSA Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#4f46e5;--accent-soft:#eef0ff;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#a5b4fc;--accent-soft:#252a5c;}}:root[data-theme=dark]{--accent:#a5b4fc;--accent-soft:#252a5c;}</style>
+  <link rel="stylesheet" href="../assets/topics/sliding-window.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/sliding-window.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="DSA Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">DS</span>DSA Home</a>
+    <p class="sidebar-caption">Data structures &amp; algorithms, seen.<br>Every idea animated, every pattern drilled.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations</summary><ul class="topic-list"><li data-search="The Problem-Solving Playbook Foundations A visual decision map from input size, shape and question type to the right technique, plus a repeatable interview/contest workflow. pattern recognition constraints approach interview" data-slug="problem-solving-playbook"><a href="../topics/problem-solving-playbook.html">The Problem-Solving Playbook</a></li><li data-search="Complexity Analysis Foundations Big-O growth you can see, amortized cost, recursion trees and the Master theorem, and what 10^8 operations per second really buys you. big o amortized master theorem time space" data-slug="complexity-analysis"><a href="../topics/complexity-analysis.html">Complexity Analysis</a></li><li data-search="Recursion &amp; the Call Stack Foundations Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from. call stack recursion tree divide and conquer" data-slug="recursion"><a href="../topics/recursion.html">Recursion &amp; the Call Stack</a></li></ul></details><details class="nav-track" open><summary>Arrays &amp; Strings</summary><ul class="topic-list"><li data-search="Two Pointers Arrays &amp; Strings Opposite-end, same-direction and fast/slow pointers: why moving one pointer is safe, with partitioning and k-sum. pair sum partition dutch flag 3sum" data-slug="two-pointers"><a href="../topics/two-pointers.html">Two Pointers</a></li><li data-search="Sliding Window Arrays &amp; Strings Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows. substring subarray window at most k" data-slug="sliding-window"><a href="../topics/sliding-window.html" aria-current="page">Sliding Window</a></li><li data-search="Prefix Sums &amp; Difference Arrays Arrays &amp; Strings 1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR. subarray sum equals k range sum 2d prefix difference array" data-slug="prefix-sums"><a href="../topics/prefix-sums.html">Prefix Sums &amp; Difference Arrays</a></li><li data-search="Binary Search Arrays &amp; Strings One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection. lower bound upper bound search on answer rotated monotonic predicate" data-slug="binary-search"><a href="../topics/binary-search.html">Binary Search</a></li><li data-search="Sorting Algorithms Arrays &amp; Strings Animated bubble, insertion, merge, quick, heap, counting and radix sorts; stability, quickselect and custom comparators. merge sort quick sort quickselect counting sort inversions" data-slug="sorting"><a href="../topics/sorting.html">Sorting Algorithms</a></li><li data-search="Hashing Patterns Arrays &amp; Strings How hash tables work inside, then frequency maps, grouping by canonical keys, complement lookups and rolling hashes. hash map hash set anagram two sum collision" data-slug="hashing"><a href="../topics/hashing.html">Hashing Patterns</a></li><li data-search="Monotonic Stack &amp; Queue Arrays &amp; Strings Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight. next greater largest rectangle deque trapping rain water" data-slug="monotonic-stack-queue"><a href="../topics/monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a></li><li data-search="Intervals &amp; Sweep Line Arrays &amp; Strings Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline. merge intervals meeting rooms events skyline" data-slug="intervals-sweep-line"><a href="../topics/intervals-sweep-line.html">Intervals &amp; Sweep Line</a></li><li data-search="String Algorithms Arrays &amp; Strings KMP failure function, Z-algorithm, Rabin–Karp, Manacher&#x27;s palindromes and string hashing, each animated character by character. kmp z algorithm rabin karp manacher palindrome pattern matching" data-slug="string-algorithms"><a href="../topics/string-algorithms.html">String Algorithms</a></li></ul></details><details class="nav-track"><summary>Linked Lists, Stacks, Queues &amp; Heaps</summary><ul class="topic-list"><li data-search="Linked Lists Linked Lists, Stacks, Queues &amp; Heaps Pointer rewiring you can watch: reversal, dummy heads, fast/slow cycle detection, merging, and LRU cache design. reverse floyd cycle merge lru" data-slug="linked-lists"><a href="../topics/linked-lists.html">Linked Lists</a></li><li data-search="Stacks &amp; Queues Linked Lists, Stacks, Queues &amp; Heaps Balanced brackets, expression evaluation, min-stack, queues from stacks, deques and BFS queues. parentheses calculator deque min stack" data-slug="stacks-queues"><a href="../topics/stacks-queues.html">Stacks &amp; Queues</a></li><li data-search="Heaps &amp; Priority Queues Linked Lists, Stacks, Queues &amp; Heaps Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling. heap top k median k way merge priority queue" data-slug="heaps-priority-queues"><a href="../topics/heaps-priority-queues.html">Heaps &amp; Priority Queues</a></li></ul></details><details class="nav-track"><summary>Trees</summary><ul class="topic-list"><li data-search="Tree Traversals Trees Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees. dfs bfs inorder level order morris" data-slug="tree-traversals"><a href="../topics/tree-traversals.html">Tree Traversals</a></li><li data-search="Binary Search Trees Trees Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters. bst validate successor avl red black" data-slug="binary-search-trees"><a href="../topics/binary-search-trees.html">Binary Search Trees</a></li><li data-search="Tree Problem Patterns Trees Return-value recursion (diameter, max path sum), top-down state, LCA, serialization, and binary lifting. lca diameter path sum binary lifting serialize" data-slug="tree-patterns"><a href="../topics/tree-patterns.html">Tree Problem Patterns</a></li><li data-search="Tries Trees Prefix trees animated insert by insert: autocomplete, word search on boards, and bitwise tries for max XOR. prefix tree autocomplete word search xor trie" data-slug="tries"><a href="../topics/tries.html">Tries</a></li><li data-search="Segment Trees, Fenwick Trees &amp; Sparse Tables Trees Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables. segment tree lazy propagation fenwick bit rmq" data-slug="segment-fenwick-trees"><a href="../topics/segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a></li></ul></details><details class="nav-track"><summary>Graphs</summary><ul class="topic-list"><li data-search="Graph Fundamentals: BFS &amp; DFS Graphs Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS. bfs dfs grid islands connected components cycle" data-slug="graph-fundamentals"><a href="../topics/graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></li><li data-search="Topological Sort &amp; DAGs Graphs Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs. kahn course schedule dag dependency order" data-slug="topological-sort"><a href="../topics/topological-sort.html">Topological Sort &amp; DAGs</a></li><li data-search="Union-Find (Disjoint Set Union) Graphs Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries. dsu disjoint set path compression connectivity" data-slug="union-find"><a href="../topics/union-find.html">Union-Find (Disjoint Set Union)</a></li><li data-search="Shortest Paths Graphs BFS, 0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall and A* animated, and a chart to pick the right one every time. dijkstra bellman ford floyd warshall a star 0-1 bfs" data-slug="shortest-paths"><a href="../topics/shortest-paths.html">Shortest Paths</a></li><li data-search="Minimum Spanning Trees Graphs Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems. kruskal prim mst cut property" data-slug="minimum-spanning-trees"><a href="../topics/minimum-spanning-trees.html">Minimum Spanning Trees</a></li><li data-search="Advanced Graph Algorithms Graphs Strongly connected components, bridges and articulation points, bipartite checks, Euler paths, and max-flow / matching. tarjan kosaraju scc bridges euler max flow bipartite matching" data-slug="advanced-graphs"><a href="../topics/advanced-graphs.html">Advanced Graph Algorithms</a></li></ul></details><details class="nav-track"><summary>Backtracking &amp; Greedy</summary><ul class="topic-list"><li data-search="Backtracking Backtracking &amp; Greedy The choose/explore/un-choose template animated on a decision tree: subsets, permutations, combinations, N-Queens, Sudoku and pruning. subsets permutations n queens sudoku pruning" data-slug="backtracking"><a href="../topics/backtracking.html">Backtracking</a></li><li data-search="Greedy Algorithms Backtracking &amp; Greedy When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding. exchange argument interval scheduling jump game huffman" data-slug="greedy"><a href="../topics/greedy.html">Greedy Algorithms</a></li></ul></details><details class="nav-track"><summary>Dynamic Programming</summary><ul class="topic-list"><li data-search="The DP Framework Dynamic Programming Recursion → memoization → tabulation → space optimisation, visualised on one problem; how to design state and transitions. memoization tabulation state transition overlapping subproblems" data-slug="dp-framework"><a href="../topics/dp-framework.html">The DP Framework</a></li><li data-search="1D &amp; Grid DP Dynamic Programming Climbing stairs, house robber, decode ways, unique paths, min path sum, maximal square and dungeon game with animated tables. house robber unique paths grid dp maximal square" data-slug="dp-linear-grid"><a href="../topics/dp-linear-grid.html">1D &amp; Grid DP</a></li><li data-search="Knapsack Family Dynamic Programming 0/1 vs unbounded vs bounded knapsack, why loop direction matters, coin change, subset sum and target sum. knapsack coin change subset sum partition" data-slug="dp-knapsack"><a href="../topics/dp-knapsack.html">Knapsack Family</a></li><li data-search="Sequence &amp; String DP Dynamic Programming LIS with patience sorting, LCS, edit distance, palindromic subsequences, regex/wildcard matching and distinct subsequences. lis lcs edit distance regex matching palindrome" data-slug="dp-sequences-strings"><a href="../topics/dp-sequences-strings.html">Sequence &amp; String DP</a></li><li data-search="Interval &amp; Tree DP Dynamic Programming Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting). interval dp burst balloons matrix chain tree dp rerooting" data-slug="dp-intervals-trees"><a href="../topics/dp-intervals-trees.html">Interval &amp; Tree DP</a></li><li data-search="Bitmask &amp; Digit DP Dynamic Programming Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints. bitmask tsp digit dp subset dp" data-slug="dp-bitmask-digit"><a href="../topics/dp-bitmask-digit.html">Bitmask &amp; Digit DP</a></li><li data-search="State Machines &amp; DP Optimisations Dynamic Programming Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth. stock state machine convex hull trick knuth optimisation" data-slug="dp-advanced"><a href="../topics/dp-advanced.html">State Machines &amp; DP Optimisations</a></li></ul></details><details class="nav-track"><summary>Bits &amp; Math</summary><ul class="topic-list"><li data-search="Bit Manipulation Bits &amp; Math Bits drawn as switches: masks, XOR tricks, counting bits, subset enumeration and Gray codes. xor mask single number popcount subsets" data-slug="bit-manipulation"><a href="../topics/bit-manipulation.html">Bit Manipulation</a></li><li data-search="Math, Number Theory &amp; Combinatorics Bits &amp; Math GCD, sieves, fast power, modular inverses, nCr mod p, inclusion–exclusion, and the geometry primitives you need. gcd sieve modular fast exponentiation combinatorics geometry" data-slug="math-number-theory"><a href="../topics/math-number-theory.html">Math, Number Theory &amp; Combinatorics</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../CodeExcellenceHome/index.html">Code Excellence Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>DSA Home / Sliding Window</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">ARRAYS &AMP; STRINGS</p><h1>Sliding Window</h1><p class="lede">Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows.</p><div class="meta"><span class="level level-beginner">Beginner → Advanced</span><span>~55 min study</span><span>Builds on: <a href="two-pointers.html">Two Pointers</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="sliding-window" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="what-it-is-and-when-you-need-it">What it is and when you need it</h2>
+<p>A <strong>window</strong> is a contiguous stretch <code>a[l..r]</code> of an array or string. An array of length n has n(n+1)/2 of them, so "check every subarray" costs O(n²) windows, and often O(n³) with the check. A sliding window visits them in O(n): both edges move <strong>only to the right</strong>, and the window's state (a sum, a count map, a deque) is updated by one element at a time instead of being recomputed.</p>
+<div class="rule">
+<p><strong>The invariant.</strong> Keep <code>a[l..r]</code> valid. Advance <code>r</code> to take one element in. Advance <code>l</code> only to restore validity (or to keep a fixed length). This is correct exactly when validity is <strong>monotone</strong>: every sub-window of a valid window is valid, so a start that fails for <code>r</code> also fails for every later <code>r</code>.</p>
+</div>
+<p>A sliding window is the "same direction" family of <a href="two-pointers.html">Two Pointers</a>, specialised to contiguous ranges. The two-pointers page proves that discarding is safe in a pair matrix. Here the matrix is a triangle of windows, and the proof is the monotonicity above.</p>
+<div class="compare">
+<div class="bad">
+<h4 id="brute-force-on2-windows">Brute force: O(n²) windows</h4>
+<p>Enumerate every <code>(l, r)</code> and evaluate it. Even with a running total per <code>l</code>, that is O(n²). It works for any condition, which is its only advantage.</p>
+</div>
+<div class="warn">
+<h4 id="prefix-sums-on-any-sign">Prefix sums: O(n), any sign</h4>
+<p><code>sum(a[l..r]) = P[r+1] − P[l]</code> plus a hashmap answers "sum equals k" even with negative numbers. It only handles sums, and it costs O(n) space. See <a href="prefix-sums.html">Prefix Sums</a>.</p>
+</div>
+<div class="good">
+<h4 id="sliding-window-on-ostate">Sliding window: O(n), O(state)</h4>
+<p>It handles any condition that is monotone and can be updated incrementally: sums of non-negatives, distinct counts, character quotas, "at most k bad elements", window max and min (with a deque).</p>
+</div>
+</div>
+<h2 id="intuition-a-staircase-through-the-triangle-of-windows">Intuition: a staircase through the triangle of windows</h2>
+<p>Draw every window as a cell <code>(l, r)</code> with <code>l ≤ r</code>. Fix the right end <code>r</code> (a column) and ask which starts <code>l</code> give a valid window. For "no repeated character" the answer is always one <strong>contiguous block at the bottom of the column</strong>, and the top of that block only ever moves <strong>down</strong> as <code>r</code> grows. The algorithm just walks along that boundary.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 312" width="900" role="img" aria-label="Triangle of all windows (l, r) of abcabcbb with valid and invalid cells and the staircase walked by the two pointers">
+<text x="196" y="18" text-anchor="middle" class="small muted">r (right end) →</text>
+<text x="91.0" y="40" text-anchor="middle" class="small muted mono">0</text>
+<text x="91.0" y="55" text-anchor="middle" class="mono">a</text>
+<text x="121.0" y="40" text-anchor="middle" class="small muted mono">1</text>
+<text x="121.0" y="55" text-anchor="middle" class="mono">b</text>
+<text x="151.0" y="40" text-anchor="middle" class="small muted mono">2</text>
+<text x="151.0" y="55" text-anchor="middle" class="mono">c</text>
+<text x="181.0" y="40" text-anchor="middle" class="small muted mono">3</text>
+<text x="181.0" y="55" text-anchor="middle" class="mono">a</text>
+<text x="211.0" y="40" text-anchor="middle" class="small muted mono">4</text>
+<text x="211.0" y="55" text-anchor="middle" class="mono">b</text>
+<text x="241.0" y="40" text-anchor="middle" class="small muted mono">5</text>
+<text x="241.0" y="55" text-anchor="middle" class="mono">c</text>
+<text x="271.0" y="40" text-anchor="middle" class="small muted mono">6</text>
+<text x="271.0" y="55" text-anchor="middle" class="mono">b</text>
+<text x="301.0" y="40" text-anchor="middle" class="small muted mono">7</text>
+<text x="301.0" y="55" text-anchor="middle" class="mono">b</text>
+<text x="66" y="79" text-anchor="end" class="small mono">l=0 a</text>
+<text x="66" y="109" text-anchor="end" class="small mono">l=1 b</text>
+<text x="66" y="139" text-anchor="end" class="small mono">l=2 c</text>
+<text x="66" y="169" text-anchor="end" class="small mono">l=3 a</text>
+<text x="66" y="199" text-anchor="end" class="small mono">l=4 b</text>
+<text x="66" y="229" text-anchor="end" class="small mono">l=5 c</text>
+<text x="66" y="259" text-anchor="end" class="small mono">l=6 b</text>
+<text x="66" y="289" text-anchor="end" class="small mono">l=7 b</text>
+<rect class="box active" x="78" y="62" width="26" height="26" rx="4"/>
+<rect class="box active" x="108" y="62" width="26" height="26" rx="4"/>
+<rect class="box active" x="138" y="62" width="26" height="26" rx="4"/>
+<rect class="box bad" x="168" y="62" width="26" height="26" rx="4"/>
+<rect class="box bad" x="198" y="62" width="26" height="26" rx="4"/>
+<rect class="box bad" x="228" y="62" width="26" height="26" rx="4"/>
+<rect class="box bad" x="258" y="62" width="26" height="26" rx="4"/>
+<rect class="box bad" x="288" y="62" width="26" height="26" rx="4"/>
+<rect class="box done" x="108" y="92" width="26" height="26" rx="4"/>
+<rect class="box done" x="138" y="92" width="26" height="26" rx="4"/>
+<rect class="box active" x="168" y="92" width="26" height="26" rx="4"/>
+<rect class="box bad" x="198" y="92" width="26" height="26" rx="4"/>
+<rect class="box bad" x="228" y="92" width="26" height="26" rx="4"/>
+<rect class="box bad" x="258" y="92" width="26" height="26" rx="4"/>
+<rect class="box bad" x="288" y="92" width="26" height="26" rx="4"/>
+<rect class="box done" x="138" y="122" width="26" height="26" rx="4"/>
+<rect class="box done" x="168" y="122" width="26" height="26" rx="4"/>
+<rect class="box active" x="198" y="122" width="26" height="26" rx="4"/>
+<rect class="box bad" x="228" y="122" width="26" height="26" rx="4"/>
+<rect class="box bad" x="258" y="122" width="26" height="26" rx="4"/>
+<rect class="box bad" x="288" y="122" width="26" height="26" rx="4"/>
+<rect class="box done" x="168" y="152" width="26" height="26" rx="4"/>
+<rect class="box done" x="198" y="152" width="26" height="26" rx="4"/>
+<rect class="box active" x="228" y="152" width="26" height="26" rx="4"/>
+<rect class="box bad" x="258" y="152" width="26" height="26" rx="4"/>
+<rect class="box bad" x="288" y="152" width="26" height="26" rx="4"/>
+<rect class="box done" x="198" y="182" width="26" height="26" rx="4"/>
+<rect class="box done" x="228" y="182" width="26" height="26" rx="4"/>
+<rect class="box bad" x="258" y="182" width="26" height="26" rx="4"/>
+<rect class="box bad" x="288" y="182" width="26" height="26" rx="4"/>
+<rect class="box done" x="228" y="212" width="26" height="26" rx="4"/>
+<rect class="box active" x="258" y="212" width="26" height="26" rx="4"/>
+<rect class="box bad" x="288" y="212" width="26" height="26" rx="4"/>
+<rect class="box done" x="258" y="242" width="26" height="26" rx="4"/>
+<rect class="box bad" x="288" y="242" width="26" height="26" rx="4"/>
+<rect class="box active" x="288" y="272" width="26" height="26" rx="4"/>
+<path class="edge path" d="M91.0 75.0 H121.0 V75.0 H151.0 V75.0 H181.0 V105.0 H211.0 V135.0 H241.0 V165.0 H271.0 V225.0 H301.0 V285.0" opacity=".55"/>
+<text x="91.0" y="79" text-anchor="middle" class="small mono">1</text>
+<text x="121.0" y="79" text-anchor="middle" class="small mono">2</text>
+<text x="151.0" y="79" text-anchor="middle" class="small mono">3</text>
+<text x="181.0" y="79" text-anchor="middle" class="small fill-bad">×</text>
+<text x="211.0" y="79" text-anchor="middle" class="small fill-bad">×</text>
+<text x="241.0" y="79" text-anchor="middle" class="small fill-bad">×</text>
+<text x="271.0" y="79" text-anchor="middle" class="small fill-bad">×</text>
+<text x="301.0" y="79" text-anchor="middle" class="small fill-bad">×</text>
+<text x="121.0" y="109" text-anchor="middle" class="small mono">1</text>
+<text x="151.0" y="109" text-anchor="middle" class="small mono">2</text>
+<text x="181.0" y="109" text-anchor="middle" class="small mono">3</text>
+<text x="211.0" y="109" text-anchor="middle" class="small fill-bad">×</text>
+<text x="241.0" y="109" text-anchor="middle" class="small fill-bad">×</text>
+<text x="271.0" y="109" text-anchor="middle" class="small fill-bad">×</text>
+<text x="301.0" y="109" text-anchor="middle" class="small fill-bad">×</text>
+<text x="151.0" y="139" text-anchor="middle" class="small mono">1</text>
+<text x="181.0" y="139" text-anchor="middle" class="small mono">2</text>
+<text x="211.0" y="139" text-anchor="middle" class="small mono">3</text>
+<text x="241.0" y="139" text-anchor="middle" class="small fill-bad">×</text>
+<text x="271.0" y="139" text-anchor="middle" class="small fill-bad">×</text>
+<text x="301.0" y="139" text-anchor="middle" class="small fill-bad">×</text>
+<text x="181.0" y="169" text-anchor="middle" class="small mono">1</text>
+<text x="211.0" y="169" text-anchor="middle" class="small mono">2</text>
+<text x="241.0" y="169" text-anchor="middle" class="small mono">3</text>
+<text x="271.0" y="169" text-anchor="middle" class="small fill-bad">×</text>
+<text x="301.0" y="169" text-anchor="middle" class="small fill-bad">×</text>
+<text x="211.0" y="199" text-anchor="middle" class="small mono">1</text>
+<text x="241.0" y="199" text-anchor="middle" class="small mono">2</text>
+<text x="271.0" y="199" text-anchor="middle" class="small fill-bad">×</text>
+<text x="301.0" y="199" text-anchor="middle" class="small fill-bad">×</text>
+<text x="241.0" y="229" text-anchor="middle" class="small mono">1</text>
+<text x="271.0" y="229" text-anchor="middle" class="small mono">2</text>
+<text x="301.0" y="229" text-anchor="middle" class="small fill-bad">×</text>
+<text x="271.0" y="259" text-anchor="middle" class="small mono">1</text>
+<text x="301.0" y="259" text-anchor="middle" class="small fill-bad">×</text>
+<text x="301.0" y="289" text-anchor="middle" class="small mono">1</text>
+<text x="370" y="30" class="title">Every window of s = "abcabcbb" is one cell (l, r)</text>
+<rect class="box done" x="370" y="47" width="14" height="14" rx="3"/>
+<text x="390" y="58" class="small">valid: no repeat (number = length)</text>
+<rect class="box bad" x="620" y="47" width="14" height="14" rx="3"/>
+<text x="640" y="58" class="small">invalid: holds a repeat</text>
+<rect class="box active" x="370" y="71" width="14" height="14" rx="3"/>
+<text x="390" y="82" class="small">l(r): leftmost valid start for column r</text>
+<text x="370" y="116" class="small">36 cells. Brute force checks every one: O(n²) windows, each</text>
+<text x="370" y="134" class="small">checked in O(n), so O(n³), or O(n²) with incremental counts.</text>
+<text x="370" y="162" class="small">① In each column, the valid starts form one interval [l(r), r]:</text>
+<text x="370" y="180" class="small">    a sub-window of a repeat-free window is repeat-free.</text>
+<text x="370" y="198" class="small">② l(r) never decreases: a start that is invalid at r stays invalid</text>
+<text x="370" y="216" class="small">    at r + 1, because the longer window still holds the repeat.</text>
+<text x="370" y="234" class="small">③ So l and r only move right, along the staircase.</text>
+<text x="370" y="252" class="small">    At most 2n pointer moves: O(n).</text>
+</svg>
+<figcaption>The purple line is the path the pointers take: each step right is <code>r += 1</code> (which may enter an invalid red cell), each step down is <code>l += 1</code> (which leaves it). The path never goes up or left, so it has at most 2n steps. Every cell above the path is never examined, and the monotonicity proof says none of them could be valid.</figcaption>
+</figure>
+
+<p>Three facts make this work, and every sliding-window problem must have all three. If any is missing, use the alternatives in <a href="#when-windows-do-not-work">When windows do NOT work</a>.</p>
+<ol>
+<li><strong>Contiguity.</strong> The answer is a subarray or substring, not a subsequence.</li>
+<li><strong>Monotone validity.</strong> Shrinking a valid window keeps it valid. Equivalently, growing an invalid window keeps it invalid, so <code>l</code> never has to move back.</li>
+<li><strong>Incremental state.</strong> Adding <code>a[r]</code> and removing <code>a[l]</code> each update the state in O(1) (amortised): a running sum, a count map with a "how many are satisfied" counter, or a monotonic deque.</li>
+</ol>
+<h2 id="the-two-generic-templates">The two generic templates</h2>
+<p>Every window problem is one of two loops. In the <strong>fixed</strong> loop the length is given, so <code>l = r − k + 1</code> is forced. In the <strong>variable</strong> loop, <code>l</code> moves only when the invariant demands it. The only thing that changes between "longest" and "shortest" is <strong>where you record</strong> the answer.</p>
+<div class="code-tabs">
+<pre><code class="language-python">from typing import Callable, Sequence, TypeVar
+
+T = TypeVar(&quot;T&quot;)
+
+
+def fixed_window(a: Sequence[T], k: int, add: Callable[[T], None],
+                 remove: Callable[[T], None], record: Callable[[int, int], None]) -&gt; None:
+    for r in range(len(a)):
+        add(a[r])                    # a[r] enters
+        if r &gt;= k:
+            remove(a[r - k])         # a[r - k] leaves: the window is a[r-k+1 .. r]
+        if r &gt;= k - 1:
+            record(r - k + 1, r)     # the window is full: evaluate it
+
+
+def longest_window(a: Sequence[T], add: Callable[[T], None], remove: Callable[[T], None],
+                   invalid: Callable[[], bool], record: Callable[[int, int], None]) -&gt; None:
+    l = 0
+    for r in range(len(a)):
+        add(a[r])                    # 1. expand
+        while invalid():             # 2. shrink until valid again
+            remove(a[l])
+            l += 1
+        record(l, r)                 # 3. [l..r] is the LONGEST valid window ending at r
+
+
+def shortest_window(a: Sequence[T], add: Callable[[T], None], remove: Callable[[T], None],
+                    valid: Callable[[], bool], record: Callable[[int, int], None]) -&gt; None:
+    l = 0
+    for r in range(len(a)):
+        add(a[r])                    # 1. expand
+        while valid():               # 2. while valid ...
+            record(l, r)             #    ... record it, then try a shorter one
+            remove(a[l])
+            l += 1
+
+
+# Example: the longest substring with at most 2 distinct characters.
+def longest_two_distinct(s: str) -&gt; int:
+    cnt: dict[str, int] = {}
+    best = 0
+
+    def add(c: str) -&gt; None:
+        cnt[c] = cnt.get(c, 0) + 1
+
+    def remove(c: str) -&gt; None:
+        cnt[c] -= 1
+        if cnt[c] == 0:
+            del cnt[c]               # keep len(cnt) == number of distinct chars
+
+    def record(l: int, r: int) -&gt; None:
+        nonlocal best
+        best = max(best, r - l + 1)
+
+    longest_window(s, add, remove, lambda: len(cnt) &gt; 2, record)
+    return best
+</code></pre>
+<pre><code class="language-csharp">public static void FixedWindow&lt;T&gt;(IReadOnlyList&lt;T&gt; a, int k, Action&lt;T&gt; add, Action&lt;T&gt; remove,
+                                  Action&lt;int, int&gt; record)
+{
+    for (int r = 0; r &lt; a.Count; r++)
+    {
+        add(a[r]);                              // a[r] enters
+        if (r &gt;= k) remove(a[r - k]);           // a[r - k] leaves
+        if (r &gt;= k - 1) record(r - k + 1, r);   // the window is full
+    }
+}
+
+public static void LongestWindow&lt;T&gt;(IReadOnlyList&lt;T&gt; a, Action&lt;T&gt; add, Action&lt;T&gt; remove,
+                                    Func&lt;bool&gt; invalid, Action&lt;int, int&gt; record)
+{
+    int l = 0;
+    for (int r = 0; r &lt; a.Count; r++)
+    {
+        add(a[r]);
+        while (invalid()) remove(a[l++]);
+        record(l, r);                           // longest valid window ending at r
+    }
+}
+
+public static void ShortestWindow&lt;T&gt;(IReadOnlyList&lt;T&gt; a, Action&lt;T&gt; add, Action&lt;T&gt; remove,
+                                     Func&lt;bool&gt; valid, Action&lt;int, int&gt; record)
+{
+    int l = 0;
+    for (int r = 0; r &lt; a.Count; r++)
+    {
+        add(a[r]);
+        while (valid())
+        {
+            record(l, r);                       // valid: record, then try shorter
+            remove(a[l++]);
+        }
+    }
+}
+
+// Example: the longest substring with at most 2 distinct characters.
+public static int LongestTwoDistinct(string s)
+{
+    var cnt = new Dictionary&lt;char, int&gt;();
+    int best = 0;
+    LongestWindow(s.ToCharArray(),
+        c =&gt; cnt[c] = cnt.GetValueOrDefault(c) + 1,
+        c =&gt; { if (--cnt[c] == 0) cnt.Remove(c); },
+        () =&gt; cnt.Count &gt; 2,
+        (l, r) =&gt; best = Math.Max(best, r - l + 1));
+    return best;
+}
+</code></pre>
+</div>
+<p>Each element is added once and removed at most once, so all three loops run in <strong>O(n)</strong> calls to <code>add</code>/<code>remove</code>, plus whatever <code>invalid()</code>/<code>valid()</code> costs. Make that test O(1) by maintaining a counter (such as <code>len(cnt)</code>, <code>have == req</code>, or a running sum) rather than rescanning the state.</p>
+<h2 id="fixed-size-windows">Fixed-size windows</h2>
+<p>When the length is fixed at <code>k</code>, consecutive windows overlap in <code>k − 1</code> elements. Recomputing each window from scratch wastes all of that overlap.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 190" width="900" role="img" aria-label="A fixed window sliding by one: the leaving value is subtracted, the entering value is added, the shared middle is untouched">
+<defs><marker id="sw-m-slide" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box" x="40" y="62" width="40" height="40" rx="6"/>
+<text x="60.0" y="87" text-anchor="middle" class="mono">2</text>
+<text x="60.0" y="116" text-anchor="middle" class="small muted mono">0</text>
+<rect class="box bad" x="86" y="62" width="40" height="40" rx="6"/>
+<text x="106.0" y="87" text-anchor="middle" class="mono">1</text>
+<text x="106.0" y="116" text-anchor="middle" class="small muted mono">1</text>
+<rect class="box visit" x="132" y="62" width="40" height="40" rx="6"/>
+<text x="152.0" y="87" text-anchor="middle" class="mono">5</text>
+<text x="152.0" y="116" text-anchor="middle" class="small muted mono">2</text>
+<rect class="box visit" x="178" y="62" width="40" height="40" rx="6"/>
+<text x="198.0" y="87" text-anchor="middle" class="mono">1</text>
+<text x="198.0" y="116" text-anchor="middle" class="small muted mono">3</text>
+<rect class="box active" x="224" y="62" width="40" height="40" rx="6"/>
+<text x="244.0" y="87" text-anchor="middle" class="mono">3</text>
+<text x="244.0" y="116" text-anchor="middle" class="small muted mono">4</text>
+<rect class="box" x="270" y="62" width="40" height="40" rx="6"/>
+<text x="290.0" y="87" text-anchor="middle" class="mono">2</text>
+<text x="290.0" y="116" text-anchor="middle" class="small muted mono">5</text>
+<rect class="box" x="316" y="62" width="40" height="40" rx="6"/>
+<text x="336.0" y="87" text-anchor="middle" class="mono">9</text>
+<text x="336.0" y="116" text-anchor="middle" class="small muted mono">6</text>
+<rect class="box" x="362" y="62" width="40" height="40" rx="6"/>
+<text x="382.0" y="87" text-anchor="middle" class="mono">-4</text>
+<text x="382.0" y="116" text-anchor="middle" class="small muted mono">7</text>
+<path class="edge" d="M88 58 V52 H216 V58"/>
+<text x="152.0" y="44" text-anchor="middle" class="small">old window [1..3]: s = 7</text>
+<path class="edge accent" d="M134 122 V128 H262 V122"/>
+<text x="198.0" y="146" text-anchor="middle" class="small">new window [2..4]: s = 7 − 1 + 3 = 9</text>
+<text x="106.0" y="24" text-anchor="middle" class="small fill-bad">out: a[r − k]</text>
+<text x="258.0" y="24" text-anchor="middle" class="small fill-active">in: a[r]</text>
+<text x="440" y="40" class="title mono">s += a[r] − a[r − k]</text>
+<text x="440" y="68" class="small">The k − 1 shared values (blue) are never touched again.</text>
+<text x="440" y="86" class="small">Each slide costs 2 operations instead of k:</text>
+<text x="440" y="104" class="small">O(n) total instead of O(n · k).</text>
+<text x="440" y="132" class="small muted">Works whenever the window state can both add and remove:</text>
+<text x="440" y="150" class="small muted">sum, count, xor, character counts, distinct count (with a map).</text>
+<text x="440" y="168" class="small muted">Max / min cannot be removed → use the monotonic deque below.</text>
+</svg>
+<figcaption>Two consecutive windows share everything except one cell at each end. Subtract the cell that leaves and add the cell that enters.</figcaption>
+</figure>
+
+<div class="viz" data-viz="sliding-window-fixed"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def max_sum_k(a: list[int], k: int) -&gt; int:
+    s = sum(a[:k])                   # the first window, paid once
+    best = s
+    for r in range(k, len(a)):
+        s += a[r] - a[r - k]         # one value in, one value out
+        best = max(best, s)
+    return best
+</code></pre>
+<pre><code class="language-csharp">public static long MaxSumK(int[] a, int k)
+{
+    long s = 0;
+    for (int i = 0; i &lt; k; i++) s += a[i];      // the first window, paid once
+    long best = s;
+    for (int r = k; r &lt; a.Length; r++)
+    {
+        s += a[r] - a[r - k];                   // one value in, one value out
+        best = Math.Max(best, s);
+    }
+    return best;
+}
+</code></pre>
+</div>
+<p>O(n) time and O(1) space. The same skeleton handles "every window of length <code>|p|</code> that is an anagram of <code>p</code>" (keep 26 counts, see <a href="#3-find-all-anagrams-in-a-string">Find All Anagrams</a>), "max distinct-sum window of length k" (a sum and a count map), and "does any window of length k + 1 contain a duplicate" (a set). A fixed window needs <strong>no monotonicity</strong>, because <code>l</code> is never chosen; it is forced.</p>
+<div class="tip">
+<p><strong>Turn "remove k from the ends" into "keep a window of n − k".</strong> <em>Maximum Points You Can Obtain from Cards</em> takes <code>k</code> cards from the two ends. Whatever is left is a contiguous window of length <code>n − k</code>. Minimise that window's sum with the fixed template, or equivalently slide a window of length <code>k</code> across the wrap-around point.</p>
+</div>
+<h2 id="variable-windows-expand-shrink-record">Variable windows: expand, shrink, record</h2>
+<p>Now <code>l</code> is free, and the invariant decides it. Each step has three moves, always in this order:</p>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · EXPAND</small><strong>take a[r]</strong><p>Update the state with the new element. The window may now break the invariant.</p></div>
+<div class="flow-step"><small>2 · SHRINK</small><strong>while broken: drop a[l]</strong><p>Move <code>l</code> right only as far as needed. Starts left of <code>l</code> are dead for every later <code>r</code> too.</p></div>
+<div class="flow-step"><small>3 · RECORD</small><strong>[l..r] is valid</strong><p>For "longest", this window is the best one ending at <code>r</code>. Record it after the shrink loop.</p></div>
+</div>
+
+<h3 id="longest-valid-window">Longest valid window</h3>
+<p>Step through the canonical example: the longest substring without repeating characters. Watch the green invariant panel turn red the moment a duplicate enters, and watch <code>l</code> stop moving when it turns green again. That is the whole algorithm.</p>
+<div class="viz" data-viz="sliding-window-longest"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def longest_no_repeat(s: str) -&gt; int:
+    count: dict[str, int] = {}
+    l = best = 0
+    for r, ch in enumerate(s):
+        count[ch] = count.get(ch, 0) + 1     # 1. expand
+        while count[ch] &gt; 1:                 # 2. only ch can be duplicated: shrink
+            count[s[l]] -= 1
+            l += 1
+        best = max(best, r - l + 1)          # 3. record: [l..r] is valid
+    return best
+</code></pre>
+<pre><code class="language-csharp">public static int LongestNoRepeat(string s)
+{
+    var count = new Dictionary&lt;char, int&gt;();
+    int l = 0, best = 0;
+    for (int r = 0; r &lt; s.Length; r++)
+    {
+        char ch = s[r];
+        count[ch] = count.GetValueOrDefault(ch) + 1;    // 1. expand
+        while (count[ch] &gt; 1)                           // 2. shrink while broken
+        {
+            count[s[l]]--;
+            l++;
+        }
+        best = Math.Max(best, r - l + 1);               // 3. record
+    }
+    return best;
+}
+</code></pre>
+</div>
+<p>O(n) time, O(σ) space for an alphabet of size σ. The shrink test <code>count[ch] &gt; 1</code> only checks the character that just entered. Before step 1 the window was valid, so the only possible duplicate is <code>ch</code>. Small observations like this keep the validity test O(1).</p>
+<h3 id="shortest-valid-window">Shortest valid window</h3>
+<p>Flip the goal: find the <strong>shortest</strong> window that satisfies a condition, such as "sum ≥ target" or "contains every character of t". Validity is still monotone, but in the other direction: <strong>growing</strong> a valid window keeps it valid. So expand until valid, then shrink <strong>while still valid</strong>, recording at every step. The best window ending at <code>r</code> is the last valid one before the window breaks.</p>
+<div class="compare">
+<div class="good">
+<h4 id="longest-record-after-the-loop">Longest: record after the loop</h4>
+<p><code>while invalid: shrink</code> then <code>best = max(best, r − l + 1)</code>. The window you record is valid and as long as possible.</p>
+</div>
+<div class="good">
+<h4 id="shortest-record-inside-the-loop">Shortest: record inside the loop</h4>
+<p><code>while valid: best = min(best, r − l + 1); shrink</code>. Each window you record is valid. Once the loop exits, the window is invalid and must not be recorded.</p>
+</div>
+</div>
+<div class="code-tabs">
+<pre><code class="language-python">import math
+
+
+def min_subarray_len(target: int, nums: list[int]) -&gt; int:
+    &quot;&quot;&quot;Shortest subarray with sum &gt;= target. Requires nums[i] &gt;= 0.&quot;&quot;&quot;
+    l = s = 0
+    best = math.inf
+    for r, x in enumerate(nums):
+        s += x                               # 1. expand
+        while s &gt;= target:                   # 2. while valid ...
+            best = min(best, r - l + 1)      #    record first
+            s -= nums[l]                     #    then try a shorter one
+            l += 1
+    return 0 if best == math.inf else best
+</code></pre>
+<pre><code class="language-csharp">public static int MinSubArrayLen(int target, int[] nums)
+{
+    int l = 0, best = int.MaxValue;
+    long s = 0;
+    for (int r = 0; r &lt; nums.Length; r++)
+    {
+        s += nums[r];
+        while (s &gt;= target)
+        {
+            best = Math.Min(best, r - l + 1);
+            s -= nums[l++];
+        }
+    }
+    return best == int.MaxValue ? 0 : best;
+}
+</code></pre>
+</div>
+<p>When validity means "contains a multiset", as in <strong>minimum window substring</strong>, comparing two count maps on every step would cost O(σ). Instead, keep <code>need[c]</code> (the counts of t) and one integer: <strong>have</strong>, the number of distinct characters whose quota is met. <code>have</code> changes only when a count <em>crosses</em> its quota, which is an O(1) check on each add or remove. The window is valid exactly when <code>have == req</code>.</p>
+<div class="viz" data-viz="sliding-window-minwin"></div>
+
+<p>Watch two details in the visualizer. First, <code>have</code> goes up only when <code>win[c]</code> reaches <code>need[c]</code> <strong>exactly</strong>; surplus copies change nothing. Second, <code>have</code> goes down only when <code>win[c]</code> drops <strong>below</strong> <code>need[c]</code>, which is the step that ends the shrink loop. The full solution is <a href="#4-minimum-window-substring">worked problem 4</a>.</p>
+<h2 id="counting-windows">Counting windows</h2>
+<p>"How many subarrays satisfy X?" Recording one window per <code>r</code> is not enough here. Every valid window must be counted, and there can be O(n²) of them, so you need to count many windows per step.</p>
+<h3 id="at-most-k-every-window-that-ends-at-r-counts">At most K: every window that ends at r counts</h3>
+<p>If <code>[l..r]</code> is the longest valid window ending at <code>r</code>, monotonicity says that <strong>every</strong> window <code>[i..r]</code> with <code>l ≤ i ≤ r</code> is valid too. That is <code>r − l + 1</code> windows, all counted with a single addition.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 196" width="900" role="img" aria-label="For a valid window [l..r], all r minus l plus 1 windows that end at r are valid and are counted at once">
+<rect class="box" x="40" y="30" width="40" height="40" rx="6"/>
+<text x="60.0" y="55" text-anchor="middle" class="mono">9</text>
+<text x="60.0" y="84" text-anchor="middle" class="small mono muted">0</text>
+<rect class="box" x="86" y="30" width="40" height="40" rx="6"/>
+<text x="106.0" y="55" text-anchor="middle" class="mono">7</text>
+<text x="106.0" y="84" text-anchor="middle" class="small mono muted">1</text>
+<rect class="box visit" x="132" y="30" width="40" height="40" rx="6"/>
+<text x="152.0" y="55" text-anchor="middle" class="mono">2</text>
+<text x="152.0" y="84" text-anchor="middle" class="small mono fill-accent">l</text>
+<rect class="box visit" x="178" y="30" width="40" height="40" rx="6"/>
+<text x="198.0" y="55" text-anchor="middle" class="mono">3</text>
+<text x="198.0" y="84" text-anchor="middle" class="small mono muted">3</text>
+<rect class="box visit" x="224" y="30" width="40" height="40" rx="6"/>
+<text x="244.0" y="55" text-anchor="middle" class="mono">1</text>
+<text x="244.0" y="84" text-anchor="middle" class="small mono muted">4</text>
+<rect class="box active" x="270" y="30" width="40" height="40" rx="6"/>
+<text x="290.0" y="55" text-anchor="middle" class="mono">4</text>
+<text x="290.0" y="84" text-anchor="middle" class="small mono fill-accent">r</text>
+<rect class="box" x="316" y="30" width="40" height="40" rx="6" opacity=".45"/>
+<text x="336.0" y="55" text-anchor="middle" class="mono">8</text>
+<text x="336.0" y="84" text-anchor="middle" class="small mono muted">6</text>
+<rect class="box" x="362" y="30" width="40" height="40" rx="6" opacity=".45"/>
+<text x="382.0" y="55" text-anchor="middle" class="mono">6</text>
+<text x="382.0" y="84" text-anchor="middle" class="small mono muted">7</text>
+<path class="edge done" d="M136 104 H306"/>
+<circle cx="136" cy="104" r="3" class="fill-done"/>
+<text x="320" y="108" class="small mono">[2..5]</text>
+<path class="edge done" d="M182 120 H306"/>
+<circle cx="182" cy="120" r="3" class="fill-done"/>
+<text x="320" y="124" class="small mono">[3..5]</text>
+<path class="edge done" d="M228 136 H306"/>
+<circle cx="228" cy="136" r="3" class="fill-done"/>
+<text x="320" y="140" class="small mono">[4..5]</text>
+<path class="edge done" d="M274 152 H306"/>
+<circle cx="274" cy="152" r="3" class="fill-done"/>
+<text x="320" y="156" class="small mono">[5..5]</text>
+<text x="63.0" y="134" text-anchor="middle" class="small fill-bad">starts 0, 1: invalid</text>
+<text x="470" y="40" class="title mono">count += r − l + 1</text>
+<text x="470" y="68" class="small">Example: product &lt; 100. The window [2..5] = 2·3·1·4 = 24 is valid.</text>
+<text x="470" y="86" class="small">Every window inside it that ends at r is valid too (a smaller</text>
+<text x="470" y="104" class="small">product), so all r − l + 1 = 4 of them count, in one addition.</text>
+<text x="470" y="132" class="small muted">Each window is counted exactly once: at its right end r.</text>
+<text x="470" y="150" class="small muted">Summing over r gives the number of valid windows in O(n).</text>
+<text x="470" y="168" class="small muted">This is "at most" counting: it needs the same monotonicity.</text>
+</svg>
+<figcaption>Each valid window is counted once, at its right end. Starts 0 and 1 make the product too large, and by monotonicity so does every longer window ending at r.</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-python">def num_subarray_product_less_than_k(nums: list[int], k: int) -&gt; int:
+    &quot;&quot;&quot;Count subarrays with product &lt; k. nums[i] &gt;= 1.&quot;&quot;&quot;
+    if k &lt;= 1:
+        return 0                             # no product of positive integers is &lt; 1
+    prod, l, count = 1, 0, 0
+    for r, x in enumerate(nums):
+        prod *= x
+        while prod &gt;= k:
+            prod //= nums[l]
+            l += 1
+        count += r - l + 1                   # all of [l..r], [l+1..r], ..., [r..r]
+    return count
+</code></pre>
+<pre><code class="language-csharp">public static long NumSubarrayProductLessThanK(int[] nums, int k)
+{
+    if (k &lt;= 1) return 0;
+    long prod = 1, count = 0;
+    int l = 0;
+    for (int r = 0; r &lt; nums.Length; r++)
+    {
+        prod *= nums[r];
+        while (prod &gt;= k) prod /= nums[l++];
+        count += r - l + 1;
+    }
+    return count;
+}
+</code></pre>
+</div>
+<p>The <code>k &lt;= 1</code> guard is not optional. Without it, <code>prod &gt;= k</code> stays true even for the empty window. <code>l</code> runs past <code>r</code>, and the code divides by elements outside the window.</p>
+<h3 id="exactly-k-atmostk-atmostk-1">Exactly K = atMost(K) − atMost(K − 1)</h3>
+<p>"Count subarrays with <strong>exactly</strong> K distinct values" breaks the shrink rule. A window with K distinct values can lose a value and drop to K − 1 (too few), or keep K. No single <code>l</code> describes "all the good starts", because the good starts are a band with <strong>two</strong> moving edges. Each edge, though, is the left edge of an "at most" window, and "at most" is monotone.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 222" width="900" role="img" aria-label="Distinct counts per start split into bands greater than K, equal to K, less than K; exactly K equals at most K minus at most K minus 1">
+<text x="156" y="50" text-anchor="end" class="small mono">a[i]</text>
+<text x="156" y="102" text-anchor="end" class="small">distinct in a[i..5]</text>
+<rect class="box" x="170" y="26" width="40" height="40" rx="6"/>
+<text x="190.0" y="51" text-anchor="middle" class="mono">3</text>
+<text x="190.0" y="16" text-anchor="middle" class="small muted mono">i=0</text>
+<rect class="box bad" x="170" y="80" width="40" height="36" rx="6"/>
+<text x="190.0" y="103" text-anchor="middle" class="mono">3</text>
+<rect class="box" x="216" y="26" width="40" height="40" rx="6"/>
+<text x="236.0" y="51" text-anchor="middle" class="mono">1</text>
+<text x="236.0" y="16" text-anchor="middle" class="small muted mono">i=1</text>
+<rect class="box done" x="216" y="80" width="40" height="36" rx="6"/>
+<text x="236.0" y="103" text-anchor="middle" class="mono">2</text>
+<rect class="box" x="262" y="26" width="40" height="40" rx="6"/>
+<text x="282.0" y="51" text-anchor="middle" class="mono">2</text>
+<text x="282.0" y="16" text-anchor="middle" class="small muted mono">i=2</text>
+<rect class="box done" x="262" y="80" width="40" height="36" rx="6"/>
+<text x="282.0" y="103" text-anchor="middle" class="mono">2</text>
+<rect class="box" x="308" y="26" width="40" height="40" rx="6"/>
+<text x="328.0" y="51" text-anchor="middle" class="mono">1</text>
+<text x="328.0" y="16" text-anchor="middle" class="small muted mono">i=3</text>
+<rect class="box done" x="308" y="80" width="40" height="36" rx="6"/>
+<text x="328.0" y="103" text-anchor="middle" class="mono">2</text>
+<rect class="box" x="354" y="26" width="40" height="40" rx="6"/>
+<text x="374.0" y="51" text-anchor="middle" class="mono">2</text>
+<text x="374.0" y="16" text-anchor="middle" class="small muted mono">i=4</text>
+<rect class="box visit" x="354" y="80" width="40" height="36" rx="6"/>
+<text x="374.0" y="103" text-anchor="middle" class="mono">1</text>
+<rect class="box active" x="400" y="26" width="40" height="40" rx="6"/>
+<text x="420.0" y="51" text-anchor="middle" class="mono">2</text>
+<text x="420.0" y="16" text-anchor="middle" class="small muted mono">i=5</text>
+<rect class="box visit" x="400" y="80" width="40" height="36" rx="6"/>
+<text x="420.0" y="103" text-anchor="middle" class="mono">1</text>
+<path class="edge accent" d="M219 134 V140 H437 V134"/>
+<text x="453" y="144" class="small">≤ 2 distinct: starts 1..5 → 5</text>
+<path class="edge accent" d="M357 164 V170 H437 V164"/>
+<text x="453" y="174" class="small">≤ 1 distinct: starts 4..5 → 2</text>
+<path class="edge done" d="M219 194 V200 H345 V194"/>
+<text x="453" y="204" class="small fill-done">exactly 2: 5 − 2 = 3 starts</text>
+<text x="640" y="30" class="title">Why the band is contiguous</text>
+<text x="640" y="56" class="small">Moving the start right removes</text>
+<text x="640" y="74" class="small">elements, so the distinct count</text>
+<text x="640" y="92" class="small">never goes up. Starts split into</text>
+<text x="640" y="110" class="small">three runs: &gt; K | = K | &lt; K.</text>
+<text x="640" y="136" class="small muted">Both ends of the = K run move</text>
+<text x="640" y="154" class="small muted">right as r grows. Each end is</text>
+<text x="640" y="172" class="small muted">the left edge of an at-most</text>
+<text x="640" y="190" class="small muted">window: two windows, subtract.</text>
+</svg>
+<figcaption>For a fixed r the starts form three contiguous bands. "At most 2" counts the green and blue bands, and "at most 1" counts only the blue band. Their difference is the green band: exactly 2.</figcaption>
+</figure>
+
+<p>The visualizer runs both "at most" counters together with one shared <code>r</code>. Its bottom row shows the distinct count of every window ending at <code>r</code>, so you can see the bands directly. That row is for illustration only; the algorithm never computes it.</p>
+<div class="viz" data-viz="sliding-window-exactk"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def subarrays_with_k_distinct(nums: list[int], k: int) -&gt; int:
+    def at_most(k: int) -&gt; int:
+        cnt: dict[int, int] = {}
+        l = total = 0
+        for r, x in enumerate(nums):
+            cnt[x] = cnt.get(x, 0) + 1
+            while len(cnt) &gt; k:
+                cnt[nums[l]] -= 1
+                if cnt[nums[l]] == 0:
+                    del cnt[nums[l]]         # len(cnt) must count distinct values
+                l += 1
+            total += r - l + 1
+        return total
+
+    return at_most(k) - at_most(k - 1)
+</code></pre>
+<pre><code class="language-csharp">public static long SubarraysWithKDistinct(int[] nums, int k)
+{
+    long AtMost(int kk)
+    {
+        var cnt = new Dictionary&lt;int, int&gt;();
+        long total = 0;
+        int l = 0;
+        for (int r = 0; r &lt; nums.Length; r++)
+        {
+            cnt[nums[r]] = cnt.GetValueOrDefault(nums[r]) + 1;
+            while (cnt.Count &gt; kk)
+            {
+                if (--cnt[nums[l]] == 0) cnt.Remove(nums[l]);
+                l++;
+            }
+            total += r - l + 1;
+        }
+        return total;
+    }
+    return AtMost(k) - AtMost(k - 1);
+}
+</code></pre>
+</div>
+<p>The same trick counts subarrays with exactly k odd numbers (<em>Count Number of Nice Subarrays</em>), with sum exactly <code>goal</code> in a binary array (<em>Binary Subarrays With Sum</em>), and in general anything of the form "exactly" where "at most" is monotone. For sums of non-negative numbers, <code>atMost(goal)</code> uses <code>while s &gt; goal</code>. For <code>goal = 0</code>, <code>atMost(−1)</code> must return 0; a guard like <code>if goal &lt; 0: return 0</code> handles it.</p>
+<h2 id="sliding-window-maximum-the-monotonic-deque">Sliding window maximum: the monotonic deque</h2>
+<p>A sum can be "un-added", but a maximum cannot be "un-maxed": when the current max leaves the window, which value takes over? A heap answers in O(log k) with lazy deletion. A <strong>monotonic deque</strong> answers in amortised O(1), because most values can be thrown away for good the moment a bigger value arrives.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 236" width="900" role="img" aria-label="Bars of a window: older bars shadowed by a newer, taller bar are dominated; the survivors form a decreasing staircase kept in the deque">
+<rect class="box" x="40" y="128" width="36" height="68" rx="4" opacity=".5"/>
+<text x="58.0" y="212" text-anchor="middle" class="mono">4</text>
+<text x="58.0" y="227" text-anchor="middle" class="small muted mono">i=0</text>
+<rect class="box path" x="90" y="60" width="36" height="136" rx="4"/>
+<text x="108.0" y="212" text-anchor="middle" class="mono">8</text>
+<text x="108.0" y="227" text-anchor="middle" class="small muted mono">i=1</text>
+<rect class="box" x="140" y="145" width="36" height="51" rx="4" opacity=".5"/>
+<text x="158.0" y="212" text-anchor="middle" class="mono">3</text>
+<text x="158.0" y="227" text-anchor="middle" class="small muted mono">i=2</text>
+<rect class="box path" x="190" y="94" width="36" height="102" rx="4"/>
+<text x="208.0" y="212" text-anchor="middle" class="mono">6</text>
+<text x="208.0" y="227" text-anchor="middle" class="small muted mono">i=3</text>
+<rect class="box" x="240" y="111" width="36" height="85" rx="4" opacity=".5"/>
+<text x="258.0" y="212" text-anchor="middle" class="mono">5</text>
+<text x="258.0" y="227" text-anchor="middle" class="small muted mono">i=4</text>
+<rect class="box" x="290" y="162" width="36" height="34" rx="4" opacity=".5"/>
+<text x="308.0" y="212" text-anchor="middle" class="mono">2</text>
+<text x="308.0" y="227" text-anchor="middle" class="small muted mono">i=5</text>
+<rect class="box path" x="340" y="111" width="36" height="85" rx="4"/>
+<text x="358.0" y="212" text-anchor="middle" class="mono">5</text>
+<text x="358.0" y="227" text-anchor="middle" class="small muted mono">i=6</text>
+<rect class="box path" x="390" y="179" width="36" height="17" rx="4"/>
+<text x="408.0" y="212" text-anchor="middle" class="mono">1</text>
+<text x="408.0" y="227" text-anchor="middle" class="small muted mono">i=7</text>
+<path class="edge bad dash" d="M76 128 H90"/>
+<path class="edge bad dash" d="M176 145 H190"/>
+<path class="edge bad dash" d="M276 111 H340"/>
+<path class="edge bad dash" d="M326 162 H340"/>
+<line class="edge" x1="30" x2="440" y1="196" y2="196"/>
+<text x="108.0" y="52" text-anchor="middle" class="small fill-path">front</text>
+<text x="408.0" y="171" text-anchor="middle" class="small fill-path">back</text>
+<text x="470" y="30" class="title">Who can still be a window maximum?</text>
+<text x="470" y="56" class="small">An older bar is useless once a newer bar at least as tall exists:</text>
+<text x="470" y="74" class="small">the newer one stays in every future window the older one is in.</text>
+<text x="470" y="92" class="small">The red dashes show who shadows whom.</text>
+<text x="470" y="120" class="small muted">Survivors are the suffix maxima: heights 8 &gt; 6 &gt; 5 &gt; 1,</text>
+<text x="470" y="138" class="small muted">stored as indices 1, 3, 6, 7. The front is the window max.</text>
+<text x="470" y="156" class="small muted">New value: pop shorter-or-equal bars from the back.</text>
+<text x="470" y="174" class="small muted">Window moves on: pop the front if its index expired.</text>
+</svg>
+<figcaption>An older value that is ≤ a newer one is <em>dominated</em>. It leaves the window first and is never bigger, so it can never be a maximum again. Only the decreasing staircase of survivors needs to be stored, as indices so that expiry can be detected.</figcaption>
+</figure>
+
+<div class="viz" data-viz="sliding-window-deque"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+
+def max_sliding_window(nums: list[int], k: int) -&gt; list[int]:
+    dq: deque[int] = deque()                 # indices; nums[dq] strictly decreasing
+    out: list[int] = []
+    for r, x in enumerate(nums):
+        while dq and nums[dq[-1]] &lt;= x:      # dominated: older and not bigger
+            dq.pop()
+        dq.append(r)
+        if dq[0] &lt;= r - k:                   # the front left the window
+            dq.popleft()
+        if r &gt;= k - 1:
+            out.append(nums[dq[0]])          # front = max of nums[r-k+1 .. r]
+    return out
+</code></pre>
+<pre><code class="language-csharp">public static int[] MaxSlidingWindow(int[] nums, int k)
+{
+    var dq = new LinkedList&lt;int&gt;();                     // indices, values decreasing
+    var outp = new int[nums.Length - k + 1];
+    for (int r = 0; r &lt; nums.Length; r++)
+    {
+        while (dq.Count &gt; 0 &amp;&amp; nums[dq.Last!.Value] &lt;= nums[r]) dq.RemoveLast();
+        dq.AddLast(r);
+        if (dq.First!.Value &lt;= r - k) dq.RemoveFirst(); // expired
+        if (r &gt;= k - 1) outp[r - k + 1] = nums[dq.First.Value];
+    }
+    return outp;
+}
+</code></pre>
+</div>
+<p>Each index is pushed once and popped at most once, so the total is O(n) and the extra space is O(k). For the <strong>minimum</strong>, flip the comparison to <code>&gt;=</code>. To keep both, maintain two deques. That is how <em>Longest Continuous Subarray With Absolute Diff ≤ Limit</em> combines a variable window with "max − min" (<a href="#6-longest-continuous-subarray-with-absolute-diff-limit">worked problem 6</a>). The general structure lives in <a href="monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a>.</p>
+<h2 id="when-windows-do-not-work">When windows do NOT work</h2>
+<p>The window's shrink rule is a proof: "the sum is too big, so every window starting at <code>l</code> is too big". With negative numbers the proof is false, because a later negative value can pull the sum back down.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 216" width="900" role="img" aria-label="With non-negative values a too-large window start is dead forever; with a negative value the same start becomes valid again">
+<defs><marker id="sw-m-neg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker></defs>
+<rect class="box" x="10" y="10" width="430" height="196" rx="10"/>
+<rect class="box" x="460" y="10" width="430" height="196" rx="10"/>
+<text x="26" y="36" class="title">All values ≥ 0: a dead start stays dead</text>
+<text x="476" y="36" class="title">With a negative value: it comes back</text>
+<rect class="box bad" x="40" y="58" width="40" height="40" rx="6"/>
+<text x="60" y="83" text-anchor="middle" class="mono">2</text>
+<text x="60" y="112" text-anchor="middle" class="small muted mono">0</text>
+<rect class="box visit" x="86" y="58" width="40" height="40" rx="6"/>
+<text x="106" y="83" text-anchor="middle" class="mono">1</text>
+<text x="106" y="112" text-anchor="middle" class="small muted mono">1</text>
+<rect class="box visit" x="132" y="58" width="40" height="40" rx="6"/>
+<text x="152" y="83" text-anchor="middle" class="mono">3</text>
+<text x="152" y="112" text-anchor="middle" class="small muted mono">2</text>
+<rect class="box" x="178" y="58" width="40" height="40" rx="6"/>
+<text x="198" y="83" text-anchor="middle" class="mono">2</text>
+<text x="198" y="112" text-anchor="middle" class="small muted mono">3</text>
+<rect class="box" x="224" y="58" width="40" height="40" rx="6"/>
+<text x="244" y="83" text-anchor="middle" class="mono">4</text>
+<text x="244" y="112" text-anchor="middle" class="small muted mono">4</text>
+<path class="edge accent" d="M42 122 V128 H170 V122"/>
+<text x="26" y="154" class="small">k = 5: [0..2] = 6 &gt; 5, so drop a[0]. Every [0..r′] with r′ ≥ 2</text>
+<text x="26" y="172" class="small">is at least 6 too, because adding values never lowers the sum.</text>
+<text x="26" y="192" class="small fill-done">Moving l right is safe.</text>
+<rect class="box bad" x="500" y="58" width="40" height="40" rx="6"/>
+<text x="520" y="83" text-anchor="middle" class="mono">5</text>
+<text x="520" y="112" text-anchor="middle" class="small muted mono">0</text>
+<rect class="box" x="546" y="58" width="40" height="40" rx="6"/>
+<text x="566" y="83" text-anchor="middle" class="mono">-4</text>
+<text x="566" y="112" text-anchor="middle" class="small muted mono">1</text>
+<rect class="box" x="592" y="58" width="40" height="40" rx="6"/>
+<text x="612" y="83" text-anchor="middle" class="mono">2</text>
+<text x="612" y="112" text-anchor="middle" class="small muted mono">2</text>
+<path class="edge done" d="M502 122 V128 H630 V122"/>
+<text x="660" y="76" class="small fill-done">[0..2] = 5 − 4 + 2 = 3 = k</text>
+<text x="660" y="94" class="small fill-done">a valid answer</text>
+<text x="476" y="154" class="small">k = 3: at r = 0, s = 5 &gt; 3, so the window drops a[0] forever.</text>
+<text x="476" y="172" class="small">But a[1] = −4 would have pulled the sum back down to 3.</text>
+<text x="476" y="192" class="small fill-bad">Too big no longer proves the start is dead. Use prefix sums.</text>
+</svg>
+<figcaption>Left: with non-negative values, a start that is too big stays too big. Right: one negative value revives a start the window already threw away.</figcaption>
+</figure>
+
+<p>The visualizer runs the naive window on mixed-sign input for "count subarrays with sum = k", compares its count with brute force, and then solves the same input with prefix sums and a hashmap. Press <strong>Randomize</strong> a few times to see how often the naive window is wrong.</p>
+<div class="viz" data-viz="sliding-window-prefix"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def subarray_sum(nums: list[int], k: int) -&gt; int:
+    &quot;&quot;&quot;Count subarrays with sum == k. Any signs. O(n) time, O(n) space.&quot;&quot;&quot;
+    seen = {0: 1}                            # prefix value -&gt; how many times seen
+    p = count = 0
+    for x in nums:
+        p += x
+        count += seen.get(p - k, 0)          # earlier prefixes P[i] with P[r+1] - P[i] == k
+        seen[p] = seen.get(p, 0) + 1
+    return count
+</code></pre>
+<pre><code class="language-csharp">public static int SubarraySum(int[] nums, int k)
+{
+    var seen = new Dictionary&lt;long, int&gt; { [0] = 1 };
+    long p = 0;
+    int count = 0;
+    foreach (int x in nums)
+    {
+        p += x;
+        count += seen.GetValueOrDefault(p - k);
+        seen[p] = seen.GetValueOrDefault(p) + 1;
+    }
+    return count;
+}
+</code></pre>
+</div>
+<p>The full list of situations where a window is the wrong tool:</p>
+<ul>
+<li><strong>Negative numbers with a sum condition.</strong> For "sum = k", use prefix sums with a hashmap (above). For "shortest subarray with sum ≥ k", use prefix sums with a monotonic deque (<a href="#8-shortest-subarray-with-sum-at-least-k">worked problem 8</a>). For "maximum subarray sum", use Kadane or prefix minima.</li>
+<li><strong>Exactly-K conditions.</strong> These are not monotone directly. Use <code>atMost(K) − atMost(K − 1)</code>, or count with two left edges.</li>
+<li><strong>Subsequences.</strong> The answer is not contiguous, so there is no window. Use DP, or sort and use <a href="two-pointers.html">Two Pointers</a>.</li>
+<li><strong>Non-invertible state without a deque structure.</strong> Examples are the median of each window (use two heaps with lazy deletion, or a sorted list), or the k-th largest. The window still slides, but the state needs a richer structure: O(n log k).</li>
+<li><strong>Validity that depends on the whole array.</strong> For example, "the subarray's sum is the largest of all subarrays" is a global property, not a window property.</li>
+</ul>
+<h2 id="decision-chart">Decision chart</h2>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 426" width="900" role="img" aria-label="Decision chart: contiguous, fixed length, monotone validity, then which window template to use">
+<defs><marker id="sw-m-dec" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box accent" x="240" y="8" width="420" height="44" rx="9"/>
+<text x="450.0" y="35.0" text-anchor="middle" class="title">Is the answer a contiguous subarray or substring?</text>
+<path class="edge accent" d="M240 30 H135 V86" marker-end="url(#sw-m-dec)"/>
+<text x="188" y="24" text-anchor="middle" class="small fill-accent">no</text>
+<rect class="box bad" x="10" y="90" width="250" height="60" rx="9"/>
+<text x="135.0" y="109.0" text-anchor="middle" class="title">Not a window</text>
+<text x="135.0" y="125.0" text-anchor="middle" class="small">subsequences: DP, sort + two pointers,</text>
+<text x="135.0" y="141.0" text-anchor="middle" class="small">or hashing</text>
+<path class="edge accent" d="M450 52 V86" marker-end="url(#sw-m-dec)"/>
+<text x="466" y="74" text-anchor="middle" class="small fill-accent">yes</text>
+<rect class="box" x="330" y="90" width="240" height="44" rx="9"/>
+<text x="450.0" y="117.0" text-anchor="middle" class="title">Is the length fixed at k?</text>
+<path class="edge accent" d="M570 112 H636" marker-end="url(#sw-m-dec)"/>
+<text x="603" y="104" text-anchor="middle" class="small fill-accent">yes</text>
+<rect class="box done" x="640" y="84" width="250" height="58" rx="9"/>
+<text x="765.0" y="102.0" text-anchor="middle" class="title">Fixed window</text>
+<text x="765.0" y="118.0" text-anchor="middle" class="small">add a[r], drop a[r − k];</text>
+<text x="765.0" y="134.0" text-anchor="middle" class="small">record once r ≥ k − 1</text>
+<path class="edge accent" d="M450 134 V172" marker-end="url(#sw-m-dec)"/>
+<text x="464" y="160" text-anchor="middle" class="small fill-accent">no</text>
+<rect class="box" x="240" y="176" width="420" height="58" rx="9"/>
+<text x="450.0" y="194.0" text-anchor="middle" class="title">Is validity monotone?</text>
+<text x="450.0" y="210.0" text-anchor="middle" class="small">every sub-window of a valid window is valid: sums of</text>
+<text x="450.0" y="226.0" text-anchor="middle" class="small">values ≥ 0, ≤ K distinct, ≤ k changes, product &lt; k …</text>
+<path class="edge accent" d="M240 205 H150 V258" marker-end="url(#sw-m-dec)"/>
+<text x="196" y="198" text-anchor="middle" class="small fill-accent">no</text>
+<rect class="box bad" x="10" y="262" width="290" height="66" rx="9"/>
+<text x="155.0" y="284.0" text-anchor="middle" class="title">Not a window: prefix sums</text>
+<text x="155.0" y="300.0" text-anchor="middle" class="small">sum = k with negatives → prefix + hashmap</text>
+<text x="155.0" y="316.0" text-anchor="middle" class="small">shortest sum ≥ k, negatives → prefix + deque</text>
+<path class="edge accent" d="M450 234 V264" marker-end="url(#sw-m-dec)"/>
+<text x="466" y="254" text-anchor="middle" class="small fill-accent">yes</text>
+<rect class="box accent" x="330" y="268" width="240" height="40" rx="9"/>
+<text x="450.0" y="293.0" text-anchor="middle" class="title">What is the question?</text>
+<path class="edge accent" d="M450 308 V330 H94 V350" marker-end="url(#sw-m-dec)"/>
+<rect class="box done" x="10" y="354" width="168" height="64" rx="9"/>
+<text x="94.0" y="375.0" text-anchor="middle" class="title">Longest valid</text>
+<text x="94.0" y="391.0" text-anchor="middle" class="small">shrink while invalid,</text>
+<text x="94.0" y="407.0" text-anchor="middle" class="small">then record</text>
+<path class="edge accent" d="M450 308 V330 H272 V350" marker-end="url(#sw-m-dec)"/>
+<rect class="box done" x="188" y="354" width="168" height="64" rx="9"/>
+<text x="272.0" y="375.0" text-anchor="middle" class="title">Shortest valid</text>
+<text x="272.0" y="391.0" text-anchor="middle" class="small">while valid: record,</text>
+<text x="272.0" y="407.0" text-anchor="middle" class="small">then shrink</text>
+<path class="edge accent" d="M450 308 V330 H450 V350" marker-end="url(#sw-m-dec)"/>
+<rect class="box done" x="366" y="354" width="168" height="64" rx="9"/>
+<text x="450.0" y="383.0" text-anchor="middle" class="title">Count (at most)</text>
+<text x="450.0" y="399.0" text-anchor="middle" class="small">count += r − l + 1</text>
+<path class="edge accent" d="M450 308 V330 H628 V350" marker-end="url(#sw-m-dec)"/>
+<rect class="box done" x="544" y="354" width="168" height="64" rx="9"/>
+<text x="628.0" y="375.0" text-anchor="middle" class="title">Count exactly K</text>
+<text x="628.0" y="391.0" text-anchor="middle" class="small">atMost(K) −</text>
+<text x="628.0" y="407.0" text-anchor="middle" class="small">atMost(K − 1)</text>
+<path class="edge accent" d="M450 308 V330 H806 V350" marker-end="url(#sw-m-dec)"/>
+<rect class="box done" x="722" y="354" width="168" height="64" rx="9"/>
+<text x="806.0" y="375.0" text-anchor="middle" class="title">Max / min per window</text>
+<text x="806.0" y="391.0" text-anchor="middle" class="small">monotonic deque</text>
+<text x="806.0" y="407.0" text-anchor="middle" class="small">of indices</text>
+</svg>
+<figcaption>Ask three questions in order: is it contiguous, is the length fixed, and is validity monotone? Then pick the record or count rule that matches the question.</figcaption>
+</figure>
+
+<h2 id="templates-at-a-glance">Templates at a glance</h2>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Move <code>l</code> when</th>
+<th>Record / count</th>
+<th>Typical state</th>
+<th>Time · space</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fixed length k</td>
+<td>always, once <code>r ≥ k</code> (<code>l = r − k + 1</code>)</td>
+<td>when <code>r ≥ k − 1</code></td>
+<td>sum, 26 counts + matches</td>
+<td>O(n) · O(1) or O(σ)</td>
+</tr>
+<tr>
+<td>Longest valid</td>
+<td><code>while invalid</code></td>
+<td>after the loop: <code>max(best, r − l + 1)</code></td>
+<td>count map + distinct, sum</td>
+<td>O(n) · O(σ)</td>
+</tr>
+<tr>
+<td>Shortest valid</td>
+<td><code>while valid</code></td>
+<td>inside the loop, before shrinking</td>
+<td>sum, need/have</td>
+<td>O(n) · O(σ)</td>
+</tr>
+<tr>
+<td>Count, at most</td>
+<td><code>while invalid</code></td>
+<td><code>count += r − l + 1</code></td>
+<td>count map, product</td>
+<td>O(n) · O(σ)</td>
+</tr>
+<tr>
+<td>Count, exactly K</td>
+<td>two at-most windows</td>
+<td><code>atMost(K) − atMost(K − 1)</code></td>
+<td>two count maps</td>
+<td>O(n) · O(σ)</td>
+</tr>
+<tr>
+<td>Window max / min</td>
+<td>expiry from the front</td>
+<td><code>a[dq[0]]</code> once <code>r ≥ k − 1</code></td>
+<td>deque of indices</td>
+<td>O(n) · O(k)</td>
+</tr>
+<tr>
+<td>Sum = k with negatives</td>
+<td>not a window</td>
+<td><code>count += seen[P − k]</code></td>
+<td>prefix hashmap</td>
+<td>O(n) · O(n)</td>
+</tr>
+</tbody>
+</table>
+<div class="recognize">
+<p><strong>Recognize it when</strong></p>
+<ul>
+<li>The question asks for a <strong>contiguous</strong> subarray or substring: the longest, the shortest, the count, or every window of length k.</li>
+<li>The condition is "<strong>at most</strong> k" of something (distinct values, zeros to flip, replacements, odd numbers), or a sum or product bound with <strong>non-negative</strong> values.</li>
+<li>A brute force has an inner loop <code>for j in range(i, n)</code> that you could stop early, and the start <code>i</code> that works never moves backward as <code>j</code> grows.</li>
+<li>The phrase "<strong>exactly</strong> K" next to a monotone "at most" condition: subtract two counts.</li>
+<li>"Maximum / minimum of every window of size k", or "max − min ≤ limit": a monotonic deque.</li>
+<li>Values can be negative and the condition is a sum: <strong>stop</strong>, and reach for <a href="prefix-sums.html">prefix sums</a>.</li>
+</ul>
+</div>
+<h3 id="pitfalls">Pitfalls</h3>
+<div class="pitfall">
+<p><strong>Pitfall: <code>if</code> instead of <code>while</code> when shrinking</strong>
+One step left may not be enough. In "longest without repeats" on <code>"abcdbe"</code>, the second <code>b</code> requires dropping both <code>a</code> and the first <code>b</code>. With <code>if</code>, only <code>a</code> is dropped, the invalid window <code>"bcdb"</code> survives, and the code reports 5 for <code>"bcdbe"</code>, which contains two <code>b</code>s. The correct answer is 4 (<code>"cdbe"</code>). Always shrink with <code>while</code>. (<em>Longest Repeating Character Replacement</em> is the one deliberate exception; see worked problem 2.)</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: recording in the wrong place</strong>
+For "shortest", recording after the loop records an <em>invalid</em> window: the loop exits precisely when the window broke. With target 7 and <code>[2, 3, 1, 2, 4, 3]</code>, that version reports length 1. For "longest", recording inside a <code>while invalid</code> loop records broken windows. The rule: <strong>record only windows you know are valid</strong>.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: zero counts left in the map</strong>
+<code>len(cnt)</code> is supposed to be the number of distinct values, but <code>cnt[x] -= 1</code> leaves <code>x: 0</code> behind. The map then claims <code>[1, 2]</code> has 3 distinct values once a 3 has passed through. Delete keys that reach 0, or keep a separate <code>distinct</code> counter that you update when a count goes 0 → 1 or 1 → 0.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: sliding over negative numbers</strong>
+<code>while s &gt; k: shrink</code> is only sound when every value is ≥ 0. On <code>[5, −4, 2]</code> with <code>k = 3</code> it drops the 5 immediately and never finds <code>[5, −4, 2]</code>. If the constraints allow negatives, switch to prefix sums. Check this before writing any code.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: storing values instead of indices in the deque</strong>
+To expire the front you must know whether it is still inside <code>[r − k + 1, r]</code>. With values only, <code>[3, 3, 1]</code> and <code>k = 2</code> cannot tell which 3 left. Store indices. (The values-only variant works only if you pop with strict <code>&lt;</code>, so duplicates stay in the deque, and expire with <code>if dq[0] == nums[r − k]</code>.)</p>
+</div>
+<div class="pitfall">
+<p><strong>Pitfall: fixed-window off-by-one</strong>
+Record when <code>r &gt;= k − 1</code> (the window <code>a[r−k+1..r]</code> is full), and remove <code>a[r − k]</code> when <code>r &gt;= k</code>. Recording at <code>r &gt;= k</code> silently skips the first window; with <code>k = len(a)</code>, it returns nothing at all.</p>
+</div>
+<h2 id="worked-problems">Worked problems</h2>
+<h3 id="1-longest-substring-without-repeating-characters">1. Longest Substring Without Repeating Characters</h3>
+<p><strong>Insight:</strong> the count-map version above shrinks one step at a time. If you store each character's <strong>last index</strong> instead, <code>l</code> can jump straight past the earlier copy. The check <code>last[ch] &gt;= l</code> matters: an old copy to the left of the window is not a duplicate. Without it, <code>"abba"</code> would move <code>l</code> backwards when the final <code>a</code> arrives.</p>
+<details class="solution">
+<summary>Solution: O(n) time, O(σ) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def length_of_longest_substring(s: str) -&gt; int:
+    last: dict[str, int] = {}
+    l = best = 0
+    for r, ch in enumerate(s):
+        if last.get(ch, -1) &gt;= l:            # earlier copy is inside the window
+            l = last[ch] + 1                 # jump past it
+        last[ch] = r
+        best = max(best, r - l + 1)
+    return best
+</code></pre>
+<pre><code class="language-csharp">public static int LengthOfLongestSubstring(string s)
+{
+    var last = new Dictionary&lt;char, int&gt;();
+    int l = 0, best = 0;
+    for (int r = 0; r &lt; s.Length; r++)
+    {
+        if (last.TryGetValue(s[r], out int p) &amp;&amp; p &gt;= l) l = p + 1;
+        last[s[r]] = r;
+        best = Math.Max(best, r - l + 1);
+    }
+    return best;
+}
+</code></pre>
+</div>
+</details>
+<h3 id="2-longest-repeating-character-replacement">2. Longest Repeating Character Replacement</h3>
+<p>Replace at most <code>k</code> characters to get the longest run of one letter. <strong>Insight:</strong> a window is valid when <code>length − maxFreq ≤ k</code>, where <code>maxFreq</code> is the count of its most common letter. Recomputing the true <code>maxFreq</code> after each shrink would be correct but is unnecessary. Only a <strong>larger</strong> <code>maxFreq</code> can produce a longer answer, so the window never needs to shrink: when it is invalid, slide it one step (drop one on the left, as the new one entered on the right). A stale <code>maxFreq</code> only keeps the size where it is, and the size grows only when a genuinely higher frequency appears. At the end, the window size <code>n − l</code> is the answer.</p>
+<details class="solution">
+<summary>Solution: O(n) time, O(26) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def character_replacement(s: str, k: int) -&gt; int:
+    count = [0] * 26
+    l = max_f = 0
+    for r, ch in enumerate(s):
+        i = ord(ch) - ord(&quot;A&quot;)
+        count[i] += 1
+        max_f = max(max_f, count[i])         # may be stale later: that is fine
+        if r - l + 1 - max_f &gt; k:            # `if`, not `while`: slide, never shrink
+            count[ord(s[l]) - ord(&quot;A&quot;)] -= 1
+            l += 1
+    return len(s) - l                        # the window only ever grew
+</code></pre>
+<pre><code class="language-csharp">public static int CharacterReplacement(string s, int k)
+{
+    var count = new int[26];
+    int l = 0, maxF = 0;
+    for (int r = 0; r &lt; s.Length; r++)
+    {
+        maxF = Math.Max(maxF, ++count[s[r] - 'A']);
+        if (r - l + 1 - maxF &gt; k)
+        {
+            count[s[l] - 'A']--;
+            l++;
+        }
+    }
+    return s.Length - l;
+}
+</code></pre>
+</div>
+</details>
+<h3 id="3-find-all-anagrams-in-a-string">3. Find All Anagrams in a String</h3>
+<p>Return every start index where a window of <code>s</code> is a permutation of <code>p</code>. <strong>Insight:</strong> this is a fixed window of length <code>|p|</code>. Comparing two 26-count arrays on each step costs O(26). Keep <code>diff[c] = need[c] − window[c]</code> and an integer <code>bad</code>, the number of letters whose <code>diff</code> is not 0. Each add or remove changes one <code>diff</code> entry, which can change <code>bad</code> by at most one. The window is an anagram exactly when <code>bad == 0</code>. <em>Permutation in String</em> is the same code returning a boolean.</p>
+<details class="solution">
+<summary>Solution: O(n) time, O(26) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def find_anagrams(s: str, p: str) -&gt; list[int]:
+    k = len(p)
+    diff = [0] * 26                          # need - window, per letter
+    for ch in p:
+        diff[ord(ch) - 97] += 1
+    bad = sum(d != 0 for d in diff)
+    out: list[int] = []
+
+    def change(ch: str, delta: int) -&gt; None:
+        nonlocal bad
+        i = ord(ch) - 97
+        if diff[i] == 0:
+            bad += 1                         # was balanced, now is not
+        diff[i] += delta
+        if diff[i] == 0:
+            bad -= 1                         # became balanced
+
+    for r, ch in enumerate(s):
+        change(ch, -1)                       # enters the window
+        if r &gt;= k:
+            change(s[r - k], +1)             # leaves the window
+        if r &gt;= k - 1 and bad == 0:
+            out.append(r - k + 1)
+    return out
+</code></pre>
+<pre><code class="language-csharp">public static IList&lt;int&gt; FindAnagrams(string s, string p)
+{
+    int k = p.Length;
+    var diff = new int[26];
+    foreach (char c in p) diff[c - 'a']++;
+    int bad = 0;
+    foreach (int d in diff) if (d != 0) bad++;
+    var outp = new List&lt;int&gt;();
+
+    void Change(char c, int delta)
+    {
+        int i = c - 'a';
+        if (diff[i] == 0) bad++;
+        diff[i] += delta;
+        if (diff[i] == 0) bad--;
+    }
+
+    for (int r = 0; r &lt; s.Length; r++)
+    {
+        Change(s[r], -1);
+        if (r &gt;= k) Change(s[r - k], +1);
+        if (r &gt;= k - 1 &amp;&amp; bad == 0) outp.Add(r - k + 1);
+    }
+    return outp;
+}
+</code></pre>
+</div>
+</details>
+<h3 id="4-minimum-window-substring">4. Minimum Window Substring</h3>
+<p>The shortest substring of <code>s</code> that contains every character of <code>t</code>, duplicates included. <strong>Insight:</strong> this is a shortest valid window with the need/have counter from the visualizer. Record inside <code>while have == req</code>. Store <code>(length, start)</code> instead of slicing on every improvement, so the loop stays O(1) per step.</p>
+<details class="solution">
+<summary>Solution: O(|s| + |t|) time, O(σ) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import Counter
+
+
+def min_window(s: str, t: str) -&gt; str:
+    need = Counter(t)
+    req, have = len(need), 0                 # distinct chars needed / satisfied
+    win: dict[str, int] = {}
+    best_len, best_l = len(s) + 1, 0
+    l = 0
+    for r, ch in enumerate(s):
+        if ch in need:
+            win[ch] = win.get(ch, 0) + 1
+            if win[ch] == need[ch]:          # just reached its quota
+                have += 1
+        while have == req:                   # valid: record, then shrink
+            if r - l + 1 &lt; best_len:
+                best_len, best_l = r - l + 1, l
+            c = s[l]
+            if c in need:
+                win[c] -= 1
+                if win[c] &lt; need[c]:         # just fell below its quota
+                    have -= 1
+            l += 1
+    return &quot;&quot; if best_len &gt; len(s) else s[best_l:best_l + best_len]
+</code></pre>
+<pre><code class="language-csharp">public static string MinWindow(string s, string t)
+{
+    var need = new Dictionary&lt;char, int&gt;();
+    foreach (char c in t) need[c] = need.GetValueOrDefault(c) + 1;
+    var win = new Dictionary&lt;char, int&gt;();
+    int req = need.Count, have = 0, l = 0;
+    int bestLen = s.Length + 1, bestL = 0;
+    for (int r = 0; r &lt; s.Length; r++)
+    {
+        char ch = s[r];
+        if (need.TryGetValue(ch, out int q))
+        {
+            win[ch] = win.GetValueOrDefault(ch) + 1;
+            if (win[ch] == q) have++;
+        }
+        while (have == req)
+        {
+            if (r - l + 1 &lt; bestLen) { bestLen = r - l + 1; bestL = l; }
+            char c = s[l++];
+            if (need.TryGetValue(c, out int qc) &amp;&amp; --win[c] &lt; qc) have--;
+        }
+    }
+    return bestLen &gt; s.Length ? &quot;&quot; : s.Substring(bestL, bestLen);
+}
+</code></pre>
+</div>
+</details>
+<h3 id="5-subarrays-with-k-different-integers">5. Subarrays with K Different Integers</h3>
+<p>Count subarrays with exactly <code>k</code> distinct values. <strong>Insight:</strong> the section above computes <code>atMost(k) − atMost(k − 1)</code> in two passes. The same idea fits in <strong>one</strong> pass with two left edges sharing <code>r</code>. <code>l1</code> is the left edge of the "at most k" window, and <code>l2</code> is the left edge of the "at most k − 1" window. The starts in <code>[l1, l2)</code> have exactly <code>k</code> distinct values, so add <code>l2 − l1</code>. This is exactly what the visualizer draws.</p>
+<details class="solution">
+<summary>Solution: O(n) time, O(n) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def subarrays_with_k_distinct_one_pass(nums: list[int], k: int) -&gt; int:
+    c1: dict[int, int] = {}                  # window [l1..r]: at most k distinct
+    c2: dict[int, int] = {}                  # window [l2..r]: at most k - 1 distinct
+    l1 = l2 = total = 0
+
+    def drop(c: dict[int, int], x: int) -&gt; None:
+        c[x] -= 1
+        if c[x] == 0:
+            del c[x]
+
+    for x in nums:
+        c1[x] = c1.get(x, 0) + 1
+        c2[x] = c2.get(x, 0) + 1
+        while len(c1) &gt; k:
+            drop(c1, nums[l1])
+            l1 += 1
+        while len(c2) &gt; k - 1:
+            drop(c2, nums[l2])
+            l2 += 1
+        total += l2 - l1                     # starts with exactly k distinct
+    return total
+</code></pre>
+<pre><code class="language-csharp">public static long SubarraysWithKDistinctOnePass(int[] nums, int k)
+{
+    var c1 = new Dictionary&lt;int, int&gt;();
+    var c2 = new Dictionary&lt;int, int&gt;();
+    int l1 = 0, l2 = 0;
+    long total = 0;
+
+    static void Drop(Dictionary&lt;int, int&gt; c, int x)
+    {
+        if (--c[x] == 0) c.Remove(x);
+    }
+
+    foreach (int x in nums)
+    {
+        c1[x] = c1.GetValueOrDefault(x) + 1;
+        c2[x] = c2.GetValueOrDefault(x) + 1;
+        while (c1.Count &gt; k) Drop(c1, nums[l1++]);
+        while (c2.Count &gt; k - 1) Drop(c2, nums[l2++]);
+        total += l2 - l1;
+    }
+    return total;
+}
+</code></pre>
+</div>
+</details>
+<h3 id="6-longest-continuous-subarray-with-absolute-diff-limit">6. Longest Continuous Subarray With Absolute Diff ≤ Limit</h3>
+<p>The longest subarray whose <code>max − min ≤ limit</code>. <strong>Insight:</strong> validity is monotone, because shrinking a window can only lower its max and raise its min. So this is a longest-valid window. The state needs the window's max and min under removals from the left, which is exactly what two monotonic deques provide. When the window is invalid, advance <code>l</code> and expire any deque front that fell out.</p>
+<details class="solution">
+<summary>Solution: O(n) time, O(n) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+
+def longest_subarray(nums: list[int], limit: int) -&gt; int:
+    mx: deque[int] = deque()                 # indices, values decreasing
+    mn: deque[int] = deque()                 # indices, values increasing
+    l = best = 0
+    for r, x in enumerate(nums):
+        while mx and nums[mx[-1]] &lt;= x:
+            mx.pop()
+        mx.append(r)
+        while mn and nums[mn[-1]] &gt;= x:
+            mn.pop()
+        mn.append(r)
+        while nums[mx[0]] - nums[mn[0]] &gt; limit:
+            l += 1
+            if mx[0] &lt; l:
+                mx.popleft()
+            if mn[0] &lt; l:
+                mn.popleft()
+        best = max(best, r - l + 1)
+    return best
+</code></pre>
+<pre><code class="language-csharp">public static int LongestSubarray(int[] nums, int limit)
+{
+    var mx = new LinkedList&lt;int&gt;();
+    var mn = new LinkedList&lt;int&gt;();
+    int l = 0, best = 0;
+    for (int r = 0; r &lt; nums.Length; r++)
+    {
+        while (mx.Count &gt; 0 &amp;&amp; nums[mx.Last!.Value] &lt;= nums[r]) mx.RemoveLast();
+        mx.AddLast(r);
+        while (mn.Count &gt; 0 &amp;&amp; nums[mn.Last!.Value] &gt;= nums[r]) mn.RemoveLast();
+        mn.AddLast(r);
+        while (nums[mx.First!.Value] - nums[mn.First!.Value] &gt; limit)
+        {
+            l++;
+            if (mx.First.Value &lt; l) mx.RemoveFirst();
+            if (mn.First.Value &lt; l) mn.RemoveFirst();
+        }
+        best = Math.Max(best, r - l + 1);
+    }
+    return best;
+}
+</code></pre>
+</div>
+</details>
+<h3 id="7-count-subarrays-with-fixed-bounds">7. Count Subarrays With Fixed Bounds</h3>
+<p>Count subarrays whose minimum is exactly <code>minK</code> and whose maximum is exactly <code>maxK</code>. <strong>Insight:</strong> this is a counting window in which the "left edges" are just remembered indices. For each <code>r</code>, a start <code>i</code> works when no out-of-range value lies in <code>[i..r]</code> (so <code>i &gt; bad</code>) and the window contains both a <code>minK</code> and a <code>maxK</code> (so <code>i ≤ min(lastMin, lastMax)</code>). The good starts form a band, and its size is <code>max(0, min(lastMin, lastMax) − bad)</code>.</p>
+<details class="solution">
+<summary>Solution: O(n) time, O(1) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def count_subarrays(nums: list[int], min_k: int, max_k: int) -&gt; int:
+    bad = last_min = last_max = -1
+    total = 0
+    for i, x in enumerate(nums):
+        if x &lt; min_k or x &gt; max_k:
+            bad = i                          # no window may contain this index
+        if x == min_k:
+            last_min = i
+        if x == max_k:
+            last_max = i
+        total += max(0, min(last_min, last_max) - bad)
+    return total
+</code></pre>
+<pre><code class="language-csharp">public static long CountSubarrays(int[] nums, int minK, int maxK)
+{
+    int bad = -1, lastMin = -1, lastMax = -1;
+    long total = 0;
+    for (int i = 0; i &lt; nums.Length; i++)
+    {
+        int x = nums[i];
+        if (x &lt; minK || x &gt; maxK) bad = i;
+        if (x == minK) lastMin = i;
+        if (x == maxK) lastMax = i;
+        total += Math.Max(0, Math.Min(lastMin, lastMax) - bad);
+    }
+    return total;
+}
+</code></pre>
+</div>
+</details>
+<h3 id="8-shortest-subarray-with-sum-at-least-k">8. Shortest Subarray with Sum at Least K</h3>
+<p>Like <em>Minimum Size Subarray Sum</em>, but the values may be <strong>negative</strong>, so a plain window fails. <strong>Insight:</strong> with prefix sums <code>P</code>, you want the largest <code>i &lt; j</code> with <code>P[j] − P[i] ≥ k</code>. Keep a deque of candidate starts with <strong>increasing</strong> <code>P</code>. A start <code>i</code> is useless when a later <code>i'</code> has <code>P[i'] ≤ P[i]</code>, because <code>i'</code> is closer and gives a bigger sum. Pop from the front while the front works: it has found its best <code>j</code>, since any later <code>j</code> would be farther away.</p>
+<details class="solution">
+<summary>Solution: O(n) time, O(n) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+
+def shortest_subarray(nums: list[int], k: int) -&gt; int:
+    n = len(nums)
+    P = [0] * (n + 1)
+    for i, x in enumerate(nums):
+        P[i + 1] = P[i] + x
+    dq: deque[int] = deque()                 # start indices, P increasing
+    best = n + 1
+    for j in range(n + 1):
+        while dq and P[j] - P[dq[0]] &gt;= k:   # front start is done: record it
+            best = min(best, j - dq.popleft())
+        while dq and P[dq[-1]] &gt;= P[j]:      # j dominates older, higher starts
+            dq.pop()
+        dq.append(j)
+    return best if best &lt;= n else -1
+</code></pre>
+<pre><code class="language-csharp">public static int ShortestSubarray(int[] nums, int k)
+{
+    int n = nums.Length;
+    var P = new long[n + 1];
+    for (int i = 0; i &lt; n; i++) P[i + 1] = P[i] + nums[i];
+    var dq = new int[n + 1];                            // array deque: [head, tail)
+    int head = 0, tail = 0, best = n + 1;
+    for (int j = 0; j &lt;= n; j++)
+    {
+        while (head &lt; tail &amp;&amp; P[j] - P[dq[head]] &gt;= k) best = Math.Min(best, j - dq[head++]);
+        while (head &lt; tail &amp;&amp; P[dq[tail - 1]] &gt;= P[j]) tail--;
+        dq[tail++] = j;
+    }
+    return best &lt;= n ? best : -1;
+}
+</code></pre>
+</div>
+</details>
+<h2 id="problem-ladder">Problem ladder</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Level</th>
+<th>The key idea</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://leetcode.com/problems/maximum-average-subarray-i/">Maximum Average Subarray I</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Fixed window: add <code>a[r]</code>, subtract <code>a[r − k]</code>, compare sums (divide once at the end).</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://leetcode.com/problems/contains-duplicate-ii/">Contains Duplicate II</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Fixed window of size k kept as a set; check membership before inserting.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/">Longest Substring Without Repeating Characters</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Longest valid window; only the entering char can be duplicated. Or jump with last index.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://leetcode.com/problems/minimum-size-subarray-sum/">Minimum Size Subarray Sum</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Shortest valid window: record inside <code>while sum &gt;= target</code>.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://leetcode.com/problems/permutation-in-string/">Permutation in String</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Fixed window of <code>len(s1)</code> with a <code>bad</code> counter over 26 letters.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://leetcode.com/problems/find-all-anagrams-in-a-string/">Find All Anagrams in a String</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>The same window, collecting every start where <code>bad == 0</code>.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://leetcode.com/problems/max-consecutive-ones-iii/">Max Consecutive Ones III</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Longest window with at most k zeros.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://leetcode.com/problems/fruit-into-baskets/">Fruit Into Baskets</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Longest window with at most 2 distinct values; delete zero counts.</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://leetcode.com/problems/longest-repeating-character-replacement/">Longest Repeating Character Replacement</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Valid when <code>len − maxFreq ≤ k</code>; a stale <code>maxFreq</code> is safe because the window never shrinks.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/">Maximum Points You Can Obtain from Cards</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Taking k from the ends = leaving a middle window of n − k with the minimum sum.</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://leetcode.com/problems/subarray-product-less-than-k/">Subarray Product Less Than K</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Count: <code>+= r − l + 1</code>. Guard <code>k &lt;= 1</code>.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://leetcode.com/problems/maximum-sum-of-distinct-subarrays-with-length-k/">Maximum Sum of Distinct Subarrays With Length K</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Fixed window with a running sum and a distinct counter; valid when distinct == k.</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://leetcode.com/problems/count-number-of-nice-subarrays/">Count Number of Nice Subarrays</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Exactly k odd numbers = atMost(k) − atMost(k − 1).</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="https://leetcode.com/problems/binary-subarrays-with-sum/">Binary Subarrays With Sum</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Exactly goal = atMost(goal) − atMost(goal − 1); <code>atMost(−1) = 0</code>.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="https://leetcode.com/problems/frequency-of-the-most-frequent-element/">Frequency of the Most Frequent Element</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Sort; window valid when <code>a[r] · len − sum ≤ k</code> (cost to raise all to <code>a[r]</code>).</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="https://leetcode.com/problems/subarray-sum-equals-k/">Subarray Sum Equals K</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>The trap: negatives allowed, so not a window. Prefix sums with a hashmap.</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/">Longest Continuous Subarray With Absolute Diff ≤ Limit</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Longest valid window; max and min from two monotonic deques.</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="https://leetcode.com/problems/minimum-window-substring/">Minimum Window Substring</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Shortest valid window with need/have; valid ⇔ <code>have == req</code>.</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="https://leetcode.com/problems/subarrays-with-k-different-integers/">Subarrays with K Different Integers</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Exactly k = atMost(k) − atMost(k − 1), or two left edges in one pass.</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="https://leetcode.com/problems/sliding-window-maximum/">Sliding Window Maximum</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Monotonic deque of indices; dominated values are popped for good.</td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="https://leetcode.com/problems/count-subarrays-with-fixed-bounds/">Count Subarrays With Fixed Bounds</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Remember <code>bad</code>, <code>lastMin</code>, <code>lastMax</code>; add <code>max(0, min(lastMin, lastMax) − bad)</code>.</td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="https://leetcode.com/problems/substring-with-concatenation-of-all-words/">Substring with Concatenation of All Words</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Run <code>w</code> windows, one per offset mod word length, stepping a whole word at a time.</td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="https://leetcode.com/problems/minimum-number-of-k-consecutive-bit-flips/">Minimum Number of K Consecutive Bit Flips</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Greedy left to right; a window of active flips tracks the parity at each index.</td>
+</tr>
+<tr>
+<td>24</td>
+<td><a href="https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/">Shortest Subarray with Sum at Least K</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Negatives: prefix sums with an increasing deque of starts.</td>
+</tr>
+<tr>
+<td>25</td>
+<td><a href="https://leetcode.com/problems/sliding-window-median/">Sliding Window Median</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Non-invertible state: two heaps with lazy deletion, or a sorted list. O(n log k).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>Why is the variable window O(n) even though it has a <code>while</code> loop inside a <code>for</code> loop?</summary>
+<p>Each iteration of the inner loop moves <code>l</code> right by one, and <code>l</code> never moves left and never passes <code>n</code>. So across the whole run the inner loop executes at most <code>n</code> times in total, not <code>n</code> times per <code>r</code>. Together with the <code>n</code> steps of <code>r</code>, the total work is at most 2n steps.</p>
+</details>
+<details class="quiz">
+<summary>"Longest subarray with sum ≤ S" on an array that may contain negative numbers. Does the window work?</summary>
+<p>No. Shrinking assumes that once <code>[l..r]</code> is too big, every window <code>[l..r']</code> with <code>r' &gt; r</code> is too big as well. A later negative value can bring the sum back under S, so the window may already have dropped the start of the best answer. Use prefix sums. (This specific problem takes O(n log n): binary-search a running maximum of the prefix sums for the earliest start that works.)</p>
+</details>
+<details class="quiz">
+<summary>For "shortest valid window", why do you record inside the shrink loop and not after it?</summary>
+<p>The loop is <code>while valid</code>, so it exits exactly when the window has become invalid. A window recorded after the loop is the first invalid one. Inside the loop, each window is still valid, and the last one recorded before exiting is the shortest valid window ending at <code>r</code>.</p>
+</details>
+<details class="quiz">
+<summary>In "subarray product less than k", why does each step add <code>r − l + 1</code>?</summary>
+<p>After shrinking, <code>[l..r]</code> is the longest valid window ending at <code>r</code>. Every shorter window ending at <code>r</code>, from <code>[l+1..r]</code> to <code>[r..r]</code>, has a smaller product, so it is valid too. That is <code>r − l + 1</code> windows. Each subarray is counted exactly once, at its right end.</p>
+</details>
+<details class="quiz">
+<summary>Why can't you count "exactly K distinct" with one window, and how does the subtraction fix it?</summary>
+<p>For a fixed <code>r</code>, the starts with exactly K distinct values form a band with two moving edges: starts too far left have more than K, and starts too far right have fewer. One <code>l</code> can track only one edge. Each edge, however, is the left edge of a monotone "at most" window: atMost(K) includes the band and everything to its right, atMost(K − 1) includes only what is to its right, and the difference is the band.</p>
+</details>
+<details class="quiz">
+<summary>In the sliding-window-maximum deque, why can a value be popped forever when a bigger value arrives?</summary>
+<p>The new value is to the right of it, so it stays in the window at least as long. It is also at least as big. Every future window that contains the old value also contains the new one, so the old value can never be the maximum again. Each index enters and leaves the deque once, which gives O(n) in total.</p>
+</details>
+<details class="quiz">
+<summary>Longest Repeating Character Replacement uses <code>if</code> instead of <code>while</code> and never lowers <code>maxFreq</code>. Why is that not a bug?</summary>
+<p>The answer only improves when a window of a new record size becomes valid, and that requires a <code>maxFreq</code> larger than any seen before. Until then, the window just slides at its current size, so it is never smaller than the best answer so far. It may be invalid while it slides, but it is never recorded as a new best. <code>n − l</code> is the largest size it ever reached.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Fixed k</strong>Add <code>a[r]</code>; if <code>r &gt;= k</code>, remove <code>a[r−k]</code>; if <code>r &gt;= k−1</code>, record.</div>
+<div><strong>Longest valid</strong>Expand; <code>while invalid: shrink</code>; then <code>best = max(best, r−l+1)</code>.</div>
+<div><strong>Shortest valid</strong>Expand; <code>while valid: record, shrink</code>.</div>
+<div><strong>Count, at most</strong><code>count += r − l + 1</code> after shrinking.</div>
+<div><strong>Exactly K</strong><code>atMost(K) − atMost(K−1)</code>, or two left edges: <code>+= l2 − l1</code>.</div>
+<div><strong>Multiset match</strong>need/have counters: change <code>have</code> only when a count crosses its quota.</div>
+<div><strong>Distinct count</strong>Delete keys that reach 0, or keep a <code>distinct</code> counter.</div>
+<div><strong>Window max</strong>Deque of indices, values decreasing; pop back while <code>&lt;=</code>; expire front at <code>r−k</code>.</div>
+<div><strong>Negatives</strong>Not a window: prefix sums + hashmap; ≥ k with negatives: prefix + deque.</div>
+<div><strong>Cue words</strong>contiguous, substring, longest/shortest, at most k, every window of size k.</div>
+</div><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="two-pointers.html"><small>&larr; PREVIOUS</small>Two Pointers</a><a class="next" href="prefix-sums.html"><small>NEXT &rarr;</small>Prefix Sums &amp; Difference Arrays</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#what-it-is-and-when-you-need-it">What it is and when you need it</a></li>
+<li><a href="#intuition-a-staircase-through-the-triangle-of-windows">Intuition: a staircase through the triangle of windows</a></li>
+<li><a href="#the-two-generic-templates">The two generic templates</a></li>
+<li><a href="#fixed-size-windows">Fixed-size windows</a></li>
+<li><a href="#variable-windows-expand-shrink-record">Variable windows: expand, shrink, record</a><ul>
+<li><a href="#longest-valid-window">Longest valid window</a></li>
+<li><a href="#shortest-valid-window">Shortest valid window</a></li>
+</ul>
+</li>
+<li><a href="#counting-windows">Counting windows</a><ul>
+<li><a href="#at-most-k-every-window-that-ends-at-r-counts">At most K: every window that ends at r counts</a></li>
+<li><a href="#exactly-k-atmostk-atmostk-1">Exactly K = atMost(K) − atMost(K − 1)</a></li>
+</ul>
+</li>
+<li><a href="#sliding-window-maximum-the-monotonic-deque">Sliding window maximum: the monotonic deque</a></li>
+<li><a href="#when-windows-do-not-work">When windows do NOT work</a></li>
+<li><a href="#decision-chart">Decision chart</a></li>
+<li><a href="#templates-at-a-glance">Templates at a glance</a><ul>
+<li><a href="#pitfalls">Pitfalls</a></li>
+</ul>
+</li>
+<li><a href="#worked-problems">Worked problems</a><ul>
+<li><a href="#1-longest-substring-without-repeating-characters">1. Longest Substring Without Repeating Characters</a></li>
+<li><a href="#2-longest-repeating-character-replacement">2. Longest Repeating Character Replacement</a></li>
+<li><a href="#3-find-all-anagrams-in-a-string">3. Find All Anagrams in a String</a></li>
+<li><a href="#4-minimum-window-substring">4. Minimum Window Substring</a></li>
+<li><a href="#5-subarrays-with-k-different-integers">5. Subarrays with K Different Integers</a></li>
+<li><a href="#6-longest-continuous-subarray-with-absolute-diff-limit">6. Longest Continuous Subarray With Absolute Diff ≤ Limit</a></li>
+<li><a href="#7-count-subarrays-with-fixed-bounds">7. Count Subarrays With Fixed Bounds</a></li>
+<li><a href="#8-shortest-subarray-with-sum-at-least-k">8. Shortest Subarray with Sum at Least K</a></li>
+</ul>
+</li>
+<li><a href="#problem-ladder">Problem ladder</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

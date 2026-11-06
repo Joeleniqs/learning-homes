@@ -1,0 +1,1108 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>DI Fundamentals | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/di-fundamentals.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/di-fundamentals.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track" open><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html" aria-current="page">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / DI Fundamentals</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">DEPENDENCY INJECTION</p><h1>DI Fundamentals</h1><p class="lede">From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution).</p><div class="meta"><span class="level level-beginner">Beginner → Intermediate</span><span>~50 min study</span><span>Builds on: <a href="design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="di-fundamentals" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-a-class-that-builds-its-own-world">The problem: a class that builds its own world</h2>
+<p>Here is a perfectly ordinary order service. It works in production, and nobody can change or test it.</p>
+<div class="code-tabs" data-labels="Before: news up everything,After: ask for what you need">
+<pre><code class="language-csharp">public class OrderService
+{
+    private readonly SqlConnection _db = new(&quot;Server=prod-db;Database=shop;Integrated Security=true&quot;);
+    private readonly FileLogger _log = new(@&quot;C:\logs\app.log&quot;);
+
+    public Receipt PlaceOrder(Order order)
+    {
+        _log.Info($&quot;placing {order.Id}&quot;);
+        var http = new HttpClient();                                   // a fresh connection pool per call
+        var stripe = new StripeGateway(http, Environment.GetEnvironmentVariable(&quot;STRIPE_KEY&quot;));
+        var charge = stripe.Charge(order.Total);                       // a real charge, every time
+        if (!charge.Approved) return Receipt.Declined(order.Id);
+
+        order.PlacedAt = DateTime.UtcNow;                              // ambient time: cannot be frozen
+        new SqlOrderRepository(_db).Save(order);                       // writes to the prod database
+        return Receipt.Ok(order.Id, charge.Id);
+    }
+}
+</code></pre>
+<pre><code class="language-csharp">public sealed class OrderService(
+    IOrderRepository repo,          // every collaborator is visible in the signature
+    IPaymentGateway payments,
+    TimeProvider clock,
+    ILogger&lt;OrderService&gt; log)
+{
+    public Receipt PlaceOrder(Order order)
+    {
+        log.LogInformation(&quot;placing {OrderId}&quot;, order.Id);
+        var charge = payments.Charge(order.Total);
+        if (!charge.Approved) return Receipt.Declined(order.Id);
+
+        order.PlacedAt = clock.GetUtcNow();
+        repo.Save(order);
+        return Receipt.Ok(order.Id, charge.Id);
+    }
+}
+</code></pre>
+</div>
+<p>The "before" version decides <strong>four things that are not its job</strong>: which database, which log file, which payment provider and which clock. Each <code>new</code> is a hard edge in the dependency graph. Draw the graph and the problem becomes obvious:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 940 350" width="940" role="img" aria-label="Before: OrderService creates SqlConnection, FileLogger, StripeGateway with HttpClient and reads DateTime.Now directly. After: OrderService depends on four abstractions, implementations implement them, and only Program.cs creates objects.">
+<defs>
+<marker id="di-fundamentals-ar-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-bad"/></marker>
+<marker id="di-fundamentals-ar-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker>
+<marker id="di-fundamentals-ar-mut" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker>
+<marker id="di-fundamentals-ar-done" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker>
+</defs>
+<text x="15" y="26" class="title">Before: OrderService news up its world</text>
+<rect class="box active" x="150" y="48" width="160" height="50" rx="8"/><text x="230" y="70" text-anchor="middle" class="mono">OrderService</text><text x="230" y="88" text-anchor="middle" class="small muted">PlaceOrder()</text>
+<path class="edge bad" d="M200 98 L68 166" marker-end="url(#di-fundamentals-ar-bad)"/>
+<path class="edge bad" d="M218 98 L178 166" marker-end="url(#di-fundamentals-ar-bad)"/>
+<path class="edge bad" d="M242 98 L282 166" marker-end="url(#di-fundamentals-ar-bad)"/>
+<path class="edge bad" d="M262 98 L392 166" marker-end="url(#di-fundamentals-ar-bad)"/>
+<text x="110" y="128" class="small mono">new</text><text x="176" y="138" class="small mono">new</text><text x="268" y="138" class="small mono">new</text><text x="338" y="128" class="small mono">static</text>
+<rect class="box bad" x="15" y="168" width="102" height="54" rx="7"/><text x="66" y="190" text-anchor="middle" class="mono small">SqlConnection</text><text x="66" y="208" text-anchor="middle" class="small muted">prod-db</text>
+<rect class="box bad" x="125" y="168" width="102" height="54" rx="7"/><text x="176" y="190" text-anchor="middle" class="mono small">FileLogger</text><text x="176" y="208" text-anchor="middle" class="small muted">C:\logs\app.log</text>
+<rect class="box bad" x="235" y="168" width="102" height="54" rx="7"/><text x="286" y="190" text-anchor="middle" class="mono small">StripeGateway</text><text x="286" y="208" text-anchor="middle" class="small muted">live charges</text>
+<rect class="box bad" x="345" y="168" width="102" height="54" rx="7"/><text x="396" y="190" text-anchor="middle" class="mono small">DateTime.Now</text><text x="396" y="208" text-anchor="middle" class="small muted">ambient clock</text>
+<path class="edge bad" d="M286 222 L286 262" marker-end="url(#di-fundamentals-ar-bad)"/><text x="292" y="246" class="small mono">new</text>
+<rect class="box bad" x="235" y="264" width="102" height="44" rx="7"/><text x="286" y="284" text-anchor="middle" class="mono small">HttpClient</text><text x="286" y="299" text-anchor="middle" class="small muted">one per call</text>
+<text x="15" y="258" class="small">✗ a unit test hits prod DB and Stripe</text>
+<text x="15" y="278" class="small">✗ swapping a provider = editing this class</text>
+<text x="15" y="298" class="small">✗ dependencies hidden from the signature</text>
+<text x="15" y="318" class="small">✗ object lifetimes decided ad hoc</text>
+<line x1="470" y1="40" x2="470" y2="330" class="edge dash"/>
+<text x="490" y="26" class="title">After: ask for abstractions, wire at the root</text>
+<rect class="box done" x="490" y="48" width="140" height="50" rx="8"/><text x="560" y="70" text-anchor="middle" class="mono">Program.cs</text><text x="560" y="88" text-anchor="middle" class="small muted">composition root</text>
+<path class="edge done" d="M630 73 L718 73" marker-end="url(#di-fundamentals-ar-done)"/><text x="674" y="65" text-anchor="middle" class="small">passes in</text>
+<rect class="box active" x="720" y="48" width="200" height="50" rx="8"/><text x="820" y="70" text-anchor="middle" class="mono">OrderService</text><text x="820" y="88" text-anchor="middle" class="small muted">(repo, payments, clock, log)</text>
+<path class="edge accent" d="M770 98 L545 168" marker-end="url(#di-fundamentals-ar-acc)"/>
+<path class="edge accent" d="M805 98 L655 168" marker-end="url(#di-fundamentals-ar-acc)"/>
+<path class="edge accent" d="M835 98 L765 168" marker-end="url(#di-fundamentals-ar-acc)"/>
+<path class="edge accent" d="M865 98 L875 168" marker-end="url(#di-fundamentals-ar-acc)"/>
+<text x="610" y="128" class="small">depends on</text>
+<rect class="box accent" x="492" y="170" width="106" height="44" rx="7"/><text x="545" y="197" text-anchor="middle" class="mono small">IOrderRepo</text>
+<rect class="box accent" x="602" y="170" width="106" height="44" rx="7"/><text x="655" y="197" text-anchor="middle" class="mono small">IPayments</text>
+<rect class="box accent" x="712" y="170" width="106" height="44" rx="7"/><text x="765" y="197" text-anchor="middle" class="mono small">ILogger&lt;T&gt;</text>
+<rect class="box accent" x="822" y="170" width="106" height="44" rx="7"/><text x="875" y="197" text-anchor="middle" class="mono small">TimeProvider</text>
+<path class="edge dash" d="M545 260 L545 216" marker-end="url(#di-fundamentals-ar-mut)"/>
+<path class="edge dash" d="M655 260 L655 216" marker-end="url(#di-fundamentals-ar-mut)"/>
+<path class="edge dash" d="M765 260 L765 216" marker-end="url(#di-fundamentals-ar-mut)"/>
+<path class="edge dash" d="M875 260 L875 216" marker-end="url(#di-fundamentals-ar-mut)"/>
+<text x="551" y="244" class="small muted">implements</text>
+<rect class="box" x="492" y="262" width="106" height="44" rx="7"/><text x="545" y="289" text-anchor="middle" class="mono small">SqlOrderRepo</text>
+<rect class="box" x="602" y="262" width="106" height="44" rx="7"/><text x="655" y="289" text-anchor="middle" class="mono small">StripePayments</text>
+<rect class="box" x="712" y="262" width="106" height="44" rx="7"/><text x="765" y="289" text-anchor="middle" class="mono small">FileLogger</text>
+<rect class="box" x="822" y="262" width="106" height="44" rx="7"/><text x="875" y="289" text-anchor="middle" class="mono small">System clock</text>
+<text x="490" y="334" class="small">✓ only Program.cs says new · ✓ every arrow from OrderService ends at an abstraction</text>
+</svg>
+<figcaption>Left: every arrow is a <code>new</code> or a static call buried in the class, so the class drags its whole world into every test. Right: the class only names abstractions; concretes point <em>up</em> at those abstractions, and one place at the edge of the app decides which concretes exist.</figcaption>
+</figure>
+
+<p>The costs are concrete, not theoretical:</p>
+<ul>
+<li><strong>Untestable.</strong> A unit test for "a declined card saves nothing" charges a real card and writes to the production database. Nobody writes that test, so the rule goes unchecked.</li>
+<li><strong>Rigid.</strong> Moving from Stripe to Adyen, or from a file log to OpenTelemetry, means editing <code>OrderService</code>, and every other class that copied the same <code>new</code>.</li>
+<li><strong>Dishonest signature.</strong> <code>new OrderService()</code> <em>looks</em> free. You only learn that it needs a database, a network and a disk by reading its body or by watching it fail at runtime.</li>
+<li><strong>Lifetimes by accident.</strong> <code>new HttpClient()</code> per call exhausts sockets under load; one <code>SqlConnection</code> field shared across threads corrupts state. The class is making lifetime decisions it cannot see the consequences of.</li>
+</ul>
+<div class="rule">
+<p><strong>Dependency injection in one sentence:</strong> a class <em>asks</em> for its collaborators (usually through its constructor) instead of <em>creating</em> them, and a single place at the entry point of the application, the <strong>composition root</strong>, decides which concrete objects exist and how long they live.</p>
+</div>
+<p>The visualizer below runs the same <code>PlaceOrder</code> under three wirings. Watch which object handles each call, and what that costs the test: time, side effects, and whether the assertion even means anything.</p>
+<div class="viz dif-wide" data-viz="di-fundamentals-seams"></div>
+
+<p>The point of the "fakes" run is not that it is faster (although 0 ms vs ~460 ms adds up over 2,000 tests). It is that the test can <strong>choose the scenario</strong>: "the card is declined" is one constructor argument, not a Stripe test card and a prayer. The place where a test can substitute behaviour without editing the class is called a <strong>seam</strong>; constructor parameters are the cleanest seams a language offers.</p>
+<h2 id="ioc-dip-and-di-three-different-ideas">IoC, DIP and DI: three different ideas</h2>
+<p>These three terms get used interchangeably, and that blurs the reasoning. They answer <strong>different questions</strong>:</p>
+<div class="compare">
+<div>
+<h4 id="inversion-of-control-ioc">Inversion of Control (IoC)</h4>
+<p><strong>A broad principle about who drives.</strong> Your code no longer controls some part of the flow; a framework does and calls you back ("don't call us, we'll call you"). ASP.NET Core calls your controller, JUnit calls your test, the browser calls your click handler. <em>Creating</em> your collaborators is just one more thing you can hand over.</p>
+</div>
+<div class="good">
+<h4 id="dependency-inversion-principle-dip">Dependency Inversion Principle (DIP)</h4>
+<p><strong>A design rule about which way source-code dependencies point</strong> (the D in SOLID). High-level policy (<code>OrderService</code>) must not depend on low-level detail (<code>SqlOrderRepo</code>). Both depend on an abstraction, and the abstraction is <strong>owned by the policy side</strong> (<code>IOrderRepository</code> is shaped by what orders need, not by what SQL offers).</p>
+</div>
+<div class="warn">
+<h4 id="dependency-injection-di">Dependency Injection (DI)</h4>
+<p><strong>A concrete technique for delivering collaborators.</strong> Something outside the object passes the dependencies in, through the constructor, a property or a method parameter. DI is IoC applied to object <em>creation</em>. It is the usual <em>delivery mechanism</em> for DIP, but either can exist without the other.</p>
+</div>
+</div>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 300" width="900" role="img" aria-label="Inversion of Control is a broad region containing framework callbacks, events, service locator and dependency injection. The Dependency Inversion Principle is a separate dashed region that overlaps dependency injection.">
+<rect class="box accent" x="15" y="20" width="570" height="268" rx="16"/>
+<text x="32" y="46" class="title">Inversion of Control</text>
+<text x="32" y="64" class="small muted">a principle: someone else controls flow or creation</text>
+<rect class="box" x="32" y="84" width="250" height="58" rx="9"/><text x="157" y="108" text-anchor="middle">Framework calls your code</text><text x="157" y="127" text-anchor="middle" class="small muted">controllers, test runners, template method</text>
+<rect class="box" x="32" y="156" width="250" height="58" rx="9"/><text x="157" y="180" text-anchor="middle">Events and observers</text><text x="157" y="199" text-anchor="middle" class="small muted">a publisher never knows its subscribers</text>
+<rect class="box" x="32" y="228" width="250" height="46" rx="9"/><text x="157" y="249" text-anchor="middle">Service locator</text><text x="157" y="265" text-anchor="middle" class="small muted">creation inverted, but pulled, not pushed</text>
+<rect class="box" x="300" y="84" width="268" height="58" rx="9"/><text x="434" y="108" text-anchor="middle">Factories, plug-in loading</text><text x="434" y="127" text-anchor="middle" class="small muted">someone else picks the concrete type</text>
+<rect class="box active" x="312" y="170" width="250" height="96" rx="10"/><text x="437" y="196" text-anchor="middle" class="title">Dependency Injection</text><text x="437" y="216" text-anchor="middle" class="small">a technique: collaborators are passed in</text><text x="437" y="234" text-anchor="middle" class="small muted">constructor · property · method</text><text x="437" y="252" text-anchor="middle" class="small muted">by hand (pure DI) or by a container</text>
+<rect class="box path" x="296" y="156" width="588" height="126" rx="14" style="fill:none" stroke-dasharray="7 5"/>
+<text x="600" y="182" class="title">Dependency Inversion Principle</text>
+<text x="600" y="202" class="small">a design rule: high-level policy and</text>
+<text x="600" y="218" class="small">low-level detail both depend on an</text>
+<text x="600" y="234" class="small">abstraction that the policy owns</text>
+<text x="600" y="262" class="small muted">DIP without DI: depend on IRepo,</text>
+<text x="600" y="277" class="small muted">but fetch it from a static factory</text>
+</svg>
+<figcaption>IoC is the umbrella. DI is one way to invert <em>creation</em>. DIP is about the <em>direction of source dependencies</em> and lives on a different axis; DI is simply the most common way to satisfy it.</figcaption>
+</figure>
+
+<p>Because they are independent, all four combinations exist in real code:</p>
+<table>
+<thead>
+<tr>
+<th>Uses DI?</th>
+<th>Follows DIP?</th>
+<th>Example</th>
+<th>What you get</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No</td>
+<td>No</td>
+<td><code>new SqlOrderRepository(conn)</code> inside <code>OrderService</code></td>
+<td>Rigid and untestable: the "before" code above.</td>
+</tr>
+<tr>
+<td><strong>Yes</strong></td>
+<td>No</td>
+<td><code>OrderService(SqlOrderRepository repo)</code>: a concrete class is injected</td>
+<td>Wiring has moved out, so the lifetime is controlled. But <code>OrderService</code> still compiles against SQL, so a fake has to subclass a SQL class.</td>
+</tr>
+<tr>
+<td>No</td>
+<td><strong>Yes</strong></td>
+<td><code>OrderService</code> depends on <code>IOrderRepository</code> but calls <code>RepoFactory.Create()</code></td>
+<td>The direction is right, but a hidden static choice remains: tests must mutate global state.</td>
+</tr>
+<tr>
+<td><strong>Yes</strong></td>
+<td><strong>Yes</strong></td>
+<td><code>OrderService(IOrderRepository repo)</code>, wired at the root</td>
+<td>The goal: swappable, honest and testable.</td>
+</tr>
+</tbody>
+</table>
+<div class="insight">
+<p><strong>Why DIP says the abstraction belongs to the policy</strong>
+If <code>IOrderRepository</code> lives next to <code>SqlOrderRepository</code> and mirrors its methods (<code>ExecuteSql</code>, <code>BeginTransaction</code>), you have inverted nothing: the high-level code still speaks SQL. Define the interface in the <em>orders</em> module with the operations orders need (<code>Save(order)</code>, <code>FindOpen(customer)</code>). Then the SQL module depends on the orders module, not the other way round. See <a href="design-principles.html">Design Principles</a> for SOLID in full.</p>
+</div>
+<h2 id="three-ways-to-inject">Three ways to inject</h2>
+<p>There are three places a dependency can enter an object. They differ in <strong>when the object becomes valid</strong>, and that is the whole decision.</p>
+<div class="compare">
+<div class="good">
+<h4 id="constructor-injection-the-default">Constructor injection (the default)</h4>
+<p>Dependencies are required constructor parameters stored in <code>readonly</code>/<code>final</code> fields. The object is <strong>valid from the moment it exists</strong> and can never be half-built. Use it for every required dependency, which is nearly all of them.</p>
+</div>
+<div class="warn">
+<h4 id="property-setter-injection">Property (setter) injection</h4>
+<p>A settable property, assigned after construction. The object is <strong>invalid between <code>new</code> and the assignment</strong>, and the dependency can be swapped mid-life. Use it only for a genuinely <em>optional</em> dependency with a safe local default (for example <code>Logger = NullLogger.Instance</code>).</p>
+</div>
+<div>
+<h4 id="method-injection">Method injection</h4>
+<p>The dependency is a parameter of the method that uses it. It is valid <strong>for that call only</strong>. Use it when the dependency varies per call (the current request's <code>CancellationToken</code>, a culture, a per-request <code>HttpContext</code>) or when a long-lived object needs a short-lived collaborator.</p>
+</div>
+</div>
+<p>Step through what each style does when a caller makes a mistake. The constructor version refuses to exist in an invalid state, the property version fails <em>later</em>, far from the bug, and the method version moves the burden to every call site:</p>
+<div class="viz" data-viz="di-fundamentals-styles"></div>
+
+<div class="code-tabs" data-labels="Constructor,Property,Method">
+<pre><code class="language-csharp">public sealed class ReportService
+{
+    private readonly TimeProvider _clock;                      // required, never null, never swapped
+    private readonly IReportStore _store;
+
+    public ReportService(TimeProvider clock, IReportStore store)
+    {
+        _clock = clock ?? throw new ArgumentNullException(nameof(clock));
+        _store = store ?? throw new ArgumentNullException(nameof(store));
+    }
+
+    public void Generate(ReportRequest req) =&gt;
+        _store.Save(new Report(req, _clock.GetUtcNow()));
+}
+</code></pre>
+<pre><code class="language-csharp">public sealed class ReportService
+{
+    public TimeProvider? Clock { get; set; }                   // anyone can set these, or forget to
+    public IReportStore? Store { get; set; }
+    public ILogger Logger { get; set; } = NullLogger.Instance; // fine: optional, with a safe default
+
+    public void Generate(ReportRequest req) =&gt;                 // NullReferenceException here,
+        Store!.Save(new Report(req, Clock!.GetUtcNow()));      // far from the line that forgot
+}
+</code></pre>
+<pre><code class="language-csharp">public sealed class ReportService(TimeProvider clock, IReportStore store)
+{
+    // The formatter really does vary per call (CSV today, PDF next), so it is a parameter.
+    // The clock and store do not vary, so they stay in the constructor.
+    public void Generate(ReportRequest req, IReportFormatter formatter) =&gt;
+        store.Save(formatter.Format(new Report(req, clock.GetUtcNow())));
+}
+</code></pre>
+</div>
+<p>Frameworks use all three. ASP.NET Core uses constructor injection for services, and <em>method</em> injection for middleware <code>InvokeAsync(HttpContext ctx, IMyScoped svc)</code> and minimal-API handler parameters. Spring supports constructor, setter and field injection, but the Spring team recommends constructors for required dependencies. FastAPI's <code>Depends</code> is method injection at the endpoint. Microsoft.Extensions.DependencyInjection has <strong>no</strong> property injection at all; that is a deliberate nudge.</p>
+<div class="pitfall">
+<p><strong>Pitfall: field injection</strong>
+Spring's <code>@Autowired private PaymentGateway payments;</code> and similar attribute-on-a-private-field tricks look tidy, but they produce a class you cannot construct without the container (tests need reflection or a Spring context), fields that cannot be <code>final</code>, and a constructor that hides how many collaborators there are. Constructor injection makes "this class needs nine things" painfully visible, and that pain is useful feedback.</p>
+</div>
+<h2 id="the-composition-root-and-pure-di-first">The composition root, and pure DI first</h2>
+<p>If no class creates its own collaborators, <em>someone</em> must. That someone is the <strong>composition root</strong>: one place, as close to the entry point as possible, that knows every concrete type and assembles the object graph. Everything else in the application only knows abstractions.</p>
+<table>
+<thead>
+<tr>
+<th>Ecosystem</th>
+<th>Where the composition root lives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASP.NET Core / .NET</td>
+<td><code>Program.cs</code>: <code>builder.Services.Add…</code> calls, then <code>builder.Build()</code></td>
+</tr>
+<tr>
+<td>Spring Boot</td>
+<td>The application context: <code>@SpringBootApplication</code> component scanning plus <code>@Configuration</code> <code>@Bean</code> methods</td>
+</tr>
+<tr>
+<td>Go</td>
+<td><code>main()</code> (or a <code>run()</code> function it calls); plain constructor calls</td>
+</tr>
+<tr>
+<td>FastAPI / Python</td>
+<td><code>main()</code> / <code>create_app()</code> and the dependency functions passed to <code>Depends</code></td>
+</tr>
+<tr>
+<td>NestJS / Node</td>
+<td><code>AppModule</code> provider lists plus <code>main.ts</code>; or plain <code>new</code> calls in <code>main.ts</code></td>
+</tr>
+</tbody>
+</table>
+<p>Start without a container. Wiring by hand is called <strong>pure DI</strong> (Mark Seemann's term; older texts say "poor man's DI", which undersells it). Here is the graph that the container visualizer further down builds, written as plain code:</p>
+<pre><code class="language-csharp">// Program.cs: the composition root, by hand. Creation order = leaves first.
+var settings  = Settings.Load(&quot;appsettings.json&quot;);                 // app-wide
+var dbFactory = new SqlDbFactory(settings);                         // app-wide
+var logger    = new ConsoleLogger();                                // app-wide, thread-safe
+var http      = new HttpClient();                                   // app-wide: reuse the pool
+
+app.MapPost(&quot;/orders&quot;, (Order order) =&gt;
+{
+    var repo     = new SqlOrderRepo(dbFactory, logger);             // per request
+    var payments = new StripePayments(http, logger);                // per use
+    var service  = new OrderService(repo, payments, logger);        // per request
+    return service.PlaceOrder(order);
+});
+</code></pre>
+<p>That is the whole idea. There is nothing magic about it: the compiler checks every edge, "go to definition" works, and the lifetimes are visible as <em>where the <code>new</code> sits</em> (outside the lambda means one per app; inside means one per request).</p>
+<h3 id="why-one-root-matters-change-ripples">Why one root matters: change ripples</h3>
+<p>When <code>ConsoleLogger</code> grows a constructor parameter, how many files change? With <code>new</code> scattered through the classes, every class that creates a logger must change, and each of those creates its <em>own</em> logger, so you also have duplicate instances. With a composition root, exactly one line changes. Try each class and each wiring:</p>
+<div class="viz dif-wide" data-viz="di-fundamentals-ripple"></div>
+
+<p>Notice the container row: when a constructor grows, the container needs <strong>no edit at all</strong>, because it reads constructor signatures itself. That is the main thing a container buys you, and it is why the cost of pure DI grows with the number of classes and the cost of a container does not.</p>
+<h2 id="what-a-container-actually-does">What a container actually does</h2>
+<p>A DI container (also called an IoC container) is a library that automates the composition root. Every container, from <code>Microsoft.Extensions.DependencyInjection</code> to Spring to Dagger, does the same four jobs:</p>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · REGISTER</small><strong>Describe, don't create</strong><p>Map service → implementation + lifetime. <code>AddScoped&lt;IOrderRepo, SqlOrderRepo&gt;()</code> creates nothing yet.</p></div>
+<div class="flow-step"><small>2 · BUILD</small><strong>Freeze and validate</strong><p>Compile the table into a provider. Optionally walk every graph now (<code>ValidateOnBuild</code>) so mistakes fail at startup.</p></div>
+<div class="flow-step"><small>3 · RESOLVE</small><strong>Recursive construction</strong><p>Look up the implementation, read its constructor, resolve each parameter the same way, create leaves first, cache per lifetime.</p></div>
+<div class="flow-step"><small>4 · RELEASE</small><strong>Dispose what it created</strong><p>When a scope (or the app) ends, dispose the tracked <code>IDisposable</code> instances in reverse creation order.</p></div>
+</div>
+
+<p>Step 3 is the interesting one. It is a <strong>depth-first walk</strong> of the constructor graph: to create <code>OrderService</code> the container must first have every one of its arguments, and each argument is resolved the same way. The walk keeps a <strong>resolve chain</strong> (a call stack) so it can detect cycles, and it consults each lifetime's cache before creating anything: singletons are cached for the whole app, scoped instances for the current scope (one HTTP request), and transients never.</p>
+<p>Edit the registrations (<code>Service=Impl(Dep,Dep)@lifetime</code>, separated by <code>;</code>), pick 2 requests to see what survives between scopes, or press Randomize to cycle through a cycle, a missing registration and an all-transient graph. The right-hand panel writes the equivalent pure-DI line for every object the container creates:</p>
+<div class="viz dif-wide" data-viz="di-fundamentals-resolve" data-opts='{"runs":2}'></div>
+
+<p>Things to notice:</p>
+<ul>
+<li><strong>Leaves first.</strong> <code>Settings</code> is created before <code>SqlDbFactory</code>, which is created before <code>SqlOrderRepo</code>. Constructor arguments must exist before the constructor runs, so creation order is a post-order walk.</li>
+<li><strong>Reuse is per lifetime.</strong> <code>ConsoleLogger</code> (singleton) is created once and then appears as <em>reused</em> every time; <code>StripePayments</code> (transient) is new every time it is asked for. In request 2, scoped <code>OrderService</code> and <code>SqlOrderRepo</code> are new again, while every singleton is reused.</li>
+<li><strong>The container never "knows" the graph.</strong> It knows only the flat registration table and discovers the edges by reading constructors. That is why a constructor change needs no registration change, and also why errors appear only at resolution time unless you validate on build.</li>
+</ul>
+<h3 id="circular-dependencies">Circular dependencies</h3>
+<p>If <code>SqlOrderRepo</code> needs <code>IAuditLog</code> and <code>DbAuditLog</code> needs <code>IOrderRepo</code>, there is <strong>no order</strong> in which the constructors can run: each needs the other to exist first. The container notices when a service it is already resolving appears again on its own resolve chain, and it refuses:</p>
+<div class="viz dif-wide" data-viz="di-fundamentals-resolve" data-opts='{"preset":"cycle","title":"A circular dependency: the resolve chain meets itself"}'></div>
+
+<p>A cycle is a design signal, not a container problem. Fixes, best first:</p>
+<ol>
+<li><strong>Extract the shared part.</strong> Usually both classes need a third concept (here, "record an audit entry" does not need the whole repository). Move it into a new class that both depend on.</li>
+<li><strong>Invert one edge with an event.</strong> The repository publishes <code>OrderSaved</code>; the audit log subscribes. Neither constructor needs the other.</li>
+<li><strong>Defer one edge</strong> (<code>Lazy&lt;T&gt;</code>, <code>Func&lt;T&gt;</code>, Spring <code>ObjectProvider&lt;T&gt;</code>/<code>@Lazy</code>). This compiles and runs, but it hides the cycle rather than removing it. Treat it as a last resort.</li>
+</ol>
+<p>Spring Boot 2.6 and later rejects circular references by default (<code>spring.main.allow-circular-references=false</code>), and constructor-injection cycles have always failed with <code>BeanCurrentlyInCreationException</code>. Dagger and Wire report cycles at compile or generate time.</p>
+<h3 id="pure-di-or-a-container">Pure DI or a container?</h3>
+<div class="compare">
+<div class="good">
+<h4 id="pure-di">Pure DI</h4>
+<ul>
+<li>The compiler checks every edge; no runtime "unable to resolve" errors.</li>
+<li>Zero reflection, zero startup cost, trivially debuggable.</li>
+<li>Lifetimes are visible as <em>where</em> the <code>new</code> sits.</li>
+<li>Cost: every constructor change edits the root; lifetime and disposal bookkeeping is manual; it grows linearly with the class count.</li>
+</ul>
+</div>
+<div class="warn">
+<h4 id="container">Container</h4>
+<ul>
+<li>Auto-wiring: constructor changes need no registration edits.</li>
+<li>Lifetime caching and disposal handled for you, per scope.</li>
+<li>Framework integration: controllers, middleware, hosted services, typed <code>HttpClient</code>s and options all come from the same container.</li>
+<li>Cost: errors move to runtime (mitigate with build-time validation), "magic" wiring, a framework dependency, and a learning curve for lifetimes (see <a href="di-lifetimes.html">DI Lifetimes</a>).</li>
+</ul>
+</div>
+</div>
+<h2 id="service-locator-the-look-alike">Service locator: the look-alike</h2>
+<p>A <strong>service locator</strong> also inverts creation: classes get their collaborators from a central registry instead of <code>new</code>. The difference is direction. With DI, dependencies are <strong>pushed</strong> in through the signature. With a locator, the class <strong>pulls</strong> them from the registry inside its method bodies. Injecting <code>IServiceProvider</code>, <code>ApplicationContext</code> or a global <code>Container.Resolve&lt;T&gt;()</code> into a business class turns the container into a locator.</p>
+<div class="viz dif-wide" data-viz="di-fundamentals-locator"></div>
+
+<p>Both versions run the same code path when everything is registered. The difference shows up when something is missing, and when someone tries to test the class:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Service locator (pull)</th>
+<th>Constructor injection (push)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What the class needs</td>
+<td>Hidden in method bodies; read the code to find out</td>
+<td>Listed in the constructor</td>
+</tr>
+<tr>
+<td>A missing registration</td>
+<td>Fails <strong>mid-request</strong>, possibly after a card was charged</td>
+<td>Fails when the graph is built: at startup with <code>ValidateOnBuild</code>, at compile time with pure DI, Dagger or Wire</td>
+</tr>
+<tr>
+<td>Unit test setup</td>
+<td>Build a container, guess which services the method touches</td>
+<td>Pass the arguments; the compiler tells you what is missing</td>
+</tr>
+<tr>
+<td>Coupling</td>
+<td>Every class depends on the locator API</td>
+<td>Classes depend only on their abstractions</td>
+</tr>
+</tbody>
+</table>
+<div class="callout">
+<p><strong>When pulling is fine.</strong> Infrastructure <em>inside</em> the composition root has to resolve things: the framework creating a controller per request, a factory that creates a scope per message, a plug-in host. Pulling from the container is acceptable <strong>at the edge of the app, in code whose job is wiring</strong>. It is the anti-pattern only when business classes do it.</p>
+</div>
+<h2 id="the-same-app-in-five-ecosystems">The same app in five ecosystems</h2>
+<p>The application is the one above: <code>OrderService</code> needs an order repository, a payment gateway (which needs an HTTP client) and a clock. First, the service. Notice that in every language it is a plain class or struct that receives its collaborators. None of these service files mentions a container.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">public interface IPaymentGateway { ChargeResult Charge(decimal amount); }
+public interface IOrderRepository { void Save(Order order); }
+
+// C# 12 primary constructor: parameters are captured; no container types appear
+public sealed class OrderService(
+    IOrderRepository repo, IPaymentGateway payments, TimeProvider clock, ILogger&lt;OrderService&gt; log)
+{
+    public Receipt PlaceOrder(Order order)
+    {
+        log.LogInformation(&quot;placing {OrderId}&quot;, order.Id);
+        var charge = payments.Charge(order.Total);
+        if (!charge.Approved) return Receipt.Declined(order.Id);
+        order.PlacedAt = clock.GetUtcNow();
+        repo.Save(order);
+        return Receipt.Ok(order.Id, charge.Id);
+    }
+}
+</code></pre>
+<pre><code class="language-java">public interface PaymentGateway { ChargeResult charge(BigDecimal amount); }
+public interface OrderRepository { void save(Order order); }
+
+@Service                                     // a @Component stereotype: Spring will create it
+public class OrderService {
+    private final OrderRepository repo;      // final: constructor injection makes immutability possible
+    private final PaymentGateway payments;
+    private final Clock clock;               // java.time.Clock: the JDK's injectable clock
+
+    @Autowired                               // optional since Spring 4.3 when there is one constructor
+    public OrderService(OrderRepository repo, PaymentGateway payments, Clock clock) {
+        this.repo = repo;
+        this.payments = payments;
+        this.clock = clock;
+    }
+
+    public Receipt placeOrder(Order order) {
+        ChargeResult charge = payments.charge(order.total());
+        if (!charge.approved()) return Receipt.declined(order.id());
+        repo.save(order.withPlacedAt(clock.instant()));
+        return Receipt.ok(order.id(), charge.id());
+    }
+}
+</code></pre>
+<pre><code class="language-python">from dataclasses import dataclass
+from datetime import datetime
+from decimal import Decimal
+from typing import Callable, Protocol
+
+
+@dataclass
+class Order:
+    id: int
+    total: Decimal
+    placed_at: datetime | None = None
+
+
+@dataclass(frozen=True)
+class ChargeResult:
+    approved: bool
+    charge_id: str = &quot;&quot;
+
+
+@dataclass(frozen=True)
+class Receipt:
+    order_id: int
+    approved: bool
+    charge_id: str = &quot;&quot;
+
+
+class PaymentGateway(Protocol):            # structural: implementations never import this
+    def charge(self, amount: Decimal) -&gt; ChargeResult: ...
+
+
+class OrderRepository(Protocol):
+    def save(self, order: Order) -&gt; None: ...
+
+
+Clock = Callable[[], datetime]             # a function is the simplest possible abstraction
+
+
+class OrderService:
+    def __init__(self, repo: OrderRepository, payments: PaymentGateway, clock: Clock) -&gt; None:
+        self._repo, self._payments, self._clock = repo, payments, clock
+
+    def place_order(self, order: Order) -&gt; Receipt:
+        charge = self._payments.charge(order.total)
+        if not charge.approved:
+            return Receipt(order.id, approved=False)
+        order.placed_at = self._clock()
+        self._repo.save(order)
+        return Receipt(order.id, approved=True, charge_id=charge.charge_id)
+</code></pre>
+<pre><code class="language-go">package orders
+
+// Interfaces are declared by the consumer, and satisfied implicitly:
+// postgres.OrderRepository never imports this package.
+type PaymentGateway interface {
+    Charge(ctx context.Context, amountCents int64) (ChargeResult, error)
+}
+
+type Repository interface {
+    Save(ctx context.Context, o *Order) error
+}
+
+type Service struct {
+    repo     Repository
+    payments PaymentGateway
+    now      func() time.Time
+}
+
+// &quot;Accept interfaces, return structs.&quot;
+func NewService(repo Repository, payments PaymentGateway, now func() time.Time) *Service {
+    return &amp;Service{repo: repo, payments: payments, now: now}
+}
+
+func (s *Service) PlaceOrder(ctx context.Context, o *Order) (Receipt, error) {
+    charge, err := s.payments.Charge(ctx, o.TotalCents)
+    if err != nil {
+        return Receipt{}, fmt.Errorf(&quot;charge order %d: %w&quot;, o.ID, err)
+    }
+    if !charge.Approved {
+        return Receipt{OrderID: o.ID}, nil
+    }
+    o.PlacedAt = s.now()
+    if err := s.repo.Save(ctx, o); err != nil {
+        return Receipt{}, fmt.Errorf(&quot;save order %d: %w&quot;, o.ID, err)
+    }
+    return Receipt{OrderID: o.ID, Approved: true, ChargeID: charge.ID}, nil
+}
+</code></pre>
+<pre><code class="language-typescript">export interface PaymentGateway { charge(amountCents: number): Promise&lt;ChargeResult&gt;; }
+export interface OrderRepository { save(order: Order): Promise&lt;void&gt;; }
+export type Clock = () =&gt; Date;
+
+export class OrderService {
+  // parameter properties: declare and assign the fields in one go
+  constructor(
+    private readonly repo: OrderRepository,
+    private readonly payments: PaymentGateway,
+    private readonly clock: Clock,
+  ) {}
+
+  async placeOrder(order: Order): Promise&lt;Receipt&gt; {
+    const charge = await this.payments.charge(order.totalCents);
+    if (!charge.approved) return { orderId: order.id, approved: false };
+    order.placedAt = this.clock();
+    await this.repo.save(order);
+    return { orderId: order.id, approved: true, chargeId: charge.id };
+  }
+}
+</code></pre>
+</div>
+<p>Now the wiring. This is the only code that changes between "by hand" and "with a container", and the only code that names concrete types:</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// --- Option A: pure DI (a console app, a Lambda, a small tool) ---
+using var http = new HttpClient { BaseAddress = new Uri(&quot;https://api.stripe.com&quot;) };
+using var loggerFactory = LoggerFactory.Create(b =&gt; b.AddConsole());
+var orders = new OrderService(
+    new SqlOrderRepository(connectionString),
+    new StripePaymentGateway(http),
+    TimeProvider.System,
+    loggerFactory.CreateLogger&lt;OrderService&gt;());
+
+// --- Option B: Microsoft.Extensions.DependencyInjection (ASP.NET Core) ---
+var builder = WebApplication.CreateBuilder(args);       // ILogger&lt;T&gt; and options are pre-registered
+builder.Services.AddSingleton(TimeProvider.System);
+builder.Services.AddScoped&lt;IOrderRepository&gt;(sp =&gt;      // a factory when a ctor needs a non-service value
+    new SqlOrderRepository(builder.Configuration.GetConnectionString(&quot;Shop&quot;)!));
+builder.Services.AddHttpClient&lt;IPaymentGateway, StripePaymentGateway&gt;(c =&gt;
+    c.BaseAddress = new Uri(&quot;https://api.stripe.com&quot;)); // typed client: pooled handlers, no socket leaks
+builder.Services.AddScoped&lt;OrderService&gt;();
+
+var app = builder.Build();
+app.MapPost(&quot;/orders&quot;, (Order order, OrderService svc) =&gt; svc.PlaceOrder(order)); // method injection
+app.Run();
+</code></pre>
+<pre><code class="language-java">// Spring Boot: the composition root is spread over annotations, scanned at startup.
+@Repository                                    // @Component + persistence exception translation
+class JdbcOrderRepository implements OrderRepository {
+    private final JdbcClient jdbc;             // auto-configured by Spring Boot 3.2+
+    JdbcOrderRepository(JdbcClient jdbc) { this.jdbc = jdbc; }
+    public void save(Order o) {
+        jdbc.sql(&quot;insert into orders (id, total, placed_at) values (?, ?, ?)&quot;)
+            .params(o.id(), o.total(), o.placedAt()).update();
+    }
+}
+
+@Component
+class StripePaymentGateway implements PaymentGateway {
+    private final RestClient http;
+    StripePaymentGateway(RestClient.Builder builder, @Value(&quot;${stripe.key}&quot;) String key) {
+        this.http = builder.baseUrl(&quot;https://api.stripe.com&quot;)
+                           .defaultHeader(&quot;Authorization&quot;, &quot;Bearer &quot; + key).build();
+    }
+    public ChargeResult charge(BigDecimal amount) {
+        return http.post().uri(&quot;/v1/charges&quot;).body(Map.of(&quot;amount&quot;, amount))
+                   .retrieve().body(ChargeResult.class);
+    }
+}
+
+@Configuration
+class ClockConfig {
+    @Bean Clock clock() { return Clock.systemUTC(); }   // third-party types: register with @Bean
+}
+
+@RestController
+class OrderController {
+    private final OrderService orders;
+    OrderController(OrderService orders) { this.orders = orders; }
+    @PostMapping(&quot;/orders&quot;) Receipt place(@RequestBody Order order) { return orders.placeOrder(order); }
+}
+
+@SpringBootApplication                        // enables component scanning of this package and below
+public class ShopApplication {
+    public static void main(String[] args) { SpringApplication.run(ShopApplication.class, args); }
+}
+// Pure DI in Java is just: new OrderService(new JdbcOrderRepository(jdbc), new StripePaymentGateway(...), Clock.systemUTC())
+</code></pre>
+<pre><code class="language-python">import os
+from datetime import datetime, timezone
+from decimal import Decimal
+from typing import Annotated
+
+import httpx
+from fastapi import Depends, FastAPI
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
+
+def utc_now() -&gt; datetime:
+    return datetime.now(timezone.utc)
+
+# --- Option A: pure DI. The composition root is a function. ---
+def main() -&gt; None:
+    engine = create_engine(os.environ[&quot;DATABASE_URL&quot;])
+    with httpx.Client(base_url=&quot;https://api.stripe.com&quot;, timeout=10) as http, Session(engine) as session:
+        service = OrderService(SqlOrderRepository(session), StripeGateway(http, os.environ[&quot;STRIPE_KEY&quot;]), utc_now)
+        print(service.place_order(Order(42, Decimal(&quot;99.00&quot;))))
+
+# --- Option B: FastAPI's Depends builds the graph per request ---
+app = FastAPI()
+engine = create_engine(os.environ[&quot;DATABASE_URL&quot;])               # module level: one per process
+http = httpx.Client(base_url=&quot;https://api.stripe.com&quot;, timeout=10)
+
+def get_session():
+    with Session(engine) as session:                             # yield dependency: closed after the request
+        yield session
+
+def get_payments() -&gt; PaymentGateway:
+    return StripeGateway(http, os.environ[&quot;STRIPE_KEY&quot;])
+
+def get_order_service(
+    session: Annotated[Session, Depends(get_session)],
+    payments: Annotated[PaymentGateway, Depends(get_payments)],
+) -&gt; OrderService:
+    return OrderService(SqlOrderRepository(session), payments, utc_now)
+
+@app.post(&quot;/orders&quot;)
+def place_order(body: OrderIn, svc: Annotated[OrderService, Depends(get_order_service)]) -&gt; Receipt:
+    return svc.place_order(Order(body.id, body.total))
+</code></pre>
+<pre><code class="language-go">// main.go: the composition root is ordinary code. This is the idiomatic default in Go.
+func main() {
+    db, err := sql.Open(&quot;pgx&quot;, os.Getenv(&quot;DATABASE_URL&quot;))
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer db.Close()
+
+    httpClient := &amp;http.Client{Timeout: 10 * time.Second} // shared: http.Client is safe for concurrent use
+    svc := orders.NewService(
+        postgres.NewOrderRepository(db),
+        stripe.NewGateway(httpClient, os.Getenv(&quot;STRIPE_KEY&quot;)),
+        time.Now,
+    )
+
+    mux := http.NewServeMux()
+    mux.Handle(&quot;POST /orders&quot;, orders.NewHandler(svc))
+    log.Fatal(http.ListenAndServe(&quot;:8080&quot;, mux))
+}
+
+// Large graphs: google/wire generates the code above at build time (wire.go, build tag wireinject):
+//   wire.Build(postgres.NewOrderRepository, wire.Bind(new(orders.Repository), new(*postgres.OrderRepository)),
+//              stripe.NewGateway, wire.Bind(new(orders.PaymentGateway), new(*stripe.Gateway)),
+//              provideClock, orders.NewService)
+// uber-go/fx resolves the same providers by reflection at startup and adds OnStart/OnStop hooks:
+//   fx.New(fx.Provide(openDB, fx.Annotate(postgres.NewOrderRepository, fx.As(new(orders.Repository))), ...),
+//          fx.Invoke(registerRoutes)).Run()
+</code></pre>
+<pre><code class="language-typescript">// --- Option A: pure DI in main.ts (Express, Fastify, a CLI, a Lambda) ---
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const orders = new OrderService(
+  new PgOrderRepository(pool),
+  new StripePaymentGateway(fetch, process.env.STRIPE_KEY!),
+  () =&gt; new Date(),
+);
+app.post(&quot;/orders&quot;, async (req, res) =&gt; res.json(await orders.placeOrder(req.body)));
+
+// --- Option B: NestJS. Interfaces vanish at runtime, so tokens must be real values:
+// abstract classes (which survive compilation) or symbols with @Inject.
+export abstract class PaymentGateway { abstract charge(amountCents: number): Promise&lt;ChargeResult&gt;; }
+export abstract class OrderRepository { abstract save(order: Order): Promise&lt;void&gt;; }
+export const CLOCK = Symbol(&quot;CLOCK&quot;);
+
+@Injectable()
+export class OrderService {
+  constructor(
+    private readonly repo: OrderRepository,              // class token, read from emitted metadata
+    private readonly payments: PaymentGateway,
+    @Inject(CLOCK) private readonly clock: () =&gt; Date,   // a function type has no runtime token
+  ) {}
+  // placeOrder as before
+}
+
+@Module({
+  controllers: [OrdersController],
+  providers: [
+    OrderService,
+    { provide: OrderRepository, useClass: PgOrderRepository },
+    { provide: PaymentGateway, useClass: StripePaymentGateway },
+    { provide: CLOCK, useValue: () =&gt; new Date() },
+  ],
+})
+export class OrdersModule {}
+</code></pre>
+</div>
+<h3 id="why-the-ecosystems-look-so-different">Why the ecosystems look so different</h3>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>What shapes its DI style</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>C#</strong></td>
+<td>Constructor parameter types survive to runtime, so MS.DI reflects over constructors and compiles fast activators. DI is built into the host: ASP.NET Core, the worker service, options, logging and <code>HttpClientFactory</code> all share one container, so "just use the built-in one" is the default.</td>
+</tr>
+<tr>
+<td><strong>Java</strong></td>
+<td>Spring creates beans by classpath scanning, annotations and runtime proxies (for transactions and AOP). That is powerful, but it means wiring is spread over many files. <strong>Dagger</strong> (Android, and servers that start fast) does the same job by generating plain Java at compile time, so a missing binding is a compile error.</td>
+</tr>
+<tr>
+<td><strong>Python</strong></td>
+<td>Duck typing, first-class functions and modules-as-singletons mean many apps need no container: pass objects in, or use a function as a dependency. FastAPI's <code>Depends</code> introspects function signatures and builds a per-request graph. Containers exist (dependency-injector, lagom) but are optional.</td>
+</tr>
+<tr>
+<td><strong>Go</strong></td>
+<td>Implicit interfaces, a culture of explicitness and no annotations make pure DI in <code>main</code> the norm. When <code>main</code> becomes hundreds of lines, <strong>Wire</strong> generates that code (compile-time, no reflection) and <strong>Fx</strong> wires by reflection at startup, adding lifecycle hooks.</td>
+</tr>
+<tr>
+<td><strong>TypeScript</strong></td>
+<td>Types are erased. A container can only see constructor parameter types if the compiler emits <code>design:paramtypes</code> metadata (<code>emitDecoratorMetadata</code> with <code>reflect-metadata</code>; some fast transpilers such as esbuild do not emit it), and interfaces never exist at runtime. That is why NestJS, InversifyJS and tsyringe use decorators plus class or symbol tokens.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="testing-the-payoff">Testing: the payoff</h2>
+<p>With constructor injection, a unit test is just a composition root with different leaves. A <strong>fake</strong> is a small working implementation (an in-memory repository, a gateway that always declines). A <strong>stub</strong> returns canned answers, and a <strong>mock</strong> records and verifies calls. Fakes keep tests readable and resilient to refactoring, so prefer them for your own interfaces.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">sealed class FakePaymentGateway(bool approve) : IPaymentGateway
+{
+    public List&lt;decimal&gt; Calls { get; } = [];
+    public ChargeResult Charge(decimal amount)
+    {
+        Calls.Add(amount);
+        return new ChargeResult(approve, approve ? &quot;ch_1&quot; : &quot;&quot;);
+    }
+}
+
+sealed class InMemoryOrderRepository : IOrderRepository
+{
+    public List&lt;Order&gt; Saved { get; } = [];
+    public void Save(Order order) =&gt; Saved.Add(order);
+}
+
+public class OrderServiceTests
+{
+    [Fact]
+    public void Declined_card_saves_nothing()
+    {
+        var repo = new InMemoryOrderRepository();
+        var payments = new FakePaymentGateway(approve: false);
+        var sut = new OrderService(repo, payments, new FakeTimeProvider(), NullLogger&lt;OrderService&gt;.Instance);
+
+        var receipt = sut.PlaceOrder(new Order(42, 99m));
+
+        Assert.False(receipt.Approved);
+        Assert.Empty(repo.Saved);
+        Assert.Equal(99m, Assert.Single(payments.Calls));
+    }
+}
+// Integration tests swap one registration instead:
+// factory.WithWebHostBuilder(b =&gt; b.ConfigureTestServices(s =&gt; s.AddSingleton&lt;IPaymentGateway&gt;(new FakePaymentGateway(false))));
+</code></pre>
+<pre><code class="language-java">class OrderServiceTest {
+    @Test
+    void declinedCardSavesNothing() {
+        List&lt;Order&gt; saved = new ArrayList&lt;&gt;();
+        OrderRepository repo = saved::add;                          // one-method interfaces take lambdas
+        PaymentGateway declines = amount -&gt; ChargeResult.declined();
+        Clock fixed = Clock.fixed(Instant.parse(&quot;2025-01-01T00:00:00Z&quot;), ZoneOffset.UTC);
+
+        Receipt receipt = new OrderService(repo, declines, fixed)  // no Spring context needed
+                .placeOrder(new Order(42, new BigDecimal(&quot;99.00&quot;)));
+
+        assertFalse(receipt.approved());
+        assertTrue(saved.isEmpty());
+    }
+}
+// Spring slice tests replace a bean instead: @MockitoBean PaymentGateway payments; (Spring Framework 6.2+)
+</code></pre>
+<pre><code class="language-python">from datetime import datetime, timezone
+from decimal import Decimal
+
+
+class FakePayments:
+    def __init__(self, approve: bool) -&gt; None:
+        self.approve, self.calls = approve, []
+
+    def charge(self, amount: Decimal) -&gt; ChargeResult:
+        self.calls.append(amount)
+        return ChargeResult(self.approve, &quot;ch_1&quot; if self.approve else &quot;&quot;)
+
+
+class InMemoryOrders:
+    def __init__(self) -&gt; None:
+        self.saved: list[Order] = []
+
+    def save(self, order: Order) -&gt; None:
+        self.saved.append(order)
+
+
+FIXED = datetime(2025, 1, 1, tzinfo=timezone.utc)
+
+
+def test_declined_card_saves_nothing():
+    repo, pay = InMemoryOrders(), FakePayments(approve=False)
+    receipt = OrderService(repo, pay, clock=lambda: FIXED).place_order(Order(42, Decimal(&quot;99.00&quot;)))
+    assert not receipt.approved
+    assert repo.saved == [] and pay.calls == [Decimal(&quot;99.00&quot;)]
+
+
+def test_approved_card_is_stamped_and_saved():
+    repo, pay = InMemoryOrders(), FakePayments(approve=True)
+    receipt = OrderService(repo, pay, clock=lambda: FIXED).place_order(Order(7, Decimal(&quot;5&quot;)))
+    assert receipt.approved and receipt.charge_id == &quot;ch_1&quot;
+    assert repo.saved[0].placed_at == FIXED
+
+
+# FastAPI: replace one node of the request graph for every request in the test
+# app.dependency_overrides[get_payments] = lambda: FakePayments(approve=False)
+</code></pre>
+<pre><code class="language-go">type fakeGateway struct {
+    approve bool
+    calls   []int64
+}
+
+func (f *fakeGateway) Charge(_ context.Context, amount int64) (orders.ChargeResult, error) {
+    f.calls = append(f.calls, amount)
+    return orders.ChargeResult{Approved: f.approve, ID: &quot;ch_1&quot;}, nil
+}
+
+type memRepo struct{ saved []*orders.Order }
+
+func (m *memRepo) Save(_ context.Context, o *orders.Order) error {
+    m.saved = append(m.saved, o)
+    return nil
+}
+
+func TestDeclinedCardSavesNothing(t *testing.T) {
+    repo, pay := &amp;memRepo{}, &amp;fakeGateway{approve: false}
+    fixed := func() time.Time { return time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC) }
+    svc := orders.NewService(repo, pay, fixed)
+
+    r, err := svc.PlaceOrder(context.Background(), &amp;orders.Order{ID: 42, TotalCents: 9900})
+    if err != nil {
+        t.Fatal(err)
+    }
+    if r.Approved || len(repo.saved) != 0 || len(pay.calls) != 1 {
+        t.Fatalf(&quot;got %+v, saved=%d, calls=%d&quot;, r, len(repo.saved), len(pay.calls))
+    }
+}
+</code></pre>
+<pre><code class="language-typescript">class FakePayments implements PaymentGateway {
+  calls: number[] = [];
+  constructor(private readonly approve: boolean) {}
+  async charge(amountCents: number) {
+    this.calls.push(amountCents);
+    return { approved: this.approve, id: &quot;ch_1&quot; };
+  }
+}
+
+test(&quot;declined card saves nothing&quot;, async () =&gt; {
+  const saved: Order[] = [];
+  const payments = new FakePayments(false);
+  const svc = new OrderService({ save: async (o) =&gt; { saved.push(o); } }, payments, () =&gt; new Date(&quot;2025-01-01T00:00:00Z&quot;));
+
+  const receipt = await svc.placeOrder({ id: 42, totalCents: 9900 });
+
+  expect(receipt.approved).toBe(false);
+  expect(saved).toHaveLength(0);
+  expect(payments.calls).toEqual([9900]);
+});
+
+// NestJS: build the real module, override one provider
+// const moduleRef = await Test.createTestingModule({ imports: [OrdersModule] })
+//   .overrideProvider(PaymentGateway).useValue(new FakePayments(false)).compile();
+</code></pre>
+</div>
+<h2 id="when-not-to-use-a-container">When NOT to use a container</h2>
+<p>DI the <em>principle</em> (ask, don't create) almost always pays. A DI <em>container</em> is a tool with costs: runtime errors instead of compile errors, wiring that you cannot "go to definition" through, and a framework dependency. Choose deliberately:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 350" width="900" role="img" aria-label="Decision guide. A library: constructors only, never require a container. A small script: pure DI. A framework that already has a container: use it. Otherwise a large graph with per-request lifetimes: a container or code generation; else pure DI.">
+<defs><marker id="di-fundamentals-ar-q" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box accent" x="20" y="18" width="320" height="58" rx="10"/><text x="180" y="43" text-anchor="middle">Is it a <tspan font-weight="700">library</tspan> other teams consume?</text><text x="180" y="62" text-anchor="middle" class="small muted">NuGet, Maven, PyPI, Go module, npm package</text>
+<rect class="box accent" x="20" y="100" width="320" height="58" rx="10"/><text x="180" y="125" text-anchor="middle">A <tspan font-weight="700">small</tspan> script, CLI, function or job?</text><text x="180" y="144" text-anchor="middle" class="small muted">roughly ten classes or fewer, one lifetime</text>
+<rect class="box accent" x="20" y="182" width="320" height="58" rx="10"/><text x="180" y="207" text-anchor="middle">Does the <tspan font-weight="700">framework</tspan> already have one?</text><text x="180" y="226" text-anchor="middle" class="small muted">ASP.NET Core, Spring, NestJS, FastAPI Depends</text>
+<rect class="box accent" x="20" y="264" width="320" height="58" rx="10"/><text x="180" y="289" text-anchor="middle">A <tspan font-weight="700">large</tspan> graph with per-request lifetimes?</text><text x="180" y="308" text-anchor="middle" class="small muted">dozens of services, scopes, disposal</text>
+<path class="edge accent" d="M180 76 L180 98" marker-end="url(#di-fundamentals-ar-q)"/><text x="188" y="92" class="small muted">no</text>
+<path class="edge accent" d="M180 158 L180 180" marker-end="url(#di-fundamentals-ar-q)"/><text x="188" y="174" class="small muted">no</text>
+<path class="edge accent" d="M180 240 L180 262" marker-end="url(#di-fundamentals-ar-q)"/><text x="188" y="256" class="small muted">no</text>
+<path class="edge accent" d="M340 47 L398 47" marker-end="url(#di-fundamentals-ar-q)"/><text x="356" y="40" class="small">yes</text>
+<path class="edge accent" d="M340 129 L398 129" marker-end="url(#di-fundamentals-ar-q)"/><text x="356" y="122" class="small">yes</text>
+<path class="edge accent" d="M340 211 L398 211" marker-end="url(#di-fundamentals-ar-q)"/><text x="356" y="204" class="small">yes</text>
+<path class="edge accent" d="M340 293 L398 293" marker-end="url(#di-fundamentals-ar-q)"/><text x="356" y="286" class="small">yes</text>
+<path class="edge accent" d="M180 322 L180 338 L764 338 L764 324" marker-end="url(#di-fundamentals-ar-q)"/><text x="610" y="333" class="small">no</text>
+<rect class="box bad" x="400" y="18" width="480" height="58" rx="10"/><text x="414" y="42">Constructors only. <tspan font-weight="700">Never require a container.</tspan></text><text x="414" y="62" class="small muted">Optionally ship a thin AddMyLib(IServiceCollection) helper.</text>
+<rect class="box done" x="400" y="100" width="480" height="58" rx="10"/><text x="414" y="124"><tspan font-weight="700">Pure DI</tspan> in main(). The wiring is shorter than the config.</text><text x="414" y="144" class="small muted">Compile-time checked, zero startup cost.</text>
+<rect class="box path" x="400" y="182" width="480" height="58" rx="10"/><text x="414" y="206"><tspan font-weight="700">Use the built-in container</tspan>, only in the composition root.</text><text x="414" y="226" class="small muted">Business classes stay container-agnostic: plain constructors.</text>
+<rect class="box visit" x="400" y="264" width="232" height="58" rx="10"/><text x="412" y="288" font-weight="700">Container or codegen</text><text x="412" y="308" class="small muted">MS.DI, Spring, Dagger, Wire, Fx</text>
+<rect class="box done" x="648" y="264" width="232" height="58" rx="10"/><text x="660" y="288" font-weight="700">Pure DI</text><text x="660" y="308" class="small muted">until main() hurts to maintain</text>
+</svg>
+<figcaption>The principle is constant; the tool is not. Most importantly, a library must never force its consumers into a container (or into <em>your</em> container).</figcaption>
+</figure>
+
+<div class="compare">
+<div class="bad">
+<h4 id="a-library-that-forces-a-container">A library that forces a container</h4>
+<ul>
+<li>Constructors that take <code>IServiceProvider</code>, or a static <code>MyLib.Container</code>.</li>
+<li>A dependency on Autofac or Spring that every consumer inherits.</li>
+<li>Public types that only work when resolved, with no usable constructor.</li>
+</ul>
+<p>Consumers using pure DI, another container, or Go-style <code>main</code> wiring cannot use it without workarounds.</p>
+</div>
+<div class="good">
+<h4 id="a-di-friendly-library">A DI-friendly library</h4>
+<ul>
+<li>Public types with honest constructors and sensible defaults (<code>new StripeClient(apiKey)</code>).</li>
+<li>An optional <code>services.AddStripe(o =&gt; …)</code> that depends only on <code>Microsoft.Extensions.DependencyInjection.Abstractions</code>, using <code>TryAdd…</code> so callers can override.</li>
+<li>Factories or builders for complex graphs, so pure-DI users have one line to write.</li>
+</ul>
+</div>
+</div>
+<p>Inject <strong>volatile</strong> dependencies: anything that does I/O, is non-deterministic (time, randomness, GUIDs), needs configuration, or that you might replace. Do <strong>not</strong> inject <strong>stable</strong> ones: <code>List&lt;T&gt;</code>, <code>StringBuilder</code>, pure functions, value objects and entities. <code>new Money(10, "EUR")</code> and <code>new Order(...)</code> are fine: data objects are <em>newables</em>, not services. An interface per class "for testability", when nothing will ever substitute it, adds indirection without a seam that anyone uses.</p>
+<h2 id="pitfalls-and-production-war-stories">Pitfalls and production war stories</h2>
+<div class="pitfall">
+<p><strong>Constructor over-injection</strong>
+A constructor with 9 parameters is not a DI problem; it is a class with too many jobs, and constructor injection is simply making that visible. Fix the design: split the class by responsibility, or group collaborators that are always used together behind a facade service (<code>IOrderNotifications</code> wrapping email, SMS and push). Do not "fix" it with property injection or a locator, which only hide the count.</p>
+</div>
+<div class="pitfall">
+<p><strong>The container leaks into business code</strong>
+A team injected <code>IServiceProvider</code> into a domain service "for flexibility". Every test passed. Months later a rarely used refund path called <code>GetRequiredService&lt;IRefundPolicy&gt;()</code>, which had never been registered in production, and it threw <em>after</em> the payment reversal had been sent. Fix: constructor-inject <code>IRefundPolicy</code>, and turn on <code>ValidateOnBuild</code> so a missing registration fails at startup, not on the 1,000th refund.</p>
+</div>
+<div class="pitfall">
+<p><strong>Work in constructors</strong>
+A constructor that opens a connection, calls an API or reads a file makes resolution slow and fallible: building an innocent controller suddenly hits the network, and failures surface as confusing activation exceptions. Constructors should only <strong>check and store</strong> their arguments. Do the I/O lazily, in methods, or in an explicit <code>StartAsync</code>/lifecycle hook.</p>
+</div>
+<div class="pitfall">
+<p><strong>Duplicate and ambiguous registrations</strong>
+In MS.DI, registering <code>IPaymentGateway</code> twice means <code>GetService</code> returns the <strong>last</strong> one while <code>IEnumerable&lt;IPaymentGateway&gt;</code> returns both, so a library's default can silently replace yours. Libraries should use <code>TryAdd…</code>. Multiple public constructors are another trap: MS.DI picks the one with the most parameters it can satisfy and throws if that is ambiguous; Spring needs <code>@Autowired</code> to choose. Keep exactly one public constructor on services.</p>
+</div>
+<div class="pitfall">
+<p><strong>A second container by accident</strong>
+Calling <code>services.BuildServiceProvider()</code> inside startup code (to "just get one service") creates a <strong>second</strong> container with its own singletons: two caches, two connection pools, and options read twice. ASP.NET Core flags this with analyzer warning ASP0000. Use the options pattern, a factory overload <code>AddSingleton(sp =&gt; …)</code>, or <code>IConfigureOptions&lt;T&gt;</code> instead.</p>
+</div>
+<div class="pitfall">
+<p><strong>Ambient dependencies sneak back in</strong>
+<code>DateTime.UtcNow</code>, <code>Guid.NewGuid()</code>, <code>Random.Shared</code>, <code>System.currentTimeMillis()</code>, <code>time.Now()</code> and environment variables read deep inside a method are dependencies too, just invisible ones. A test of "orders placed after 17:00 ship tomorrow" becomes impossible. Inject <code>TimeProvider</code> (.NET 8+), <code>java.time.Clock</code>, a <code>now func() time.Time</code> or a <code>clock</code> callable.</p>
+</div>
+<p>Lifetimes have their own family of bugs: a singleton that captures a scoped <code>DbContext</code>, transient disposables that leak from the root, and background services without a scope. They get a full page in <a href="di-lifetimes.html">DI Lifetimes</a>.</p>
+<h2 id="best-practice-checklist">Best-practice checklist</h2>
+<ul>
+<li>Required dependencies come through the <strong>constructor</strong>, stored in <code>readonly</code>/<code>final</code> fields; one public constructor per service.</li>
+<li>Business classes never reference the container (<code>IServiceProvider</code>, <code>ApplicationContext</code>, <code>ModuleRef</code>).</li>
+<li>Exactly one <strong>composition root</strong>, at the entry point; it is the only code that names concrete implementations.</li>
+<li>Abstractions are shaped by and live with the <strong>consumer</strong> (DIP), not mirrored from an implementation.</li>
+<li>Time, randomness, I/O and configuration are injected; data objects are simply <code>new</code>-ed.</li>
+<li>Constructors only validate and assign; no I/O.</li>
+<li>The container validates the graph at startup (<code>ValidateOnBuild</code>, Spring context startup, Dagger/Wire at compile time).</li>
+<li>Libraries expose plain constructors, plus at most an optional <code>AddX()</code> helper that uses <code>TryAdd</code>.</li>
+<li>Unit tests construct the class directly with fakes; integration tests replace single registrations.</li>
+</ul>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>Is "my class depends on <code>IOrderRepository</code> and gets it from <code>RepositoryFactory.Create()</code>" dependency injection?</summary>
+<p>No. It follows the Dependency Inversion Principle (it depends on an abstraction) but it is not DI: the class still <em>fetches</em> its collaborator, through a hidden static call, so a test must alter global factory state to substitute it. DI means the collaborator is <strong>passed in</strong> from outside.</p>
+</details>
+<details class="quiz">
+<summary>Why does a container create <code>Settings</code> before <code>SqlDbFactory</code> before <code>SqlOrderRepo</code>?</summary>
+<p>A constructor cannot run until all of its arguments exist. The container therefore walks the constructor graph depth-first and creates objects in <strong>post-order</strong>: leaves first, then their consumers, and the root last. The same order appears naturally when you write pure DI by hand.</p>
+</details>
+<details class="quiz">
+<summary>In the resolve visualizer with two requests, why is <code>ConsoleLogger</code> reused in request 2 but <code>OrderService</code> is new?</summary>
+<p><code>ConsoleLogger</code> is a <strong>singleton</strong>: cached in the root for the life of the app. <code>OrderService</code> is <strong>scoped</strong>: cached per scope, and each request gets a new scope, so request 2 starts with an empty scoped cache. A transient (<code>StripePayments</code>) is never cached at all.</p>
+</details>
+<details class="quiz">
+<summary><code>A</code> needs <code>B</code> and <code>B</code> needs <code>A</code>. Why does making one of them a singleton not help?</summary>
+<p>Lifetime decides how long an instance is <em>cached</em>, not how it is <em>constructed</em>. The first <code>A</code> still cannot be constructed until a <code>B</code> exists, and that <code>B</code> cannot be constructed until an <code>A</code> exists. Break the cycle in the design: extract the shared responsibility, or replace one edge with an event.</p>
+</details>
+<details class="quiz">
+<summary>Your library has 12 classes. Should it ship with Autofac and a pre-built container?</summary>
+<p>No. That forces every consumer into Autofac, and into <em>your</em> container rather than theirs. Give the public types honest constructors and defaults. Optionally add an <code>AddMyLibrary(this IServiceCollection)</code> helper that depends only on the DI abstractions package and uses <code>TryAdd</code> so consumers can override any registration.</p>
+</details>
+<details class="quiz">
+<summary>When is property injection the right choice?</summary>
+<p>Only for a genuinely <strong>optional</strong> dependency that has a safe local default, for example <code>ILogger Logger { get; set; } = NullLogger.Instance</code>. For anything required, property injection creates a window where the object exists but is invalid, and it allows the dependency to change mid-life. MS.DI deliberately does not support it.</p>
+</details>
+<details class="quiz">
+<summary>Why do NestJS providers often use abstract classes instead of interfaces as tokens?</summary>
+<p>TypeScript interfaces are erased at compile time, so there is nothing at runtime for the container to use as a key, and the emitted <code>design:paramtypes</code> metadata for an interface-typed parameter is just <code>Object</code>. An abstract class compiles to a real JavaScript value that can serve as the token <em>and</em> as the type, without <code>@Inject('TOKEN')</code> strings.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>IoC</strong>Principle: a framework controls the flow and calls you. Creation is one thing you can hand over.</div>
+<div><strong>DIP</strong>Design rule: policy and detail both depend on an abstraction the policy owns.</div>
+<div><strong>DI</strong>Technique: collaborators are passed in (constructor, property or method).</div>
+<div><strong>Constructor injection</strong>The default: valid from birth, immutable, honest signature.</div>
+<div><strong>Property / method</strong>Optional deps with a default / deps that vary per call.</div>
+<div><strong>Composition root</strong>One place at the entry point that knows the concretes and builds the graph.</div>
+<div><strong>Pure DI</strong>The root written by hand: compile-checked, no magic; grows with the class count.</div>
+<div><strong>Container</strong>Register → build/validate → resolve (depth-first, leaves first, cached per lifetime) → release.</div>
+<div><strong>Service locator</strong>Pulling from the container inside business code: hidden deps, late failures. Fine only in wiring code.</div>
+<div><strong>Cycles</strong>A design smell: extract a third class or use an event. <code>Lazy</code> only hides it.</div>
+<div><strong>No container when</strong>Writing a library, a small script, or when main() is still readable.</div>
+<div><strong>Testing</strong>Construct directly with fakes; override one registration for integration tests.</div>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection">Dependency injection in .NET</a> and the <a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection-guidelines">DI guidelines</a> (Microsoft Learn)</li>
+<li><a href="https://docs.spring.io/spring-framework/reference/core/beans/dependencies/factory-collaborators.html">Spring Framework: Dependency Injection</a></li>
+<li><a href="https://fastapi.tiangolo.com/tutorial/dependencies/">FastAPI: Dependencies</a></li>
+<li><a href="https://github.com/google/wire/blob/main/docs/guide.md">Wire user guide</a> and <a href="https://uber-go.github.io/fx/">Fx documentation</a></li>
+<li><a href="https://docs.nestjs.com/providers">NestJS: Providers</a> and <a href="https://docs.nestjs.com/fundamentals/custom-providers">Custom providers</a></li>
+<li><a href="https://dagger.dev/dev-guide/">Dagger user guide</a></li>
+</ul>
+<p>Next: <a href="di-lifetimes.html">DI Lifetimes</a> explains singleton, scoped and transient across concurrent requests, with captive dependencies and disposal.</p><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="distributed-architecture.html"><small>&larr; PREVIOUS</small>Services, Messaging &amp; Events</a><a class="next" href="di-lifetimes.html"><small>NEXT &rarr;</small>Lifetimes, Scopes &amp; Captive Dependencies</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-a-class-that-builds-its-own-world">The problem: a class that builds its own world</a></li>
+<li><a href="#ioc-dip-and-di-three-different-ideas">IoC, DIP and DI: three different ideas</a></li>
+<li><a href="#three-ways-to-inject">Three ways to inject</a></li>
+<li><a href="#the-composition-root-and-pure-di-first">The composition root, and pure DI first</a><ul>
+<li><a href="#why-one-root-matters-change-ripples">Why one root matters: change ripples</a></li>
+</ul>
+</li>
+<li><a href="#what-a-container-actually-does">What a container actually does</a><ul>
+<li><a href="#circular-dependencies">Circular dependencies</a></li>
+<li><a href="#pure-di-or-a-container">Pure DI or a container?</a></li>
+</ul>
+</li>
+<li><a href="#service-locator-the-look-alike">Service locator: the look-alike</a></li>
+<li><a href="#the-same-app-in-five-ecosystems">The same app in five ecosystems</a><ul>
+<li><a href="#why-the-ecosystems-look-so-different">Why the ecosystems look so different</a></li>
+</ul>
+</li>
+<li><a href="#testing-the-payoff">Testing: the payoff</a></li>
+<li><a href="#when-not-to-use-a-container">When NOT to use a container</a></li>
+<li><a href="#pitfalls-and-production-war-stories">Pitfalls and production war stories</a></li>
+<li><a href="#best-practice-checklist">Best-practice checklist</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

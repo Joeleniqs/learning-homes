@@ -1,0 +1,61 @@
+/* Monotonic Stack & Queue: SVG bar charts, arcs, overlays, chips. Colours come from variables only. */
+.msq { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; }
+.msq .v-row { gap: 26px; align-items: flex-end; }
+.msq .v-cells { gap: 3px; }
+.msq .v-cell { min-width: 36px; height: 38px; padding: 0 5px; font-size: 14px; }
+.msq .v-stack { min-width: 92px; }
+.msq-empty { font-size: 11.5px; color: var(--muted); padding: 6px; }
+.msq-chips { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; max-width: 560px; min-height: 30px; }
+.msq-chips .v-item small { display: block; font-size: 10px; color: var(--muted); font-weight: 400; }
+.msq-panel { padding: 6px 14px; border: 1.5px solid var(--line); border-radius: 9px; font: 600 13px "Cascadia Code", Consolas, monospace; }
+.msq-panel.ok { border-color: var(--v-done); background: var(--v-done-soft); }
+.msq-panel.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.msq-svg { max-width: 100%; height: auto; overflow: visible; font: 600 12px "Cascadia Code", Consolas, monospace; }
+.msq-svg .axis { stroke: var(--line); stroke-width: 1.5; }
+.msq-svg .b { fill: var(--v-dim); stroke: none; transition: fill .2s; }
+.msq-svg .b.active { fill: var(--v-active); }
+.msq-svg .b.visit { fill: var(--v-visit); }
+.msq-svg .b.done { fill: var(--v-done); }
+.msq-svg .b.bad { fill: var(--v-bad); }
+.msq-svg .b.path { fill: var(--v-path); }
+.msq-svg .b.ghost, .msq-svg .bv.ghost, .msq-svg .bi.ghost { opacity: .35; }
+.msq-svg .bv { fill: var(--text); font-size: 12px; }
+.msq-svg .bi { fill: var(--muted); font-size: 11px; font-weight: 400; }
+.msq-svg .arc { fill: none; stroke: var(--muted); stroke-width: 1.6; }
+.msq-svg .ah { fill: var(--muted); }
+.msq-svg .arc.old { stroke: var(--v-done); opacity: .35; }
+.msq-svg .ah.old { fill: var(--v-done); opacity: .35; }
+.msq-svg .arc.cur { stroke: var(--v-done); stroke-width: 2.6; }
+.msq-svg .ah.cur { fill: var(--v-done); }
+.msq-svg .arc.prev { stroke: var(--v-visit); stroke-width: 2.2; stroke-dasharray: 5 4; }
+.msq-svg .ah.prev { fill: var(--v-visit); }
+.msq-svg .al { font-size: 11px; fill: var(--text); paint-order: stroke; stroke: var(--surface); stroke-width: 3px; }
+.msq-svg .al.cur { fill: var(--v-done); }
+.msq-svg .al.prev { fill: var(--v-visit); }
+.msq-svg .ov { stroke-width: 2; }
+.msq-svg .ov.cand { fill: var(--v-active-soft); stroke: var(--v-active); fill-opacity: .55; }
+.msq-svg .ov.best { fill: var(--v-done-soft); stroke: var(--v-done); stroke-dasharray: 6 3; fill-opacity: .8; }
+.msq-svg .ov.span { fill: var(--v-visit-soft); stroke: var(--v-visit); stroke-dasharray: 4 3; stroke-width: 1.4; }
+.msq-svg .ov.badspan { fill: var(--v-bad-soft); stroke: var(--v-bad); stroke-dasharray: 4 3; stroke-width: 1.4; }
+.msq-svg .ol { font-size: 12px; fill: var(--text); paint-order: stroke; stroke: var(--surface); stroke-width: 3px; }
+.msq-svg .ol.cand, .msq-svg .ol.cur { fill: var(--text); font-weight: 700; }
+.msq-svg .band { fill: var(--v-path-soft); stroke: var(--v-path); stroke-width: 1; stroke-dasharray: 3 3; }
+.msq-svg .band.alt { fill: var(--v-visit-soft); stroke: var(--v-visit); }
+.msq-svg .band.cur { fill: var(--v-done); stroke: none; }
+.msq-svg .water { fill: var(--v-visit-soft); stroke: var(--v-visit); stroke-width: 1; }
+.msq-svg .water.cur { fill: var(--v-visit); fill-opacity: .55; stroke-width: 2; }
+.msq-svg .pline { fill: none; stroke: var(--line); stroke-width: 2; }
+.msq-svg .pt { fill: var(--v-node); stroke: var(--line); stroke-width: 1.6; }
+.msq-svg .pt.active { fill: var(--v-active-soft); stroke: var(--v-active); stroke-width: 2.4; }
+.msq-svg .pt.path { fill: var(--v-path-soft); stroke: var(--v-path); stroke-width: 2.4; }
+.msq-svg .pt.done { fill: var(--v-done-soft); stroke: var(--v-done); stroke-width: 2.4; }
+.msq-svg .pt.bad { fill: var(--v-bad-soft); stroke: var(--v-bad); stroke-width: 2.4; }
+.msq-svg .pt.ghost { opacity: .35; }
+.msq-svg .pt.old { opacity: .7; }
+.msq-svg .pv { fill: var(--text); font-size: 10px; }
+.msq-svg .need { stroke: var(--v-done); stroke-width: 2.4; }
+.msq-svg .thr { stroke: var(--v-active); stroke-width: 1.4; stroke-dasharray: 5 4; }
+/* Grid inside a viz: undo .prose table rules. */
+.prose .viz .msq table.v-grid { display: table; width: auto; border-collapse: separate; border-spacing: 3px; margin: 0; font-size: inherit; overflow: visible; }
+.prose .viz .msq .v-grid th { padding: 2px 6px; border: 0; min-width: 0; background: none; text-align: center; vertical-align: middle; white-space: nowrap; font-size: 11px; color: var(--muted); }
+.prose .viz .msq .v-grid td.v-gcell { min-width: 34px; padding: 0 5px; border-width: 1.5px; border-radius: 6px; vertical-align: middle; font-size: 11.5px; }

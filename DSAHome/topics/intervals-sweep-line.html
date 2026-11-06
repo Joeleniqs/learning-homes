@@ -1,0 +1,2053 @@
+<!doctype html>
+<html lang="en" data-home="dsa-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Intervals &amp; Sweep Line | DSA Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#4f46e5;--accent-soft:#eef0ff;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#a5b4fc;--accent-soft:#252a5c;}}:root[data-theme=dark]{--accent:#a5b4fc;--accent-soft:#252a5c;}</style>
+  <link rel="stylesheet" href="../assets/topics/intervals-sweep-line.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/intervals-sweep-line.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="DSA Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">DS</span>DSA Home</a>
+    <p class="sidebar-caption">Data structures &amp; algorithms, seen.<br>Every idea animated, every pattern drilled.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations</summary><ul class="topic-list"><li data-search="The Problem-Solving Playbook Foundations A visual decision map from input size, shape and question type to the right technique, plus a repeatable interview/contest workflow. pattern recognition constraints approach interview" data-slug="problem-solving-playbook"><a href="../topics/problem-solving-playbook.html">The Problem-Solving Playbook</a></li><li data-search="Complexity Analysis Foundations Big-O growth you can see, amortized cost, recursion trees and the Master theorem, and what 10^8 operations per second really buys you. big o amortized master theorem time space" data-slug="complexity-analysis"><a href="../topics/complexity-analysis.html">Complexity Analysis</a></li><li data-search="Recursion &amp; the Call Stack Foundations Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from. call stack recursion tree divide and conquer" data-slug="recursion"><a href="../topics/recursion.html">Recursion &amp; the Call Stack</a></li></ul></details><details class="nav-track" open><summary>Arrays &amp; Strings</summary><ul class="topic-list"><li data-search="Two Pointers Arrays &amp; Strings Opposite-end, same-direction and fast/slow pointers: why moving one pointer is safe, with partitioning and k-sum. pair sum partition dutch flag 3sum" data-slug="two-pointers"><a href="../topics/two-pointers.html">Two Pointers</a></li><li data-search="Sliding Window Arrays &amp; Strings Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows. substring subarray window at most k" data-slug="sliding-window"><a href="../topics/sliding-window.html">Sliding Window</a></li><li data-search="Prefix Sums &amp; Difference Arrays Arrays &amp; Strings 1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR. subarray sum equals k range sum 2d prefix difference array" data-slug="prefix-sums"><a href="../topics/prefix-sums.html">Prefix Sums &amp; Difference Arrays</a></li><li data-search="Binary Search Arrays &amp; Strings One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection. lower bound upper bound search on answer rotated monotonic predicate" data-slug="binary-search"><a href="../topics/binary-search.html">Binary Search</a></li><li data-search="Sorting Algorithms Arrays &amp; Strings Animated bubble, insertion, merge, quick, heap, counting and radix sorts; stability, quickselect and custom comparators. merge sort quick sort quickselect counting sort inversions" data-slug="sorting"><a href="../topics/sorting.html">Sorting Algorithms</a></li><li data-search="Hashing Patterns Arrays &amp; Strings How hash tables work inside, then frequency maps, grouping by canonical keys, complement lookups and rolling hashes. hash map hash set anagram two sum collision" data-slug="hashing"><a href="../topics/hashing.html">Hashing Patterns</a></li><li data-search="Monotonic Stack &amp; Queue Arrays &amp; Strings Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight. next greater largest rectangle deque trapping rain water" data-slug="monotonic-stack-queue"><a href="../topics/monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a></li><li data-search="Intervals &amp; Sweep Line Arrays &amp; Strings Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline. merge intervals meeting rooms events skyline" data-slug="intervals-sweep-line"><a href="../topics/intervals-sweep-line.html" aria-current="page">Intervals &amp; Sweep Line</a></li><li data-search="String Algorithms Arrays &amp; Strings KMP failure function, Z-algorithm, Rabin–Karp, Manacher&#x27;s palindromes and string hashing, each animated character by character. kmp z algorithm rabin karp manacher palindrome pattern matching" data-slug="string-algorithms"><a href="../topics/string-algorithms.html">String Algorithms</a></li></ul></details><details class="nav-track"><summary>Linked Lists, Stacks, Queues &amp; Heaps</summary><ul class="topic-list"><li data-search="Linked Lists Linked Lists, Stacks, Queues &amp; Heaps Pointer rewiring you can watch: reversal, dummy heads, fast/slow cycle detection, merging, and LRU cache design. reverse floyd cycle merge lru" data-slug="linked-lists"><a href="../topics/linked-lists.html">Linked Lists</a></li><li data-search="Stacks &amp; Queues Linked Lists, Stacks, Queues &amp; Heaps Balanced brackets, expression evaluation, min-stack, queues from stacks, deques and BFS queues. parentheses calculator deque min stack" data-slug="stacks-queues"><a href="../topics/stacks-queues.html">Stacks &amp; Queues</a></li><li data-search="Heaps &amp; Priority Queues Linked Lists, Stacks, Queues &amp; Heaps Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling. heap top k median k way merge priority queue" data-slug="heaps-priority-queues"><a href="../topics/heaps-priority-queues.html">Heaps &amp; Priority Queues</a></li></ul></details><details class="nav-track"><summary>Trees</summary><ul class="topic-list"><li data-search="Tree Traversals Trees Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees. dfs bfs inorder level order morris" data-slug="tree-traversals"><a href="../topics/tree-traversals.html">Tree Traversals</a></li><li data-search="Binary Search Trees Trees Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters. bst validate successor avl red black" data-slug="binary-search-trees"><a href="../topics/binary-search-trees.html">Binary Search Trees</a></li><li data-search="Tree Problem Patterns Trees Return-value recursion (diameter, max path sum), top-down state, LCA, serialization, and binary lifting. lca diameter path sum binary lifting serialize" data-slug="tree-patterns"><a href="../topics/tree-patterns.html">Tree Problem Patterns</a></li><li data-search="Tries Trees Prefix trees animated insert by insert: autocomplete, word search on boards, and bitwise tries for max XOR. prefix tree autocomplete word search xor trie" data-slug="tries"><a href="../topics/tries.html">Tries</a></li><li data-search="Segment Trees, Fenwick Trees &amp; Sparse Tables Trees Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables. segment tree lazy propagation fenwick bit rmq" data-slug="segment-fenwick-trees"><a href="../topics/segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a></li></ul></details><details class="nav-track"><summary>Graphs</summary><ul class="topic-list"><li data-search="Graph Fundamentals: BFS &amp; DFS Graphs Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS. bfs dfs grid islands connected components cycle" data-slug="graph-fundamentals"><a href="../topics/graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></li><li data-search="Topological Sort &amp; DAGs Graphs Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs. kahn course schedule dag dependency order" data-slug="topological-sort"><a href="../topics/topological-sort.html">Topological Sort &amp; DAGs</a></li><li data-search="Union-Find (Disjoint Set Union) Graphs Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries. dsu disjoint set path compression connectivity" data-slug="union-find"><a href="../topics/union-find.html">Union-Find (Disjoint Set Union)</a></li><li data-search="Shortest Paths Graphs BFS, 0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall and A* animated, and a chart to pick the right one every time. dijkstra bellman ford floyd warshall a star 0-1 bfs" data-slug="shortest-paths"><a href="../topics/shortest-paths.html">Shortest Paths</a></li><li data-search="Minimum Spanning Trees Graphs Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems. kruskal prim mst cut property" data-slug="minimum-spanning-trees"><a href="../topics/minimum-spanning-trees.html">Minimum Spanning Trees</a></li><li data-search="Advanced Graph Algorithms Graphs Strongly connected components, bridges and articulation points, bipartite checks, Euler paths, and max-flow / matching. tarjan kosaraju scc bridges euler max flow bipartite matching" data-slug="advanced-graphs"><a href="../topics/advanced-graphs.html">Advanced Graph Algorithms</a></li></ul></details><details class="nav-track"><summary>Backtracking &amp; Greedy</summary><ul class="topic-list"><li data-search="Backtracking Backtracking &amp; Greedy The choose/explore/un-choose template animated on a decision tree: subsets, permutations, combinations, N-Queens, Sudoku and pruning. subsets permutations n queens sudoku pruning" data-slug="backtracking"><a href="../topics/backtracking.html">Backtracking</a></li><li data-search="Greedy Algorithms Backtracking &amp; Greedy When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding. exchange argument interval scheduling jump game huffman" data-slug="greedy"><a href="../topics/greedy.html">Greedy Algorithms</a></li></ul></details><details class="nav-track"><summary>Dynamic Programming</summary><ul class="topic-list"><li data-search="The DP Framework Dynamic Programming Recursion → memoization → tabulation → space optimisation, visualised on one problem; how to design state and transitions. memoization tabulation state transition overlapping subproblems" data-slug="dp-framework"><a href="../topics/dp-framework.html">The DP Framework</a></li><li data-search="1D &amp; Grid DP Dynamic Programming Climbing stairs, house robber, decode ways, unique paths, min path sum, maximal square and dungeon game with animated tables. house robber unique paths grid dp maximal square" data-slug="dp-linear-grid"><a href="../topics/dp-linear-grid.html">1D &amp; Grid DP</a></li><li data-search="Knapsack Family Dynamic Programming 0/1 vs unbounded vs bounded knapsack, why loop direction matters, coin change, subset sum and target sum. knapsack coin change subset sum partition" data-slug="dp-knapsack"><a href="../topics/dp-knapsack.html">Knapsack Family</a></li><li data-search="Sequence &amp; String DP Dynamic Programming LIS with patience sorting, LCS, edit distance, palindromic subsequences, regex/wildcard matching and distinct subsequences. lis lcs edit distance regex matching palindrome" data-slug="dp-sequences-strings"><a href="../topics/dp-sequences-strings.html">Sequence &amp; String DP</a></li><li data-search="Interval &amp; Tree DP Dynamic Programming Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting). interval dp burst balloons matrix chain tree dp rerooting" data-slug="dp-intervals-trees"><a href="../topics/dp-intervals-trees.html">Interval &amp; Tree DP</a></li><li data-search="Bitmask &amp; Digit DP Dynamic Programming Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints. bitmask tsp digit dp subset dp" data-slug="dp-bitmask-digit"><a href="../topics/dp-bitmask-digit.html">Bitmask &amp; Digit DP</a></li><li data-search="State Machines &amp; DP Optimisations Dynamic Programming Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth. stock state machine convex hull trick knuth optimisation" data-slug="dp-advanced"><a href="../topics/dp-advanced.html">State Machines &amp; DP Optimisations</a></li></ul></details><details class="nav-track"><summary>Bits &amp; Math</summary><ul class="topic-list"><li data-search="Bit Manipulation Bits &amp; Math Bits drawn as switches: masks, XOR tricks, counting bits, subset enumeration and Gray codes. xor mask single number popcount subsets" data-slug="bit-manipulation"><a href="../topics/bit-manipulation.html">Bit Manipulation</a></li><li data-search="Math, Number Theory &amp; Combinatorics Bits &amp; Math GCD, sieves, fast power, modular inverses, nCr mod p, inclusion–exclusion, and the geometry primitives you need. gcd sieve modular fast exponentiation combinatorics geometry" data-slug="math-number-theory"><a href="../topics/math-number-theory.html">Math, Number Theory &amp; Combinatorics</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../CodeExcellenceHome/index.html">Code Excellence Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>DSA Home / Intervals &amp; Sweep Line</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">ARRAYS &AMP; STRINGS</p><h1>Intervals &amp; Sweep Line</h1><p class="lede">Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline.</p><div class="meta"><span class="level level-intermediate">Intermediate → Advanced</span><span>~45 min study</span><span>Builds on: <a href="sorting.html">Sorting Algorithms</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="intervals-sweep-line" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="what-it-is-and-when-you-need-it">What it is and when you need it</h2>
+<p>An <strong>interval</strong> is a pair <code>[start, end]</code>: a meeting, a booking, a car trip, a building's footprint, a range of IDs. Interval problems ask what happens when many of them sit on the same line. Which ones overlap? How many overlap at the busiest moment? What is the fewest you must delete so that none overlap? What does their union look like? Checking every pair against every other pair is O(n²). Almost every interval problem becomes O(n log n) with <strong>one sort followed by one left-to-right pass</strong>.</p>
+<div class="rule">
+<p><strong>The invariant.</strong> Sort first, then sweep a vertical line from left to right. At any moment the sweep only needs a small <strong>summary of what is still open</strong> behind the line: the end of the last merged block, a count of active intervals, a heap of end times, or the heights of live buildings. Everything to the left that has already closed can never matter again. Sorting by <strong>start</strong> makes "what is open" easy to maintain. Sorting by <strong>end</strong> makes greedy choices safe.</p>
+</div>
+<p>There are only two kinds of sweep, and this page builds both from pictures:</p>
+<ul>
+<li><strong>Interval sweep:</strong> walk the intervals themselves in sorted order, comparing each with a running summary. Used by merge, insert, greedy selection and the two-list intersection.</li>
+<li><strong>Event sweep:</strong> split each interval into two <strong>events</strong>, a start (+1) and an end (−1), sort the events, and keep a running total. Used by meeting rooms, car pooling, calendars, the skyline and area of rectangles. When the coordinates are small integers, the sorted events become a <strong>difference array</strong>.</li>
+</ul>
+<p>You should know <a href="sorting.html">Sorting</a> first, especially sorting by a key. Heaps appear in the second half; see <a href="heaps-priority-queues.html">Heaps &amp; Priority Queues</a>.</p>
+<div class="compare">
+<div class="bad">
+<h4 id="all-pairs-on2">All pairs: O(n²)</h4>
+<p>Compare every interval with every other one. Correct, easy, and the reference to test against, but it times out at n = 10⁵. It also answers the wrong question for "how many at once?": pairwise overlaps do not tell you that three intervals share one moment.</p>
+</div>
+<div class="warn">
+<h4 id="paint-a-timeline-on-range">Paint a timeline: O(n · range)</h4>
+<p>Mark every unit of time each interval covers. It is fine when times are small integers and intervals are short. It breaks when times go up to 10⁹, or when the endpoints are real numbers.</p>
+</div>
+<div class="good">
+<h4 id="sort-sweep-on-log-n">Sort + sweep: O(n log n)</h4>
+<p>Only the <strong>2n endpoints</strong> can change anything, so sort them once and visit each one once. Between two consecutive endpoints nothing happens, so you never have to look there.</p>
+</div>
+</div>
+<h2 id="intuition-draw-them-on-a-number-line">Intuition: draw them on a number line</h2>
+<p>Every interval question gets easier once you <strong>draw the intervals as bars stacked over one shared axis</strong>. Every visualizer on this page does exactly that. The first question is always the same: do two intervals overlap?</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 404" width="900" role="img" aria-label="Seven placements of interval b relative to a = [4,10) with the two-condition overlap test evaluated for each">
+<text x="450" y="22" text-anchor="middle" class="title">Seven ways b can sit next to a = [4, 10), and one test that covers all of them</text>
+<text x="186" y="61" text-anchor="end" class="mono">a = [4, 10)</text>
+<rect class="box active" x="320" y="44" width="180" height="22" rx="4"/>
+<line class="edge dash" x1="320" y1="38" x2="320" y2="344"/>
+<line class="edge dash" x1="500" y1="38" x2="500" y2="344"/>
+<text x="682" y="60" text-anchor="middle" class="small mono">a.s &lt; b.e</text>
+<text x="760" y="60" text-anchor="middle" class="small mono">b.s &lt; a.e</text>
+<text x="834" y="60" text-anchor="middle" class="small">overlap?</text>
+<text x="186" y="96" text-anchor="end" class="small">b entirely before a</text>
+<rect class="box path" x="200" y="80" width="90" height="22" rx="4"/>
+<text x="245" y="95" text-anchor="middle" class="small mono">[0, 3)</text>
+<text x="682" y="96" text-anchor="middle" class="small mono fill-bad">no</text>
+<text x="760" y="96" text-anchor="middle" class="small mono fill-done">yes</text>
+<text x="834" y="96" text-anchor="middle" class="small muted">apart</text>
+<text x="186" y="134" text-anchor="end" class="small">b ends exactly where a starts</text>
+<rect class="box path" x="230" y="118" width="90" height="22" rx="4"/>
+<text x="275" y="133" text-anchor="middle" class="small mono">[1, 4)</text>
+<text x="682" y="134" text-anchor="middle" class="small mono fill-bad">no</text>
+<text x="760" y="134" text-anchor="middle" class="small mono fill-done">yes</text>
+<text x="834" y="134" text-anchor="middle" class="small muted">apart</text>
+<text x="186" y="172" text-anchor="end" class="small">b overlaps a's left part</text>
+<rect class="box path" x="260" y="156" width="120" height="22" rx="4"/>
+<text x="320" y="171" text-anchor="middle" class="small mono">[2, 6)</text>
+<rect class="box done" x="320" y="180" width="60" height="6" rx="2"/>
+<text x="682" y="172" text-anchor="middle" class="small mono fill-done">yes</text>
+<text x="760" y="172" text-anchor="middle" class="small mono fill-done">yes</text>
+<text x="834" y="172" text-anchor="middle" class="small fill-done">OVERLAP</text>
+<text x="186" y="210" text-anchor="end" class="small">b sits inside a</text>
+<rect class="box path" x="350" y="194" width="90" height="22" rx="4"/>
+<text x="395" y="209" text-anchor="middle" class="small mono">[5, 8)</text>
+<rect class="box done" x="350" y="218" width="90" height="6" rx="2"/>
+<text x="682" y="210" text-anchor="middle" class="small mono fill-done">yes</text>
+<text x="760" y="210" text-anchor="middle" class="small mono fill-done">yes</text>
+<text x="834" y="210" text-anchor="middle" class="small fill-done">OVERLAP</text>
+<text x="186" y="248" text-anchor="end" class="small">b swallows a</text>
+<rect class="box path" x="260" y="232" width="300" height="22" rx="4"/>
+<text x="410" y="247" text-anchor="middle" class="small mono">[2, 12)</text>
+<rect class="box done" x="320" y="256" width="180" height="6" rx="2"/>
+<text x="682" y="248" text-anchor="middle" class="small mono fill-done">yes</text>
+<text x="760" y="248" text-anchor="middle" class="small mono fill-done">yes</text>
+<text x="834" y="248" text-anchor="middle" class="small fill-done">OVERLAP</text>
+<text x="186" y="286" text-anchor="end" class="small">b overlaps a's right part</text>
+<rect class="box path" x="440" y="270" width="150" height="22" rx="4"/>
+<text x="515" y="285" text-anchor="middle" class="small mono">[8, 13)</text>
+<rect class="box done" x="440" y="294" width="60" height="6" rx="2"/>
+<text x="682" y="286" text-anchor="middle" class="small mono fill-done">yes</text>
+<text x="760" y="286" text-anchor="middle" class="small mono fill-done">yes</text>
+<text x="834" y="286" text-anchor="middle" class="small fill-done">OVERLAP</text>
+<text x="186" y="324" text-anchor="end" class="small">b entirely after a</text>
+<rect class="box path" x="530" y="308" width="90" height="22" rx="4"/>
+<text x="575" y="323" text-anchor="middle" class="small mono">[11, 14)</text>
+<text x="682" y="324" text-anchor="middle" class="small mono fill-done">yes</text>
+<text x="760" y="324" text-anchor="middle" class="small mono fill-bad">no</text>
+<text x="834" y="324" text-anchor="middle" class="small muted">apart</text>
+<line class="edge" x1="194" y1="350" x2="626" y2="350"/>
+<line class="edge" x1="200" y1="347" x2="200" y2="353"/>
+<text x="200" y="365" text-anchor="middle" class="small muted mono">0</text>
+<line class="edge" x1="230" y1="347" x2="230" y2="353"/>
+<text x="230" y="365" text-anchor="middle" class="small muted mono">1</text>
+<line class="edge" x1="260" y1="347" x2="260" y2="353"/>
+<text x="260" y="365" text-anchor="middle" class="small muted mono">2</text>
+<line class="edge" x1="290" y1="347" x2="290" y2="353"/>
+<text x="290" y="365" text-anchor="middle" class="small muted mono">3</text>
+<line class="edge" x1="320" y1="347" x2="320" y2="353"/>
+<text x="320" y="365" text-anchor="middle" class="small muted mono">4</text>
+<line class="edge" x1="350" y1="347" x2="350" y2="353"/>
+<text x="350" y="365" text-anchor="middle" class="small muted mono">5</text>
+<line class="edge" x1="380" y1="347" x2="380" y2="353"/>
+<text x="380" y="365" text-anchor="middle" class="small muted mono">6</text>
+<line class="edge" x1="410" y1="347" x2="410" y2="353"/>
+<text x="410" y="365" text-anchor="middle" class="small muted mono">7</text>
+<line class="edge" x1="440" y1="347" x2="440" y2="353"/>
+<text x="440" y="365" text-anchor="middle" class="small muted mono">8</text>
+<line class="edge" x1="470" y1="347" x2="470" y2="353"/>
+<text x="470" y="365" text-anchor="middle" class="small muted mono">9</text>
+<line class="edge" x1="500" y1="347" x2="500" y2="353"/>
+<text x="500" y="365" text-anchor="middle" class="small muted mono">10</text>
+<line class="edge" x1="530" y1="347" x2="530" y2="353"/>
+<text x="530" y="365" text-anchor="middle" class="small muted mono">11</text>
+<line class="edge" x1="560" y1="347" x2="560" y2="353"/>
+<text x="560" y="365" text-anchor="middle" class="small muted mono">12</text>
+<line class="edge" x1="590" y1="347" x2="590" y2="353"/>
+<text x="590" y="365" text-anchor="middle" class="small muted mono">13</text>
+<line class="edge" x1="620" y1="347" x2="620" y2="353"/>
+<text x="620" y="365" text-anchor="middle" class="small muted mono">14</text>
+<text x="450" y="390" text-anchor="middle" class="small">Overlap ⇔ a.s &lt; b.e AND b.s &lt; a.e.  The shared piece (green strip) is [max(starts), min(ends)).</text>
+</svg>
+<figcaption>Do not memorise cases. Two intervals are <b>apart</b> only when one ends before the other starts (rows 1, 2 and 7). Negate that and you get the two-condition test, which handles every other row, including “inside” and “swallows”. The green strip under each overlapping row is the intersection <code>[max(a.s, b.s), min(a.e, b.e))</code>. It is non-empty exactly when the test passes.</figcaption>
+</figure>
+
+<div class="insight">
+<p><strong>Think "apart", then negate</strong>
+Two intervals are apart exactly when one ends before the other starts: <code>a.e &lt;= b.s or b.e &lt;= a.s</code>. Negating it with De Morgan's law gives the overlap test <code>a.s &lt; b.e and b.s &lt; a.e</code>. The same idea in one line: <strong>the latest start comes before the earliest end</strong>, <code>max(a.s, b.s) &lt; min(a.e, b.e)</code>. That second form also gives you the overlap itself: <code>[max(starts), min(ends))</code>.</p>
+</div>
+<h3 id="closed-or-half-open-decide-once">Closed or half-open? Decide once</h3>
+<p>The single most common interval bug is a <code>&lt;</code> that should have been <code>&lt;=</code>, or the other way round. It comes from mixing two conventions for what an endpoint means.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 262" width="900" role="img" aria-label="Two intervals that touch at 5, drawn with closed endpoints on the left and half-open endpoints on the right">
+<text x="450" y="22" text-anchor="middle" class="title">Is “ends at 5” and “starts at 5” a conflict? It depends on the endpoint convention.</text>
+<text x="238" y="54" text-anchor="middle" class="small fill-active">Closed  [s, e]  (both ends included)</text>
+<line class="edge path" x1="128" y1="92" x2="260" y2="92"/>
+<circle class="fill-path" cx="128" cy="92" r="6"/>
+<circle class="fill-path" cx="260" cy="92" r="6"/>
+<text x="194" y="82" text-anchor="middle" class="small mono">[2, 5]</text>
+<line class="edge path" x1="260" y1="132" x2="392" y2="132"/>
+<circle class="fill-path" cx="260" cy="132" r="6"/>
+<circle class="fill-path" cx="392" cy="132" r="6"/>
+<text x="326" y="122" text-anchor="middle" class="small mono">[5, 8]</text>
+<line class="edge dash" x1="260" y1="70" x2="260" y2="150"/>
+<line class="edge" x1="34" y1="170" x2="442" y2="170"/>
+<line class="edge" x1="40" y1="167" x2="40" y2="173"/>
+<text x="40" y="185" text-anchor="middle" class="small muted mono">0</text>
+<line class="edge" x1="84" y1="167" x2="84" y2="173"/>
+<text x="84" y="185" text-anchor="middle" class="small muted mono">1</text>
+<line class="edge" x1="128" y1="167" x2="128" y2="173"/>
+<text x="128" y="185" text-anchor="middle" class="small muted mono">2</text>
+<line class="edge" x1="172" y1="167" x2="172" y2="173"/>
+<text x="172" y="185" text-anchor="middle" class="small muted mono">3</text>
+<line class="edge" x1="216" y1="167" x2="216" y2="173"/>
+<text x="216" y="185" text-anchor="middle" class="small muted mono">4</text>
+<line class="edge" x1="260" y1="167" x2="260" y2="173"/>
+<text x="260" y="185" text-anchor="middle" class="small muted mono">5</text>
+<line class="edge" x1="304" y1="167" x2="304" y2="173"/>
+<text x="304" y="185" text-anchor="middle" class="small muted mono">6</text>
+<line class="edge" x1="348" y1="167" x2="348" y2="173"/>
+<text x="348" y="185" text-anchor="middle" class="small muted mono">7</text>
+<line class="edge" x1="392" y1="167" x2="392" y2="173"/>
+<text x="392" y="185" text-anchor="middle" class="small muted mono">8</text>
+<line class="edge" x1="436" y1="167" x2="436" y2="173"/>
+<text x="436" y="185" text-anchor="middle" class="small muted mono">9</text>
+<text x="238" y="212" text-anchor="middle" class="small fill-bad">Both contain the point 5 → they OVERLAP.</text>
+<text x="238" y="230" text-anchor="middle" class="small mono">Test: a.s ≤ b.e and b.s ≤ a.e</text>
+<text x="238" y="248" text-anchor="middle" class="small muted">Integers covered: e − s + 1   ([2, 5] → 2, 3, 4, 5)</text>
+<text x="678" y="54" text-anchor="middle" class="small fill-path">Half-open  [s, e)  (end excluded)</text>
+<line class="edge path" x1="568" y1="92" x2="700" y2="92"/>
+<circle class="fill-path" cx="568" cy="92" r="6"/>
+<circle class="box path" cx="700" cy="92" r="6"/>
+<text x="634" y="82" text-anchor="middle" class="small mono">[2, 5)</text>
+<line class="edge path" x1="700" y1="132" x2="832" y2="132"/>
+<circle class="fill-path" cx="700" cy="132" r="6"/>
+<circle class="box path" cx="832" cy="132" r="6"/>
+<text x="766" y="122" text-anchor="middle" class="small mono">[5, 8)</text>
+<line class="edge dash" x1="700" y1="70" x2="700" y2="150"/>
+<line class="edge" x1="474" y1="170" x2="882" y2="170"/>
+<line class="edge" x1="480" y1="167" x2="480" y2="173"/>
+<text x="480" y="185" text-anchor="middle" class="small muted mono">0</text>
+<line class="edge" x1="524" y1="167" x2="524" y2="173"/>
+<text x="524" y="185" text-anchor="middle" class="small muted mono">1</text>
+<line class="edge" x1="568" y1="167" x2="568" y2="173"/>
+<text x="568" y="185" text-anchor="middle" class="small muted mono">2</text>
+<line class="edge" x1="612" y1="167" x2="612" y2="173"/>
+<text x="612" y="185" text-anchor="middle" class="small muted mono">3</text>
+<line class="edge" x1="656" y1="167" x2="656" y2="173"/>
+<text x="656" y="185" text-anchor="middle" class="small muted mono">4</text>
+<line class="edge" x1="700" y1="167" x2="700" y2="173"/>
+<text x="700" y="185" text-anchor="middle" class="small muted mono">5</text>
+<line class="edge" x1="744" y1="167" x2="744" y2="173"/>
+<text x="744" y="185" text-anchor="middle" class="small muted mono">6</text>
+<line class="edge" x1="788" y1="167" x2="788" y2="173"/>
+<text x="788" y="185" text-anchor="middle" class="small muted mono">7</text>
+<line class="edge" x1="832" y1="167" x2="832" y2="173"/>
+<text x="832" y="185" text-anchor="middle" class="small muted mono">8</text>
+<line class="edge" x1="876" y1="167" x2="876" y2="173"/>
+<text x="876" y="185" text-anchor="middle" class="small muted mono">9</text>
+<text x="678" y="212" text-anchor="middle" class="small fill-done">5 belongs only to the second → they do NOT overlap.</text>
+<text x="678" y="230" text-anchor="middle" class="small mono">Test: a.s &lt; b.e and b.s &lt; a.e</text>
+<text x="678" y="248" text-anchor="middle" class="small muted">Integers covered: e − s   ([2, 5) → 2, 3, 4)</text>
+<line class="edge dash" x1="450" y1="44" x2="450" y2="256"/>
+</svg>
+<figcaption>A filled dot means the endpoint is included, a hollow dot means it is not. Meetings, bookings and car trips are naturally <b>half-open</b>: a meeting that ends at 5 frees the room for one that starts at 5. Problems like Merge Intervals and Interval List Intersections use <b>closed</b> intervals, where touching counts. Read the problem, pick one convention, and let it decide every <code>&lt;</code> versus <code>≤</code> in your code.</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th>Convention</th>
+<th>Overlap test</th>
+<th>Touching <code>[1,5]</code> and <code>[5,8]</code></th>
+<th>Length</th>
+<th>Typical problems</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Half-open <code>[s, e)</code></td>
+<td><code>a.s &lt; b.e and b.s &lt; a.e</code></td>
+<td>apart</td>
+<td><code>e − s</code></td>
+<td>Meeting Rooms, My Calendar, Car Pooling, Non-overlapping Intervals</td>
+</tr>
+<tr>
+<td>Closed <code>[s, e]</code></td>
+<td><code>a.s &lt;= b.e and b.s &lt;= a.e</code></td>
+<td>overlap</td>
+<td><code>e − s + 1</code></td>
+<td>Merge Intervals, Interval List Intersections, Min Arrows, Flight Bookings</td>
+</tr>
+</tbody>
+</table>
+<div class="tip">
+<p><strong>Convert closed to half-open for integers</strong>
+For integer coordinates, the closed interval <code>[s, e]</code> is the same set as the half-open <code>[s, e + 1)</code>. Converting at input time lets you write every comparison with <code>&lt;</code>, and makes lengths a plain subtraction. Corporate Flight Bookings is easiest this way: the booking <code>[first, last]</code> becomes <code>+seats</code> at <code>first</code> and <code>−seats</code> at <code>last + 1</code>.</p>
+</div>
+<p>Try both conventions below. Put the two intervals end to end (the default <code>[2,6]</code> and <code>[6,9]</code>) and switch the meaning. The latest start <code>lo</code> and the earliest end <code>hi</code> are marked, and the verdict depends only on how <code>lo</code> compares with <code>hi</code>.</p>
+<div class="viz" data-viz="intervals-sweep-line-overlap"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def overlaps(a: tuple[int, int], b: tuple[int, int]) -&gt; bool:
+    &quot;&quot;&quot;Half-open [s, e): touching intervals do NOT overlap.&quot;&quot;&quot;
+    return a[0] &lt; b[1] and b[0] &lt; a[1]
+
+
+def overlaps_closed(a: tuple[int, int], b: tuple[int, int]) -&gt; bool:
+    &quot;&quot;&quot;Closed [s, e]: sharing one endpoint counts as overlap.&quot;&quot;&quot;
+    return a[0] &lt;= b[1] and b[0] &lt;= a[1]
+
+
+def intersection(a, b):
+    &quot;&quot;&quot;The shared piece of two closed intervals, or None.&quot;&quot;&quot;
+    lo, hi = max(a[0], b[0]), min(a[1], b[1])
+    return (lo, hi) if lo &lt;= hi else None
+</code></pre>
+<pre><code class="language-csharp">// Half-open [s, e): touching intervals do NOT overlap.
+public static bool Overlaps((int S, int E) a, (int S, int E) b)
+    =&gt; a.S &lt; b.E &amp;&amp; b.S &lt; a.E;
+
+// Closed [s, e]: sharing one endpoint counts as overlap.
+public static bool OverlapsClosed((int S, int E) a, (int S, int E) b)
+    =&gt; a.S &lt;= b.E &amp;&amp; b.S &lt;= a.E;
+
+// The shared piece of two closed intervals, or null.
+public static (int S, int E)? Intersection((int S, int E) a, (int S, int E) b)
+{
+    int lo = Math.Max(a.S, b.S), hi = Math.Min(a.E, b.E);
+    return lo &lt;= hi ? (lo, hi) : null;
+}
+</code></pre>
+</div>
+<h2 id="merge-intervals-sort-by-start-compare-with-the-last-block-only">Merge Intervals: sort by start, compare with the last block only</h2>
+<p><em>Given a list of closed intervals, merge every group of overlapping ones and return the disjoint result.</em> This is the most-asked interval problem, and its loop is the skeleton of half the others.</p>
+<p>Why does sorting by start make this one pass? Once the list is sorted, the intervals that belong to the same merged block are <strong>consecutive</strong>. A new interval cannot reach back past the last block, because every earlier block ended before the last block started. So the only question per interval is: <em>does it start before the last block ends?</em></p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 344" width="900" role="img" aria-label="Six sorted intervals merging into three blocks, with the decision for each interval">
+<text x="450" y="22" text-anchor="middle" class="title">Sorted by start, each interval either extends the last block or opens a new one</text>
+<rect class="box path" x="80" y="60" width="68" height="22" rx="4"/>
+<text x="114" y="75" text-anchor="middle" class="small mono">[1,3]</text>
+<text x="628" y="75" text-anchor="start" class="small fill-path">first interval opens block 1</text>
+<rect class="box path" x="114" y="94" width="136" height="22" rx="4"/>
+<text x="182" y="109" text-anchor="middle" class="small mono">[2,6]</text>
+<text x="628" y="109" text-anchor="start" class="small fill-done">2 ≤ 3: overlap, end becomes 6</text>
+<rect class="box path" x="182" y="128" width="34" height="22" rx="4"/>
+<text x="199" y="143" text-anchor="middle" class="small mono">[4,5]</text>
+<text x="628" y="143" text-anchor="start" class="small fill-active">4 ≤ 6: inside, end stays max(6, 5) = 6</text>
+<rect class="box path" x="318" y="162" width="68" height="22" rx="4"/>
+<text x="352" y="177" text-anchor="middle" class="small mono">[8,10]</text>
+<text x="628" y="177" text-anchor="start" class="small fill-path">8 &gt; 6: gap, open a new block</text>
+<rect class="box path" x="352" y="196" width="102" height="22" rx="4"/>
+<text x="403" y="211" text-anchor="middle" class="small mono">[9,12]</text>
+<text x="628" y="211" text-anchor="start" class="small fill-done">9 ≤ 10: overlap, end becomes 12</text>
+<rect class="box path" x="522" y="230" width="68" height="22" rx="4"/>
+<text x="556" y="245" text-anchor="middle" class="small mono">[14,16]</text>
+<text x="628" y="245" text-anchor="start" class="small fill-path">14 &gt; 12: gap, open a new block</text>
+<text x="42" y="276" text-anchor="start" class="small muted">result</text>
+<rect class="box done" x="80" y="282" width="170" height="26" rx="4"/>
+<text x="165" y="299" text-anchor="middle" class="mono">[1,6]</text>
+<rect class="box done" x="318" y="282" width="136" height="26" rx="4"/>
+<text x="386" y="299" text-anchor="middle" class="mono">[8,12]</text>
+<rect class="box done" x="522" y="282" width="68" height="26" rx="4"/>
+<text x="556" y="299" text-anchor="middle" class="mono">[14,16]</text>
+<line class="edge" x1="40" y1="320" x2="630" y2="320"/>
+<line class="edge" x1="46" y1="317" x2="46" y2="323"/>
+<text x="46" y="335" text-anchor="middle" class="small muted mono">0</text>
+<line class="edge" x1="80" y1="317" x2="80" y2="323"/>
+<text x="80" y="335" text-anchor="middle" class="small muted mono">1</text>
+<line class="edge" x1="114" y1="317" x2="114" y2="323"/>
+<text x="114" y="335" text-anchor="middle" class="small muted mono">2</text>
+<line class="edge" x1="148" y1="317" x2="148" y2="323"/>
+<text x="148" y="335" text-anchor="middle" class="small muted mono">3</text>
+<line class="edge" x1="182" y1="317" x2="182" y2="323"/>
+<text x="182" y="335" text-anchor="middle" class="small muted mono">4</text>
+<line class="edge" x1="216" y1="317" x2="216" y2="323"/>
+<text x="216" y="335" text-anchor="middle" class="small muted mono">5</text>
+<line class="edge" x1="250" y1="317" x2="250" y2="323"/>
+<text x="250" y="335" text-anchor="middle" class="small muted mono">6</text>
+<line class="edge" x1="284" y1="317" x2="284" y2="323"/>
+<text x="284" y="335" text-anchor="middle" class="small muted mono">7</text>
+<line class="edge" x1="318" y1="317" x2="318" y2="323"/>
+<text x="318" y="335" text-anchor="middle" class="small muted mono">8</text>
+<line class="edge" x1="352" y1="317" x2="352" y2="323"/>
+<text x="352" y="335" text-anchor="middle" class="small muted mono">9</text>
+<line class="edge" x1="386" y1="317" x2="386" y2="323"/>
+<text x="386" y="335" text-anchor="middle" class="small muted mono">10</text>
+<line class="edge" x1="420" y1="317" x2="420" y2="323"/>
+<text x="420" y="335" text-anchor="middle" class="small muted mono">11</text>
+<line class="edge" x1="454" y1="317" x2="454" y2="323"/>
+<text x="454" y="335" text-anchor="middle" class="small muted mono">12</text>
+<line class="edge" x1="488" y1="317" x2="488" y2="323"/>
+<text x="488" y="335" text-anchor="middle" class="small muted mono">13</text>
+<line class="edge" x1="522" y1="317" x2="522" y2="323"/>
+<text x="522" y="335" text-anchor="middle" class="small muted mono">14</text>
+<line class="edge" x1="556" y1="317" x2="556" y2="323"/>
+<text x="556" y="335" text-anchor="middle" class="small muted mono">15</text>
+<line class="edge" x1="590" y1="317" x2="590" y2="323"/>
+<text x="590" y="335" text-anchor="middle" class="small muted mono">16</text>
+<line class="edge" x1="624" y1="317" x2="624" y2="323"/>
+<text x="624" y="335" text-anchor="middle" class="small muted mono">17</text>
+</svg>
+<figcaption>Because the list is sorted by start, a new interval can only touch the <b>last</b> block, never an earlier one. The third row is the classic bug: <code>[4,5]</code> sits inside <code>[1,6]</code>, so the end must be <code>max(6, 5)</code>. Writing <code>end = e</code> would shrink the block to 5.</figcaption>
+</figure>
+
+<p>Step through it. The <code>last end</code> marker is the only state the algorithm keeps. Switch the touching rule to see <code>[6,7]</code> join or not join <code>[2,6]</code>. The final frame checks the result against a brute force that keeps merging any overlapping pair until none is left.</p>
+<div class="viz" data-viz="intervals-sweep-line-merge"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def merge(intervals: list[list[int]]) -&gt; list[list[int]]:
+    &quot;&quot;&quot;LeetCode 56. Closed intervals: [1,4] and [4,5] merge.&quot;&quot;&quot;
+    out: list[list[int]] = []
+    for s, e in sorted(intervals):            # by start (then end)
+        if out and s &lt;= out[-1][1]:           # overlaps the last block
+            out[-1][1] = max(out[-1][1], e)   # max: e may be inside
+        else:
+            out.append([s, e])                # gap: open a new block
+    return out
+</code></pre>
+<pre><code class="language-csharp">// LeetCode 56. Closed intervals: [1,4] and [4,5] merge.
+public static int[][] Merge(int[][] intervals)
+{
+    var sorted = intervals.OrderBy(iv =&gt; iv[0]).ToArray();
+    var outList = new List&lt;int[]&gt;();
+    foreach (var iv in sorted)
+    {
+        if (outList.Count &gt; 0 &amp;&amp; iv[0] &lt;= outList[^1][1])
+            outList[^1][1] = Math.Max(outList[^1][1], iv[1]);
+        else
+            outList.Add(new[] { iv[0], iv[1] });
+    }
+    return outList.ToArray();
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n log n) time for the sort plus O(n) for the pass, and O(n) for the output. For half-open intervals (where touching does not merge), change <code>s &lt;= last_end</code> to <code>s &lt; last_end</code>. The rest is identical.</p>
+<h2 id="insert-interval-three-runs-no-sort">Insert Interval: three runs, no sort</h2>
+<p><em>The list is already sorted and disjoint. Insert one new interval and merge where needed.</em> You could append it and call <code>merge</code> (O(n log n)), but the existing order lets you do it in O(n). Read the list in three runs:</p>
+<ol>
+<li><strong>Left run:</strong> intervals that end before the new one starts (<code>iv.e &lt; s</code>). Copy them unchanged.</li>
+<li><strong>Swallowed run:</strong> intervals that start no later than the new one ends (<code>iv.s &lt;= e</code>). Each of them overlaps it, so stretch the new interval to cover it: <code>s = min(s, iv.s)</code> and <code>e = max(e, iv.e)</code>.</li>
+<li><strong>Right run:</strong> everything after that. Emit the stretched interval, then copy the rest.</li>
+</ol>
+<p>The visualizer colours the three runs as they are discovered. The original new interval stays behind as a faded ghost, and the stretched copy grows each time it swallows a neighbour.</p>
+<div class="viz" data-viz="intervals-sweep-line-insert"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def insert(intervals: list[list[int]], new: list[int]) -&gt; list[list[int]]:
+    &quot;&quot;&quot;LeetCode 57. intervals is sorted and disjoint (closed).&quot;&quot;&quot;
+    s, e = new
+    out, i, n = [], 0, len(intervals)
+    while i &lt; n and intervals[i][1] &lt; s:      # 1. ends before new starts
+        out.append(intervals[i])
+        i += 1
+    while i &lt; n and intervals[i][0] &lt;= e:     # 2. overlaps: swallow it
+        s = min(s, intervals[i][0])
+        e = max(e, intervals[i][1])
+        i += 1
+    out.append([s, e])
+    out.extend(intervals[i:])                 # 3. starts after new ends
+    return out
+</code></pre>
+<pre><code class="language-csharp">// LeetCode 57. intervals is sorted and disjoint (closed).
+public static int[][] Insert(int[][] intervals, int[] newInterval)
+{
+    int s = newInterval[0], e = newInterval[1], i = 0, n = intervals.Length;
+    var res = new List&lt;int[]&gt;();
+    while (i &lt; n &amp;&amp; intervals[i][1] &lt; s) res.Add(intervals[i++]);
+    while (i &lt; n &amp;&amp; intervals[i][0] &lt;= e)
+    {
+        s = Math.Min(s, intervals[i][0]);
+        e = Math.Max(e, intervals[i][1]);
+        i++;
+    }
+    res.Add(new[] { s, e });
+    while (i &lt; n) res.Add(intervals[i++]);
+    return res.ToArray();
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n) time. Finding where the left run ends could use binary search, but the copying is O(n) anyway. If you need many inserts, see <em>Data Stream as Disjoint Intervals</em> under Worked problems, where a sorted structure makes each insert O(log n).</p>
+<h2 id="greedy-selection-sort-by-end">Greedy selection: sort by END</h2>
+<p>A different family asks you to <strong>choose</strong> intervals:</p>
+<ul>
+<li><strong>Non-overlapping Intervals (LC 435):</strong> erase as few as possible so the rest do not overlap.</li>
+<li><strong>Minimum Arrows (LC 452):</strong> each balloon is an interval on the x-axis, and one vertical arrow bursts every balloon it touches. How few arrows burst them all?</li>
+<li><strong>Maximum Length of Pair Chain</strong> and <strong>Activity Selection:</strong> keep as many non-overlapping intervals as possible.</li>
+</ul>
+<p>They are the same problem. Keeping the most non-overlapping intervals is the same as erasing the fewest. And the minimum number of arrows equals the maximum number of pairwise-disjoint balloons, because each disjoint balloon needs its own arrow, and one arrow at the end of each kept balloon bursts everything that was skipped. The greedy rule is: <strong>sort by end, and keep each interval that starts after the last kept one ends.</strong></p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 228" width="900" role="img" aria-label="Exchange argument for greedy by earliest end, and a counterexample for sorting by start">
+<text x="450" y="22" text-anchor="middle" class="title">Why “keep the interval that ends first” is safe</text>
+<text x="220" y="50" text-anchor="middle" class="small fill-active">Exchange argument</text>
+<rect class="box done" x="70" y="66" width="90" height="22" rx="4"/>
+<text x="64" y="81" text-anchor="end" class="mono fill-done">g</text>
+<text x="115" y="81" text-anchor="middle" class="small">earliest end</text>
+<rect class="box bad" x="40" y="100" width="180" height="22" rx="4"/>
+<text x="34" y="115" text-anchor="end" class="mono fill-bad">o</text>
+<text x="130" y="115" text-anchor="middle" class="small">best plan's first</text>
+<rect class="box path" x="250" y="100" width="60" height="22" rx="4"/>
+<rect class="box path" x="340" y="100" width="90" height="22" rx="4"/>
+<text x="340" y="140" text-anchor="middle" class="small fill-path">rest of the best plan</text>
+<line class="edge done dash" x1="160" y1="58" x2="160" y2="150"/>
+<line class="edge bad dash" x1="220" y1="58" x2="220" y2="150"/>
+<text x="160" y="168" text-anchor="middle" class="small mono fill-done">end(g)</text>
+<text x="220" y="168" text-anchor="middle" class="small mono fill-bad">≤ end(o)</text>
+<text x="220" y="194" text-anchor="middle" class="small">Swap o for g: g ends no later, so it cannot clash with the rest.</text>
+<text x="220" y="212" text-anchor="middle" class="small">The plan keeps the same size, so taking g first loses nothing.</text>
+<line class="edge dash" x1="450" y1="40" x2="450" y2="220"/>
+<text x="680" y="50" text-anchor="middle" class="small fill-bad">Sorting by start instead fails</text>
+<rect class="box bad" x="490" y="66" width="330" height="22" rx="4"/>
+<text x="655" y="81" text-anchor="middle" class="small">[0, 11)  starts first, blocks everything</text>
+<rect class="box done" x="520" y="100" width="60" height="22" rx="4"/>
+<text x="550" y="115" text-anchor="middle" class="small mono">[1,3)</text>
+<rect class="box done" x="610" y="100" width="60" height="22" rx="4"/>
+<text x="640" y="115" text-anchor="middle" class="small mono">[4,6)</text>
+<rect class="box done" x="700" y="100" width="60" height="22" rx="4"/>
+<text x="730" y="115" text-anchor="middle" class="small mono">[7,9)</text>
+<text x="680" y="150" text-anchor="middle" class="small mono fill-bad">by start: keep [0,11), erase 3</text>
+<text x="680" y="170" text-anchor="middle" class="small mono fill-done">by end: keep the three short ones, erase 1</text>
+<text x="680" y="200" text-anchor="middle" class="small muted">A long interval that starts early looks harmless</text>
+<text x="680" y="216" text-anchor="middle" class="small muted">but it eats the room many short ones would use.</text>
+</svg>
+<figcaption>Left: in any best selection, replace its first interval <b>o</b> with the earliest-ending interval <b>g</b>. Because <code>end(g) ≤ end(o)</code>, everything after <b>o</b> still fits after <b>g</b>. Repeat the argument on what is left. Right: the counterexample for sorting by start. This is the same proof as Activity Selection in <a href="greedy.html">Greedy</a>.</figcaption>
+</figure>
+
+<p>The visualizer runs all three modes. In <em>erase</em> mode, kept intervals turn green and erased ones red. In <em>arrows</em> mode, an arrow is fired at the end of the first balloon it has not yet burst. The third mode sorts by start instead, and the final frame shows how much worse that is. The default input has a long <code>[1,11]</code> that starts first and would block everything.</p>
+<div class="viz" data-viz="intervals-sweep-line-greedy"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def erase_overlap_intervals(intervals: list[list[int]]) -&gt; int:
+    &quot;&quot;&quot;LeetCode 435. Half-open: [1,2] and [2,3] may both stay.&quot;&quot;&quot;
+    kept, end = 0, float(&quot;-inf&quot;)
+    for s, e in sorted(intervals, key=lambda iv: iv[1]):   # by END
+        if s &gt;= end:            # starts after the last kept one ends
+            kept += 1
+            end = e
+    return len(intervals) - kept
+
+
+def find_min_arrow_shots(points: list[list[int]]) -&gt; int:
+    &quot;&quot;&quot;LeetCode 452. Closed: an arrow at x bursts [s, e] if s &lt;= x &lt;= e.&quot;&quot;&quot;
+    arrows, pos = 0, float(&quot;-inf&quot;)
+    for s, e in sorted(points, key=lambda p: p[1]):
+        if s &gt; pos:             # not burst by the last arrow
+            arrows += 1
+            pos = e             # shoot as far right as possible
+    return arrows
+</code></pre>
+<pre><code class="language-csharp">// LeetCode 435. Half-open: [1,2] and [2,3] may both stay.
+public static int EraseOverlapIntervals(int[][] intervals)
+{
+    int kept = 0;
+    long end = long.MinValue;
+    foreach (var iv in intervals.OrderBy(iv =&gt; iv[1]))
+    {
+        if (iv[0] &gt;= end) { kept++; end = iv[1]; }
+    }
+    return intervals.Length - kept;
+}
+
+// LeetCode 452. Closed: an arrow at x bursts [s, e] if s &lt;= x &lt;= e.
+public static int FindMinArrowShots(int[][] points)
+{
+    int arrows = 0;
+    long pos = long.MinValue;     // long: inputs reach int.MinValue
+    foreach (var p in points.OrderBy(p =&gt; p[1]))
+    {
+        if (p[0] &gt; pos) { arrows++; pos = p[1]; }
+    }
+    return arrows;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n log n) for the sort, then O(n). The two functions differ only in <code>&gt;=</code> versus <code>&gt;</code>, which is the closed versus half-open choice again. Balloons that touch at one point share an arrow, so they count as overlapping. In LC 452 the coordinates span the whole <code>int</code> range, so <code>p[1] - q[1]</code> comparators overflow. Compare with <code>&lt;</code> or sort by key, as above.</p>
+<div class="pitfall">
+<p><strong>"Sort by start and drop the longer one" also works, but it is easy to get wrong</strong>
+A start-sorted version exists: when two intervals overlap, keep the one with the <strong>smaller end</strong> (<code>end = min(end, e)</code>). It is the same greedy in disguise. If you forget the <code>min</code> and simply skip the newcomer, you keep the long interval and get the wrong answer, which is exactly what the third mode of the visualizer shows. Sorting by end makes the safe choice automatic.</p>
+</div>
+<h3 id="when-intervals-have-weights-greedy-stops-working-use-dp">When intervals have weights, greedy stops working: use DP</h3>
+<p>If each interval carries a <strong>profit</strong> and you want the most profitable non-overlapping set (<em>Maximum Profit in Job Scheduling</em>, LC 1235), "earliest end" is no longer safe. A short cheap job can block a long valuable one. Sort by end and use the classic <strong>weighted interval scheduling</strong> DP. Let <code>best[i]</code> be the best profit using the first <code>i</code> jobs (in end order). For job <code>i</code>, either skip it or take it plus the best you can do among the jobs that end by its start. You find those jobs with binary search over the sorted ends. See <a href="dp-linear-grid.html">DP: Linear &amp; Grid</a> for the general shape.</p>
+<div class="code-tabs">
+<pre><code class="language-python">from bisect import bisect_right
+
+
+def job_scheduling(start: list[int], end: list[int], profit: list[int]) -&gt; int:
+    &quot;&quot;&quot;LeetCode 1235. Half-open jobs: one may start when another ends.&quot;&quot;&quot;
+    jobs = sorted(zip(end, start, profit))          # by end
+    ends = [e for e, _, _ in jobs]
+    best = [0] * (len(jobs) + 1)                    # best[i]: first i jobs
+    for i, (e, s, p) in enumerate(jobs):
+        k = bisect_right(ends, s, 0, i)             # jobs ending &lt;= s
+        best[i + 1] = max(best[i], best[k] + p)     # skip vs take
+    return best[-1]
+</code></pre>
+<pre><code class="language-csharp">// LeetCode 1235. Half-open jobs: one may start when another ends.
+public static int JobScheduling(int[] start, int[] end, int[] profit)
+{
+    var jobs = Enumerable.Range(0, start.Length)
+        .Select(i =&gt; (S: start[i], E: end[i], P: profit[i]))
+        .OrderBy(j =&gt; j.E).ToArray();
+    var best = new int[jobs.Length + 1];
+    for (int i = 0; i &lt; jobs.Length; i++)
+    {
+        int lo = 0, hi = i;              // count of jobs[0..i) with E &lt;= S
+        while (lo &lt; hi)
+        {
+            int mid = (lo + hi) / 2;
+            if (jobs[mid].E &lt;= jobs[i].S) lo = mid + 1; else hi = mid;
+        }
+        best[i + 1] = Math.Max(best[i], best[lo] + jobs[i].P);
+    }
+    return best[^1];
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n log n). If every profit is 1, this DP computes the same number as the greedy, which is a good way to convince yourself the greedy is right.</p>
+<h2 id="counting-overlaps-meeting-rooms">Counting overlaps: Meeting Rooms</h2>
+<p><em>Meeting Rooms I:</em> can one person attend every meeting? Sort by start and check that each meeting starts no earlier than the previous one ends. Any overlap anywhere shows up between two neighbours in start order, by the same reasoning as merge.</p>
+<p><em>Meeting Rooms II:</em> what is the minimum number of rooms? This is the most important counting question on the page. <strong>The minimum number of rooms equals the maximum number of meetings in progress at the same instant.</strong> You clearly need at least that many. And that many is always enough, because when a meeting starts, fewer than the peak are running, so some room is free. There are two standard ways to find the peak, and they are worth knowing side by side.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 390" width="900" role="img" aria-label="Five meetings converted into +1 and -1 events and a step chart of how many rooms are in use">
+<text x="450" y="22" text-anchor="middle" class="title">Turn intervals into events: +1 at each start, −1 at each end, then walk left to right</text>
+<rect class="box path" x="70" y="56" width="552" height="20" rx="4"/>
+<text x="346" y="70" text-anchor="middle" class="small mono">[0, 12)</text>
+<rect class="box path" x="162" y="84" width="138" height="20" rx="4"/>
+<text x="231" y="98" text-anchor="middle" class="small mono">[2, 5)</text>
+<rect class="box path" x="254" y="112" width="230" height="20" rx="4"/>
+<text x="369" y="126" text-anchor="middle" class="small mono">[4, 9)</text>
+<rect class="box path" x="392" y="140" width="138" height="20" rx="4"/>
+<text x="461" y="154" text-anchor="middle" class="small mono">[7, 10)</text>
+<rect class="box path" x="530" y="168" width="184" height="20" rx="4"/>
+<text x="622" y="182" text-anchor="middle" class="small mono">[10, 14)</text>
+<line class="edge" x1="64" y1="210" x2="766" y2="210"/>
+<line class="edge" x1="70" y1="207" x2="70" y2="213"/>
+<text x="70" y="225" text-anchor="middle" class="small muted mono">0</text>
+<line class="edge" x1="116" y1="207" x2="116" y2="213"/>
+<text x="116" y="225" text-anchor="middle" class="small muted mono">1</text>
+<line class="edge" x1="162" y1="207" x2="162" y2="213"/>
+<text x="162" y="225" text-anchor="middle" class="small muted mono">2</text>
+<line class="edge" x1="208" y1="207" x2="208" y2="213"/>
+<text x="208" y="225" text-anchor="middle" class="small muted mono">3</text>
+<line class="edge" x1="254" y1="207" x2="254" y2="213"/>
+<text x="254" y="225" text-anchor="middle" class="small muted mono">4</text>
+<line class="edge" x1="300" y1="207" x2="300" y2="213"/>
+<text x="300" y="225" text-anchor="middle" class="small muted mono">5</text>
+<line class="edge" x1="346" y1="207" x2="346" y2="213"/>
+<text x="346" y="225" text-anchor="middle" class="small muted mono">6</text>
+<line class="edge" x1="392" y1="207" x2="392" y2="213"/>
+<text x="392" y="225" text-anchor="middle" class="small muted mono">7</text>
+<line class="edge" x1="438" y1="207" x2="438" y2="213"/>
+<text x="438" y="225" text-anchor="middle" class="small muted mono">8</text>
+<line class="edge" x1="484" y1="207" x2="484" y2="213"/>
+<text x="484" y="225" text-anchor="middle" class="small muted mono">9</text>
+<line class="edge" x1="530" y1="207" x2="530" y2="213"/>
+<text x="530" y="225" text-anchor="middle" class="small muted mono">10</text>
+<line class="edge" x1="576" y1="207" x2="576" y2="213"/>
+<text x="576" y="225" text-anchor="middle" class="small muted mono">11</text>
+<line class="edge" x1="622" y1="207" x2="622" y2="213"/>
+<text x="622" y="225" text-anchor="middle" class="small muted mono">12</text>
+<line class="edge" x1="668" y1="207" x2="668" y2="213"/>
+<text x="668" y="225" text-anchor="middle" class="small muted mono">13</text>
+<line class="edge" x1="714" y1="207" x2="714" y2="213"/>
+<text x="714" y="225" text-anchor="middle" class="small muted mono">14</text>
+<line class="edge" x1="760" y1="207" x2="760" y2="213"/>
+<text x="760" y="225" text-anchor="middle" class="small muted mono">15</text>
+<text x="70" y="242" text-anchor="middle" class="small mono fill-done">+1</text>
+<text x="162" y="242" text-anchor="middle" class="small mono fill-done">+1</text>
+<text x="254" y="242" text-anchor="middle" class="small mono fill-done">+1</text>
+<text x="300" y="242" text-anchor="middle" class="small mono fill-active">−1</text>
+<text x="392" y="242" text-anchor="middle" class="small mono fill-done">+1</text>
+<text x="484" y="242" text-anchor="middle" class="small mono fill-active">−1</text>
+<text x="530" y="242" text-anchor="middle" class="small mono fill-bad">−1 +1</text>
+<text x="622" y="242" text-anchor="middle" class="small mono fill-active">−1</text>
+<text x="714" y="242" text-anchor="middle" class="small mono fill-active">−1</text>
+<text x="60" y="242" text-anchor="end" class="small muted">events</text>
+<rect class="box visit" x="70" y="334" width="92" height="26" rx="0"/>
+<text x="116" y="329" text-anchor="middle" class="small mono">1</text>
+<rect class="box visit" x="162" y="308" width="92" height="52" rx="0"/>
+<text x="208" y="303" text-anchor="middle" class="small mono">2</text>
+<rect class="box done" x="254" y="282" width="46" height="78" rx="0"/>
+<text x="277" y="277" text-anchor="middle" class="small mono">3</text>
+<rect class="box visit" x="300" y="308" width="92" height="52" rx="0"/>
+<text x="346" y="303" text-anchor="middle" class="small mono">2</text>
+<rect class="box done" x="392" y="282" width="92" height="78" rx="0"/>
+<text x="438" y="277" text-anchor="middle" class="small mono">3</text>
+<rect class="box visit" x="484" y="308" width="46" height="52" rx="0"/>
+<text x="507" y="303" text-anchor="middle" class="small mono">2</text>
+<rect class="box visit" x="530" y="308" width="92" height="52" rx="0"/>
+<text x="576" y="303" text-anchor="middle" class="small mono">2</text>
+<rect class="box visit" x="622" y="334" width="92" height="26" rx="0"/>
+<text x="668" y="329" text-anchor="middle" class="small mono">1</text>
+<line class="edge" x1="64" y1="360" x2="766" y2="360"/>
+<text x="60" y="364" text-anchor="end" class="small muted mono">0</text>
+<text x="60" y="338" text-anchor="end" class="small muted mono">1</text>
+<text x="60" y="312" text-anchor="end" class="small muted mono">2</text>
+<text x="60" y="286" text-anchor="end" class="small muted mono">3</text>
+<text x="24" y="320" text-anchor="middle" class="small muted">rooms</text>
+<text x="24" y="334" text-anchor="middle" class="small muted">in use</text>
+<line class="edge bad dash" x1="530" y1="250" x2="530" y2="364"/>
+<text x="536" y="264" text-anchor="start" class="small fill-bad">t = 10: process −1 before +1</text>
+<text x="536" y="278" text-anchor="start" class="small fill-bad">so the count goes 2 → 1 → 2, never 3</text>
+<text x="277" y="380" text-anchor="middle" class="small fill-done">peak = 3 rooms</text>
+</svg>
+<figcaption>The answer to Meeting Rooms II is the highest point of this step chart. Every interval adds one block of height 1 across its span, so the chart is the count of meetings in progress at each moment. Only the event times matter, so you sort <code>2n</code> events and keep a running sum. At equal times, ends must come before starts for half-open meetings. Otherwise the chart shows a spike that never really happened.</figcaption>
+</figure>
+
+<h3 id="way-1-event-sweep-1-1">Way 1: event sweep (+1 / −1)</h3>
+<p>Turn each meeting into two events, <code>(start, +1)</code> and <code>(end, −1)</code>. Sort them by time and keep a running count. The peak of the count is the answer. <strong>Ties matter:</strong> with half-open meetings, a meeting ending at 10 frees its room for one starting at 10, so at equal times the −1 must come first. In Python, sorting the tuples <code>(t, -1)</code> and <code>(t, +1)</code> does this for you, because −1 sorts before +1.</p>
+<p>Switch the tie rule in the visualizer to <em>start before end (wrong)</em>. The default input has back-to-back meetings at 10 and 15, and the step chart grows a red spike at exactly those instants. The final frame also shows the gaps where the count is 0: that is everyone's free time, which is the whole of <em>Employee Free Time</em>.</p>
+<div class="viz" data-viz="intervals-sweep-line-rooms-sweep"></div>
+
+<h3 id="way-2-a-min-heap-of-end-times">Way 2: a min-heap of end times</h3>
+<p>Process meetings by start time. Each room is represented by the time it becomes free, and those times live in a <strong>min-heap</strong>, so the room that frees up first is on top. For each meeting: if the top room is free by the start time (<code>heap[0] &lt;= start</code>), reuse it by replacing its end time. Otherwise open a new room. The heap only grows when <strong>every</strong> room is busy at that instant, so its final size is the peak overlap.</p>
+<div class="viz" data-viz="intervals-sweep-line-rooms-heap"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">import heapq
+
+
+def can_attend_meetings(intervals: list[list[int]]) -&gt; bool:
+    &quot;&quot;&quot;Meeting Rooms I. Half-open: back-to-back is fine.&quot;&quot;&quot;
+    iv = sorted(intervals)
+    return all(iv[i][0] &gt;= iv[i - 1][1] for i in range(1, len(iv)))
+
+
+def min_meeting_rooms_sweep(intervals: list[list[int]]) -&gt; int:
+    &quot;&quot;&quot;Meeting Rooms II by events. (t, -1) sorts before (t, +1).&quot;&quot;&quot;
+    events = [(s, 1) for s, _ in intervals] + [(e, -1) for _, e in intervals]
+    cur = best = 0
+    for _, delta in sorted(events):
+        cur += delta
+        best = max(best, cur)
+    return best
+
+
+def min_meeting_rooms_heap(intervals: list[list[int]]) -&gt; int:
+    &quot;&quot;&quot;Meeting Rooms II by heap. heap = end times of rooms in use.&quot;&quot;&quot;
+    heap: list[int] = []
+    for s, e in sorted(intervals):
+        if heap and heap[0] &lt;= s:
+            heapq.heapreplace(heap, e)    # reuse the earliest-free room
+        else:
+            heapq.heappush(heap, e)       # all busy: open a room
+    return len(heap)
+</code></pre>
+<pre><code class="language-csharp">// Meeting Rooms I. Half-open: back-to-back is fine.
+public static bool CanAttendMeetings(int[][] intervals)
+{
+    var iv = intervals.OrderBy(x =&gt; x[0]).ToArray();
+    for (int i = 1; i &lt; iv.Length; i++)
+        if (iv[i][0] &lt; iv[i - 1][1]) return false;
+    return true;
+}
+
+// Meeting Rooms II by events. Ends sort before starts at equal times.
+public static int MinMeetingRoomsSweep(int[][] intervals)
+{
+    var events = new List&lt;(int T, int D)&gt;();
+    foreach (var iv in intervals) { events.Add((iv[0], 1)); events.Add((iv[1], -1)); }
+    events.Sort();                    // tuples: by T, then -1 before +1
+    int cur = 0, best = 0;
+    foreach (var (_, d) in events) { cur += d; best = Math.Max(best, cur); }
+    return best;
+}
+
+// Meeting Rooms II by heap. The heap holds end times of rooms in use.
+public static int MinMeetingRoomsHeap(int[][] intervals)
+{
+    var heap = new PriorityQueue&lt;int, int&gt;();
+    foreach (var iv in intervals.OrderBy(x =&gt; x[0]))
+    {
+        if (heap.Count &gt; 0 &amp;&amp; heap.Peek() &lt;= iv[0]) heap.Dequeue();
+        heap.Enqueue(iv[1], iv[1]);
+    }
+    return heap.Count;
+}
+</code></pre>
+</div>
+<div class="compare">
+<div class="warn">
+<h4 id="event-sweep">Event sweep</h4>
+<p>O(n log n) to sort 2n events, then O(1) extra memory. It gives you the <strong>whole profile</strong>: the peak, where the peak happens, and the free gaps. But it does not say <strong>which</strong> room each meeting gets.</p>
+</div>
+<div class="good">
+<h4 id="min-heap-of-ends">Min-heap of ends</h4>
+<p>Also O(n log n). It is an actual <strong>assignment</strong>: each meeting is placed in a concrete room. You need this as soon as rooms have identities, as in Meeting Rooms III (Worked problems) or "assign tasks to servers".</p>
+</div>
+<div class="warn">
+<h4 id="two-sorted-arrays">Two sorted arrays</h4>
+<p>Sort the starts and the ends separately, then walk them with two pointers: <code>if start[i] &lt; end[j]</code> open a room, else free one. It is the event sweep without building tuples, and the same O(n log n).</p>
+</div>
+</div>
+<h2 id="two-sorted-lists-interval-list-intersections">Two sorted lists: Interval List Intersections</h2>
+<p><em>Each of two lists is sorted and internally disjoint. Return every intersection between an interval of A and an interval of B (closed intervals).</em> With <a href="two-pointers.html">two pointers</a>, <code>i</code> walks A and <code>j</code> walks B:</p>
+<ol>
+<li>The current pair intersects in <code>[max(starts), min(ends)]</code> if that is non-empty. Record it.</li>
+<li>Then <strong>advance whichever interval ends first.</strong> It cannot intersect anything else in the other list, because everything later there starts after the current interval of the other list, which already reaches past it.</li>
+</ol>
+<p>The other interval stays, because it may still overlap the next interval of the list that moved. Each step advances one pointer, so the total is O(m + n).</p>
+<div class="viz" data-viz="intervals-sweep-line-intersect"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def interval_intersection(A: list[list[int]], B: list[list[int]]) -&gt; list[list[int]]:
+    &quot;&quot;&quot;LeetCode 986. Closed intervals; each list sorted and disjoint.&quot;&quot;&quot;
+    i = j = 0
+    out: list[list[int]] = []
+    while i &lt; len(A) and j &lt; len(B):
+        lo = max(A[i][0], B[j][0])
+        hi = min(A[i][1], B[j][1])
+        if lo &lt;= hi:
+            out.append([lo, hi])
+        if A[i][1] &lt; B[j][1]:      # A[i] ends first: it is finished
+            i += 1
+        else:
+            j += 1
+    return out
+</code></pre>
+<pre><code class="language-csharp">// LeetCode 986. Closed intervals; each list sorted and disjoint.
+public static int[][] IntervalIntersection(int[][] a, int[][] b)
+{
+    int i = 0, j = 0;
+    var res = new List&lt;int[]&gt;();
+    while (i &lt; a.Length &amp;&amp; j &lt; b.Length)
+    {
+        int lo = Math.Max(a[i][0], b[j][0]), hi = Math.Min(a[i][1], b[j][1]);
+        if (lo &lt;= hi) res.Add(new[] { lo, hi });
+        if (a[i][1] &lt; b[j][1]) i++; else j++;
+    }
+    return res.ToArray();
+}
+</code></pre>
+</div>
+<p>The same two-pointer walk computes the <strong>union</strong> of two lists (merge them by start, then run the merge loop) and the <strong>difference</strong> (cut each A interval wherever B covers it). <em>Employee Free Time</em> is the same idea with k lists.</p>
+<h2 id="difference-arrays-many-ranges-small-coordinates">Difference arrays: many ranges, small coordinates</h2>
+<p>When the coordinates are small integers (stops 0..1000, flights 1..n, days in a year), you do not need to sort events at all. <strong>Store them in an array indexed by time.</strong> Each range update <code>[a, b) += c</code> becomes two writes, <code>diff[a] += c</code> and <code>diff[b] -= c</code>. A single running sum afterwards turns <code>diff</code> back into the value at every point. This is the event sweep with counting sort built in, and it is the exact inverse of a <a href="prefix-sums.html">prefix sum</a>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 356" width="900" role="img" aria-label="Three car trips written as +c and -c into a difference array, and the prefix sum giving the load at every stop">
+<text x="450" y="22" text-anchor="middle" class="title">Difference array: write only the two edges of each range, then one running sum rebuilds every value</text>
+<rect class="box path" x="186" y="44" width="224" height="20" rx="4"/>
+<text x="298" y="58" text-anchor="middle" class="small">2 riders, stops [1, 5)</text>
+<text x="190" y="58" text-anchor="start" class="small mono fill-done">+2</text>
+<text x="406" y="58" text-anchor="end" class="small mono fill-active">−2</text>
+<rect class="box path" x="298" y="72" width="224" height="20" rx="4"/>
+<text x="410" y="86" text-anchor="middle" class="small">3 riders, stops [3, 7)</text>
+<text x="302" y="86" text-anchor="start" class="small mono fill-done">+3</text>
+<text x="518" y="86" text-anchor="end" class="small mono fill-active">−3</text>
+<rect class="box path" x="466" y="100" width="168" height="20" rx="4"/>
+<text x="550" y="114" text-anchor="middle" class="small">1 rider, stops [6, 9)</text>
+<text x="470" y="114" text-anchor="start" class="small mono fill-done">+1</text>
+<text x="630" y="114" text-anchor="end" class="small mono fill-active">−1</text>
+<text x="118" y="162" text-anchor="end" class="small muted">stop</text>
+<text x="158" y="162" text-anchor="middle" class="small muted mono">0</text>
+<text x="214" y="162" text-anchor="middle" class="small muted mono">1</text>
+<text x="270" y="162" text-anchor="middle" class="small muted mono">2</text>
+<text x="326" y="162" text-anchor="middle" class="small muted mono">3</text>
+<text x="382" y="162" text-anchor="middle" class="small muted mono">4</text>
+<text x="438" y="162" text-anchor="middle" class="small muted mono">5</text>
+<text x="494" y="162" text-anchor="middle" class="small muted mono">6</text>
+<text x="550" y="162" text-anchor="middle" class="small muted mono">7</text>
+<text x="606" y="162" text-anchor="middle" class="small muted mono">8</text>
+<text x="662" y="162" text-anchor="middle" class="small muted mono">9</text>
+<text x="118" y="216" text-anchor="end" class="small muted">diff</text>
+<rect class="box" x="133" y="194" width="50" height="34" rx="5"/>
+<text x="158" y="216" text-anchor="middle" class="mono">0</text>
+<rect class="box done" x="189" y="194" width="50" height="34" rx="5"/>
+<text x="214" y="216" text-anchor="middle" class="mono">+2</text>
+<rect class="box" x="245" y="194" width="50" height="34" rx="5"/>
+<text x="270" y="216" text-anchor="middle" class="mono">0</text>
+<rect class="box done" x="301" y="194" width="50" height="34" rx="5"/>
+<text x="326" y="216" text-anchor="middle" class="mono">+3</text>
+<rect class="box" x="357" y="194" width="50" height="34" rx="5"/>
+<text x="382" y="216" text-anchor="middle" class="mono">0</text>
+<rect class="box active" x="413" y="194" width="50" height="34" rx="5"/>
+<text x="438" y="216" text-anchor="middle" class="mono">−2</text>
+<rect class="box done" x="469" y="194" width="50" height="34" rx="5"/>
+<text x="494" y="216" text-anchor="middle" class="mono">+1</text>
+<rect class="box active" x="525" y="194" width="50" height="34" rx="5"/>
+<text x="550" y="216" text-anchor="middle" class="mono">−3</text>
+<rect class="box" x="581" y="194" width="50" height="34" rx="5"/>
+<text x="606" y="216" text-anchor="middle" class="mono">0</text>
+<rect class="box active" x="637" y="194" width="50" height="34" rx="5"/>
+<text x="662" y="216" text-anchor="middle" class="mono">−1</text>
+<text x="118" y="270" text-anchor="end" class="small muted">load</text>
+<rect class="box" x="133" y="248" width="50" height="34" rx="5"/>
+<text x="158" y="270" text-anchor="middle" class="mono">0</text>
+<rect class="box visit" x="189" y="248" width="50" height="34" rx="5"/>
+<text x="214" y="270" text-anchor="middle" class="mono">2</text>
+<rect class="box visit" x="245" y="248" width="50" height="34" rx="5"/>
+<text x="270" y="270" text-anchor="middle" class="mono">2</text>
+<rect class="box bad" x="301" y="248" width="50" height="34" rx="5"/>
+<text x="326" y="270" text-anchor="middle" class="mono">5</text>
+<rect class="box bad" x="357" y="248" width="50" height="34" rx="5"/>
+<text x="382" y="270" text-anchor="middle" class="mono">5</text>
+<rect class="box visit" x="413" y="248" width="50" height="34" rx="5"/>
+<text x="438" y="270" text-anchor="middle" class="mono">3</text>
+<rect class="box visit" x="469" y="248" width="50" height="34" rx="5"/>
+<text x="494" y="270" text-anchor="middle" class="mono">4</text>
+<rect class="box visit" x="525" y="248" width="50" height="34" rx="5"/>
+<text x="550" y="270" text-anchor="middle" class="mono">1</text>
+<rect class="box visit" x="581" y="248" width="50" height="34" rx="5"/>
+<text x="606" y="270" text-anchor="middle" class="mono">1</text>
+<rect class="box" x="637" y="248" width="50" height="34" rx="5"/>
+<text x="662" y="270" text-anchor="middle" class="mono">0</text>
+<defs><marker id="intervals-sweep-line-m-run" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<path class="edge accent" d="M164 286 Q186 302 208 288" marker-end="url(#intervals-sweep-line-m-run)"/>
+<path class="edge accent" d="M220 286 Q242 302 264 288" marker-end="url(#intervals-sweep-line-m-run)"/>
+<path class="edge accent" d="M276 286 Q298 302 320 288" marker-end="url(#intervals-sweep-line-m-run)"/>
+<path class="edge accent" d="M332 286 Q354 302 376 288" marker-end="url(#intervals-sweep-line-m-run)"/>
+<path class="edge accent" d="M388 286 Q410 302 432 288" marker-end="url(#intervals-sweep-line-m-run)"/>
+<path class="edge accent" d="M444 286 Q466 302 488 288" marker-end="url(#intervals-sweep-line-m-run)"/>
+<path class="edge accent" d="M500 286 Q522 302 544 288" marker-end="url(#intervals-sweep-line-m-run)"/>
+<path class="edge accent" d="M556 286 Q578 302 600 288" marker-end="url(#intervals-sweep-line-m-run)"/>
+<path class="edge accent" d="M612 286 Q634 302 656 288" marker-end="url(#intervals-sweep-line-m-run)"/>
+<text x="410" y="326" text-anchor="middle" class="small mono">load[i] = load[i − 1] + diff[i]   (a prefix sum)</text>
+<text x="410" y="346" text-anchor="middle" class="small fill-bad">peak load = 5 at stops 3–4: over a capacity of 4, under a capacity of 5</text>
+</svg>
+<figcaption>Each trip costs two writes no matter how long it is: <code>+c</code> where riders get on, <code>−c</code> where they get off. One left-to-right running sum then gives the load at every stop. This is the event sweep from Meeting Rooms with the events stored in an array indexed by time, because time is a small integer here. It is also the inverse of <a href="prefix-sums.html">prefix sums</a>.</figcaption>
+</figure>
+
+<ul>
+<li><strong>Car Pooling (LC 1094):</strong> each trip is <code>[passengers, from, to]</code> and riders leave at <code>to</code>, so the range is half-open <code>[from, to)</code>. Is the load ever above capacity?</li>
+<li><strong>Corporate Flight Bookings (LC 1109):</strong> each booking <code>[first, last, seats]</code> is closed, so write <code>−seats</code> at <code>last + 1</code>. Return the total for every flight.</li>
+</ul>
+<p>Switch the mode in the visualizer between the two conventions and watch the <code>−</code> write move by one cell. The step chart above the arrays is the same load the prefix sum produces, drawn as a profile.</p>
+<div class="viz" data-viz="intervals-sweep-line-diff"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def car_pooling(trips: list[list[int]], capacity: int) -&gt; bool:
+    &quot;&quot;&quot;LeetCode 1094. Riders occupy [from, to).&quot;&quot;&quot;
+    diff = [0] * (max(t for _, _, t in trips) + 1)
+    for p, a, b in trips:
+        diff[a] += p
+        diff[b] -= p
+    load = 0
+    for d in diff:
+        load += d
+        if load &gt; capacity:
+            return False
+    return True
+
+
+def corp_flight_bookings(bookings: list[list[int]], n: int) -&gt; list[int]:
+    &quot;&quot;&quot;LeetCode 1109. Flights 1..n; a booking covers [first, last].&quot;&quot;&quot;
+    diff = [0] * (n + 2)
+    for first, last, seats in bookings:
+        diff[first] += seats
+        diff[last + 1] -= seats         # closed -&gt; half-open
+    out, run = [], 0
+    for f in range(1, n + 1):
+        run += diff[f]
+        out.append(run)
+    return out
+</code></pre>
+<pre><code class="language-csharp">// LeetCode 1094. Riders occupy [from, to).
+public static bool CarPooling(int[][] trips, int capacity)
+{
+    var diff = new int[trips.Max(t =&gt; t[2]) + 1];
+    foreach (var t in trips) { diff[t[1]] += t[0]; diff[t[2]] -= t[0]; }
+    int load = 0;
+    foreach (var d in diff)
+    {
+        load += d;
+        if (load &gt; capacity) return false;
+    }
+    return true;
+}
+
+// LeetCode 1109. Flights 1..n; a booking covers [first, last].
+public static int[] CorpFlightBookings(int[][] bookings, int n)
+{
+    var diff = new int[n + 2];
+    foreach (var b in bookings) { diff[b[0]] += b[2]; diff[b[1] + 1] -= b[2]; }
+    var res = new int[n];
+    for (int f = 1, run = 0; f &lt;= n; f++) { run += diff[f]; res[f - 1] = run; }
+    return res;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n + R), where R is the coordinate range. When R is huge (10⁹), switch back to sorting the 2n events, or <strong>compress the coordinates</strong> first (see below). Two-dimensional versions (adding to rectangles in a grid) use a 2-D difference array: four writes per rectangle, then a 2-D prefix sum.</p>
+<h2 id="the-skyline-problem-sweep-with-a-max-heap">The Skyline Problem: sweep with a max-heap</h2>
+<p><em>Buildings are <code>[left, right, height]</code>. Return the key points of the skyline: each point is where the outline's height changes, with the new height.</em> This is the hardest classic sweep, and it combines everything above. The events are building edges. The state behind the sweep line is the set of buildings that are currently standing. The answer at each event is the <strong>maximum</strong> height in that set.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 310" width="900" role="img" aria-label="Five overlapping buildings, their skyline outline and the seven key points">
+<text x="450" y="22" text-anchor="middle" class="title">The skyline changes only where the tallest active building changes</text>
+<rect class="box path" x="110" y="130" width="210" height="150" rx="0" opacity=".55"/>
+<text x="116" y="144" text-anchor="start" class="small">B1 h=10</text>
+<rect class="box path" x="140" y="55" width="120" height="225" rx="0" opacity=".55"/>
+<text x="146" y="69" text-anchor="start" class="small">B2 h=15</text>
+<rect class="box path" x="200" y="100" width="210" height="180" rx="0" opacity=".55"/>
+<text x="206" y="114" text-anchor="start" class="small">B3 h=12</text>
+<rect class="box path" x="500" y="130" width="150" height="150" rx="0" opacity=".55"/>
+<text x="506" y="144" text-anchor="start" class="small">B4 h=10</text>
+<rect class="box path" x="620" y="160" width="150" height="120" rx="0" opacity=".55"/>
+<text x="626" y="174" text-anchor="start" class="small">B5 h=8</text>
+<path class="edge done" d="M110 280 L110 130 L140 130 L140 55 L260 55 L260 100 L410 100 L410 280 L500 280 L500 130 L650 130 L650 160 L770 160 L770 280"/>
+<circle class="fill-done" cx="110" cy="130" r="5"/>
+<text x="104" y="124" text-anchor="end" class="small mono fill-done">(2,10)</text>
+<circle class="fill-done" cx="140" cy="55" r="5"/>
+<text x="143" y="47" text-anchor="start" class="small mono fill-done">(3,15)</text>
+<circle class="fill-done" cx="260" cy="100" r="5"/>
+<text x="263" y="92" text-anchor="start" class="small mono fill-done">(7,12)</text>
+<circle class="fill-done" cx="410" cy="280" r="5"/>
+<text x="413" y="272" text-anchor="start" class="small mono fill-done">(12,0)</text>
+<circle class="fill-done" cx="500" cy="130" r="5"/>
+<text x="503" y="122" text-anchor="start" class="small mono fill-done">(15,10)</text>
+<circle class="fill-done" cx="650" cy="160" r="5"/>
+<text x="653" y="152" text-anchor="start" class="small mono fill-done">(20,8)</text>
+<circle class="fill-done" cx="770" cy="280" r="5"/>
+<text x="773" y="272" text-anchor="start" class="small mono fill-done">(24,0)</text>
+<line class="edge" x1="44" y1="280" x2="806" y2="280"/>
+<line class="edge" x1="50" y1="277" x2="50" y2="283"/>
+<text x="50" y="295" text-anchor="middle" class="small muted mono">0</text>
+<line class="edge" x1="80" y1="277" x2="80" y2="283"/>
+<text x="80" y="295" text-anchor="middle" class="small muted mono">1</text>
+<line class="edge" x1="110" y1="277" x2="110" y2="283"/>
+<text x="110" y="295" text-anchor="middle" class="small muted mono">2</text>
+<line class="edge" x1="140" y1="277" x2="140" y2="283"/>
+<text x="140" y="295" text-anchor="middle" class="small muted mono">3</text>
+<line class="edge" x1="170" y1="277" x2="170" y2="283"/>
+<text x="170" y="295" text-anchor="middle" class="small muted mono">4</text>
+<line class="edge" x1="200" y1="277" x2="200" y2="283"/>
+<text x="200" y="295" text-anchor="middle" class="small muted mono">5</text>
+<line class="edge" x1="230" y1="277" x2="230" y2="283"/>
+<text x="230" y="295" text-anchor="middle" class="small muted mono">6</text>
+<line class="edge" x1="260" y1="277" x2="260" y2="283"/>
+<text x="260" y="295" text-anchor="middle" class="small muted mono">7</text>
+<line class="edge" x1="290" y1="277" x2="290" y2="283"/>
+<text x="290" y="295" text-anchor="middle" class="small muted mono">8</text>
+<line class="edge" x1="320" y1="277" x2="320" y2="283"/>
+<text x="320" y="295" text-anchor="middle" class="small muted mono">9</text>
+<line class="edge" x1="350" y1="277" x2="350" y2="283"/>
+<text x="350" y="295" text-anchor="middle" class="small muted mono">10</text>
+<line class="edge" x1="380" y1="277" x2="380" y2="283"/>
+<text x="380" y="295" text-anchor="middle" class="small muted mono">11</text>
+<line class="edge" x1="410" y1="277" x2="410" y2="283"/>
+<text x="410" y="295" text-anchor="middle" class="small muted mono">12</text>
+<line class="edge" x1="440" y1="277" x2="440" y2="283"/>
+<text x="440" y="295" text-anchor="middle" class="small muted mono">13</text>
+<line class="edge" x1="470" y1="277" x2="470" y2="283"/>
+<text x="470" y="295" text-anchor="middle" class="small muted mono">14</text>
+<line class="edge" x1="500" y1="277" x2="500" y2="283"/>
+<text x="500" y="295" text-anchor="middle" class="small muted mono">15</text>
+<line class="edge" x1="530" y1="277" x2="530" y2="283"/>
+<text x="530" y="295" text-anchor="middle" class="small muted mono">16</text>
+<line class="edge" x1="560" y1="277" x2="560" y2="283"/>
+<text x="560" y="295" text-anchor="middle" class="small muted mono">17</text>
+<line class="edge" x1="590" y1="277" x2="590" y2="283"/>
+<text x="590" y="295" text-anchor="middle" class="small muted mono">18</text>
+<line class="edge" x1="620" y1="277" x2="620" y2="283"/>
+<text x="620" y="295" text-anchor="middle" class="small muted mono">19</text>
+<line class="edge" x1="650" y1="277" x2="650" y2="283"/>
+<text x="650" y="295" text-anchor="middle" class="small muted mono">20</text>
+<line class="edge" x1="680" y1="277" x2="680" y2="283"/>
+<text x="680" y="295" text-anchor="middle" class="small muted mono">21</text>
+<line class="edge" x1="710" y1="277" x2="710" y2="283"/>
+<text x="710" y="295" text-anchor="middle" class="small muted mono">22</text>
+<line class="edge" x1="740" y1="277" x2="740" y2="283"/>
+<text x="740" y="295" text-anchor="middle" class="small muted mono">23</text>
+<line class="edge" x1="770" y1="277" x2="770" y2="283"/>
+<text x="770" y="295" text-anchor="middle" class="small muted mono">24</text>
+<line class="edge" x1="800" y1="277" x2="800" y2="283"/>
+<text x="800" y="295" text-anchor="middle" class="small muted mono">25</text>
+<line class="edge bad dash" x1="260" y1="40" x2="260" y2="280"/>
+<text x="440" y="52" text-anchor="start" class="small fill-bad">red sweep line at x = 7: B2 (15) ends</text>
+<text x="440" y="70" text-anchor="start" class="small mono">max-heap of active heights: {15, 12, 10} → {12, 10}</text>
+<text x="440" y="88" text-anchor="start" class="small fill-done">top changed 15 → 12, so emit key point (7, 12)</text>
+</svg>
+<figcaption>Key points are the left end of each horizontal segment of the outline. Sweep the critical x values (every left and right edge) in order. Keep the heights of the buildings that cover x in a max-heap, and emit a point whenever the top of the heap differs from the last height you emitted. B1's height of 10 never shows here: it is always covered by something taller.</figcaption>
+</figure>
+
+<p>What makes it hard is that a max-heap cannot delete an arbitrary building when its right edge arrives. The standard fix is <strong>lazy deletion</strong>. Store each building as <code>(height, right)</code>. At each x, first push every building that starts at x, then pop from the top while the top's <code>right &lt;= x</code>, because it has already ended. Buildings that ended but are buried under a taller live one stay in the heap as <strong>stale</strong> entries. They are harmless until they reach the top, and then they are popped. Finally, if the top height differs from the last height you emitted, emit <code>[x, top]</code>.</p>
+<p>The visualizer greys out stale heap entries, highlights the building being added, and draws the skyline as it grows. Step to x = 7, where the tallest building ends and the outline drops to the next live one, not to 0.</p>
+<div class="viz" data-viz="intervals-sweep-line-skyline"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">import heapq
+
+
+def get_skyline(buildings: list[list[int]]) -&gt; list[list[int]]:
+    &quot;&quot;&quot;LeetCode 218. Sweep critical x values; max-heap with lazy delete.&quot;&quot;&quot;
+    # Start events carry -height (taller first at equal x); ends carry 0.
+    events = sorted([(l, -h, r) for l, r, h in buildings] +
+                    [(r, 0, 0) for _, r, _ in buildings])
+    heap = [(0, float(&quot;inf&quot;))]          # (-height, right); ground never ends
+    out: list[list[int]] = []
+    for x, neg_h, r in events:
+        if neg_h:
+            heapq.heappush(heap, (neg_h, r))
+        while heap[0][1] &lt;= x:          # top has ended: discard (lazy)
+            heapq.heappop(heap)
+        height = -heap[0][0]
+        if not out or out[-1][1] != height:
+            out.append([x, height])
+    return out
+</code></pre>
+<pre><code class="language-csharp">// LeetCode 218. Sweep critical x values; max-heap with lazy delete.
+public static IList&lt;IList&lt;int&gt;&gt; GetSkyline(int[][] buildings)
+{
+    var events = new List&lt;(int X, int NegH, int R)&gt;();
+    foreach (var b in buildings) { events.Add((b[0], -b[2], b[1])); events.Add((b[1], 0, 0)); }
+    events.Sort();
+    // Element (height, right); priority -height makes it a max-heap.
+    var heap = new PriorityQueue&lt;(int H, int R), int&gt;();
+    heap.Enqueue((0, int.MaxValue), 0);
+    var res = new List&lt;IList&lt;int&gt;&gt;();
+    foreach (var (x, negH, r) in events)
+    {
+        if (negH != 0) heap.Enqueue((-negH, r), negH);
+        while (heap.Peek().R &lt;= x) heap.Dequeue();
+        int h = heap.Peek().H;
+        if (res.Count == 0 || res[^1][1] != h) res.Add(new List&lt;int&gt; { x, h });
+    }
+    return res;
+}
+</code></pre>
+</div>
+<p>Three details carry the whole algorithm:</p>
+<ul>
+<li><strong>Sort key <code>(x, -h)</code>:</strong> at the same x, starts come before ends, and taller starts come first. A taller building starting exactly where a shorter one ends therefore produces one key point, not a dip and a rise.</li>
+<li><strong>Emit only on change:</strong> two adjacent buildings of equal height produce no key point between them.</li>
+<li><strong>The ground sentinel <code>(0, ∞)</code>:</strong> the heap is never empty, and the outline drops to 0 when nothing is left standing.</li>
+</ul>
+<p><strong>Complexity:</strong> O(n log n). Each building is pushed once and popped at most once. In C# or Java you can avoid lazy deletion with a <code>SortedDictionary&lt;int, int&gt;</code> (height to count) and delete exactly, at the same complexity.</p>
+<h2 id="online-bookings-my-calendar-i-ii-and-iii">Online bookings: My Calendar I, II and III</h2>
+<p>So far you had all the intervals up front, so you could sort. In the <strong>My Calendar</strong> problems, bookings arrive <strong>one at a time</strong> and each must be answered immediately:</p>
+<ul>
+<li><strong>I:</strong> accept the booking if it would not create a double booking.</li>
+<li><strong>II:</strong> accept it if it would not create a triple booking.</li>
+<li><strong>III:</strong> accept everything and report the maximum overlap (k) so far.</li>
+</ul>
+<p>All three are solved by one structure: a <strong>sorted map from time to delta</strong>, holding +1 at each start and −1 at each end. That is the event list from Meeting Rooms, kept sorted at all times. To book, add the two deltas, sweep the map with a running sum, and if the sum ever exceeds the limit, <strong>roll back</strong> the two deltas and refuse.</p>
+<div class="viz" data-viz="intervals-sweep-line-calendar"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">from bisect import bisect_right, insort
+
+
+class MyCalendar:
+    &quot;&quot;&quot;I: reject double bookings. Keep disjoint bookings sorted.&quot;&quot;&quot;
+
+    def __init__(self) -&gt; None:
+        self.starts: list[int] = []
+        self.ends: list[int] = []
+
+    def book(self, start: int, end: int) -&gt; bool:
+        i = bisect_right(self.starts, start)   # bookings before: 0..i-1
+        if i &gt; 0 and self.ends[i - 1] &gt; start:
+            return False                       # previous one runs into us
+        if i &lt; len(self.starts) and self.starts[i] &lt; end:
+            return False                       # we run into the next one
+        self.starts.insert(i, start)
+        self.ends.insert(i, end)
+        return True
+
+
+class KCalendar:
+    &quot;&quot;&quot;II (k=2) and III: sorted delta map + sweep with rollback.&quot;&quot;&quot;
+
+    def __init__(self, k: int = 10**9) -&gt; None:
+        self.k, self.keys, self.delta = k, [], {}
+
+    def _add(self, t: int, d: int) -&gt; None:
+        if t not in self.delta:
+            insort(self.keys, t)
+            self.delta[t] = 0
+        self.delta[t] += d
+
+    def book(self, start: int, end: int) -&gt; int:
+        &quot;&quot;&quot;Returns the max overlap, or 0 if the booking was refused.&quot;&quot;&quot;
+        self._add(start, 1)
+        self._add(end, -1)
+        run = best = 0
+        for t in self.keys:
+            run += self.delta[t]
+            best = max(best, run)
+        if best &gt; self.k:                       # refuse: undo the deltas
+            self._add(start, -1)
+            self._add(end, 1)
+            return 0
+        return best
+</code></pre>
+<pre><code class="language-csharp">// I: reject double bookings. Keep disjoint bookings sorted by start.
+public class MyCalendar
+{
+    private readonly List&lt;(int S, int E)&gt; _iv = new();
+
+    public bool Book(int start, int end)
+    {
+        int lo = 0, hi = _iv.Count;              // first booking with S &gt; start
+        while (lo &lt; hi)
+        {
+            int mid = (lo + hi) / 2;
+            if (_iv[mid].S &lt;= start) lo = mid + 1; else hi = mid;
+        }
+        if (lo &gt; 0 &amp;&amp; _iv[lo - 1].E &gt; start) return false;
+        if (lo &lt; _iv.Count &amp;&amp; _iv[lo].S &lt; end) return false;
+        _iv.Insert(lo, (start, end));
+        return true;
+    }
+}
+
+// II (k = 2) and III: sorted delta map + sweep with rollback.
+public class KCalendar
+{
+    private readonly SortedDictionary&lt;int, int&gt; _delta = new();
+    private readonly int _k;
+    public KCalendar(int k = int.MaxValue) =&gt; _k = k;
+
+    private void Add(int t, int d) =&gt; _delta[t] = _delta.GetValueOrDefault(t) + d;
+
+    // Returns the max overlap, or 0 if the booking was refused.
+    public int Book(int start, int end)
+    {
+        Add(start, 1);
+        Add(end, -1);
+        int run = 0, best = 0;
+        foreach (var d in _delta.Values) { run += d; best = Math.Max(best, run); }
+        if (best &gt; _k) { Add(start, -1); Add(end, 1); return 0; }
+        return best;
+    }
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> My Calendar I is O(log n) to search plus O(n) for the list insert in Python. In C# with a <code>List</code> it is the same. A balanced tree, such as Java's <code>TreeMap.floorKey</code>, makes it O(log n). The delta-map sweep is O(n) per booking, so O(n²) in total, which is fine for the 1,000 calls these problems allow. For 10⁵ online bookings, use a <a href="segment-fenwick-trees.html">segment tree</a> with lazy "add on a range" and "max on a range": O(log C) per booking, with dynamic nodes because C can be 10⁹.</p>
+<div class="insight">
+<p><strong>Why the delta map handles half-open intervals for free</strong>
+A booking ending at 20 adds −1 at key 20, and one starting at 20 adds +1 at the <strong>same key</strong>. They cancel inside the map before the sweep reads the key, so back-to-back bookings never look like an overlap. With separate event tuples you had to sort ends first. Here the map merges them.</p>
+</div>
+<h2 id="coordinate-compression-and-the-area-of-rectangles">Coordinate compression and the area of rectangles</h2>
+<p>Sweeps only care about the <strong>order</strong> of coordinates, not their values. If a problem has 200 rectangles with coordinates up to 10⁹, there are at most 400 distinct x values and 400 distinct y values. <strong>Coordinate compression</strong> replaces each coordinate by its rank in the sorted list of distinct values. After that, a difference array or a grid indexed by rank is small, and each cell or segment between two neighbouring ranks remembers its real width.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 395" width="900" role="img" aria-label="Three overlapping rectangles, the grid cut by their distinct x and y edges, and the compressed grid of covered cells with their areas">
+<text x="450" y="22" text-anchor="middle" class="title">Coordinate compression: only the distinct edges matter, so cut the plane there</text>
+<text x="205" y="56" text-anchor="middle" class="small muted">Real coordinates (0 … 12)</text>
+<line class="edge dash" x1="70" y1="340" x2="70" y2="70"/>
+<line class="edge dash" x1="130" y1="340" x2="130" y2="70"/>
+<line class="edge dash" x1="220" y1="340" x2="220" y2="70"/>
+<line class="edge dash" x1="280" y1="340" x2="280" y2="70"/>
+<line class="edge dash" x1="310" y1="340" x2="310" y2="70"/>
+<line class="edge dash" x1="370" y1="340" x2="370" y2="70"/>
+<line class="edge dash" x1="40" y1="310" x2="400" y2="310"/>
+<line class="edge dash" x1="40" y1="280" x2="400" y2="280"/>
+<line class="edge dash" x1="40" y1="220" x2="400" y2="220"/>
+<line class="edge dash" x1="40" y1="190" x2="400" y2="190"/>
+<line class="edge dash" x1="40" y1="130" x2="400" y2="130"/>
+<line class="edge dash" x1="40" y1="100" x2="400" y2="100"/>
+<rect class="box path" x="70" y="220" width="150" height="90" rx="0" opacity=".5"/>
+<text x="74" y="233" text-anchor="start" class="small">R1</text>
+<rect class="box path" x="130" y="130" width="180" height="150" rx="0" opacity=".5"/>
+<text x="134" y="143" text-anchor="start" class="small">R2</text>
+<rect class="box path" x="280" y="100" width="90" height="90" rx="0" opacity=".5"/>
+<text x="284" y="113" text-anchor="start" class="small">R3</text>
+<line class="edge" x1="40" y1="340" x2="400" y2="340"/>
+<line class="edge" x1="40" y1="340" x2="40" y2="70"/>
+<text x="40" y="355" text-anchor="middle" class="small muted mono">0</text>
+<text x="100" y="355" text-anchor="middle" class="small muted mono">2</text>
+<text x="160" y="355" text-anchor="middle" class="small muted mono">4</text>
+<text x="220" y="355" text-anchor="middle" class="small muted mono">6</text>
+<text x="280" y="355" text-anchor="middle" class="small muted mono">8</text>
+<text x="340" y="355" text-anchor="middle" class="small muted mono">10</text>
+<text x="400" y="355" text-anchor="middle" class="small muted mono">12</text>
+<text x="32" y="344" text-anchor="end" class="small muted mono">0</text>
+<text x="32" y="284" text-anchor="end" class="small muted mono">2</text>
+<text x="32" y="224" text-anchor="end" class="small muted mono">4</text>
+<text x="32" y="164" text-anchor="end" class="small muted mono">6</text>
+<text x="32" y="104" text-anchor="end" class="small muted mono">8</text>
+<text x="630" y="48" text-anchor="middle" class="small muted">Compressed 5 × 5 grid: cell (i, j) has size dx[i] × dy[j]</text>
+<rect class="box visit" x="522" y="258" width="40" height="40" rx="4"/>
+<text x="542" y="282" text-anchor="middle" class="small mono">2</text>
+<rect class="box visit" x="566" y="258" width="40" height="40" rx="4"/>
+<text x="586" y="282" text-anchor="middle" class="small mono">3</text>
+<rect class="box" x="610" y="258" width="40" height="40" rx="4"/>
+<text x="630" y="282" text-anchor="middle" class="small muted">·</text>
+<rect class="box" x="654" y="258" width="40" height="40" rx="4"/>
+<text x="674" y="282" text-anchor="middle" class="small muted">·</text>
+<rect class="box" x="698" y="258" width="40" height="40" rx="4"/>
+<text x="718" y="282" text-anchor="middle" class="small muted">·</text>
+<rect class="box visit" x="522" y="214" width="40" height="40" rx="4"/>
+<text x="542" y="238" text-anchor="middle" class="small mono">4</text>
+<rect class="box done" x="566" y="214" width="40" height="40" rx="4"/>
+<text x="586" y="238" text-anchor="middle" class="small mono">6</text>
+<rect class="box visit" x="610" y="214" width="40" height="40" rx="4"/>
+<text x="630" y="238" text-anchor="middle" class="small mono">4</text>
+<rect class="box visit" x="654" y="214" width="40" height="40" rx="4"/>
+<text x="674" y="238" text-anchor="middle" class="small mono">2</text>
+<rect class="box" x="698" y="214" width="40" height="40" rx="4"/>
+<text x="718" y="238" text-anchor="middle" class="small muted">·</text>
+<rect class="box" x="522" y="170" width="40" height="40" rx="4"/>
+<text x="542" y="194" text-anchor="middle" class="small muted">·</text>
+<rect class="box visit" x="566" y="170" width="40" height="40" rx="4"/>
+<text x="586" y="194" text-anchor="middle" class="small mono">3</text>
+<rect class="box visit" x="610" y="170" width="40" height="40" rx="4"/>
+<text x="630" y="194" text-anchor="middle" class="small mono">2</text>
+<rect class="box visit" x="654" y="170" width="40" height="40" rx="4"/>
+<text x="674" y="194" text-anchor="middle" class="small mono">1</text>
+<rect class="box" x="698" y="170" width="40" height="40" rx="4"/>
+<text x="718" y="194" text-anchor="middle" class="small muted">·</text>
+<rect class="box" x="522" y="126" width="40" height="40" rx="4"/>
+<text x="542" y="150" text-anchor="middle" class="small muted">·</text>
+<rect class="box visit" x="566" y="126" width="40" height="40" rx="4"/>
+<text x="586" y="150" text-anchor="middle" class="small mono">6</text>
+<rect class="box visit" x="610" y="126" width="40" height="40" rx="4"/>
+<text x="630" y="150" text-anchor="middle" class="small mono">4</text>
+<rect class="box done" x="654" y="126" width="40" height="40" rx="4"/>
+<text x="674" y="150" text-anchor="middle" class="small mono">2</text>
+<rect class="box visit" x="698" y="126" width="40" height="40" rx="4"/>
+<text x="718" y="150" text-anchor="middle" class="small mono">4</text>
+<rect class="box" x="522" y="82" width="40" height="40" rx="4"/>
+<text x="542" y="106" text-anchor="middle" class="small muted">·</text>
+<rect class="box" x="566" y="82" width="40" height="40" rx="4"/>
+<text x="586" y="106" text-anchor="middle" class="small muted">·</text>
+<rect class="box" x="610" y="82" width="40" height="40" rx="4"/>
+<text x="630" y="106" text-anchor="middle" class="small muted">·</text>
+<rect class="box visit" x="654" y="82" width="40" height="40" rx="4"/>
+<text x="674" y="106" text-anchor="middle" class="small mono">1</text>
+<rect class="box visit" x="698" y="82" width="40" height="40" rx="4"/>
+<text x="718" y="106" text-anchor="middle" class="small mono">2</text>
+<text x="542" y="316" text-anchor="middle" class="small mono fill-path">2</text>
+<text x="586" y="316" text-anchor="middle" class="small mono fill-path">3</text>
+<text x="630" y="316" text-anchor="middle" class="small mono fill-path">2</text>
+<text x="674" y="316" text-anchor="middle" class="small mono fill-path">1</text>
+<text x="718" y="316" text-anchor="middle" class="small mono fill-path">2</text>
+<text x="512" y="282" text-anchor="end" class="small mono fill-path">1</text>
+<text x="512" y="238" text-anchor="end" class="small mono fill-path">2</text>
+<text x="512" y="194" text-anchor="end" class="small mono fill-path">1</text>
+<text x="512" y="150" text-anchor="end" class="small mono fill-path">2</text>
+<text x="512" y="106" text-anchor="end" class="small mono fill-path">1</text>
+<text x="630" y="334" text-anchor="middle" class="small muted">dx (column widths)</text>
+<text x="490" y="70" text-anchor="middle" class="small muted">dy</text>
+<text x="630" y="360" text-anchor="middle" class="small fill-done">Sum of covered cells = 46  (naive sum of areas = 54)</text>
+<text x="630" y="378" text-anchor="middle" class="small muted">Darker cells are covered twice but counted once.</text>
+</svg>
+<figcaption>Coordinates can be up to 10<sup>9</sup>, but three rectangles have only 6 distinct x edges and 6 distinct y edges. Between two neighbouring edges nothing changes, so each compressed cell is either fully covered or fully empty. Union area = the sum of <code>dx · dy</code> over covered cells. With n rectangles that is an O(n²) grid of cells, and a sweep with a segment tree brings it down to O(n log n).</figcaption>
+</figure>
+
+<p><strong>Rectangle Area II (LC 850)</strong> asks for the total area covered by the union of rectangles. Overlaps count once. The visualizer compresses x and y, paints a coverage count into each compressed cell, then sums <code>dx · dy</code> row by row. Summing row by row <strong>is</strong> a sweep line moving up the y axis. At each height, the covered width is a 1-D union length, which is the merge problem again.</p>
+<div class="viz" data-viz="intervals-sweep-line-area"></div>
+
+<p>The code turns this into a proper sweep over x. Events are the left edges (+1) and right edges (−1) of the rectangles, and a coverage count is kept per compressed y segment. Between two consecutive events, the covered y length is constant, so it adds <code>covered_y × (x − prev_x)</code> of area.</p>
+<div class="code-tabs">
+<pre><code class="language-python">def rectangle_area(rectangles: list[list[int]]) -&gt; int:
+    &quot;&quot;&quot;LeetCode 850. Sweep x; coverage count per compressed y segment.&quot;&quot;&quot;
+    ys = sorted({y for _, y1, _, y2 in rectangles for y in (y1, y2)})
+    rank = {y: i for i, y in enumerate(ys)}
+    events = []
+    for x1, y1, x2, y2 in rectangles:
+        events.append((x1, 1, y1, y2))
+        events.append((x2, -1, y1, y2))
+    events.sort()
+    cover = [0] * (len(ys) - 1)                 # segment j = [ys[j], ys[j+1])
+    area, prev_x = 0, events[0][0] if events else 0
+    for x, d, y1, y2 in events:
+        covered = sum(ys[j + 1] - ys[j] for j, c in enumerate(cover) if c)
+        area += covered * (x - prev_x)          # strip [prev_x, x)
+        prev_x = x
+        for j in range(rank[y1], rank[y2]):
+            cover[j] += d
+    return area % (10**9 + 7)
+</code></pre>
+<pre><code class="language-csharp">// LeetCode 850. Sweep x; coverage count per compressed y segment.
+public static int RectangleArea(int[][] rectangles)
+{
+    var ys = rectangles.SelectMany(r =&gt; new[] { r[1], r[3] }).Distinct().OrderBy(y =&gt; y).ToArray();
+    var rank = new Dictionary&lt;int, int&gt;();
+    for (int i = 0; i &lt; ys.Length; i++) rank[ys[i]] = i;
+    var events = new List&lt;(int X, int D, int Y1, int Y2)&gt;();
+    foreach (var r in rectangles) { events.Add((r[0], 1, r[1], r[3])); events.Add((r[2], -1, r[1], r[3])); }
+    events.Sort();
+    var cover = new int[Math.Max(0, ys.Length - 1)];
+    long area = 0;
+    int prevX = events.Count &gt; 0 ? events[0].X : 0;
+    foreach (var (x, d, y1, y2) in events)
+    {
+        long covered = 0;
+        for (int j = 0; j &lt; cover.Length; j++) if (cover[j] &gt; 0) covered += ys[j + 1] - ys[j];
+        area += covered * (x - prevX);
+        prevX = x;
+        for (int j = rank[y1]; j &lt; rank[y2]; j++) cover[j] += d;
+    }
+    return (int)(area % 1_000_000_007);
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n²): 2n events, each scanning O(n) y segments. A segment tree over the y segments that stores "covered length" brings it to O(n log n), and that is the industrial version of this algorithm (union of rectangles, VLSI layout checks, map overlays).</p>
+<h2 id="choosing-the-technique">Choosing the technique</h2>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 398" width="900" role="img" aria-label="Decision table mapping eight kinds of interval questions to techniques">
+<text x="450" y="22" text-anchor="middle" class="title">Which interval technique? Match the question to a row</text>
+<defs><marker id="intervals-sweep-line-m-dec" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="205" y="48" text-anchor="middle" class="small muted">If the question asks…</text>
+<text x="680" y="48" text-anchor="middle" class="small muted">…reach for</text>
+<rect class="box visit" x="20" y="58" width="400" height="32" rx="6"/>
+<text x="220" y="78" text-anchor="middle" class="small">Combine overlapping intervals / clean up a list</text>
+<path class="edge accent" d="M424 74 L476 74" marker-end="url(#intervals-sweep-line-m-dec)"/>
+<rect class="box done" x="480" y="58" width="400" height="32" rx="6"/>
+<text x="680" y="78" text-anchor="middle" class="small">Sort by start, merge into the last block</text>
+<rect class="box visit" x="20" y="100" width="400" height="32" rx="6"/>
+<text x="220" y="120" text-anchor="middle" class="small">Keep the most non-overlapping / erase fewest / fewest arrows</text>
+<path class="edge accent" d="M424 116 L476 116" marker-end="url(#intervals-sweep-line-m-dec)"/>
+<rect class="box done" x="480" y="100" width="400" height="32" rx="6"/>
+<text x="680" y="120" text-anchor="middle" class="small">Sort by END, greedy keep-first-to-finish</text>
+<rect class="box visit" x="20" y="142" width="400" height="32" rx="6"/>
+<text x="220" y="162" text-anchor="middle" class="small">How many overlap at once? rooms, platforms, peak load</text>
+<path class="edge accent" d="M424 158 L476 158" marker-end="url(#intervals-sweep-line-m-dec)"/>
+<rect class="box done" x="480" y="142" width="400" height="32" rx="6"/>
+<text x="680" y="162" text-anchor="middle" class="small">Events +1/−1 sorted (ends first), or min-heap of ends</text>
+<rect class="box visit" x="20" y="184" width="400" height="32" rx="6"/>
+<text x="220" y="204" text-anchor="middle" class="small">Many range updates, then read every point (small range)</text>
+<path class="edge accent" d="M424 200 L476 200" marker-end="url(#intervals-sweep-line-m-dec)"/>
+<rect class="box done" x="480" y="184" width="400" height="32" rx="6"/>
+<text x="680" y="204" text-anchor="middle" class="small">Difference array + prefix sum</text>
+<rect class="box visit" x="20" y="226" width="400" height="32" rx="6"/>
+<text x="220" y="246" text-anchor="middle" class="small">Two sorted, internally disjoint lists: common part</text>
+<path class="edge accent" d="M424 242 L476 242" marker-end="url(#intervals-sweep-line-m-dec)"/>
+<rect class="box done" x="480" y="226" width="400" height="32" rx="6"/>
+<text x="680" y="246" text-anchor="middle" class="small">Two pointers; advance the one that ends first</text>
+<rect class="box visit" x="20" y="268" width="400" height="32" rx="6"/>
+<text x="220" y="288" text-anchor="middle" class="small">Outline / max height over x (skyline)</text>
+<path class="edge accent" d="M424 284 L476 284" marker-end="url(#intervals-sweep-line-m-dec)"/>
+<rect class="box done" x="480" y="268" width="400" height="32" rx="6"/>
+<text x="680" y="288" text-anchor="middle" class="small">Sweep edges + max-heap with lazy deletion</text>
+<rect class="box visit" x="20" y="310" width="400" height="32" rx="6"/>
+<text x="220" y="330" text-anchor="middle" class="small">Bookings arrive one by one, answer each now</text>
+<path class="edge accent" d="M424 326 L476 326" marker-end="url(#intervals-sweep-line-m-dec)"/>
+<rect class="box done" x="480" y="310" width="400" height="32" rx="6"/>
+<text x="680" y="330" text-anchor="middle" class="small">Sorted map of +1/−1, or a segment tree</text>
+<rect class="box visit" x="20" y="352" width="400" height="32" rx="6"/>
+<text x="220" y="372" text-anchor="middle" class="small">Huge coordinates, few distinct ones; 2-D area</text>
+<path class="edge accent" d="M424 368 L476 368" marker-end="url(#intervals-sweep-line-m-dec)"/>
+<rect class="box done" x="480" y="352" width="400" height="32" rx="6"/>
+<text x="680" y="372" text-anchor="middle" class="small">Coordinate compression + sweep</text>
+</svg>
+<figcaption>Almost every interval problem starts with a sort. The first decision is <b>what to sort by</b>: start for merging and sweeping, end for greedy selection. The second is <b>offline or online</b>: if you have all intervals up front, sort them. If they arrive one at a time and each needs an immediate answer, you need an ordered structure.</figcaption>
+</figure>
+
+<h2 id="recognize-it-when">Recognize it when</h2>
+<div class="recognize">
+<ul>
+<li>The input is a list of pairs: <code>[start, end]</code>, <code>[from, to]</code>, <code>[left, right, height]</code>, or bookings and meetings with times.</li>
+<li>The question says <strong>overlap, merge, conflict, free time, at the same time, rooms, platforms, cover, union</strong>.</li>
+<li>The question asks for a maximum or minimum number of intervals to keep, remove, or "shoot": that is the greedy, sorted by end.</li>
+<li>Many range updates followed by point queries over a small range: a difference array.</li>
+<li>The answer only changes at endpoints, for example a maximum height, a count, or a covered length. That means an event sweep.</li>
+<li>Intervals arrive one by one and need immediate answers: a sorted map or a segment tree.</li>
+</ul>
+</div>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Technique</th>
+<th>Time</th>
+<th>Extra space</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Overlap test, intersection</td>
+<td>Compare <code>max(starts)</code> with <code>min(ends)</code></td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Merge Intervals</td>
+<td>Sort by start + one pass</td>
+<td>O(n log n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Insert Interval</td>
+<td>Three runs</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Non-overlapping / Min Arrows / Pair Chain</td>
+<td>Sort by end, greedy</td>
+<td>O(n log n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Weighted job scheduling</td>
+<td>Sort by end + DP + binary search</td>
+<td>O(n log n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Meeting Rooms II</td>
+<td>±1 event sweep, or heap of ends</td>
+<td>O(n log n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Interval List Intersections</td>
+<td>Two pointers</td>
+<td>O(m + n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Car Pooling / Flight Bookings</td>
+<td>Difference array</td>
+<td>O(n + R)</td>
+<td>O(R)</td>
+</tr>
+<tr>
+<td>Skyline</td>
+<td>Event sweep + max-heap (lazy)</td>
+<td>O(n log n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>My Calendar I</td>
+<td>Sorted list + binary search</td>
+<td>O(n) per call (O(log n) with a tree)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>My Calendar II / III</td>
+<td>Sorted delta map + sweep</td>
+<td>O(n) per call</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Rectangle Area union</td>
+<td>Compress + sweep</td>
+<td>O(n²), O(n log n) with a segment tree</td>
+<td>O(n)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pitfalls">Pitfalls</h2>
+<div class="pitfall">
+<p><strong>Mixing closed and half-open</strong>
+The bug: you use <code>s &lt;= last_end</code> in Non-overlapping Intervals and erase <code>[2,3]</code> because it "overlaps" <code>[1,2]</code>. The fix: decide the convention from the problem statement, write it at the top of your code in a comment, and derive every comparison from it. For integers, converting <code>[s, e]</code> to <code>[s, e + 1)</code> removes the question entirely.</p>
+</div>
+<div class="pitfall">
+<p><strong>Taking <code>e</code> instead of <code>max(last_end, e)</code> when merging</strong>
+The bug: <code>out[-1][1] = e</code>. Sorting by start says nothing about ends, so <code>[1,10]</code> followed by <code>[2,3]</code> shrinks the block to <code>[1,3]</code>. The fix: always <code>max</code>.</p>
+</div>
+<div class="pitfall">
+<p><strong>Wrong tie order in an event sweep</strong>
+The bug: at equal times you process +1 before −1, and back-to-back meetings count as overlapping, so you report one room too many. The fix: for half-open intervals, sort <code>(time, delta)</code> with −1 first. For closed intervals, where touching <strong>does</strong> overlap, process +1 first. The rooms-sweep visualizer shows both.</p>
+</div>
+<div class="pitfall">
+<p><strong>Sorting by start for a greedy selection</strong>
+The bug: you keep the first-starting interval, which might be a giant one that blocks five small ones. The fix: sort by <strong>end</strong>. Or, if you must sort by start, keep the smaller end whenever two intervals collide.</p>
+</div>
+<div class="pitfall">
+<p><strong>Comparator overflow</strong>
+The bug: <code>(a, b) =&gt; a[1] - b[1]</code> in Java, C# or JavaScript, with coordinates near ±2³¹. The subtraction overflows and the sort silently misorders. LeetCode 452 is built to catch this. The fix: <code>a[1].CompareTo(b[1])</code>, <code>Integer.compare</code>, or a key selector, as in <code>OrderBy</code>.</p>
+</div>
+<div class="pitfall">
+<p><strong>Mutating the caller's lists</strong>
+The bug: <code>intervals.sort()</code> and then <code>out.append(intervals[i])</code> without a copy. Later you update <code>out[-1][1]</code> and also change the caller's input. The fix: sort into a new list (<code>sorted(...)</code>) and append copies, <code>[s, e]</code>, when you plan to mutate them.</p>
+</div>
+<h2 id="worked-problems">Worked problems</h2>
+<h3 id="1-employee-free-time">1. Employee Free Time</h3>
+<p>Each employee has a sorted list of non-overlapping working intervals. Return the finite intervals of positive length when <strong>every</strong> employee is free. <strong>Insight:</strong> free time for everyone is the gaps in the <strong>union</strong> of all working intervals. Merge everything, and each gap between two consecutive merged blocks is an answer. The rooms-sweep visualizer above draws these gaps in green on its last frame: they are the stretches where the busy count is 0.</p>
+<details class="solution">
+<summary>Solution: O(N log N) time, O(N) space (N = total intervals)</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def employee_free_time(schedule: list[list[list[int]]]) -&gt; list[list[int]]:
+    &quot;&quot;&quot;LeetCode 759. Intervals are closed; gaps must have positive length.&quot;&quot;&quot;
+    work = sorted(iv for emp in schedule for iv in emp)
+    free: list[list[int]] = []
+    end = work[0][1]
+    for s, e in work[1:]:
+        if s &gt; end:                    # a gap nobody is working in
+            free.append([end, s])
+        end = max(end, e)              # merge loop, without storing blocks
+    return free
+</code></pre>
+<pre><code class="language-csharp">// LeetCode 759. Intervals are closed; gaps must have positive length.
+public static List&lt;int[]&gt; EmployeeFreeTime(int[][][] schedule)
+{
+    var work = schedule.SelectMany(emp =&gt; emp).OrderBy(iv =&gt; iv[0]).ToArray();
+    var free = new List&lt;int[]&gt;();
+    int end = work[0][1];
+    foreach (var iv in work.Skip(1))
+    {
+        if (iv[0] &gt; end) free.Add(new[] { end, iv[0] });
+        end = Math.Max(end, iv[1]);
+    }
+    return free;
+}
+</code></pre>
+</div>
+<p>Each employee's list is already sorted, so a k-way merge with a heap of <code>(start, employee, index)</code> produces the same sorted stream in O(N log k) instead of O(N log N). The merge loop on top is unchanged. It is the same trick as Merge k Sorted Lists in <a href="heaps-priority-queues.html">Heaps &amp; Priority Queues</a>.</p>
+</details>
+<h3 id="2-remove-covered-intervals">2. Remove Covered Intervals</h3>
+<p>Interval <code>[a, b)</code> is covered by <code>[c, d)</code> if <code>c &lt;= a</code> and <code>b &lt;= d</code>. Remove every covered interval and return how many remain. <strong>Insight:</strong> sort by start ascending and, for equal starts, by <strong>end descending</strong>. Then an interval is covered exactly when some earlier interval reaches at least as far, which you can check against the running maximum end. The tie rule matters: <code>[1,4]</code> must come before <code>[1,2]</code>, so that <code>[1,2]</code> sees the bigger end and is counted as covered.</p>
+<details class="solution">
+<summary>Solution: O(n log n) time, O(1) extra space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def remove_covered_intervals(intervals: list[list[int]]) -&gt; int:
+    &quot;&quot;&quot;LeetCode 1288.&quot;&quot;&quot;
+    kept, max_end = 0, float(&quot;-inf&quot;)
+    for _, e in sorted(intervals, key=lambda iv: (iv[0], -iv[1])):
+        if e &gt; max_end:                # sticks out past everything before
+            kept += 1
+            max_end = e
+    return kept
+</code></pre>
+<pre><code class="language-csharp">// LeetCode 1288.
+public static int RemoveCoveredIntervals(int[][] intervals)
+{
+    int kept = 0, maxEnd = int.MinValue;
+    foreach (var iv in intervals.OrderBy(iv =&gt; iv[0]).ThenByDescending(iv =&gt; iv[1]))
+    {
+        if (iv[1] &gt; maxEnd) { kept++; maxEnd = iv[1]; }
+    }
+    return kept;
+}
+</code></pre>
+</div>
+<p>Every earlier interval starts no later than the current one, so "covered" reduces to "some earlier end is ≥ mine". Only the largest earlier end matters. Without the descending tie-break, <code>[1,2]</code> would be visited before <code>[1,4]</code> and counted as kept.</p>
+</details>
+<h3 id="3-maximum-number-of-events-that-can-be-attended">3. Maximum Number of Events That Can Be Attended</h3>
+<p>Event <code>i</code> can be attended on any one day in <code>[start, end]</code>, and you can attend one event per day. Maximise the number of events attended. <strong>Insight:</strong> sweep the <strong>days</strong>, not the events. On each day, every event that has started is a candidate. Attend the candidate that <strong>ends soonest</strong>, because it has the fewest remaining options. The others can wait. Keep the candidates' end days in a min-heap. This is the greedy-by-end idea, run online inside a sweep.</p>
+<details class="solution">
+<summary>Solution: O(n log n) time, O(n) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">import heapq
+
+
+def max_events(events: list[list[int]]) -&gt; int:
+    &quot;&quot;&quot;LeetCode 1353. Closed day ranges; one event per day.&quot;&quot;&quot;
+    events = sorted(events)
+    heap: list[int] = []              # end days of started events
+    i, n, day, attended = 0, len(events), 0, 0
+    while i &lt; n or heap:
+        if not heap:
+            day = max(day, events[i][0])      # jump over idle days
+        while i &lt; n and events[i][0] &lt;= day:
+            heapq.heappush(heap, events[i][1])
+            i += 1
+        while heap and heap[0] &lt; day:         # expired: can't attend now
+            heapq.heappop(heap)
+        if heap:
+            heapq.heappop(heap)               # attend the most urgent
+            attended += 1
+            day += 1
+    return attended
+</code></pre>
+<pre><code class="language-csharp">// LeetCode 1353. Closed day ranges; one event per day.
+public static int MaxEvents(int[][] events)
+{
+    var ev = events.OrderBy(e =&gt; e[0]).ToArray();
+    var heap = new PriorityQueue&lt;int, int&gt;();   // end days of started events
+    int i = 0, n = ev.Length, day = 0, attended = 0;
+    while (i &lt; n || heap.Count &gt; 0)
+    {
+        if (heap.Count == 0) day = Math.Max(day, ev[i][0]);
+        while (i &lt; n &amp;&amp; ev[i][0] &lt;= day) { heap.Enqueue(ev[i][1], ev[i][1]); i++; }
+        while (heap.Count &gt; 0 &amp;&amp; heap.Peek() &lt; day) heap.Dequeue();
+        if (heap.Count &gt; 0) { heap.Dequeue(); attended++; day++; }
+    }
+    return attended;
+}
+</code></pre>
+</div>
+<p>Why the soonest end? Exchange argument: if an optimal plan attends some other candidate today and the most urgent one later (or never), swap them. The urgent one fits today, and the other one has an equal or later deadline, so it fits wherever the urgent one was. The day-jump keeps the loop O(n log n) even when the days go up to 10⁵ or 10⁹.</p>
+</details>
+<h3 id="4-minimum-interval-to-include-each-query">4. Minimum Interval to Include Each Query</h3>
+<p>Given closed intervals and a list of query points, return for each query the <strong>size</strong> (<code>right − left + 1</code>) of the smallest interval that contains it, or −1. <strong>Insight:</strong> answer the queries <strong>offline, in sorted order</strong>. Sweep the query points from left to right. Push every interval that has started into a min-heap keyed by size, and lazily discard intervals whose right end is to the left of the current query. Because queries only move right, an interval that has expired stays expired. This is the skyline's lazy-deletion trick with "smallest" in place of "tallest".</p>
+<details class="solution">
+<summary>Solution: O((n + q) log n) time, O(n + q) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">import heapq
+
+
+def min_interval(intervals: list[list[int]], queries: list[int]) -&gt; list[int]:
+    &quot;&quot;&quot;LeetCode 1851.&quot;&quot;&quot;
+    intervals = sorted(intervals)
+    heap: list[tuple[int, int]] = []          # (size, right)
+    ans: dict[int, int] = {}
+    i = 0
+    for q in sorted(set(queries)):
+        while i &lt; len(intervals) and intervals[i][0] &lt;= q:
+            l, r = intervals[i]
+            heapq.heappush(heap, (r - l + 1, r))
+            i += 1
+        while heap and heap[0][1] &lt; q:        # ends before q: gone for good
+            heapq.heappop(heap)
+        ans[q] = heap[0][0] if heap else -1
+    return [ans[q] for q in queries]
+</code></pre>
+<pre><code class="language-csharp">// LeetCode 1851.
+public static int[] MinInterval(int[][] intervals, int[] queries)
+{
+    var iv = intervals.OrderBy(x =&gt; x[0]).ToArray();
+    var order = Enumerable.Range(0, queries.Length).OrderBy(k =&gt; queries[k]).ToArray();
+    var heap = new PriorityQueue&lt;int, int&gt;();  // element: right, priority: size
+    var res = new int[queries.Length];
+    int i = 0;
+    foreach (int k in order)
+    {
+        int q = queries[k];
+        while (i &lt; iv.Length &amp;&amp; iv[i][0] &lt;= q) { heap.Enqueue(iv[i][1], iv[i][1] - iv[i][0] + 1); i++; }
+        while (heap.Count &gt; 0 &amp;&amp; heap.Peek() &lt; q) heap.Dequeue();
+        res[k] = heap.TryPeek(out _, out int size) ? size : -1;
+    }
+    return res;
+}
+</code></pre>
+</div>
+<p>Interval lengths and the query values are unrelated, so no single sort order handles both. The sweep handles <strong>position</strong> (which intervals contain q), and the heap handles <strong>size</strong> (which of those is smallest). Sorting queries offline is the standard escape whenever online answers would need a heavy data structure.</p>
+</details>
+<h3 id="5-data-stream-as-disjoint-intervals">5. Data Stream as Disjoint Intervals</h3>
+<p>Numbers arrive one at a time (<code>addNum</code>). At any moment <code>getIntervals</code> must return the numbers seen so far as sorted, disjoint closed intervals. <strong>Insight:</strong> this is Insert Interval for a single point, done online. Keep the intervals in a sorted structure and look only at the two neighbours of the new value: the interval starting at or before <code>v</code>, and the one starting after it. There are four cases:</p>
+<ul>
+<li><code>v</code> is already covered: do nothing.</li>
+<li><code>v</code> bridges the two neighbours (<code>left.e == v − 1</code> and <code>right.s == v + 1</code>): fuse them.</li>
+<li><code>v</code> extends just one of them.</li>
+<li><code>v</code> stands alone: insert <code>[v, v]</code>.</li>
+</ul>
+<details class="solution">
+<summary>Solution: O(log n) per call with a balanced tree (O(n) insert with a Python list)</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from bisect import bisect_right
+
+
+class SummaryRanges:
+    &quot;&quot;&quot;LeetCode 352. self.iv: sorted, disjoint, non-adjacent [s, e].&quot;&quot;&quot;
+
+    def __init__(self) -&gt; None:
+        self.iv: list[list[int]] = []
+
+    def addNum(self, v: int) -&gt; None:
+        iv = self.iv
+        i = bisect_right(iv, [v, float(&quot;inf&quot;)])    # first with start &gt; v
+        if i &gt; 0 and iv[i - 1][1] &gt;= v:
+            return                                  # already covered
+        joins_left = i &gt; 0 and iv[i - 1][1] == v - 1
+        joins_right = i &lt; len(iv) and iv[i][0] == v + 1
+        if joins_left and joins_right:
+            iv[i - 1][1] = iv[i][1]                 # v bridges the gap
+            del iv[i]
+        elif joins_left:
+            iv[i - 1][1] = v
+        elif joins_right:
+            iv[i][0] = v
+        else:
+            iv.insert(i, [v, v])
+
+    def getIntervals(self) -&gt; list[list[int]]:
+        return [x[:] for x in self.iv]
+</code></pre>
+<pre><code class="language-csharp">// LeetCode 352. A SortedSet ordered by start; sentinels avoid empty checks.
+public class SummaryRanges
+{
+    private readonly SortedSet&lt;(int S, int E)&gt; _set =
+        new() { (int.MinValue, int.MinValue), (int.MaxValue, int.MaxValue) };
+
+    public void AddNum(int v)
+    {
+        var left = _set.GetViewBetween((int.MinValue, int.MinValue), (v, int.MaxValue)).Max;
+        var right = _set.GetViewBetween((v, int.MaxValue), (int.MaxValue, int.MaxValue)).Min;
+        if (left.E &gt;= v) return;                       // already covered
+        bool joinL = left.E == v - 1, joinR = right.S == v + 1;
+        if (joinL &amp;&amp; joinR)
+        {
+            _set.Remove(left); _set.Remove(right); _set.Add((left.S, right.E));
+        }
+        else if (joinL) { _set.Remove(left); _set.Add((left.S, v)); }
+        else if (joinR) { _set.Remove(right); _set.Add((v, right.E)); }
+        else _set.Add((v, v));
+    }
+
+    public int[][] GetIntervals() =&gt;
+        _set.Where(x =&gt; x.S != int.MinValue &amp;&amp; x.S != int.MaxValue)
+            .Select(x =&gt; new[] { x.S, x.E }).ToArray();
+}
+</code></pre>
+</div>
+<p>The two <code>GetViewBetween</code> calls are a floor and a ceiling lookup, which C#'s <code>SortedSet</code> does not expose directly. Java's <code>TreeMap.floorKey</code> and <code>higherKey</code> do the same job. The <code>(int.MaxValue, int.MaxValue)</code> right sentinel sits after <code>(v, int.MaxValue)</code> only if <code>v</code> is less than <code>int.MaxValue</code>, which LC 352's bounds (<code>0 ≤ v ≤ 10⁴</code>) guarantee. Follow-up: when merges are frequent and the number of disjoint intervals stays small, this is far cheaper than storing every number and re-merging on each <code>getIntervals</code>.</p>
+</details>
+<h3 id="6-meeting-rooms-iii">6. Meeting Rooms III</h3>
+<p>There are <code>n</code> rooms numbered 0..n−1, and meetings <code>[start, end)</code> with distinct starts. Each meeting takes the <strong>lowest-numbered free room</strong>. If none is free, it waits for the room that frees up first (ties go to the lowest number) and keeps its original duration. Return the room that held the most meetings. <strong>Insight:</strong> two heaps. One holds <strong>free rooms by number</strong>. The other holds <strong>busy rooms by <code>(free_time, number)</code></strong>. Before each meeting, move every room that is free by its start from the busy heap to the free heap. This is the rooms heap from Meeting Rooms II, except that now the rooms have names.</p>
+<details class="solution">
+<summary>Solution: O(m log m + m log n) time, O(n) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">import heapq
+
+
+def most_booked(n: int, meetings: list[list[int]]) -&gt; int:
+    &quot;&quot;&quot;LeetCode 2402.&quot;&quot;&quot;
+    free = list(range(n))                     # already a valid min-heap
+    busy: list[tuple[int, int]] = []          # (free_time, room)
+    count = [0] * n
+    for s, e in sorted(meetings):
+        while busy and busy[0][0] &lt;= s:       # rooms that are free by s
+            _, r = heapq.heappop(busy)
+            heapq.heappush(free, r)
+        if free:
+            r = heapq.heappop(free)
+            heapq.heappush(busy, (e, r))
+        else:                                 # wait for the earliest room
+            t, r = heapq.heappop(busy)
+            heapq.heappush(busy, (t + e - s, r))   # same duration, delayed
+        count[r] += 1
+    return count.index(max(count))
+</code></pre>
+<pre><code class="language-csharp">// LeetCode 2402.
+public static int MostBooked(int n, int[][] meetings)
+{
+    var free = new PriorityQueue&lt;int, int&gt;();
+    for (int r = 0; r &lt; n; r++) free.Enqueue(r, r);
+    var busy = new PriorityQueue&lt;int, (long T, int R)&gt;();   // room by (free time, room)
+    var count = new int[n];
+    foreach (var m in meetings.OrderBy(m =&gt; m[0]))
+    {
+        long s = m[0], e = m[1];
+        while (busy.TryPeek(out int br, out var p) &amp;&amp; p.T &lt;= s) { busy.Dequeue(); free.Enqueue(br, br); }
+        int room;
+        if (free.Count &gt; 0) { room = free.Dequeue(); busy.Enqueue(room, (e, room)); }
+        else
+        {
+            busy.TryDequeue(out room, out var p);
+            busy.Enqueue(room, (p.T + e - s, room));
+        }
+        count[room]++;
+    }
+    return Array.IndexOf(count, count.Max());
+}
+</code></pre>
+</div>
+<p>Two traps hide in this problem. First, the delayed end can exceed 2³¹, which is why the C# version uses <code>long</code>. Second, you must move <strong>all</strong> freed rooms into the free heap before choosing, because "lowest-numbered free room" is not the same as "the room that freed up first".</p>
+</details>
+<h2 id="problem-ladder">Problem ladder</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Level</th>
+<th>The key idea</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://leetcode.com/problems/meeting-rooms/">Meeting Rooms</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Sort by start; check each neighbouring pair with the half-open test.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://leetcode.com/problems/summary-ranges/">Summary Ranges</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Build intervals from a sorted array: extend while <code>x == last + 1</code>.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://leetcode.com/problems/merge-intervals/">Merge Intervals</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Sort by start; compare with the last block only; <code>max</code> the end.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://leetcode.com/problems/insert-interval/">Insert Interval</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Three runs: left, swallowed, right. O(n), no sort.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://leetcode.com/problems/non-overlapping-intervals/">Non-overlapping Intervals</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Sort by end; keep the most; erase <code>n − kept</code>.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/">Minimum Number of Arrows to Burst Balloons</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Same greedy; closed intervals; beware comparator overflow.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://leetcode.com/problems/maximum-length-of-pair-chain/">Maximum Length of Pair Chain</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Activity selection with a strict <code>&lt;</code> between pairs.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://leetcode.com/problems/meeting-rooms-ii/">Meeting Rooms II</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Peak overlap: ±1 sweep (ends first) or a heap of end times.</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://leetcode.com/problems/interval-list-intersections/">Interval List Intersections</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Two pointers; advance whichever ends first.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://leetcode.com/problems/remove-covered-intervals/">Remove Covered Intervals</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Sort <code>(start, −end)</code>; covered iff end ≤ running max end.</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://leetcode.com/problems/car-pooling/">Car Pooling</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Difference array on <code>[from, to)</code>; check the running load.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://leetcode.com/problems/corporate-flight-bookings/">Corporate Flight Bookings</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Difference array; closed → write <code>−seats</code> at <code>last + 1</code>.</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://leetcode.com/problems/my-calendar-i/">My Calendar I</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Sorted bookings; check only the floor and ceiling neighbours.</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="https://leetcode.com/problems/my-calendar-ii/">My Calendar II</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Delta map + sweep, limit 2, roll back on failure.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended/">Maximum Number of Events That Can Be Attended</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Sweep days; min-heap of ends; attend the most urgent.</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="https://leetcode.com/problems/video-stitching/">Video Stitching</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Greedy reach: among clips starting ≤ current end, jump to the farthest end.</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="https://leetcode.com/problems/employee-free-time/">Employee Free Time</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Gaps in the union of all schedules; k-way merge with a heap.</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="https://leetcode.com/problems/data-stream-as-disjoint-intervals/">Data Stream as Disjoint Intervals</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Sorted structure; floor/ceiling neighbours; four cases.</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="https://leetcode.com/problems/my-calendar-iii/">My Calendar III</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Delta map peak; a dynamic segment tree for big inputs.</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="https://leetcode.com/problems/maximum-profit-in-job-scheduling/">Maximum Profit in Job Scheduling</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Weighted intervals: sort by end, DP + binary search.</td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="https://leetcode.com/problems/minimum-interval-to-include-each-query/">Minimum Interval to Include Each Query</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Offline sorted queries + min-heap by size with lazy expiry.</td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="https://leetcode.com/problems/the-skyline-problem/">The Skyline Problem</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Edge events sorted <code>(x, −h)</code>; max-heap with lazy deletion; emit on change.</td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="https://leetcode.com/problems/meeting-rooms-iii/">Meeting Rooms III</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Free-room heap by number + busy heap by <code>(end, room)</code>.</td>
+</tr>
+<tr>
+<td>24</td>
+<td><a href="https://leetcode.com/problems/range-module/">Range Module</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Online add, remove and query on a sorted disjoint list: insert and cut intervals.</td>
+</tr>
+<tr>
+<td>25</td>
+<td><a href="https://leetcode.com/problems/rectangle-area-ii/">Rectangle Area II</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Compress y, sweep x, covered length per strip; segment tree for O(n log n).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>In Merge Intervals, why is it enough to compare each interval with the <b>last</b> merged block only?</summary>
+<p>The list is sorted by start, so the current interval starts at or after every earlier interval. Every block before the last one ended before the last block started (that is why they are separate blocks), and so it also ends before the current interval starts. Only the last block can still reach the current interval.</p>
+</details>
+<details class="quiz">
+<summary>Why is the minimum number of meeting rooms equal to the maximum number of meetings running at one instant?</summary>
+<p><strong>At least:</strong> at the peak instant, k meetings are running and each needs its own room. <strong>At most:</strong> assign rooms greedily in start order. When a meeting starts, fewer than k other meetings are running (or the count would exceed the peak), so one of k rooms is free. The min-heap algorithm is exactly this assignment, which is why its final size equals the peak of the ±1 sweep.</p>
+</details>
+<details class="quiz">
+<summary>Half-open intervals <code>[1,2], [2,3], [3,4], [1,3]</code>: how many must be erased so the rest do not overlap? Trace the greedy.</summary>
+<p>Sorted by end: <code>[1,2]</code> (end 2), <code>[2,3]</code> and <code>[1,3]</code> (end 3), <code>[3,4]</code> (end 4). Keep <code>[1,2]</code>, so end = 2. <code>[2,3]</code> starts at 2 ≥ 2, so keep it and end = 3. <code>[1,3]</code> starts at 1 &lt; 3, so erase it. <code>[3,4]</code> starts at 3 ≥ 3, so keep it. Three kept, so <strong>1</strong> erased. If you used <code>&gt;</code> instead of <code>&gt;=</code> you would also erase <code>[2,3]</code> and <code>[3,4]</code> and answer 3, which is the closed-interval answer to a half-open question.</p>
+</details>
+<details class="quiz">
+<summary>In the skyline sweep, why sort start events by <code>(x, −height)</code>, and why is lazy deletion from the heap safe?</summary>
+<p>At the same x, the taller start must be pushed first, so the first height read at that x is already the final one. Otherwise a shorter building starting at the same x would emit a key point that the taller one immediately replaces, giving two key points at one x. Lazy deletion is safe because a stale (already ended) building only affects the answer when it is on <strong>top</strong> of the heap, and that is exactly when the <code>while top.right &lt;= x</code> loop removes it. Buried stale entries never get read.</p>
+</details>
+<details class="quiz">
+<summary>In Interval List Intersections, why is it safe to advance the pointer of the interval that ends first?</summary>
+<p>Say <code>A[i]</code> ends first, at <code>e</code>. The next interval in B starts after <code>B[j]</code> ends (B is disjoint), and <code>B[j]</code> ends at or after <code>e</code>. So every later B interval starts after <code>e</code>, and <code>A[i]</code> cannot intersect any of them. <code>B[j]</code> must stay, because it reaches further and may still overlap <code>A[i+1]</code>.</p>
+</details>
+<details class="quiz">
+<summary>When does "sort by end, keep greedily" give the wrong answer, and what replaces it?</summary>
+<p>When intervals have <strong>weights</strong> (profits) and you maximise total weight rather than count. One long interval worth 100 beats three short ones worth 1 each, but the greedy would keep the short ones. Replace it with weighted interval scheduling: sort by end, <code>best[i] = max(best[i−1], best[k] + w_i)</code> where <code>k</code> (found by binary search) counts the jobs that end by job i's start.</p>
+</details>
+<details class="quiz">
+<summary>Car Pooling writes <code>−c</code> at <code>to</code>, but Corporate Flight Bookings writes <code>−seats</code> at <code>last + 1</code>. Why the difference?</summary>
+<p>The conventions differ. Car riders get off <strong>at</strong> <code>to</code>, so they are not in the car there: the range is half-open <code>[from, to)</code>, and the load must drop at <code>to</code>. A flight booking <code>[first, last]</code> includes flight <code>last</code>, so the seats must still count there and drop one step later, at <code>last + 1</code>. Both are the same rule: write the minus at the first point that is <strong>not</strong> covered.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Overlap</strong>Half-open: <code>a.s &lt; b.e and b.s &lt; a.e</code>. Closed: <code>≤</code>. Shared part: <code>[max(s), min(e)]</code>.</div>
+<div><strong>Convention</strong>Integer <code>[s, e]</code> = <code>[s, e+1)</code>. Pick one per problem; it decides every <code>&lt;</code> vs <code>≤</code>.</div>
+<div><strong>Merge</strong>Sort by start; <code>if s &lt;= out[-1][1]: out[-1][1] = max(out[-1][1], e)</code> else append.</div>
+<div><strong>Insert</strong>Copy while <code>iv.e &lt; s</code>; swallow while <code>iv.s &lt;= e</code>; append; copy the rest.</div>
+<div><strong>Greedy select</strong>Sort by <b>end</b>; keep if <code>s &gt;= last_end</code>. Erase = n − kept. Arrows: <code>s &gt; pos</code>.</div>
+<div><strong>Weighted</strong>Sort by end; <code>best[i+1] = max(best[i], best[bisect(ends, s)] + p)</code>.</div>
+<div><strong>Peak overlap</strong>Events <code>(t, +1)</code>, <code>(t, −1)</code>; sort, ends first for half-open; running max. Or a min-heap of ends.</div>
+<div><strong>Two lists</strong><code>lo = max(starts), hi = min(ends)</code>; record if <code>lo &lt;= hi</code>; advance whichever ends first.</div>
+<div><strong>Difference array</strong><code>d[a] += c; d[b] −= c</code> (half-open), then a prefix sum. O(n + R).</div>
+<div><strong>Skyline</strong>Events <code>(l, −h, r)</code> and <code>(r, 0, 0)</code>; push, pop while <code>top.r &lt;= x</code>, emit on change.</div>
+<div><strong>Online</strong>Sorted map of deltas, sweep, roll back if over the limit. A segment tree for 10⁵+ calls.</div>
+<div><strong>Compression</strong><code>xs = sorted(set(coords))</code>; work on ranks; each gap remembers <code>xs[i+1] − xs[i]</code>.</div>
+</div><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="monotonic-stack-queue.html"><small>&larr; PREVIOUS</small>Monotonic Stack &amp; Queue</a><a class="next" href="string-algorithms.html"><small>NEXT &rarr;</small>String Algorithms</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#what-it-is-and-when-you-need-it">What it is and when you need it</a></li>
+<li><a href="#intuition-draw-them-on-a-number-line">Intuition: draw them on a number line</a><ul>
+<li><a href="#closed-or-half-open-decide-once">Closed or half-open? Decide once</a></li>
+</ul>
+</li>
+<li><a href="#merge-intervals-sort-by-start-compare-with-the-last-block-only">Merge Intervals: sort by start, compare with the last block only</a></li>
+<li><a href="#insert-interval-three-runs-no-sort">Insert Interval: three runs, no sort</a></li>
+<li><a href="#greedy-selection-sort-by-end">Greedy selection: sort by END</a><ul>
+<li><a href="#when-intervals-have-weights-greedy-stops-working-use-dp">When intervals have weights, greedy stops working: use DP</a></li>
+</ul>
+</li>
+<li><a href="#counting-overlaps-meeting-rooms">Counting overlaps: Meeting Rooms</a><ul>
+<li><a href="#way-1-event-sweep-1-1">Way 1: event sweep (+1 / −1)</a></li>
+<li><a href="#way-2-a-min-heap-of-end-times">Way 2: a min-heap of end times</a></li>
+</ul>
+</li>
+<li><a href="#two-sorted-lists-interval-list-intersections">Two sorted lists: Interval List Intersections</a></li>
+<li><a href="#difference-arrays-many-ranges-small-coordinates">Difference arrays: many ranges, small coordinates</a></li>
+<li><a href="#the-skyline-problem-sweep-with-a-max-heap">The Skyline Problem: sweep with a max-heap</a></li>
+<li><a href="#online-bookings-my-calendar-i-ii-and-iii">Online bookings: My Calendar I, II and III</a></li>
+<li><a href="#coordinate-compression-and-the-area-of-rectangles">Coordinate compression and the area of rectangles</a></li>
+<li><a href="#choosing-the-technique">Choosing the technique</a></li>
+<li><a href="#recognize-it-when">Recognize it when</a></li>
+<li><a href="#pitfalls">Pitfalls</a></li>
+<li><a href="#worked-problems">Worked problems</a><ul>
+<li><a href="#1-employee-free-time">1. Employee Free Time</a></li>
+<li><a href="#2-remove-covered-intervals">2. Remove Covered Intervals</a></li>
+<li><a href="#3-maximum-number-of-events-that-can-be-attended">3. Maximum Number of Events That Can Be Attended</a></li>
+<li><a href="#4-minimum-interval-to-include-each-query">4. Minimum Interval to Include Each Query</a></li>
+<li><a href="#5-data-stream-as-disjoint-intervals">5. Data Stream as Disjoint Intervals</a></li>
+<li><a href="#6-meeting-rooms-iii">6. Meeting Rooms III</a></li>
+</ul>
+</li>
+<li><a href="#problem-ladder">Problem ladder</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

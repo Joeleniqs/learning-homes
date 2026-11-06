@@ -1,0 +1,2013 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Types, Immutability &amp; Domain Modelling | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/types-and-immutability.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/types-and-immutability.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track" open><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html" aria-current="page">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Types, Immutability &amp; Domain Modelling</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">FOUNDATIONS OF CRAFT</p><h1>Types, Immutability &amp; Domain Modelling</h1><p class="lede">Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate.</p><div class="meta"><span class="level level-intermediate">Intermediate → Advanced</span><span>~50 min study</span><span>Builds on: <a href="language-mental-models.html">Cross-Language Mental Models</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="types-and-immutability" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-the-type-said-string-the-bug-said-otherwise">The problem: the type said <code>string</code>, the bug said otherwise</h2>
+<p>Most production bugs are not clever. They are a value that should never have existed: an order that is both
+cancelled and shipped, a customer ID passed where an account ID belonged, a list that someone else changed
+while you were holding it. In each case the language would have stopped the bug <strong>if the types had said what the
+code meant</strong>. They didn't, so the bug waited for production.</p>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>The code that compiled</th>
+<th>What happened</th>
+<th>The missing idea</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C#</td>
+<td><code>Charge(order.AccountId, order.CustomerId, total)</code></td>
+<td>Both IDs were <code>Guid</code>. The arguments were swapped and a customer was charged on someone else's card.</td>
+<td><a href="#strongly-typed-ids-and-primitive-obsession">Strongly-typed IDs</a></td>
+</tr>
+<tr>
+<td>TypeScript</td>
+<td><code>{ status: "shipped", cancelledAt: new Date() }</code></td>
+<td>Five optional fields allowed 32 combinations; the UI showed "Shipped" and "Refund issued" on the same order.</td>
+<td><a href="#make-illegal-states-unrepresentable">Illegal states</a></td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>return this.items;</code> from a getter</td>
+<td>A caller sorted the returned list in place, and the domain object's invariant "lines in insertion order" broke.</td>
+<td><a href="#defensive-copying-vs-immutability">Defensive copying vs immutability</a></td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>cache[key] = value</code> where <code>key</code> was a mutable dataclass</td>
+<td>The key was changed after insertion; the entry became unreachable and the cache leaked.</td>
+<td><a href="#value-objects-and-records">Value objects and records</a></td>
+</tr>
+<tr>
+<td>Go</td>
+<td><code>switch m := p.(type) { case Card: ...; case Bank: ... }</code></td>
+<td>A new <code>Wallet</code> payment method fell through silently and refunds returned zero.</td>
+<td><a href="#enums-and-tagged-unions">Tagged unions</a></td>
+</tr>
+</tbody>
+</table>
+<p>All five bugs have the same shape: <strong>the type was wider than the meaning</strong>. A <code>Guid</code> can be any Guid, a <code>string</code>
+can be any text, a <code>List</code> can be changed by anyone who holds it. This page is about narrowing types until they
+match the meaning, across C#, Java, Python, Go and TypeScript, and about knowing when <em>not</em> to.</p>
+<div class="rule">
+<p><strong>Rule.</strong> Use types to make wrong code fail to compile, not just to describe the data. Model each concept with its own type, make values immutable by default, parse untrusted input once at the boundary, and represent "one of several things" as a closed union that the compiler can check exhaustively.</p>
+</div>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 300" width="880" role="img" aria-label="A ladder of type precision from primitives to unions, showing which bugs each rung prevents">
+<text x="20" y="26" class="title">The type-precision ladder: each rung removes a class of bugs</text>
+<rect class="box bad" x="20" y="44" width="200" height="110" rx="10"/>
+<text x="34" y="68" class="title">Primitives</text>
+<text x="34" y="90" class="small mono">string email</text>
+<text x="34" y="108" class="small mono">Guid customerId</text>
+<text x="34" y="126" class="small">anything goes in</text>
+<text x="34" y="144" class="small muted">bugs: swaps, bad formats</text>
+<rect class="box visit" x="240" y="44" width="200" height="110" rx="10"/>
+<text x="254" y="68" class="title">Value objects</text>
+<text x="254" y="90" class="small mono">Email, CustomerId</text>
+<text x="254" y="108" class="small mono">Money(amount, ccy)</text>
+<text x="254" y="126" class="small">valid by construction</text>
+<text x="254" y="144" class="small muted">removes: swaps, formats</text>
+<rect class="box active" x="460" y="44" width="200" height="110" rx="10"/>
+<text x="474" y="68" class="title">Immutable records</text>
+<text x="474" y="90" class="small mono">record Order(...)</text>
+<text x="474" y="108" class="small mono">with { Total = t }</text>
+<text x="474" y="126" class="small">nobody changes it under you</text>
+<text x="474" y="144" class="small muted">removes: aliasing, races</text>
+<rect class="box done" x="680" y="44" width="180" height="110" rx="10"/>
+<text x="694" y="68" class="title">Closed unions</text>
+<text x="694" y="90" class="small mono">Pending | Paid</text>
+<text x="694" y="108" class="small mono">  | Shipped(at)</text>
+<text x="694" y="126" class="small">only legal states exist</text>
+<text x="694" y="144" class="small muted">removes: impossible combos</text>
+<line x1="220" y1="99" x2="240" y2="99" class="edge accent"/>
+<line x1="440" y1="99" x2="460" y2="99" class="edge accent"/>
+<line x1="660" y1="99" x2="680" y2="99" class="edge accent"/>
+<rect class="box" x="20" y="176" width="840" height="104" rx="10"/>
+<text x="34" y="200" class="title">What climbing costs</text>
+<text x="34" y="222" class="small">More types to name and read. Mapping at the boundaries (JSON, ORM, database). In Go and Python the compiler helps less,</text>
+<text x="34" y="240" class="small">so some rungs are enforced by convention, linters or a type checker in CI. Climb as far as the domain deserves:</text>
+<text x="34" y="258" class="small">money, identity, permissions and state machines deserve it; a temporary loop index does not.</text>
+</svg>
+<figcaption>Each step up the ladder moves a check from "a test might catch it" to "the compiler refuses it". The visualizers below show each rung failing and then holding.</figcaption>
+</figure>
+
+<p><strong>Prerequisite:</strong> <a href="language-mental-models.html">Language Mental Models</a>, especially values vs references and
+equality. Sum types are introduced here at the level of <em>design</em>; <a href="functional-patterns.html#pattern-matching-and-discriminated-unions">Functional Patterns</a>
+goes deeper into pattern matching and <code>Option</code>/<code>Result</code>.</p>
+<h2 id="types-are-design-tools-not-paperwork">Types are design tools, not paperwork</h2>
+<p>A type is a promise the compiler checks every time the code builds. The more a type promises, the less every
+function that receives it has to check. Compare two signatures for the same operation:</p>
+<pre><code class="language-text">void Ship(string orderId, string address, bool expedited, DateTime? shippedAt)
+void Ship(PaidOrder order, ShippingAddress to, ShippingSpeed speed)
+</code></pre>
+<p>The first accepts 2 strings that may be empty, a boolean whose meaning you read from the docs, and a nullable
+timestamp that might already be set. Every caller and every implementer must remember the rules. The second
+<strong>cannot be called</strong> with an unpaid order, an unparsed address or a speed that doesn't exist. The rules moved
+from comments and <code>if</code> statements into types, where the compiler enforces them for free on every build.</p>
+<p>Four techniques do almost all of the work. The rest of the page takes them one at a time:</p>
+<table>
+<thead>
+<tr>
+<th>Technique</th>
+<th>What it promises</th>
+<th>Where the check lives</th>
+<th>C#</th>
+<th>Java</th>
+<th>Python</th>
+<th>Go</th>
+<th>TypeScript</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value object / record</td>
+<td>equal by value, valid by construction</td>
+<td>constructor or factory</td>
+<td><code>record</code>, <code>readonly record struct</code></td>
+<td><code>record</code></td>
+<td><code>@dataclass(frozen=True)</code></td>
+<td>struct + constructor func</td>
+<td><code>readonly</code> type + factory</td>
+</tr>
+<tr>
+<td>Immutability</td>
+<td>nobody changes it after creation</td>
+<td>compiler (C#, Java, TS), convention (Python, Go)</td>
+<td><code>init</code>, <code>ImmutableList</code></td>
+<td><code>final</code>, <code>List.of</code></td>
+<td><code>frozen</code>, <code>tuple</code></td>
+<td>unexported fields</td>
+<td><code>readonly</code>, <code>as const</code></td>
+</tr>
+<tr>
+<td>Closed union</td>
+<td>exactly one of N known shapes</td>
+<td>compiler exhaustiveness</td>
+<td><code>switch</code> + sealed records</td>
+<td><code>sealed interface</code> + records</td>
+<td><code>Literal</code>/union + <code>assert_never</code></td>
+<td>interface + type switch (linter)</td>
+<td>discriminated union + <code>never</code></td>
+</tr>
+<tr>
+<td>Parse at the boundary</td>
+<td>"this was checked once"</td>
+<td>the type of the parsed value</td>
+<td><code>Email.Parse</code></td>
+<td><code>Email.parse</code></td>
+<td><code>Email.parse</code></td>
+<td><code>ParseEmail</code> returning <code>(Email, error)</code></td>
+<td><code>parseEmail</code> returning a branded type</td>
+</tr>
+</tbody>
+</table>
+<div class="insight">
+<p><strong>Where the guarantee comes from matters</strong>
+C#, Java and TypeScript enforce most of these at compile time. Python enforces nothing at run time unless you
+write the check yourself (<code>frozen=True</code> and <code>__post_init__</code> do run), so the promise comes from <strong>mypy or pyright
+in CI</strong>. Go has no unions, no <code>readonly</code> and no generic variance, so the promise comes from <strong>unexported fields,
+constructor functions and linters</strong> such as <code>exhaustive</code>. Know which kind of promise you're relying on.</p>
+</div>
+<h2 id="make-illegal-states-unrepresentable">Make illegal states unrepresentable</h2>
+<p>The phrase comes from Yaron Minsky (OCaml): design your types so that a value which would be a bug <strong>can't be
+built</strong>. The most common violation is a bag of optional fields plus a set of rules that live only in someone's
+head:</p>
+<pre><code class="language-typescript">// Before: 4 independent fields, 2^4 = 16 combinations, 5 of them legal
+interface Order {
+  paidAt?: Date;
+  shippedAt?: Date;
+  cancelledAt?: Date;
+  trackingNo?: string;
+}
+</code></pre>
+<p>Which combinations are legal? Shipped implies paid. Tracking number implies shipped. Cancelled excludes shipped.
+None of that is in the type, so every function must re-check it, and one of them will forget. The fix is to
+list the <strong>legal states</strong> as cases of a union, each carrying exactly the data that state needs:</p>
+<pre><code class="language-typescript">// After: 5 cases, 5 legal states, 0 illegal ones
+type Order =
+  | { kind: &quot;draft&quot; }
+  | { kind: &quot;paid&quot;; paidAt: Date }
+  | { kind: &quot;shipped&quot;; paidAt: Date; shippedAt: Date; trackingNo: string }
+  | { kind: &quot;cancelled&quot;; cancelledAt: Date }
+  | { kind: &quot;refunded&quot;; paidAt: Date; cancelledAt: Date };
+</code></pre>
+<p>The visualizer enumerates <strong>every</strong> combination of the optional fields, runs the business rules on each, and
+then shows which union case (if any) can represent it. Illegal combinations have no case, so they simply can't
+be constructed. Try the three models: the counts are computed, not hard-coded.</p>
+<div class="viz" data-viz="types-and-immutability-states"></div>
+
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 250" width="880" role="img" aria-label="Optional fields form a large rectangle of combinations; a union maps only the legal subset">
+<text x="20" y="26" class="title">Product type vs sum type: counting the values a type allows</text>
+<rect class="box bad" x="20" y="44" width="400" height="186" rx="10"/>
+<text x="34" y="68" class="title">Fields: multiply</text>
+<text x="34" y="92" class="small mono">{ paid?: Date; shipped?: Date;</text>
+<text x="34" y="110" class="small mono">  cancelled?: Date; tracking?: string }</text>
+<text x="34" y="138" class="small">2 × 2 × 2 × 2 = 16 shapes (ignoring the values)</text>
+<text x="34" y="158" class="small">rules live in if-statements spread across services</text>
+<text x="34" y="186" class="small">Every reader asks: "can tracking be set while</text>
+<text x="34" y="204" class="small">cancelled?" The type cannot answer.</text>
+<rect class="box done" x="460" y="44" width="400" height="186" rx="10"/>
+<text x="474" y="68" class="title">Cases: add</text>
+<text x="474" y="92" class="small mono">Draft | Paid(at) | Shipped(paid, at, no)</text>
+<text x="474" y="110" class="small mono">  | Cancelled(at) | Refunded(paid, at)</text>
+<text x="474" y="138" class="small">1 + 1 + 1 + 1 + 1 = 5 shapes</text>
+<text x="474" y="158" class="small">rules live in the type: the constructor of each case</text>
+<text x="474" y="186" class="small">A "cancelled with tracking" order has no case,</text>
+<text x="474" y="204" class="small">so it cannot be built, stored or rendered.</text>
+<line x1="420" y1="137" x2="460" y2="137" class="edge accent"/>
+</svg>
+<figcaption>Records and classes are <em>product types</em> (their sizes multiply); unions are <em>sum types</em> (their sizes add). Use products for data that always appears together and sums for "one of".</figcaption>
+</figure>
+
+<p>The same design in all five languages. Notice where the language does the work and where you must:</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// C# 9+: a closed hierarchy of records. 'sealed' + private base ctor keeps outsiders from adding cases.
+public abstract record Order
+{
+    private Order() { }
+    public sealed record Draft() : Order;
+    public sealed record Paid(DateTimeOffset PaidAt) : Order;
+    public sealed record Shipped(DateTimeOffset PaidAt, DateTimeOffset ShippedAt, string TrackingNo) : Order;
+    public sealed record Cancelled(DateTimeOffset CancelledAt) : Order;
+    public sealed record Refunded(DateTimeOffset PaidAt, DateTimeOffset CancelledAt) : Order;
+}
+
+static string Label(Order o) =&gt; o switch
+{
+    Order.Draft =&gt; &quot;Draft&quot;,
+    Order.Paid p =&gt; $&quot;Paid {p.PaidAt:d}&quot;,
+    Order.Shipped s =&gt; $&quot;Shipped, tracking {s.TrackingNo}&quot;,
+    Order.Cancelled =&gt; &quot;Cancelled&quot;,
+    Order.Refunded =&gt; &quot;Refunded&quot;,
+    // C# can't prove this hierarchy is closed, so without a '_' arm it warns CS8509.
+    // A throwing arm keeps the gap loud; treat new CS8509 warnings as errors in CI.
+    _ =&gt; throw new UnreachableException()
+};
+
+// Transitions are functions that accept only the legal source state:
+static Order.Shipped Ship(Order.Paid paid, string trackingNo, TimeProvider clock) =&gt;
+    new(paid.PaidAt, clock.GetUtcNow(), trackingNo);
+</code></pre>
+<pre><code class="language-java">// Java 21: sealed interface + records gives a compiler-checked closed set.
+public sealed interface Order permits Draft, Paid, Shipped, Cancelled, Refunded {}
+public record Draft() implements Order {}
+public record Paid(Instant paidAt) implements Order {}
+public record Shipped(Instant paidAt, Instant shippedAt, String trackingNo) implements Order {}
+public record Cancelled(Instant cancelledAt) implements Order {}
+public record Refunded(Instant paidAt, Instant cancelledAt) implements Order {}
+
+static String label(Order o) {
+    return switch (o) {               // exhaustive: no default needed, and adding a case breaks the build
+        case Draft d -&gt; &quot;Draft&quot;;
+        case Paid p -&gt; &quot;Paid &quot; + p.paidAt();
+        case Shipped s -&gt; &quot;Shipped, tracking &quot; + s.trackingNo();
+        case Cancelled c -&gt; &quot;Cancelled&quot;;
+        case Refunded r -&gt; &quot;Refunded&quot;;
+    };
+}
+
+static Shipped ship(Paid paid, String trackingNo, Clock clock) {
+    return new Shipped(paid.paidAt(), clock.instant(), trackingNo);
+}
+</code></pre>
+<pre><code class="language-python"># Python 3.10+: frozen dataclasses + a Union alias. mypy/pyright check exhaustiveness with assert_never.
+from dataclasses import dataclass
+from datetime import datetime
+from typing import assert_never
+
+@dataclass(frozen=True)
+class Draft: pass
+@dataclass(frozen=True)
+class Paid: paid_at: datetime
+@dataclass(frozen=True)
+class Shipped: paid_at: datetime; shipped_at: datetime; tracking_no: str
+@dataclass(frozen=True)
+class Cancelled: cancelled_at: datetime
+@dataclass(frozen=True)
+class Refunded: paid_at: datetime; cancelled_at: datetime
+
+Order = Draft | Paid | Shipped | Cancelled | Refunded
+
+def label(o: Order) -&gt; str:
+    match o:
+        case Draft(): return &quot;Draft&quot;
+        case Paid(paid_at=t): return f&quot;Paid {t:%Y-%m-%d}&quot;
+        case Shipped(tracking_no=n): return f&quot;Shipped, tracking {n}&quot;
+        case Cancelled(): return &quot;Cancelled&quot;
+        case Refunded(): return &quot;Refunded&quot;
+        case _: assert_never(o)   # mypy error here if a case is missing; AssertionError at run time
+
+def ship(paid: Paid, tracking_no: str, now: datetime) -&gt; Shipped:
+    return Shipped(paid.paid_at, now, tracking_no)
+</code></pre>
+<pre><code class="language-go">// Go has no sum types. Idiom: an interface with an unexported marker method, so only this package can add cases.
+type Order interface{ isOrder() }
+
+type Draft struct{}
+type Paid struct{ PaidAt time.Time }
+type Shipped struct {
+    PaidAt, ShippedAt time.Time
+    TrackingNo        string
+}
+type Cancelled struct{ CancelledAt time.Time }
+type Refunded struct{ PaidAt, CancelledAt time.Time }
+
+func (Draft) isOrder()     {}
+func (Paid) isOrder()      {}
+func (Shipped) isOrder()   {}
+func (Cancelled) isOrder() {}
+func (Refunded) isOrder()  {}
+
+func Label(o Order) string {
+    switch v := o.(type) { // the compiler does NOT check this is exhaustive; the 'exhaustive' linters can
+    case Draft:
+        return &quot;Draft&quot;
+    case Paid:
+        return &quot;Paid &quot; + v.PaidAt.Format(time.DateOnly)
+    case Shipped:
+        return &quot;Shipped, tracking &quot; + v.TrackingNo
+    case Cancelled:
+        return &quot;Cancelled&quot;
+    case Refunded:
+        return &quot;Refunded&quot;
+    default:
+        panic(fmt.Sprintf(&quot;unhandled order %T&quot;, o)) // make the gap loud
+    }
+}
+
+func Ship(p Paid, trackingNo string, now time.Time) Shipped {
+    return Shipped{PaidAt: p.PaidAt, ShippedAt: now, TrackingNo: trackingNo}
+}
+</code></pre>
+<pre><code class="language-typescript">// TypeScript: a discriminated union on a literal 'kind' field, narrowed by switch.
+type Order =
+  | { readonly kind: &quot;draft&quot; }
+  | { readonly kind: &quot;paid&quot;; readonly paidAt: Date }
+  | { readonly kind: &quot;shipped&quot;; readonly paidAt: Date; readonly shippedAt: Date; readonly trackingNo: string }
+  | { readonly kind: &quot;cancelled&quot;; readonly cancelledAt: Date }
+  | { readonly kind: &quot;refunded&quot;; readonly paidAt: Date; readonly cancelledAt: Date };
+
+function assertNever(x: never): never { throw new Error(`Unhandled: ${JSON.stringify(x)}`); }
+
+function label(o: Order): string {
+  switch (o.kind) {
+    case &quot;draft&quot;: return &quot;Draft&quot;;
+    case &quot;paid&quot;: return `Paid ${o.paidAt.toISOString().slice(0, 10)}`;
+    case &quot;shipped&quot;: return `Shipped, tracking ${o.trackingNo}`;   // o is narrowed: trackingNo exists
+    case &quot;cancelled&quot;: return &quot;Cancelled&quot;;
+    case &quot;refunded&quot;: return &quot;Refunded&quot;;
+    default: return assertNever(o);                               // compile error if a case is missing
+  }
+}
+
+type Paid = Extract&lt;Order, { kind: &quot;paid&quot; }&gt;;
+const ship = (p: Paid, trackingNo: string, now: Date): Order =&gt;
+  ({ kind: &quot;shipped&quot;, paidAt: p.paidAt, shippedAt: now, trackingNo });
+</code></pre>
+</div>
+<div class="tip">
+<p><strong>Transitions become signatures</strong>
+Once each state is its own type, a transition is a function from one state type to another: <code>Ship(Paid) -&gt; Shipped</code>.
+Shipping a draft isn't a runtime check any more; it's a compile error. Where the state is only known at run time
+(loaded from the database), switch once at the edge and call the typed transition from the matching arm.</p>
+</div>
+<h2 id="value-objects-and-records">Value objects and records</h2>
+<p>A <strong>value object</strong> is defined entirely by its values: two <code>Money(10, "EUR")</code> are interchangeable, the same way two
+5s are. Compare that with an <strong>entity</strong> such as <code>Customer</code>, which has an identity that survives changes to its
+fields. Value objects should be:</p>
+<ol>
+<li><strong>Immutable.</strong> "Changing" one creates a new one, so it can be shared, cached, used as a dictionary key and
+   passed across threads without locks.</li>
+<li><strong>Equal by value.</strong> <code>==</code>/<code>Equals</code> compares fields, and the hash code agrees with equality.</li>
+<li><strong>Valid by construction.</strong> The constructor or factory rejects bad input, so an instance is proof of validity.</li>
+</ol>
+<p>Every one of the five languages now has a short way to declare the first two. The third is always up to you.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>C#</th>
+<th>Java</th>
+<th>Python</th>
+<th>Go</th>
+<th>TypeScript</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Declaration</td>
+<td><code>record Money(decimal Amount, string Ccy)</code></td>
+<td><code>record Money(BigDecimal amount, String ccy)</code></td>
+<td><code>@dataclass(frozen=True) class Money</code></td>
+<td><code>type Money struct{ amount int64; ccy string }</code></td>
+<td><code>type Money = Readonly&lt;{ amount: number; ccy: string }&gt;</code></td>
+</tr>
+<tr>
+<td>Value equality</td>
+<td>generated <code>Equals</code>, <code>==</code>, <code>GetHashCode</code></td>
+<td>generated <code>equals</code>, <code>hashCode</code></td>
+<td>generated <code>__eq__</code>, <code>__hash__</code> (with <code>frozen</code>)</td>
+<td><code>==</code> on comparable structs (no slices/maps)</td>
+<td>none: <code>===</code> is identity, write <code>equals</code></td>
+</tr>
+<tr>
+<td>Copy with change</td>
+<td><code>m with { Amount = 5 }</code></td>
+<td>write a <code>withAmount</code> method (no <code>with</code> yet)</td>
+<td><code>dataclasses.replace(m, amount=5)</code></td>
+<td>assign the struct, change the copy</td>
+<td><code>{ ...m, amount: 5 }</code></td>
+</tr>
+<tr>
+<td>Shallow or deep?</td>
+<td>shallow</td>
+<td>shallow</td>
+<td>shallow</td>
+<td>copies arrays, shares slices/maps/pointers</td>
+<td>shallow</td>
+</tr>
+<tr>
+<td>Enforced immutable?</td>
+<td><code>init</code> props: compile time</td>
+<td>final fields: compile time</td>
+<td><code>FrozenInstanceError</code> at run time</td>
+<td>only by unexported fields</td>
+<td><code>readonly</code>: compile time only</td>
+</tr>
+<tr>
+<td>Validation hook</td>
+<td>constructor body / factory</td>
+<td>compact constructor</td>
+<td><code>__post_init__</code></td>
+<td><code>NewMoney(...) (Money, error)</code></td>
+<td>factory function</td>
+</tr>
+<tr>
+<td>Value-type variant</td>
+<td><code>readonly record struct</code> (no heap)</td>
+<td>value classes (Valhalla, preview)</td>
+<td><code>NamedTuple</code></td>
+<td>structs are values already</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<div class="pitfall">
+<p><strong>"Immutable record" is shallow everywhere</strong>
+A record whose field is a mutable <code>List</code> is only immutable at the top level. <code>with</code>, <code>replace</code> and object spread
+copy the <strong>reference</strong> to the list, so the original and the copy share it. Change the list through one and the
+other changes too, and in C# the two records still compare <em>unequal</em>, because <code>List&lt;T&gt;</code> compares by reference.
+The visualizer below runs this exact sequence and computes <code>a == c</code> per language.</p>
+</div>
+<div class="viz" data-viz="types-and-immutability-records"></div>
+
+<p>The fix is the same in every language: make the fields themselves immutable (an immutable collection, a tuple, a
+<code>ReadonlyArray</code>, or a Go array/copied slice), and validate in one place. Here is a complete <code>Money</code> value object:</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">public readonly record struct Money
+{
+    public decimal Amount { get; }
+    public string Currency { get; }
+
+    public Money(decimal amount, string currency)
+    {
+        if (amount &lt; 0) throw new ArgumentOutOfRangeException(nameof(amount), &quot;Amount can't be negative.&quot;);
+        if (currency is not { Length: 3 } || !currency.All(char.IsAsciiLetterUpper))
+            throw new ArgumentException(&quot;Use an ISO 4217 code like EUR.&quot;, nameof(currency));
+        (Amount, Currency) = (decimal.Round(amount, 2), currency);
+    }
+
+    public Money Add(Money other) =&gt; other.Currency == Currency
+        ? new Money(Amount + other.Amount, Currency)
+        : throw new InvalidOperationException($&quot;Can't add {other.Currency} to {Currency}.&quot;);
+
+    public override string ToString() =&gt; $&quot;{Amount:0.00} {Currency}&quot;;
+}
+
+var a = new Money(10, &quot;EUR&quot;);
+var b = a with { };                 // a copy (fields copied as-is, no constructor call)
+Console.WriteLine(a == b);          // True: value equality
+var set = new HashSet&lt;Money&gt; { a, b };   // one element
+// Note: 'with { Amount = -5 }' can't compile here because Amount has no init accessor. Keep it that way
+// for validated types: init setters let 'with' skip your checks.
+</code></pre>
+<pre><code class="language-java">public record Money(BigDecimal amount, String currency) {
+    public Money {                                     // compact constructor: runs for every instance
+        Objects.requireNonNull(amount); Objects.requireNonNull(currency);
+        if (amount.signum() &lt; 0) throw new IllegalArgumentException(&quot;Amount can't be negative.&quot;);
+        if (!currency.matches(&quot;[A-Z]{3}&quot;)) throw new IllegalArgumentException(&quot;Use an ISO 4217 code like EUR.&quot;);
+        amount = amount.setScale(2, RoundingMode.HALF_EVEN);   // normalize so equals agrees: 10 vs 10.00
+    }
+
+    public Money add(Money other) {
+        if (!other.currency.equals(currency)) throw new IllegalArgumentException(&quot;Currency mismatch&quot;);
+        return new Money(amount.add(other.amount), currency);
+    }
+}
+
+var a = new Money(new BigDecimal(&quot;10&quot;), &quot;EUR&quot;);
+var b = new Money(new BigDecimal(&quot;10.00&quot;), &quot;EUR&quot;);
+System.out.println(a.equals(b));   // true, only because we normalized the scale
+</code></pre>
+<pre><code class="language-python">from dataclasses import dataclass, replace
+from decimal import Decimal, ROUND_HALF_EVEN
+import re
+
+@dataclass(frozen=True, slots=True)
+class Money:
+    amount: Decimal
+    currency: str
+
+    def __post_init__(self) -&gt; None:
+        if self.amount &lt; 0:
+            raise ValueError(&quot;Amount can't be negative.&quot;)
+        if not re.fullmatch(r&quot;[A-Z]{3}&quot;, self.currency):
+            raise ValueError(&quot;Use an ISO 4217 code like EUR.&quot;)
+        # frozen blocks normal assignment; object.__setattr__ is the sanctioned escape hatch inside __post_init__
+        object.__setattr__(self, &quot;amount&quot;, self.amount.quantize(Decimal(&quot;0.01&quot;), ROUND_HALF_EVEN))
+
+    def add(self, other: &quot;Money&quot;) -&gt; &quot;Money&quot;:
+        if other.currency != self.currency:
+            raise ValueError(&quot;Currency mismatch&quot;)
+        return Money(self.amount + other.amount, self.currency)
+
+a = Money(Decimal(&quot;10&quot;), &quot;EUR&quot;)
+print(a == Money(Decimal(&quot;10.00&quot;), &quot;EUR&quot;))   # True
+print(replace(a, amount=Decimal(&quot;5&quot;)))       # replace() re-runs __post_init__, so validation holds
+# a.amount = Decimal(&quot;1&quot;)  -&gt; dataclasses.FrozenInstanceError
+</code></pre>
+<pre><code class="language-go">// Unexported fields + a constructor are Go's way to say &quot;valid and read-only outside this package&quot;.
+type Money struct {
+    cents    int64  // integer minor units: no floating point for money
+    currency string
+}
+
+var ccy = regexp.MustCompile(`^[A-Z]{3}$`)
+
+func NewMoney(cents int64, currency string) (Money, error) {
+    if cents &lt; 0 {
+        return Money{}, errors.New(&quot;amount can't be negative&quot;)
+    }
+    if !ccy.MatchString(currency) {
+        return Money{}, fmt.Errorf(&quot;currency %q: use an ISO 4217 code like EUR&quot;, currency)
+    }
+    return Money{cents, currency}, nil
+}
+
+func (m Money) Cents() int64      { return m.cents }
+func (m Money) Currency() string  { return m.currency }
+func (m Money) Add(o Money) (Money, error) { // value receiver: works on a copy, returns a new value
+    if o.currency != m.currency {
+        return Money{}, fmt.Errorf(&quot;can't add %s to %s&quot;, o.currency, m.currency)
+    }
+    return Money{m.cents + o.cents, m.currency}, nil
+}
+
+// Money is comparable (only int64 and string fields), so a == b compares values and it works as a map key.
+// Caveat: the zero value Money{} exists without NewMoney. Make &quot;&quot; currency mean invalid, or accept it.
+</code></pre>
+<pre><code class="language-typescript">// Brand + private constructor-like factory. Types vanish at run time, so the factory is the real guard.
+declare const brand: unique symbol;
+export type Money = Readonly&lt;{ cents: number; currency: string }&gt; &amp; { readonly [brand]: &quot;Money&quot; };
+
+export function money(cents: number, currency: string): Money {
+  if (!Number.isSafeInteger(cents) || cents &lt; 0) throw new RangeError(&quot;cents must be a non-negative integer&quot;);
+  if (!/^[A-Z]{3}$/.test(currency)) throw new RangeError(&quot;Use an ISO 4217 code like EUR.&quot;);
+  return Object.freeze({ cents, currency }) as Money;   // freeze: also immutable at run time
+}
+
+export const add = (a: Money, b: Money): Money =&gt; {
+  if (a.currency !== b.currency) throw new Error(`Can't add ${b.currency} to ${a.currency}`);
+  return money(a.cents + b.cents, a.currency);
+};
+
+export const equals = (a: Money, b: Money) =&gt; a.cents === b.cents &amp;&amp; a.currency === b.currency;
+// money(1000, &quot;EUR&quot;) === money(1000, &quot;EUR&quot;)  -&gt; false: objects compare by identity. Use equals().
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>C# <code>with</code> skips your constructor</strong>
+<code>with</code> clones the record and then runs <code>init</code> setters. It does <strong>not</strong> run the constructor body, so validation in
+the constructor is bypassed. If a record enforces invariants, give its properties no <code>init</code> accessor (as above),
+or validate inside each <code>init</code> accessor. Python's <code>dataclasses.replace</code> does call <code>__init__</code> and <code>__post_init__</code>,
+and Java has no <code>with</code>, so this trap is C#-specific.</p>
+</div>
+<h3 id="records-vs-classes-vs-structs-which-one">Records vs classes vs structs: which one?</h3>
+<div class="compare">
+<div class="good">
+<h4 id="record-reference-for-value-objects-and-messages">Record (reference) for value objects and messages</h4>
+<p><code>Money</code>, <code>Address</code>, DTOs, events, commands, query results. Value equality and <code>ToString</code> for free, cheap to pass
+around. In C# prefer a <code>record class</code> unless profiling says allocation matters.</p>
+</div>
+<div class="warn">
+<h4 id="struct-record-struct-for-small-hot-values">Struct / <code>record struct</code> for small hot values</h4>
+<p><code>Point</code>, <code>Rgb</code>, <code>Instant</code>, IDs: up to roughly 16–24 bytes, immutable (<code>readonly</code>). No heap allocation, but every
+assignment copies, and a large struct copied around is slower than a reference. Go structs are values by default;
+pass a pointer only when the struct is large or must be mutated.</p>
+</div>
+<div class="bad">
+<h4 id="class-for-entities-with-identity-and-lifecycle">Class for entities with identity and lifecycle</h4>
+<p><code>Order</code>, <code>Customer</code>, <code>Account</code>: identity stays the same while fields change, so value equality is wrong. Two
+customers named "Ada Lovelace" are different people. Equality should compare the ID (or stay reference equality).</p>
+</div>
+</div>
+<h2 id="immutable-collections">Immutable collections</h2>
+<p>Collections are where immutability most often leaks. There are three different things people mean by "read-only",
+and only one of them is a guarantee:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 236" width="880" role="img" aria-label="Three kinds of read-only collection: a read-only interface, a read-only view, and a truly immutable collection">
+<text x="20" y="26" class="title">Read-only interface ≠ read-only view ≠ immutable</text>
+<rect class="box bad" x="20" y="44" width="270" height="172" rx="10"/>
+<text x="34" y="68" class="title">Read-only interface</text>
+<text x="34" y="90" class="small mono">IReadOnlyList&lt;T&gt; xs = list;</text>
+<text x="34" y="108" class="small mono">readonly T[] (TS), Sequence[T]</text>
+<text x="34" y="132" class="small">Same object, narrower type. A cast</text>
+<text x="34" y="150" class="small">gets the mutable list back, and the</text>
+<text x="34" y="168" class="small">owner can still change it.</text>
+<text x="34" y="196" class="small muted">guarantee: "this code won't write"</text>
+<rect class="box active" x="305" y="44" width="270" height="172" rx="10"/>
+<text x="319" y="68" class="title">Read-only view (wrapper)</text>
+<text x="319" y="90" class="small mono">list.AsReadOnly()</text>
+<text x="319" y="108" class="small mono">Collections.unmodifiableList(l)</text>
+<text x="319" y="132" class="small">Writes through the view throw, but</text>
+<text x="319" y="150" class="small">the owner's changes show through it:</text>
+<text x="319" y="168" class="small">it is a window, not a snapshot.</text>
+<text x="319" y="196" class="small muted">guarantee: "nobody writes via me"</text>
+<rect class="box done" x="590" y="44" width="270" height="172" rx="10"/>
+<text x="604" y="68" class="title">Immutable collection</text>
+<text x="604" y="90" class="small mono">ImmutableList, FrozenSet, List.of</text>
+<text x="604" y="108" class="small mono">tuple, frozenset</text>
+<text x="604" y="132" class="small">No one can change it, ever. "Add"</text>
+<text x="604" y="150" class="small">returns a new collection; the old</text>
+<text x="604" y="168" class="small">one is untouched and safe to share.</text>
+<text x="604" y="196" class="small muted">guarantee: "this will never change"</text>
+</svg>
+<figcaption>Only the right-hand column is safe to store in a value object or share across threads without copying. The aliasing visualizer in the next section shows all three failing or holding.</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>C#</th>
+<th>Java</th>
+<th>Python</th>
+<th>Go</th>
+<th>TypeScript</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read-only interface</td>
+<td><code>IReadOnlyList&lt;T&gt;</code>, <code>IReadOnlyDictionary&lt;K,V&gt;</code></td>
+<td>none built in (<code>List</code> has mutators)</td>
+<td><code>Sequence</code>, <code>Mapping</code> (type hints)</td>
+<td>none</td>
+<td><code>ReadonlyArray&lt;T&gt;</code>, <code>ReadonlyMap</code>, <code>readonly T[]</code></td>
+</tr>
+<tr>
+<td>Read-only view</td>
+<td><code>list.AsReadOnly()</code>, <code>ReadOnlyCollection&lt;T&gt;</code></td>
+<td><code>Collections.unmodifiableList(l)</code></td>
+<td><code>types.MappingProxyType(d)</code></td>
+<td>none</td>
+<td>none (a <code>Proxy</code> if you must)</td>
+</tr>
+<tr>
+<td>Immutable</td>
+<td><code>ImmutableList</code>, <code>ImmutableArray</code>, <code>ImmutableDictionary</code></td>
+<td><code>List.of</code>, <code>Set.of</code>, <code>Map.of</code>, <code>List.copyOf</code></td>
+<td><code>tuple</code>, <code>frozenset</code>, <code>bytes</code>, <code>str</code></td>
+<td>arrays by value; slices never</td>
+<td><code>Object.freeze</code> (shallow, run time)</td>
+</tr>
+<tr>
+<td>Frozen (read-optimized)</td>
+<td><code>FrozenDictionary</code>, <code>FrozenSet</code> (.NET 8)</td>
+<td><code>Map.of</code> (compact, immutable)</td>
+<td><code>frozenset</code></td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>Persistent (cheap "add")</td>
+<td><code>ImmutableList</code> (AVL tree), <code>ImmutableDictionary</code> (HAMT-like)</td>
+<td>Vavr, PCollections (third party)</td>
+<td><code>pyrsistent</code> (third party)</td>
+<td>third party</td>
+<td>Immutable.js, Immer (copy-on-write)</td>
+</tr>
+<tr>
+<td>Copy into immutable</td>
+<td><code>xs.ToImmutableArray()</code>, <code>ToFrozenSet()</code></td>
+<td><code>List.copyOf(xs)</code></td>
+<td><code>tuple(xs)</code>, <code>frozenset(xs)</code></td>
+<td><code>slices.Clone(xs)</code></td>
+<td><code>Object.freeze([...xs])</code></td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs">
+<pre><code class="language-csharp">using System.Collections.Frozen;
+using System.Collections.Immutable;
+
+ImmutableArray&lt;string&gt; tags = [&quot;a&quot;, &quot;b&quot;];          // C# 12 collection expression
+ImmutableArray&lt;string&gt; more = tags.Add(&quot;c&quot;);        // new array; 'tags' is still [a, b]
+
+var builder = ImmutableList.CreateBuilder&lt;int&gt;();   // mutable builder for bulk construction...
+for (var i = 0; i &lt; 1000; i++) builder.Add(i);
+ImmutableList&lt;int&gt; numbers = builder.ToImmutable(); // ...then freeze once
+
+// Built once at startup, read millions of times: Frozen* optimizes lookups at the cost of slow creation.
+FrozenDictionary&lt;string, decimal&gt; vat = new Dictionary&lt;string, decimal&gt;
+{
+    [&quot;DE&quot;] = 0.19m, [&quot;FR&quot;] = 0.20m, [&quot;NL&quot;] = 0.21m,
+}.ToFrozenDictionary(StringComparer.OrdinalIgnoreCase);
+
+// ImmutableArray&lt;T&gt; is a struct over a T[]: fastest reads, but Add copies everything (O(n)).
+// ImmutableList&lt;T&gt; is a balanced tree: O(log n) Add with sharing, slower indexing. Pick by usage.
+</code></pre>
+<pre><code class="language-java">List&lt;String&gt; tags = List.of(&quot;a&quot;, &quot;b&quot;);        // immutable; tags.add(&quot;c&quot;) throws UnsupportedOperationException
+List&lt;String&gt; copy = List.copyOf(mutable);     // snapshot; returns the same instance if already immutable
+Map&lt;String, BigDecimal&gt; vat = Map.of(&quot;DE&quot;, new BigDecimal(&quot;0.19&quot;), &quot;FR&quot;, new BigDecimal(&quot;0.20&quot;));
+
+// Java has no &quot;add returns new list&quot; in the JDK, so you copy:
+List&lt;String&gt; more = Stream.concat(tags.stream(), Stream.of(&quot;c&quot;)).toList();   // toList() is unmodifiable
+
+// Careful: List.of rejects nulls (NPE), and unmodifiableList is a VIEW, not a copy:
+List&lt;String&gt; backing = new ArrayList&lt;&gt;(List.of(&quot;x&quot;));
+List&lt;String&gt; view = Collections.unmodifiableList(backing);
+backing.add(&quot;y&quot;);
+System.out.println(view);   // [x, y]
+</code></pre>
+<pre><code class="language-python">from types import MappingProxyType
+
+tags = (&quot;a&quot;, &quot;b&quot;)                 # tuple: immutable sequence
+more = tags + (&quot;c&quot;,)              # new tuple
+allowed = frozenset({&quot;read&quot;, &quot;write&quot;})   # immutable set: hashable, usable as a dict key
+
+_vat = {&quot;DE&quot;: 0.19, &quot;FR&quot;: 0.20}
+VAT = MappingProxyType(_vat)      # read-only VIEW: VAT[&quot;DE&quot;] = 1 raises TypeError, but _vat changes show
+
+# Tuples are shallowly immutable: ([1], [2]) can't be reassigned, but the inner lists can change,
+# and then the tuple is no longer hashable. Keep the contents immutable too.
+</code></pre>
+<pre><code class="language-go">// Go has no immutable collections. Options, in order of preference:
+// 1) don't expose the slice: unexported field + accessor that copies
+type Order struct{ lines []string }
+
+func (o *Order) Lines() []string { return slices.Clone(o.lines) }
+
+// 2) expose an iterator (Go 1.23+): callers can read but never get the backing array
+func (o *Order) All() iter.Seq[string] { return slices.Values(o.lines) }
+
+// 3) use arrays for small fixed-size data: [3]string is copied on assignment, so it behaves like a value
+type RGB [3]uint8
+
+// Maps are always references. Return maps.Clone(m) or expose a Get(key) method instead.
+</code></pre>
+<pre><code class="language-typescript">const tags: readonly string[] = [&quot;a&quot;, &quot;b&quot;];      // compile-time only: no push, no index assignment
+const more = [...tags, &quot;c&quot;];                      // new array
+
+const VAT = Object.freeze({ DE: 0.19, FR: 0.2 }); // run time: writes ignored (throw in strict mode)
+const ROLES = [&quot;read&quot;, &quot;write&quot;] as const;         // readonly [&quot;read&quot;, &quot;write&quot;]: literal types + readonly
+type Role = (typeof ROLES)[number];               // &quot;read&quot; | &quot;write&quot;
+
+// readonly is erased: JS code (or a cast) can still mutate. Object.freeze is shallow:
+const cfg = Object.freeze({ hosts: [&quot;a&quot;] });
+cfg.hosts.push(&quot;b&quot;);                               // allowed! freeze the nested array too, or deep-freeze
+</code></pre>
+</div>
+<h2 id="defensive-copying-vs-immutability">Defensive copying vs immutability</h2>
+<p>When an object holds a mutable collection, <strong>two other parties</strong> can change it behind the object's back:</p>
+<ul>
+<li>the <strong>caller</strong> who passed the list in and keeps using its own reference, and</li>
+<li>any <strong>consumer</strong> who reads the list through a getter and then writes to it.</li>
+</ul>
+<p>Both are <em>aliasing</em>: two names for one heap object. In the <a href="language-mental-models.html#what-a-variable-holds-values-and-references">values and references</a>
+model, a field that stores a reference shares the object with whoever else holds that reference. There are two
+defences, and they differ in cost:</p>
+<ul>
+<li><strong>Defensive copying.</strong> Copy on the way in (<code>new List&lt;&gt;(tags)</code>) and copy or wrap on the way out. It works in
+  every language, but costs an allocation and an O(n) copy per call, and every author must remember to do it.</li>
+<li><strong>Immutability.</strong> Store a collection nobody can change. Sharing becomes free and safe, with no copies at all.</li>
+</ul>
+<p>The visualizer runs the same four-line scenario with each strategy. The caller changes <code>tags[0]</code> after
+constructing the order, then a consumer writes <code>Items[1]</code>. Watch the heap: which objects does each name point to,
+and which writes land on the order's data?</p>
+<div class="viz" data-viz="types-and-immutability-aliasing"></div>
+
+<p>What the runs show:</p>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Caller's later write</th>
+<th>Consumer's write</th>
+<th>Cost</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Share the reference</td>
+<td><strong>corrupts</strong> the order</td>
+<td><strong>corrupts</strong> the order</td>
+<td>none</td>
+<td>never for domain objects</td>
+</tr>
+<tr>
+<td>Copy in</td>
+<td>blocked (order has its own copy)</td>
+<td><strong>corrupts</strong> the order</td>
+<td>O(n) per construction</td>
+<td>half a fix</td>
+</tr>
+<tr>
+<td>Read-only view, no copy</td>
+<td><strong>shows through</strong> the view</td>
+<td>blocked (compile or run time)</td>
+<td>O(1) wrapper</td>
+<td>half a fix, the other half</td>
+</tr>
+<tr>
+<td>Copy in + read-only/copy out</td>
+<td>blocked</td>
+<td>blocked</td>
+<td>O(n) in, O(1) or O(n) out</td>
+<td>correct, but manual</td>
+</tr>
+<tr>
+<td>Immutable collection</td>
+<td>blocked</td>
+<td>blocked</td>
+<td>O(n) once; sharing after is free</td>
+<td>correct by construction</td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Correct and cheap: store an immutable collection. Callers can pass any IEnumerable.
+public sealed class Order(IEnumerable&lt;string&gt; lines)
+{
+    public ImmutableArray&lt;string&gt; Lines { get; } = [.. lines];   // one copy, then free to share
+}
+
+// If you must keep a List&lt;T&gt; internally (you mutate it in methods), never hand it out:
+public sealed class Basket
+{
+    private readonly List&lt;string&gt; _lines = [];
+    public IReadOnlyList&lt;string&gt; Lines =&gt; _lines.AsReadOnly();   // view: consumers can't write
+    public void Add(string line) { ArgumentException.ThrowIfNullOrWhiteSpace(line); _lines.Add(line); }
+}
+</code></pre>
+<pre><code class="language-java">// Records: normalize in the compact constructor. List.copyOf is immutable and skips the copy if already immutable.
+public record Order(List&lt;String&gt; lines) {
+    public Order { lines = List.copyOf(lines); }
+}
+
+// Effective Java, Item 50: &quot;Make defensive copies when needed&quot;, and copy BEFORE validating
+// (a concurrent caller could change the list between your check and your copy).
+public final class Period {
+    private final Instant start, end;
+    public Period(Instant start, Instant end) {
+        this.start = start; this.end = end;   // Instant is immutable, so no copy needed (Date would need one)
+        if (this.start.isAfter(this.end)) throw new IllegalArgumentException(start + &quot; after &quot; + end);
+    }
+}
+</code></pre>
+<pre><code class="language-python">from dataclasses import dataclass, field
+from typing import Iterable
+
+@dataclass(frozen=True)
+class Order:
+    lines: tuple[str, ...]
+
+    @classmethod
+    def of(cls, lines: Iterable[str]) -&gt; &quot;Order&quot;:
+        return cls(tuple(lines))      # copy into an immutable tuple once
+
+# The classic Python alias: a mutable default shared by every instance.
+@dataclass
+class Basket:
+    lines: list[str] = field(default_factory=list)   # NOT lines: list[str] = [] (dataclass rejects that)
+</code></pre>
+<pre><code class="language-go">type Order struct{ lines []string }
+
+func NewOrder(lines []string) *Order {
+    return &amp;Order{lines: slices.Clone(lines)} // copy in: the caller keeps its own backing array
+}
+
+// Copy out, or better, don't hand out the slice at all.
+func (o *Order) Lines() []string            { return slices.Clone(o.lines) }
+func (o *Order) Line(i int) string          { return o.lines[i] }
+func (o *Order) EachLine() iter.Seq[string] { return slices.Values(o.lines) }
+
+// Watch out for &quot;copy&quot; that isn't: lines[:] and lines[0:len(lines)] share the backing array.
+</code></pre>
+<pre><code class="language-typescript">class Order {
+  readonly lines: readonly string[];
+  constructor(lines: Iterable&lt;string&gt;) {
+    this.lines = Object.freeze([...lines]);   // copy in, freeze: immutable at compile time AND run time
+  }
+}
+
+// Spread is a SHALLOW copy: objects inside are still shared.
+const a = [{ sku: &quot;A&quot;, qty: 1 }];
+const b = [...a];
+b[0].qty = 99;              // a[0].qty is 99 too
+const c = structuredClone(a); // deep copy (no functions, class prototypes are lost)
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Immutability turns copying from a duty into an optimization</strong>
+With mutable data, every boundary must copy "just in case", and forgetting once is a bug. With immutable data,
+nobody needs to copy, so you copy <strong>once</strong> when converting from a mutable source and then share freely. That is
+also why immutable objects are thread-safe: there are no writes to race with (see
+<a href="concurrency-async.html">Concurrency and Async</a>).</p>
+</div>
+<h2 id="structural-sharing-persistent-data-structures">Structural sharing: persistent data structures</h2>
+<p>The obvious objection to immutability is cost: if "adding" to an immutable list creates a new list, isn't every
+change O(n)? For a flat array, yes (<code>ImmutableArray.Add</code> copies everything). <strong>Persistent</strong> data structures avoid
+it with <em>structural sharing</em>: the new version reuses every part of the old one that didn't change, and only the
+path to the change is copied.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 270" width="880" role="img" aria-label="Path copying: inserting into a persistent tree copies only the nodes on the path to the change; the rest is shared by both versions">
+<text x="20" y="26" class="title">Path copying: version 2 shares everything off the path</text>
+<circle cx="200" cy="70" r="18" class="box visit"/><text x="200" y="75" text-anchor="middle" class="mono small">50</text>
+<circle cx="120" cy="140" r="18" class="box done"/><text x="120" y="145" text-anchor="middle" class="mono small">30</text>
+<circle cx="280" cy="140" r="18" class="box visit"/><text x="280" y="145" text-anchor="middle" class="mono small">70</text>
+<circle cx="240" cy="210" r="18" class="box done"/><text x="240" y="215" text-anchor="middle" class="mono small">60</text>
+<circle cx="320" cy="210" r="18" class="box done"/><text x="320" y="215" text-anchor="middle" class="mono small">80</text>
+<line x1="188" y1="84" x2="132" y2="126" class="edge"/><line x1="212" y1="84" x2="268" y2="126" class="edge"/>
+<line x1="270" y1="155" x2="250" y2="195" class="edge"/><line x1="290" y1="155" x2="310" y2="195" class="edge"/>
+<text x="200" y="42" text-anchor="middle" class="small muted">v1</text>
+<circle cx="560" cy="70" r="18" class="box path"/><text x="560" y="75" text-anchor="middle" class="mono small">50</text>
+<circle cx="640" cy="140" r="18" class="box path"/><text x="640" y="145" text-anchor="middle" class="mono small">70</text>
+<circle cx="600" cy="210" r="18" class="box path"/><text x="600" y="215" text-anchor="middle" class="mono small">60</text>
+<circle cx="640" cy="250" r="14" class="box path"/><text x="640" y="254" text-anchor="middle" class="mono small">65</text>
+<line x1="548" y1="82" x2="136" y2="138" class="edge done dash"/>
+<line x1="572" y1="84" x2="628" y2="126" class="edge path"/>
+<line x1="630" y1="155" x2="610" y2="195" class="edge path"/>
+<line x1="656" y1="146" x2="336" y2="208" class="edge done dash"/>
+<line x1="612" y1="222" x2="630" y2="240" class="edge path"/>
+<text x="560" y="42" text-anchor="middle" class="small">v2 = v1.Insert(65)</text>
+<rect class="box" x="700" y="56" width="166" height="150" rx="10"/>
+<text x="712" y="78" class="small"><tspan class="title">Cost of the insert</tspan></text>
+<text x="712" y="102" class="small">new nodes: 4 (path + leaf)</text>
+<text x="712" y="122" class="small">shared: 30, 80 subtrees</text>
+<text x="712" y="142" class="small">O(log n) time and memory</text>
+<text x="712" y="166" class="small muted">v1 still works and is</text>
+<text x="712" y="184" class="small muted">unchanged: free undo.</text>
+</svg>
+<figcaption>Green dashed edges point from new nodes back into v1. Readers holding v1 never notice v2 exists; there is nothing to lock.</figcaption>
+</figure>
+
+<p>Run it on your own keys. The simulation builds v1 by inserting the keys in order, then inserts one more key
+persistently: it walks down, creates the leaf, and copies each node on the way back up. The final counters
+compare the nodes allocated with what a full copy would cost.</p>
+<div class="viz" data-viz="types-and-immutability-sharing"></div>
+
+<p>Where you meet structural sharing in practice:</p>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Built in</th>
+<th>Libraries</th>
+<th>Typical use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C#</td>
+<td><code>ImmutableList</code>, <code>ImmutableDictionary</code>, <code>ImmutableHashSet</code>, <code>ImmutableSortedSet</code></td>
+<td>none needed</td>
+<td>Roslyn's syntax trees (red-green trees), MSBuild evaluation, state snapshots</td>
+</tr>
+<tr>
+<td>Java</td>
+<td>none (<code>List.of</code> copies)</td>
+<td>Vavr, PCollections, Clojure's collections</td>
+<td>event-sourced state, functional-style services</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>none (<code>tuple</code> copies)</td>
+<td><code>pyrsistent</code> (<code>pvector</code>, <code>pmap</code>)</td>
+<td>configuration snapshots, undo stacks</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>none</td>
+<td><code>github.com/benbjohnson/immutable</code></td>
+<td>MVCC-style read snapshots</td>
+</tr>
+<tr>
+<td>TypeScript</td>
+<td>none (spread copies one level)</td>
+<td>Immer (copy-on-write proxies), Immutable.js</td>
+<td>Redux/React state: unchanged subtrees keep their identity, so <code>===</code> checks skip re-rendering</td>
+</tr>
+</tbody>
+</table>
+<div class="tip">
+<p><strong>Spread is shallow structural sharing</strong>
+<code>{ ...state, cart: { ...state.cart, total: 42 } }</code> in TypeScript (or <code>with</code> in C#) already shares every
+unchanged branch: only the objects on the path to <code>total</code> are new. That is exactly path copying, done by hand.
+React and Redux rely on it: if <code>state.user === prev.user</code>, nothing under <code>user</code> changed, so the check is O(1).</p>
+</div>
+<h2 id="enums-and-tagged-unions">Enums and tagged unions</h2>
+<p>An <strong>enum</strong> is a closed set of names: <code>Card</code>, <code>BankTransfer</code>, <code>Wallet</code>. A <strong>tagged union</strong> (also called a sum
+type or discriminated union) is an enum whose cases can carry <em>different data</em>: a <code>Card</code> has a last-four, a
+<code>BankTransfer</code> has an IBAN. Both are only as useful as the compiler's <strong>exhaustiveness check</strong>: when someone adds
+a case, every <code>switch</code> that doesn't handle it should light up. Enums in the five languages differ a lot:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>C#</th>
+<th>Java</th>
+<th>Python</th>
+<th>Go</th>
+<th>TypeScript</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plain enum</td>
+<td><code>enum Kind { Card, Bank }</code> (an int underneath)</td>
+<td><code>enum Kind { CARD, BANK }</code> (objects)</td>
+<td><code>class Kind(Enum)</code></td>
+<td><code>const ( Card Kind = iota; Bank )</code></td>
+<td>union of string literals: <code>"card"</code>, <code>"bank"</code></td>
+</tr>
+<tr>
+<td>Closed?</td>
+<td><strong>No</strong>: <code>(Kind)42</code> is a legal value</td>
+<td>yes</td>
+<td>yes</td>
+<td><strong>no</strong>: any <code>Kind(n)</code></td>
+<td>yes (union of literals)</td>
+</tr>
+<tr>
+<td>Cases with data</td>
+<td>sealed record hierarchy</td>
+<td><code>sealed interface</code> + records</td>
+<td>dataclasses + <code>Union</code></td>
+<td>interface + structs</td>
+<td>discriminated union</td>
+</tr>
+<tr>
+<td>Exhaustive <code>switch</code></td>
+<td>switch <em>expression</em>: warning CS8509</td>
+<td><code>switch</code> on sealed/enum: compile <strong>error</strong></td>
+<td><code>match</code> + <code>assert_never</code>: mypy error</td>
+<td>none (linter <code>exhaustive</code>)</td>
+<td><code>never</code> check: compile error</td>
+</tr>
+<tr>
+<td>What <code>default</code> costs you</td>
+<td>hides new cases</td>
+<td>hides new cases</td>
+<td>hides new cases</td>
+<td>needed: there's no check anyway</td>
+<td>hides new cases</td>
+</tr>
+</tbody>
+</table>
+<div class="pitfall">
+<p><strong>A catch-all arm switches the safety off</strong>
+<code>default:</code> / <code>_ =&gt;</code> / <code>case _:</code> means "I've handled everything else", including cases that don't exist yet. When
+someone adds <code>GiftCard</code>, the switch compiles happily and runs the default. For closed unions, leave the catch-all
+out (or make it throw, as <code>assertNever</code> and <code>assert_never</code> do) so the compiler or checker flags every site.</p>
+</div>
+<p>The visualizer adds a fourth payment method, <code>GiftCard</code>, to a union that two functions already switch on:
+<code>Fee()</code> and <code>Label()</code>. Choose where the catch-all arms are, and see which sites each toolchain flags and what
+actually happens at run time when a gift card arrives.</p>
+<div class="viz" data-viz="types-and-immutability-unions"></div>
+
+<div class="code-tabs">
+<pre><code class="language-csharp">// Cases with data: a sealed record hierarchy. The switch expression warns CS8509 when a case is missing.
+public abstract record Payment
+{
+    private Payment() { }
+    public sealed record Card(string Last4) : Payment;
+    public sealed record BankTransfer(string Iban) : Payment;
+    public sealed record Wallet(string Provider) : Payment;
+}
+
+static decimal Fee(Payment p, decimal amount) =&gt; p switch
+{
+    Payment.Card =&gt; amount * 0.029m + 0.30m,
+    Payment.BankTransfer =&gt; 0.50m,
+    Payment.Wallet w when w.Provider == &quot;PayPal&quot; =&gt; amount * 0.034m,
+    Payment.Wallet =&gt; amount * 0.025m,
+    _ =&gt; throw new UnreachableException($&quot;Unhandled payment {p.GetType().Name}&quot;),
+};
+// &lt;WarningsAsErrors&gt;CS8509;CS8524&lt;/WarningsAsErrors&gt; in the .csproj turns the warnings into build breaks.
+</code></pre>
+<pre><code class="language-java">public sealed interface Payment permits Card, BankTransfer, Wallet {}
+public record Card(String last4) implements Payment {}
+public record BankTransfer(String iban) implements Payment {}
+public record Wallet(String provider) implements Payment {}
+
+static BigDecimal fee(Payment p, BigDecimal amount) {
+    return switch (p) {   // no default: adding a case to 'permits' breaks the build here
+        case Card c -&gt; amount.multiply(new BigDecimal(&quot;0.029&quot;)).add(new BigDecimal(&quot;0.30&quot;));
+        case BankTransfer b -&gt; new BigDecimal(&quot;0.50&quot;);
+        case Wallet w when w.provider().equals(&quot;PayPal&quot;) -&gt; amount.multiply(new BigDecimal(&quot;0.034&quot;));
+        case Wallet w -&gt; amount.multiply(new BigDecimal(&quot;0.025&quot;));
+    };
+}
+</code></pre>
+<pre><code class="language-python">from dataclasses import dataclass
+from decimal import Decimal
+from typing import assert_never
+
+@dataclass(frozen=True)
+class Card: last4: str
+@dataclass(frozen=True)
+class BankTransfer: iban: str
+@dataclass(frozen=True)
+class Wallet: provider: str
+
+Payment = Card | BankTransfer | Wallet
+
+def fee(p: Payment, amount: Decimal) -&gt; Decimal:
+    match p:
+        case Card(): return amount * Decimal(&quot;0.029&quot;) + Decimal(&quot;0.30&quot;)
+        case BankTransfer(): return Decimal(&quot;0.50&quot;)
+        case Wallet(provider=&quot;PayPal&quot;): return amount * Decimal(&quot;0.034&quot;)
+        case Wallet(): return amount * Decimal(&quot;0.025&quot;)
+        case _: assert_never(p)   # mypy: error if Payment gains a case not matched above
+</code></pre>
+<pre><code class="language-go">type Payment interface{ isPayment() }
+type Card struct{ Last4 string }
+type BankTransfer struct{ IBAN string }
+type Wallet struct{ Provider string }
+
+func (Card) isPayment()         {}
+func (BankTransfer) isPayment() {}
+func (Wallet) isPayment()       {}
+
+func Fee(p Payment, cents int64) int64 {
+    switch v := p.(type) {
+    case Card:
+        return cents*29/1000 + 30
+    case BankTransfer:
+        return 50
+    case Wallet:
+        if v.Provider == &quot;PayPal&quot; {
+            return cents * 34 / 1000
+        }
+        return cents * 25 / 1000
+    default: // the compiler can't check exhaustiveness; panic so a missing case is loud in tests
+        panic(fmt.Sprintf(&quot;Fee: unhandled payment %T&quot;, p))
+    }
+}
+// go-check-sumtype or the 'exhaustive' analyzer (enums) can enforce coverage in CI.
+</code></pre>
+<pre><code class="language-typescript">type Payment =
+  | { kind: &quot;card&quot;; last4: string }
+  | { kind: &quot;bank&quot;; iban: string }
+  | { kind: &quot;wallet&quot;; provider: string };
+
+function assertNever(x: never): never { throw new Error(`Unhandled ${JSON.stringify(x)}`); }
+
+function fee(p: Payment, amount: number): number {
+  switch (p.kind) {
+    case &quot;card&quot;: return amount * 0.029 + 0.3;
+    case &quot;bank&quot;: return 0.5;
+    case &quot;wallet&quot;: return p.provider === &quot;PayPal&quot; ? amount * 0.034 : amount * 0.025;
+    default: return assertNever(p);   // TS2345 if a kind is missing: 'p' is not assignable to 'never'
+  }
+}
+
+// Prefer string-literal unions to TS 'enum': they're erased, structural and work with JSON as-is.
+</code></pre>
+</div>
+<div class="compare">
+<div class="good">
+<h4 id="use-a-union-when-the-set-of-cases-is-yours-and-closed">Use a union when the set of cases is yours and closed</h4>
+<p>Order states, payment methods, API results, parse outcomes, commands in a CLI. Adding a case is a deliberate
+change, and the compiler lists every place that must handle it.</p>
+</div>
+<div class="warn">
+<h4 id="use-an-interface-open-polymorphism-when-others-add-cases">Use an interface (open polymorphism) when others add cases</h4>
+<p>Plugins, storage providers, notification channels. New implementations arrive without touching existing code
+(the open/closed principle, see <a href="design-principles.html">Design Principles</a>), so a central <code>switch</code> would be wrong.</p>
+</div>
+<div class="bad">
+<h4 id="dont-use-a-boolean-or-a-string-for-a-state">Don't use a boolean or a string for a state</h4>
+<p><code>isShipped</code>, <code>isCancelled</code>, <code>status: string</code>. Two booleans give four states when you meant three; a string allows
+<code>"shiped"</code>. Both reappear as <code>if</code> chains in every function.</p>
+</div>
+</div>
+<div class="recognize">
+<p><strong>Recognize it: expression problem</strong>
+Unions make it easy to add <strong>operations</strong> (a new function with a switch) and hard to add <strong>cases</strong> (every switch
+changes). Interfaces are the opposite: easy to add cases (a new class), hard to add operations (every class
+changes). Choose by which one you expect to change more often.</p>
+</div>
+<h2 id="strongly-typed-ids-and-primitive-obsession">Strongly-typed IDs and primitive obsession</h2>
+<p><strong>Primitive obsession</strong> is modelling domain concepts with raw primitives: <code>string email</code>, <code>decimal price</code>,
+<code>Guid customerId</code>. The compiler sees <code>Guid</code> and <code>Guid</code>, so it can't tell a customer from an account. The bugs it
+causes are boring and expensive: swapped arguments, IDs from the wrong table, prices in cents passed as euros.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 200" width="880" role="img" aria-label="Same-typed parameters can be swapped silently; distinct ID types make the swap a compile error">
+<text x="20" y="26" class="title">Same representation, different meaning: give each meaning its own type</text>
+<rect class="box bad" x="20" y="44" width="410" height="136" rx="10"/>
+<text x="34" y="68" class="title">Charge(Guid customer, Guid account, ...)</text>
+<text x="34" y="94" class="small mono">Charge(order.AccountId, order.CustomerId, 20m)</text>
+<text x="34" y="120" class="small">compiles: Guid fits Guid</text>
+<text x="34" y="140" class="small">runs: charges account #customer-id (if it exists!)</text>
+<text x="34" y="164" class="small muted">found by: a customer, in production</text>
+<rect class="box done" x="450" y="44" width="410" height="136" rx="10"/>
+<text x="464" y="68" class="title">Charge(CustomerId customer, AccountId account, ...)</text>
+<text x="464" y="94" class="small mono">Charge(order.AccountId, order.CustomerId, 20m)</text>
+<text x="464" y="120" class="small">CS1503: cannot convert from 'AccountId'</text>
+<text x="464" y="140" class="small">to 'CustomerId'</text>
+<text x="464" y="164" class="small muted">found by: the compiler, before commit</text>
+</svg>
+<figcaption>A strongly-typed ID costs one line per type and nothing at run time in C# (record struct), Go (defined type) and TypeScript (brand).</figcaption>
+</figure>
+
+<p>The visualizer uses real data: customer 7 is Ada, customer 42 is Grace; account 42 is Ada's Visa and account 7
+is Grace's Amex. Choose a language, a typing style and a mistake (swapped arguments, or a raw literal <code>42</code>
+typed in a test), then see what the toolchain says and whose card is charged.</p>
+<div class="viz" data-viz="types-and-immutability-ids"></div>
+
+<div class="code-tabs">
+<pre><code class="language-csharp">// One line each. record struct: no allocation, value equality, ToString &quot;CustomerId { Value = 7 }&quot;.
+public readonly record struct CustomerId(long Value);
+public readonly record struct AccountId(long Value);
+
+void Charge(CustomerId customer, AccountId account, Money amount) { /* ... */ }
+
+Charge(order.AccountId, order.CustomerId, total);   // error CS1503: cannot convert from 'AccountId' to 'CustomerId'
+Charge(new CustomerId(42), new AccountId(7), total); // explicit at the call site; raw 42 doesn't compile
+
+// Persistence: EF Core value converters (HasConversion) and System.Text.Json converters map them to columns/JSON.
+// Libraries such as StronglyTypedId and Vogen generate the boilerplate.
+</code></pre>
+<pre><code class="language-java">public record CustomerId(long value) {
+    public CustomerId { if (value &lt;= 0) throw new IllegalArgumentException(&quot;CustomerId must be positive&quot;); }
+}
+public record AccountId(long value) {}
+
+void charge(CustomerId customer, AccountId account, Money amount) { /* ... */ }
+
+charge(order.accountId(), order.customerId(), total);
+// error: incompatible types: AccountId cannot be converted to CustomerId
+// Cost: one small object per ID (escape analysis often removes it). Valhalla value classes will make it free.
+</code></pre>
+<pre><code class="language-python">from typing import NewType
+
+CustomerId = NewType(&quot;CustomerId&quot;, int)   # zero run-time cost: CustomerId(7) is just 7
+AccountId = NewType(&quot;AccountId&quot;, int)
+
+def charge(customer: CustomerId, account: AccountId, amount: Money) -&gt; None: ...
+
+charge(order.account_id, order.customer_id, total)
+# mypy: Argument 1 to &quot;charge&quot; has incompatible type &quot;AccountId&quot;; expected &quot;CustomerId&quot;  [arg-type]
+# At run time nothing checks, so CI must run mypy/pyright. For a run-time check too, use a frozen dataclass:
+# @dataclass(frozen=True) class CustomerId: value: int
+</code></pre>
+<pre><code class="language-go">type CustomerID int64 // defined types: distinct, zero cost
+type AccountID int64
+
+func Charge(customer CustomerID, account AccountID, amount Money) error { /* ... */ return nil }
+
+Charge(o.AccountID, o.CustomerID, total)
+// cannot use o.AccountID (variable of type AccountID) as CustomerID value in argument to Charge
+// Caveat: an untyped constant converts implicitly, so Charge(42, 7, total) compiles.
+// Note: 'type CustomerID = int64' (with '=') is an ALIAS: no protection at all.
+</code></pre>
+<pre><code class="language-typescript">// TypeScript is structural: two &quot;number&quot; types are identical. A brand adds a phantom property.
+declare const brand: unique symbol;
+type Brand&lt;T, B extends string&gt; = T &amp; { readonly [brand]: B };
+type CustomerId = Brand&lt;number, &quot;CustomerId&quot;&gt;;
+type AccountId = Brand&lt;number, &quot;AccountId&quot;&gt;;
+
+const customerId = (n: number) =&gt; n as CustomerId;   // the only place a cast is allowed: the boundary
+const accountId = (n: number) =&gt; n as AccountId;
+
+function charge(customer: CustomerId, account: AccountId, amount: Money): void { /* ... */ }
+
+charge(order.accountId, order.customerId, total);
+// TS2345: Argument of type 'AccountId' is not assignable to parameter of type 'CustomerId'.
+// A raw 42 fails too: 'number' is not assignable to 'CustomerId'.
+</code></pre>
+</div>
+<div class="tip">
+<p><strong>Where primitives are fine</strong>
+Not every <code>int</code> needs a type. Wrap values that cross function boundaries <strong>and</strong> could be confused with a
+sibling of the same representation: IDs, money and units, emails, country codes, percentages vs fractions.
+A loop counter, a local sum or a private helper's parameter don't need it.</p>
+</div>
+<h2 id="parse-dont-validate">Parse, don't validate</h2>
+<p>Alexis King's phrase names a subtle but important shift. A <strong>validator</strong> checks input and returns a boolean
+(<code>IsValidEmail(s)</code>), then the code carries on with the <em>same</em> <code>string</code>. The knowledge "this was checked" lives
+only in the programmer's head, so every layer either re-checks (wasted work and duplicated rules) or trusts that
+someone upstream did (and one day nobody did). A <strong>parser</strong> checks input and returns a <em>new type</em> (<code>Email</code>) or
+the errors. The knowledge is now in the type, and every function that takes an <code>Email</code> gets the proof for free.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 236" width="880" role="img" aria-label="Validation passes a raw string through every layer; parsing converts once at the boundary into a typed value">
+<text x="20" y="26" class="title">Validate: the check is forgotten. Parse: the check is remembered by the type</text>
+<text x="20" y="62" class="small muted">validate</text>
+<rect class="box bad" x="90" y="44" width="160" height="40" rx="8"/><text x="170" y="69" text-anchor="middle" class="small mono">Controller: string</text>
+<rect class="box bad" x="290" y="44" width="160" height="40" rx="8"/><text x="370" y="69" text-anchor="middle" class="small mono">Service: string</text>
+<rect class="box bad" x="490" y="44" width="160" height="40" rx="8"/><text x="570" y="69" text-anchor="middle" class="small mono">Repository: string</text>
+<rect class="box bad" x="690" y="44" width="170" height="40" rx="8"/><text x="775" y="69" text-anchor="middle" class="small mono">Email job: string</text>
+<line x1="250" y1="64" x2="290" y2="64" class="edge"/><line x1="450" y1="64" x2="490" y2="64" class="edge"/><line x1="650" y1="64" x2="690" y2="64" class="edge"/>
+<text x="170" y="104" text-anchor="middle" class="small">IsValid? ✓</text>
+<text x="370" y="104" text-anchor="middle" class="small">IsValid? (again)</text>
+<text x="570" y="104" text-anchor="middle" class="small">forgot: stores raw</text>
+<text x="775" y="104" text-anchor="middle" class="small">IsValid? (again)</text>
+<text x="20" y="160" class="small muted">parse</text>
+<rect class="box active" x="90" y="142" width="160" height="40" rx="8"/><text x="170" y="167" text-anchor="middle" class="small mono">Email.Parse(raw)</text>
+<rect class="box done" x="290" y="142" width="160" height="40" rx="8"/><text x="370" y="167" text-anchor="middle" class="small mono">Service: Email</text>
+<rect class="box done" x="490" y="142" width="160" height="40" rx="8"/><text x="570" y="167" text-anchor="middle" class="small mono">Repository: Email</text>
+<rect class="box done" x="690" y="142" width="170" height="40" rx="8"/><text x="775" y="167" text-anchor="middle" class="small mono">Email job: Email</text>
+<line x1="250" y1="162" x2="290" y2="162" class="edge done"/><line x1="450" y1="162" x2="490" y2="162" class="edge done"/><line x1="650" y1="162" x2="690" y2="162" class="edge done"/>
+<text x="170" y="204" text-anchor="middle" class="small">checks once, normalizes</text>
+<text x="570" y="204" text-anchor="middle" class="small">no checks: the type is the proof</text>
+</svg>
+<figcaption>Parsing happens at the edge of the system (HTTP handler, message consumer, file reader). Inside, only typed values flow.</figcaption>
+</figure>
+
+<p>There is a second, quieter benefit: a parser can <strong>normalize</strong>. <code>" Ada@Example.COM "</code> and <code>"ada@example.com"</code> are
+the same address. A validator that returns <code>true</code> for both leaves two different strings flowing through the
+system, and the duplicate check in the database misses. A parser returns the canonical form, so equality works.</p>
+<p>The visualizer runs the real rules on your input, collecting <em>all</em> failures instead of stopping at the first. The
+two lanes then show what each layer receives. The database already contains <code>ada@example.com</code>; try the default
+input, then <code>grace@@example.com</code>, <code>a b@example</code>, or anything else.</p>
+<div class="viz" data-viz="types-and-immutability-parse"></div>
+
+<div class="code-tabs">
+<pre><code class="language-csharp">public sealed record Email
+{
+    public string Value { get; }
+    private Email(string value) =&gt; Value = value;   // private: Parse is the only way in
+
+    public static bool TryParse(string? raw, [NotNullWhen(true)] out Email? email, out IReadOnlyList&lt;string&gt; errors)
+    {
+        var s = (raw ?? &quot;&quot;).Trim();
+        var errs = new List&lt;string&gt;();
+        if (s.Length is 0 or &gt; 254) errs.Add(&quot;length 1–254&quot;);
+        var at = s.LastIndexOf('@');
+        if (s.Count(c =&gt; c == '@') != 1) errs.Add(&quot;exactly one @&quot;);
+        if (at is &lt;= 0 or &gt; 64) errs.Add(&quot;local part 1–64 chars&quot;);
+        var domain = at &gt;= 0 ? s[(at + 1)..] : &quot;&quot;;
+        if (domain.Length &lt; 3 || domain.IndexOf('.', 1) &lt; 1 || domain.EndsWith('.')) errs.Add(&quot;domain needs an inner dot&quot;);
+        if (s.Any(char.IsWhiteSpace)) errs.Add(&quot;no spaces&quot;);
+        email = errs.Count == 0 ? new Email(s.ToLowerInvariant()) : null;
+        errors = errs;
+        return email is not null;
+    }
+    public override string ToString() =&gt; Value;
+}
+
+// Boundary (minimal API): parse, or return 400 with every error at once.
+app.MapPost(&quot;/register&quot;, (RegisterRequest req, Users users) =&gt;
+    Email.TryParse(req.Email, out var email, out var errors)
+        ? users.Register(email)                                  // takes Email, not string
+        : Results.ValidationProblem(new Dictionary&lt;string, string[]&gt; { [&quot;email&quot;] = [.. errors] }));
+</code></pre>
+<pre><code class="language-java">public record Email(String value) {
+    private static final Pattern DOMAIN = Pattern.compile(&quot;[^.\\s]+(\\.[^.\\s]+)+&quot;);
+
+    public Email {                                   // even 'new Email(...)' can't bypass the rules
+        var errors = problems(value);
+        if (!errors.isEmpty()) throw new IllegalArgumentException(String.join(&quot;; &quot;, errors));
+    }
+
+    public static Either&lt;List&lt;String&gt;, Email&gt; parse(String raw) {     // Either from Vavr, or your own Result
+        var s = raw == null ? &quot;&quot; : raw.strip();
+        var errors = problems(s);
+        return errors.isEmpty() ? Either.right(new Email(s.toLowerCase(Locale.ROOT))) : Either.left(errors);
+    }
+
+    static List&lt;String&gt; problems(String s) {
+        var errs = new ArrayList&lt;String&gt;();
+        if (s.isEmpty() || s.length() &gt; 254) errs.add(&quot;length 1–254&quot;);
+        int at = s.lastIndexOf('@');
+        if (s.chars().filter(c -&gt; c == '@').count() != 1) errs.add(&quot;exactly one @&quot;);
+        if (at &lt;= 0 || at &gt; 64) errs.add(&quot;local part 1–64 chars&quot;);
+        if (!DOMAIN.matcher(at &gt;= 0 ? s.substring(at + 1) : &quot;&quot;).matches()) errs.add(&quot;domain needs an inner dot&quot;);
+        if (s.chars().anyMatch(Character::isWhitespace)) errs.add(&quot;no spaces&quot;);
+        return errs;
+    }
+}
+</code></pre>
+<pre><code class="language-python">from dataclasses import dataclass
+
+@dataclass(frozen=True, slots=True)
+class Email:
+    value: str
+
+    @staticmethod
+    def parse(raw: str | None) -&gt; &quot;Email | list[str]&quot;:
+        s = (raw or &quot;&quot;).strip()
+        errs: list[str] = []
+        if not 1 &lt;= len(s) &lt;= 254: errs.append(&quot;length 1–254&quot;)
+        local, _, domain = s.rpartition(&quot;@&quot;)
+        if s.count(&quot;@&quot;) != 1: errs.append(&quot;exactly one @&quot;)
+        if not 1 &lt;= len(local) &lt;= 64: errs.append(&quot;local part 1–64 chars&quot;)
+        if &quot;.&quot; not in domain.strip(&quot;.&quot;) or domain.startswith(&quot;.&quot;) or domain.endswith(&quot;.&quot;):
+            errs.append(&quot;domain needs an inner dot&quot;)
+        if any(c.isspace() for c in s): errs.append(&quot;no spaces&quot;)
+        return errs if errs else Email(s.lower())
+
+match Email.parse(&quot; Ada@Example.COM &quot;):
+    case Email() as email: register(email)       # register(email: Email) -&gt; None
+    case errors: print(errors)
+
+# pydantic does the same at the boundary: a model field typed EmailStr is parsed, not just checked.
+</code></pre>
+<pre><code class="language-go">type Email struct{ value string } // unexported field: only ParseEmail can build a non-zero Email
+
+func (e Email) String() string { return e.value }
+
+func ParseEmail(raw string) (Email, error) {
+    s := strings.TrimSpace(raw)
+    var errs []error
+    if n := len(s); n == 0 || n &gt; 254 {
+        errs = append(errs, errors.New(&quot;length 1–254&quot;))
+    }
+    at := strings.LastIndexByte(s, '@')
+    if strings.Count(s, &quot;@&quot;) != 1 {
+        errs = append(errs, errors.New(&quot;exactly one @&quot;))
+    }
+    if at &lt;= 0 || at &gt; 64 {
+        errs = append(errs, errors.New(&quot;local part 1–64 chars&quot;))
+    }
+    if d := s[at+1:]; !strings.Contains(strings.Trim(d, &quot;.&quot;), &quot;.&quot;) || strings.HasPrefix(d, &quot;.&quot;) || strings.HasSuffix(d, &quot;.&quot;) {
+        errs = append(errs, errors.New(&quot;domain needs an inner dot&quot;))
+    }
+    if strings.ContainsFunc(s, unicode.IsSpace) {
+        errs = append(errs, errors.New(&quot;no spaces&quot;))
+    }
+    if len(errs) &gt; 0 {
+        return Email{}, errors.Join(errs...) // every problem, not just the first
+    }
+    return Email{strings.ToLower(s)}, nil
+}
+// s[at+1:] works when at == -1 too (it's s[0:]), so there's no out-of-range panic.
+</code></pre>
+<pre><code class="language-typescript">import { z } from &quot;zod&quot;;
+
+// Hand-written parser with a brand...
+type Email = string &amp; { readonly __brand: &quot;Email&quot; };
+type Parsed&lt;T&gt; = { ok: true; value: T } | { ok: false; errors: string[] };
+
+function parseEmail(raw: unknown): Parsed&lt;Email&gt; {
+  const s = typeof raw === &quot;string&quot; ? raw.trim() : &quot;&quot;;
+  const errors: string[] = [];
+  if (s.length &lt; 1 || s.length &gt; 254) errors.push(&quot;length 1–254&quot;);
+  const at = s.lastIndexOf(&quot;@&quot;), local = s.slice(0, Math.max(at, 0)), domain = s.slice(at + 1);
+  if ([...s].filter((c) =&gt; c === &quot;@&quot;).length !== 1) errors.push(&quot;exactly one @&quot;);
+  if (local.length &lt; 1 || local.length &gt; 64) errors.push(&quot;local part 1–64 chars&quot;);
+  if (!/^[^.]+(\.[^.]+)+$/.test(domain)) errors.push(&quot;domain needs an inner dot&quot;);
+  if (/\s/.test(s)) errors.push(&quot;no spaces&quot;);
+  return errors.length ? { ok: false, errors } : { ok: true, value: s.toLowerCase() as Email };
+}
+
+// ...or a schema library that parses (not just validates) a whole request body:
+const Register = z.object({ email: z.string().trim().toLowerCase().email().brand&lt;&quot;Email&quot;&gt;() });
+type Register = z.infer&lt;typeof Register&gt;;      // { email: string &amp; z.BRAND&lt;&quot;Email&quot;&gt; }
+const result = Register.safeParse(await req.json());   // { success, data } or { success: false, error }
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Accumulate errors at the boundary, fail fast inside</strong>
+At the boundary, the user wants every problem at once ("email needs one @, and the password is too short"), so
+parsers collect errors and return them together as a 400 response
+(<a href="api-design.html#errors-problem-details-rfc-9457">problem details</a>). Inside the core, a broken invariant is a bug,
+not user input, so constructors throw immediately. <a href="error-handling.html">Error Handling</a> covers which failures
+should be values and which should be exceptions.</p>
+</div>
+<h2 id="variance-covariance-and-contravariance">Variance: covariance and contravariance</h2>
+<p>If a <code>Cat</code> is an <code>Animal</code>, is a <code>List&lt;Cat&gt;</code> a <code>List&lt;Animal&gt;</code>? It feels like it should be, and the answer decides
+whether some of the most confusing type errors are protecting you or merely in your way. The rule is short:</p>
+<ul>
+<li>A type that only <strong>produces</strong> <code>T</code> (returns it, yields it) can be <strong>covariant</strong>: a producer of Cats is a
+  producer of Animals. <code>IEnumerable&lt;out T&gt;</code>, <code>Sequence[T]</code>, <code>readonly T[]</code>, <code>? extends T</code>.</li>
+<li>A type that only <strong>consumes</strong> <code>T</code> (takes it as a parameter) can be <strong>contravariant</strong>: a consumer of Animals
+  is a consumer of Cats. <code>Action&lt;in T&gt;</code>, <code>Comparer&lt;in T&gt;</code>, <code>Callable[[T], ...]</code>, <code>? super T</code>.</li>
+<li>A type that does <strong>both</strong> (a mutable list: <code>get</code> <em>and</em> <code>add</code>) must be <strong>invariant</strong>. Otherwise you could add a
+  Dog through the <code>List&lt;Animal&gt;</code> view into what is really a list of Cats.</li>
+</ul>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 260" width="880" role="img" aria-label="Covariance follows the subtype direction for producers, contravariance reverses it for consumers, mutable containers are invariant">
+<text x="20" y="26" class="title">Which way does the arrow go? Producers follow it, consumers reverse it</text>
+<rect class="box" x="20" y="44" width="130" height="36" rx="8"/><text x="85" y="67" text-anchor="middle" class="small mono">Cat</text>
+<rect class="box" x="20" y="150" width="130" height="36" rx="8"/><text x="85" y="173" text-anchor="middle" class="small mono">Animal</text>
+<line x1="85" y1="80" x2="85" y2="148" class="edge accent"/><text x="95" y="120" class="small">is-a</text>
+<rect class="box done" x="200" y="44" width="200" height="36" rx="8"/><text x="300" y="67" text-anchor="middle" class="small mono">IEnumerable&lt;Cat&gt;</text>
+<rect class="box done" x="200" y="150" width="200" height="36" rx="8"/><text x="300" y="173" text-anchor="middle" class="small mono">IEnumerable&lt;Animal&gt;</text>
+<line x1="300" y1="80" x2="300" y2="148" class="edge done"/><text x="310" y="120" class="small">covariant (out)</text>
+<rect class="box visit" x="440" y="44" width="200" height="36" rx="8"/><text x="540" y="67" text-anchor="middle" class="small mono">Action&lt;Cat&gt;</text>
+<rect class="box visit" x="440" y="150" width="200" height="36" rx="8"/><text x="540" y="173" text-anchor="middle" class="small mono">Action&lt;Animal&gt;</text>
+<line x1="540" y1="148" x2="540" y2="82" class="edge active"/><text x="550" y="120" class="small">contravariant (in)</text>
+<rect class="box bad" x="680" y="44" width="180" height="36" rx="8"/><text x="770" y="67" text-anchor="middle" class="small mono">List&lt;Cat&gt;</text>
+<rect class="box bad" x="680" y="150" width="180" height="36" rx="8"/><text x="770" y="173" text-anchor="middle" class="small mono">List&lt;Animal&gt;</text>
+<text x="770" y="112" text-anchor="middle" class="small">no arrow:</text>
+<text x="770" y="130" text-anchor="middle" class="small">invariant</text>
+<text x="20" y="220" class="small">Arrow = "can be used as". Read-only producers keep the direction; consumers reverse it; read-write containers allow neither.</text>
+<text x="20" y="240" class="small muted">Arrays in C# and Java are covariant anyway (a 1990s decision), so the check moves to every array store at run time.</text>
+</svg>
+<figcaption>Mnemonic from Java: PECS, "Producer Extends, Consumer Super". C# spells it at the declaration: <code>out T</code> for producers, <code>in T</code> for consumers.</figcaption>
+</figure>
+
+<p>The visualizer tries four scenarios in each language and simulates what the runtime does: it tracks the
+container's real element type, the store, and the later read that calls <code>meow()</code>. Compare where each language
+stops the Dog: at compile time, at the store, much later at the read, or never.</p>
+<div class="viz" data-viz="types-and-immutability-variance"></div>
+
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>C#</th>
+<th>Java</th>
+<th>Python (mypy)</th>
+<th>Go</th>
+<th>TypeScript</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read-only sequence of Cat as Animal</td>
+<td>ok: <code>IEnumerable&lt;out T&gt;</code></td>
+<td>ok with <code>? extends Animal</code></td>
+<td>ok: <code>Sequence</code> is covariant</td>
+<td>compile error: copy in a loop</td>
+<td>ok: <code>readonly Animal[]</code></td>
+</tr>
+<tr>
+<td>Mutable list of Cat as Animal, add Dog</td>
+<td>compile error CS0029</td>
+<td>compile error</td>
+<td>checker error; runs, crashes later</td>
+<td>compile error</td>
+<td><strong>compiles</strong>; crashes later</td>
+</tr>
+<tr>
+<td>Array of Cat as Animal, store Dog</td>
+<td>compiles; <code>ArrayTypeMismatchException</code> at the store</td>
+<td>compiles; <code>ArrayStoreException</code> at the store</td>
+<td>same as list</td>
+<td>compile error</td>
+<td><strong>compiles</strong>; crashes later</td>
+</tr>
+<tr>
+<td>Animal consumer used as Cat consumer</td>
+<td>ok: <code>Action&lt;in T&gt;</code></td>
+<td>ok with <code>? super Cat</code></td>
+<td>ok: <code>Callable</code> params are contravariant</td>
+<td>compile error: wrap the func</td>
+<td>ok with <code>strictFunctionTypes</code></td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Declaration-site variance: only on interfaces and delegates, and only for reference types.
+public interface IProducer&lt;out T&gt; { T Next(); }          // T only in output positions
+public interface IConsumer&lt;in T&gt; { void Accept(T item); } // T only in input positions
+
+IEnumerable&lt;Cat&gt; cats = [new Cat(&quot;Tom&quot;)];
+IEnumerable&lt;Animal&gt; animals = cats;                       // ok: covariant
+IComparer&lt;Animal&gt; byName = Comparer&lt;Animal&gt;.Create((a, b) =&gt; string.Compare(a.Name, b.Name));
+IComparer&lt;Cat&gt; catsByName = byName;                       // ok: contravariant
+// IEnumerable&lt;int&gt; -&gt; IEnumerable&lt;object&gt; does NOT work: variance needs reference conversions (no boxing).
+</code></pre>
+<pre><code class="language-java">// Use-site variance with wildcards. Producer Extends, Consumer Super.
+static double totalWeight(List&lt;? extends Animal&gt; animals) {   // reads Animals out
+    return animals.stream().mapToDouble(Animal::weight).sum();
+}
+static void addCats(List&lt;? super Cat&gt; sink) {                 // writes Cats in
+    sink.add(new Cat(&quot;Tom&quot;));
+}
+List&lt;Cat&gt; cats = new ArrayList&lt;&gt;();
+List&lt;Animal&gt; zoo = new ArrayList&lt;&gt;();
+totalWeight(cats);       // ok
+addCats(zoo);            // ok: a list of Animals accepts Cats
+// Collections.copy(List&lt;? super T&gt; dest, List&lt;? extends T&gt; src) is the textbook signature.
+</code></pre>
+<pre><code class="language-python">from typing import Callable, Sequence
+
+def total_weight(animals: Sequence[Animal]) -&gt; float:      # Sequence is covariant: list[Cat] is accepted
+    return sum(a.weight for a in animals)
+
+def feed_all(cats: list[Cat], feeder: Callable[[Cat], None]) -&gt; None:
+    for c in cats: feeder(c)
+
+def feed_any(a: Animal) -&gt; None: ...
+feed_all([Cat(&quot;Tom&quot;)], feed_any)                           # ok: Callable is contravariant in its params
+
+# Your own generics (3.12 syntax): variance is inferred from usage, or declare TypeVar(..., covariant=True).
+class Box[T]:
+    def __init__(self, item: T) -&gt; None: self._item = item
+    def get(self) -&gt; T: return self._item                  # only produces T -&gt; inferred covariant
+</code></pre>
+<pre><code class="language-go">// Go has no variance: []Cat is not []Animal, func(Animal) is not func(Cat). Convert explicitly.
+animals := make([]Animal, 0, len(cats))
+for _, c := range cats {
+    animals = append(animals, c) // each Cat is wrapped in an interface value
+}
+
+feed := func(a Animal) { a.Eat() }
+feedCat := func(c Cat) { feed(c) } // adapt the consumer by hand
+
+// Or write generic code over the element type and skip the conversion entirely:
+func TotalWeight[T Animal](xs []T) (w float64) {
+    for _, x := range xs {
+        w += x.Weight()
+    }
+    return w
+}
+</code></pre>
+<pre><code class="language-typescript">// Readonly views are safely covariant; mutable arrays are covariant too, which is unsound.
+const cats: Cat[] = [new Cat(&quot;Tom&quot;)];
+const view: readonly Animal[] = cats;      // safe
+const animals: Animal[] = cats;            // compiles...
+animals.push(new Dog(&quot;Rex&quot;));              // ...and now cats[1] is a Dog
+// Prefer readonly parameters: function totalWeight(xs: readonly Animal[]) accepts Cat[] safely.
+
+// TS 4.7+ lets you annotate type parameters: interface Producer&lt;out T&gt; { next(): T }
+// Method-syntax members stay bivariant even under strictFunctionTypes; use property syntax for callbacks:
+interface Handlers { onCat: (c: Cat) =&gt; void }   // checked contravariantly
+</code></pre>
+</div>
+<h2 id="when-mutability-is-the-right-choice">When mutability is the right choice</h2>
+<p>Immutability is a default, not a religion. Mutation is faster and simpler when <strong>nobody else can see it</strong>. The
+rule of thumb: <em>mutate locally, publish immutably</em>. A function may build a result with a mutable list, a
+<code>StringBuilder</code> or a dictionary, as long as what escapes is immutable or exclusively owned by the caller.</p>
+<div class="compare">
+<div class="good">
+<h4 id="mutate-freely">Mutate freely</h4>
+<ul>
+<li><strong>Local accumulation</strong>: building a list inside a function, then returning it (or a frozen copy).</li>
+<li><strong>Builders</strong>: <code>StringBuilder</code>, <code>ImmutableList.CreateBuilder</code>, <code>strings.Builder</code>, Java <code>Stream.Builder</code>.</li>
+<li><strong>Hot paths with measured cost</strong>: buffers, pooled arrays (<code>ArrayPool&lt;T&gt;</code>), <code>Span&lt;T&gt;</code> parsing, numeric kernels.</li>
+<li><strong>Single-owner state</strong>: an aggregate mutated only through its own methods, inside one transaction.</li>
+</ul>
+</div>
+<div class="warn">
+<h4 id="mutate-with-care">Mutate with care</h4>
+<ul>
+<li><strong>Entities with identity</strong>: <code>Order.AddLine()</code> is natural, but keep collections private and invariants checked.</li>
+<li><strong>ORM-tracked objects</strong>: EF Core and JPA track changes by mutation. Keep them in the data layer and map to
+  immutable DTOs at the edge (see <a href="data-access.html">Data Access</a>).</li>
+<li><strong>UI state</strong>: allowed in frameworks built for it (MobX, Vue reactivity), harmful in ones that compare by reference (React, Redux).</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="dont-mutate">Don't mutate</h4>
+<ul>
+<li>Anything <strong>shared across threads</strong> without a lock.</li>
+<li><strong>Dictionary keys and set members</strong> after insertion.</li>
+<li><strong>Arguments</strong> the caller didn't hand over for mutation.</li>
+<li><strong>Configuration, cached values, static data</strong>: freeze them at startup.</li>
+<li><strong>Messages and events</strong> once published.</li>
+</ul>
+</div>
+</div>
+<p>A builder gives you the convenience of mutation while constructing and the safety of immutability afterwards.
+It's the standard answer to "my immutable type has 12 fields and some are optional":</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Records + object initializers act as a builder; 'required' makes fields mandatory at compile time.
+public sealed record HttpOptions
+{
+    public required Uri BaseAddress { get; init; }
+    public TimeSpan Timeout { get; init; } = TimeSpan.FromSeconds(10);
+    public int MaxRetries { get; init; } = 3;
+    public ImmutableDictionary&lt;string, string&gt; Headers { get; init; } = ImmutableDictionary&lt;string, string&gt;.Empty;
+}
+
+var opts = new HttpOptions { BaseAddress = new(&quot;https://api.example.com&quot;), MaxRetries = 5 };
+
+// Building a big collection: mutate a builder, publish once.
+var b = ImmutableArray.CreateBuilder&lt;Order&gt;(initialCapacity: rows.Count);
+foreach (var row in rows) b.Add(Map(row));
+ImmutableArray&lt;Order&gt; orders = b.MoveToImmutable();   // no copy when Count == Capacity
+</code></pre>
+<pre><code class="language-java">// Classic builder for an immutable class (Lombok's @Builder generates this).
+public final class HttpOptions {
+    private final URI baseAddress; private final Duration timeout; private final int maxRetries;
+    private HttpOptions(Builder b) { baseAddress = Objects.requireNonNull(b.baseAddress); timeout = b.timeout; maxRetries = b.maxRetries; }
+    public static Builder builder() { return new Builder(); }
+
+    public static final class Builder {
+        private URI baseAddress; private Duration timeout = Duration.ofSeconds(10); private int maxRetries = 3;
+        public Builder baseAddress(URI v) { baseAddress = v; return this; }
+        public Builder timeout(Duration v) { timeout = v; return this; }
+        public Builder maxRetries(int v) { maxRetries = v; return this; }
+        public HttpOptions build() { return new HttpOptions(this); }   // validate here
+    }
+}
+var opts = HttpOptions.builder().baseAddress(URI.create(&quot;https://api.example.com&quot;)).maxRetries(5).build();
+</code></pre>
+<pre><code class="language-python">from dataclasses import dataclass, field
+
+# Keyword arguments with defaults make builders unnecessary in Python.
+@dataclass(frozen=True, kw_only=True)
+class HttpOptions:
+    base_address: str
+    timeout_s: float = 10.0
+    max_retries: int = 3
+    headers: tuple[tuple[str, str], ...] = ()
+
+opts = HttpOptions(base_address=&quot;https://api.example.com&quot;, max_retries=5)
+
+# Mutate locally, publish immutably:
+def load_orders(rows) -&gt; tuple[&quot;Order&quot;, ...]:
+    out = []                       # local list: nobody else can see it
+    for row in rows:
+        out.append(to_order(row))
+    return tuple(out)
+</code></pre>
+<pre><code class="language-go">// Functional options: Go's idiomatic builder.
+type HTTPOptions struct {
+    baseAddress string
+    timeout     time.Duration
+    maxRetries  int
+}
+
+type Option func(*HTTPOptions)
+
+func WithTimeout(d time.Duration) Option { return func(o *HTTPOptions) { o.timeout = d } }
+func WithMaxRetries(n int) Option        { return func(o *HTTPOptions) { o.maxRetries = n } }
+
+func NewHTTPOptions(base string, opts ...Option) HTTPOptions {
+    o := HTTPOptions{baseAddress: base, timeout: 10 * time.Second, maxRetries: 3}
+    for _, apply := range opts {
+        apply(&amp;o) // mutation, but only on a local value before it escapes
+    }
+    return o // returned by value: the caller gets its own copy
+}
+
+var opts = NewHTTPOptions(&quot;https://api.example.com&quot;, WithMaxRetries(5))
+</code></pre>
+<pre><code class="language-typescript">// Object literals + Readonly&lt;&gt; + defaults via spread.
+type HttpOptions = Readonly&lt;{ baseAddress: string; timeoutMs: number; maxRetries: number }&gt;;
+const defaults = { timeoutMs: 10_000, maxRetries: 3 } as const;
+
+function httpOptions(o: Pick&lt;HttpOptions, &quot;baseAddress&quot;&gt; &amp; Partial&lt;HttpOptions&gt;): HttpOptions {
+  return Object.freeze({ ...defaults, ...o });
+}
+const opts = httpOptions({ baseAddress: &quot;https://api.example.com&quot;, maxRetries: 5 });
+
+// Immer: write &quot;mutating&quot; code against a draft; get a new immutable state with structural sharing.
+// const next = produce(state, (draft) =&gt; { draft.cart.items.push(item); });
+</code></pre>
+</div>
+<div class="tip">
+<p><strong>Measure before you trade safety for speed</strong>
+An immutable update allocates. In request-handling code that's noise next to I/O; in a loop over a million
+elements it can dominate. Profile first (<a href="performance-patterns.html">Performance Patterns</a>), then use a builder,
+a pooled buffer or local mutation in the measured hot spot, and keep the public surface immutable.</p>
+</div>
+<h2 id="choosing-when-to-and-when-not-to">Choosing: when to, and when not to</h2>
+<table>
+<thead>
+<tr>
+<th>Technique</th>
+<th>Use it when</th>
+<th>Don't use it when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Union / sealed hierarchy</td>
+<td>a value is exactly one of a known, closed set of shapes (states, results, commands)</td>
+<td>third parties need to add cases: use an interface</td>
+</tr>
+<tr>
+<td>Value object</td>
+<td>a concept has rules (format, range, unit) or can be confused with a same-typed sibling</td>
+<td>it's a local, short-lived value with no rules</td>
+</tr>
+<tr>
+<td>Strongly-typed ID</td>
+<td>IDs of different entities share a representation (<code>Guid</code>, <code>long</code>, <code>string</code>)</td>
+<td>a single-entity service where only one kind of ID exists, and the cost of mapping outweighs the risk</td>
+</tr>
+<tr>
+<td>Record / value equality</td>
+<td>the object is defined by its data: DTOs, messages, money, coordinates</td>
+<td>it has identity that persists through change (entities)</td>
+</tr>
+<tr>
+<td>Immutable collection</td>
+<td>it's stored in a field, shared, cached, used as a key or crosses threads</td>
+<td>it's a local accumulator inside one function</td>
+</tr>
+<tr>
+<td>Defensive copy</td>
+<td>you must keep a mutable type (legacy API, ORM) at a trust boundary</td>
+<td>the type is already immutable: copying is wasted work</td>
+</tr>
+<tr>
+<td>Persistent collection</td>
+<td>many versions are kept (undo, snapshots, MVCC) or small updates to big data are frequent</td>
+<td>read-mostly data built once: a frozen/array-backed collection is faster</td>
+</tr>
+<tr>
+<td>Parse at the boundary</td>
+<td>input arrives from outside (HTTP, queue, file, env vars, database)</td>
+<td>data was produced by your own typed code</td>
+</tr>
+<tr>
+<td>Variance annotations</td>
+<td>you design a generic interface that only produces or only consumes <code>T</code></td>
+<td>the type both reads and writes <code>T</code>: keep it invariant</td>
+</tr>
+</tbody>
+</table>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · NAME IT</small><strong>Is it a concept?</strong><p>If it has rules or a confusable sibling, give it a type.</p></div>
+<div class="flow-step"><small>2 · SHAPE IT</small><strong>One of N, or all of N?</strong><p>"One of" is a union; "all of" is a record.</p></div>
+<div class="flow-step"><small>3 · FREEZE IT</small><strong>Who else can change it?</strong><p>Make fields and collections immutable by default.</p></div>
+<div class="flow-step"><small>4 · PARSE IT</small><strong>Where does it come from?</strong><p>Untrusted input is parsed once, at the edge.</p></div>
+<div class="flow-step"><small>5 · CHECK IT</small><strong>Will the compiler notice?</strong><p>No catch-alls; checkers and linters in CI.</p></div>
+</div>
+
+<h2 id="pitfalls-and-war-stories">Pitfalls and war stories</h2>
+<div class="pitfall">
+<p><strong>The HashSet that lost an order</strong>
+A C# <code>HashSet&lt;OrderKey&gt;</code> used a mutable class with <code>Equals</code>/<code>GetHashCode</code> over <code>Region</code> and <code>Number</code>. A
+background job normalized <code>Region</code> from <code>"eu"</code> to <code>"EU"</code> on objects already in the set. <code>Contains</code> looked in the
+bucket for the <em>new</em> hash, found nothing, and the dedupe logic sent the order twice. <strong>Fix:</strong> keys are
+<code>readonly record struct</code>s; normalization happens in the constructor, before the value is ever hashed.</p>
+</div>
+<div class="pitfall">
+<p><strong>The "immutable" config that changed at runtime</strong>
+A TypeScript service exported <code>export const config: Readonly&lt;Config&gt; = loadConfig()</code>. A test helper did
+<code>(config as any).retries = 0</code> to speed up tests, and because modules are singletons, the next test file ran with
+zero retries and flaked for weeks. <strong>Fix:</strong> <code>Object.freeze</code> (deeply) at load time, and inject config instead of
+importing a mutable singleton (see <a href="di-fundamentals.html">DI Fundamentals</a>).</p>
+</div>
+<div class="pitfall">
+<p><strong>The Go enum that grew a value</strong>
+<code>type Status int</code> with <code>iota</code> constants was stored in the database as an integer. A new <code>StatusOnHold</code> was
+inserted <strong>in the middle</strong> of the <code>const</code> block, shifting every later value by one. Old rows now decoded as the
+wrong status. <strong>Fix:</strong> assign explicit values (<code>StatusShipped Status = 3</code>), never reorder, persist names rather
+than ordinals where possible, and run the <code>exhaustive</code> linter. Java's <code>enum.ordinal()</code> and C# enums without
+explicit values have the same trap.</p>
+</div>
+<div class="pitfall">
+<p><strong>The Python dataclass default that every instance shared</strong>
+<code>@dataclass class Cart: items: list = None</code> with <code>if self.items is None: self.items = []</code> worked, until someone
+"simplified" it to a module-level <code>EMPTY = []</code> default passed explicitly. Every cart shared <code>EMPTY</code>, and items
+appeared in strangers' carts. <strong>Fix:</strong> <code>field(default_factory=list)</code>, or better, <code>tuple</code> fields on a frozen
+dataclass.</p>
+</div>
+<div class="pitfall">
+<p><strong>The validated string that wasn't</strong>
+An API validated <code>email</code> in the controller with a regex and passed a <code>string</code> on. A later batch-import path
+called the same service method directly, skipping the controller, and wrote 40,000 unvalidated rows. <strong>Fix:</strong> the
+service method takes <code>Email</code>, so the import path <em>had</em> to parse: the compiler found the second entry point.</p>
+</div>
+<h2 id="checklist">Checklist</h2>
+<ul>
+<li>[ ] Every "one of several" concept (status, kind, result) is a closed union, not a set of booleans or a free string.</li>
+<li>[ ] Switches over closed unions have no catch-all arm (or one that throws), and exhaustiveness warnings are errors in CI.</li>
+<li>[ ] IDs of different entities have different types; money carries its currency; units are in the type or the name.</li>
+<li>[ ] Value objects are immutable, equal by value, and validated in exactly one place (constructor or factory).</li>
+<li>[ ] Records don't hold mutable collections: fields use <code>ImmutableArray</code>/<code>List.copyOf</code>/<code>tuple</code>/<code>readonly T[]</code> or copies.</li>
+<li>[ ] Getters never return a mutable internal collection.</li>
+<li>[ ] Untrusted input (HTTP, queue, file, env) is parsed once into typed values at the boundary, collecting all errors.</li>
+<li>[ ] Dictionary keys and set members are immutable.</li>
+<li>[ ] Shared, cached and static data is frozen at startup.</li>
+<li>[ ] Mutation is local or single-owner; anything published (returned, stored, sent) is immutable.</li>
+<li>[ ] Python and TypeScript type checkers run in CI with strict settings (<code>mypy --strict</code> / pyright strict, <code>tsc --strict</code>).</li>
+<li>[ ] Generic interfaces that only produce or only consume <code>T</code> declare it (<code>out</code>/<code>in</code>, <code>? extends</code>/<code>? super</code>, <code>readonly</code>).</li>
+</ul>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>An order has optional <code>paidAt</code>, <code>shippedAt</code> and <code>trackingNo</code>. How many combinations can the type represent, and how would you shrink it?</summary>
+<p>2 × 2 × 2 = 8 combinations, but only Draft (none), Paid (paidAt) and Shipped (all three) are legal: 3 of 8.
+Replace the optional fields with a union <code>Draft | Paid(paidAt) | Shipped(paidAt, shippedAt, trackingNo)</code>, so the
+5 illegal combinations can't be constructed.</p>
+</details>
+<details class="quiz">
+<summary>A C# <code>record Order(int Id, List&lt;string&gt; Lines)</code> is copied with <code>var b = a with { Id = 2 };</code>, then <code>b.Lines.Add("x")</code>. What does <code>a.Lines</code> contain, and is <code>a with { } == a</code> still true?</summary>
+<p><code>a.Lines</code> contains <code>"x"</code> too: <code>with</code> is a shallow copy, so both records hold the same list. <code>a with { } == a</code> is
+true because both records hold the <em>same</em> list reference. But two records with <em>different</em> lists of equal
+contents compare unequal, because <code>List&lt;T&gt;</code> uses reference equality. Use <code>ImmutableArray&lt;string&gt;</code> with a custom
+equality, or <code>ImmutableList</code> plus <code>SequenceEqual</code> in an overridden <code>Equals</code>.</p>
+</details>
+<details class="quiz">
+<summary>Why is <code>Collections.unmodifiableList(items)</code> not enough to make a Java record immutable?</summary>
+<p>It's a view, not a copy. Writes through the view throw, but whoever still holds <code>items</code> can change it, and the
+change shows through. Use <code>List.copyOf(items)</code> in the compact constructor: it copies (unless already immutable)
+and the result can't be changed by anyone.</p>
+</details>
+<details class="quiz">
+<summary>In Go, <code>type CustomerID int64</code> protects <code>Charge(c CustomerID, a AccountID)</code> from swapped variables. What still slips through, and what about <code>type CustomerID = int64</code>?</summary>
+<p>Untyped constants convert implicitly, so <code>Charge(42, 7)</code> compiles. <code>type CustomerID = int64</code> is an alias: it <em>is</em>
+<code>int64</code>, so it offers no protection at all, not even against swapped variables.</p>
+</details>
+<details class="quiz">
+<summary>Why does Java reject <code>List&lt;Animal&gt; a = new ArrayList&lt;Cat&gt;()</code> but accept <code>Animal[] a = new Cat[1]</code>?</summary>
+<p>Generics are invariant because a <code>List&lt;Animal&gt;</code> reference could <code>add(new Dog())</code> into a list of Cats, and erased
+generics have no run-time element type to check. Arrays are covariant for historical reasons and are reified, so
+the JVM checks every store and throws <code>ArrayStoreException</code>. The compile-time error is the better deal.</p>
+</details>
+<details class="quiz">
+<summary>What's the difference between validating an email and parsing one?</summary>
+<p>Validation answers yes/no and leaves you with the same <code>string</code>, so the knowledge is lost and must be re-checked
+or trusted. Parsing returns a new <code>Email</code> type (or all the errors), normalized to a canonical form. Every function
+that takes <code>Email</code> is guaranteed a valid, canonical value without checking.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Illegal states</strong>Optional fields multiply; union cases add. Model "one of" as a union with per-case data.</div>
+<div><strong>Records</strong>C#/Java record, Python frozen dataclass, Go struct, TS Readonly type + factory. All shallow.</div>
+<div><strong>Collections</strong>Interface ≠ view ≠ immutable. Store ImmutableArray, List.copyOf, tuple, frozen readonly arrays.</div>
+<div><strong>Aliasing</strong>Copy in + read-only out, or store immutable. Never return the internal mutable list.</div>
+<div><strong>Sharing</strong>Persistent structures copy only the path: O(log n) per update, old versions stay valid.</div>
+<div><strong>Unions</strong>C# sealed records (CS8509), Java sealed (error), Python assert_never, Go linter, TS never.</div>
+<div><strong>IDs</strong>C# record struct, Java record, Python NewType, Go defined type (not alias), TS brand.</div>
+<div><strong>Parse</strong>Boundary: parse to a type, collect all errors, normalize. Core: take the type, don't re-check.</div>
+<div><strong>Variance</strong>Producers covariant (out, extends, readonly), consumers contravariant (in, super), mutable invariant.</div>
+<div><strong>Mutability</strong>Mutate locally or in builders; publish immutably. Measure before optimizing away safety.</div>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li>C#: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/record">Records</a>, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/operators/switch-expression">Pattern matching: switch expression</a>, <a href="https://learn.microsoft.com/dotnet/api/system.collections.immutable">System.Collections.Immutable</a>, <a href="https://learn.microsoft.com/dotnet/api/system.collections.frozen">Frozen collections</a>, <a href="https://learn.microsoft.com/dotnet/standard/generics/covariance-and-contravariance">Covariance and contravariance in generics</a></li>
+<li>Java: <a href="https://docs.oracle.com/en/java/javase/21/language/records.html">Record classes</a>, <a href="https://docs.oracle.com/en/java/javase/21/language/sealed-classes-and-interfaces.html">Sealed classes</a>, <a href="https://docs.oracle.com/en/java/javase/21/language/pattern-matching-switch.html">Pattern matching for switch</a>, <a href="https://docs.oracle.com/en/java/javase/21/core/creating-immutable-lists-sets-and-maps.html">Unmodifiable collections</a></li>
+<li>Python: <a href="https://docs.python.org/3/library/dataclasses.html">dataclasses</a>, <a href="https://docs.python.org/3/library/typing.html">typing: NewType, assert_never</a>, <a href="https://typing.python.org/en/latest/reference/generics.html">Variance of generic types</a>, <a href="https://peps.python.org/pep-0636/">Structural pattern matching (PEP 636)</a></li>
+<li>Go: <a href="https://go.dev/ref/spec#Type_declarations">Type declarations (spec)</a>, <a href="https://pkg.go.dev/slices">slices package</a>, <a href="https://go.dev/blog/range-functions">Range over function types</a></li>
+<li>TypeScript: <a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html">Narrowing and discriminated unions</a>, <a href="https://www.typescriptlang.org/docs/handbook/2/objects.html">Readonly and ReadonlyArray</a>, <a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html">Variance annotations (4.7)</a>, <a href="https://www.typescriptlang.org/tsconfig/#strictFunctionTypes">strictFunctionTypes</a></li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="clean-code.html"><small>&larr; PREVIOUS</small>Clean Code &amp; Refactoring</a><a class="next" href="error-handling.html"><small>NEXT &rarr;</small>Error Handling Strategies</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-the-type-said-string-the-bug-said-otherwise">The problem: the type said string, the bug said otherwise</a></li>
+<li><a href="#types-are-design-tools-not-paperwork">Types are design tools, not paperwork</a></li>
+<li><a href="#make-illegal-states-unrepresentable">Make illegal states unrepresentable</a></li>
+<li><a href="#value-objects-and-records">Value objects and records</a><ul>
+<li><a href="#records-vs-classes-vs-structs-which-one">Records vs classes vs structs: which one?</a></li>
+</ul>
+</li>
+<li><a href="#immutable-collections">Immutable collections</a></li>
+<li><a href="#defensive-copying-vs-immutability">Defensive copying vs immutability</a></li>
+<li><a href="#structural-sharing-persistent-data-structures">Structural sharing: persistent data structures</a></li>
+<li><a href="#enums-and-tagged-unions">Enums and tagged unions</a></li>
+<li><a href="#strongly-typed-ids-and-primitive-obsession">Strongly-typed IDs and primitive obsession</a></li>
+<li><a href="#parse-dont-validate">Parse, don't validate</a></li>
+<li><a href="#variance-covariance-and-contravariance">Variance: covariance and contravariance</a></li>
+<li><a href="#when-mutability-is-the-right-choice">When mutability is the right choice</a></li>
+<li><a href="#choosing-when-to-and-when-not-to">Choosing: when to, and when not to</a></li>
+<li><a href="#pitfalls-and-war-stories">Pitfalls and war stories</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

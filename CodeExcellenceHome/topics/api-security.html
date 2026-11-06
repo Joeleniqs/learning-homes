@@ -1,0 +1,1531 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>API Security: AuthN, AuthZ &amp; Rate Limiting | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/api-security.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/api-security.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track" open><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html" aria-current="page">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / API Security: AuthN, AuthZ &amp; Rate Limiting</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">API DEVELOPMENT</p><h1>API Security: AuthN, AuthZ &amp; Rate Limiting</h1><p class="lede">OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms.</p><div class="meta"><span class="level level-intermediate">Intermediate → Advanced</span><span>~60 min study</span><span>Builds on: <a href="api-design.html">REST API Design</a>, <a href="middleware-patterns.html">Middleware Patterns &amp; Ordering</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="api-security" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-a-valid-token-is-not-permission">The problem: a valid token is not permission</h2>
+<p>An online shop ships a mobile app. Its API checks every request carefully: no token gives a 401, an expired token gives a 401, and a forged token gives a 401. The penetration test passes. Six months later a customer notices that <code>GET /orders/1018</code> works while signed in as themselves, even though order 1018 is someone else's. They change the number again, and again. A script then downloads two million orders with names and home addresses, using one perfectly valid token.</p>
+<p>Nothing in that API was broken in the way people usually picture "security". The tokens were real, and so were the signatures. The API answered the question <strong>who are you?</strong> correctly, and then never asked the next one: <strong>is <em>this</em> order yours?</strong> That missing check is called <em>Broken Object Level Authorization</em> (BOLA). It's number one on the OWASP API Security Top 10, and it causes more API data breaches than anything else.</p>
+<div class="rule">
+<p><strong>The rule</strong></p>
+<p>Every request must pass <strong>several different checks</strong>, each answering its own question:</p>
+<ul>
+<li><strong>Authentication</strong>: who is calling?</li>
+<li><strong>Endpoint authorization</strong>: may this caller do this kind of thing?</li>
+<li><strong>Resource authorization</strong>: may they do it to <em>this</em> object?</li>
+<li><strong>Abuse limits</strong>: are they asking too often?</li>
+</ul>
+<p>A token answers only the first question. Your code has to answer the other three, on every request.</p>
+</div>
+<p>The layers stack up in your <a href="middleware-patterns.html">middleware pipeline</a> like this. The cheap, general checks run first. The specific checks that need data run last, inside the handler.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 200" width="900" role="img" aria-label="A request passes through TLS, rate limiting, authentication, endpoint authorization, input validation and resource authorization before the handler; each layer can reject with its own status code"><defs><marker id="api-security-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-muted"/></marker></defs><text class="title" x="450" y="20" text-anchor="middle">One request, seven questions, in order of cost</text><rect class="box" x="8" y="44" width="104" height="58" rx="8"/><text x="60" y="68" text-anchor="middle">TLS</text><text class="small muted" x="60" y="86" text-anchor="middle">gateway / LB</text><rect class="box path" x="134" y="44" width="104" height="58" rx="8"/><text x="186" y="68" text-anchor="middle">Rate limit</text><text class="small muted" x="186" y="86" text-anchor="middle">per IP, per client</text><rect class="box accent" x="260" y="44" width="116" height="58" rx="8"/><text x="318" y="68" text-anchor="middle">Authenticate</text><text class="small muted" x="318" y="86" text-anchor="middle">validate token</text><rect class="box accent" x="398" y="44" width="116" height="58" rx="8"/><text x="456" y="68" text-anchor="middle">Endpoint authz</text><text class="small muted" x="456" y="86" text-anchor="middle">scope / role</text><rect class="box visit" x="536" y="44" width="104" height="58" rx="8"/><text x="588" y="68" text-anchor="middle">Validate</text><text class="small muted" x="588" y="86" text-anchor="middle">DTO, size, types</text><rect class="box active" x="662" y="44" width="116" height="58" rx="8"/><text x="720" y="68" text-anchor="middle">Resource authz</text><text class="small muted" x="720" y="86" text-anchor="middle">load, then check</text><rect class="box done" x="800" y="44" width="92" height="58" rx="8"/><text x="846" y="78" text-anchor="middle">Handler</text><line class="edge" x1="112" y1="73" x2="131" y2="73" marker-end="url(#api-security-ar)"/><line class="edge" x1="238" y1="73" x2="257" y2="73" marker-end="url(#api-security-ar)"/><line class="edge" x1="376" y1="73" x2="395" y2="73" marker-end="url(#api-security-ar)"/><line class="edge" x1="514" y1="73" x2="533" y2="73" marker-end="url(#api-security-ar)"/><line class="edge" x1="640" y1="73" x2="659" y2="73" marker-end="url(#api-security-ar)"/><line class="edge" x1="778" y1="73" x2="797" y2="73" marker-end="url(#api-security-ar)"/><line class="edge bad dash" x1="186" y1="102" x2="186" y2="130"/><line class="edge bad dash" x1="318" y1="102" x2="318" y2="130"/><line class="edge bad dash" x1="456" y1="102" x2="456" y2="130"/><line class="edge bad dash" x1="588" y1="102" x2="588" y2="130"/><line class="edge bad dash" x1="720" y1="102" x2="720" y2="130"/><rect class="box bad" x="146" y="130" width="80" height="26" rx="6"/><text class="mono" x="186" y="148" text-anchor="middle">429</text><rect class="box bad" x="278" y="130" width="80" height="26" rx="6"/><text class="mono" x="318" y="148" text-anchor="middle">401</text><rect class="box bad" x="416" y="130" width="80" height="26" rx="6"/><text class="mono" x="456" y="148" text-anchor="middle">403</text><rect class="box bad" x="548" y="130" width="80" height="26" rx="6"/><text class="mono" x="588" y="148" text-anchor="middle">400/422</text><rect class="box bad" x="680" y="130" width="80" height="26" rx="6"/><text class="mono" x="720" y="148" text-anchor="middle">404/403</text><text class="small" x="186" y="178" text-anchor="middle">"too often"</text><text class="small" x="318" y="178" text-anchor="middle">"who are you?"</text><text class="small" x="456" y="178" text-anchor="middle">"not this action"</text><text class="small" x="588" y="178" text-anchor="middle">"malformed"</text><text class="small" x="720" y="178" text-anchor="middle">"not this object"</text></svg>
+<figcaption>Each layer has one job and one way to say no. The resource check can only happen <em>after</em> loading the object, which is why frameworks can't do it for you with an attribute.</figcaption>
+</figure>
+
+<p>Play with that pipeline below. Try the other-tenant order with the response set to 403 and then 404, and notice that one of them confirms the order exists. Then compare "Bob reads Alice's order" with and without the manager role.</p>
+<div class="viz" data-viz="api-security-gate"></div>
+
+<h2 id="authentication-vs-authorization-401-403-or-404">Authentication vs authorization: 401, 403 or 404</h2>
+<p>The two words are confusingly similar. HTTP makes the confusion worse by naming status 401 "Unauthorized" when it actually means <em>unauthenticated</em>. Keep them apart:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Authentication (AuthN)</th>
+<th>Authorization (AuthZ)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Question</td>
+<td>Who is calling, and can they prove it?</td>
+<td>Is this caller allowed to do this, to this?</td>
+</tr>
+<tr>
+<td>Input</td>
+<td>Credentials: token, certificate, key</td>
+<td>The authenticated identity, the operation, the resource, context</td>
+</tr>
+<tr>
+<td>Who does it</td>
+<td>Mostly delegated to an identity provider; your API only <em>validates</em> the result</td>
+<td>Your API. Always. Only you know who owns order 42</td>
+</tr>
+<tr>
+<td>Fails with</td>
+<td><strong>401</strong> + <code>WWW-Authenticate: Bearer</code> (try again with credentials)</td>
+<td><strong>403</strong> (you're known, the answer is no), or <strong>404</strong> to hide that it exists</td>
+</tr>
+<tr>
+<td>Typical bug</td>
+<td>Accepting tokens meant for another API</td>
+<td>Checking the role but not the owner (BOLA)</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>WWW-Authenticate</code> header on a 401 is required, and RFC 6750 defines error codes for it. A good client uses them to decide what to do next:</p>
+<pre><code class="language-http">HTTP/1.1 401 Unauthorized
+WWW-Authenticate: Bearer realm=&quot;orders&quot;, error=&quot;invalid_token&quot;, error_description=&quot;The token expired&quot;
+
+HTTP/1.1 403 Forbidden
+WWW-Authenticate: Bearer error=&quot;insufficient_scope&quot;, scope=&quot;orders.write&quot;
+</code></pre>
+<p><code>invalid_token</code> means "get a new token": refresh it, or sign the user in again. <code>insufficient_scope</code> means "this token is genuine but too narrow". The client must ask the user to consent to more, and retrying with the same token is pointless.</p>
+<div class="insight">
+<p><strong>403 or 404 for someone else's object?</strong></p>
+<p>A 403 confirms the object exists. That's fine when the caller is allowed to know it exists, for example a colleague in the same tenant. Across tenants, or for anything whose existence is itself sensitive (a user's email address, a medical record id), answer <strong>404</strong>, exactly as if the object weren't there. GitHub does this for private repositories you can't see. Whichever you choose, make the 404 indistinguishable from a real one: same body, same headers, and roughly the same timing.</p>
+</div>
+<h2 id="oauth-20-and-openid-connect-without-the-fog">OAuth 2.0 and OpenID Connect, without the fog</h2>
+<p>OAuth 2.0 (RFC 6749) is a framework for <strong>delegated authorization</strong>: a user lets an app call an API <em>on their behalf</em> without giving the app their password. OpenID Connect (OIDC) is a thin layer on top that adds <strong>authentication</strong>: an <em>ID token</em> that tells the app who signed in. Four parties are involved:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 250" width="860" role="img" aria-label="OAuth roles: the user consents at the authorization server, which issues a token to the client; the client calls the resource server, which validates the token with cached keys from the authorization server"><text class="title" x="430" y="20" text-anchor="middle">The four OAuth roles</text><rect class="box visit" x="20" y="44" width="190" height="62" rx="10"/><text x="115" y="70" text-anchor="middle">Resource owner</text><text class="small muted" x="115" y="90" text-anchor="middle">the user (Alice)</text><rect class="box accent" x="330" y="44" width="200" height="62" rx="10"/><text x="430" y="70" text-anchor="middle">Authorization server</text><text class="small muted" x="430" y="90" text-anchor="middle">Entra ID, Auth0, Okta, Keycloak</text><rect class="box active" x="20" y="166" width="190" height="62" rx="10"/><text x="115" y="192" text-anchor="middle">Client</text><text class="small muted" x="115" y="212" text-anchor="middle">SPA, mobile, web app, daemon</text><rect class="box done" x="650" y="166" width="190" height="62" rx="10"/><text x="745" y="192" text-anchor="middle">Resource server</text><text class="small muted" x="745" y="212" text-anchor="middle">your API</text><line class="edge accent" x1="210" y1="75" x2="326" y2="75" marker-end="url(#api-security-ar)"/><text class="small" x="268" y="66" text-anchor="middle">1 sign in</text><text class="small" x="268" y="96" text-anchor="middle">+ consent</text><line class="edge accent" x1="380" y1="106" x2="190" y2="164" marker-end="url(#api-security-ar)"/><text class="small" x="318" y="146" text-anchor="middle">2 tokens</text><line class="edge active" x1="210" y1="197" x2="646" y2="197" marker-end="url(#api-security-ar)"/><text class="small mono" x="428" y="188" text-anchor="middle">3 Authorization: Bearer eyJ…</text><line class="edge dash" x1="700" y1="164" x2="534" y2="94" marker-end="url(#api-security-ar)"/><text class="small" x="680" y="118" text-anchor="middle">4 signing keys (JWKS),</text><text class="small" x="680" y="134" text-anchor="middle">fetched once and cached</text></svg>
+<figcaption>Your API never sees the password and never talks to the authorization server per request. It validates the token's signature with keys it downloaded once.</figcaption>
+</figure>
+
+<p>A <strong>grant type</strong> (or <em>flow</em>) is a way for a client to get a token. Today only a few are worth knowing; the others are deprecated by the OAuth 2.0 Security Best Current Practice (RFC 9700) and the upcoming OAuth 2.1. Step through each one below. The legend colours show which messages carry a secret proof and which bring tokens back.</p>
+<div class="viz" data-viz="api-security-flows"></div>
+
+<table>
+<thead>
+<tr>
+<th>Who is calling</th>
+<th>Flow</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A user, through a web app with a server side</td>
+<td><strong>Authorization code + PKCE</strong>, confidential client</td>
+<td>The server keeps tokens; the browser gets a session cookie</td>
+</tr>
+<tr>
+<td>A user, through a SPA</td>
+<td>Auth code + PKCE, ideally via a <strong>BFF</strong> (backend for frontend)</td>
+<td>A BFF keeps tokens out of JavaScript entirely (see CSRF below)</td>
+</tr>
+<tr>
+<td>A user, through a mobile or desktop app</td>
+<td>Auth code + PKCE with the system browser</td>
+<td>Never an embedded web view: the app could read the password</td>
+</tr>
+<tr>
+<td>A device with no browser (TV, CLI)</td>
+<td>Device authorization grant (RFC 8628)</td>
+<td>"Go to example.com/device and enter ABCD-EFGH"</td>
+</tr>
+<tr>
+<td>A service, no user</td>
+<td><strong>Client credentials</strong></td>
+<td>Prefer a certificate or managed identity over a client secret</td>
+</tr>
+<tr>
+<td>An API calling another API for the same user</td>
+<td><strong>On-behalf-of</strong> / token exchange (RFC 8693)</td>
+<td>Never forward the incoming token</td>
+</tr>
+<tr>
+<td>~~Implicit grant~~</td>
+<td>Deprecated</td>
+<td>Tokens in the URL fragment leak through history and Referer headers</td>
+</tr>
+<tr>
+<td>~~Resource owner password~~</td>
+<td>Deprecated</td>
+<td>The app sees the password, which defeats the point; it also can't do MFA</td>
+</tr>
+</tbody>
+</table>
+<p>Three kinds of token come out of these flows, and mixing them up is a classic bug:</p>
+<div class="compare">
+<div class="good">
+<h4 id="access-token">Access token</h4>
+<ul>
+<li><strong>Audience</strong>: your API (<code>aud = api://orders</code>).</li>
+<li><strong>Purpose</strong>: authorizes calls. The API validates it.</li>
+<li><strong>Lifetime</strong>: short, from minutes to an hour.</li>
+<li><strong>Format</strong>: JWT or opaque. <em>Clients should treat it as opaque</em> and never parse it.</li>
+</ul>
+</div>
+<div class="warn">
+<h4 id="id-token-oidc">ID token (OIDC)</h4>
+<ul>
+<li><strong>Audience</strong>: the client app (<code>aud = client_id</code>).</li>
+<li><strong>Purpose</strong>: tells the app who signed in.</li>
+<li><strong>Never</strong> send it to an API as a bearer token. Its audience is wrong, and it carries no scopes.</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="refresh-token">Refresh token</h4>
+<ul>
+<li><strong>Audience</strong>: the authorization server only.</li>
+<li><strong>Purpose</strong>: gets new access tokens without bothering the user.</li>
+<li><strong>Lifetime</strong>: long. Treat it like a password. Rotate it on every use, or bind it to the client.</li>
+</ul>
+</div>
+</div>
+<h2 id="pkce-why-a-stolen-code-is-worthless">PKCE: why a stolen code is worthless</h2>
+<p>In the authorization code flow the code comes back through the browser, in a redirect URL. That's the weak link. On a phone, another app can register the same custom URL scheme and receive the redirect. On the web, codes leak into logs, <code>Referer</code> headers and browser history. <strong>PKCE</strong> (Proof Key for Code Exchange, RFC 7636) binds the code to the app that asked for it:</p>
+<ol>
+<li>The app makes a random secret, the <strong>code_verifier</strong>, and sends only its SHA-256 hash, the <strong>code_challenge</strong>, through the browser.</li>
+<li>When it redeems the code, it sends the verifier over the direct back channel.</li>
+<li>The authorization server hashes the verifier and compares the result with the challenge it stored. A thief has the code and maybe the challenge, but not the verifier.</li>
+</ol>
+<p>The visualizer below runs real SHA-256. The default verifier is the example from RFC 7636, and it produces the RFC's challenge <code>E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM</code>. Switch the method to <code>plain</code> with the "attacker sees the URL" attack and watch it fail. Then try "no PKCE".</p>
+<div class="viz" data-viz="api-security-pkce"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">import base64, hashlib, secrets
+
+def b64url(b: bytes) -&gt; str:
+    return base64.urlsafe_b64encode(b).rstrip(b&quot;=&quot;).decode()
+
+verifier = b64url(secrets.token_bytes(32))                   # 43 chars, keep it in memory
+challenge = b64url(hashlib.sha256(verifier.encode()).digest())
+# /authorize?...&amp;code_challenge={challenge}&amp;code_challenge_method=S256
+# later: POST /token  grant_type=authorization_code&amp;code=...&amp;code_verifier={verifier}
+
+assert b64url(hashlib.sha256(b&quot;dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk&quot;).digest()) \
+    == &quot;E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM&quot;         # RFC 7636 appendix B
+</code></pre>
+<pre><code class="language-csharp">using System.Security.Cryptography;
+using System.Text;
+
+static string B64Url(byte[] b) =&gt;
+    Convert.ToBase64String(b).TrimEnd('=').Replace('+', '-').Replace('/', '_');
+
+var verifier = B64Url(RandomNumberGenerator.GetBytes(32));
+var challenge = B64Url(SHA256.HashData(Encoding.ASCII.GetBytes(verifier)));
+// In ASP.NET Core you rarely write this: AddOpenIdConnect uses PKCE by default (UsePkce = true).
+</code></pre>
+<pre><code class="language-typescript">// Browser or Node 20+: Web Crypto
+const b64url = (b: ArrayBuffer) =&gt;
+  btoa(String.fromCharCode(...new Uint8Array(b))).replace(/\+/g, &quot;-&quot;).replace(/\//g, &quot;_&quot;).replace(/=+$/, &quot;&quot;);
+
+const verifier = b64url(crypto.getRandomValues(new Uint8Array(32)).buffer);
+const challenge = b64url(await crypto.subtle.digest(&quot;SHA-256&quot;, new TextEncoder().encode(verifier)));
+// MSAL.js, oidc-client-ts and the Auth0 SDK all do this for you.
+</code></pre>
+</div>
+<div class="tip">
+<p><strong>Use PKCE for every client, including confidential ones</strong></p>
+<p>PKCE was designed for mobile apps, but RFC 9700 now recommends it for <em>all</em> clients using the authorization code flow, because it also stops authorization code <em>injection</em>: an attacker pasting their own code into your callback. Use <code>S256</code> only, and validate <code>state</code> (or rely on PKCE plus the OIDC <code>nonce</code>) on the redirect. In practice you won't write any of this yourself: the MSAL libraries, Spring Security's OAuth2 client, Authlib and oidc-client-ts all do it for you. Learn it so that you can recognise when it's missing.</p>
+</div>
+<h2 id="jwt-anatomy-three-base64url-strings-and-a-dot">JWT anatomy: three base64url strings and a dot</h2>
+<p>Most access tokens your API receives are <strong>JSON Web Tokens</strong> (JWT, RFC 7519), signed as a JWS. A JWT is three base64url segments joined by dots: a header, a payload and a signature. Anyone can decode the first two (they're encoded, <strong>not encrypted</strong>), so never put anything secret in them.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 270" width="900" role="img" aria-label="JWT anatomy: header with alg, typ and kid; payload with iss, aud, sub, exp, nbf, scp and roles; signature over header.payload made with the issuer's private key and checked with its public key"><text class="title" x="450" y="20" text-anchor="middle">header . payload . signature</text><rect class="box visit" x="10" y="36" width="230" height="140" rx="8"/><text x="125" y="58" text-anchor="middle">Header</text><text class="mono small" x="24" y="84">"alg": "RS256"</text><text class="mono small" x="24" y="104">"typ": "at+jwt"</text><text class="mono small" x="24" y="124">"kid": "rsa-2026"</text><text class="small muted" x="24" y="160">how to verify; untrusted input!</text><rect class="box accent" x="256" y="36" width="390" height="140" rx="8"/><text x="451" y="58" text-anchor="middle">Payload (claims)</text><text class="mono small" x="270" y="84">"iss": "https://login.example.com/contoso/v2.0"</text><text class="mono small" x="270" y="104">"aud": "api://orders"   "sub": "alice-7f3c"</text><text class="mono small" x="270" y="124">"exp": 1800000600   "nbf": 1800000000</text><text class="mono small" x="270" y="144">"scp": "orders.read orders.write"</text><text class="small muted" x="270" y="166">readable by anyone: no secrets, no PII you can avoid</text><rect class="box done" x="662" y="36" width="228" height="140" rx="8"/><text x="776" y="58" text-anchor="middle">Signature</text><text class="mono small" x="676" y="88">RSASSA-PKCS1-v1_5(</text><text class="mono small" x="676" y="108">  SHA-256,</text><text class="mono small" x="676" y="128">  header.payload)</text><text class="small muted" x="676" y="160">private key at the issuer</text><rect class="box path" x="10" y="200" width="880" height="56" rx="8"/><text x="450" y="222" text-anchor="middle">Your API: pick the key by kid from the issuer's JWKS, verify the signature with the public key,</text><text x="450" y="242" text-anchor="middle">then check iss, aud, exp/nbf, then scopes. Only the signature makes the claims trustworthy.</text></svg>
+<figcaption>The header tells you <em>how</em> the token claims it was signed. An attacker writes that header, so your code must decide the algorithm, never the token.</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Meaning</th>
+<th>Check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>iss</code></td>
+<td>Issuer: who minted it</td>
+<td>Exactly equals your configured issuer (per tenant if multi-tenant)</td>
+</tr>
+<tr>
+<td><code>aud</code></td>
+<td>Audience: who it's for</td>
+<td>Contains <strong>your</strong> API's identifier. Skipping this lets any token from the same issuer in</td>
+</tr>
+<tr>
+<td><code>exp</code> / <code>nbf</code></td>
+<td>Valid until / not before (Unix seconds)</td>
+<td>Now is inside the window, with a small clock skew (30–60 s, not the 5 min some defaults use)</td>
+</tr>
+<tr>
+<td><code>sub</code> / <code>oid</code></td>
+<td>Subject: the user or app</td>
+<td>Use a stable, immutable id as the key for ownership. Never <code>email</code> or <code>name</code></td>
+</tr>
+<tr>
+<td><code>scp</code> / <code>scope</code></td>
+<td>Delegated permissions the user consented to</td>
+<td>Endpoint authorization</td>
+</tr>
+<tr>
+<td><code>roles</code></td>
+<td>App roles assigned to the user or app</td>
+<td>Endpoint authorization; app-only tokens carry roles, not <code>scp</code></td>
+</tr>
+<tr>
+<td><code>azp</code> / <code>client_id</code></td>
+<td>Which client app asked</td>
+<td>Optional allow-list of calling apps</td>
+</tr>
+<tr>
+<td><code>tid</code></td>
+<td>Tenant (Entra ID)</td>
+<td>Multi-tenant APIs must check it against allowed tenants</td>
+</tr>
+<tr>
+<td><code>jti</code></td>
+<td>Unique token id</td>
+<td>Replay detection, if you need it</td>
+</tr>
+</tbody>
+</table>
+<h3 id="validation-step-by-step-and-the-famous-attacks">Validation, step by step, and the famous attacks</h3>
+<p>Here is a real token validator running real RS256 (a small toy RSA key, but the same maths as production) against nine tokens. It has three validator settings: one strict, one naive, and one that "just decodes". Try the two famous attacks:</p>
+<ul>
+<li><strong><code>alg: none</code></strong>: the token says "no signature needed". A library that trusts the header accepts it.</li>
+<li><strong>Algorithm confusion</strong>: the token says <code>HS256</code> and is HMAC-signed with the API's <em>public</em> key as the shared secret. The public key is public, so the attacker has it. A validator that picks the algorithm from the header computes the HMAC with "its key" (the same public key bytes), and the signature matches.</li>
+</ul>
+<p>Then flip to the expired and <code>nbf</code> tokens and change the clock skew.</p>
+<div class="viz" data-viz="api-security-jwt"></div>
+
+<div class="pitfall">
+<p><strong>"Decode" is not "validate"</strong></p>
+<p><code>jwt.decode(token, options={"verify_signature": False})</code>, <code>new JwtSecurityTokenHandler().ReadJwtToken(t)</code>, <code>jwt-decode</code> in JavaScript, and <code>jwt.ParseUnverified</code> in Go all exist to <em>read</em> a token, for example in a client that wants to show the user's name. Used inside an API they accept any token anyone types. Search your codebase for them. Every one in a request path is a critical bug unless a real validation happened first.</p>
+</div>
+<p>The fix is the same in every stack. <strong>Configure</strong> the validator once in middleware: issuer, audience and an algorithm allow-list, with keys fetched from the issuer's metadata (<code>/.well-known/openid-configuration</code> → <code>jwks_uri</code>). Then never touch tokens in handlers.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// ASP.NET Core 10 — Program.cs  (package: Microsoft.AspNetCore.Authentication.JwtBearer)
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(o =&gt;
+    {
+        o.Authority = &quot;https://login.example.com/contoso/v2.0&quot;;   // discovers iss + JWKS, caches and rotates keys
+        o.Audience = &quot;api://orders&quot;;
+        o.MapInboundClaims = false;                                // keep &quot;scp&quot;, &quot;sub&quot;, &quot;roles&quot; as-is
+        o.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidAlgorithms = [SecurityAlgorithms.RsaSha256],     // never let the token choose
+            ClockSkew = TimeSpan.FromSeconds(60),                  // default is 5 minutes
+            NameClaimType = &quot;name&quot;,
+            RoleClaimType = &quot;roles&quot;,
+        };
+    });
+builder.Services.AddAuthorization();
+
+app.UseAuthentication();
+app.UseAuthorization();
+// For Entra ID specifically, Microsoft.Identity.Web's AddMicrosoftIdentityWebApi wraps all of this.
+</code></pre>
+<pre><code class="language-java">// Spring Boot 3 / Spring Security 6 — application.yml
+//   spring.security.oauth2.resourceserver.jwt.issuer-uri: https://login.example.com/contoso/v2.0
+//   spring.security.oauth2.resourceserver.jwt.audiences: api://orders
+@Configuration
+@EnableMethodSecurity
+class SecurityConfig {
+    @Bean
+    SecurityFilterChain api(HttpSecurity http) throws Exception {
+        return http
+            .authorizeHttpRequests(a -&gt; a
+                .requestMatchers(HttpMethod.GET, &quot;/orders/**&quot;).hasAuthority(&quot;SCOPE_orders.read&quot;)
+                .requestMatchers(&quot;/orders/**&quot;).hasAuthority(&quot;SCOPE_orders.write&quot;)
+                .anyRequest().authenticated())
+            .oauth2ResourceServer(o -&gt; o.jwt(Customizer.withDefaults()))   // RS256 only by default, iss + exp checked
+            .sessionManagement(s -&gt; s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .csrf(c -&gt; c.disable())          // OK only because auth is a bearer header, never a cookie
+            .build();
+    }
+}
+</code></pre>
+<pre><code class="language-python"># FastAPI + PyJWT 2.x (pip install &quot;pyjwt[crypto]&quot;)
+import jwt
+from fastapi import Depends, HTTPException, Security
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer, SecurityScopes
+
+ISSUER = &quot;https://login.example.com/contoso/v2.0&quot;
+AUDIENCE = &quot;api://orders&quot;
+jwks = jwt.PyJWKClient(f&quot;{ISSUER}/discovery/v2.0/keys&quot;, cache_keys=True)  # read jwks_uri from metadata
+bearer = HTTPBearer(auto_error=False)
+
+def current_user(scopes: SecurityScopes,
+                 cred: HTTPAuthorizationCredentials | None = Depends(bearer)) -&gt; dict:
+    challenge = {&quot;WWW-Authenticate&quot;: &quot;Bearer&quot;}
+    if cred is None:
+        raise HTTPException(401, &quot;missing token&quot;, headers=challenge)
+    try:
+        key = jwks.get_signing_key_from_jwt(cred.credentials).key
+        claims = jwt.decode(cred.credentials, key,
+                            algorithms=[&quot;RS256&quot;],              # the allow-list: never read it from the header
+                            audience=AUDIENCE, issuer=ISSUER, leeway=60,
+                            options={&quot;require&quot;: [&quot;exp&quot;, &quot;iss&quot;, &quot;aud&quot;, &quot;sub&quot;]})
+    except jwt.InvalidTokenError as e:
+        raise HTTPException(401, &quot;invalid token&quot;,
+                            headers={&quot;WWW-Authenticate&quot;: 'Bearer error=&quot;invalid_token&quot;'}) from e
+    granted = set(claims.get(&quot;scp&quot;, &quot;&quot;).split())
+    missing = [s for s in scopes.scopes if s not in granted]
+    if missing:
+        raise HTTPException(403, &quot;insufficient scope&quot;, headers={
+            &quot;WWW-Authenticate&quot;: f'Bearer error=&quot;insufficient_scope&quot;, scope=&quot;{&quot; &quot;.join(missing)}&quot;'})
+    return claims
+
+@app.get(&quot;/orders/{order_id}&quot;)
+def get_order(order_id: int, user: dict = Security(current_user, scopes=[&quot;orders.read&quot;])): ...
+</code></pre>
+<pre><code class="language-go">// Go net/http + github.com/golang-jwt/jwt/v5 + github.com/MicahParks/keyfunc/v3 (JWKS cache)
+func RequireJWT(kf jwt.Keyfunc, next http.Handler) http.Handler {
+    parser := jwt.NewParser(
+        jwt.WithValidMethods([]string{&quot;RS256&quot;}), // rejects none and HS256 confusion
+        jwt.WithIssuer(&quot;https://login.example.com/contoso/v2.0&quot;),
+        jwt.WithAudience(&quot;api://orders&quot;),
+        jwt.WithLeeway(60*time.Second),
+        jwt.WithExpirationRequired(),
+    )
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        raw, ok := strings.CutPrefix(r.Header.Get(&quot;Authorization&quot;), &quot;Bearer &quot;)
+        if !ok {
+            w.Header().Set(&quot;WWW-Authenticate&quot;, &quot;Bearer&quot;)
+            http.Error(w, &quot;missing token&quot;, http.StatusUnauthorized)
+            return
+        }
+        claims := jwt.MapClaims{}
+        if _, err := parser.ParseWithClaims(raw, claims, kf); err != nil {
+            w.Header().Set(&quot;WWW-Authenticate&quot;, `Bearer error=&quot;invalid_token&quot;`)
+            http.Error(w, &quot;invalid token&quot;, http.StatusUnauthorized)
+            return
+        }
+        next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), claimsKey{}, claims)))
+    })
+}
+
+// k, _ := keyfunc.NewDefaultCtx(ctx, []string{issuer + &quot;/discovery/v2.0/keys&quot;}); RequireJWT(k.Keyfunc, mux)
+</code></pre>
+<pre><code class="language-typescript">// NestJS + @nestjs/passport + passport-jwt + jwks-rsa
+@Injectable()
+export class JwtStrategy extends PassportStrategy(Strategy) {
+  constructor() {
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKeyProvider: passportJwtSecret({
+        jwksUri: &quot;https://login.example.com/contoso/discovery/v2.0/keys&quot;,
+        cache: true, rateLimit: true,             // don't let bad kids hammer the IdP
+      }),
+      algorithms: [&quot;RS256&quot;],
+      issuer: &quot;https://login.example.com/contoso/v2.0&quot;,
+      audience: &quot;api://orders&quot;,
+      jsonWebTokenOptions: { clockTolerance: 60 },
+    });
+  }
+  validate(claims: Record&lt;string, unknown&gt;) { return claims; }   // becomes req.user
+}
+// Express without Nest: express-oauth2-jwt-bearer's auth({ issuerBaseURL, audience }) does the same.
+</code></pre>
+</div>
+<p>How each stack differs, and why:</p>
+<ul>
+<li><strong>ASP.NET Core</strong> maps short claim names to long XML URIs (<code>scp</code> becomes <code>http://schemas.microsoft.com/identity/claims/scope</code>) unless you set <code>MapInboundClaims = false</code>. Half the "my policy never matches" questions online come from that.</li>
+<li><strong>Spring</strong> turns every scope into a <code>SCOPE_</code> authority, and checks the audience only when you configure <code>audiences</code>.</li>
+<li><strong>PyJWT</strong> makes <code>algorithms</code> mandatory on purpose, after the <code>alg: none</code> era. It verifies <code>aud</code> whenever the token has one, and raises if you didn't pass <code>audience</code>.</li>
+<li><strong>golang-jwt v5</strong> only enforces <code>exp</code> when present, unless you add <code>WithExpirationRequired</code>.</li>
+<li><strong>passport-jwt</strong> delegates to <code>jsonwebtoken</code>, which refuses <code>none</code> unless you explicitly allow it.</li>
+</ul>
+<h3 id="opaque-tokens-introspection-and-revocation">Opaque tokens, introspection and revocation</h3>
+<p>A JWT is self-contained, so your API can validate it offline in microseconds. The price is that <strong>you can't revoke it</strong>: a stolen token works until <code>exp</code>. The options:</p>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>How</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Short-lived JWTs (5–60 min) + refresh tokens</td>
+<td>Revoke the refresh token; the access token dies soon</td>
+<td>A window of minutes. Usually the right default</td>
+</tr>
+<tr>
+<td>Opaque tokens + introspection (RFC 7662)</td>
+<td>API asks the authorization server "is this token active?"</td>
+<td>One network call per request (cache for seconds)</td>
+</tr>
+<tr>
+<td>Deny-list of <code>jti</code> / continuous access evaluation</td>
+<td>IdP pushes revocation events (Entra CAE, Shared Signals)</td>
+<td>Infrastructure; worth it for high-value APIs</td>
+</tr>
+<tr>
+<td>Sender-constrained tokens (mTLS RFC 8705, DPoP RFC 9449)</td>
+<td>Token only works with the client's private key</td>
+<td>A stolen token alone is useless</td>
+</tr>
+</tbody>
+</table>
+<h2 id="scopes-roles-policies-endpoint-authorization">Scopes, roles, policies: endpoint authorization</h2>
+<p>Once you know who's calling, you decide whether they may do <em>this kind</em> of thing. Three vocabularies get mixed up:</p>
+<div class="compare">
+<div class="good">
+<h4 id="scopes-scp">Scopes (<code>scp</code>)</h4>
+<p>What <strong>the app</strong> may do on the user's behalf, as consented by the user: <code>orders.read</code>, <code>orders.write</code>. A scope limits the <em>app</em>, not the user. Alice may be an admin, but if she signed in to a reporting tool that asked only for <code>orders.read</code>, that tool can't write, even as Alice.</p>
+</div>
+<div class="good">
+<h4 id="roles-roles">Roles (<code>roles</code>)</h4>
+<p>What <strong>the user (or app)</strong> is: <code>Orders.Manager</code>, <code>Billing.Reader</code>. They're assigned by an admin in the identity provider. App-only tokens (client credentials) carry application roles and no scopes, because no user consented to anything.</p>
+</div>
+<div class="good">
+<h4 id="policies">Policies</h4>
+<p><strong>Your code's</strong> named rules that combine both with anything else: "<code>CanEditOrders</code> = scope <code>orders.write</code> AND (role Manager OR the order's owner) AND same tenant". Endpoints reference the policy name, so the rule lives in one place.</p>
+</div>
+</div>
+<div class="rule">
+<p><strong>Delegated access is the intersection</strong></p>
+<p>A delegated call (a user signed in through an app) is allowed only if <strong>both</strong> of these hold: the app was granted the scope, <strong>and</strong> the user has the permission. Checking only the scope trusts every user of the app. Checking only the role trusts every app the user ever signed in to. Then add the resource check, because neither one knows which tenant or owner the order belongs to.</p>
+</div>
+<p>The visualizer runs eight requests against four policies and counts the holes. Look at Carol, a manager signed in through a read-only reporting app, and at Mallory, who has a valid token from another tenant.</p>
+<div class="viz" data-viz="api-security-authz"></div>
+
+<div class="code-tabs">
+<pre><code class="language-csharp">// ASP.NET Core: named policies, then attach them to endpoints
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy(&quot;orders.read&quot;, p =&gt; p.RequireAssertion(ctx =&gt;
+        HasScope(ctx.User, &quot;orders.read&quot;) || ctx.User.IsInRole(&quot;Orders.Read.All&quot;)))   // delegated or app-only
+    .AddPolicy(&quot;orders.write&quot;, p =&gt; p
+        .RequireAuthenticatedUser()
+        .RequireAssertion(ctx =&gt; HasScope(ctx.User, &quot;orders.write&quot;)
+                              &amp;&amp; (ctx.User.IsInRole(&quot;Orders.Manager&quot;) || ctx.User.IsInRole(&quot;Orders.Editor&quot;))));
+
+static bool HasScope(ClaimsPrincipal u, string s) =&gt;
+    u.FindAll(&quot;scp&quot;).SelectMany(c =&gt; c.Value.Split(' ')).Contains(s);
+
+var orders = app.MapGroup(&quot;/orders&quot;).RequireAuthorization(&quot;orders.read&quot;);
+orders.MapPatch(&quot;/{id:int}&quot;, UpdateOrder).RequireAuthorization(&quot;orders.write&quot;);
+// Controllers: [Authorize(Policy = &quot;orders.write&quot;)]. And set a fallback policy so new endpoints are closed by default:
+// builder.Services.AddAuthorizationBuilder().SetFallbackPolicy(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build());
+</code></pre>
+<pre><code class="language-java">// Spring Security: method security with SpEL (needs @EnableMethodSecurity)
+@RestController
+@RequestMapping(&quot;/orders&quot;)
+class OrdersController {
+    @PatchMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasAuthority('SCOPE_orders.write') and hasAnyRole('Orders.Manager','Orders.Editor')&quot;)
+    OrderDto update(@PathVariable long id, @Valid @RequestBody UpdateOrder body) { ... }
+}
+// Map the &quot;roles&quot; claim to ROLE_ authorities with a JwtAuthenticationConverter bean.
+</code></pre>
+<pre><code class="language-python"># FastAPI: scopes through Security(), roles through a small dependency
+def require_role(*allowed: str):
+    def check(user: dict = Security(current_user)) -&gt; dict:
+        if not set(user.get(&quot;roles&quot;, [])) &amp; set(allowed):
+            raise HTTPException(403, &quot;missing role&quot;)
+        return user
+    return check
+
+@app.patch(&quot;/orders/{order_id}&quot;)
+def update_order(order_id: int, body: UpdateOrder,
+                 _: dict = Security(current_user, scopes=[&quot;orders.write&quot;]),
+                 user: dict = Depends(require_role(&quot;Orders.Manager&quot;, &quot;Orders.Editor&quot;))): ...
+</code></pre>
+<pre><code class="language-go">// Go + chi: authorization as composable middleware
+func RequireScope(scope string, roles ...string) func(http.Handler) http.Handler {
+    return func(next http.Handler) http.Handler {
+        return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+            c := r.Context().Value(claimsKey{}).(jwt.MapClaims)
+            scp, _ := c[&quot;scp&quot;].(string)
+            if !slices.Contains(strings.Fields(scp), scope) || !hasAnyRole(c, roles) {
+                w.Header().Set(&quot;WWW-Authenticate&quot;, fmt.Sprintf(`Bearer error=&quot;insufficient_scope&quot;, scope=%q`, scope))
+                http.Error(w, &quot;forbidden&quot;, http.StatusForbidden)
+                return
+            }
+            next.ServeHTTP(w, r)
+        })
+    }
+}
+// r.With(RequireScope(&quot;orders.write&quot;, &quot;Orders.Manager&quot;, &quot;Orders.Editor&quot;)).Patch(&quot;/orders/{id}&quot;, updateOrder)
+</code></pre>
+<pre><code class="language-typescript">// NestJS: a metadata decorator plus a guard
+export const Scopes = (...s: string[]) =&gt; SetMetadata(&quot;scopes&quot;, s);
+
+@Injectable()
+export class ScopesGuard implements CanActivate {
+  constructor(private reflector: Reflector) {}
+  canActivate(ctx: ExecutionContext): boolean {
+    const need = this.reflector.getAllAndOverride&lt;string[]&gt;(&quot;scopes&quot;, [ctx.getHandler(), ctx.getClass()]) ?? [];
+    const granted = new Set(String(ctx.switchToHttp().getRequest().user?.scp ?? &quot;&quot;).split(&quot; &quot;));
+    if (!need.every((s) =&gt; granted.has(s))) throw new ForbiddenException(&quot;insufficient scope&quot;);
+    return true;
+  }
+}
+// @UseGuards(AuthGuard(&quot;jwt&quot;), ScopesGuard) @Scopes(&quot;orders.write&quot;) @Patch(&quot;:id&quot;) update(...) {}
+</code></pre>
+</div>
+<h2 id="resource-based-authorization-and-bola">Resource-based authorization and BOLA</h2>
+<p>Endpoint policies run <em>before</em> the handler, using only the token. They can't know that order 1018 belongs to Bob, because finding that out needs a database read. So the ownership check has to happen <strong>after loading the resource</strong> and before returning or changing it. It's easy to forget, it's different in every handler, and no framework attribute adds it for you. That's why BOLA tops the OWASP list.</p>
+<div class="viz" data-viz="api-security-bola"></div>
+
+<p>What the simulation shows:</p>
+<ul>
+<li>With <strong>sequential ids and no check</strong>, the attacker walks the id space and every hit is a breach.</li>
+<li><strong>UUIDs</strong> slow down guessing. But ids leak through shared links, logs, <code>Referer</code> headers, support tickets and other API responses, and one leaked UUID is enough. Unguessable ids are defence in depth, not authorization.</li>
+<li>A <strong>403</strong> stops the leak of data but still answers "does order 1018 exist?". A <strong>404</strong> reveals nothing, because the attacker can't tell "not yours" from "not there".</li>
+</ul>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 210" width="880" role="img" aria-label="Two ways to enforce ownership: filter the query by owner and tenant so other people's rows never load, or load then call an authorization handler with the resource"><defs><marker id="api-security-ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-muted"/></marker></defs><text class="title" x="220" y="20" text-anchor="middle">A: scope the query (preferred for reads)</text><text class="title" x="660" y="20" text-anchor="middle">B: load, then authorize (writes, complex rules)</text><rect class="box accent" x="20" y="40" width="400" height="44" rx="8"/><text class="mono small" x="34" y="60">WHERE id = @id AND tenant_id = @tid</text><text class="mono small" x="34" y="76">  AND (owner_id = @sub OR @isManager)</text><line class="edge" x1="220" y1="84" x2="220" y2="110" marker-end="url(#api-security-ar2)"/><rect class="box done" x="40" y="112" width="160" height="40" rx="8"/><text x="120" y="137" text-anchor="middle">row → 200</text><rect class="box bad" x="240" y="112" width="160" height="40" rx="8"/><text x="320" y="137" text-anchor="middle">no row → 404</text><text class="small muted" x="220" y="180" text-anchor="middle">"not yours" and "not there" are the same code path:</text><text class="small muted" x="220" y="196" text-anchor="middle">impossible to forget, impossible to tell apart</text><rect class="box visit" x="460" y="40" width="180" height="44" rx="8"/><text x="550" y="67" text-anchor="middle">load order 1018</text><rect class="box active" x="676" y="40" width="190" height="44" rx="8"/><text x="771" y="60" text-anchor="middle">Authorize(user,</text><text x="771" y="76" text-anchor="middle">order, "Edit")</text><line class="edge" x1="640" y1="62" x2="673" y2="62" marker-end="url(#api-security-ar2)"/><line class="edge" x1="771" y1="84" x2="771" y2="110" marker-end="url(#api-security-ar2)"/><rect class="box done" x="676" y="112" width="90" height="40" rx="8"/><text x="721" y="137" text-anchor="middle">change</text><rect class="box bad" x="776" y="112" width="90" height="40" rx="8"/><text x="821" y="137" text-anchor="middle">404/403</text><text class="small muted" x="660" y="180" text-anchor="middle">one handler per rule, unit-testable, reused by every</text><text class="small muted" x="660" y="196" text-anchor="middle">endpoint that touches orders</text></svg>
+<figcaption>Prefer A wherever you can: a repository that <em>always</em> filters by tenant (EF Core global query filters, Hibernate filters, row-level security in the database) makes BOLA structurally hard. Use B for writes and rules that need the loaded object.</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-csharp">// ASP.NET Core: resource-based authorization handler
+public sealed class OrderEditHandler : AuthorizationHandler&lt;OperationAuthorizationRequirement, Order&gt;
+{
+    protected override Task HandleRequirementAsync(AuthorizationHandlerContext ctx,
+        OperationAuthorizationRequirement req, Order order)
+    {
+        var sub = ctx.User.FindFirstValue(&quot;sub&quot;);
+        var tid = ctx.User.FindFirstValue(&quot;tid&quot;);
+        if (order.TenantId == tid &amp;&amp; (order.OwnerId == sub || ctx.User.IsInRole(&quot;Orders.Manager&quot;)))
+            ctx.Succeed(req);
+        return Task.CompletedTask;                     // not calling Succeed = deny
+    }
+}
+builder.Services.AddSingleton&lt;IAuthorizationHandler, OrderEditHandler&gt;();
+
+app.MapPatch(&quot;/orders/{id:int}&quot;, async (int id, UpdateOrder body, ClaimsPrincipal user,
+    IAuthorizationService authz, OrdersDb db) =&gt;
+{
+    var order = await db.Orders.FindAsync(id);
+    if (order is null) return Results.NotFound();
+    var ok = await authz.AuthorizeAsync(user, order, new OperationAuthorizationRequirement { Name = &quot;Edit&quot; });
+    if (!ok.Succeeded) return Results.NotFound();     // same answer as &quot;doesn't exist&quot;
+    order.Apply(body);
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+}).RequireAuthorization(&quot;orders.write&quot;);
+</code></pre>
+<pre><code class="language-java">// Spring Security: a bean called from @PreAuthorize / @PostAuthorize
+@Component(&quot;orderAuthz&quot;)
+class OrderAuthz {
+    private final OrderRepository repo;
+    OrderAuthz(OrderRepository repo) { this.repo = repo; }
+
+    public boolean canEdit(long id, Jwt jwt) {
+        return repo.findById(id)
+            .filter(o -&gt; o.tenantId().equals(jwt.getClaimAsString(&quot;tid&quot;)))
+            .filter(o -&gt; o.ownerId().equals(jwt.getSubject())
+                      || jwt.getClaimAsStringList(&quot;roles&quot;).contains(&quot;Orders.Manager&quot;))
+            .isPresent();
+    }
+}
+
+@PatchMapping(&quot;/{id}&quot;)
+@PreAuthorize(&quot;hasAuthority('SCOPE_orders.write') and @orderAuthz.canEdit(#id, authentication.token)&quot;)
+OrderDto update(@PathVariable long id, @Valid @RequestBody UpdateOrder body) { ... }
+// A denied check throws AccessDeniedException (403). Map it to 404 in a @ControllerAdvice if existence is sensitive.
+</code></pre>
+<pre><code class="language-python"># FastAPI + SQLAlchemy: scope every query by tenant and owner (pattern A)
+def get_owned_order(order_id: int, user: dict, db: Session) -&gt; Order:
+    q = select(Order).where(Order.id == order_id, Order.tenant_id == user[&quot;tid&quot;])
+    if &quot;Orders.Manager&quot; not in user.get(&quot;roles&quot;, []):
+        q = q.where(Order.owner_id == user[&quot;sub&quot;])
+    order = db.scalars(q).first()
+    if order is None:
+        raise HTTPException(404, &quot;order not found&quot;)     # not yours == not there
+    return order
+
+@app.get(&quot;/orders/{order_id}&quot;)
+def read_order(order_id: int, user: dict = Security(current_user, scopes=[&quot;orders.read&quot;]),
+               db: Session = Depends(get_db)):
+    return OrderOut.model_validate(get_owned_order(order_id, user, db))
+</code></pre>
+<pre><code class="language-go">// Go: the store method takes the caller, so there is no unscoped way to load an order
+func (s *Store) OrderFor(ctx context.Context, id int64, c Caller) (*Order, error) {
+    q := `SELECT id, owner_id, tenant_id, total FROM orders WHERE id = $1 AND tenant_id = $2`
+    args := []any{id, c.TenantID}
+    if !c.HasRole(&quot;Orders.Manager&quot;) {
+        q += ` AND owner_id = $3`
+        args = append(args, c.Subject)
+    }
+    var o Order
+    err := s.db.QueryRowContext(ctx, q, args...).Scan(&amp;o.ID, &amp;o.OwnerID, &amp;o.TenantID, &amp;o.Total)
+    if errors.Is(err, sql.ErrNoRows) {
+        return nil, ErrNotFound // handler maps to 404
+    }
+    return &amp;o, err
+}
+</code></pre>
+<pre><code class="language-typescript">// NestJS + Prisma: ownership in the service, never trust the id alone
+@Injectable()
+export class OrdersService {
+  constructor(private prisma: PrismaService) {}
+
+  async findOwned(id: number, user: { sub: string; tid: string; roles?: string[] }) {
+    const isManager = user.roles?.includes(&quot;Orders.Manager&quot;) ?? false;
+    const order = await this.prisma.order.findFirst({
+      where: { id, tenantId: user.tid, ...(isManager ? {} : { ownerId: user.sub }) },
+    });
+    if (!order) throw new NotFoundException();        // not yours == not there
+    return order;
+  }
+}
+// Libraries such as CASL express the same rules as abilities: can(&quot;update&quot;, &quot;Order&quot;, { ownerId: user.sub }).
+</code></pre>
+</div>
+<div class="recognize">
+<p><strong>Recognise BOLA in code review</strong></p>
+<ul>
+<li>A handler takes an id from the route, query or body and calls <code>FindAsync(id)</code>, <code>findById(id)</code> or <code>get(id)</code> with <strong>nothing else</strong>.</li>
+<li>The only authorization is an attribute on the endpoint (<code>[Authorize]</code>, <code>@PreAuthorize("isAuthenticated()")</code>).</li>
+<li>A list endpoint filters by <code>?customerId=</code> taken from the query instead of from the token.</li>
+<li>Child resources (<code>/orders/{id}/invoice</code>) re-check the child but not the parent, or neither.</li>
+<li>An "internal" or "admin" endpoint is exposed through the same gateway, protected only because nobody knows its URL.</li>
+</ul>
+</div>
+<p>The function-level cousin is <strong>BFLA</strong> (broken <em>function</em> level authorization, API5): a normal user calls <code>DELETE /admin/users/7</code> or <code>PUT</code> instead of <code>GET</code> and it works. Endpoint policies with a deny-by-default fallback are the fix.</p>
+<h2 id="input-validation-and-mass-assignment">Input validation and mass assignment</h2>
+<p>Every byte in a request is attacker-controlled: path, query, headers, body and file names. Validation is your first resource-protection layer, and it has two jobs that are often confused:</p>
+<ol>
+<li><strong>Shape and bounds</strong> (syntactic): types, lengths, ranges, formats, maximum array sizes, maximum body size. Reject with 400 or 422 and a problem details body (see <a href="api-design.html">API design</a>). This also protects you: an unbounded <code>?pageSize=1000000</code> or a 50 MB JSON array is a denial of service (OWASP API4, <em>unrestricted resource consumption</em>).</li>
+<li><strong>Which fields the caller may set</strong> (semantic). This is where <strong>mass assignment</strong> lives (OWASP API3, <em>broken object property level authorization</em>). If you bind the request body straight onto your database entity, the caller can set <em>any</em> property, including <code>role</code>, <code>balance</code>, <code>tenantId</code> and <code>emailVerified</code>.</li>
+</ol>
+<div class="viz" data-viz="api-security-mass-assign"></div>
+
+<p>The same API3 entry covers the mirror image: <strong>excessive data exposure</strong>. Returning the entity serialises every property, including password hashes, internal flags and other users' emails in nested objects, and relies on the client to "only show what it needs". The fix is the same in both directions: <strong>explicit DTOs for input and output</strong>, with an allow-list of fields.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Input DTO: only what the caller may set, validated. Never bind to the EF entity.
+public sealed record UpdateProfile([Required, StringLength(80, MinimumLength = 1)] string DisplayName);
+
+// .NET 10 minimal APIs validate DataAnnotations when you call AddValidation()
+builder.Services.AddValidation();
+// Unknown JSON properties are silently ignored by default; opt in to rejecting them
+builder.Services.ConfigureHttpJsonOptions(o =&gt;
+    o.SerializerOptions.UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow);
+
+app.MapPatch(&quot;/me&quot;, async (UpdateProfile body, ClaimsPrincipal u, UsersDb db) =&gt;
+{
+    var me = await db.Users.SingleAsync(x =&gt; x.Subject == u.FindFirstValue(&quot;sub&quot;));
+    me.DisplayName = body.DisplayName;               // the only field that can change
+    await db.SaveChangesAsync();
+    return Results.Ok(new ProfileView(me.DisplayName, me.Email));   // output DTO, not the entity
+}).RequireAuthorization();
+</code></pre>
+<pre><code class="language-java">// Spring: record DTOs + Bean Validation; fail on unknown properties
+public record UpdateProfile(@NotBlank @Size(max = 80) String displayName) {}
+
+// application.yml:  spring.jackson.deserialization.fail-on-unknown-properties: true
+@PatchMapping(&quot;/me&quot;)
+ProfileView update(@Valid @RequestBody UpdateProfile body, @AuthenticationPrincipal Jwt jwt) {
+    var me = users.findBySubject(jwt.getSubject()).orElseThrow();
+    me.setDisplayName(body.displayName());
+    return ProfileView.from(users.save(me));
+}
+</code></pre>
+<pre><code class="language-python"># FastAPI + Pydantic v2: extra=&quot;forbid&quot; turns unknown fields into a 422
+from pydantic import BaseModel, ConfigDict, Field
+
+class UpdateProfile(BaseModel):
+    model_config = ConfigDict(extra=&quot;forbid&quot;)
+    display_name: str = Field(min_length=1, max_length=80)
+
+class ProfileView(BaseModel):
+    display_name: str
+    email: str
+
+@app.patch(&quot;/me&quot;, response_model=ProfileView)          # response_model filters the output too
+def update_me(body: UpdateProfile, user: dict = Security(current_user), db: Session = Depends(get_db)):
+    me = db.scalars(select(User).where(User.subject == user[&quot;sub&quot;])).one()
+    me.display_name = body.display_name
+    db.commit()
+    return me
+</code></pre>
+<pre><code class="language-go">// Go: a dedicated struct, DisallowUnknownFields, and a body size cap
+type updateProfile struct {
+    DisplayName string `json:&quot;displayName&quot;`
+}
+
+func updateMe(w http.ResponseWriter, r *http.Request) {
+    r.Body = http.MaxBytesReader(w, r.Body, 16&lt;&lt;10) // 16 KB is plenty for this endpoint
+    dec := json.NewDecoder(r.Body)
+    dec.DisallowUnknownFields()
+    var in updateProfile
+    if err := dec.Decode(&amp;in); err != nil || len(in.DisplayName) == 0 || len(in.DisplayName) &gt; 80 {
+        http.Error(w, &quot;invalid body&quot;, http.StatusBadRequest)
+        return
+    }
+    // update only DisplayName for the caller from the token, never from the body
+}
+</code></pre>
+<pre><code class="language-typescript">// NestJS: class-validator DTOs + a global ValidationPipe with whitelist
+export class UpdateProfileDto {
+  @IsString() @Length(1, 80) displayName!: string;
+}
+
+app.useGlobalPipes(new ValidationPipe({
+  whitelist: true,              // strip properties without decorators
+  forbidNonWhitelisted: true,   // ...or reject them with 400
+  transform: true,
+}));
+// Express + zod: UpdateProfile.strict().parse(req.body) does the same.
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Validation is not sanitisation, and neither replaces parameterised queries</strong></p>
+<p>Validate input against what it <em>should</em> be (an allow-list), and reject it if it isn't. Don't try to strip out "dangerous" characters. Then still use parameterised SQL, encode output for its context (HTML, URL, shell), and never pass user input to <code>eval</code>, a shell, an XML parser with external entities enabled, or a URL fetcher without an allow-list (SSRF, API7). The injection details live in <a href="security-fundamentals.html">Security fundamentals</a>.</p>
+</div>
+<h2 id="api-keys-mtls-and-sender-constrained-tokens">API keys, mTLS and sender-constrained tokens</h2>
+<p>Not every caller is a user behind an OAuth client. For machine callers you have a few choices, and they differ mostly in <strong>what happens when the credential leaks</strong>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>API key</th>
+<th>Client credentials (secret)</th>
+<th>Client credentials (certificate / managed identity)</th>
+<th>mTLS (RFC 8705)</th>
+<th>DPoP (RFC 9449)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What is sent</td>
+<td>Static string in a header</td>
+<td>Short-lived token</td>
+<td>Short-lived token, obtained with a signed assertion</td>
+<td>Client certificate in the TLS handshake (+ bound token)</td>
+<td>Token + a fresh signed proof per request</td>
+</tr>
+<tr>
+<td>Identifies</td>
+<td>A project / customer</td>
+<td>An app</td>
+<td>An app</td>
+<td>An app (and binds its tokens)</td>
+<td>An app's key pair</td>
+</tr>
+<tr>
+<td>If it leaks from a log</td>
+<td>Works until someone rotates it</td>
+<td>The secret works until rotated</td>
+<td>Nothing reusable leaks; the private key stays in an HSM or the platform</td>
+<td>Useless without the private key</td>
+<td>Useless without the private key</td>
+</tr>
+<tr>
+<td>Scopes, expiry</td>
+<td>Whatever you build</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Good for</td>
+<td>Metering, quotas, low-risk public data, identifying a partner</td>
+<td>Legacy service-to-service</td>
+<td><strong>Default for service-to-service</strong></td>
+<td>High-assurance B2B, open banking, internal zero-trust</td>
+<td>Public clients (SPAs, mobile) needing proof of possession</td>
+</tr>
+</tbody>
+</table>
+<div class="compare">
+<div class="warn">
+<h4 id="api-keys-are-identification-not-authorization">API keys are identification, not authorization</h4>
+<p>They're fine for "which customer is this, and what is their quota?". If you use them:</p>
+<ul>
+<li>Send them in a header (<code>X-Api-Key</code> or <code>Authorization: ApiKey …</code>), <strong>never</strong> in the URL, where they end up in logs and browser history.</li>
+<li>Store only a hash (SHA-256 of a high-entropy key is fine; it doesn't need bcrypt).</li>
+<li>Give them a prefix so secret scanners can find leaked ones: <code>sk_live_…</code>, <code>ghp_…</code>.</li>
+<li>Support several active keys per client so they can rotate without downtime.</li>
+<li>Scope them, expire them, and rate limit per key.</li>
+</ul>
+</div>
+<div class="good">
+<h4 id="prefer-identities-you-never-have-to-type">Prefer identities you never have to type</h4>
+<p>In Azure, a <strong>managed identity</strong> gets tokens from the platform without any secret. In Kubernetes, <strong>workload identity federation</strong> trades the pod's service-account token for an Entra ID or AWS token. GitHub Actions do the same with OIDC. There's nothing to leak, rotate or forget in a config file (see <a href="configuration-and-secrets.html">Configuration &amp; secrets</a>).</p>
+</div>
+</div>
+<p>A <strong>bearer</strong> token is like cash: whoever holds it can spend it. <strong>Sender-constrained</strong> tokens are like a card with a PIN. With mTLS the authorization server puts the client certificate's thumbprint in the token (<code>cnf.x5t#S256</code>), and your API checks that the certificate on <em>this</em> TLS connection matches. With DPoP the client signs a small JWT per request, covering the method, the URL and a timestamp, with a key whose thumbprint is in the token. Either way, a token copied out of a log is useless.</p>
+<div class="tip">
+<p><strong>mTLS behind a load balancer</strong></p>
+<p>TLS usually terminates at a gateway (Azure Front Door, Application Gateway, NGINX, Envoy), so your app never sees the client certificate. The gateway either validates it itself or forwards it in a header (<code>X-Client-Cert</code>, <code>X-Forwarded-Client-Cert</code>). If you trust that header, make sure <strong>only the gateway can reach your app</strong>. Otherwise anyone can send the header directly. ASP.NET Core's <code>AddCertificateForwarding</code> and Spring's <code>x509()</code> with a custom extractor handle the header case.</p>
+</div>
+<h2 id="cors-a-browser-rule-that-protects-users-not-your-api">CORS: a browser rule that protects users, not your API</h2>
+<p><strong>CORS</strong> (cross-origin resource sharing) is the most misunderstood security feature on the web. It's not an API firewall. Browsers enforce the <strong>same-origin policy</strong>: JavaScript on <code>https://evil.example</code> may <em>send</em> many requests to <code>https://api.contoso.com</code>, but may not <em>read</em> the responses. CORS is how your API tells the browser "it's OK, let JavaScript from <code>https://app.contoso.com</code> read my responses". It <strong>relaxes</strong> a protection; it doesn't add one.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 250" width="880" role="img" aria-label="CORS preflight: for a non-simple request the browser first sends OPTIONS with Origin and Access-Control-Request headers; only if the response allows them does it send the real request, and only then may JavaScript read the response"><defs><marker id="api-security-ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-muted"/></marker></defs><rect class="box visit" x="20" y="14" width="200" height="34" rx="8"/><text x="120" y="36" text-anchor="middle">JS on app.contoso.com</text><rect class="box active" x="340" y="14" width="200" height="34" rx="8"/><text x="440" y="36" text-anchor="middle">Browser</text><rect class="box done" x="660" y="14" width="200" height="34" rx="8"/><text x="760" y="36" text-anchor="middle">api.contoso.com</text><line class="edge dash" x1="120" y1="48" x2="120" y2="240"/><line class="edge dash" x1="440" y1="48" x2="440" y2="240"/><line class="edge dash" x1="760" y1="48" x2="760" y2="240"/><line class="edge" x1="120" y1="72" x2="436" y2="72" marker-end="url(#api-security-ar3)"/><text class="mono small" x="278" y="66" text-anchor="middle">fetch(PATCH, Authorization, JSON)</text><line class="edge accent" x1="440" y1="104" x2="756" y2="104" marker-end="url(#api-security-ar3)"/><text class="mono small" x="598" y="98" text-anchor="middle">OPTIONS + Origin + Access-Control-Request-*</text><line class="edge accent" x1="760" y1="138" x2="444" y2="138" marker-end="url(#api-security-ar3)"/><text class="mono small" x="602" y="132" text-anchor="middle">204 Allow-Origin, Allow-Methods, Allow-Headers</text><line class="edge active" x1="440" y1="172" x2="756" y2="172" marker-end="url(#api-security-ar3)"/><text class="mono small" x="598" y="166" text-anchor="middle">PATCH /orders/42 (the real request)</text><line class="edge active" x1="760" y1="206" x2="444" y2="206" marker-end="url(#api-security-ar3)"/><text class="mono small" x="602" y="200" text-anchor="middle">200 + Access-Control-Allow-Origin</text><line class="edge done" x1="440" y1="230" x2="124" y2="230" marker-end="url(#api-security-ar3)"/><text class="small" x="282" y="224" text-anchor="middle">response readable by JS</text><text class="small muted" x="280" y="120" text-anchor="middle">"may I?" (cached for Max-Age)</text></svg>
+<figcaption>The preflight only happens for <em>non-simple</em> requests: methods other than GET, HEAD or POST, custom headers such as Authorization, or a JSON content type. Simple requests (a form POST, an image GET) go straight to the server, with cookies, and the browser only blocks JavaScript from reading the answer.</figcaption>
+</figure>
+
+<p>That last sentence is the key to the whole topic, so try it below. With a <strong>form POST</strong> from <code>evil.example</code> the transfer runs on the server under <em>every</em> CORS policy, including "no CORS headers at all", because the request was simple and needed no permission. CORS only decided whether evil JavaScript could read the reply. Then try reflecting any <code>Origin</code> with credentials, which is the worst policy: now evil JavaScript can read the victim's data too.</p>
+<div class="viz" data-viz="api-security-cors"></div>
+
+<div class="compare">
+<div class="good">
+<h4 id="what-cors-does">What CORS does</h4>
+<ul>
+<li>Stops <em>other websites' JavaScript</em> from <strong>reading</strong> responses from your API in a victim's browser.</li>
+<li>With credentials (cookies), that protects users' data from being read by pages they happen to visit.</li>
+<li>Preflights stop <em>non-simple</em> cross-origin requests before they're sent, if you don't allow them.</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="what-cors-does-not-do">What CORS does NOT do</h4>
+<ul>
+<li>It doesn't stop <code>curl</code>, Postman, scripts or servers: they ignore CORS entirely.</li>
+<li>It doesn't stop <strong>simple</strong> cross-origin requests (form POSTs) from reaching your server and running. That's CSRF, next section.</li>
+<li>It doesn't authenticate anyone. <code>Origin</code> can be anything outside a browser.</li>
+<li>It doesn't apply to bearer-token APIs the way people fear: evil.example has no way to get the victim's token.</li>
+</ul>
+</div>
+</div>
+<div class="code-tabs">
+<pre><code class="language-csharp">// ASP.NET Core: an explicit allow-list; never AllowAnyOrigin with AllowCredentials (it throws anyway)
+builder.Services.AddCors(o =&gt; o.AddPolicy(&quot;spa&quot;, p =&gt; p
+    .WithOrigins(&quot;https://app.contoso.com&quot;)
+    .WithMethods(&quot;GET&quot;, &quot;POST&quot;, &quot;PATCH&quot;, &quot;DELETE&quot;)
+    .WithHeaders(&quot;Authorization&quot;, &quot;Content-Type&quot;, &quot;Idempotency-Key&quot;, &quot;If-Match&quot;)
+    .WithExposedHeaders(&quot;ETag&quot;, &quot;Location&quot;, &quot;Retry-After&quot;)
+    .SetPreflightMaxAge(TimeSpan.FromHours(1))));
+
+app.UseCors(&quot;spa&quot;);          // after UseRouting, before UseAuthentication
+</code></pre>
+<pre><code class="language-java">// Spring Security: a CorsConfigurationSource bean, and http.cors(Customizer.withDefaults())
+@Bean
+CorsConfigurationSource cors() {
+    var c = new CorsConfiguration();
+    c.setAllowedOrigins(List.of(&quot;https://app.contoso.com&quot;));
+    c.setAllowedMethods(List.of(&quot;GET&quot;, &quot;POST&quot;, &quot;PATCH&quot;, &quot;DELETE&quot;));
+    c.setAllowedHeaders(List.of(&quot;Authorization&quot;, &quot;Content-Type&quot;, &quot;Idempotency-Key&quot;, &quot;If-Match&quot;));
+    c.setExposedHeaders(List.of(&quot;ETag&quot;, &quot;Location&quot;, &quot;Retry-After&quot;));
+    c.setMaxAge(3600L);
+    var src = new UrlBasedCorsConfigurationSource();
+    src.registerCorsConfiguration(&quot;/**&quot;, c);
+    return src;
+}
+</code></pre>
+<pre><code class="language-python"># FastAPI / Starlette
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[&quot;https://app.contoso.com&quot;],         # not [&quot;*&quot;] with allow_credentials=True
+    allow_methods=[&quot;GET&quot;, &quot;POST&quot;, &quot;PATCH&quot;, &quot;DELETE&quot;],
+    allow_headers=[&quot;Authorization&quot;, &quot;Content-Type&quot;, &quot;Idempotency-Key&quot;, &quot;If-Match&quot;],
+    expose_headers=[&quot;ETag&quot;, &quot;Location&quot;, &quot;Retry-After&quot;],
+    max_age=3600,
+)
+</code></pre>
+<pre><code class="language-go">// Go: github.com/go-chi/cors (or rs/cors) as router middleware
+r := chi.NewRouter()
+r.Use(cors.Handler(cors.Options{
+    AllowedOrigins:   []string{&quot;https://app.contoso.com&quot;},
+    AllowedMethods:   []string{&quot;GET&quot;, &quot;POST&quot;, &quot;PATCH&quot;, &quot;DELETE&quot;},
+    AllowedHeaders:   []string{&quot;Authorization&quot;, &quot;Content-Type&quot;, &quot;Idempotency-Key&quot;, &quot;If-Match&quot;},
+    ExposedHeaders:   []string{&quot;ETag&quot;, &quot;Location&quot;, &quot;Retry-After&quot;},
+    AllowCredentials: false, // bearer tokens: no cookies needed
+    MaxAge:           3600,
+}))
+</code></pre>
+<pre><code class="language-typescript">// NestJS (Express adapter underneath uses the cors package)
+app.enableCors({
+  origin: [&quot;https://app.contoso.com&quot;],            // a function (origin, cb) for dynamic allow-lists
+  methods: [&quot;GET&quot;, &quot;POST&quot;, &quot;PATCH&quot;, &quot;DELETE&quot;],
+  allowedHeaders: [&quot;Authorization&quot;, &quot;Content-Type&quot;, &quot;Idempotency-Key&quot;, &quot;If-Match&quot;],
+  exposedHeaders: [&quot;ETag&quot;, &quot;Location&quot;, &quot;Retry-After&quot;],
+  maxAge: 3600,
+});
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Origin-matching bugs</strong></p>
+<p>Dynamic allow-lists written by hand go wrong in predictable ways:</p>
+<ul>
+<li><code>origin.endsWith("contoso.com")</code> also matches <code>evilcontoso.com</code>.</li>
+<li><code>origin.includes("contoso.com")</code> also matches <code>contoso.com.evil.example</code>.</li>
+<li>A regex without anchors or escaped dots: <code>https://app.contoso.com</code> matches <code>https://appXcontoso.com</code>.</li>
+<li>Allowing <code>null</code>, which sandboxed iframes and <code>file://</code> pages send.</li>
+</ul>
+<p>Compare exact strings from a set. When you return a dynamic <code>Access-Control-Allow-Origin</code>, also send <code>Vary: Origin</code>, or a <a href="caching.html">cache</a> or CDN will serve one origin's CORS headers to another.</p>
+</div>
+<h2 id="csrf-when-cookies-vote-on-your-behalf">CSRF: when cookies vote on your behalf</h2>
+<p><strong>Cross-site request forgery</strong> happens when a page on <code>evil.example</code> makes the victim's browser send a request to <code>bank.example</code>, and the browser <strong>attaches the victim's cookies automatically</strong>. The server sees a perfectly authenticated request. No JavaScript reading is needed, so CORS doesn't help. The defences are:</p>
+<ul>
+<li><strong>SameSite cookies</strong>, which stop the browser from attaching the cookie to cross-site requests: <code>Strict</code> always, <code>Lax</code> except for top-level GET navigations.</li>
+<li><strong>Anti-forgery tokens</strong>: a secret the evil page can't read, sent back in a header or form field.</li>
+<li><strong>Origin checks</strong> on state-changing requests.</li>
+<li>Not using cookies at all for APIs: <strong>bearer tokens are immune</strong> to CSRF, because the browser never adds them by itself.</li>
+</ul>
+<div class="viz" data-viz="api-security-csrf"></div>
+
+<p>The grid of results is worth studying:</p>
+<ul>
+<li><code>SameSite=Lax</code>, the modern browser default, blocks the form POST, but not a <strong>state-changing GET</strong>. The link is a top-level navigation, so Lax sends the cookie, and token and Origin checks usually skip GETs. The real fix is to never change state on GET (see <a href="api-design.html">API design</a>).</li>
+<li><code>SameSite=None</code> (needed for some cross-site embeds) brings the whole attack back, and only a token or Origin check stops it.</li>
+<li><code>fetch</code> with <code>credentials: "include"</code> and a JSON body is <em>not simple</em>, so the preflight fails under a sane CORS policy and the request is never sent.</li>
+<li>Bearer tokens are safe in every row, because nothing is attached automatically.</li>
+</ul>
+<div class="insight">
+<p><strong>The BFF pattern: cookies for the browser, tokens for the APIs</strong></p>
+<p>Storing access tokens in <code>localStorage</code> makes them readable by any XSS. A <strong>backend for frontend</strong> keeps the tokens on a small server owned by the SPA. The browser holds only an <code>HttpOnly; Secure; SameSite=Strict</code> session cookie. The BFF swaps it for a token and proxies the API call. You now need CSRF protection on the BFF (SameSite plus a custom header such as <code>X-CSRF: 1</code>, which forces a preflight), but tokens never touch JavaScript. Duende BFF (.NET), Spring Cloud Gateway with the token relay filter, and Next.js route handlers all implement it.</p>
+</div>
+<h2 id="rate-limiting-fair-use-abuse-control-and-self-defence">Rate limiting: fair use, abuse control and self-defence</h2>
+<p>Authentication tells you who's calling, and rate limiting decides <strong>how often</strong> they may. It does three different jobs, and each needs a different key and a different limit:</p>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>Key</th>
+<th>Example limit</th>
+<th>On exceed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stop brute force and credential stuffing</td>
+<td>IP + username, per endpoint</td>
+<td>5 failed sign-ins / 15 min</td>
+<td>429, plus growing delays or CAPTCHA</td>
+</tr>
+<tr>
+<td>Fair use between customers (quotas)</td>
+<td>API key / client id / tenant</td>
+<td>1,000 req/min, 1M/month</td>
+<td>429 with <code>Retry-After</code>; billing tier upgrade</td>
+</tr>
+<tr>
+<td>Protect the service from overload</td>
+<td>Global / per instance</td>
+<td>500 concurrent requests</td>
+<td>503 + load shedding (see <a href="resilience.html">Resilience</a>)</td>
+</tr>
+<tr>
+<td>Expensive operations</td>
+<td>User + operation</td>
+<td>10 exports/hour, 3 SMS/hour</td>
+<td>429; this is OWASP API6, business flows</td>
+</tr>
+</tbody>
+</table>
+<p>The algorithm decides <em>how bursty</em> the allowed traffic can be. The visualizer runs five classic algorithms on the same traffic, with a limit of 10 requests per 10 seconds (a rate of 1 per second). The interesting row is <strong>Burst at a window edge</strong>. A fixed window lets 20 requests through in under 3 seconds, because 10 arrive just before the boundary and 10 just after. The sliding log never lets more than 10 into <em>any</em> 10-second span. The token bucket allows its capacity of 10 as a burst, then refills at 1 per second.</p>
+<div class="viz" data-viz="api-security-ratelimit"></div>
+
+<div class="compare">
+<div class="warn">
+<h4 id="fixed-window">Fixed window</h4>
+<p>A counter per key per window (<code>key:12:00</code>). It's trivial in Redis (<code>INCR</code> + <code>EXPIRE</code>), but allows <strong>2× the limit</strong> at a window boundary.</p>
+</div>
+<div class="good">
+<h4 id="sliding-window-counter">Sliding window counter</h4>
+<p>It weights the previous window's count by how much of it still overlaps the sliding window. It uses two counters per key, and its error is small enough for almost everything. Cloudflare and many gateways use it.</p>
+</div>
+<div class="good">
+<h4 id="sliding-log">Sliding log</h4>
+<p>It stores every timestamp, so it's exact, but uses memory O(limit) per key. Use it for low limits such as sign-in attempts.</p>
+</div>
+<div class="good">
+<h4 id="token-bucket">Token bucket</h4>
+<p>A bucket holds up to C tokens and refills at R per second; each request takes one. It allows bursts up to C with a long-run rate of R. It's the usual choice for APIs (AWS API Gateway, Stripe, <code>golang.org/x/time/rate</code>).</p>
+</div>
+<div class="warn">
+<h4 id="leaky-bucket-queue">Leaky bucket (queue)</h4>
+<p>Requests queue up and leave at a steady rate. The output is smooth, which is good for protecting a fragile downstream, but it <strong>adds latency</strong> instead of rejecting, and the queue needs a bound.</p>
+</div>
+<div class="bad">
+<h4 id="concurrency-limit">Concurrency limit</h4>
+<p>It doesn't count requests over time; it limits how many are <strong>in flight</strong>. That's the right tool for overload protection (a bulkhead), and a poor tool for quotas.</p>
+</div>
+</div>
+<p>Tell the client what happened, so a well-behaved one can back off instead of hammering you:</p>
+<pre><code class="language-http">HTTP/1.1 429 Too Many Requests
+Retry-After: 6
+RateLimit-Policy: &quot;per-client&quot;;q=10;w=10
+RateLimit: &quot;per-client&quot;;r=0;t=6
+Content-Type: application/problem+json
+
+{&quot;type&quot;:&quot;https://api.contoso.com/problems/rate-limited&quot;,&quot;title&quot;:&quot;Too many requests&quot;,&quot;status&quot;:429,
+ &quot;detail&quot;:&quot;Limit is 10 requests per 10 seconds for this client. Retry in 6 s.&quot;}
+</code></pre>
+<p><code>Retry-After</code> is standard (RFC 9110). The <code>RateLimit</code> and <code>RateLimit-Policy</code> fields come from an IETF draft (<code>draft-ietf-httpapi-ratelimit-headers</code>). Their syntax changed between draft versions, and many APIs still send the older <code>X-RateLimit-Limit/Remaining/Reset</code> triple. Pick one format and document it.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// ASP.NET Core: built-in Microsoft.AspNetCore.RateLimiting (.NET 7+)
+builder.Services.AddRateLimiter(o =&gt;
+{
+    o.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    o.AddPolicy(&quot;per-client&quot;, ctx =&gt; RateLimitPartition.GetTokenBucketLimiter(
+        partitionKey: ctx.User.FindFirstValue(&quot;azp&quot;) ?? ctx.Connection.RemoteIpAddress?.ToString() ?? &quot;anon&quot;,
+        factory: _ =&gt; new TokenBucketRateLimiterOptions
+        {
+            TokenLimit = 10,                                  // burst capacity C
+            TokensPerPeriod = 1,                              // refill rate R = 1 per second
+            ReplenishmentPeriod = TimeSpan.FromSeconds(1),
+            QueueLimit = 0,                                   // reject, don't queue
+        }));
+    o.OnRejected = (ctx, _) =&gt;
+    {
+        if (ctx.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retry))
+            ctx.HttpContext.Response.Headers.RetryAfter = ((int)Math.Ceiling(retry.TotalSeconds)).ToString();
+        return ValueTask.CompletedTask;
+    };
+});
+app.UseRateLimiter();            // after UseAuthentication, so ctx.User is populated
+orders.RequireRateLimiting(&quot;per-client&quot;);                 // the /orders group from the policies example
+// In-process only: with N instances each one allows the full limit. Use a gateway or Redis for a global limit.
+</code></pre>
+<pre><code class="language-java">// Spring Boot + Bucket4j (in memory here; bucket4j-redis / -jcache for clusters)
+@Component
+class RateLimitFilter extends OncePerRequestFilter {
+    private final Map&lt;String, Bucket&gt; buckets = new ConcurrentHashMap&lt;&gt;();   // bound this (Caffeine) in production
+
+    private Bucket newBucket(String key) {
+        return Bucket.builder()
+            .addLimit(limit -&gt; limit.capacity(10).refillGreedy(1, Duration.ofSeconds(1)))
+            .build();
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
+            throws ServletException, IOException {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        var key = auth != null ? auth.getName() : req.getRemoteAddr();
+        var probe = buckets.computeIfAbsent(key, this::newBucket).tryConsumeAndReturnRemaining(1);
+        if (probe.isConsumed()) { chain.doFilter(req, res); return; }
+        res.setStatus(429);
+        res.setHeader(&quot;Retry-After&quot;, String.valueOf(
+            Math.max(1, TimeUnit.NANOSECONDS.toSeconds(probe.getNanosToWaitForRefill()))));
+    }
+}
+</code></pre>
+<pre><code class="language-python"># Token bucket, the algorithm itself (what slowapi / limits / a gateway does for you)
+import math, time
+
+class TokenBucket:
+    def __init__(self, capacity: float, rate: float, now=time.monotonic):
+        self.capacity, self.rate, self.now = capacity, rate, now
+        self.tokens, self.last = capacity, now()
+
+    def try_take(self) -&gt; tuple[bool, int]:
+        t = self.now()
+        self.tokens = min(self.capacity, self.tokens + (t - self.last) * self.rate)
+        self.last = t
+        if self.tokens &gt;= 1:
+            self.tokens -= 1
+            return True, 0
+        return False, math.ceil((1 - self.tokens) / self.rate)   # seconds until a token exists
+
+# FastAPI middleware: buckets keyed by client id, 429 + Retry-After when empty
+# (use Redis with a Lua script for the same logic across instances)
+</code></pre>
+<pre><code class="language-go">// Go: golang.org/x/time/rate is a token bucket; one limiter per client
+type limiters struct {
+    mu sync.Mutex
+    m  map[string]*rate.Limiter // evict idle entries in production
+}
+
+func (l *limiters) get(key string) *rate.Limiter {
+    l.mu.Lock()
+    defer l.mu.Unlock()
+    lim, ok := l.m[key]
+    if !ok {
+        lim = rate.NewLimiter(rate.Limit(1), 10) // R = 1/s, burst C = 10
+        l.m[key] = lim
+    }
+    return lim
+}
+
+func (l *limiters) Middleware(next http.Handler) http.Handler {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        res := l.get(clientKey(r)).Reserve()
+        if d := res.Delay(); d &gt; 0 {
+            res.Cancel() // don't consume a future token
+            w.Header().Set(&quot;Retry-After&quot;, strconv.Itoa(int(math.Ceil(d.Seconds()))))
+            http.Error(w, &quot;too many requests&quot;, http.StatusTooManyRequests)
+            return
+        }
+        next.ServeHTTP(w, r)
+    })
+}
+</code></pre>
+<pre><code class="language-typescript">// NestJS: @nestjs/throttler (v5+: ttl in milliseconds); Redis storage for clusters
+@Module({
+  imports: [ThrottlerModule.forRoot([{ name: &quot;default&quot;, ttl: 10_000, limit: 10 }])],
+  providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
+})
+export class AppModule {}
+
+@Controller(&quot;auth&quot;)
+export class AuthController {
+  @Throttle({ default: { ttl: 900_000, limit: 5 } })   // sign-in: 5 per 15 min
+  @Post(&quot;login&quot;) login() { /* ... */ }
+}
+// Express: express-rate-limit with standardHeaders: &quot;draft-8&quot; emits the RateLimit header fields.
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Rate limiting pitfalls</strong></p>
+<ul>
+<li><strong>Keying by IP only.</strong> Thousands of users behind one corporate NAT share a limit, while an attacker with a botnet has thousands of IPs. Key by the authenticated client or user, and use IP only for anonymous endpoints.</li>
+<li><strong>Trusting <code>X-Forwarded-For</code> blindly.</strong> Anyone can send it. Take the address your <em>own</em> proxy appended (ASP.NET Core <code>ForwardedHeadersOptions.KnownProxies</code>, Spring <code>server.forward-headers-strategy</code>, Express <code>app.set("trust proxy", 1)</code>).</li>
+<li><strong>Per-instance limits</strong> in a scaled-out service: with 8 instances, "100 per minute" really means 800. Enforce at the gateway or in shared storage.</li>
+<li><strong>Counting before authentication</strong> for per-user limits, so unauthenticated junk eats real users' quota. Have a cheap per-IP limit first, then per-user after authentication.</li>
+<li><strong>No limit on expensive operations</strong>: a "send verification SMS" endpoint without a per-user limit is a bill, not a feature.</li>
+</ul>
+</div>
+<h2 id="the-owasp-api-security-top-10-2023-mapped-to-this-page">The OWASP API Security Top 10 (2023), mapped to this page</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Risk</th>
+<th>What it looks like</th>
+<th>Primary defence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API1</td>
+<td>Broken object level authorization</td>
+<td><code>GET /orders/1018</code> returns someone else's order</td>
+<td>Ownership check after load, or tenant/owner-scoped queries; 404</td>
+</tr>
+<tr>
+<td>API2</td>
+<td>Broken authentication</td>
+<td>Unvalidated JWTs, <code>alg: none</code>, no brute-force limit, tokens in URLs</td>
+<td>Library validation with issuer, audience, algorithm allow-list; sign-in rate limits</td>
+</tr>
+<tr>
+<td>API3</td>
+<td>Broken object property level authorization</td>
+<td>Mass assignment of <code>role</code>; responses leak <code>passwordHash</code></td>
+<td>Input and output DTOs, unknown fields rejected</td>
+</tr>
+<tr>
+<td>API4</td>
+<td>Unrestricted resource consumption</td>
+<td><code>pageSize=1000000</code>, 50 MB bodies, unbounded GraphQL depth</td>
+<td>Size and page caps, timeouts, rate and concurrency limits</td>
+</tr>
+<tr>
+<td>API5</td>
+<td>Broken function level authorization</td>
+<td>A normal user calls <code>DELETE /admin/users/7</code></td>
+<td>Deny-by-default fallback policy; role/scope policies per endpoint</td>
+</tr>
+<tr>
+<td>API6</td>
+<td>Unrestricted access to sensitive business flows</td>
+<td>Bots buying all the stock, SMS pumping, referral abuse</td>
+<td>Per-user limits on the <em>flow</em>, device signals, CAPTCHA, step-up auth</td>
+</tr>
+<tr>
+<td>API7</td>
+<td>Server-side request forgery</td>
+<td><code>POST /import {url: "http://169.254.169.254/…"}</code></td>
+<td>Allow-list destinations; block internal ranges; no redirects</td>
+</tr>
+<tr>
+<td>API8</td>
+<td>Security misconfiguration</td>
+<td>Permissive CORS, verbose stack traces, missing TLS, default credentials</td>
+<td>Hardened defaults, problem details without internals, config review</td>
+</tr>
+<tr>
+<td>API9</td>
+<td>Improper inventory management</td>
+<td>Forgotten <code>/v1</code> or <code>staging-api</code> without the new checks</td>
+<td>Gateway inventory, OpenAPI for every version, retire old versions</td>
+</tr>
+<tr>
+<td>API10</td>
+<td>Unsafe consumption of APIs</td>
+<td>Trusting a partner API's response blindly; following its redirects</td>
+<td>Validate third-party responses like user input; timeouts; TLS</td>
+</tr>
+</tbody>
+</table>
+<h2 id="secrets-logs-and-headers-the-boring-layer-that-leaks">Secrets, logs and headers: the boring layer that leaks</h2>
+<p><strong>Never put secrets in tokens.</strong> A JWT payload is base64url, not encryption: paste one into any decoder and you can read it. Keep tokens to identifiers and permissions. If an API needs sensitive attributes, it should look them up, or you should use an encrypted JWE, which is rarely worth the complexity.</p>
+<p><strong>Never log credentials.</strong> Logs are copied to more places, kept longer and read by more people than any database. Specifically:</p>
+<ul>
+<li><strong>Redact</strong> <code>Authorization</code>, <code>Cookie</code>, <code>Set-Cookie</code>, <code>X-Api-Key</code>, <code>Proxy-Authorization</code>, and query strings containing <code>code=</code>, <code>token=</code>, <code>key=</code>, <code>sig=</code>.</li>
+<li>Log the token's <code>jti</code>, <code>sub</code>, <code>azp</code> and <code>exp</code> if you need to correlate, never the token itself.</li>
+<li>Request-body logging middleware is the usual culprit; allow-list fields instead of logging everything.</li>
+<li>Error messages go to clients without internals: no stack traces, SQL, or "user exists but password wrong" (that's an enumeration oracle).</li>
+</ul>
+<p>See <a href="observability.html">Observability</a> for structured logging with redaction, and <a href="configuration-and-secrets.html">Configuration &amp; secrets</a> for where signing keys and client secrets should live (a vault, never <code>appsettings.json</code> or <code>.env</code> in Git).</p>
+<p>A JSON API needs a much shorter header list than a website, but these still matter:</p>
+<table>
+<thead>
+<tr>
+<th>Header</th>
+<th>Value for a JSON API</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Strict-Transport-Security</code></td>
+<td><code>max-age=31536000; includeSubDomains</code></td>
+<td>Browsers never try plain HTTP again</td>
+</tr>
+<tr>
+<td><code>Content-Type</code></td>
+<td><code>application/json; charset=utf-8</code> (always explicit)</td>
+<td>Prevents content sniffing into HTML</td>
+</tr>
+<tr>
+<td><code>X-Content-Type-Options</code></td>
+<td><code>nosniff</code></td>
+<td>Same, for older browsers</td>
+</tr>
+<tr>
+<td><code>Cache-Control</code></td>
+<td><code>no-store</code> on anything personal</td>
+<td>Shared <a href="caching.html">caches</a> and the browser's disk must not keep it</td>
+</tr>
+<tr>
+<td><code>Content-Security-Policy</code></td>
+<td><code>default-src 'none'; frame-ancestors 'none'</code></td>
+<td>If a response is ever rendered as a page, it can't run or be framed</td>
+</tr>
+<tr>
+<td><code>Referrer-Policy</code></td>
+<td><code>no-referrer</code></td>
+<td>URLs with ids or codes don't leak to other sites</td>
+</tr>
+<tr>
+<td><code>Server</code>, <code>X-Powered-By</code></td>
+<td>remove</td>
+<td>Free fingerprinting for attackers</td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs">
+<pre><code class="language-csharp">// ASP.NET Core: HSTS + a tiny header middleware; remove the Kestrel Server header
+builder.WebHost.ConfigureKestrel(k =&gt; k.AddServerHeader = false);
+app.UseHsts();
+app.Use(async (ctx, next) =&gt;
+{
+    var h = ctx.Response.Headers;
+    h.XContentTypeOptions = &quot;nosniff&quot;;
+    h.ContentSecurityPolicy = &quot;default-src 'none'; frame-ancestors 'none'&quot;;
+    h[&quot;Referrer-Policy&quot;] = &quot;no-referrer&quot;;
+    h.CacheControl = &quot;no-store&quot;;            // override per endpoint for cacheable public data
+    await next();
+});
+</code></pre>
+<pre><code class="language-java">// Spring Security sets nosniff, HSTS (on HTTPS), Cache-Control no-store and X-Frame-Options by default
+http.headers(h -&gt; h
+    .contentSecurityPolicy(c -&gt; c.policyDirectives(&quot;default-src 'none'; frame-ancestors 'none'&quot;))
+    .referrerPolicy(r -&gt; r.policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.NO_REFERRER)));
+</code></pre>
+<pre><code class="language-python"># FastAPI / Starlette: a small middleware (or the 'secure' package)
+@app.middleware(&quot;http&quot;)
+async def security_headers(request, call_next):
+    resp = await call_next(request)
+    resp.headers.update({
+        &quot;Strict-Transport-Security&quot;: &quot;max-age=31536000; includeSubDomains&quot;,
+        &quot;X-Content-Type-Options&quot;: &quot;nosniff&quot;,
+        &quot;Content-Security-Policy&quot;: &quot;default-src 'none'; frame-ancestors 'none'&quot;,
+        &quot;Referrer-Policy&quot;: &quot;no-referrer&quot;,
+    })
+    resp.headers.setdefault(&quot;Cache-Control&quot;, &quot;no-store&quot;)
+    return resp
+</code></pre>
+<pre><code class="language-go">func SecurityHeaders(next http.Handler) http.Handler {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        h := w.Header()
+        h.Set(&quot;Strict-Transport-Security&quot;, &quot;max-age=31536000; includeSubDomains&quot;)
+        h.Set(&quot;X-Content-Type-Options&quot;, &quot;nosniff&quot;)
+        h.Set(&quot;Content-Security-Policy&quot;, &quot;default-src 'none'; frame-ancestors 'none'&quot;)
+        h.Set(&quot;Referrer-Policy&quot;, &quot;no-referrer&quot;)
+        h.Set(&quot;Cache-Control&quot;, &quot;no-store&quot;)
+        next.ServeHTTP(w, r)
+    })
+}
+</code></pre>
+<pre><code class="language-typescript">// NestJS / Express: helmet sets sensible defaults; tighten CSP for a pure API
+import helmet from &quot;helmet&quot;;
+app.use(helmet({ contentSecurityPolicy: { directives: { defaultSrc: [&quot;'none'&quot;], frameAncestors: [&quot;'none'&quot;] } },
+                 referrerPolicy: { policy: &quot;no-referrer&quot; } }));
+app.getHttpAdapter().getInstance().disable(&quot;x-powered-by&quot;);
+</code></pre>
+</div>
+<h2 id="when-to-use-what-and-what-not-to-build">When to use what (and what not to build)</h2>
+<div class="insight">
+<p><strong>Decision guide, in order</strong></p>
+<ol>
+<li><strong>Is there a user?</strong> Yes: authorization code + PKCE through a standard library and a hosted identity provider. No: client credentials, with a certificate or managed identity.</li>
+<li><strong>Is the client a browser app?</strong> Prefer a BFF with an <code>HttpOnly</code> <code>SameSite=Strict</code> cookie. A pure SPA holds tokens in memory only, never <code>localStorage</code>.</li>
+<li><strong>Does your API call another API for the user?</strong> Use on-behalf-of / token exchange. Never forward the incoming token, and never fall back to a god-mode service identity.</li>
+<li><strong>Can you revoke fast enough?</strong> Keep access tokens to 5–60 minutes. For high-value APIs, add sender-constrained tokens (mTLS or DPoP) or continuous access evaluation.</li>
+<li><strong>Every endpoint</strong>: deny by default, then a policy (scope + role), then a resource check, then input and output DTOs, then rate limits keyed by client.</li>
+</ol>
+</div>
+<div class="compare">
+<div class="bad">
+<h4 id="dont-build-these-yourself">Don't build these yourself</h4>
+<ul>
+<li>A login page with password storage, MFA, reset and lockout, when an identity provider exists.</li>
+<li>Your own token format or signing scheme ("HMAC of user id + timestamp").</li>
+<li>JWT parsing and validation by hand, or a JWKS cache with a home-made rotation.</li>
+<li>Session tokens in JWTs "to be stateless", when you then need a server-side deny-list anyway.</li>
+</ul>
+</div>
+<div class="warn">
+<h4 id="dont-over-build-either">Don't over-build either</h4>
+<ul>
+<li>OAuth for a single internal tool used by three colleagues: platform authentication (Easy Auth, an IAP, a VPN with SSO) may be enough.</li>
+<li>mTLS everywhere inside a cluster that already runs a service mesh: the mesh does it.</li>
+<li>A distributed rate limiter for a service with one instance and an API gateway in front.</li>
+<li>JWE-encrypted tokens to hide claims you could just leave out.</li>
+</ul>
+</div>
+</div>
+<h2 id="common-pitfalls">Common pitfalls</h2>
+<div class="pitfall">
+<p><strong>Accepting any token from your identity provider</strong></p>
+<p>Validating the signature and issuer but not the <strong>audience</strong> means a token minted for <em>another</em> API in the same tenant (Microsoft Graph, a colleague's service) works on yours. With multi-tenant Entra ID apps, also check <code>tid</code>. Otherwise "any Microsoft account in the world" is your user base.</p>
+</div>
+<div class="pitfall">
+<p><strong>Reading roles from the wrong place</strong></p>
+<p>The user's role must come from the validated token or your own database, never from the request body, a header such as <code>X-User-Role</code>, or a client-side flag. An "admin" toggle in the SPA that the API trusts is API5 in one line.</p>
+</div>
+<div class="pitfall">
+<p><strong>Different rules on different paths</strong></p>
+<p><code>GET /orders/42</code> checks ownership, but <code>GET /orders/42/invoice.pdf</code>, <code>GET /search?q=</code> or the GraphQL resolver for <code>order(id:)</code> doesn't. Put authorization in the <strong>service or repository layer</strong> that every path uses, not only in controllers.</p>
+</div>
+<div class="pitfall">
+<p><strong>Long clock skew and long-lived tokens</strong></p>
+<p>ASP.NET Core's default <code>ClockSkew</code> is 5 minutes. Combined with 24-hour access tokens, a stolen token is usable for a day. Use 30–60 s of skew, 5–60 minute access tokens, and rotating refresh tokens.</p>
+</div>
+<h2 id="checklist">Checklist</h2>
+<div class="rule">
+<p><strong>Before an API ships</strong></p>
+<ul>
+<li>[ ] Tokens are validated by a maintained library: signature, <code>iss</code>, <code>aud</code>, <code>exp</code>/<code>nbf</code> with skew ≤ 60 s, and an <strong>algorithm allow-list</strong>.</li>
+<li>[ ] A <strong>fallback policy</strong> requires authentication; anonymous endpoints are explicitly marked.</li>
+<li>[ ] Every endpoint has a scope or role policy, and delegated calls check scope <strong>and</strong> user permission.</li>
+<li>[ ] Every id from the client is checked for ownership and tenant (or the query is scoped); cross-tenant answers 404.</li>
+<li>[ ] Input is bound to DTOs with bounds; unknown fields are rejected; responses use output DTOs.</li>
+<li>[ ] 401s carry <code>WWW-Authenticate</code>; 403s say <code>insufficient_scope</code> where relevant; errors use problem details without internals.</li>
+<li>[ ] Rate limits exist per client, per sign-in, and per expensive flow, with 429 and <code>Retry-After</code>, enforced globally.</li>
+<li>[ ] CORS is an exact allow-list; no state changes on GET; cookie auth has SameSite plus a token or Origin check.</li>
+<li>[ ] Machine callers use managed identity or certificates; any API keys are hashed, prefixed, scoped and rotatable.</li>
+<li>[ ] <code>Authorization</code>, cookies and keys are redacted in logs; tokens carry no secrets.</li>
+<li>[ ] Security headers and HSTS are set; <code>Server</code>/<code>X-Powered-By</code> are removed.</li>
+<li>[ ] There are tests for the negative cases: no token, wrong audience, other user's id, other tenant's id, extra fields, burst traffic. See <a href="testing-strategy.html">Testing strategy</a>.</li>
+</ul>
+</div>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<p><summary>An access token validates, its scope is <code>orders.read</code>, and the caller sends PATCH. Status code and header?</summary></p>
+<p><strong>403</strong> with <code>WWW-Authenticate: Bearer error="insufficient_scope", scope="orders.write"</code>. The caller <em>is</em> authenticated, so 401 is wrong, and retrying with the same token won't help. The client needs a token with more consent.</p>
+</details>
+<details class="quiz">
+<p><summary>Why does the HS256 "algorithm confusion" attack work, and what single setting stops it?</summary></p>
+<p>The validator lets the token's header choose the algorithm. For HS256 it uses "the key" as an HMAC secret, and that key is the RSA <em>public</em> key, which the attacker can download. So the attacker can compute a valid HMAC. Fix it by configuring an <strong>algorithm allow-list</strong> (<code>ValidAlgorithms</code>, <code>algorithms=["RS256"]</code>, <code>WithValidMethods</code>) and keying by algorithm type.</p>
+</details>
+<details class="quiz">
+<p><summary>You switched order ids from integers to UUIDs. Is the BOLA bug fixed?</summary></p>
+<p>No. Guessing becomes impractical, but ids leak through shared links, logs, <code>Referer</code> headers and other responses. One leaked id still returns someone else's order. You need an ownership check, or a query scoped by owner and tenant.</p>
+</details>
+<details class="quiz">
+<p><summary>Your API sets <code>Access-Control-Allow-Origin</code> to an exact allow-list. Is a cookie-authenticated <code>POST /transfer</code> safe from evil.example?</summary></p>
+<p>Not necessarily. A form-encoded POST is a <em>simple</em> request. The browser sends it <strong>without a preflight</strong>, with cookies (unless SameSite blocks them), and the server runs it. CORS only stops evil.example's JavaScript from reading the response. You need <code>SameSite=Lax/Strict</code> plus an anti-CSRF token or Origin check, or bearer-token auth.</p>
+</details>
+<details class="quiz">
+<p><summary>A fixed-window limiter allows 100 requests per minute. What's the most a client can send in a few seconds without a single 429?</summary></p>
+<p><strong>200</strong>: 100 at the end of one window and 100 at the start of the next. A sliding window or token bucket bounds this. A token bucket allows its capacity C as a burst, then R per second.</p>
+</details>
+<details class="quiz">
+<p><summary>Orders API needs to call Inventory API for the signed-in user. Which token should it send?</summary></p>
+<p>A <strong>new</strong> token for the Inventory API, obtained with on-behalf-of / token exchange (RFC 8693) using the incoming token as the assertion. Forwarding the incoming token fails the audience check, and it should. Using the Orders API's own app identity loses the user's permissions and lets one user act with the service's powers (the <em>confused deputy</em> problem).</p>
+</details>
+<details class="quiz">
+<p><summary>Where should the check "Bob may edit only his own orders, managers may edit any in their tenant" live?</summary></p>
+<p>In a <strong>resource-based</strong> check that runs after the order is loaded, or in a repository query scoped by tenant and owner. It must be shared by every path that touches orders. An endpoint attribute can't do it, because it runs before the order is known.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>401 vs 403 vs 404</strong>401 = who are you? (+ <code>WWW-Authenticate</code>). 403 = known, not allowed. 404 = not yours and you shouldn't know it exists.</div>
+<div><strong>Flows</strong>User: auth code + PKCE (S256). Service: client credentials with a cert or managed identity. API → API: on-behalf-of. Never implicit or password.</div>
+<div><strong>Tokens</strong>Access token → your API (<code>aud</code>). ID token → the client only. Refresh token → the authorization server only, rotated.</div>
+<div><strong>JWT validation</strong>Algorithm allow-list → key by <code>kid</code> from JWKS → signature → <code>iss</code> → <code>aud</code> → <code>exp</code>/<code>nbf</code> (≤ 60 s skew) → scopes.</div>
+<div><strong>AuthZ layers</strong>Fallback: authenticated. Endpoint: scope ∧ role. Resource: owner/tenant after load. Delegated = app scope ∩ user permission.</div>
+<div><strong>BOLA</strong>Every client-supplied id is untrusted. Scope queries by tenant and owner; answer 404. UUIDs are not authorization.</div>
+<div><strong>Mass assignment</strong>Input DTO with allowed fields only; reject unknown ones; output DTO, never the entity.</div>
+<div><strong>CORS</strong>Lets <em>your</em> front end read responses. Doesn't stop curl, servers or simple form POSTs. Exact allow-list + <code>Vary: Origin</code>.</div>
+<div><strong>CSRF</strong>Cookies are attached automatically; bearer headers aren't. SameSite=Lax/Strict + token or Origin check; no state change on GET.</div>
+<div><strong>Rate limits</strong>Token bucket (C burst, R/s) for APIs; sliding log for sign-in; concurrency limits for overload. 429 + <code>Retry-After</code>; key by client.</div>
+<div><strong>Machine credentials</strong>Managed identity &gt; certificate &gt; client secret &gt; API key. Keys: header only, hashed, prefixed, rotatable.</div>
+<div><strong>Never</strong>Secrets in JWTs; tokens in URLs or logs; <code>decode</code> without verify; roles from the request; <code>Allow-Origin</code> reflecting any origin with credentials.</div>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://owasp.org/API-Security/editions/2023/en/0x11-t10/">OWASP API Security Top 10 (2023)</a> and the <a href="https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html">OWASP REST Security Cheat Sheet</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc9700">RFC 9700: OAuth 2.0 Security Best Current Practice</a>, <a href="https://www.rfc-editor.org/rfc/rfc6749">RFC 6749</a> (OAuth 2.0), <a href="https://www.rfc-editor.org/rfc/rfc6750">RFC 6750</a> (bearer tokens), <a href="https://www.rfc-editor.org/rfc/rfc7636">RFC 7636</a> (PKCE), <a href="https://www.rfc-editor.org/rfc/rfc8693">RFC 8693</a> (token exchange)</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc7519">RFC 7519</a> (JWT), <a href="https://www.rfc-editor.org/rfc/rfc8725">RFC 8725</a> (JWT best current practices), <a href="https://www.rfc-editor.org/rfc/rfc9068">RFC 9068</a> (JWT profile for access tokens), <a href="https://www.rfc-editor.org/rfc/rfc8705">RFC 8705</a> (mTLS), <a href="https://www.rfc-editor.org/rfc/rfc9449">RFC 9449</a> (DPoP)</li>
+<li><a href="https://learn.microsoft.com/aspnet/core/security/authorization/introduction">ASP.NET Core authorization</a>, <a href="https://learn.microsoft.com/aspnet/core/security/authorization/resourcebased">resource-based authorization</a>, <a href="https://learn.microsoft.com/aspnet/core/performance/rate-limit">rate limiting middleware</a></li>
+<li><a href="https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html">Spring Security OAuth 2.0 Resource Server</a>, <a href="https://fastapi.tiangolo.com/advanced/security/oauth2-scopes/">FastAPI security</a>, <a href="https://docs.nestjs.com/security/authorization">NestJS authorization</a> and <a href="https://docs.nestjs.com/security/rate-limiting">rate limiting</a></li>
+<li><a href="https://developer.mozilla.org/docs/Web/HTTP/CORS">MDN: CORS</a> and <a href="https://developer.mozilla.org/docs/Web/HTTP/Headers/Set-Cookie#samesitesamesite-value">SameSite cookies</a></li>
+<li>Related topics here: <a href="api-design.html">REST API design</a>, <a href="middleware-patterns.html">Middleware patterns</a>, <a href="request-pipeline.html">Request pipeline</a>, <a href="security-fundamentals.html">Security fundamentals</a>, <a href="resilience.html">Resilience</a>, <a href="api-protocols.html">API protocols</a></li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="api-protocols.html"><small>&larr; PREVIOUS</small>Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a><a class="next" href="caching.html"><small>NEXT &rarr;</small>Caching: When To, When Not To, and How</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-a-valid-token-is-not-permission">The problem: a valid token is not permission</a></li>
+<li><a href="#authentication-vs-authorization-401-403-or-404">Authentication vs authorization: 401, 403 or 404</a></li>
+<li><a href="#oauth-20-and-openid-connect-without-the-fog">OAuth 2.0 and OpenID Connect, without the fog</a></li>
+<li><a href="#pkce-why-a-stolen-code-is-worthless">PKCE: why a stolen code is worthless</a></li>
+<li><a href="#jwt-anatomy-three-base64url-strings-and-a-dot">JWT anatomy: three base64url strings and a dot</a><ul>
+<li><a href="#validation-step-by-step-and-the-famous-attacks">Validation, step by step, and the famous attacks</a></li>
+<li><a href="#opaque-tokens-introspection-and-revocation">Opaque tokens, introspection and revocation</a></li>
+</ul>
+</li>
+<li><a href="#scopes-roles-policies-endpoint-authorization">Scopes, roles, policies: endpoint authorization</a></li>
+<li><a href="#resource-based-authorization-and-bola">Resource-based authorization and BOLA</a></li>
+<li><a href="#input-validation-and-mass-assignment">Input validation and mass assignment</a></li>
+<li><a href="#api-keys-mtls-and-sender-constrained-tokens">API keys, mTLS and sender-constrained tokens</a></li>
+<li><a href="#cors-a-browser-rule-that-protects-users-not-your-api">CORS: a browser rule that protects users, not your API</a></li>
+<li><a href="#csrf-when-cookies-vote-on-your-behalf">CSRF: when cookies vote on your behalf</a></li>
+<li><a href="#rate-limiting-fair-use-abuse-control-and-self-defence">Rate limiting: fair use, abuse control and self-defence</a></li>
+<li><a href="#the-owasp-api-security-top-10-2023-mapped-to-this-page">The OWASP API Security Top 10 (2023), mapped to this page</a></li>
+<li><a href="#secrets-logs-and-headers-the-boring-layer-that-leaks">Secrets, logs and headers: the boring layer that leaks</a></li>
+<li><a href="#when-to-use-what-and-what-not-to-build">When to use what (and what not to build)</a></li>
+<li><a href="#common-pitfalls">Common pitfalls</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

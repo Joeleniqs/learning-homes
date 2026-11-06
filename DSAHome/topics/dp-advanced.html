@@ -1,0 +1,1873 @@
+<!doctype html>
+<html lang="en" data-home="dsa-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>State Machines &amp; DP Optimisations | DSA Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#4f46e5;--accent-soft:#eef0ff;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#a5b4fc;--accent-soft:#252a5c;}}:root[data-theme=dark]{--accent:#a5b4fc;--accent-soft:#252a5c;}</style>
+  <link rel="stylesheet" href="../assets/topics/dp-advanced.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/dp-advanced.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="DSA Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">DS</span>DSA Home</a>
+    <p class="sidebar-caption">Data structures &amp; algorithms, seen.<br>Every idea animated, every pattern drilled.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations</summary><ul class="topic-list"><li data-search="The Problem-Solving Playbook Foundations A visual decision map from input size, shape and question type to the right technique, plus a repeatable interview/contest workflow. pattern recognition constraints approach interview" data-slug="problem-solving-playbook"><a href="../topics/problem-solving-playbook.html">The Problem-Solving Playbook</a></li><li data-search="Complexity Analysis Foundations Big-O growth you can see, amortized cost, recursion trees and the Master theorem, and what 10^8 operations per second really buys you. big o amortized master theorem time space" data-slug="complexity-analysis"><a href="../topics/complexity-analysis.html">Complexity Analysis</a></li><li data-search="Recursion &amp; the Call Stack Foundations Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from. call stack recursion tree divide and conquer" data-slug="recursion"><a href="../topics/recursion.html">Recursion &amp; the Call Stack</a></li></ul></details><details class="nav-track"><summary>Arrays &amp; Strings</summary><ul class="topic-list"><li data-search="Two Pointers Arrays &amp; Strings Opposite-end, same-direction and fast/slow pointers: why moving one pointer is safe, with partitioning and k-sum. pair sum partition dutch flag 3sum" data-slug="two-pointers"><a href="../topics/two-pointers.html">Two Pointers</a></li><li data-search="Sliding Window Arrays &amp; Strings Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows. substring subarray window at most k" data-slug="sliding-window"><a href="../topics/sliding-window.html">Sliding Window</a></li><li data-search="Prefix Sums &amp; Difference Arrays Arrays &amp; Strings 1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR. subarray sum equals k range sum 2d prefix difference array" data-slug="prefix-sums"><a href="../topics/prefix-sums.html">Prefix Sums &amp; Difference Arrays</a></li><li data-search="Binary Search Arrays &amp; Strings One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection. lower bound upper bound search on answer rotated monotonic predicate" data-slug="binary-search"><a href="../topics/binary-search.html">Binary Search</a></li><li data-search="Sorting Algorithms Arrays &amp; Strings Animated bubble, insertion, merge, quick, heap, counting and radix sorts; stability, quickselect and custom comparators. merge sort quick sort quickselect counting sort inversions" data-slug="sorting"><a href="../topics/sorting.html">Sorting Algorithms</a></li><li data-search="Hashing Patterns Arrays &amp; Strings How hash tables work inside, then frequency maps, grouping by canonical keys, complement lookups and rolling hashes. hash map hash set anagram two sum collision" data-slug="hashing"><a href="../topics/hashing.html">Hashing Patterns</a></li><li data-search="Monotonic Stack &amp; Queue Arrays &amp; Strings Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight. next greater largest rectangle deque trapping rain water" data-slug="monotonic-stack-queue"><a href="../topics/monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a></li><li data-search="Intervals &amp; Sweep Line Arrays &amp; Strings Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline. merge intervals meeting rooms events skyline" data-slug="intervals-sweep-line"><a href="../topics/intervals-sweep-line.html">Intervals &amp; Sweep Line</a></li><li data-search="String Algorithms Arrays &amp; Strings KMP failure function, Z-algorithm, Rabin–Karp, Manacher&#x27;s palindromes and string hashing, each animated character by character. kmp z algorithm rabin karp manacher palindrome pattern matching" data-slug="string-algorithms"><a href="../topics/string-algorithms.html">String Algorithms</a></li></ul></details><details class="nav-track"><summary>Linked Lists, Stacks, Queues &amp; Heaps</summary><ul class="topic-list"><li data-search="Linked Lists Linked Lists, Stacks, Queues &amp; Heaps Pointer rewiring you can watch: reversal, dummy heads, fast/slow cycle detection, merging, and LRU cache design. reverse floyd cycle merge lru" data-slug="linked-lists"><a href="../topics/linked-lists.html">Linked Lists</a></li><li data-search="Stacks &amp; Queues Linked Lists, Stacks, Queues &amp; Heaps Balanced brackets, expression evaluation, min-stack, queues from stacks, deques and BFS queues. parentheses calculator deque min stack" data-slug="stacks-queues"><a href="../topics/stacks-queues.html">Stacks &amp; Queues</a></li><li data-search="Heaps &amp; Priority Queues Linked Lists, Stacks, Queues &amp; Heaps Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling. heap top k median k way merge priority queue" data-slug="heaps-priority-queues"><a href="../topics/heaps-priority-queues.html">Heaps &amp; Priority Queues</a></li></ul></details><details class="nav-track"><summary>Trees</summary><ul class="topic-list"><li data-search="Tree Traversals Trees Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees. dfs bfs inorder level order morris" data-slug="tree-traversals"><a href="../topics/tree-traversals.html">Tree Traversals</a></li><li data-search="Binary Search Trees Trees Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters. bst validate successor avl red black" data-slug="binary-search-trees"><a href="../topics/binary-search-trees.html">Binary Search Trees</a></li><li data-search="Tree Problem Patterns Trees Return-value recursion (diameter, max path sum), top-down state, LCA, serialization, and binary lifting. lca diameter path sum binary lifting serialize" data-slug="tree-patterns"><a href="../topics/tree-patterns.html">Tree Problem Patterns</a></li><li data-search="Tries Trees Prefix trees animated insert by insert: autocomplete, word search on boards, and bitwise tries for max XOR. prefix tree autocomplete word search xor trie" data-slug="tries"><a href="../topics/tries.html">Tries</a></li><li data-search="Segment Trees, Fenwick Trees &amp; Sparse Tables Trees Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables. segment tree lazy propagation fenwick bit rmq" data-slug="segment-fenwick-trees"><a href="../topics/segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a></li></ul></details><details class="nav-track"><summary>Graphs</summary><ul class="topic-list"><li data-search="Graph Fundamentals: BFS &amp; DFS Graphs Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS. bfs dfs grid islands connected components cycle" data-slug="graph-fundamentals"><a href="../topics/graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></li><li data-search="Topological Sort &amp; DAGs Graphs Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs. kahn course schedule dag dependency order" data-slug="topological-sort"><a href="../topics/topological-sort.html">Topological Sort &amp; DAGs</a></li><li data-search="Union-Find (Disjoint Set Union) Graphs Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries. dsu disjoint set path compression connectivity" data-slug="union-find"><a href="../topics/union-find.html">Union-Find (Disjoint Set Union)</a></li><li data-search="Shortest Paths Graphs BFS, 0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall and A* animated, and a chart to pick the right one every time. dijkstra bellman ford floyd warshall a star 0-1 bfs" data-slug="shortest-paths"><a href="../topics/shortest-paths.html">Shortest Paths</a></li><li data-search="Minimum Spanning Trees Graphs Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems. kruskal prim mst cut property" data-slug="minimum-spanning-trees"><a href="../topics/minimum-spanning-trees.html">Minimum Spanning Trees</a></li><li data-search="Advanced Graph Algorithms Graphs Strongly connected components, bridges and articulation points, bipartite checks, Euler paths, and max-flow / matching. tarjan kosaraju scc bridges euler max flow bipartite matching" data-slug="advanced-graphs"><a href="../topics/advanced-graphs.html">Advanced Graph Algorithms</a></li></ul></details><details class="nav-track"><summary>Backtracking &amp; Greedy</summary><ul class="topic-list"><li data-search="Backtracking Backtracking &amp; Greedy The choose/explore/un-choose template animated on a decision tree: subsets, permutations, combinations, N-Queens, Sudoku and pruning. subsets permutations n queens sudoku pruning" data-slug="backtracking"><a href="../topics/backtracking.html">Backtracking</a></li><li data-search="Greedy Algorithms Backtracking &amp; Greedy When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding. exchange argument interval scheduling jump game huffman" data-slug="greedy"><a href="../topics/greedy.html">Greedy Algorithms</a></li></ul></details><details class="nav-track" open><summary>Dynamic Programming</summary><ul class="topic-list"><li data-search="The DP Framework Dynamic Programming Recursion → memoization → tabulation → space optimisation, visualised on one problem; how to design state and transitions. memoization tabulation state transition overlapping subproblems" data-slug="dp-framework"><a href="../topics/dp-framework.html">The DP Framework</a></li><li data-search="1D &amp; Grid DP Dynamic Programming Climbing stairs, house robber, decode ways, unique paths, min path sum, maximal square and dungeon game with animated tables. house robber unique paths grid dp maximal square" data-slug="dp-linear-grid"><a href="../topics/dp-linear-grid.html">1D &amp; Grid DP</a></li><li data-search="Knapsack Family Dynamic Programming 0/1 vs unbounded vs bounded knapsack, why loop direction matters, coin change, subset sum and target sum. knapsack coin change subset sum partition" data-slug="dp-knapsack"><a href="../topics/dp-knapsack.html">Knapsack Family</a></li><li data-search="Sequence &amp; String DP Dynamic Programming LIS with patience sorting, LCS, edit distance, palindromic subsequences, regex/wildcard matching and distinct subsequences. lis lcs edit distance regex matching palindrome" data-slug="dp-sequences-strings"><a href="../topics/dp-sequences-strings.html">Sequence &amp; String DP</a></li><li data-search="Interval &amp; Tree DP Dynamic Programming Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting). interval dp burst balloons matrix chain tree dp rerooting" data-slug="dp-intervals-trees"><a href="../topics/dp-intervals-trees.html">Interval &amp; Tree DP</a></li><li data-search="Bitmask &amp; Digit DP Dynamic Programming Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints. bitmask tsp digit dp subset dp" data-slug="dp-bitmask-digit"><a href="../topics/dp-bitmask-digit.html">Bitmask &amp; Digit DP</a></li><li data-search="State Machines &amp; DP Optimisations Dynamic Programming Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth. stock state machine convex hull trick knuth optimisation" data-slug="dp-advanced"><a href="../topics/dp-advanced.html" aria-current="page">State Machines &amp; DP Optimisations</a></li></ul></details><details class="nav-track"><summary>Bits &amp; Math</summary><ul class="topic-list"><li data-search="Bit Manipulation Bits &amp; Math Bits drawn as switches: masks, XOR tricks, counting bits, subset enumeration and Gray codes. xor mask single number popcount subsets" data-slug="bit-manipulation"><a href="../topics/bit-manipulation.html">Bit Manipulation</a></li><li data-search="Math, Number Theory &amp; Combinatorics Bits &amp; Math GCD, sieves, fast power, modular inverses, nCr mod p, inclusion–exclusion, and the geometry primitives you need. gcd sieve modular fast exponentiation combinatorics geometry" data-slug="math-number-theory"><a href="../topics/math-number-theory.html">Math, Number Theory &amp; Combinatorics</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../CodeExcellenceHome/index.html">Code Excellence Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>DSA Home / State Machines &amp; DP Optimisations</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">DYNAMIC PROGRAMMING</p><h1>State Machines &amp; DP Optimisations</h1><p class="lede">Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth.</p><div class="meta"><span class="level level-advanced">Advanced → Expert</span><span>~75 min study</span><span>Builds on: <a href="dp-knapsack.html">Knapsack Family</a>, <a href="dp-sequences-strings.html">Sequence &amp; String DP</a>, <a href="monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="dp-advanced" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="where-this-page-fits">Where this page fits</h2>
+<p>By now you can write a correct DP for almost anything: <a href="dp-framework.html">The DP Framework</a> gives you the recipe (state, transition, base cases, order, answer), <a href="dp-knapsack.html">Knapsack DP</a> adds budgets, <a href="dp-sequences-strings.html">Sequence &amp; String DP</a> adds pairs of indices, and <a href="dp-intervals-trees.html">Interval &amp; Tree DP</a> adds ranges and subtrees. This page is about the two things that are still missing on "Hard" and "Expert" problems:</p>
+<ol>
+<li><strong>States that are not positions.</strong> Sometimes "where am I in the array" is not enough. You also need "what mode am I in": holding a stock or not, swapped or not, on cooldown or not. That is a <strong>state machine</strong> unrolled over time. When the dependencies form an arbitrary acyclic graph instead of a line, it is <strong>DP on a DAG</strong>.</li>
+<li><strong>Transitions that are too slow.</strong> The recurrence is right, but it scans <em>all</em> earlier states, which is O(n²) or O(n³) when the limits need O(n log n). The fix is never a new recurrence. It is a <strong>data structure or a structural fact</strong> that answers "best earlier state" faster: a monotonic deque, binary search, a segment tree, a set of lines (convex hull trick, Li Chao), or the fact that the optimal split point only moves one way (divide &amp; conquer, Knuth).</li>
+</ol>
+<p>Then there are three families that look like DP but need their own tricks: <strong>probability and expected value</strong>, <strong>counting modulo 10⁹+7</strong> (including matrix exponentiation for n up to 10¹⁸), and <strong>games</strong> (minimax, Nim, Sprague-Grundy).</p>
+<div class="rule">
+<p><strong>Optimising a DP never changes <em>what</em> you compute. It changes <em>how fast you find the best earlier state</em>.</strong> First write the slow recurrence and check it on small cases. Then look at the shape of the <code>max</code>/<code>min</code> inside it: a sliding window, a prefix over sorted keys, a min over lines, or a monotone split point. Each shape has exactly one standard speed-up.</p>
+</div>
+<h2 id="the-optimisation-map">The optimisation map</h2>
+<p>Every speed-up on this page starts from a recurrence written in a recognisable shape. Learn to read the shape, and the technique follows. Each row is taught in its own section below, with a visualizer that runs it.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 830 440" width="830" role="img" aria-label="Map from recurrence shape to DP speed-up: sliding-window max to monotonic deque, prefix over keys to bisect or segment tree, min over lines to convex hull trick or Li Chao, monotone split point to divide and conquer, interval split with quadrangle inequality to Knuth, fixed linear recurrence to matrix power">
+<defs><marker id="dp-advanced-m1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="20" y="26" class="title">The max/min inside your recurrence looks like …</text><text x="440" y="26" class="title">… so use</text><text x="680" y="26" class="title">cost</text>
+<rect class="box" x="16" y="42" width="384" height="50" rx="8"/><text x="28" y="62" class="mono">dp[i] = a[i] + max(dp[i−k … i−1])</text><text x="28" y="82" class="small muted">best over a sliding window of earlier states</text>
+<path class="edge accent" d="M402 67 L432 67" marker-end="url(#dp-advanced-m1)"/>
+<rect class="box active" x="436" y="42" width="230" height="50" rx="8"/><text x="448" y="62" class="title">Monotonic deque</text><text x="448" y="82" class="small">max of window in O(1)</text><text x="680" y="72" class="small mono">O(nk) → O(n)</text>
+<rect class="box" x="16" y="104" width="384" height="50" rx="8"/><text x="28" y="124" class="mono">dp[i] = 1 + max{dp[j] : j &lt; i, key[j] &lt; key[i]}</text><text x="28" y="144" class="small muted">best over all earlier states with a smaller key</text>
+<path class="edge accent" d="M402 129 L432 129" marker-end="url(#dp-advanced-m1)"/>
+<rect class="box active" x="436" y="104" width="230" height="50" rx="8"/><text x="448" y="124" class="title">Bisect / segment tree</text><text x="448" y="144" class="small">sorted tails, or tree over keys</text><text x="680" y="134" class="small mono">O(n²) → O(n log n)</text>
+<rect class="box" x="16" y="166" width="384" height="50" rx="8"/><text x="28" y="186" class="mono">dp[i] = min_j ( m[j]·x[i] + b[j] ) + c[i]</text><text x="28" y="206" class="small muted">term splits into (only j) × (only i): a line per j</text>
+<path class="edge accent" d="M402 191 L432 191" marker-end="url(#dp-advanced-m1)"/>
+<rect class="box active" x="436" y="166" width="230" height="50" rx="8"/><text x="448" y="186" class="title">Convex hull trick</text><text x="448" y="206" class="small">deque of lines, or Li Chao tree</text><text x="680" y="196" class="small mono">O(n²) → O(n log n)</text>
+<rect class="box" x="16" y="228" width="384" height="50" rx="8"/><text x="28" y="248" class="mono">dp[t][i] = min_{j&lt;i} dp[t−1][j] + C(j, i)</text><text x="28" y="268" class="small muted">K layers, and opt(i) ≤ opt(i+1) inside a layer</text>
+<path class="edge accent" d="M402 253 L432 253" marker-end="url(#dp-advanced-m1)"/>
+<rect class="box active" x="436" y="228" width="230" height="50" rx="8"/><text x="448" y="248" class="title">Divide &amp; conquer</text><text x="448" y="268" class="small">solve mid row, recurse on halves</text><text x="680" y="258" class="small mono">O(Kn²) → O(Kn log n)</text>
+<rect class="box" x="16" y="290" width="384" height="50" rx="8"/><text x="28" y="310" class="mono">dp[i][j] = min_{i≤k&lt;j} dp[i][k] + dp[k+1][j] + C</text><text x="28" y="330" class="small muted">interval DP, C satisfies the quadrangle inequality</text>
+<path class="edge accent" d="M402 315 L432 315" marker-end="url(#dp-advanced-m1)"/>
+<rect class="box active" x="436" y="290" width="230" height="50" rx="8"/><text x="448" y="310" class="title">Knuth</text><text x="448" y="330" class="small">opt[i][j−1] ≤ opt ≤ opt[i+1][j]</text><text x="680" y="320" class="small mono">O(n³) → O(n²)</text>
+<rect class="box" x="16" y="352" width="384" height="50" rx="8"/><text x="28" y="372" class="mono">f(n) = c₁f(n−1) + … + c_k f(n−k)</text><text x="28" y="392" class="small muted">fixed small k, but n up to 10¹⁸</text>
+<path class="edge accent" d="M402 377 L432 377" marker-end="url(#dp-advanced-m1)"/>
+<rect class="box active" x="436" y="352" width="230" height="50" rx="8"/><text x="448" y="372" class="title">Matrix power</text><text x="448" y="392" class="small">square-and-multiply on k×k</text><text x="680" y="382" class="small mono">O(nk) → O(k³ log n)</text>
+<text x="415" y="428" text-anchor="middle" class="small muted">Prove the slow version on small inputs first. Then swap the inner loop for the structure in the middle column.</text>
+</svg>
+<figcaption>Six recurrence shapes and their standard speed-ups. The left column is what you write first; the middle column is what you replace the inner loop with.</figcaption>
+</figure>
+
+<h2 id="state-machine-dp">State-machine DP</h2>
+<p>Many problems have a small set of <strong>modes</strong>, and the rules say which mode you may move to next. Index the DP by time <strong>and</strong> mode: <code>dp[day][mode]</code>. Each day you take every allowed edge out of every mode, and keep the best value per mode. That is a state machine "unrolled" into a grid, which people call a <strong>trellis</strong>.</p>
+<h3 id="the-stock-family-is-one-machine">The stock family is one machine</h3>
+<p>The six LeetCode stock problems (121, 122, 123, 188, 309, 714) look different, but they are all one machine with three kinds of edge: <strong>buy</strong> (pay the price), <strong>sell</strong> (receive the price), and <strong>wait</strong>. The variants only change which modes exist and what an edge costs:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 720 296" width="720" role="img" aria-label="Stock state machine with cooldown: REST goes to HOLD by buying at minus price, HOLD goes to SOLD by selling at plus price, SOLD goes back to REST after a cooldown day; REST and HOLD can wait">
+<defs><marker id="dp-advanced-s1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-active"/></marker><marker id="dp-advanced-s2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker><marker id="dp-advanced-s3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker></defs>
+<circle class="box accent" cx="130" cy="140" r="46"/><text x="130" y="138" text-anchor="middle" class="title">REST</text><text x="130" y="156" text-anchor="middle" class="small">cash, may buy</text>
+<circle class="box active" cx="360" cy="140" r="46"/><text x="360" y="138" text-anchor="middle" class="title">HOLD</text><text x="360" y="156" text-anchor="middle" class="small">own one share</text>
+<circle class="box done" cx="590" cy="140" r="46"/><text x="590" y="138" text-anchor="middle" class="title">SOLD</text><text x="590" y="156" text-anchor="middle" class="small">sold today</text>
+<path class="edge active" d="M170 116 Q245 64 318 116" marker-end="url(#dp-advanced-s1)"/><text x="245" y="76" text-anchor="middle" class="mono">buy: − price</text>
+<path class="edge done" d="M400 116 Q475 64 548 116" marker-end="url(#dp-advanced-s2)"/><text x="475" y="76" text-anchor="middle" class="mono">sell: + price</text>
+<path class="edge dash" d="M566 180 Q360 290 154 180" marker-end="url(#dp-advanced-s3)"/><text x="360" y="256" text-anchor="middle" class="small">next day: forced back to REST (the cooldown in 309)</text>
+<path class="edge" d="M106 101 C70 36 190 36 154 101" marker-end="url(#dp-advanced-s3)"/><text x="130" y="36" text-anchor="middle" class="small">wait</text>
+<path class="edge" d="M336 101 C300 36 420 36 384 101" marker-end="url(#dp-advanced-s3)"/><text x="360" y="36" text-anchor="middle" class="small">wait</text>
+<text x="360" y="284" text-anchor="middle" class="small muted">Without cooldown, SOLD merges into REST. With k trades, copy REST/HOLD once per trade count. A fee is just "sell: + price − fee".</text>
+</svg>
+<figcaption>The cooldown variant (309) as a machine. Every stock problem is this picture with modes merged or copied.</figcaption>
+</figure>
+
+<p>Now unroll it. Each column below is a day, and each row is a mode. The value in a cell is the <strong>best cash you can have on that day while in that mode</strong>. Step through and watch each cell choose between its incoming edges. Switch the problem selector to see how the trellis changes: one trade (121) gives one HOLD row that can only be entered from a zero-cash REST; <em>k</em> trades (188) stacks <em>k</em> copies of HOLD/SOLD; the fee (714) is subtracted on the sell edge.</p>
+<div class="viz dpa-wide" data-viz="dp-advanced-stock"></div>
+
+<p>The six variants in one table. <code>p</code> is today's price, and the right-hand side always reads <strong>yesterday's</strong> values:</p>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Modes</th>
+<th>Transitions</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>121 one trade</td>
+<td>hold, sold</td>
+<td><code>hold = max(hold, −p)</code>; <code>sold = max(sold, hold + p)</code></td>
+<td><code>sold</code></td>
+</tr>
+<tr>
+<td>122 unlimited</td>
+<td>cash, hold</td>
+<td><code>cash = max(cash, hold + p)</code>; <code>hold = max(hold, cash − p)</code></td>
+<td><code>cash</code></td>
+</tr>
+<tr>
+<td>123 two trades</td>
+<td>hold₁, sold₁, hold₂, sold₂</td>
+<td><code>hold₂ = max(hold₂, sold₁ − p)</code> etc.</td>
+<td><code>sold₂</code></td>
+</tr>
+<tr>
+<td>188 k trades</td>
+<td>hold[t], sold[t] for t = 1..k</td>
+<td><code>hold[t] = max(hold[t], sold[t−1] − p)</code></td>
+<td><code>max(sold)</code></td>
+</tr>
+<tr>
+<td>309 cooldown</td>
+<td>rest, hold, sold</td>
+<td><code>rest = max(rest, sold)</code>; <code>hold = max(hold, rest − p)</code>; <code>sold = hold + p</code></td>
+<td><code>max(rest, sold)</code></td>
+</tr>
+<tr>
+<td>714 fee</td>
+<td>cash, hold</td>
+<td><code>cash = max(cash, hold + p − fee)</code></td>
+<td><code>cash</code></td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs">
+<pre><code class="language-python">def max_profit_k(prices, k):              # 188; k = 1 is 121, k = 2 is 123
+    hold = [float(&quot;-inf&quot;)] * (k + 1)      # hold[t]: holding, t-th buy done
+    sold = [0] + [float(&quot;-inf&quot;)] * k      # sold[t]: not holding, t trades done
+    for p in prices:
+        for t in range(k, 0, -1):         # read yesterday's values: go downward
+            sold[t] = max(sold[t], hold[t] + p)
+            hold[t] = max(hold[t], sold[t - 1] - p)
+    return max(sold)
+
+def max_profit_cooldown(prices):          # 309
+    rest, hold, sold = 0, float(&quot;-inf&quot;), float(&quot;-inf&quot;)
+    for p in prices:
+        rest, hold, sold = max(rest, sold), max(hold, rest - p), hold + p
+    return max(rest, sold)
+
+def max_profit_fee(prices, fee):          # 714; fee = 0 is 122
+    cash, hold = 0, float(&quot;-inf&quot;)
+    for p in prices:
+        cash, hold = max(cash, hold + p - fee), max(hold, cash - p)
+    return cash
+</code></pre>
+<pre><code class="language-csharp">public static int MaxProfitK(int k, int[] prices)       // 188; k = 1 is 121, k = 2 is 123
+{
+    const long NEG = long.MinValue / 4;
+    var hold = new long[k + 1]; var sold = new long[k + 1];
+    Array.Fill(hold, NEG); Array.Fill(sold, NEG); sold[0] = 0;
+    foreach (int p in prices)
+        for (int t = k; t &gt;= 1; t--)                       // downward: read yesterday's sold[t-1]
+        {
+            sold[t] = Math.Max(sold[t], hold[t] + p);
+            hold[t] = Math.Max(hold[t], sold[t - 1] - p);
+        }
+    return (int)sold.Max();
+}
+
+public static int MaxProfitCooldown(int[] prices)        // 309
+{
+    int rest = 0, hold = int.MinValue / 2, sold = int.MinValue / 2;
+    foreach (int p in prices)
+        (rest, hold, sold) = (Math.Max(rest, sold), Math.Max(hold, rest - p), hold + p);
+    return Math.Max(rest, sold);
+}
+
+public static int MaxProfitFee(int[] prices, int fee)    // 714; fee = 0 is 122
+{
+    int cash = 0, hold = int.MinValue / 2;
+    foreach (int p in prices)
+        (cash, hold) = (Math.Max(cash, hold + p - fee), Math.Max(hold, cash - p));
+    return cash;
+}
+</code></pre>
+</div>
+<p>All three run in O(n·modes) time and O(modes) space. For 188, when <code>k ≥ n/2</code> the limit never binds, so you can fall back to the unlimited version and avoid an O(nk) loop with a huge k.</p>
+<div class="insight">
+<p><strong>Why the tuple assignment matters.</strong> In <code>rest, hold, sold = max(rest, sold), max(hold, rest - p), hold + p</code>, every right-hand side reads <strong>yesterday's</strong> values. If you update one variable at a time, <code>hold</code> would read today's <code>rest</code>, and you would buy and sell on the same day through the cooldown. In the k-trade version the same goal is reached by looping <code>t</code> <strong>downward</strong>, exactly like the reverse loop in <a href="dp-knapsack.html">0/1 knapsack</a>: <code>hold[t]</code> reads <code>sold[t−1]</code>, which has not been updated yet this day.</p>
+</div>
+<div class="recognize">
+<p><strong>Recognise a state machine when</strong> the statement has phrases like "you may not … on the day after …", "at most k times", "you must … before you can …", "after a swap", or "while holding". Draw the modes as circles and the allowed moves as arrows <em>before</em> writing code. The DP is then one line per arrow.</p>
+</div>
+<p>The same pattern solves problems with no stocks at all. <a href="https://leetcode.com/problems/minimum-swaps-to-make-sequences-increasing/">Minimum Swaps To Make Sequences Increasing</a> has two modes per column (kept or swapped), and is worked in full <a href="#1-minimum-swaps-to-make-sequences-increasing-two-modes-per-column">below</a>. Other examples are a string with "no three equal letters in a row" (the mode is the length of the current run) and <a href="https://leetcode.com/problems/student-attendance-record-ii/">Student Attendance Record II</a> (the modes are absences used × current late streak, so 2 × 3 = 6 modes).</p>
+<h2 id="dp-on-a-dag">DP on a DAG</h2>
+<p>A DP is always a computation on a directed acyclic graph: the states are nodes, and "state <em>u</em> is used to compute state <em>v</em>" is an edge. On a line or a grid the order is obvious. When the dependencies are an <strong>arbitrary DAG</strong> (courses with prerequisites, tasks with dependencies, cells that may only step to larger values), you need an order in which every node comes after all its inputs. That order is a <a href="topological-sort.html">topological order</a>, and Kahn's algorithm gives it to you while you fill the table.</p>
+<p><a href="https://leetcode.com/problems/parallel-courses-iii/">Parallel Courses III</a> is the cleanest example. Course <em>v</em> can start only when every prerequisite has finished, and courses run in parallel. So <code>start[v] = max(finish[u])</code> over the prerequisites <em>u</em>, and <code>finish[v] = start[v] + time[v]</code>. The answer is the <strong>longest path</strong> in the DAG, weighted by node. Longest path is NP-hard in general graphs, but on a DAG it is one pass of DP.</p>
+<div class="viz dpa-wide" data-viz="dp-advanced-dag"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def minimum_time(n, relations, time):     # 2050
+    adj = [[] for _ in range(n + 1)]; indeg = [0] * (n + 1)
+    for u, v in relations: adj[u].append(v); indeg[v] += 1
+    start = [0] * (n + 1)
+    q = deque(v for v in range(1, n + 1) if indeg[v] == 0)
+    best = 0
+    while q:
+        u = q.popleft()                   # every input of u is final now
+        fin = start[u] + time[u - 1]; best = max(best, fin)
+        for v in adj[u]:
+            start[v] = max(start[v], fin) # relax: v cannot start before u ends
+            indeg[v] -= 1
+            if indeg[v] == 0: q.append(v)
+    return best
+</code></pre>
+<pre><code class="language-csharp">public static int MinimumTime(int n, int[][] relations, int[] time)   // 2050
+{
+    var adj = new List&lt;int&gt;[n + 1]; var indeg = new int[n + 1];
+    for (int v = 0; v &lt;= n; v++) adj[v] = new List&lt;int&gt;();
+    foreach (var r in relations) { adj[r[0]].Add(r[1]); indeg[r[1]]++; }
+    var start = new int[n + 1]; var q = new Queue&lt;int&gt;();
+    for (int v = 1; v &lt;= n; v++) if (indeg[v] == 0) q.Enqueue(v);
+    int best = 0;
+    while (q.Count &gt; 0)
+    {
+        int u = q.Dequeue(), fin = start[u] + time[u - 1];   // every input of u is final now
+        best = Math.Max(best, fin);
+        foreach (int v in adj[u])
+        {
+            start[v] = Math.Max(start[v], fin);                // v cannot start before u ends
+            if (--indeg[v] == 0) q.Enqueue(v);
+        }
+    }
+    return best;
+}
+</code></pre>
+</div>
+<p>O(V + E) time and space. The same skeleton gives <a href="https://leetcode.com/problems/longest-increasing-path-in-a-matrix/">Longest Increasing Path in a Matrix</a> (edges go from smaller to larger cells, so the graph is a DAG for free), counting paths in a DAG (replace <code>max</code> by <code>+</code>), and <a href="https://leetcode.com/problems/largest-color-value-in-a-directed-graph/">Largest Color Value in a Directed Graph</a>, where each node carries 26 counters and a leftover node after Kahn's pass means there is a cycle. That last one is worked on <a href="dp-intervals-trees.html">Interval &amp; Tree DP</a>.</p>
+<div class="tip">
+<p><strong>Memoised DFS or Kahn?</strong> Both are fine on a DAG. Memoised DFS ("the answer for <em>v</em> is computed from its predecessors, recursively") is shorter to write but can overflow the recursion stack at 10⁵ nodes in Python. Kahn's queue is iterative, and it also <strong>detects cycles</strong>: if fewer than <em>n</em> nodes are popped, the input was not a DAG.</p>
+</div>
+<h2 id="dp-monotonic-deque">DP + monotonic deque</h2>
+<p>Here is the first speed-up. Suppose your recurrence is</p>
+<p><code>dp[i] = a[i] + max(dp[j])</code> for <code>j</code> in the window <code>[i − k, i − 1]</code>.</p>
+<p>The direct loop costs O(k) per cell, so O(nk) in total. With n = k = 10⁵ that is 10¹⁰ operations, which is too slow. But the windows of neighbouring cells overlap in all but one element: going from <code>i</code> to <code>i + 1</code>, one state enters the window and one leaves. That is exactly the <strong>sliding window maximum</strong> problem from <a href="monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a>, with the twist that the values in the window are DP values you computed a moment ago.</p>
+<div class="insight">
+<p><strong>The dominance argument.</strong> If <code>j₁ &lt; j₂</code> and <code>dp[j₁] ≤ dp[j₂]</code>, then <code>j₁</code> can <strong>never</strong> be the best choice again: <code>j₂</code> is at least as good, and it stays in the window longer. So throw <code>j₁</code> away. The survivors are in increasing order of index and decreasing order of value, which is a monotonic deque. The front is the best state in the window, and states leave from the front only when they get too old.</p>
+</div>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 720 244" width="720" role="img" aria-label="Deque DP: the window of the last k states, of which only a decreasing chain survives in the deque; the front is the max; dominated states are crossed out">
+<defs><marker id="dp-advanced-d1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-active"/></marker></defs>
+<text x="20" y="28" class="small">index j</text><text x="20" y="72" class="small">dp[j]</text>
+<rect class="box" x="90" y="46" width="52" height="40" rx="6"/><rect class="box" x="150" y="46" width="52" height="40" rx="6"/><rect class="box done" x="210" y="46" width="52" height="40" rx="6"/><rect class="box bad" x="270" y="46" width="52" height="40" rx="6"/><rect class="box done" x="330" y="46" width="52" height="40" rx="6"/><rect class="box bad" x="390" y="46" width="52" height="40" rx="6"/><rect class="box done" x="450" y="46" width="52" height="40" rx="6"/><rect class="box active" x="530" y="46" width="52" height="40" rx="6"/>
+<text x="116" y="28" text-anchor="middle" class="small mono">0</text><text x="176" y="28" text-anchor="middle" class="small mono">1</text><text x="236" y="28" text-anchor="middle" class="small mono">2</text><text x="296" y="28" text-anchor="middle" class="small mono">3</text><text x="356" y="28" text-anchor="middle" class="small mono">4</text><text x="416" y="28" text-anchor="middle" class="small mono">5</text><text x="476" y="28" text-anchor="middle" class="small mono">6</text><text x="556" y="28" text-anchor="middle" class="small mono">i = 7</text>
+<text x="116" y="71" text-anchor="middle" class="mono">8</text><text x="176" y="71" text-anchor="middle" class="mono">3</text><text x="236" y="71" text-anchor="middle" class="mono">9</text><text x="296" y="71" text-anchor="middle" class="mono">4</text><text x="356" y="71" text-anchor="middle" class="mono">6</text><text x="416" y="71" text-anchor="middle" class="mono">2</text><text x="476" y="71" text-anchor="middle" class="mono">5</text><text x="556" y="71" text-anchor="middle" class="mono">?</text>
+<path class="edge accent dash" d="M204 96 L508 96"/><path class="edge accent" d="M204 90 L204 102"/><path class="edge accent" d="M508 90 L508 102"/><text x="356" y="114" text-anchor="middle" class="small">window: j in [i − k, i − 1] with k = 5</text>
+<path class="edge bad" d="M276 52 L316 80"/><path class="edge bad" d="M396 52 L436 80"/>
+<text x="20" y="160" class="small">deque</text>
+<rect class="box done" x="90" y="140" width="70" height="36" rx="6"/><text x="125" y="163" text-anchor="middle" class="mono">j=2 · 9</text><rect class="box done" x="170" y="140" width="70" height="36" rx="6"/><text x="205" y="163" text-anchor="middle" class="mono">j=4 · 6</text><rect class="box done" x="250" y="140" width="70" height="36" rx="6"/><text x="285" y="163" text-anchor="middle" class="mono">j=6 · 5</text>
+<text x="125" y="196" text-anchor="middle" class="small">front = max</text><text x="285" y="196" text-anchor="middle" class="small">back = newest</text>
+<path class="edge active" d="M125 140 L125 128 Q125 124 133 124 L548 124 Q556 124 556 116 L556 90" marker-end="url(#dp-advanced-d1)"/><text x="420" y="150" class="small">dp[7] = a[7] + dp[2]</text>
+<text x="360" y="218" text-anchor="middle" class="small muted">j = 3 (4 ≤ 6, older) and j = 5 (2 ≤ 5, older) are dominated and were popped from the back.</text><text x="360" y="234" text-anchor="middle" class="small muted">j = 0, 1 are outside the window (and both were already dominated by j = 2).</text>
+</svg>
+<figcaption>Values decrease from front to back. Each index is pushed once and popped once, so the whole DP is O(n).</figcaption>
+</figure>
+
+<p>Two classic problems use this shape. In <a href="https://leetcode.com/problems/jump-game-vi/">Jump Game VI</a> you must land on the last index, and your score is the sum of the cells you land on: <code>dp[i] = nums[i] + max(dp[i−k … i−1])</code>. In <a href="https://leetcode.com/problems/constrained-subsequence-sum/">Constrained Subsequence Sum</a> you choose a non-empty subsequence in which neighbours are at most <code>k</code> apart, so you may also <strong>start fresh</strong>: <code>dp[i] = nums[i] + max(0, max(dp[i−k … i−1]))</code>. Step through both with the selector, and watch the deque under the array.</p>
+<div class="viz dpa-wide" data-viz="dp-advanced-deque"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def max_result(nums, k):                  # Jump Game VI (1696)
+    n = len(nums); dp = [0] * n; dp[0] = nums[0]
+    dq = deque([0])                       # indices, dp values decreasing
+    for i in range(1, n):
+        while dq[0] &lt; i - k: dq.popleft()           # too old to jump from
+        dp[i] = nums[i] + dp[dq[0]]
+        while dq and dp[dq[-1]] &lt;= dp[i]: dq.pop()  # dominated by i
+        dq.append(i)
+    return dp[-1]
+
+def constrained_subset_sum(nums, k):      # 1425
+    dp, dq = [0] * len(nums), deque()
+    for i, x in enumerate(nums):
+        while dq and dq[0] &lt; i - k: dq.popleft()
+        dp[i] = x + max(0, dp[dq[0]] if dq else 0)  # 0 = start a new subsequence
+        while dq and dp[dq[-1]] &lt;= dp[i]: dq.pop()
+        dq.append(i)
+    return max(dp)
+</code></pre>
+<pre><code class="language-csharp">public static int MaxResult(int[] nums, int k)             // Jump Game VI (1696)
+{
+    int n = nums.Length; var dp = new int[n]; dp[0] = nums[0];
+    var dq = new int[n]; int head = 0, tail = 0;           // dq[head..tail): indices, dp decreasing
+    dq[tail++] = 0;
+    for (int i = 1; i &lt; n; i++)
+    {
+        while (dq[head] &lt; i - k) head++;                   // too old to jump from
+        dp[i] = nums[i] + dp[dq[head]];
+        while (tail &gt; head &amp;&amp; dp[dq[tail - 1]] &lt;= dp[i]) tail--;   // dominated by i
+        dq[tail++] = i;
+    }
+    return dp[n - 1];
+}
+
+public static int ConstrainedSubsetSum(int[] nums, int k)  // 1425
+{
+    int n = nums.Length; var dp = new int[n];
+    var dq = new int[n]; int head = 0, tail = 0;
+    int best = int.MinValue;
+    for (int i = 0; i &lt; n; i++)
+    {
+        while (tail &gt; head &amp;&amp; dq[head] &lt; i - k) head++;
+        dp[i] = nums[i] + Math.Max(0, tail &gt; head ? dp[dq[head]] : 0);   // 0 = start fresh
+        while (tail &gt; head &amp;&amp; dp[dq[tail - 1]] &lt;= dp[i]) tail--;
+        dq[tail++] = i;
+        best = Math.Max(best, dp[i]);
+    }
+    return best;
+}
+</code></pre>
+</div>
+<p>Both are O(n) time and O(n) space (O(k) for the deque). The C# version uses a plain array with two moving ends instead of <code>LinkedList&lt;int&gt;</code>, because each index is pushed at most once.</p>
+<div class="recognize">
+<p><strong>The general form.</strong> The deque works whenever the term inside the max splits into a part that depends only on <code>j</code> and a part that depends only on <code>i</code>, and the window's ends only move right: <code>dp[i] = g(i) + max_{j ∈ [L(i), i−1]} h(j)</code> with <code>L(i)</code> non-decreasing. Examples: <a href="https://leetcode.com/problems/max-value-of-equation/">Max Value of Equation</a> (<code>yᵢ + xᵢ + max(yⱼ − xⱼ)</code> over <code>xᵢ − xⱼ ≤ k</code>), <a href="https://leetcode.com/problems/delivering-boxes-from-storage-to-ports/">Delivering Boxes from Storage to Ports</a>, and <a href="https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/">Shortest Subarray with Sum at Least K</a>, which uses an increasing deque over prefix sums. If the term mixes <code>i</code> and <code>j</code> in a product, you need the convex hull trick instead.</p>
+</div>
+<h2 id="dp-binary-search">DP + binary search</h2>
+<p>When the "best earlier state" is restricted by a <strong>key</strong> (a value smaller than mine, an end time before my start) rather than by a window, sort or bucket by the key and binary search for the boundary.</p>
+<h3 id="lis-in-on-log-n-patience-sorting">LIS in O(n log n): patience sorting</h3>
+<p>The slow LIS is <code>dp[i] = 1 + max(dp[j] for j &lt; i if a[j] &lt; a[i])</code>, which is O(n²). The fast version keeps a different table:</p>
+<div class="rule">
+<p><strong><code>tails[L]</code> = the smallest possible last element of an increasing subsequence of length <code>L + 1</code> seen so far.</strong> A smaller tail is always better, because it can be extended by more future numbers. <code>tails</code> is strictly increasing, so for each new <code>x</code> you binary search the first tail <code>≥ x</code> and replace it (or append if there is none).</p>
+</div>
+<p>Think of a card game. Each card goes on the <strong>leftmost pile whose top card is ≥ it</strong>, or starts a new pile on the right. The number of piles is the LIS length. The pile tops are exactly <code>tails</code>. To recover an actual subsequence (not only its length), give every card a back-pointer to the <strong>current top of the pile to its left</strong>. Following back-pointers from the top of the last pile spells out an LIS in reverse.</p>
+<div class="viz dpa-wide" data-viz="dp-advanced-lis"></div>
+
+<div class="pitfall">
+<p><strong><code>tails</code> is not an LIS.</strong> After <code>[3, 8, 4, 1]</code> the tails are <code>[1, 4]</code>, but <code>1, 4</code> is not a subsequence in that order, since 1 comes after 4. Only its <strong>length</strong> is meaningful. If you need the sequence, keep the back-pointers as in the code below. Also choose the bisect side on purpose: <code>bisect_left</code> for strictly increasing, <code>bisect_right</code> for non-decreasing (for example <a href="https://leetcode.com/problems/minimum-operations-to-make-the-array-k-increasing/">Minimum Operations to Make the Array K-Increasing</a>).</p>
+</div>
+<h3 id="russian-doll-envelopes-2d-lis-with-one-sort">Russian Doll Envelopes: 2D LIS with one sort</h3>
+<p>An envelope <code>(w, h)</code> fits in another only if <strong>both</strong> dimensions are strictly smaller. Sort by width, and the problem becomes an LIS on heights, with one catch: two envelopes with the <strong>same width</strong> must not both be chosen, yet an LIS on heights would happily take <code>(3, 4)</code> then <code>(3, 5)</code>. The fix is one sort key: <strong>width ascending, height descending on ties</strong>. Within one width the heights then appear in decreasing order, so a strictly increasing subsequence can pick at most one of them. Switch the visualizer above to "Russian Doll Envelopes" to see it.</p>
+<div class="code-tabs">
+<pre><code class="language-python">import bisect
+
+def lis(a):                               # returns one longest strictly increasing subsequence
+    tails, top, prev = [], [], [-1] * len(a)
+    for i, x in enumerate(a):
+        j = bisect.bisect_left(tails, x)      # bisect_right for non-decreasing
+        prev[i] = top[j - 1] if j else -1     # back-pointer: top of the pile to the left
+        if j == len(tails): tails.append(x); top.append(i)
+        else: tails[j] = x; top[j] = i
+    out, i = [], top[-1] if top else -1
+    while i != -1: out.append(a[i]); i = prev[i]
+    return out[::-1]
+
+def max_envelopes(env):                   # 354
+    env.sort(key=lambda e: (e[0], -e[1]))     # width up, height DOWN on ties
+    tails = []
+    for _, h in env:
+        j = bisect.bisect_left(tails, h)
+        if j == len(tails): tails.append(h)
+        else: tails[j] = h
+    return len(tails)
+</code></pre>
+<pre><code class="language-csharp">static int LowerBound(List&lt;int&gt; xs, int x)                // first index with xs[i] &gt;= x
+{
+    int lo = 0, hi = xs.Count;
+    while (lo &lt; hi) { int mid = (lo + hi) / 2; if (xs[mid] &lt; x) lo = mid + 1; else hi = mid; }
+    return lo;
+}
+
+public static List&lt;int&gt; Lis(int[] a)
+{
+    var tails = new List&lt;int&gt;(); var top = new List&lt;int&gt;(); var prev = new int[a.Length];
+    for (int i = 0; i &lt; a.Length; i++)
+    {
+        int j = LowerBound(tails, a[i]);
+        prev[i] = j &gt; 0 ? top[j - 1] : -1;                // back-pointer: top of the pile to the left
+        if (j == tails.Count) { tails.Add(a[i]); top.Add(i); }
+        else { tails[j] = a[i]; top[j] = i; }
+    }
+    var res = new List&lt;int&gt;();
+    for (int i = top.Count &gt; 0 ? top[^1] : -1; i != -1; i = prev[i]) res.Add(a[i]);
+    res.Reverse();
+    return res;
+}
+
+public static int MaxEnvelopes(int[][] env)               // 354
+{
+    Array.Sort(env, (p, q) =&gt; p[0] != q[0] ? p[0].CompareTo(q[0]) : q[1].CompareTo(p[1]));
+    var tails = new List&lt;int&gt;();
+    foreach (var e in env)
+    {
+        int j = LowerBound(tails, e[1]);
+        if (j == tails.Count) tails.Add(e[1]); else tails[j] = e[1];
+    }
+    return tails.Count;
+}
+</code></pre>
+</div>
+<p>O(n log n) time, O(n) space. In C#, avoid <code>List&lt;T&gt;.BinarySearch</code> here: with duplicates it returns <em>some</em> matching index, not the first one, so it is not a lower bound.</p>
+<h3 id="weighted-interval-scheduling-sort-by-end-bisect-for-the-past">Weighted interval scheduling: sort by end, bisect for the past</h3>
+<p><a href="https://leetcode.com/problems/maximum-profit-in-job-scheduling/">Maximum Profit in Job Scheduling</a> gives jobs <code>(start, end, profit)</code>. Choose non-overlapping jobs with maximum total profit (a job may start exactly when another ends). Sort by end time. Then <code>dp[i]</code>, the best profit using only the first <code>i</code> jobs, has two choices for job <code>i</code>:</p>
+<ul>
+<li><strong>skip it</strong>: <code>dp[i − 1]</code>;</li>
+<li><strong>take it</strong>: <code>profit[i] + dp[k]</code>, where <code>k</code> is the number of earlier jobs that end at or before <code>start[i]</code>. Because the jobs are sorted by end, those jobs form a <strong>prefix</strong>, and <code>k = bisect_right(ends, start[i])</code>.</li>
+</ul>
+<p>That is "knapsack where the budget is time", and the binary search replaces a backwards scan. The visualizer draws the jobs as bars on a timeline, highlights the compatible prefix found by bisect, and shows which choice wins.</p>
+<div class="viz dpa-wide" data-viz="dp-advanced-jobs"></div>
+
+<p>The full solution is <a href="#2-maximum-profit-in-job-scheduling-dp-over-sorted-ends">worked problem 2</a>.</p>
+<h2 id="dp-segment-tree-or-fenwick-tree">DP + segment tree or Fenwick tree</h2>
+<p>Binary search works when the useful earlier states form a prefix of something sorted. When the query is "best <code>dp</code> among earlier states whose <strong>value</strong> lies in a range <code>[lo, hi]</code>", index a <a href="segment-fenwick-trees.html">segment tree</a> by value and let it answer range-max queries in O(log V).</p>
+<p><a href="https://leetcode.com/problems/longest-increasing-subsequence-ii/">Longest Increasing Subsequence II</a> asks for the longest strictly increasing subsequence in which neighbours differ by <strong>at most k</strong>. Patience sorting cannot express "at most k", but a DP over values can:</p>
+<p><code>best[x] = 1 + max(best[v] for v in [x − k, x − 1])</code>, processed in array order.</p>
+<p><code>best[v]</code> is "the longest valid subsequence seen so far that ends with value <code>v</code>". The range max is a segment tree query; writing back <code>best[x]</code> is a point update. The visualizer shows the tree over values 1..16, the query range lighting up, and the nodes the query touches.</p>
+<div class="viz dpa-wide" data-viz="dp-advanced-segdp"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def length_of_lis_k(nums, k):             # 2407
+    size = 1
+    while size &lt; max(nums) + 1: size *= 2
+    tree = [0] * (2 * size)               # iterative segment tree over values, range max
+    def query(lo, hi):                    # max over values [lo, hi]
+        res, lo, hi = 0, lo + size, hi + size + 1
+        while lo &lt; hi:
+            if lo &amp; 1: res = max(res, tree[lo]); lo += 1
+            if hi &amp; 1: hi -= 1; res = max(res, tree[hi])
+            lo //= 2; hi //= 2
+        return res
+    def update(i, v):
+        i += size; tree[i] = max(tree[i], v)
+        while i &gt; 1:
+            i //= 2; tree[i] = max(tree[2 * i], tree[2 * i + 1])
+    for x in nums:
+        update(x, query(max(0, x - k), x - 1) + 1)
+    return tree[1]
+</code></pre>
+<pre><code class="language-csharp">public static int LengthOfLIS(int[] nums, int k)          // 2407
+{
+    int size = 1;
+    while (size &lt; nums.Max() + 1) size *= 2;
+    var tree = new int[2 * size];                         // iterative segment tree over values, range max
+    int Query(int lo, int hi)                             // max over values [lo, hi]
+    {
+        int res = 0;
+        for (lo += size, hi += size + 1; lo &lt; hi; lo /= 2, hi /= 2)
+        {
+            if ((lo &amp; 1) == 1) res = Math.Max(res, tree[lo++]);
+            if ((hi &amp; 1) == 1) res = Math.Max(res, tree[--hi]);
+        }
+        return res;
+    }
+    void Update(int i, int v)
+    {
+        i += size; tree[i] = Math.Max(tree[i], v);
+        for (i /= 2; i &gt;= 1; i /= 2) tree[i] = Math.Max(tree[2 * i], tree[2 * i + 1]);
+    }
+    foreach (int x in nums) Update(x, Query(Math.Max(0, x - k), x - 1) + 1);
+    return tree[1];
+}
+</code></pre>
+</div>
+<p>O(n log V) time and O(V) space. If the values are large (up to 10⁹), <strong>coordinate-compress</strong> them first (sort the distinct values and replace each value by its rank). When the query range is always a <strong>prefix</strong> <code>[0, x − 1]</code>, a Fenwick tree with "prefix max" is shorter. When you need <em>counts</em> (for example, the number of longest increasing subsequences), store a <code>(length, count)</code> pair per node and merge pairs instead of taking a max.</p>
+<h2 id="convex-hull-trick-and-li-chao-tree">Convex hull trick and Li Chao tree</h2>
+<h3 id="when-the-term-mixes-i-and-j">When the term mixes i and j</h3>
+<p>Now the hard case. <a href="https://atcoder.jp/contests/dp/tasks/dp_z">Frog 3</a> from the AtCoder Educational DP contest: stones have strictly increasing heights <code>h</code>. The frog jumps from stone <code>j</code> to any later stone <code>i</code> at a cost of <code>(h[i] − h[j])² + C</code>. Find the minimum cost to reach the last stone.</p>
+<p><code>dp[i] = min over j &lt; i of dp[j] + (h[i] − h[j])² + C</code></p>
+<p>The term <code>(h[i] − h[j])²</code> mixes <code>i</code> and <code>j</code>, so a deque of "best <code>dp[j]</code>" does not help: which <code>j</code> is best depends on <code>h[i]</code>. Expand the square and group by who owns each piece:</p>
+<p><code>dp[i] = h[i]² + C + min over j of ( (−2·h[j]) · h[i] + (dp[j] + h[j]²) )</code></p>
+<p>The part in the min is a <strong>line</strong> in the variable <code>x = h[i]</code>, with slope <code>m_j = −2·h[j]</code> and intercept <code>b_j = dp[j] + h[j]²</code>, both known as soon as <code>dp[j]</code> is final. So every finished state <em>j</em> contributes one line, and every new state <em>i</em> asks one question: <strong>which line is lowest at x = h[i]?</strong> The lowest line at each x forms the <strong>lower envelope</strong>, a convex chain. A line that is never on the envelope is never the answer and can be thrown away.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 300" width="760" role="img" aria-label="Lower envelope of five lines; four lines take turns being lowest as x grows, one line is never lowest; a vertical query at x equals 6 hits the envelope on the steepest line">
+<defs><marker id="dp-advanced-c1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-active"/></marker></defs>
+<path class="edge" d="M60 220 L630 220"/><path class="edge" d="M60 64 L60 280"/>
+<text x="52" y="224" text-anchor="end" class="small mono muted">0</text><text x="60" y="296" text-anchor="middle" class="small mono">x=0</text><text x="270" y="296" text-anchor="middle" class="small mono">3</text><text x="340" y="296" text-anchor="middle" class="small mono">4</text><text x="410" y="296" text-anchor="middle" class="small mono">5</text><text x="480" y="296" text-anchor="middle" class="small mono">6</text><text x="620" y="296" text-anchor="middle" class="small mono">8</text>
+<path class="edge" d="M60 220 L620 124"/><path class="edge" d="M60 184 L620 184"/><path class="edge" d="M60 136 L620 232"/><path class="edge" d="M60 76 L620 268"/>
+<path class="edge bad dash" d="M60 124 L620 76"/>
+<polyline class="edge done" points="60,220 270,184 340,184 410,196 620,268" style="stroke-width:5;opacity:.75"/>
+<text x="628" y="128" class="small mono">y = x</text><text x="628" y="188" class="small mono">y = 3</text><text x="628" y="236" class="small mono">y = 7 − x</text><text x="628" y="272" class="small mono">y = 12 − 2x</text><text x="628" y="80" class="small mono">y = 8 + x/2</text><text x="628" y="96" class="small">never lowest</text>
+<path class="edge active dash" d="M480 64 L480 280"/><circle cx="480" cy="220" r="6" class="fill-active"/>
+<text x="472" y="58" text-anchor="end" class="small">query x = 6: the envelope says min = 0, from y = 12 − 2x</text>
+<text x="96" y="248" class="small" style="font-weight:600">lower envelope = min of all lines (thick green)</text>
+</svg>
+<figcaption>Each finished DP state is a line. A query is a vertical line at x; the answer is the envelope's height there. Slopes on the envelope decrease from left to right.</figcaption>
+</figure>
+
+<h3 id="the-monotone-case-a-deque-of-lines">The monotone case: a deque of lines</h3>
+<p>In Frog 3 two things are monotone: lines are added in order of <strong>decreasing slope</strong> (heights increase, so <code>−2·h[j]</code> decreases), and queries come in <strong>increasing x</strong> (<code>h[i]</code> increases). Then the envelope can be kept in a deque, just like the sliding-window max, but with two different pop rules:</p>
+<ul>
+<li><strong>Pop from the front</strong> while the second line is at least as low as the first at the current x. Queries only move right, so once the front line loses it loses forever.</li>
+<li><strong>Pop from the back</strong> before adding line <code>ℓ₃</code> while the last line <code>ℓ₂</code> is never strictly lowest between <code>ℓ₁</code> and <code>ℓ₃</code>. That is the case when <code>ℓ₃</code> overtakes <code>ℓ₁</code> no later than <code>ℓ₂</code> does. Compare the two intersection x-coordinates by <strong>cross-multiplying</strong>, never by dividing (floating point would misjudge near-ties):</li>
+</ul>
+<p><code>(b₃ − b₁)·(m₁ − m₂) ≤ (b₂ − b₁)·(m₁ − m₃)</code> → pop <code>ℓ₂</code>.</p>
+<p>Each line is pushed and popped once, so the DP is O(n) after sorting. Step through it: the plot shows the lines, the envelope, the current query, and which lines leave the deque and why.</p>
+<div class="viz dpa-wide" data-viz="dp-advanced-cht"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+def frog3(h, C):                          # AtCoder DP Z; h strictly increasing
+    n = len(h); dp = [0] * n
+    m = lambda j: -2 * h[j]               # slope of line j
+    b = lambda j: dp[j] + h[j] * h[j]     # intercept of line j
+    val = lambda j, x: m(j) * x + b(j)
+    def bad(j1, j2, j3):                  # j2 never strictly lowest
+        return (b(j3) - b(j1)) * (m(j1) - m(j2)) &lt;= (b(j2) - b(j1)) * (m(j1) - m(j3))
+    dq = deque([0])
+    for i in range(1, n):
+        x = h[i]
+        while len(dq) &gt;= 2 and val(dq[1], x) &lt;= val(dq[0], x): dq.popleft()
+        dp[i] = val(dq[0], x) + x * x + C
+        while len(dq) &gt;= 2 and bad(dq[-2], dq[-1], i): dq.pop()
+        dq.append(i)
+    return dp[-1]
+</code></pre>
+<pre><code class="language-csharp">public static long Frog3(long[] h, long C)                // AtCoder DP Z; h strictly increasing
+{
+    int n = h.Length; var dp = new long[n];
+    long M(int j) =&gt; -2 * h[j];                           // slope of line j
+    long B(int j) =&gt; dp[j] + h[j] * h[j];                 // intercept of line j
+    long Val(int j, long x) =&gt; M(j) * x + B(j);
+    bool Bad(int j1, int j2, int j3) =&gt;                   // Int128: the products overflow long
+        (Int128)(B(j3) - B(j1)) * (M(j1) - M(j2)) &lt;= (Int128)(B(j2) - B(j1)) * (M(j1) - M(j3));
+    var dq = new int[n]; int head = 0, tail = 0; dq[tail++] = 0;
+    for (int i = 1; i &lt; n; i++)
+    {
+        long x = h[i];
+        while (tail - head &gt;= 2 &amp;&amp; Val(dq[head + 1], x) &lt;= Val(dq[head], x)) head++;
+        dp[i] = Val(dq[head], x) + x * x + C;
+        while (tail - head &gt;= 2 &amp;&amp; Bad(dq[tail - 2], dq[tail - 1], i)) tail--;
+        dq[tail++] = i;
+    }
+    return dp[n - 1];
+}
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Overflow in the cross-multiplication.</strong> With heights up to 10⁶ and <code>C</code> up to 10¹², intercepts reach about 10¹³ and slope differences about 10⁶, so the products are around 10¹⁹, which is past <code>long.MaxValue</code> (≈ 9.2·10¹⁸). Python's integers are unbounded and do not care. In C#, use <code>Int128</code> (as above), <code>decimal</code>, or compare the intersections with <code>double</code> only when you can prove the values are small. In Java there is no 128-bit type, so people use <code>Math.multiplyHigh</code> or <code>BigInteger</code>.</p>
+</div>
+<h3 id="li-chao-tree-lines-and-queries-in-any-order">Li Chao tree: lines and queries in any order</h3>
+<p>If slopes arrive in arbitrary order, or queries jump around, the deque's pop rules break. A <strong>Li Chao tree</strong> is a segment tree over the x-range in which each node stores <strong>one line: the one that is lowest at the node's midpoint</strong> among those that reached it. To insert a new line at a node:</p>
+<ol>
+<li>Compare the new line with the stored one at <code>mid</code>. Keep the winner in the node; the loser carries on down.</li>
+<li>Two lines cross at most once. So the loser can still win on <strong>only one side</strong> of <code>mid</code>: the side where it is lower at that side's end. Send it to that child only.</li>
+</ol>
+<p>A query walks from the root to the leaf for <code>x</code> and takes the min of the lines it passes. Both operations are O(log X), where X is the size of the x-range. Lines can also be inserted over a sub-range (a "segment"), at O(log² X).</p>
+<div class="viz dpa-wide" data-viz="dp-advanced-lichao"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">class LiChao:
+    &quot;&quot;&quot;Min of lines y = m*x + b over integer x in [lo, hi].&quot;&quot;&quot;
+    def __init__(self, lo, hi):
+        self.lo, self.hi, self.line = lo, hi, {}      # node id -&gt; (m, b); children 2v, 2v+1
+    def add(self, m, b):
+        node, l, r, new = 1, self.lo, self.hi, (m, b)
+        f = lambda ln, x: ln[0] * x + ln[1]
+        while True:
+            cur = self.line.get(node)
+            if cur is None: self.line[node] = new; return
+            mid = (l + r) // 2
+            left_better = f(new, l) &lt; f(cur, l)
+            mid_better = f(new, mid) &lt; f(cur, mid)
+            if mid_better: self.line[node], new = new, cur   # winner at mid stays
+            if l == r: return
+            if left_better != mid_better: node, r = 2 * node, mid     # loser can win only on the left
+            else: node, l = 2 * node + 1, mid + 1                     # ... or only on the right
+    def query(self, x):
+        node, l, r, best = 1, self.lo, self.hi, float(&quot;inf&quot;)
+        while node in self.line:
+            m, b = self.line[node]; best = min(best, m * x + b)
+            if l == r: break
+            mid = (l + r) // 2
+            if x &lt;= mid: node, r = 2 * node, mid
+            else: node, l = 2 * node + 1, mid + 1
+        return best
+</code></pre>
+<pre><code class="language-csharp">public sealed class LiChao                                 // min of lines over integer x in [lo, hi]
+{
+    readonly long lo, hi;
+    readonly Dictionary&lt;long, (long m, long b)&gt; line = new();   // node id -&gt; line; children 2v, 2v+1
+    public LiChao(long lo, long hi) { this.lo = lo; this.hi = hi; }
+    static long F((long m, long b) ln, long x) =&gt; ln.m * x + ln.b;
+    public void Add(long m, long b)
+    {
+        long node = 1, l = lo, r = hi; var nw = (m, b);
+        while (true)
+        {
+            if (!line.TryGetValue(node, out var cur)) { line[node] = nw; return; }
+            long mid = (long)Math.Floor((l + r) / 2.0);        // floor, also for negative ranges
+            bool leftBetter = F(nw, l) &lt; F(cur, l), midBetter = F(nw, mid) &lt; F(cur, mid);
+            if (midBetter) { line[node] = nw; nw = cur; }      // winner at mid stays
+            if (l == r) return;
+            if (leftBetter != midBetter) { node = 2 * node; r = mid; }
+            else { node = 2 * node + 1; l = mid + 1; }
+        }
+    }
+    public long Query(long x)
+    {
+        long node = 1, l = lo, r = hi, best = long.MaxValue;
+        while (line.TryGetValue(node, out var ln))
+        {
+            best = Math.Min(best, F(ln, x));
+            if (l == r) break;
+            long mid = (long)Math.Floor((l + r) / 2.0);
+            if (x &lt;= mid) { node = 2 * node; r = mid; } else { node = 2 * node + 1; l = mid + 1; }
+        }
+        return best;
+    }
+}
+</code></pre>
+</div>
+<p>For max instead of min, insert <code>(−m, −b)</code> and negate the answer. A dictionary keeps memory proportional to the lines inserted. With a small dense range, use arrays of size 4X instead.</p>
+<div class="tip">
+<p><strong>Which one to use?</strong> Slopes sorted <strong>and</strong> queries sorted: the deque, O(n). Slopes sorted, queries arbitrary: keep the envelope in an array and <strong>binary search</strong> the query, O(log n). Anything else, or lines that are only valid on a segment: Li Chao. Li Chao is also the easiest to get right under time pressure, because there is no intersection formula to get wrong.</p>
+</div>
+<h2 id="divide-conquer-optimisation-and-knuth-at-a-glance">Divide &amp; conquer optimisation, and Knuth at a glance</h2>
+<h3 id="splitting-an-array-into-k-groups">Splitting an array into K groups</h3>
+<p>Many "partition into K pieces" problems have the layered recurrence</p>
+<p><code>dp[t][i] = min over j &lt; i of dp[t − 1][j] + C(j, i)</code></p>
+<p>where <code>C(j, i)</code> is the cost of making <code>a[j..i−1]</code> one group. Done directly this is O(K·n²). Now suppose the <strong>optimal split point is monotone</strong>: <code>opt(i) ≤ opt(i + 1)</code> (a longer prefix never wants its last group to start earlier). Then compute the middle <code>i</code> first by scanning all candidate <code>j</code>, and recurse: the left half only needs <code>j</code> up to <code>opt(mid)</code>, and the right half only <code>j</code> from <code>opt(mid)</code>. Each recursion level scans O(n) candidates in total, and there are O(log n) levels, so each layer costs O(n log n).</p>
+<p>The visualizer uses <code>C(j, i) = (sum of the group)²</code> on positive numbers, which rewards balanced groups. Watch the candidate range shrink as the recursion goes deeper, and compare the evaluation count with the n² of the naive scan.</p>
+<div class="viz dpa-wide" data-viz="dp-advanced-dnc"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def min_partition_cost(a, K):             # split a into K groups, cost = sum of (group sum)^2
+    n = len(a); pre = [0]
+    for x in a: pre.append(pre[-1] + x)
+    cost = lambda j, i: (pre[i] - pre[j]) ** 2
+    INF = float(&quot;inf&quot;)
+    prev = [0] + [INF] * n                # layer t - 1
+    for t in range(1, K + 1):
+        cur = [INF] * (n + 1)
+        def solve(lo, hi, opt_lo, opt_hi):
+            if lo &gt; hi: return
+            mid = (lo + hi) // 2
+            best, opt = INF, opt_lo
+            for j in range(opt_lo, min(opt_hi, mid - 1) + 1):
+                v = prev[j] + cost(j, mid)
+                if v &lt; best: best, opt = v, j
+            cur[mid] = best
+            solve(lo, mid - 1, opt_lo, opt)   # left half: split points &lt;= opt
+            solve(mid + 1, hi, opt, opt_hi)   # right half: split points &gt;= opt
+        solve(t, n, t - 1, n - 1)
+        prev = cur
+    return prev[n]
+</code></pre>
+<pre><code class="language-csharp">public static long MinPartitionCost(int[] a, int K)       // split into K groups, cost = sum of (group sum)^2
+{
+    int n = a.Length; var pre = new long[n + 1];
+    for (int i = 0; i &lt; n; i++) pre[i + 1] = pre[i] + a[i];
+    long Cost(int j, int i) =&gt; (pre[i] - pre[j]) * (pre[i] - pre[j]);
+    const long INF = long.MaxValue / 4;
+    var prev = new long[n + 1]; Array.Fill(prev, INF); prev[0] = 0;
+    for (int t = 1; t &lt;= K; t++)
+    {
+        var cur = new long[n + 1]; Array.Fill(cur, INF);
+        void Solve(int lo, int hi, int optLo, int optHi)
+        {
+            if (lo &gt; hi) return;
+            int mid = (lo + hi) / 2, opt = optLo; long best = INF;
+            for (int j = optLo; j &lt;= Math.Min(optHi, mid - 1); j++)
+            {
+                long v = prev[j] + Cost(j, mid);
+                if (v &lt; best) { best = v; opt = j; }
+            }
+            cur[mid] = best;
+            Solve(lo, mid - 1, optLo, opt);               // left half: split points &lt;= opt
+            Solve(mid + 1, hi, opt, optHi);               // right half: split points &gt;= opt
+        }
+        Solve(t, n, t - 1, n - 1);
+        prev = cur;
+    }
+    return prev[n];
+}
+</code></pre>
+</div>
+<p><strong>When is <code>opt</code> monotone?</strong> A sufficient condition is the <strong>quadrangle inequality</strong> on the cost: for <code>a ≤ b ≤ c ≤ d</code>,</p>
+<p><code>C(a, c) + C(b, d) ≤ C(a, d) + C(b, c)</code></p>
+<p>In words: two overlapping ranges cost no more than the outer range plus the inner one. Squared sums of non-negative numbers satisfy it, and so does "distance of houses to their median mailbox" (<a href="#6-allocate-mailboxes-divide-conquer-over-k-layers">worked problem 6</a>). In an interview or contest, the practical test is just as good: run the slow DP on random small inputs, record <code>opt</code>, and assert that it never decreases.</p>
+<h3 id="knuths-optimisation-interval-dp">Knuth's optimisation (interval DP)</h3>
+<p>For interval DP of the form <code>dp[i][j] = min over i ≤ k &lt; j of dp[i][k] + dp[k+1][j] + C(i, j)</code> (merge stones, optimal BST, cutting a stick), Knuth's observation is that when <code>C</code> satisfies the quadrangle inequality and is monotone on nested intervals (<code>C(b, c) ≤ C(a, d)</code> for <code>[b, c] ⊆ [a, d]</code>), the best split satisfies</p>
+<p><code>opt[i][j − 1] ≤ opt[i][j] ≤ opt[i + 1][j]</code></p>
+<p><strong>Proof sketch of the speed-up:</strong> for a fixed interval length, the scan for <code>(i, j)</code> costs <code>opt[i+1][j] − opt[i][j−1] + 1</code>. Summed over all <code>i</code>, the middle terms cancel (a telescoping sum), leaving at most <code>n</code> plus O(n). So each length costs O(n), and all lengths cost O(n²) instead of O(n³). The monotonicity itself comes from showing that <code>dp</code> inherits the quadrangle inequality from <code>C</code>, by induction on the interval length. <a href="dp-intervals-trees.html">Interval &amp; Tree DP</a> has a visualizer that shades the narrowed <code>k</code> range cell by cell. Here is the template for merging adjacent piles, where merging costs the total size:</p>
+<div class="code-tabs">
+<pre><code class="language-python">def merge_piles(a):                       # min cost to merge adjacent piles into one, O(n^2)
+    n = len(a); pre = [0]
+    for x in a: pre.append(pre[-1] + x)
+    dp = [[0] * n for _ in range(n)]
+    opt = [[i] * n for i in range(n)]     # opt[i][i] = i
+    for d in range(1, n):
+        for i in range(n - d):
+            j = i + d; best = float(&quot;inf&quot;)
+            for k in range(opt[i][j - 1], min(opt[i + 1][j], j - 1) + 1):   # Knuth's window
+                v = dp[i][k] + dp[k + 1][j]
+                if v &lt; best: best, opt[i][j] = v, k
+            dp[i][j] = best + pre[j + 1] - pre[i]
+    return dp[0][n - 1]
+</code></pre>
+<pre><code class="language-csharp">public static long MergePiles(int[] a)                    // min cost to merge adjacent piles, O(n^2)
+{
+    int n = a.Length; var pre = new long[n + 1];
+    for (int i = 0; i &lt; n; i++) pre[i + 1] = pre[i] + a[i];
+    var dp = new long[n, n]; var opt = new int[n, n];
+    for (int i = 0; i &lt; n; i++) opt[i, i] = i;
+    for (int d = 1; d &lt; n; d++)
+        for (int i = 0; i + d &lt; n; i++)
+        {
+            int j = i + d; long best = long.MaxValue;
+            for (int k = opt[i, j - 1]; k &lt;= Math.Min(opt[i + 1, j], j - 1); k++)   // Knuth's window
+            {
+                long v = dp[i, k] + dp[k + 1, j];
+                if (v &lt; best) { best = v; opt[i, j] = k; }
+            }
+            dp[i, j] = best + pre[j + 1] - pre[i];
+        }
+    return dp[0, n - 1];
+}
+</code></pre>
+</div>
+<div class="compare">
+<div class="good">
+<h4 id="divide-conquer-okn-log-n">Divide &amp; conquer: O(K·n log n)</h4>
+<ul>
+<li>Layered: <code>dp[t][·]</code> from <code>dp[t−1][·]</code>.</li>
+<li>Needs <code>opt(i) ≤ opt(i+1)</code> within a layer.</li>
+<li>O(K · n log n). Works even when you can only evaluate <code>C(j, i)</code> in O(1) via prefix sums.</li>
+<li>Typical: split into K groups, K mailboxes, K servers.</li>
+</ul>
+</div>
+<div class="good">
+<h4 id="knuth-on2">Knuth: O(n²)</h4>
+<ul>
+<li>Interval: <code>dp[i][j]</code> from shorter intervals.</li>
+<li>Needs <code>opt[i][j−1] ≤ opt[i][j] ≤ opt[i+1][j]</code>.</li>
+<li>O(n²) instead of O(n³).</li>
+<li>Typical: merge adjacent piles, optimal BST, cutting a stick at given points.</li>
+</ul>
+</div>
+</div>
+<h2 id="probability-and-expected-value-dp">Probability and expected-value DP</h2>
+<p>Probability DP has the same skeleton as counting DP, with one change: every transition is <strong>weighted by its probability</strong>, and the weights out of a state sum to 1. You can run it in two directions:</p>
+<ul>
+<li><strong>Push (forward):</strong> keep a distribution over states, the "probability mass", and move it one step at a time. This is natural when the start is fixed and you want the distribution after k steps.</li>
+<li><strong>Pull (backward):</strong> <code>f(state) = Σ p(move) · f(next state)</code>, with terminal states as the base case. This is natural for "probability of eventually …" and for <strong>expected values</strong>, where <code>E(state) = cost + Σ p · E(next)</code>. Linearity of expectation is what makes this work: the expected total is the sum of the expected parts, even when the parts are dependent.</li>
+</ul>
+<h3 id="knight-probability-push-the-mass-forward">Knight Probability: push the mass forward</h3>
+<p><a href="https://leetcode.com/problems/knight-probability-in-chessboard/">Knight Probability in Chessboard</a>: a knight makes <code>k</code> uniformly random moves on an <code>n × n</code> board. What is the probability that it is still on the board? Start with mass 1 on the start cell. At each step every cell sends <code>1/8</code> of its mass to each of its 8 targets; mass that lands off the board is lost for good. The answer is the mass left after <code>k</code> steps. The heatmap shows where the mass is, and the bar shows how much has fallen off.</p>
+<div class="viz dpa-wide" data-viz="dp-advanced-knight"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def knight_probability(n, k, row, col):   # 688
+    moves = [(1, 2), (2, 1), (2, -1), (1, -2), (-1, -2), (-2, -1), (-2, 1), (-1, 2)]
+    cur = [[0.0] * n for _ in range(n)]; cur[row][col] = 1.0
+    for _ in range(k):
+        nxt = [[0.0] * n for _ in range(n)]
+        for x in range(n):
+            for y in range(n):
+                if cur[x][y]:
+                    for dx, dy in moves:
+                        a, b = x + dx, y + dy
+                        if 0 &lt;= a &lt; n and 0 &lt;= b &lt; n: nxt[a][b] += cur[x][y] / 8
+        cur = nxt                         # mass that left the board is simply not copied
+    return sum(map(sum, cur))
+</code></pre>
+<pre><code class="language-csharp">public static double KnightProbability(int n, int k, int row, int col)   // 688
+{
+    int[] dx = { 1, 2, 2, 1, -1, -2, -2, -1 }, dy = { 2, 1, -1, -2, -2, -1, 1, 2 };
+    var cur = new double[n, n]; cur[row, col] = 1;
+    for (int step = 0; step &lt; k; step++)
+    {
+        var nxt = new double[n, n];
+        for (int x = 0; x &lt; n; x++)
+            for (int y = 0; y &lt; n; y++)
+            {
+                if (cur[x, y] == 0) continue;
+                for (int d = 0; d &lt; 8; d++)
+                {
+                    int a = x + dx[d], b = y + dy[d];
+                    if (a &gt;= 0 &amp;&amp; a &lt; n &amp;&amp; b &gt;= 0 &amp;&amp; b &lt; n) nxt[a, b] += cur[x, y] / 8;
+                }
+            }
+        cur = nxt;                                         // off-board mass is not copied
+    }
+    double sum = 0; foreach (double p in cur) sum += p;
+    return sum;
+}
+</code></pre>
+</div>
+<p>O(k·n²·8) time and O(n²) space. Note that <strong>probabilities, not counts</strong>, are stored: the count of surviving paths is up to 8ᵏ, which overflows for k = 100, while probabilities stay in [0, 1].</p>
+<h3 id="new-21-game-an-average-over-a-sliding-window">New 21 Game: an average over a sliding window</h3>
+<p><a href="https://leetcode.com/problems/new-21-game/">New 21 Game</a>: Alice starts at 0 points and draws a uniform number from <code>1..W</code> while she has fewer than <code>k</code> points. What is the probability that she ends with at most <code>n</code> points? Let <code>dp[x]</code> be the probability that she is ever <strong>at exactly</strong> <code>x</code> points. She reaches <code>x</code> from any <code>x − w</code> (w = 1..W) <strong>at which she was still drawing</strong>, that is <code>x − w &lt; k</code>:</p>
+<p><code>dp[x] = (1/W) · Σ dp[x − w] over w = 1..W with 0 ≤ x − w &lt; k</code></p>
+<p>That is the average of a <strong>sliding window</strong> of the last W values. So keep a running window sum, add <code>dp[x]</code> when <code>x &lt; k</code> (she will draw again from <code>x</code>), and drop <code>dp[x − W]</code> as it leaves the window. That turns O(n·W) into O(n). The answer is the sum of <code>dp[x]</code> for <code>k ≤ x ≤ n</code>. The window is the same idea as the deque section, but for sums you need no deque at all.</p>
+<div class="viz dpa-wide" data-viz="dp-advanced-new21"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def new21_game(n, k, maxPts):             # 837
+    if k == 0 or n &gt;= k - 1 + maxPts: return 1.0   # she can never pass n
+    dp = [0.0] * (n + 1); dp[0] = 1.0
+    window, ans = 1.0, 0.0                # window = sum of dp[x-W .. x-1] restricted to x' &lt; k
+    for x in range(1, n + 1):
+        dp[x] = window / maxPts
+        if x &lt; k: window += dp[x]         # she draws again from x
+        else: ans += dp[x]                # she stops at x (k &lt;= x &lt;= n)
+        if x - maxPts &gt;= 0: window -= dp[x - maxPts]
+    return ans
+</code></pre>
+<pre><code class="language-csharp">public static double New21Game(int n, int k, int maxPts)   // 837
+{
+    if (k == 0 || n &gt;= k - 1 + maxPts) return 1.0;          // she can never pass n
+    var dp = new double[n + 1]; dp[0] = 1;
+    double window = 1, ans = 0;
+    for (int x = 1; x &lt;= n; x++)
+    {
+        dp[x] = window / maxPts;
+        if (x &lt; k) window += dp[x]; else ans += dp[x];     // draw again, or stop here
+        if (x - maxPts &gt;= 0) window -= dp[x - maxPts];
+    }
+    return ans;
+}
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>The subtle bug: adding stopped states to the window.</strong> Once she reaches <code>k</code> she stops, so <code>dp[x]</code> for <code>x ≥ k</code> must <strong>not</strong> feed later cells. If you write <code>window += dp[x]</code> unconditionally, you count paths that keep drawing after stopping, and the answer is too large. The early return also matters: when <code>k = 0</code> she never draws, and when <code>n ≥ k − 1 + W</code> even the worst final total (<code>k − 1 + W</code>) is within <code>n</code>.</p>
+</div>
+<h3 id="soup-servings-memoise-then-notice-the-limit">Soup Servings: memoise, then notice the limit</h3>
+<p><a href="https://leetcode.com/problems/soup-servings/">Soup Servings</a> gives you <code>n</code> ml each of soups A and B and four equally likely servings: (100, 0), (75, 25), (50, 50), (25, 75). Return P(A empties first) + ½·P(both empty at the same time). Two observations make it easy:</p>
+<ol>
+<li>Every amount is a multiple of 25, so work in units of 25 ml: <code>m = ceil(n / 25)</code> and the servings are (4, 0), (3, 1), (2, 2), (1, 3). The state is <code>(a, b)</code>, and the pull recurrence is the average of four memoised states.</li>
+<li>On average A loses 2.5 units per serving and B only 1.5, so A almost surely empties first when <code>n</code> is large. The answer goes to 1 quickly: past about <code>n = 4800</code> it is within 10⁻⁶ of 1, which is the tolerance the problem allows. Return 1 immediately there. Without this cutoff, <code>n = 10⁹</code> gives a table with 10¹⁴ cells.</li>
+</ol>
+<p>The full solution is <a href="#7-soup-servings-probability-dp-with-a-cutoff">worked problem 7</a>.</p>
+<div class="insight">
+<p><strong>Expected value in one line.</strong> "Expected number of rolls to see a 6" is <code>E = 1 + (5/6)·E</code>, so <code>E = 6</code>. Every expected-value DP is a system like this. When the state graph is a DAG (the process always moves forward), solve it in reverse topological order. When a state can loop back to itself, as here, move the self-term to the left: <code>E(s) = (1 + Σ_{t≠s} p_t E(t)) / (1 − p_s)</code>. Only general cycles need Gaussian elimination.</p>
+</div>
+<h2 id="counting-dp-modulo-109-7">Counting DP modulo 10⁹ + 7</h2>
+<p>When a problem says "return the answer modulo 10⁹ + 7", the true count is astronomically large, and the DP is a <strong>counting</strong> DP: sums of products instead of max/min. Three rules keep it correct:</p>
+<ul>
+<li><strong>Reduce after every addition and multiplication.</strong> <code>(a + b) % M</code> and <code>(a * b) % M</code>. In C#, <code>long</code> holds a product of two values below M (about 10¹⁸ &lt; 9.2·10¹⁸), but not three: reduce between multiplications.</li>
+<li><strong>Subtraction needs a fix-up:</strong> <code>((a − b) % M + M) % M</code> in C# and Java, where <code>%</code> can return a negative number. Python's <code>%</code> is already non-negative.</li>
+<li><strong>Never divide.</strong> Division mod p is multiplication by a modular inverse. Why 10⁹ + 7 is prime, and how the inverse works, is on <a href="math-number-theory.html">Math, Number Theory &amp; Combinatorics</a>.</li>
+</ul>
+<h3 id="number-of-music-playlists-count-by-how-many-distinct-so-far">Number of Music Playlists: count by "how many distinct so far"</h3>
+<p><a href="https://leetcode.com/problems/number-of-music-playlists/">Number of Music Playlists</a>: <code>n</code> songs, a playlist of <code>goal</code> slots, every song played at least once, and a song may be replayed only if <code>k</code> other songs have played since. The state that makes the count work is <code>dp[i][j]</code>: playlists of length <code>i</code> that use exactly <code>j</code> distinct songs. The last slot is either a <strong>new</strong> song (any of the <code>n − (j−1)</code> unused ones) or a <strong>replay</strong> (any of the <code>j</code> used songs except the <code>k</code> most recent, which are all distinct). It is <a href="#3-number-of-music-playlists-count-by-distinct-songs-so-far">worked problem 3</a>.</p>
+<h3 id="count-vowels-permutation-counting-walks-in-a-state-machine">Count Vowels Permutation: counting walks in a state machine</h3>
+<p><a href="https://leetcode.com/problems/count-vowels-permutation/">Count Vowels Permutation</a> defines which vowel may <strong>follow</strong> which. That is a state machine again, and the number of strings of length <code>n</code> is the number of walks of length <code>n − 1</code> in this graph:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 290" width="760" role="img" aria-label="Vowel follow graph: a to e; e to a and i; i to a, e, o, u; o to i and u; u to a">
+<defs><marker id="dp-advanced-v1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<path class="edge accent" d="M381 65 L434 104" marker-start="url(#dp-advanced-v1)" marker-end="url(#dp-advanced-v1)"/>
+<path class="edge accent" d="M447 144 L427 206" marker-start="url(#dp-advanced-v1)" marker-end="url(#dp-advanced-v1)"/>
+<path class="edge accent" d="M393 231 L327 231" marker-start="url(#dp-advanced-v1)" marker-end="url(#dp-advanced-v1)"/>
+<path class="edge accent" d="M411 206 L368 75" marker-end="url(#dp-advanced-v1)"/>
+<path class="edge accent" d="M398 216 L286 134" marker-end="url(#dp-advanced-v1)"/>
+<path class="edge accent" d="M293 206 L273 144" marker-end="url(#dp-advanced-v1)"/>
+<path class="edge accent" d="M286 104 L339 65" marker-end="url(#dp-advanced-v1)"/>
+<circle class="box active" cx="360" cy="50" r="24"/><text x="360" y="56" text-anchor="middle" class="title mono">a</text>
+<circle class="box active" cx="455" cy="119" r="24"/><text x="455" y="125" text-anchor="middle" class="title mono">e</text>
+<circle class="box active" cx="419" cy="231" r="24"/><text x="419" y="237" text-anchor="middle" class="title mono">i</text>
+<circle class="box active" cx="301" cy="231" r="24"/><text x="301" y="237" text-anchor="middle" class="title mono">o</text>
+<circle class="box active" cx="265" cy="119" r="24"/><text x="265" y="125" text-anchor="middle" class="title mono">u</text>
+<text x="20" y="40" class="small">rules (who may follow):</text><text x="20" y="62" class="small mono">a → e</text><text x="20" y="80" class="small mono">e → a, i</text><text x="20" y="98" class="small mono">i → a, e, o, u</text><text x="20" y="116" class="small mono">o → i, u</text><text x="20" y="134" class="small mono">u → a</text>
+<text x="540" y="40" class="small">new count of strings ending in …</text><text x="540" y="62" class="small mono">a' = e + i + u</text><text x="540" y="80" class="small mono">e' = a + i</text><text x="540" y="98" class="small mono">i' = e + o</text><text x="540" y="116" class="small mono">o' = i</text><text x="540" y="134" class="small mono">u' = i + o</text>
+<text x="540" y="166" class="small muted">read the arrows backwards:</text><text x="540" y="182" class="small muted">a' sums every vowel with</text><text x="540" y="198" class="small muted">an arrow INTO a</text>
+<text x="380" y="282" text-anchor="middle" class="small muted">Counting strings of length n = counting walks of n − 1 steps. One step = one multiplication by this graph's 5 × 5 adjacency matrix.</text>
+</svg>
+<figcaption>The follow rules as a graph. The DP update reads each node's incoming arrows. Double-headed arrows mean both directions are allowed.</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-python">MOD = 10**9 + 7
+
+def count_vowel_permutation(n):           # 1220
+    a = e = i = o = u = 1                 # strings of length 1 ending in each vowel
+    for _ in range(n - 1):
+        a, e, i, o, u = (e + i + u) % MOD, (a + i) % MOD, (e + o) % MOD, i % MOD, (i + o) % MOD
+    return (a + e + i + o + u) % MOD
+</code></pre>
+<pre><code class="language-csharp">const long MOD = 1_000_000_007;
+
+public static int CountVowelPermutation(int n)            // 1220
+{
+    long a = 1, e = 1, i = 1, o = 1, u = 1;               // strings of length 1 ending in each vowel
+    for (int step = 1; step &lt; n; step++)
+        (a, e, i, o, u) = ((e + i + u) % MOD, (a + i) % MOD, (e + o) % MOD, i, (i + o) % MOD);
+    return (int)((a + e + i + o + u) % MOD);
+}
+</code></pre>
+</div>
+<h3 id="domino-and-tromino-tiling-a-second-state-for-ragged-edges">Domino and Tromino Tiling: a second state for "ragged edges"</h3>
+<p><a href="https://leetcode.com/problems/domino-and-tromino-tiling/">Domino and Tromino Tiling</a> counts tilings of a 2 × n board with dominoes and L-trominoes. Counting only full boards is not enough, because a tromino leaves a <strong>ragged edge</strong> with one cell sticking out. So add a second state, the same move as adding a mode to a state machine:</p>
+<ul>
+<li><code>full[i]</code>: tilings of a 2 × i board.</li>
+<li><code>part[i]</code>: tilings of a 2 × (i − 1) board plus <strong>one</strong> cell of column i (one orientation; the mirror image has the same count).</li>
+</ul>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 200" width="760" role="img" aria-label="How full[i] is formed: full[i-1] plus a vertical domino; full[i-2] plus two horizontal dominoes; part[i-1] plus an L tromino, twice for the mirror image">
+<rect class="box" x="20" y="50" width="96" height="48" rx="4" style="stroke-dasharray:5 4"/><text x="68" y="79" text-anchor="middle" class="mono">full[i−1]</text>
+<rect class="box active" x="120" y="50" width="24" height="48" rx="3"/>
+<text x="82" y="124" text-anchor="middle" class="small">+ one vertical domino</text>
+<rect class="box" x="250" y="50" width="96" height="48" rx="4" style="stroke-dasharray:5 4"/><text x="298" y="79" text-anchor="middle" class="mono">full[i−2]</text>
+<rect class="box done" x="350" y="50" width="48" height="23" rx="3"/><rect class="box done" x="350" y="75" width="48" height="23" rx="3"/>
+<text x="322" y="124" text-anchor="middle" class="small">+ two horizontal dominoes</text>
+<rect class="box" x="500" y="50" width="96" height="48" rx="4" style="stroke-dasharray:5 4"/><rect class="box" x="598" y="50" width="24" height="23" rx="3" style="stroke-dasharray:5 4"/><text x="548" y="79" text-anchor="middle" class="mono">part[i−1]</text>
+<polygon class="box visit" points="598,75 622,75 622,50 646,50 646,98 598,98"/>
+<text x="573" y="124" text-anchor="middle" class="small">+ one L-tromino, × 2 (mirror)</text>
+<text x="380" y="160" text-anchor="middle" class="mono">full[i] = full[i−1] + full[i−2] + 2·part[i−1]</text>
+<text x="380" y="184" text-anchor="middle" class="mono">part[i] = part[i−1] + full[i−2]</text>
+</svg>
+<figcaption>Classify every tiling by the piece(s) that cover the last column. A ragged prefix (part) is closed by a tromino; a part is extended by a horizontal domino on its short row, or created by a tromino on a full board.</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-python">def num_tilings(n):                       # 790
+    full, part = [1, 1] + [0] * n, [0, 0] + [0] * n
+    for i in range(2, n + 1):
+        full[i] = (full[i - 1] + full[i - 2] + 2 * part[i - 1]) % MOD
+        part[i] = (part[i - 1] + full[i - 2]) % MOD
+    return full[n]
+</code></pre>
+<pre><code class="language-csharp">public static int NumTilings(int n)                       // 790
+{
+    var full = new long[n + 2]; var part = new long[n + 2];
+    full[0] = full[1] = 1;
+    for (int i = 2; i &lt;= n; i++)
+    {
+        full[i] = (full[i - 1] + full[i - 2] + 2 * part[i - 1]) % MOD;
+        part[i] = (part[i - 1] + full[i - 2]) % MOD;
+    }
+    return (int)full[n];
+}
+</code></pre>
+</div>
+<p>Substituting <code>part</code> away gives the famous one-liner <code>full[i] = 2·full[i−1] + full[i−3]</code>. It is neat, but the two-state version is the one you can <strong>derive</strong> under pressure. Both are O(n). I checked them against a brute-force column-by-column tiler for n ≤ 10.</p>
+<h2 id="matrix-exponentiation">Matrix exponentiation</h2>
+<p>Every recurrence in the last section is <strong>linear</strong>: the new state vector is a fixed matrix times the old one. Fibonacci is the simplest case:</p>
+<p><code>[F(n+1), F(n)]ᵀ = [[1, 1], [1, 0]] · [F(n), F(n−1)]ᵀ</code>, so <code>[[1, 1], [1, 0]]ⁿ = [[F(n+1), F(n)], [F(n), F(n−1)]]</code>.</p>
+<p>Applying the matrix n times is O(n). But matrix multiplication is <strong>associative</strong>, so you can compute <code>Mⁿ</code> by <strong>repeated squaring</strong>, exactly like <a href="math-number-theory.html">fast power</a> for numbers: write n in binary, square M once per bit, and multiply the squares whose bit is 1 into the result.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 210" width="760" role="img" aria-label="M to the 13: 13 is 1101 in binary, so M^13 equals M^8 times M^4 times M^1; the squares M, M^2, M^4, M^8 are computed by squaring and the ones with bit 1 are multiplied into the result">
+<defs><marker id="dp-advanced-x1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="dp-advanced-x2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker></defs>
+<text x="20" y="30" class="small">n = 13 = 1101₂ (read the bits from the right)</text>
+<rect class="box done" x="40" y="50" width="110" height="50" rx="8"/><text x="95" y="72" text-anchor="middle" class="mono">M¹</text><text x="95" y="90" text-anchor="middle" class="small">bit 0 = 1: use</text>
+<rect class="box bad" x="220" y="50" width="110" height="50" rx="8"/><text x="275" y="72" text-anchor="middle" class="mono">M²</text><text x="275" y="90" text-anchor="middle" class="small">bit 1 = 0: skip</text>
+<rect class="box done" x="400" y="50" width="110" height="50" rx="8"/><text x="455" y="72" text-anchor="middle" class="mono">M⁴</text><text x="455" y="90" text-anchor="middle" class="small">bit 2 = 1: use</text>
+<rect class="box done" x="580" y="50" width="110" height="50" rx="8"/><text x="635" y="72" text-anchor="middle" class="mono">M⁸</text><text x="635" y="90" text-anchor="middle" class="small">bit 3 = 1: use</text>
+<path class="edge" d="M152 75 L216 75" marker-end="url(#dp-advanced-x1)"/><text x="184" y="68" text-anchor="middle" class="small">square</text>
+<path class="edge" d="M332 75 L396 75" marker-end="url(#dp-advanced-x1)"/><text x="364" y="68" text-anchor="middle" class="small">square</text>
+<path class="edge" d="M512 75 L576 75" marker-end="url(#dp-advanced-x1)"/><text x="544" y="68" text-anchor="middle" class="small">square</text>
+<rect class="box active" x="250" y="146" width="260" height="44" rx="8"/><text x="380" y="173" text-anchor="middle" class="mono">M¹³ = M⁸ · M⁴ · M¹</text>
+<path class="edge done" d="M95 102 L290 146" marker-end="url(#dp-advanced-x2)"/><path class="edge done" d="M455 102 L400 146" marker-end="url(#dp-advanced-x2)"/><path class="edge done" d="M635 102 L470 146" marker-end="url(#dp-advanced-x2)"/>
+<text x="600" y="176" class="small muted">3 squarings + 3 products</text><text x="600" y="192" class="small muted">instead of 12 products</text>
+</svg>
+<figcaption>Square-and-multiply on matrices. For n = 10¹⁸ that is about 60 squarings of a 2 × 2 matrix instead of 10¹⁸ additions.</figcaption>
+</figure>
+
+<p>The visualizer runs it on Fibonacci (exact and mod 10⁹+7 for n up to 10¹⁸) and on Tribonacci with a 3 × 3 matrix. It shows the bits of n, the running square, and the result matrix after each bit.</p>
+<div class="viz dpa-wide" data-viz="dp-advanced-matpow"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">MOD = 10**9 + 7
+
+def mat_mul(A, B, mod=MOD):
+    return [[sum(A[i][t] * B[t][j] for t in range(len(B))) % mod
+             for j in range(len(B[0]))] for i in range(len(A))]
+
+def mat_pow(M, e, mod=MOD):
+    R = [[int(i == j) for j in range(len(M))] for i in range(len(M))]   # identity
+    while e:
+        if e &amp; 1: R = mat_mul(R, M, mod)  # this bit is set: use the current square
+        M = mat_mul(M, M, mod)            # next square
+        e &gt;&gt;= 1
+    return R
+
+def fib(n, mod=MOD):
+    return mat_pow([[1, 1], [1, 0]], n, mod)[0][1]
+</code></pre>
+<pre><code class="language-csharp">public static long[,] MatMul(long[,] A, long[,] B)
+{
+    int n = A.GetLength(0), m = B.GetLength(1), inner = B.GetLength(0);
+    var C = new long[n, m];
+    for (int i = 0; i &lt; n; i++)
+        for (int t = 0; t &lt; inner; t++)
+        {
+            if (A[i, t] == 0) continue;
+            for (int j = 0; j &lt; m; j++) C[i, j] = (C[i, j] + A[i, t] * B[t, j]) % MOD;   // reduce every product
+        }
+    return C;
+}
+
+public static long[,] MatPow(long[,] M, long e)
+{
+    int n = M.GetLength(0); var R = new long[n, n];
+    for (int i = 0; i &lt; n; i++) R[i, i] = 1;              // identity
+    for (; e &gt; 0; e &gt;&gt;= 1)
+    {
+        if ((e &amp; 1) == 1) R = MatMul(R, M);               // this bit is set: use the current square
+        M = MatMul(M, M);                                 // next square
+    }
+    return R;
+}
+
+public static long Fib(long n) =&gt; MatPow(new long[,] { { 1, 1 }, { 1, 0 } }, n)[0, 1];
+</code></pre>
+</div>
+<p>O(k³ log n) for a k × k matrix. Checks: <code>fib(10**18) = 209783453</code>, and the Vowel Permutation count with the 5 × 5 follow matrix matches the loop above for every n up to 30.</p>
+<div class="recognize">
+<p><strong>Use matrix power when</strong> the transition is linear with constant coefficients, the state is small (k ≤ about 100), and n is huge (10⁹ to 10¹⁸). Typical signs: "number of strings/tilings/walks of length n" with n ≥ 10⁹, or "the n-th term of a recurrence". Building the matrix: row r of the matrix lists how many ways each old state contributes to new state r. For counting walks, the matrix is just the adjacency matrix of the state machine, and <code>Mⁿ[u][v]</code> is the number of walks of length n from u to v.</p>
+</div>
+<h2 id="game-theory-dp">Game theory DP</h2>
+<p>Two players alternate moves, both play perfectly, and you must predict the result. Three ideas cover almost every interview and contest game.</p>
+<h3 id="minimax-as-a-score-difference">Minimax as a score difference</h3>
+<p>The textbook minimax alternates max levels and min levels. For <strong>zero-sum</strong> games there is a much simpler form: let <code>d(state)</code> be <strong>(my score − opponent's score) from now on, for the player about to move</strong>. After I move, my opponent is "the player about to move", so their advantage counts against me:</p>
+<p><code>d(state) = max over moves of ( gain(move) − d(next state) )</code></p>
+<p>One function, no turn flag, and no separate tables for the two players. In <a href="https://leetcode.com/problems/predict-the-winner/">Predict the Winner</a> players take a number from either end of the array, and the state is the remaining interval <code>[i, j]</code>:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 276" width="760" role="img" aria-label="Predict the Winner game tree for 1, 5, 2: root has d equals minus 2; taking 1 leaves 5, 2 with d 3; taking 2 leaves 1, 5 with d 4; leaves are single numbers">
+<defs><marker id="dp-advanced-g1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker></defs>
+<rect class="box bad" x="300" y="16" width="160" height="46" rx="8"/><text x="380" y="36" text-anchor="middle" class="mono">[1, 5, 2]</text><text x="380" y="54" text-anchor="middle" class="small">d = max(1−3, 2−4) = −2</text>
+<rect class="box done" x="110" y="110" width="160" height="46" rx="8"/><text x="190" y="130" text-anchor="middle" class="mono">[5, 2]</text><text x="190" y="148" text-anchor="middle" class="small">d = max(5−2, 2−5) = 3</text>
+<rect class="box done" x="490" y="110" width="160" height="46" rx="8"/><text x="570" y="130" text-anchor="middle" class="mono">[1, 5]</text><text x="570" y="148" text-anchor="middle" class="small">d = max(1−5, 5−1) = 4</text>
+<path class="edge" d="M340 62 L220 108" marker-end="url(#dp-advanced-g1)"/><text x="250" y="80" text-anchor="middle" class="small">take 1 → 1 − 3</text>
+<path class="edge" d="M420 62 L540 108" marker-end="url(#dp-advanced-g1)"/><text x="512" y="80" text-anchor="middle" class="small">take 2 → 2 − 4</text>
+<rect class="box" x="40" y="200" width="80" height="40" rx="8"/><text x="80" y="225" text-anchor="middle" class="mono">[2] d=2</text>
+<rect class="box" x="230" y="200" width="80" height="40" rx="8"/><text x="270" y="225" text-anchor="middle" class="mono">[5] d=5</text>
+<rect class="box" x="450" y="200" width="80" height="40" rx="8"/><text x="490" y="225" text-anchor="middle" class="mono">[5] d=5</text>
+<rect class="box" x="640" y="200" width="80" height="40" rx="8"/><text x="680" y="225" text-anchor="middle" class="mono">[1] d=1</text>
+<path class="edge" d="M160 156 L95 198" marker-end="url(#dp-advanced-g1)"/><text x="104" y="176" text-anchor="end" class="small">take 5</text>
+<path class="edge" d="M220 156 L260 198" marker-end="url(#dp-advanced-g1)"/><text x="250" y="176" class="small">take 2</text>
+<path class="edge" d="M540 156 L505 198" marker-end="url(#dp-advanced-g1)"/><text x="514" y="176" text-anchor="end" class="small">take 1</text>
+<path class="edge" d="M600 156 L665 198" marker-end="url(#dp-advanced-g1)"/><text x="644" y="176" class="small">take 5</text>
+<text x="380" y="266" text-anchor="middle" class="small muted">d &lt; 0 at the root: the first player loses by 2 whatever they do (1 + 2 = 3 against 5).</text>
+</svg>
+<figcaption>Each node stores the advantage of the player to move. A parent subtracts its child's value, because the child's mover is the opponent.</figcaption>
+</figure>
+
+<div class="code-tabs">
+<pre><code class="language-python">def predict_the_winner(nums):             # 486
+    n = len(nums); d = nums[:]            # length-1 intervals: d[i] = nums[i]
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            d[i] = max(nums[i] - d[i + 1], nums[j] - d[i])   # d[i+1] is [i+1, j]; old d[i] is [i, j-1]
+    return d[0] &gt;= 0                      # a tie counts as a win for player 1
+</code></pre>
+<pre><code class="language-csharp">public static bool PredictTheWinner(int[] nums)           // 486
+{
+    int n = nums.Length; var d = (int[])nums.Clone();     // length-1 intervals: d[i] = nums[i]
+    for (int len = 2; len &lt;= n; len++)
+        for (int i = 0; i + len - 1 &lt; n; i++)
+        {
+            int j = i + len - 1;
+            d[i] = Math.Max(nums[i] - d[i + 1], nums[j] - d[i]);   // d[i+1] is [i+1, j]; old d[i] is [i, j-1]
+        }
+    return d[0] &gt;= 0;                                     // a tie counts as a win for player 1
+}
+</code></pre>
+</div>
+<p>O(n²) time, O(n) space, by rolling the interval table into one row ordered by length. <a href="https://leetcode.com/problems/stone-game/">Stone Game</a> (877) is the same DP, but with an even number of piles the first player can always win: colour the piles alternately, so that the even-indexed and odd-indexed piles each form one colour. The first player can take every pile of whichever colour has the larger total, so the function can just <code>return True</code>. Prove that to yourself once; it is a classic "think before you code" problem. Linear games, where you take 1 to 3 stones from the front (<a href="https://leetcode.com/problems/stone-game-iii/">Stone Game III</a>), use the same difference trick on suffixes. That is <a href="#5-stone-game-iii-minimax-as-a-score-difference">worked problem 5</a>.</p>
+<h3 id="winlose-states-nim-and-sprague-grundy">Win/lose states, Nim, and Sprague-Grundy</h3>
+<p>When there is no score, only "who makes the last move wins", every state is either <strong>winning</strong> or <strong>losing</strong> for the player to move:</p>
+<ul>
+<li>A state is <strong>losing</strong> if every move leads to a winning state (including "there is no move").</li>
+<li>A state is <strong>winning</strong> if <strong>some</strong> move leads to a losing state.</li>
+</ul>
+<p>That is a boolean DP over states, computed from the terminal states up. With many independent piles, though, the state space is the product of the piles, which is far too big. <strong>Nim</strong> is the key: with piles <code>p₁, …, pₖ</code> where a move removes any positive amount from one pile, the first player wins <strong>if and only if <code>p₁ ⊕ p₂ ⊕ … ⊕ pₖ ≠ 0</code></strong>. Why: from XOR 0, any move changes exactly one pile and so makes the XOR non-zero. From XOR <code>X ≠ 0</code>, pick a pile whose binary form has <code>X</code>'s top bit set; replacing it by <code>p ⊕ X</code> (which is smaller) brings the XOR back to 0. So the player facing XOR 0 is stuck there until all piles are empty.</p>
+<p><strong>Sprague-Grundy</strong> extends this to any impartial game, where both players have the same moves: give every state a number, its <strong>Grundy value</strong>:</p>
+<p><code>g(state) = mex { g(next) : next reachable in one move }</code></p>
+<p>where <code>mex</code> is the smallest non-negative integer <strong>not</strong> in the set. A state is losing exactly when <code>g = 0</code>, and a state with Grundy value <code>g</code> behaves exactly like a Nim pile of size <code>g</code>. So a sum of independent games is won by the first player iff the <strong>XOR of their Grundy values</strong> is non-zero. The visualizer computes <code>g</code> for a subtraction game (you may remove only amounts in <code>S</code>) and judges a multi-pile position.</p>
+<div class="viz dpa-wide" data-viz="dp-advanced-grundy"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def grundy_table(N, moves):               # subtraction game: remove s in moves from a pile
+    g = [0] * (N + 1)
+    for x in range(1, N + 1):
+        reach = {g[x - s] for s in moves if s &lt;= x}
+        m = 0
+        while m in reach: m += 1          # mex
+        g[x] = m
+    return g
+
+def first_player_wins(piles, moves):      # independent piles: XOR the Grundy values
+    g = grundy_table(max(piles), moves)
+    x = 0
+    for p in piles: x ^= g[p]
+    return x != 0
+</code></pre>
+<pre><code class="language-csharp">public static int[] GrundyTable(int N, int[] moves)       // subtraction game: remove s in moves from a pile
+{
+    var g = new int[N + 1];
+    for (int x = 1; x &lt;= N; x++)
+    {
+        var reach = new HashSet&lt;int&gt;();
+        foreach (int s in moves) if (s &lt;= x) reach.Add(g[x - s]);
+        int mex = 0; while (reach.Contains(mex)) mex++;
+        g[x] = mex;
+    }
+    return g;
+}
+
+public static bool FirstPlayerWins(int[] piles, int[] moves)   // independent piles: XOR the Grundy values
+{
+    var g = GrundyTable(piles.Max(), moves);
+    int x = 0; foreach (int p in piles) x ^= g[p];
+    return x != 0;
+}
+</code></pre>
+</div>
+<p>Both functions were checked against a brute-force win/lose search over all multi-pile positions, and Nim itself against the same search. Grundy tables of subtraction games are <strong>eventually periodic</strong>, so when the pile sizes go up to 10⁹, print the first few hundred values, find the period, and index into it. When the game state is a set of used numbers (<a href="https://leetcode.com/problems/can-i-win/">Can I Win</a>), the win/lose DP runs over bitmasks; see <a href="dp-bitmask-digit.html">Bitmask &amp; Digit DP</a>.</p>
+<h2 id="choosing-the-right-tool">Choosing the right tool</h2>
+<p>When a DP is correct but too slow, walk down this list. The first "yes" is almost always the intended solution.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 780 500" width="780" role="img" aria-label="Decision flowchart for DP optimisations: huge n with linear recurrence to matrix power; window max to deque; key filter to bisect or segment tree; product term to convex hull trick; K partitions with monotone opt to divide and conquer; interval splits to Knuth; otherwise rethink the state">
+<defs><marker id="dp-advanced-f1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-done"/></marker><marker id="dp-advanced-f2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker></defs>
+<rect class="box accent" x="20" y="14" width="420" height="44" rx="8"/><text x="32" y="34" class="small">Is n huge (10⁹ … 10¹⁸) and the transition linear</text><text x="32" y="50" class="small">with a small, fixed state vector?</text>
+<rect class="box done" x="520" y="14" width="240" height="44" rx="8"/><text x="532" y="41" class="title">Matrix power, O(k³ log n)</text>
+<rect class="box accent" x="20" y="82" width="420" height="44" rx="8"/><text x="32" y="102" class="small">Is the inner max/min over a window of earlier indices</text><text x="32" y="118" class="small">whose ends only move right?</text>
+<rect class="box done" x="520" y="82" width="240" height="44" rx="8"/><text x="532" y="109" class="title">Monotonic deque, O(n)</text>
+<rect class="box accent" x="20" y="150" width="420" height="44" rx="8"/><text x="32" y="170" class="small">Is it over earlier states filtered by a key</text><text x="32" y="186" class="small">(smaller value, earlier end time, value in a range)?</text>
+<rect class="box done" x="520" y="150" width="240" height="44" rx="8"/><text x="532" y="170" class="title">Bisect (prefix) or</text><text x="532" y="186" class="small">segment tree / BIT over keys</text>
+<rect class="box accent" x="20" y="218" width="420" height="44" rx="8"/><text x="32" y="238" class="small">Does the term contain a product f(j) · g(i)</text><text x="32" y="254" class="small">(after expanding squares)?</text>
+<rect class="box done" x="520" y="218" width="240" height="44" rx="8"/><text x="532" y="238" class="title">Convex hull trick</text><text x="532" y="254" class="small">deque if monotone, else Li Chao</text>
+<rect class="box accent" x="20" y="286" width="420" height="44" rx="8"/><text x="32" y="306" class="small">Are you splitting into K groups, and does the best</text><text x="32" y="322" class="small">split point never move left as i grows?</text>
+<rect class="box done" x="520" y="286" width="240" height="44" rx="8"/><text x="532" y="313" class="title">Divide &amp; conquer</text>
+<rect class="box accent" x="20" y="354" width="420" height="44" rx="8"/><text x="32" y="374" class="small">Is it interval DP with a split k, and a cost that</text><text x="32" y="390" class="small">satisfies the quadrangle inequality?</text>
+<rect class="box done" x="520" y="354" width="240" height="44" rx="8"/><text x="532" y="381" class="title">Knuth, O(n²)</text>
+<rect class="box bad" x="20" y="430" width="420" height="56" rx="8"/><text x="32" y="452" class="small">None of these: the state is probably wrong. Look for a</text><text x="32" y="468" class="small">smaller state (what does the future really need?), a greedy</text><text x="32" y="482" class="small">exchange argument, or a sort that makes the order natural.</text>
+<path class="edge done" d="M442 36 L516 36" marker-end="url(#dp-advanced-f1)"/><text x="478" y="30" text-anchor="middle" class="small">yes</text>
+<path class="edge done" d="M442 104 L516 104" marker-end="url(#dp-advanced-f1)"/><text x="478" y="98" text-anchor="middle" class="small">yes</text>
+<path class="edge done" d="M442 172 L516 172" marker-end="url(#dp-advanced-f1)"/><text x="478" y="166" text-anchor="middle" class="small">yes</text>
+<path class="edge done" d="M442 240 L516 240" marker-end="url(#dp-advanced-f1)"/><text x="478" y="234" text-anchor="middle" class="small">yes</text>
+<path class="edge done" d="M442 308 L516 308" marker-end="url(#dp-advanced-f1)"/><text x="478" y="302" text-anchor="middle" class="small">yes</text>
+<path class="edge done" d="M442 376 L516 376" marker-end="url(#dp-advanced-f1)"/><text x="478" y="370" text-anchor="middle" class="small">yes</text>
+<path class="edge" d="M230 58 L230 78" marker-end="url(#dp-advanced-f2)"/><path class="edge" d="M230 126 L230 146" marker-end="url(#dp-advanced-f2)"/><path class="edge" d="M230 194 L230 214" marker-end="url(#dp-advanced-f2)"/><path class="edge" d="M230 262 L230 282" marker-end="url(#dp-advanced-f2)"/><path class="edge" d="M230 330 L230 350" marker-end="url(#dp-advanced-f2)"/><path class="edge" d="M230 398 L230 426" marker-end="url(#dp-advanced-f2)"/>
+<text x="240" y="72" class="small muted">no</text><text x="240" y="140" class="small muted">no</text><text x="240" y="208" class="small muted">no</text><text x="240" y="276" class="small muted">no</text><text x="240" y="344" class="small muted">no</text><text x="240" y="416" class="small muted">no</text>
+</svg>
+<figcaption>A decision list for speeding up a correct but slow DP. The constraints usually point to the answer: n ≤ 10⁵ with an O(n²) recurrence means one of the middle four.</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th>Technique</th>
+<th>Recurrence shape</th>
+<th>Before → after</th>
+<th>Condition to check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>State machine</td>
+<td><code>dp[t][mode]</code></td>
+<td>exponential → O(n · modes)</td>
+<td>small finite set of modes</td>
+</tr>
+<tr>
+<td>DAG DP</td>
+<td><code>dp[v] = f(dp[u])</code> over edges</td>
+<td>— → O(V + E)</td>
+<td>no cycles (Kahn pops all nodes)</td>
+</tr>
+<tr>
+<td>Monotonic deque</td>
+<td><code>g(i) + max h(j)</code>, j in window</td>
+<td>O(nk) → O(n)</td>
+<td>window ends non-decreasing</td>
+</tr>
+<tr>
+<td>Bisect</td>
+<td>best over sorted prefix</td>
+<td>O(n²) → O(n log n)</td>
+<td>candidates are a prefix after sorting</td>
+</tr>
+<tr>
+<td>Segment tree / BIT</td>
+<td>best over a key range</td>
+<td>O(n²) → O(n log V)</td>
+<td>keys bounded, or compress them</td>
+</tr>
+<tr>
+<td>CHT deque</td>
+<td><code>min (m_j x_i + b_j)</code></td>
+<td>O(n²) → O(n)</td>
+<td>slopes and queries monotone</td>
+</tr>
+<tr>
+<td>Li Chao</td>
+<td>same, any order</td>
+<td>O(n²) → O(n log X)</td>
+<td>x range known in advance</td>
+</tr>
+<tr>
+<td>Divide &amp; conquer</td>
+<td><code>dp[t−1][j] + C(j, i)</code></td>
+<td>O(Kn²) → O(Kn log n)</td>
+<td>opt monotone (quadrangle inequality)</td>
+</tr>
+<tr>
+<td>Knuth</td>
+<td>interval split</td>
+<td>O(n³) → O(n²)</td>
+<td>quadrangle inequality + monotone on nesting</td>
+</tr>
+<tr>
+<td>Matrix power</td>
+<td>linear, fixed size k</td>
+<td>O(nk) → O(k³ log n)</td>
+<td>constant coefficients</td>
+</tr>
+</tbody>
+</table>
+<div class="pitfall">
+<p><strong>Pitfalls that cost hours.</strong></p>
+<ul>
+<li><strong>Updating states in place in a state machine.</strong> <code>hold = max(hold, cash − p)</code> followed by <code>cash = max(cash, hold + p)</code> lets you buy and sell on the same day. Use simultaneous assignment, or copy yesterday's values first.</li>
+<li><strong>Deque with <code>&lt;</code> instead of <code>&lt;=</code> when popping dominated states.</strong> It is still correct, but equal values pile up and the deque can grow, and with the "start fresh" variant people then read <code>dq[0]</code> on an empty deque. Pop on <code>&lt;=</code>, and guard <code>if dq</code>.</li>
+<li><strong>CHT with floating-point intersections.</strong> Two lines that cross at x = 3 might be judged to cross at 2.9999999, and a needed line disappears. Compare by cross-multiplying integers (and use 128-bit when the products can pass 9.2·10¹⁸).</li>
+<li><strong>Sorting envelopes by <code>(w, h)</code> both ascending.</strong> Same-width envelopes then chain. Sort heights <strong>descending</strong> within a width.</li>
+<li><strong>Bisect on the wrong side in job scheduling.</strong> A job that ends at time 5 is compatible with one that starts at 5: that is <code>bisect_right(ends, start)</code>. With <code>bisect_left</code> you silently forbid touching jobs.</li>
+<li><strong>Probability DP that keeps adding stopped states</strong> (New 21 Game), or that counts paths instead of probabilities and overflows.</li>
+<li><strong>Forgetting <code>% MOD</code> on one term</strong> of a sum in C#. One un-reduced product of two <code>long</code>s near 10⁹ + 7 is fine; three are not.</li>
+<li><strong>Divide &amp; conquer without checking monotonicity.</strong> If <code>opt</code> is not monotone the code still runs and returns a plausible but wrong answer. Assert it on random small inputs against the O(Kn²) version.</li>
+</ul>
+</div>
+<h2 id="worked-problems">Worked problems</h2>
+<h3 id="1-minimum-swaps-to-make-sequences-increasing-two-modes-per-column">1. Minimum Swaps To Make Sequences Increasing: two modes per column</h3>
+<p><a href="https://leetcode.com/problems/minimum-swaps-to-make-sequences-increasing/">LeetCode 801</a> <span class="diff hard">Hard</span>. Two equal-length arrays A and B. In one operation you may swap <code>A[i]</code> with <code>B[i]</code>. Return the fewest swaps that make both arrays strictly increasing (the input guarantees that it is possible).</p>
+<p><strong>Key insight.</strong> Whether column <code>i</code> is valid depends only on column <code>i − 1</code> and on whether <strong>each</strong> of the two was swapped. So the state is <code>(i, swapped?)</code>: two modes per column, the same shape as the stock machine. Between neighbours there are two independent tests: "same orientation is fine" (<code>A[i−1] &lt; A[i]</code> and <code>B[i−1] &lt; B[i]</code>) allows keep→keep and swap→swap. "Flipped orientation is fine" (<code>A[i−1] &lt; B[i]</code> and <code>B[i−1] &lt; A[i]</code>) allows keep→swap and swap→keep. A swap at column <code>i</code> costs 1.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 780 290" width="780" role="img" aria-label="Keep and swap states for A = 1,3,5,4 and B = 1,2,3,7; the cheapest path keeps the first three columns and swaps the last for a cost of 1">
+<defs><marker id="dp-advanced-w1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="dp-advanced-w2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-path"/></marker></defs>
+<text x="20" y="133" class="small muted">keep</text><text x="20" y="213" class="small muted">swap</text>
+<text x="120" y="40" text-anchor="middle" class="title">i = 0</text><text x="120" y="62" text-anchor="middle" class="mono">A 1 · B 1</text>
+<text x="300" y="40" text-anchor="middle" class="title">i = 1</text><text x="300" y="62" text-anchor="middle" class="mono">A 3 · B 2</text>
+<text x="480" y="40" text-anchor="middle" class="title">i = 2</text><text x="480" y="62" text-anchor="middle" class="mono">A 5 · B 3</text>
+<text x="660" y="40" text-anchor="middle" class="title">i = 3</text><text x="660" y="62" text-anchor="middle" class="mono">A 4 · B 7</text>
+<rect class="box path" x="70" y="110" width="100" height="40" rx="8"/><text x="120" y="135" text-anchor="middle" class="mono">keep 0</text>
+<rect class="box" x="70" y="190" width="100" height="40" rx="8"/><text x="120" y="215" text-anchor="middle" class="mono">swap 1</text>
+<rect class="box path" x="250" y="110" width="100" height="40" rx="8"/><text x="300" y="135" text-anchor="middle" class="mono">keep 0</text>
+<rect class="box" x="250" y="190" width="100" height="40" rx="8"/><text x="300" y="215" text-anchor="middle" class="mono">swap 1</text>
+<rect class="box path" x="430" y="110" width="100" height="40" rx="8"/><text x="480" y="135" text-anchor="middle" class="mono">keep 0</text>
+<rect class="box" x="430" y="190" width="100" height="40" rx="8"/><text x="480" y="215" text-anchor="middle" class="mono">swap 2</text>
+<rect class="box" x="610" y="110" width="100" height="40" rx="8"/><text x="660" y="135" text-anchor="middle" class="mono">keep 2</text>
+<rect class="box path" x="610" y="190" width="100" height="40" rx="8"/><text x="660" y="215" text-anchor="middle" class="mono">swap 1</text>
+<path class="edge path" d="M172 130 L246 130" marker-end="url(#dp-advanced-w2)"/><path class="edge" d="M172 210 L246 210" marker-end="url(#dp-advanced-w1)"/><path class="edge dash" d="M172 136 L246 202" marker-end="url(#dp-advanced-w1)"/><path class="edge dash" d="M172 204 L246 138" marker-end="url(#dp-advanced-w1)"/>
+<path class="edge path" d="M352 130 L426 130" marker-end="url(#dp-advanced-w2)"/><path class="edge" d="M352 210 L426 210" marker-end="url(#dp-advanced-w1)"/>
+<path class="edge path dash" d="M532 136 L606 202" marker-end="url(#dp-advanced-w2)"/><path class="edge dash" d="M532 204 L606 138" marker-end="url(#dp-advanced-w1)"/>
+<text x="210" y="262" text-anchor="middle" class="small">both tests pass</text><text x="390" y="262" text-anchor="middle" class="small">same only (3 &lt; 3 fails)</text><text x="570" y="262" text-anchor="middle" class="small">flipped only (5 &lt; 4 fails)</text>
+<text x="390" y="284" text-anchor="middle" class="small muted">solid = same orientation, dashed = flipped; highlighted = the cheapest path, answer min(2, 1) = 1</text>
+</svg>
+<figcaption>Every column has a keep box and a swap box. Each box takes the cheapest arrow that enters it (plus 1 on the swap row).</figcaption>
+</figure>
+
+<details class="solution">
+<summary>Solution: two rolling values, O(n) time, O(1) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def min_swap(a, b):
+    keep, swap = 0, 1                     # cost so far if column i is kept / swapped
+    for i in range(1, len(a)):
+        nk = ns = float(&quot;inf&quot;)
+        if a[i - 1] &lt; a[i] and b[i - 1] &lt; b[i]:     # same orientation stays valid
+            nk = min(nk, keep); ns = min(ns, swap + 1)
+        if a[i - 1] &lt; b[i] and b[i - 1] &lt; a[i]:     # flipped orientation is valid
+            nk = min(nk, swap); ns = min(ns, keep + 1)
+        keep, swap = nk, ns
+    return min(keep, swap)
+</code></pre>
+<pre><code class="language-csharp">public static int MinSwap(int[] a, int[] b)
+{
+    int keep = 0, swap = 1;                         // cost so far if column i is kept / swapped
+    for (int i = 1; i &lt; a.Length; i++)
+    {
+        int nk = int.MaxValue, ns = int.MaxValue;
+        if (a[i - 1] &lt; a[i] &amp;&amp; b[i - 1] &lt; b[i]) { nk = Math.Min(nk, keep); ns = Math.Min(ns, swap + 1); }
+        if (a[i - 1] &lt; b[i] &amp;&amp; b[i - 1] &lt; a[i]) { nk = Math.Min(nk, swap); ns = Math.Min(ns, keep + 1); }
+        (keep, swap) = (nk, ns);
+    }
+    return Math.Min(keep, swap);
+}
+</code></pre>
+</div>
+<p>Both tests can pass at once, which is why the code uses two <code>if</code>s and not an <code>if/else</code>. Checked against trying all 2ⁿ swap patterns.</p>
+</details>
+<h3 id="2-maximum-profit-in-job-scheduling-dp-over-sorted-ends">2. Maximum Profit in Job Scheduling: DP over sorted ends</h3>
+<p><a href="https://leetcode.com/problems/maximum-profit-in-job-scheduling/">LeetCode 1235</a> <span class="diff hard">Hard</span>. Jobs have a start, an end and a profit. Pick non-overlapping jobs (one may start exactly when another ends) to maximise total profit. n ≤ 5·10⁴, times up to 10⁹.</p>
+<p><strong>Key insight.</strong> Sort the jobs by end time. Let <code>dp[i]</code> be the best profit using only the first <code>i</code> jobs. Job <code>i</code> is either skipped (<code>dp[i−1]</code>) or taken, and then the previous jobs must end by its start. Because the ends are sorted, the compatible jobs form a <strong>prefix</strong>, and its length is one <code>bisect_right(ends, start)</code>. Step through the <a href="#weighted-interval-scheduling-sort-by-end-bisect-for-the-past">job visualizer</a> above to see the bisect land.</p>
+<details class="solution">
+<summary>Solution: sort by end, bisect, O(n log n)</summary>
+<div class="code-tabs">
+<pre><code class="language-python">import bisect
+
+def job_scheduling(start, end, profit):
+    jobs = sorted(zip(end, start, profit))
+    ends = [e for e, _, _ in jobs]
+    dp = [0] * (len(jobs) + 1)            # dp[i]: best using the first i jobs by end time
+    for i, (e, s, p) in enumerate(jobs, 1):
+        k = bisect.bisect_right(ends, s, 0, i - 1)   # jobs ending at or before s
+        dp[i] = max(dp[i - 1], dp[k] + p)
+    return dp[-1]
+</code></pre>
+<pre><code class="language-csharp">public static int JobScheduling(int[] start, int[] end, int[] profit)
+{
+    int n = start.Length;
+    var idx = Enumerable.Range(0, n).OrderBy(i =&gt; end[i]).ToArray();
+    var ends = idx.Select(i =&gt; end[i]).ToArray();
+    var dp = new int[n + 1];                      // dp[i]: best using the first i jobs by end time
+    for (int i = 1; i &lt;= n; i++)
+    {
+        int s = start[idx[i - 1]];
+        int lo = 0, hi = i - 1;                   // first index in ends[0..i-1) with end &gt; s
+        while (lo &lt; hi) { int mid = (lo + hi) / 2; if (ends[mid] &lt;= s) lo = mid + 1; else hi = mid; }
+        dp[i] = Math.Max(dp[i - 1], dp[lo] + profit[idx[i - 1]]);
+    }
+    return dp[n];
+}
+</code></pre>
+</div>
+<p>Checked against all 2ⁿ subsets on random small inputs. The same skeleton solves <a href="https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended-ii/">Maximum Number of Events That Can Be Attended II</a> with one more dimension (how many events used), where an event ending at d blocks a start at d, so the search there uses <code>bisect_left</code>.</p>
+</details>
+<h3 id="3-number-of-music-playlists-count-by-distinct-songs-so-far">3. Number of Music Playlists: count by distinct songs so far</h3>
+<p><a href="https://leetcode.com/problems/number-of-music-playlists/">LeetCode 920</a> <span class="diff hard">Hard</span>. There are n songs, the playlist has <code>goal</code> slots, every song must be played at least once, and a song can be replayed only if <code>k</code> other songs have been played since its last play. Count playlists mod 10⁹ + 7.</p>
+<p><strong>Key insight.</strong> Which songs were played does not matter, only <strong>how many different ones</strong>. Let <code>dp[i][j]</code> count playlists of length <code>i</code> that use exactly <code>j</code> distinct songs. Slot <code>i</code> is either a <strong>new</strong> song (there are <code>n − (j − 1)</code> unused songs to choose from) or a <strong>replay</strong>: of the <code>j</code> songs used so far, the last <code>k</code> slots hold <code>k</code> different songs that are blocked, so <code>j − k</code> are allowed.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 700 170" width="700" role="img" aria-label="Music playlist transitions: dp of i minus 1, j minus 1 times n minus j plus 1 for a new song, and dp of i minus 1, j times j minus k for a replay, both flow into dp of i, j">
+<defs><marker id="dp-advanced-w3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker></defs>
+<rect class="box" x="30" y="20" width="200" height="44" rx="8"/><text x="130" y="47" text-anchor="middle" class="mono">dp[i−1][j−1]</text>
+<rect class="box" x="30" y="104" width="200" height="44" rx="8"/><text x="130" y="131" text-anchor="middle" class="mono">dp[i−1][j]</text>
+<rect class="box accent" x="470" y="62" width="200" height="44" rx="8"/><text x="570" y="89" text-anchor="middle" class="mono">dp[i][j]</text>
+<path class="edge done" d="M232 42 L466 78" marker-end="url(#dp-advanced-w3)"/><text x="350" y="30" text-anchor="middle" class="small">× (n − j + 1): a brand-new song</text>
+<path class="edge" d="M232 126 L466 92" marker-end="url(#dp-advanced-w3)"/><text x="350" y="140" text-anchor="middle" class="small">× max(j − k, 0): replay one not in the last k</text>
+</svg>
+<figcaption>Two arrows into every cell. The answer is dp[goal][n]: all n songs used.</figcaption>
+</figure>
+
+<details class="solution">
+<summary>Solution: O(goal · n) counting DP</summary>
+<div class="code-tabs">
+<pre><code class="language-python">MOD = 10**9 + 7
+
+def num_music_playlists(n, goal, k):
+    dp = [[0] * (n + 1) for _ in range(goal + 1)]
+    dp[0][0] = 1
+    for i in range(1, goal + 1):
+        for j in range(1, n + 1):
+            new = dp[i - 1][j - 1] * (n - j + 1)          # a song never played before
+            old = dp[i - 1][j] * max(j - k, 0)            # replay one not in the last k
+            dp[i][j] = (new + old) % MOD
+    return dp[goal][n]
+</code></pre>
+<pre><code class="language-csharp">const long MOD = 1_000_000_007;
+
+public static int NumMusicPlaylists(int n, int goal, int k)
+{
+    var dp = new long[goal + 1, n + 1]; dp[0, 0] = 1;
+    for (int i = 1; i &lt;= goal; i++)
+        for (int j = 1; j &lt;= n; j++)
+        {
+            long fresh = dp[i - 1, j - 1] * (n - j + 1);      // a song never played before
+            long replay = dp[i - 1, j] * Math.Max(j - k, 0);  // replay one not in the last k
+            dp[i, j] = (fresh + replay) % MOD;
+        }
+    return (int)dp[goal, n];
+}
+</code></pre>
+</div>
+<p>Each product is below 10⁹ · 100, so <code>long</code> is safe before the <code>%</code>. Checked against enumerating every sequence for n ≤ 4, goal ≤ 6.</p>
+</details>
+<h3 id="4-student-attendance-record-ii-a-6-state-machine-counted">4. Student Attendance Record II: a 6-state machine, counted</h3>
+<p><a href="https://leetcode.com/problems/student-attendance-record-ii/">LeetCode 552</a> <span class="diff hard">Hard</span>. Count the strings of length n over {P, A, L} with fewer than 2 A's in total and never 3 L's in a row, mod 10⁹ + 7. n ≤ 10⁵.</p>
+<p><strong>Key insight.</strong> To decide whether the next letter is allowed you only need two facts: <strong>how many A's so far</strong> (0 or 1) and <strong>how many L's at the very end</strong> (0, 1 or 2). That is 2 × 3 = 6 states, and each day every state moves along at most three arrows. It is the stock machine again, but counting paths instead of maximising. For n up to 10¹⁸ the same 6 × 6 transition matrix goes through <a href="#matrix-exponentiation">matrix power</a>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 780 330" width="780" role="img" aria-label="Six attendance states: absences 0 or 1 by trailing lates 0, 1, 2. L moves right along a row, P returns to lates 0 in the same row, A moves from row 0 to row 1 lates 0">
+<defs><marker id="dp-advanced-w4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="muted"/></marker><marker id="dp-advanced-w5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-active"/></marker></defs>
+<text x="20" y="114" class="small muted">0 A's</text><text x="20" y="234" class="small muted">1 A</text>
+<rect class="box accent" x="110" y="90" width="130" height="40" rx="8"/><text x="175" y="115" text-anchor="middle" class="mono">L-run 0</text>
+<rect class="box" x="330" y="90" width="130" height="40" rx="8"/><text x="395" y="115" text-anchor="middle" class="mono">L-run 1</text>
+<rect class="box" x="550" y="90" width="130" height="40" rx="8"/><text x="615" y="115" text-anchor="middle" class="mono">L-run 2</text>
+<rect class="box" x="110" y="210" width="130" height="40" rx="8"/><text x="175" y="235" text-anchor="middle" class="mono">L-run 0</text>
+<rect class="box" x="330" y="210" width="130" height="40" rx="8"/><text x="395" y="235" text-anchor="middle" class="mono">L-run 1</text>
+<rect class="box" x="550" y="210" width="130" height="40" rx="8"/><text x="615" y="235" text-anchor="middle" class="mono">L-run 2</text>
+<path class="edge done" d="M242 110 L326 110" marker-end="url(#dp-advanced-w4)"/><text x="284" y="103" text-anchor="middle" class="small">L</text>
+<path class="edge done" d="M462 110 L546 110" marker-end="url(#dp-advanced-w4)"/><text x="504" y="103" text-anchor="middle" class="small">L</text>
+<path class="edge done" d="M242 230 L326 230" marker-end="url(#dp-advanced-w4)"/><text x="284" y="223" text-anchor="middle" class="small">L</text>
+<path class="edge done" d="M462 230 L546 230" marker-end="url(#dp-advanced-w4)"/><text x="504" y="223" text-anchor="middle" class="small">L</text>
+<path class="edge dash" d="M395 88 Q292 48 196 86" marker-end="url(#dp-advanced-w4)"/><path class="edge dash" d="M615 88 Q395 8 180 86" marker-end="url(#dp-advanced-w4)"/><text x="395" y="30" text-anchor="middle" class="small">P: back to run 0 in the same row</text>
+<path class="edge dash" d="M395 252 Q292 292 196 254" marker-end="url(#dp-advanced-w4)"/><path class="edge dash" d="M615 252 Q395 332 180 254" marker-end="url(#dp-advanced-w4)"/><text x="395" y="318" text-anchor="middle" class="small">P</text>
+<path class="edge active" d="M175 132 L175 206" marker-end="url(#dp-advanced-w5)"/><path class="edge active" d="M380 132 L208 206" marker-end="url(#dp-advanced-w5)"/><path class="edge active" d="M600 132 L224 208" marker-end="url(#dp-advanced-w5)"/><text x="470" y="186" class="small">A: the first absence (row 0 → row 1)</text>
+<text x="696" y="114" class="small muted">no L</text><text x="696" y="234" class="small muted">no L, no A</text>
+</svg>
+<figcaption>Rows count the A's, columns count the trailing L's. P always returns to run 0 in the same row, A drops from row 0 to row 1 (run 0), and L moves one step right. There is no arrow out of run 2 by L, and no A out of row 1. P loops from each run-0 box to itself, which is not drawn.</figcaption>
+</figure>
+
+<details class="solution">
+<summary>Solution: 6 rolling counters, O(n) time, O(1) space</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def check_record(n):
+    MOD = 10**9 + 7
+    dp = [[0] * 3 for _ in range(2)]      # dp[a][l]: a absences so far, l trailing lates
+    dp[0][0] = 1
+    for _ in range(n):
+        nd = [[0] * 3 for _ in range(2)]
+        for a in range(2):
+            for l in range(3):
+                v = dp[a][l]
+                nd[a][0] = (nd[a][0] + v) % MOD                  # P: resets the late streak
+                if a == 0: nd[1][0] = (nd[1][0] + v) % MOD       # A: only if no absence yet
+                if l &lt; 2: nd[a][l + 1] = (nd[a][l + 1] + v) % MOD  # L: streak grows, max 2
+        dp = nd
+    return sum(map(sum, dp)) % MOD
+</code></pre>
+<pre><code class="language-csharp">public static int CheckRecord(int n)
+{
+    const long MOD = 1_000_000_007;
+    var dp = new long[2, 3]; dp[0, 0] = 1;            // dp[a, l]: a absences so far, l trailing lates
+    for (int step = 0; step &lt; n; step++)
+    {
+        var nd = new long[2, 3];
+        for (int a = 0; a &lt; 2; a++)
+            for (int l = 0; l &lt; 3; l++)
+            {
+                long v = dp[a, l];
+                nd[a, 0] = (nd[a, 0] + v) % MOD;                      // P: resets the late streak
+                if (a == 0) nd[1, 0] = (nd[1, 0] + v) % MOD;          // A: only if no absence yet
+                if (l &lt; 2) nd[a, l + 1] = (nd[a, l + 1] + v) % MOD;   // L: streak grows, max 2
+            }
+        dp = nd;
+    }
+    long total = 0; foreach (long v in dp) total += v;
+    return (int)(total % MOD);
+}
+</code></pre>
+</div>
+<p>Checked against all 3ⁿ strings for n ≤ 10, plus LeetCode's n = 10101 → 183236316. Writing the state diagram <strong>first</strong> is the whole problem; the code just transcribes the arrows.</p>
+</details>
+<h3 id="5-stone-game-iii-minimax-as-a-score-difference">5. Stone Game III: minimax as a score difference</h3>
+<p><a href="https://leetcode.com/problems/stone-game-iii/">LeetCode 1406</a> <span class="diff hard">Hard</span>. Stones in a row with values (possibly negative). Players alternately take 1, 2 or 3 stones <strong>from the front</strong>. The higher total wins; return "Alice", "Bob" or "Tie".</p>
+<p><strong>Key insight.</strong> Use the score-difference minimax from <a href="#game-theory-dp">Game theory DP</a>: <code>d[i]</code> = best (mover − other) on the suffix starting at <code>i</code>. Taking <code>x</code> stones gains their sum and then hands the opponent <code>d[i + x]</code>, so <code>d[i] = max over x of (v[i] + … + v[i+x−1] − d[i+x])</code>. Fill it from the right. Negative values are why "take 3 always" is wrong, and why <code>d[i]</code> starts at −∞, not 0: you <strong>must</strong> take at least one stone.</p>
+<details class="solution">
+<summary>Solution: suffix difference DP, O(n)</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def stone_game_iii(v):
+    n = len(v); d = [0] * (n + 3)         # d[i]: best (me - opponent) from i on
+    for i in range(n - 1, -1, -1):
+        take, d[i] = 0, float(&quot;-inf&quot;)
+        for x in range(3):
+            if i + x &lt; n:
+                take += v[i + x]
+                d[i] = max(d[i], take - d[i + x + 1])
+    return &quot;Alice&quot; if d[0] &gt; 0 else &quot;Bob&quot; if d[0] &lt; 0 else &quot;Tie&quot;
+</code></pre>
+<pre><code class="language-csharp">public static string StoneGameIII(int[] v)
+{
+    int n = v.Length; var d = new int[n + 3];             // d[i]: best (me - opponent) from i on
+    for (int i = n - 1; i &gt;= 0; i--)
+    {
+        int take = 0; d[i] = int.MinValue;
+        for (int x = 0; x &lt; 3 &amp;&amp; i + x &lt; n; x++)
+        {
+            take += v[i + x];
+            d[i] = Math.Max(d[i], take - d[i + x + 1]);
+        }
+    }
+    return d[0] &gt; 0 ? &quot;Alice&quot; : d[0] &lt; 0 ? &quot;Bob&quot; : &quot;Tie&quot;;
+}
+</code></pre>
+</div>
+<p>Checked against a memoised full game search. Only <code>d[i+1..i+3]</code> is ever read, so a 4-slot ring buffer gives O(1) space.</p>
+</details>
+<h3 id="6-allocate-mailboxes-divide-conquer-over-k-layers">6. Allocate Mailboxes: divide &amp; conquer over K layers</h3>
+<p><a href="https://leetcode.com/problems/allocate-mailboxes/">LeetCode 1478</a> <span class="diff hard">Hard</span>. Houses on a line; place k mailboxes to minimise the total distance from each house to its nearest mailbox.</p>
+<p><strong>Key insight.</strong> Sort the houses. Each mailbox serves a <strong>contiguous</strong> run of houses, and one mailbox is best placed at the <strong>median</strong> of its run, so <code>cost(j, i)</code> for houses <code>j..i−1</code> is O(1) with prefix sums. Then <code>dp[t][i] = min over j of dp[t−1][j] + cost(j, i)</code>. The median cost satisfies the quadrangle inequality, so the best <code>j</code> never moves left as <code>i</code> grows, and every layer can use <a href="#divide-conquer-optimisation-and-knuth-at-a-glance">divide &amp; conquer</a>: O(k · n log n) instead of O(k · n²). LeetCode's n ≤ 100 accepts O(k n²) too, but the D&amp;C version is the one that scales to n = 10⁵.</p>
+<details class="solution">
+<summary>Solution: median cost + D&amp;C per layer, O(k · n log n)</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def min_distance(houses, k):
+    houses.sort(); n = len(houses)
+    pre = [0]
+    for h in houses: pre.append(pre[-1] + h)
+    def cost(j, i):                       # one mailbox for houses[j:i], at the median
+        m = (j + i - 1) // 2
+        return houses[m] * (m - j) - (pre[m] - pre[j]) + (pre[i] - pre[m + 1]) - houses[m] * (i - m - 1)
+    INF = float(&quot;inf&quot;); prev = [0] + [INF] * n
+    for t in range(1, k + 1):
+        cur = [INF] * (n + 1)
+        def solve(lo, hi, olo, ohi):      # fill cur[lo..hi]; their opt lies in [olo, ohi]
+            if lo &gt; hi: return
+            mid = (lo + hi) // 2; best, opt = INF, olo
+            for j in range(olo, min(ohi, mid - 1) + 1):
+                v = prev[j] + cost(j, mid)
+                if v &lt; best: best, opt = v, j
+            cur[mid] = best
+            solve(lo, mid - 1, olo, opt); solve(mid + 1, hi, opt, ohi)
+        solve(t, n, t - 1, n - 1)
+        prev = cur
+    return prev[n]
+</code></pre>
+<pre><code class="language-csharp">public static int MinDistance(int[] houses, int k)
+{
+    Array.Sort(houses); int n = houses.Length;
+    var pre = new int[n + 1];
+    for (int i = 0; i &lt; n; i++) pre[i + 1] = pre[i] + houses[i];
+    int Cost(int j, int i)                                // one mailbox for houses[j..i), at the median
+    {
+        int m = (j + i - 1) / 2;
+        return houses[m] * (m - j) - (pre[m] - pre[j]) + (pre[i] - pre[m + 1]) - houses[m] * (i - m - 1);
+    }
+    const int INF = int.MaxValue / 2;
+    var prev = new int[n + 1]; Array.Fill(prev, INF); prev[0] = 0;
+    for (int t = 1; t &lt;= k; t++)
+    {
+        var cur = new int[n + 1]; Array.Fill(cur, INF);
+        void Solve(int lo, int hi, int optLo, int optHi)  // fill cur[lo..hi]; their opt lies in [optLo, optHi]
+        {
+            if (lo &gt; hi) return;
+            int mid = (lo + hi) / 2, best = INF, opt = optLo;
+            for (int j = optLo; j &lt;= Math.Min(optHi, mid - 1); j++)
+            {
+                int v = prev[j] + Cost(j, mid);
+                if (v &lt; best) { best = v; opt = j; }
+            }
+            cur[mid] = best;
+            Solve(lo, mid - 1, optLo, opt);
+            Solve(mid + 1, hi, opt, optHi);
+        }
+        Solve(t, n, t - 1, n - 1);
+        prev = cur;
+    }
+    return prev[n];
+}
+</code></pre>
+</div>
+<p>Checked against trying every set of k mailbox positions. The median fact is worth remembering on its own: the sum of <code>|x − p|</code> is minimised at any median <code>p</code> (move p one step toward the larger side and more houses get closer than farther).</p>
+</details>
+<h3 id="7-soup-servings-probability-dp-with-a-cutoff">7. Soup Servings: probability DP with a cutoff</h3>
+<p><a href="https://leetcode.com/problems/soup-servings/">LeetCode 808</a> <span class="diff medium">Medium</span>. Two soups A and B start with n ml each. Each turn, one of four servings (A,B) = (100,0), (75,25), (50,50), (25,75) is chosen with probability ¼. Return P(A empties first) + ½·P(both empty at the same time). n ≤ 10⁹.</p>
+<p><strong>Key insight.</strong> Divide everything by 25 so the servings become (4,0), (3,1), (2,2), (1,3) and the state is <code>(a, b)</code> in units. That is a <a href="#probability-and-expected-value-dp">pull-style probability DP</a>. The trick is the <strong>cutoff</strong>: on average A loses 2.5 units per turn and B only 1.5, so as n grows the answer races to 1. It is within 10⁻⁶ of 1 once n &gt; 4800, which LeetCode's tolerance accepts. Without that observation n = 10⁹ is hopeless; with it the table is at most 193 × 193.</p>
+<details class="solution">
+<summary>Solution: memoised (a, b) in units of 25, O(min(n, 4800)² / 625)</summary>
+<div class="code-tabs">
+<pre><code class="language-python">import functools
+
+def soup_servings(n):
+    if n &gt; 4800: return 1.0               # the answer is within 1e-6 of 1 from here on
+    m = (n + 24) // 25                    # work in units of 25 ml
+    @functools.lru_cache(None)
+    def f(a, b):
+        if a &lt;= 0 and b &lt;= 0: return 0.5
+        if a &lt;= 0: return 1.0
+        if b &lt;= 0: return 0.0
+        return 0.25 * (f(a - 4, b) + f(a - 3, b - 1) + f(a - 2, b - 2) + f(a - 1, b - 3))
+    return f(m, m)
+</code></pre>
+<pre><code class="language-csharp">public static double SoupServings(int n)
+{
+    if (n &gt; 4800) return 1.0;                             // the answer is within 1e-6 of 1 from here on
+    int m = (n + 24) / 25;                                // work in units of 25 ml
+    var memo = new double?[m + 1, m + 1];
+    double F(int a, int b)
+    {
+        if (a &lt;= 0 &amp;&amp; b &lt;= 0) return 0.5;
+        if (a &lt;= 0) return 1.0;
+        if (b &lt;= 0) return 0.0;
+        return memo[a, b] ??= 0.25 * (F(a - 4, b) + F(a - 3, b - 1) + F(a - 2, b - 2) + F(a - 1, b - 3));
+    }
+    return F(m, m);
+}
+</code></pre>
+</div>
+<p><code>(n + 24) // 25</code> rounds up, because a partial 25 ml still counts as a full serving's worth of emptying. Checked against the sample answers (n = 50 → 0.625, n = 100 → 0.71875) and the convergence at 4800. The general lesson: when the input is astronomically large and the answer is a probability, <strong>look for the value it converges to</strong>.</p>
+</details>
+<h2 id="problem-ladder">Problem ladder</h2>
+<p>The ladder goes from "spot the state" to "spot the optimisation". In the Hard and Expert rows, write the slow DP first, prove it correct on small inputs, and only then speed it up.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Difficulty</th>
+<th>The idea to notice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/">Best Time to Buy and Sell Stock</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>The smallest machine: two modes, hold and free</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://leetcode.com/problems/fibonacci-number/">Fibonacci Number</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Write it as <code>[[1,1],[1,0]]ⁿ</code> once, even though n ≤ 30</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://leetcode.com/problems/n-th-tribonacci-number/">N-th Tribonacci Number</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>A 3 × 3 companion matrix; same power loop</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/">Stock with Cooldown</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Add a third mode, "just sold", that must rest</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/">Stock with Transaction Fee</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>The fee is a cost on one arrow of the machine</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://leetcode.com/problems/longest-increasing-subsequence/">Longest Increasing Subsequence</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Patience piles: <code>tails[L]</code> = smallest end of a length-(L+1) run</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://leetcode.com/problems/jump-game-vi/">Jump Game VI</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Max over the last k states: monotonic deque</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://leetcode.com/problems/knight-probability-in-chessboard/">Knight Probability in Chessboard</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Push probability mass forward k times</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://leetcode.com/problems/new-21-game/">New 21 Game</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Average over a window; stop adding states ≥ k</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://leetcode.com/problems/domino-and-tromino-tiling/">Domino and Tromino Tiling</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>A second state for a ragged edge</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://leetcode.com/problems/soup-servings/">Soup Servings</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Units of 25, then the cutoff where the answer is 1</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://leetcode.com/problems/predict-the-winner/">Predict the Winner</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Score difference: <code>max(take − d(rest))</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://leetcode.com/problems/stone-game/">Stone Game</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>The DP works, but the colouring argument says <code>True</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/">Best Time to Buy and Sell Stock IV</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Modes indexed by transactions used; k ≥ n/2 means unlimited</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="https://leetcode.com/problems/minimum-swaps-to-make-sequences-increasing/">Minimum Swaps To Make Sequences Increasing</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Keep / swap per column; two independent tests</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="https://leetcode.com/problems/constrained-subsequence-sum/">Constrained Subsequence Sum</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Deque DP plus "or start fresh" with <code>max(0, …)</code></td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="https://leetcode.com/problems/russian-doll-envelopes/">Russian Doll Envelopes</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Sort (w asc, h desc), then LIS on h</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="https://leetcode.com/problems/maximum-profit-in-job-scheduling/">Maximum Profit in Job Scheduling</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Sort by end; <code>bisect_right</code> for the compatible prefix</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="https://leetcode.com/problems/count-vowels-permutation/">Count Vowels Permutation</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Count walks in a 5-node graph; matrix power for huge n</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="https://leetcode.com/problems/number-of-music-playlists/">Number of Music Playlists</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>State = how many distinct songs, not which ones</td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="https://leetcode.com/problems/student-attendance-record-ii/">Student Attendance Record II</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>6 states: absences × trailing lates</td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="https://leetcode.com/problems/stone-game-iii/">Stone Game III</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Suffix difference DP; start at −∞, you must move</td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="https://leetcode.com/problems/longest-increasing-subsequence-ii/">Longest Increasing Subsequence II</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Max over a value range: segment tree keyed by value</td>
+</tr>
+<tr>
+<td>24</td>
+<td><a href="https://atcoder.jp/contests/dp/tasks/dp_z">Frog 3 (AtCoder DP Z)</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Expand the square: lines <code>−2h_j·x + (dp_j + h_j²)</code>; CHT</td>
+</tr>
+<tr>
+<td>25</td>
+<td><a href="https://leetcode.com/problems/allocate-mailboxes/">Allocate Mailboxes</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Median cost + D&amp;C per layer; make it work for n = 10⁵</td>
+</tr>
+</tbody>
+</table>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<p><summary>In the cooldown stock machine you write <code>hold = max(hold, cash − p)</code> and then <code>cash = max(cash, hold + p)</code> on the next line. What goes wrong?</summary></p>
+<p>The second line reads the <strong>new</strong> <code>hold</code>, so it can buy and sell on the same day with a profit of 0. That is harmless here, but it breaks fee and cooldown variants in subtle ways, and it is plain wrong for "at most k transactions", where the same-day round trip uses a transaction. Assign all modes from yesterday's values at once: <code>hold, cash = max(hold, cash − p), max(cash, hold + p)</code>.</p>
+</details>
+<details class="quiz">
+<p><summary>After running patience sorting on [3, 1, 4, 1, 5, 9, 2, 6] the <code>tails</code> array is [1, 2, 5, 6]. Is 1, 2, 5, 6 an increasing subsequence of the input?</summary></p>
+<p>No: the 2 comes <strong>after</strong> the 5 in the input. <code>tails</code> only promises that its <strong>length</strong> (4) is the LIS length, and that <code>tails[L]</code> is the smallest possible end of an increasing run of length L + 1. To recover a real subsequence, store a parent pointer when each element lands on a pile (here 1, 4, 5, 9 or 1, 4, 5, 6).</p>
+</details>
+<details class="quiz">
+<p><summary><code>dp[i] = min over j &lt; i of dp[j] + (h[i] − h[j])² + C</code>, with h strictly increasing and n = 2·10⁵. Which optimisation, and why?</summary></p>
+<p>The <strong>convex hull trick</strong>. Expanding gives <code>h[i]² + C + min_j (−2h[j] · h[i] + dp[j] + h[j]²)</code>: a line with slope <code>−2h[j]</code> and intercept <code>dp[j] + h[j]²</code>, evaluated at <code>x = h[i]</code>. The slopes decrease and the queries increase, so the deque version runs in O(n) total. With unsorted h, use a Li Chao tree for O(n log X).</p>
+</details>
+<details class="quiz">
+<p><summary>Nim with piles 3, 4, 5. Who wins, and what is a winning first move?</summary></p>
+<p><code>3 ⊕ 4 ⊕ 5 = 2</code>, which is non-zero, so the <strong>first</strong> player wins. The XOR's top bit is bit 1, and pile 3 = 011 has it set, so replace 3 by <code>3 ⊕ 2 = 1</code>, that is, take 2 stones from the first pile. Then <code>1 ⊕ 4 ⊕ 5 = 0</code> and the opponent faces a losing position.</p>
+</details>
+<details class="quiz">
+<p><summary>In a subtraction game where you may remove 1 or 2 stones, what is the Grundy value of a pile of 10?</summary></p>
+<p>The Grundy values go 0, 1, 2, 0, 1, 2, …, so <code>g(x) = x mod 3</code>, and <code>g(10) = 1</code>. Piles that are multiples of 3 are losing for the player to move. Set the visualizer's moves to <code>1,2</code> to watch the period appear. Periodicity is what lets you handle pile sizes up to 10⁹.</p>
+</details>
+<details class="quiz">
+<p><summary>Compute Fibonacci(10¹⁸) mod 10⁹ + 7. How many 2 × 2 matrix multiplications does fast power need, roughly?</summary></p>
+<p>About 2 · log₂(10¹⁸) ≈ 120: one squaring per bit (60 bits) plus one multiplication per set bit (at most 60). Each one is 8 multiplications of numbers below 10⁹ + 7, so the products fit in a 64-bit integer before <code>% MOD</code>. The answer is 209783453.</p>
+</details>
+<details class="quiz">
+<p><summary>When does the divide &amp; conquer optimisation give a wrong answer without crashing?</summary></p>
+<p>When the best split <code>opt(i)</code> is <strong>not</strong> monotone in <code>i</code>. The recursion only searches <code>[optLo, optHi]</code> for each midpoint, so if the true optimum lies outside, it is silently skipped. Check that the cost satisfies the quadrangle inequality, or test against the O(K n²) version on random small inputs before trusting it.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>State machine</strong>One DP row per mode (hold / free / rest). Update all modes from yesterday at once. O(n · modes).</div>
+<div><strong>DAG DP</strong>Topological order (Kahn), relax along edges. Longest path = max finish time. O(V + E).</div>
+<div><strong>Deque DP</strong><code>dp[i] = a[i] + max dp[j]</code>, j in a sliding window. Pop the back while ≤, pop the front when out of the window. O(n).</div>
+<div><strong>Bisect DP</strong>LIS tails + <code>bisect_left</code>. Envelopes: w ↑, h ↓. Jobs: sort by end, <code>bisect_right(ends, start)</code>. O(n log n).</div>
+<div><strong>Tree-backed DP</strong>Best over a key range: segment tree or BIT over values (compress them). O(n log V).</div>
+<div><strong>CHT / Li Chao</strong>Term <code>f(j)·g(i)</code>: lines <code>m_j x + b_j</code>. Deque if monotone, Li Chao otherwise. Integer comparisons only.</div>
+<div><strong>D&amp;C / Knuth</strong>Monotone opt. D&amp;C: O(K n log n) per K layers. Knuth: <code>opt[i][j−1] ≤ opt[i][j] ≤ opt[i+1][j]</code>, O(n²).</div>
+<div><strong>Probability</strong>Push the mass forward or pull the expectation backward. Sliding window sum for "average of the next W". Watch for a limit.</div>
+<div><strong>Counting</strong><code>% (10⁹ + 7)</code> after every product; state = what the future needs (counts, not identities).</div>
+<div><strong>Matrix power</strong>Fixed linear recurrence of size k: <code>Mⁿ</code> by squaring. O(k³ log n). Fibonacci, tilings, walks.</div>
+<div><strong>Games</strong>Zero-sum: <code>d = max(gain − d(next))</code>. Win/lose: losing iff all moves win. Sum of games: XOR of Grundy values.</div>
+<div><strong>Recognise</strong>Constraints: n ≤ 10⁵ with O(n²) DP → deque/bisect/tree/CHT. n ≤ 10¹⁸ → matrix power or a cycle.</div>
+</div>
+<h2 id="where-to-go-next">Where to go next</h2>
+<ul>
+<li><a href="dp-bitmask-digit.html">Bitmask &amp; Digit DP</a>: the state is a subset or a digit prefix (TSP, Can I Win, counting numbers with a property).</li>
+<li><a href="dp-intervals-trees.html">Interval &amp; Tree DP</a>: Knuth's optimisation step by step, games on a row, DP on trees and rerooting.</li>
+<li><a href="segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a>: the data structures behind tree-backed DP.</li>
+<li><a href="math-number-theory.html">Math, Number Theory &amp; Combinatorics</a>: fast power, modular inverses and nCr tables that counting DPs lean on.</li>
+<li><a href="bit-manipulation.html">Bit Manipulation</a>: XOR tricks behind Nim, and masks as DP states.</li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="dp-bitmask-digit.html"><small>&larr; PREVIOUS</small>Bitmask &amp; Digit DP</a><a class="next" href="bit-manipulation.html"><small>NEXT &rarr;</small>Bit Manipulation</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#where-this-page-fits">Where this page fits</a></li>
+<li><a href="#the-optimisation-map">The optimisation map</a></li>
+<li><a href="#state-machine-dp">State-machine DP</a><ul>
+<li><a href="#the-stock-family-is-one-machine">The stock family is one machine</a></li>
+</ul>
+</li>
+<li><a href="#dp-on-a-dag">DP on a DAG</a></li>
+<li><a href="#dp-monotonic-deque">DP + monotonic deque</a></li>
+<li><a href="#dp-binary-search">DP + binary search</a><ul>
+<li><a href="#lis-in-on-log-n-patience-sorting">LIS in O(n log n): patience sorting</a></li>
+<li><a href="#russian-doll-envelopes-2d-lis-with-one-sort">Russian Doll Envelopes: 2D LIS with one sort</a></li>
+<li><a href="#weighted-interval-scheduling-sort-by-end-bisect-for-the-past">Weighted interval scheduling: sort by end, bisect for the past</a></li>
+</ul>
+</li>
+<li><a href="#dp-segment-tree-or-fenwick-tree">DP + segment tree or Fenwick tree</a></li>
+<li><a href="#convex-hull-trick-and-li-chao-tree">Convex hull trick and Li Chao tree</a><ul>
+<li><a href="#when-the-term-mixes-i-and-j">When the term mixes i and j</a></li>
+<li><a href="#the-monotone-case-a-deque-of-lines">The monotone case: a deque of lines</a></li>
+<li><a href="#li-chao-tree-lines-and-queries-in-any-order">Li Chao tree: lines and queries in any order</a></li>
+</ul>
+</li>
+<li><a href="#divide-conquer-optimisation-and-knuth-at-a-glance">Divide &amp; conquer optimisation, and Knuth at a glance</a><ul>
+<li><a href="#splitting-an-array-into-k-groups">Splitting an array into K groups</a></li>
+<li><a href="#knuths-optimisation-interval-dp">Knuth's optimisation (interval DP)</a></li>
+</ul>
+</li>
+<li><a href="#probability-and-expected-value-dp">Probability and expected-value DP</a><ul>
+<li><a href="#knight-probability-push-the-mass-forward">Knight Probability: push the mass forward</a></li>
+<li><a href="#new-21-game-an-average-over-a-sliding-window">New 21 Game: an average over a sliding window</a></li>
+<li><a href="#soup-servings-memoise-then-notice-the-limit">Soup Servings: memoise, then notice the limit</a></li>
+</ul>
+</li>
+<li><a href="#counting-dp-modulo-109-7">Counting DP modulo 10⁹ + 7</a><ul>
+<li><a href="#number-of-music-playlists-count-by-how-many-distinct-so-far">Number of Music Playlists: count by "how many distinct so far"</a></li>
+<li><a href="#count-vowels-permutation-counting-walks-in-a-state-machine">Count Vowels Permutation: counting walks in a state machine</a></li>
+<li><a href="#domino-and-tromino-tiling-a-second-state-for-ragged-edges">Domino and Tromino Tiling: a second state for "ragged edges"</a></li>
+</ul>
+</li>
+<li><a href="#matrix-exponentiation">Matrix exponentiation</a></li>
+<li><a href="#game-theory-dp">Game theory DP</a><ul>
+<li><a href="#minimax-as-a-score-difference">Minimax as a score difference</a></li>
+<li><a href="#winlose-states-nim-and-sprague-grundy">Win/lose states, Nim, and Sprague-Grundy</a></li>
+</ul>
+</li>
+<li><a href="#choosing-the-right-tool">Choosing the right tool</a></li>
+<li><a href="#worked-problems">Worked problems</a><ul>
+<li><a href="#1-minimum-swaps-to-make-sequences-increasing-two-modes-per-column">1. Minimum Swaps To Make Sequences Increasing: two modes per column</a></li>
+<li><a href="#2-maximum-profit-in-job-scheduling-dp-over-sorted-ends">2. Maximum Profit in Job Scheduling: DP over sorted ends</a></li>
+<li><a href="#3-number-of-music-playlists-count-by-distinct-songs-so-far">3. Number of Music Playlists: count by distinct songs so far</a></li>
+<li><a href="#4-student-attendance-record-ii-a-6-state-machine-counted">4. Student Attendance Record II: a 6-state machine, counted</a></li>
+<li><a href="#5-stone-game-iii-minimax-as-a-score-difference">5. Stone Game III: minimax as a score difference</a></li>
+<li><a href="#6-allocate-mailboxes-divide-conquer-over-k-layers">6. Allocate Mailboxes: divide &amp; conquer over K layers</a></li>
+<li><a href="#7-soup-servings-probability-dp-with-a-cutoff">7. Soup Servings: probability DP with a cutoff</a></li>
+</ul>
+</li>
+<li><a href="#problem-ladder">Problem ladder</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#where-to-go-next">Where to go next</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1664 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Memory, Allocation &amp; Garbage Collection | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/memory-and-gc.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/memory-and-gc.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track" open><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html" aria-current="page">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Memory, Allocation &amp; Garbage Collection</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">PERFORMANCE</p><h1>Memory, Allocation &amp; Garbage Collection</h1><p class="lede">Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting.</p><div class="meta"><span class="level level-intermediate">Intermediate → Expert</span><span>~65 min study</span><span>Builds on: <a href="language-mental-models.html">Cross-Language Mental Models</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="memory-and-gc" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-the-service-that-was-fast-at-9-am-and-slow-by-lunch">The problem: the service that was fast at 9 a.m. and slow by lunch</h2>
+<p>An order-pricing API is benchmarked before launch: p50 4 ms, p99 11 ms. In production it goes wrong in three different ways over three weeks.</p>
+<ol>
+<li><strong>p99 drifts from 11 ms to 180 ms between deploys.</strong> CPU is fine. The GC log shows a gen2 (full) collection every 40 seconds that stops every request thread for 150 ms. The cause is a "temporary" <code>List&lt;PriceRow&gt;</code> of 200,000 rows per request. Arrays over 85,000 bytes go straight to the Large Object Heap, which is only collected together with gen2.</li>
+<li><strong>Memory climbs 30 MB an hour until the pod is OOM-killed.</strong> Nobody allocates anything "big". A heap dump shows 1.9 million <code>PriceChangedHandler</code> delegates. Each request subscribed a short-lived object to a long-lived event and never unsubscribed. The GC was working perfectly: every one of those objects was still <em>reachable</em>.</li>
+<li><strong>A "zero-copy" optimisation corrupts data.</strong> A developer added <code>ArrayPool&lt;byte&gt;.Shared</code> to cut allocations and returned the buffer before an <code>await</code> finished writing it. Another request rented the same array. One customer's invoice now contained the tail of another customer's invoice.</li>
+</ol>
+<p>None of these are bugs in the garbage collector. All three come from not knowing <em>where a value lives, how long it lives, and what the runtime does to reclaim it</em>. This page builds that picture for C#, Java, Python, Go and TypeScript, and animates each collector until you can predict what it will do with your code.</p>
+<div class="rule">
+<p><strong>The rule.</strong> Every heap allocation costs twice: once when you allocate it (cheap) and again when the GC has to find, copy or scan it (not cheap, and paid by someone else later). Make objects that <strong>die young or live forever</strong>, never "medium". Keep <strong>reachability</strong> under control, because a managed leak is just a reference you forgot. Release <strong>non-memory resources</strong> deterministically (<code>using</code>, try-with-resources, <code>with</code>, <code>defer</code>) and never rely on the GC to close a file. Optimise allocations only on paths a profile has shown to be hot.</p>
+</div>
+<div class="recognize">
+<p><strong>Recognize a memory problem when</strong></p>
+<ul>
+<li>Latency percentiles have regular spikes that line up with GC events (the "sawtooth" in a heap graph has steep drops at the same moments).</li>
+<li>The <em>lowest</em> point of the heap sawtooth rises over hours or days. That is a leak, even if each GC still frees plenty.</li>
+<li>CPU time in the GC (<code>% Time in GC</code>, <code>gc_cpu_fraction</code>, JFR GC events) is above roughly 5–10% on a service.</li>
+<li>Throughput drops as load rises, while CPU looks "busy" but app code is not on the flame graph.</li>
+<li>A container is OOM-killed while the runtime thinks it has plenty of headroom (the GC did not know the container limit).</li>
+</ul>
+</div>
+<p>This is the memory chapter of the performance track. <a href="performance-cadence.html">Performance Cadence</a> covers how to <em>measure</em> (goals, profiles, benchmarks, statistics); this page covers what the runtime is doing underneath the numbers. <a href="concurrency-async.html">Concurrency and Async</a> covers threads and tasks, which are heap objects too. Pooling and batching as system-level patterns live in <a href="performance-patterns.html">Performance Patterns</a>. Value vs reference semantics are introduced in <a href="language-mental-models.html">Language Mental Models</a> and <a href="types-and-immutability.html">Types and Immutability</a>.</p>
+<h2 id="two-places-to-put-a-value-stack-and-heap">Two places to put a value: stack and heap</h2>
+<p>Every running thread has a <strong>stack</strong>: a contiguous block of memory (typically 1 MB for a .NET or Java platform thread on 64-bit; a goroutine starts at 2 KB and grows on demand) that holds one <strong>frame</strong> per active method call. A frame stores the method's local variables, arguments and return address. Calling a method pushes a frame; returning pops it. Freeing a whole frame is one pointer move, so stack memory costs <em>nothing</em> to reclaim.</p>
+<p>The <strong>heap</strong> is shared by all threads and holds anything that must outlive the call that created it, or whose size is not known at compile time. Heap memory is reclaimed later by a garbage collector (or reference counting in CPython), and that is where the cost hides.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 300" width="760" role="img" aria-label="Stack frames hold locals and references; the heap holds objects that references point to">
+<defs><marker id="memory-and-gc-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="20" y="24" class="title">Thread stack (per thread, LIFO, freed on return)</text>
+<rect class="box dim" x="20" y="40" width="260" height="70" rx="6"/>
+<text x="32" y="58" class="small muted">frame: Main()</text>
+<text x="32" y="80" class="mono">orders  ●──</text>
+<text x="32" y="100" class="mono">count = 3</text>
+<rect class="box active" x="20" y="120" width="260" height="90" rx="6"/>
+<text x="32" y="138" class="small muted">frame: Price(order) — top of stack</text>
+<text x="32" y="160" class="mono">order   ●──</text>
+<text x="32" y="180" class="mono">p = Point{X=2,Y=5}</text>
+<text x="32" y="200" class="mono">total = 41.50</text>
+<text x="20" y="240" class="small">Value types (ints, doubles, C# structs,</text>
+<text x="20" y="258" class="small">Go structs that do not escape) live inline</text>
+<text x="20" y="276" class="small">in the frame. No GC work at all.</text>
+<text x="420" y="24" class="title">Heap (shared, freed by the GC)</text>
+<rect class="box visit" x="430" y="44" width="150" height="56" rx="6"/>
+<text x="442" y="64" class="small muted">List&lt;Order&gt;</text>
+<text x="442" y="86" class="mono">items ●──</text>
+<rect class="box visit" x="600" y="44" width="140" height="56" rx="6"/>
+<text x="612" y="64" class="small muted">Order[] (backing)</text>
+<text x="612" y="86" class="mono">[●, ●, ●]</text>
+<rect class="box path" x="430" y="140" width="150" height="70" rx="6"/>
+<text x="442" y="160" class="small muted">Order #17</text>
+<text x="442" y="182" class="mono">id = 17</text>
+<text x="442" y="200" class="mono">name ●──</text>
+<rect class="box path" x="600" y="140" width="140" height="56" rx="6"/>
+<text x="612" y="160" class="small muted">string "Ada"</text>
+<text x="612" y="182" class="mono">len=3</text>
+<rect class="box bad" x="430" y="236" width="150" height="44" rx="6"/>
+<text x="442" y="256" class="small muted">Order #9</text>
+<text x="442" y="272" class="small">unreachable: garbage</text>
+<path class="edge accent" d="M130 76 L428 70" marker-end="url(#memory-and-gc-ar)"/>
+<path class="edge accent" d="M130 156 L428 168" marker-end="url(#memory-and-gc-ar)"/>
+<path class="edge" d="M540 82 L598 74" marker-end="url(#memory-and-gc-ar)"/>
+<path class="edge" d="M660 100 L520 138" marker-end="url(#memory-and-gc-ar)"/>
+<path class="edge" d="M540 196 L598 172" marker-end="url(#memory-and-gc-ar)"/>
+<text x="600" y="236" class="small muted">Nothing points to #9,</text>
+<text x="600" y="254" class="small muted">so the next GC can</text>
+<text x="600" y="272" class="small muted">reclaim it.</text>
+</svg>
+<figcaption>Locals live in stack frames. Objects live on the heap and are reached through references. The GC only ever asks one question: can any root (a stack slot, a static field, a register) still reach this object?</figcaption>
+</figure>
+
+<p>A common myth is "value types live on the stack, reference types on the heap". The accurate rule is: <strong>a value type lives wherever its container lives</strong>. An <code>int</code> local is in the frame; an <code>int</code> field of a class is inside that object on the heap; a struct inside an array is inline in the array on the heap. A reference type's <em>object</em> is always on the heap (unless the JIT proves it never escapes, see escape analysis below); the <em>reference</em> to it lives wherever its container lives.</p>
+<h3 id="value-vs-reference-types-per-language">Value vs reference types, per language</h3>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Values copied on assignment (no separate heap object)</th>
+<th>References (heap object, assignment copies the pointer)</th>
+<th>Watch out for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C#</td>
+<td><code>int</code>, <code>double</code>, <code>bool</code>, <code>struct</code>, <code>record struct</code>, enums, <code>Span&lt;T&gt;</code> (stack-only <code>ref struct</code>)</td>
+<td><code>class</code>, <code>record</code>, <code>string</code>, arrays, delegates, lambdas that capture</td>
+<td><strong>Boxing</strong>: a struct cast to <code>object</code> or a non-generic interface is copied into a new heap object.</td>
+</tr>
+<tr>
+<td>Java</td>
+<td>8 primitives only: <code>int</code>, <code>long</code>, <code>double</code>, <code>boolean</code>, …</td>
+<td>Everything else, including <code>Integer</code>, <code>String</code>, arrays, records</td>
+<td><strong>Autoboxing</strong> in <code>List&lt;Integer&gt;</code> and <code>Map&lt;Long, …&gt;</code>. Value classes (Project Valhalla, JEP 401) are still a preview.</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>None. Every value is a heap object with a header</td>
+<td>Everything: <code>int</code>, <code>float</code>, <code>str</code>, <code>tuple</code>, instances</td>
+<td>Small ints (−5 to 256) and <code>None</code> are shared singletons, so <code>x = 5</code> allocates nothing. A float or a large int is a new object.</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>All types are values: <code>int</code>, structs, arrays, even a slice <em>header</em></td>
+<td>Pointers, and the hidden pointers inside slices, maps, channels, strings, interfaces and closures</td>
+<td>The compiler decides stack or heap by <strong>escape analysis</strong>, not by the type.</td>
+</tr>
+<tr>
+<td>TypeScript / JS</td>
+<td>Small integers ("Smi") are unboxed in V8; <code>boolean</code>, <code>undefined</code>, <code>null</code></td>
+<td>Objects, arrays, closures, strings, other numbers (<code>HeapNumber</code>)</td>
+<td>A number field that becomes a fraction can turn into a separate heap box; mixing shapes de-optimises objects.</td>
+</tr>
+</tbody>
+</table>
+<div class="viz mg-wide" data-viz="memory-and-gc-stackheap"></div>
+
+<p>Step through each program and watch where every value goes:</p>
+<ul>
+<li><strong>C#: struct vs class.</strong> Copying the struct copies its fields, so changing the copy leaves the original alone. Copying the class copies only the reference, so both variables see the change. The struct cost no GC work.</li>
+<li><strong>C#: boxing.</strong> Assigning a struct to <code>object</code> copies it into a new heap box. Changing the box does not change the original. This is why <code>ArrayList</code>, <code>Hashtable</code> and <code>string.Format("{0}", 42)</code> allocated so much before generics and interpolation handlers.</li>
+<li><strong>C#: closure capture.</strong> A lambda that captures a local turns that local into a field of a hidden heap object (a "display class"), so the variable outlives the stack frame. The same happens in Java (captured effectively-final values are copied into the lambda object), Go, Python and JavaScript.</li>
+<li><strong>Go: escape analysis.</strong> Returning <code>&amp;p</code> from a function forces <code>p</code> to the heap ("moved to heap: p"). Returning <code>p</code> by value keeps it on the stack.</li>
+</ul>
+<div class="code-tabs">
+<pre><code class="language-csharp">public readonly record struct Point(int X, int Y);   // value type: 8 bytes, copied on assignment
+public sealed class Customer { public string Name = &quot;&quot;; } // reference type: heap object
+
+var a = new Point(1, 2);
+var b = a;                 // copies both fields; a and b are independent
+b = b with { X = 99 };     // a.X is still 1
+
+var c1 = new Customer { Name = &quot;Ada&quot; };
+var c2 = c1;               // copies the reference; one object, two names for it
+c2.Name = &quot;Grace&quot;;         // c1.Name is now &quot;Grace&quot; too
+
+object boxed = a;          // BOXING: allocates a heap object and copies the struct into it
+int sum = 0;
+foreach (var p in new[] { a, b }) sum += p.X;  // Point[] holds structs inline: one allocation, not three
+</code></pre>
+<pre><code class="language-java">record Point(int x, int y) {}          // a class: every Point is a heap object (until Valhalla)
+
+int a = 1;
+int b = a;                              // primitives are copied
+b = 99;                                 // a is still 1
+
+List&lt;Integer&gt; ids = new ArrayList&lt;&gt;();
+for (int i = 0; i &lt; 1_000; i++) {
+    ids.add(i);                         // AUTOBOXING: Integer.valueOf(i) -&gt; new object for i &gt; 127
+}
+int[] raw = new int[1_000];             // one object, 4 KB of ints inline: far cheaper than 1,000 Integers
+
+Point p = new Point(1, 2);              // may still never touch the heap: C2's escape analysis
+int len = p.x() + p.y();                // can scalar-replace p if it never escapes this method
+</code></pre>
+<pre><code class="language-python">import sys
+
+a = 1
+b = a          # both names point to the SAME int object (small ints are cached singletons)
+b = 99         # rebinding: b now points to another object; a is untouched
+
+nums = [1.5] * 3        # a list of 3 references to one float object
+print(sys.getsizeof(1.5), sys.getsizeof(10**20), sys.getsizeof([]))  # 24 36 56 on 64-bit 3.11
+
+class Point:
+    __slots__ = (&quot;x&quot;, &quot;y&quot;)   # no per-instance __dict__: about 48 bytes instead of 56 + a 100+ byte dict
+    def __init__(self, x, y):
+        self.x, self.y = x, y
+
+import array
+raw = array.array(&quot;i&quot;, range(1000))   # 4 bytes per int inline, instead of 28+ bytes per int object
+</code></pre>
+<pre><code class="language-go">type Point struct{ X, Y int }
+
+func byValue() Point {
+    p := Point{1, 2}
+    return p // copied to the caller: p stays on the stack
+}
+
+func byPointer() *Point {
+    p := Point{1, 2}
+    return &amp;p // the pointer outlives the frame: &quot;moved to heap: p&quot;
+}
+
+func main() {
+    a := Point{1, 2}
+    b := a     // structs are values: full copy
+    b.X = 99   // a.X is still 1
+
+    s := []int{1, 2, 3}
+    t := s     // copies the slice HEADER (ptr, len, cap), not the array
+    t[0] = 42  // s[0] is now 42 too
+    _, _ = byValue(), byPointer()
+}
+</code></pre>
+<pre><code class="language-typescript">let a = 1;
+let b = a;          // numbers are values; small integers are not even heap objects in V8
+b = 99;             // a is still 1
+
+const c1 = { name: &quot;Ada&quot; };
+const c2 = c1;      // objects are references
+c2.name = &quot;Grace&quot;;  // c1.name is &quot;Grace&quot; too
+
+const raw = new Int32Array(1_000);  // typed array: numbers inline, like a C# int[]
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Why "value type" is a performance word</strong></p>
+<p>An array of 1,000 C# <code>Point</code> structs is <strong>one</strong> heap object with 8,000 bytes of payload laid out contiguously. An array of 1,000 Java <code>Point</code> records is 1,001 objects: the array of references plus 1,000 separate objects, each with its own header, scattered around the heap. Walking the first array streams through memory and the CPU cache loves it; walking the second chases a pointer per element. The GC also has 1,000 extra objects to trace. This is the single biggest reason .NET and Go can beat Java on data-heavy code, and why Project Valhalla exists.</p>
+</div>
+<h2 id="what-an-object-costs-headers-and-allocation">What an object costs: headers and allocation</h2>
+<p>A heap object is never just its fields. Every runtime adds a <strong>header</strong> so the GC and the language can find the object's type, lock it, and hash it.</p>
+<table>
+<thead>
+<tr>
+<th>Runtime (64-bit)</th>
+<th>Header</th>
+<th>Smallest object</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.NET</td>
+<td>8-byte object header (sync block index / hash / lock bits) + 8-byte method table pointer</td>
+<td>24 bytes</td>
+<td>Arrays add an 8-byte length. A <code>string</code> is 22 + 2 bytes per char, rounded up to 8.</td>
+</tr>
+<tr>
+<td>JVM (HotSpot)</td>
+<td>8-byte mark word + 4-byte compressed class pointer</td>
+<td>16 bytes</td>
+<td>Compact object headers (JEP 519, a product option since JDK 25: <code>-XX:+UseCompactObjectHeaders</code>) cut the header to 8 bytes.</td>
+</tr>
+<tr>
+<td>CPython</td>
+<td>refcount + type pointer (16 bytes); 16 more bytes of GC links for container objects</td>
+<td>16 bytes (<code>object()</code>)</td>
+<td><code>int</code> 28 bytes, <code>float</code> 24, empty <code>list</code> 56, plus a <code>__dict__</code> per instance unless you use <code>__slots__</code>.</td>
+</tr>
+<tr>
+<td>Go</td>
+<td><strong>No header.</strong> The type and pointer layout are kept in the span's metadata</td>
+<td>0 bytes (empty struct)</td>
+<td>Objects are rounded up to one of about 68 size classes (8, 16, 24, 32, 48, …). Interfaces are two words: type + data pointer.</td>
+</tr>
+<tr>
+<td>V8</td>
+<td>Map (hidden class) pointer + properties + elements, 4 bytes each with pointer compression</td>
+<td>12 bytes</td>
+<td>Objects with the same shape share a Map; adding properties in different orders creates different Maps.</td>
+</tr>
+</tbody>
+</table>
+<p>So a <code>List&lt;int&gt;</code> in .NET with 10 numbers is two objects (the list and its <code>int[]</code> of capacity 16, about 32 + 88 bytes). A <code>List&lt;Integer&gt;</code> in Java with 10 numbers outside the −128..127 cache is twelve objects. A Python <code>list</code> of 10 floats is eleven objects. This is why "it's only a few small objects" adds up: allocation volume, not allocation size, is usually what drives GC frequency.</p>
+<h3 id="allocation-itself-is-almost-free">Allocation itself is almost free</h3>
+<p>Managed runtimes allocate with a <strong>bump pointer</strong>: each thread owns a private chunk of the young generation (a TLAB, <em>thread-local allocation buffer</em>, on the JVM; an <em>allocation context</em> in .NET; a per-P <code>mcache</code> with size-class spans in Go; the new-space linear area in V8). Allocating is: check that <code>ptr + size &lt;= limit</code>, return <code>ptr</code>, add <code>size</code>. About ten instructions, with no lock.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 210" width="760" role="img" aria-label="Bump pointer allocation inside a thread-local allocation buffer">
+<text x="20" y="24" class="title">Young generation, split into per-thread buffers</text>
+<rect class="box dim" x="20" y="40" width="720" height="60" rx="6"/>
+<rect class="box active" x="30" y="50" width="70" height="40" rx="4"/><text x="65" y="75" text-anchor="middle" class="small">obj</text>
+<rect class="box active" x="100" y="50" width="40" height="40" rx="4"/><text x="120" y="75" text-anchor="middle" class="small">obj</text>
+<rect class="box active" x="140" y="50" width="90" height="40" rx="4"/><text x="185" y="75" text-anchor="middle" class="small">obj</text>
+<rect class="box visit" x="230" y="50" width="160" height="40" rx="4"/><text x="310" y="75" text-anchor="middle" class="small">free in thread 1's TLAB</text>
+<rect class="box path" x="400" y="50" width="60" height="40" rx="4"/><text x="430" y="75" text-anchor="middle" class="small">obj</text>
+<rect class="box path" x="460" y="50" width="50" height="40" rx="4"/><text x="485" y="75" text-anchor="middle" class="small">obj</text>
+<rect class="box visit" x="510" y="50" width="220" height="40" rx="4"/><text x="620" y="75" text-anchor="middle" class="small">free in thread 2's TLAB</text>
+<path class="edge accent" d="M230 132 L230 94" marker-end="url(#memory-and-gc-ar)"/>
+<text x="180" y="150" class="mono">ptr</text>
+<path class="edge accent" d="M390 132 L390 94" marker-end="url(#memory-and-gc-ar)"/>
+<text x="370" y="150" class="mono">limit</text>
+<text x="20" y="182" class="mono">new T(): if (ptr + size &lt;= limit) { obj = ptr; ptr += size; zero(obj); return obj; }</text>
+<text x="20" y="202" class="small muted">Otherwise grab a new buffer; if the young generation is full, that is what triggers a GC.</text>
+</svg>
+<figcaption>Allocation is a pointer bump in memory only one thread touches. The bill arrives later: every allocation brings the next young GC closer, and every object still alive at that GC has to be traced and usually copied.</figcaption>
+</figure>
+
+<p>That is why the rule says <em>allocations cost twice</em>: the bump is ~10 ns, but the bill comes as more frequent GCs, more tracing and copying of survivors, and worse cache locality. CPython is different: small objects (up to 512 bytes) come from <code>pymalloc</code> pools of fixed-size blocks and are freed the moment their reference count reaches zero.</p>
+<h3 id="escape-analysis-when-the-compiler-keeps-heap-objects-on-the-stack">Escape analysis: when the compiler keeps "heap" objects on the stack</h3>
+<p>If the compiler can prove an object never outlives the current call and is never visible to another thread, it does not need the heap at all. This proof is <strong>escape analysis</strong>. A value <em>escapes</em> when it is returned, stored in a field or global, captured by a closure that outlives the frame, sent on a channel, or passed to code the compiler cannot see (an interface call, reflection).</p>
+<ul>
+<li><strong>Go</strong> does escape analysis at compile time and it decides stack vs heap for <em>everything</em>. Ask the compiler: <code>go build -gcflags=-m ./...</code> prints <code>moved to heap: p</code>, <code>&amp;Point{...} escapes to heap</code> or <code>does not escape</code>. Common reasons for escaping: returning a pointer, storing in an interface (<code>fmt.Println(x)</code> boxes <code>x</code> into <code>any</code>), closures, and slices whose size is not a constant.</li>
+<li><strong>JVM</strong> (C2 and Graal JIT) does escape analysis at run time, after inlining. An object that does not escape can be <strong>scalar-replaced</strong>: its fields become locals in registers and the object is never created. It only works if the allocating code is inlined, so small methods and monomorphic call sites matter.</li>
+<li><strong>.NET</strong> added object stack allocation to the JIT in .NET 9 and widened it in .NET 10 (small non-escaping objects, boxes and delegates can live on the stack). In C# you still get the predictable version by choosing a <code>struct</code> or a <code>ref struct</code> like <code>Span&lt;T&gt;</code>.</li>
+<li><strong>V8</strong> (TurboFan) also does escape analysis for optimised functions. <strong>CPython</strong> does not: every object is a heap object.</li>
+</ul>
+<div class="code-tabs">
+<pre><code class="language-csharp">// The .NET 10 JIT may stack-allocate this; use a struct when you need a guarantee.
+static int Area(int w, int h)
+{
+    var r = new Rect(w, h);   // class, but never stored or returned: may not touch the heap
+    return r.W * r.H;
+}
+
+// Guaranteed: value types and stackalloc never touch the GC heap.
+static int SumFirst(ReadOnlySpan&lt;int&gt; data)
+{
+    Span&lt;int&gt; tmp = stackalloc int[16];   // 64 bytes in this frame, freed on return
+    data[..Math.Min(16, data.Length)].CopyTo(tmp);
+    int s = 0; foreach (var x in tmp) s += x;
+    return s;
+}
+sealed record Rect(int W, int H);
+</code></pre>
+<pre><code class="language-java">// Verify with JMH -prof gc. After inlining, C2 can scalar-replace 'p':
+static int lengthSquared(int x, int y) {
+    var p = new Point(x, y);       // does not escape: becomes two ints in registers
+    return p.x() * p.x() + p.y() * p.y();
+}
+
+static Point cached;
+static int leaks(int x, int y) {
+    var p = new Point(x, y);
+    cached = p;                    // escapes to a static field: must be a real heap object
+    return p.x();
+}
+record Point(int x, int y) {}
+</code></pre>
+<pre><code class="language-python"># CPython has no escape analysis: p is a real heap object (a 56-byte tuple),
+# freed by refcounting when the function returns. PyPy's JIT can remove it.
+def length_squared(x: int, y: int) -&gt; int:
+    p = (x, y)
+    return p[0] * p[0] + p[1] * p[1]
+
+print(length_squared(3, 4))  # 25
+</code></pre>
+<pre><code class="language-go">// go build -gcflags=-m prints the compiler's decisions:
+//   ./main.go:9:2: moved to heap: p
+//   ./main.go:15:13: ... argument does not escape
+type Point struct{ X, Y int }
+
+func NewPoint(x, y int) *Point {
+    p := Point{x, y}
+    return &amp;p // escapes: the caller keeps the pointer
+}
+
+func LengthSquared(x, y int) int {
+    p := Point{x, y} // does not escape: stays on the stack
+    return p.X*p.X + p.Y*p.Y
+}
+
+func Log(v int) {
+    fmt.Println(v) // v escapes: boxed into an 'any' for the variadic call
+}
+</code></pre>
+<pre><code class="language-typescript">// TurboFan removes allocations of objects that never escape an optimised function.
+function lengthSquared(x: number, y: number): number {
+  const p = { x, y };          // can be scalar-replaced once the function is hot and optimised
+  return p.x * p.x + p.y * p.y;
+}
+
+let last: { x: number; y: number } | undefined;
+function keep(x: number, y: number): number {
+  const p = { x, y };
+  last = p;                    // escapes to module state: must be a real heap object
+  return p.x;
+}
+</code></pre>
+</div>
+<h2 id="reachability-what-garbage-means">Reachability: what "garbage" means</h2>
+<p>A tracing collector never asks "is this object still needed?". It cannot know that. It asks a narrower, provable question: <strong>can the program still reach this object by following references from a root?</strong> Roots are the starting points the runtime knows about:</p>
+<ul>
+<li>local variables and arguments in every live stack frame of every thread (and CPU registers),</li>
+<li>static fields and globals,</li>
+<li>handles held on behalf of native code (GC handles, JNI global refs, pinned objects),</li>
+<li>objects waiting for finalization, and some runtime-internal tables.</li>
+</ul>
+<p>Anything reachable is <strong>live</strong>. Everything else is <strong>garbage</strong>, no matter how recently it was used. Two consequences follow, and both cause real bugs:</p>
+<ol>
+<li>A cycle of objects that point to each other but are not reachable from a root <em>is</em> garbage. Tracing collectors handle cycles for free. Reference counting does not.</li>
+<li>An object you will never use again, but that is still referenced from a static list, an event, a cache or a closure, is <em>not</em> garbage. That is a managed memory leak.</li>
+</ol>
+<h3 id="mark-sweep-compact">Mark, sweep, compact</h3>
+<p>The basic tracing algorithm has two or three phases:</p>
+<ol>
+<li><strong>Mark.</strong> Start at the roots and do a graph traversal, setting a mark bit on every object you reach.</li>
+<li><strong>Sweep.</strong> Walk the heap. Every unmarked object's memory goes back to a free list.</li>
+<li><strong>Compact</strong> (optional). Slide the survivors together so free memory is one contiguous block again, and update every reference to the moved objects.</li>
+</ol>
+<div class="viz mg-wide" data-viz="memory-and-gc-mark"></div>
+
+<p>The default graph has a cycle reachable from the root (A → B → C → A), a cycle that is <em>not</em> reachable (E ⇄ G), an object pointing <em>into</em> live data (H → D, but nothing points to H) and a self-loop (I). Things to try:</p>
+<ul>
+<li>Step through mark and notice that E, G, H and I are never visited. The E ⇄ G cycle is freed even though each object has a reference to it. A reference <em>to</em> an object proves nothing; only a path <em>from a root</em> does.</li>
+<li>Switch to <strong>mark-sweep</strong> and look at the heap strip at the end: the freed slots are holes between survivors. A later allocation larger than any one hole fails even though the total free space is enough. That is <strong>fragmentation</strong>.</li>
+<li>Add <code>root&gt;H</code> and run again. H, and through it D, stay alive. One forgotten reference can keep a whole subgraph alive.</li>
+</ul>
+<p>Which runtimes compact? .NET (young generations always, gen2 when worthwhile, the LOH only on request), all HotSpot collectors, and V8 for fragmented old pages. <strong>Go and CPython never move objects</strong>: Go groups like-sized objects in size-class spans so fragmentation stays bounded, and a CPython object's <code>id()</code> is its address.</p>
+<h2 id="the-generational-hypothesis">The generational hypothesis</h2>
+<p>Tracing the whole heap on every collection would be slow, because the cost of <em>mark</em> is proportional to the number of <strong>live</strong> objects, and a server can have gigabytes of them. Generational collectors exploit one empirical fact, measured over decades on real programs:</p>
+<blockquote>
+<p><strong>Most objects die young.</strong> The few that survive a while tend to live for a very long time.</p>
+</blockquote>
+<p>Request DTOs, LINQ iterators, strings built for a log line, <code>Task</code> objects and lambda closures die within milliseconds. Caches, configuration, connection pools and DI singletons live for the whole process. So the heap is split by age, and the young part is collected often and cheaply: only live young objects are traced, and since almost none are live, a young GC is fast regardless of how big the old heap is.</p>
+<p>The catch: if an old object points to a young one, the young GC must treat that pointer as a root, or it would free a live object. Runtimes track those pointers with a <strong>write barrier</strong> that records "old → young" writes in a <strong>card table</strong> (.NET, JVM) or <strong>remembered set</strong> (G1, V8). That is why writing a reference field costs slightly more than writing an <code>int</code>, and why mutating long-lived objects to point at short-lived ones makes young GCs slower.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 270" width="760" role="img" aria-label="Object survival curve: most objects die young; the old generation holds long-lived ones">
+<text x="20" y="24" class="title">Fraction of objects still alive vs object age</text>
+<path class="edge" d="M60 40 L60 220 L720 220"/>
+<text x="20" y="48" class="small">100%</text>
+<text x="34" y="222" class="small">0</text>
+<text x="660" y="244" class="small">age →</text>
+<path class="edge accent" d="M62 46 C 90 190, 120 200, 200 204 S 600 206, 716 207"/>
+<rect class="box active" x="64" y="60" width="130" height="34" rx="4"/>
+<text x="129" y="82" text-anchor="middle" class="small">gen0 / eden: ~90%+ die here</text>
+<rect class="box visit" x="200" y="120" width="150" height="34" rx="4"/>
+<text x="275" y="142" text-anchor="middle" class="small">gen1 / survivor: buffer</text>
+<rect class="box path" x="400" y="150" width="310" height="34" rx="4"/>
+<text x="555" y="172" text-anchor="middle" class="small">gen2 / old: caches, singletons, pools</text>
+<text x="300" y="70" class="small">A young GC traces only the few survivors, so it costs</text>
+<text x="300" y="88" class="small">microseconds to a few milliseconds whatever the heap size.</text>
+<text x="60" y="262" class="small muted">Objects that die "in the middle" (seconds to minutes) are the expensive ones: they are copied, promoted, then die in gen2.</text>
+</svg>
+<figcaption>The generational hypothesis. Allocation patterns that fit the curve are cheap; patterns that fight it (the "mid-life crisis") make every collector work hard.</figcaption>
+</figure>
+
+<h3 id="net-gen0-gen1-gen2-loh-and-poh">.NET: gen0, gen1, gen2, LOH and POH</h3>
+<p>The .NET GC has three generations plus two special heaps:</p>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>What goes there</th>
+<th>When it is collected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>gen0</strong></td>
+<td>Every new small object</td>
+<td>When its allocation budget is used (dynamic, roughly the size of the L3 cache up to hundreds of MB on Server GC). Survivors are promoted to gen1.</td>
+</tr>
+<tr>
+<td><strong>gen1</strong></td>
+<td>Survivors of one GC; a buffer between young and old</td>
+<td>With every gen1 collection; survivors go to gen2.</td>
+</tr>
+<tr>
+<td><strong>gen2</strong></td>
+<td>Long-lived objects</td>
+<td>Only in a full (gen2) collection, which is usually done as a <strong>background GC</strong> concurrently with your threads.</td>
+</tr>
+<tr>
+<td><strong>LOH</strong></td>
+<td>Objects of <strong>85,000 bytes or more</strong> (big arrays, big strings)</td>
+<td>Only with gen2. Not compacted by default, so it fragments.</td>
+</tr>
+<tr>
+<td><strong>POH</strong></td>
+<td>Pinned buffers allocated with <code>GC.AllocateArray&lt;T&gt;(n, pinned: true)</code> (.NET 5+)</td>
+<td>With gen2; never moved, so they do not block compaction elsewhere.</td>
+</tr>
+</tbody>
+</table>
+<p>Since .NET 7 the heap is made of <strong>regions</strong> rather than large fixed segments, which lets the GC move memory between generations and return it to the OS more easily. Since .NET 9, Server GC enables <strong>DATAS</strong> (dynamic adaptation to application sizes) by default, which grows and shrinks the number of heaps with load, a big win for containers.</p>
+<div class="viz mg-wide" data-viz="memory-and-gc-generational"></div>
+
+<p>Each chip is an object (hover it to see the tick at which it dies); gen0 shows its remaining budget as empty slots. Run all four workloads with the same budget and compare the final summary line:</p>
+<ul>
+<li><strong>Request-scoped objects</strong> die in gen0. 30 allocations cause only three cheap gen0 GCs, one gen1 and no gen2. This is the healthy shape.</li>
+<li><strong>Mid-life crisis</strong>: objects live a few seconds (an in-memory batch, a session cache with a short TTL, a <code>List</code> that accumulates per-minute stats). They survive gen0 and gen1, get <em>copied twice</em>, land in gen2, and then die there, where only an expensive full GC can reclaim them. Count the copies.</li>
+<li><strong>Growing static cache</strong>: everything survives, so every GC copies and promotes. gen2 grows without limit. A cache needs a size bound and an eviction policy (see <a href="caching.html">Caching</a>).</li>
+<li><strong>100 KB buffers per request</strong> skip the young generations entirely and go to the LOH. They die young, but the LOH is only collected with gen2, so they force full GCs. The fix is to reuse those buffers (pooling, below) or stream instead of buffering.</li>
+</ul>
+<h2 id="jvm-g1-regions-zgc-and-choosing-a-collector">JVM: G1 regions, ZGC and choosing a collector</h2>
+<p>HotSpot ships several collectors, and choosing one is a real design decision:</p>
+<table>
+<thead>
+<tr>
+<th>Collector</th>
+<th>Flag</th>
+<th>Pauses</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>G1</strong> (default since JDK 9)</td>
+<td><code>-XX:+UseG1GC</code></td>
+<td>Pause-time <em>goal</em> (<code>-XX:MaxGCPauseMillis=200</code> by default), typically 5–50 ms</td>
+<td>General-purpose services with heaps from a few hundred MB to tens of GB</td>
+</tr>
+<tr>
+<td><strong>ZGC</strong> (generational by default since JDK 23)</td>
+<td><code>-XX:+UseZGC</code></td>
+<td>Under 1 ms, independent of heap size</td>
+<td>Latency-sensitive services, very large heaps (up to 16 TB)</td>
+</tr>
+<tr>
+<td><strong>Parallel</strong></td>
+<td><code>-XX:+UseParallelGC</code></td>
+<td>Long stop-the-world pauses, highest throughput</td>
+<td>Batch jobs and offline processing, where only total time matters</td>
+</tr>
+<tr>
+<td><strong>Serial</strong></td>
+<td><code>-XX:+UseSerialGC</code></td>
+<td>Stop-the-world, one thread</td>
+<td>Tiny containers; the JVM picks it automatically with fewer than 2 CPUs or under ~1.8 GB of memory</td>
+</tr>
+</tbody>
+</table>
+<p>G1 splits the heap into equal <strong>regions</strong> (1–32 MB each, chosen from the heap size). A region has no fixed generation: it becomes eden, survivor, old or humongous when it is handed out, and it is free again once collected. Each young pause <strong>evacuates</strong> (copies) live objects out of the eden and survivor regions and frees those regions whole. When old regions pass the <strong>IHOP</strong> threshold (initiating heap occupancy, 45% by default and adaptive), G1 marks the old generation concurrently and then runs <strong>mixed</strong> collections that also evacuate the old regions with the most garbage first. That is where the name <em>Garbage First</em> comes from.</p>
+<div class="viz mg-wide" data-viz="memory-and-gc-regions"></div>
+
+<p>Read the region map from left to right: E (eden), S (survivor), O (old), H (humongous) and free. The darker part of each bar is still-live data. Things to try:</p>
+<ul>
+<li>Run the defaults: six young pauses and two mixed collections, no full GC. Each pause only touches the regions in its <strong>collection set</strong>, so its cost is proportional to the live data in those regions, not to the heap.</li>
+<li>Set <strong>survival %</strong> to 0 and see young pauses copy nothing. Then set it to 70: survivors overflow into old regions quickly, IHOP is crossed early and mixed GCs start.</li>
+<li>Set <strong>humongous every N cycles</strong> to 1. An object of at least half a region skips eden and takes <em>contiguous</em> old regions. Lots of humongous allocations fragment the region map and are a classic cause of G1 full GCs. Fix it in code (smaller chunks, reuse buffers) or raise <code>-XX:G1HeapRegionSize</code>.</li>
+<li>Try eden 8, survival 50, humongous every 2, 10 cycles. G1 eventually cannot find free regions to evacuate into ("to-space exhausted") and falls back to a <strong>full GC</strong>: a stop-the-world compaction of the whole heap, and the pause you were trying to avoid.</li>
+</ul>
+<p>ZGC relocates objects <em>while your threads run</em>. References carry metadata bits ("coloured pointers"), and a <strong>load barrier</strong> on every heap reference read fixes up pointers to moved objects on the spot. Pauses only scan thread stacks, so they stay under a millisecond. The price is barrier overhead and more memory headroom, since collection must keep up with allocation while it runs.</p>
+<div class="pitfall">
+<p><strong>The JVM uses 25% of your container by default</strong></p>
+<p>Without <code>-Xmx</code>, the JVM sizes its maximum heap at <code>MaxRAMPercentage</code>, which defaults to <strong>25%</strong> of the container's memory limit. A 4 GB pod gets a 1 GB heap, runs GC constantly and can still OOM while 3 GB sit unused. Set <code>-XX:MaxRAMPercentage=75</code> (leave room for metaspace, thread stacks, direct buffers and the code cache), or set <code>-Xmx</code> explicitly. .NET defaults to 75% of the container limit (<code>GCHeapHardLimitPercent</code>), Go knows nothing about the limit unless you set <code>GOMEMLIMIT</code>, and Node needs <code>--max-old-space-size</code>.</p>
+</div>
+<h2 id="go-a-concurrent-non-moving-non-generational-collector">Go: a concurrent, non-moving, non-generational collector</h2>
+<p>Go made unusual choices: its GC is <strong>concurrent mark-sweep</strong>, does <strong>not move</strong> objects, and (until recently) was <strong>not generational</strong>. Go relies on escape analysis to keep short-lived data on the stack, on value types to keep objects few and dense, and on concurrency to keep pauses tiny. A typical stop-the-world pause is tens to hundreds of microseconds. The cost is paid instead in CPU: during marking the GC takes about 25% of <code>GOMAXPROCS</code>, and goroutines that allocate quickly are drafted into <strong>mark assists</strong> that slow them down.</p>
+<p>Marking concurrently with your code creates a race. The GC colours objects <strong>white</strong> (not yet seen), <strong>grey</strong> (seen, children not yet scanned) and <strong>black</strong> (scanned). When the grey set is empty, white objects are garbage. But your goroutines keep writing pointers while marking runs. If a black object gets the only pointer to a white object, and the white object's last grey path is removed, the GC will never see it, and frees a live object.</p>
+<div class="viz mg-wide" data-viz="memory-and-gc-tricolor"></div>
+
+<p>The default interleaving shows the lost object: the GC finishes scanning A (black), then the program stores <code>A.next = C</code> and removes <code>B → C</code>. C is reachable but white, so the sweep frees it. Things to try:</p>
+<ul>
+<li><strong>Insertion barrier (Dijkstra).</strong> Every pointer <em>write</em> shades the new target grey. <code>A.next = C</code> greys C, so it survives. It keeps the <em>strong</em> invariant: no black object ever points to a white one.</li>
+<li><strong>Deletion barrier (Yuasa).</strong> Every pointer <em>overwrite or delete</em> shades the old target. Removing <code>B → C</code> greys C. It keeps a snapshot of the heap as it was when marking started.</li>
+<li><strong>Hybrid barrier (Go since 1.8).</strong> Shade both. This lets Go treat goroutine stacks as black once scanned and skip re-scanning them at the end, which is what took Go's pauses from milliseconds to microseconds.</li>
+<li>Edit the schedule to <code>GGGMMG</code> (all scanning first) and the bug disappears even without a barrier. That is why such races escape testing: they need a specific interleaving.</li>
+</ul>
+<h3 id="gogc-and-gomemlimit">GOGC and GOMEMLIMIT</h3>
+<p>Go has only two GC knobs, and both are about <em>when</em> to start the next cycle:</p>
+<ul>
+<li><strong><code>GOGC</code></strong> (default 100): the next GC starts when the heap has grown by GOGC% over the live heap left by the previous one (plus stacks and globals). With 100 MB live, the next cycle starts at about 200 MB. Higher GOGC means fewer GCs and more memory; lower means the opposite.</li>
+<li><strong><code>GOMEMLIMIT</code></strong> (Go 1.19+): a soft limit on total Go memory. As the heap approaches it, the GC runs more often regardless of GOGC. Set it to roughly 90% of the container limit. <code>GOGC=off</code> together with <code>GOMEMLIMIT</code> means "collect only when near the limit", which is efficient for batch jobs but dangerous with a large live heap: the GC caps itself at about 50% CPU to avoid a death spiral, so you get a very slow program instead of a crash.</li>
+</ul>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 260" width="760" role="img" aria-label="Go heap target sawtooth with GOGC and a GOMEMLIMIT cap">
+<text x="20" y="24" class="title">Go heap over time: GOGC sets the target, GOMEMLIMIT caps it</text>
+<path class="edge" d="M60 40 L60 220 L730 220"/>
+<text x="12" y="224" class="small">0</text>
+<text x="640" y="244" class="small">time →</text>
+<path class="edge dash" d="M60 70 L730 70"/>
+<text x="560" y="64" class="small">GOMEMLIMIT (soft cap)</text>
+<path class="edge dim" d="M60 170 L320 170"/>
+<text x="64" y="186" class="small muted">live heap 100 MB</text>
+<path class="edge dash" d="M60 120 L320 120"/>
+<text x="64" y="114" class="small muted">target 200 MB (GOGC=100)</text>
+<path class="edge accent" d="M62 170 L120 120 L124 170 L182 120 L186 170 L244 120 L248 170 L306 120 L310 170"/>
+<path class="edge dim" d="M320 140 L730 140"/>
+<text x="330" y="158" class="small muted">live heap grows to 160 MB: target 320 MB would exceed the cap</text>
+<path class="edge bad" d="M320 140 L350 76 L354 140 L384 76 L388 140 L418 76 L422 140 L452 76 L456 140 L486 76 L490 140 L520 76 L524 140"/>
+<text x="540" y="104" class="small">GCs come closer together;</text>
+<text x="540" y="122" class="small">CPU in GC rises (capped ~50%)</text>
+</svg>
+<figcaption>Each tooth is one GC cycle. With a healthy live heap, GOGC alone decides the rhythm. When the live heap nears GOMEMLIMIT, the limit wins and GCs get more frequent instead of the process being OOM-killed.</figcaption>
+</figure>
+
+<p>Go 1.25 shipped an experimental new marking algorithm, <strong>Green Tea</strong> (<code>GOEXPERIMENT=greenteagc</code>), which scans memory a whole page (span) at a time for better cache locality and is enabled by default from Go 1.26. The model above, a concurrent non-moving tri-colour collector, does not change.</p>
+<h2 id="python-reference-counting-plus-a-cycle-detector">Python: reference counting plus a cycle detector</h2>
+<p>CPython manages memory in two layers:</p>
+<ol>
+<li><strong>Reference counting</strong> does almost all the work. Every object header holds a count of references to it. Binding a name, storing in a list or passing an argument increments it; rebinding, <code>del</code> and leaving a scope decrement it. When the count reaches zero, the object is freed <strong>immediately</strong>, and freeing it decrements everything it pointed to.</li>
+<li>A <strong>generational cycle detector</strong> (the <code>gc</code> module) handles what refcounting cannot: groups of container objects that reference each other but are unreachable. It runs automatically based on allocation counts (thresholds <code>(700, 10, 10)</code> in 3.11) and when you call <code>gc.collect()</code>.</li>
+</ol>
+<div class="viz mg-wide" data-viz="memory-and-gc-refcount"></div>
+
+<p>The default program builds A ⇄ B, points C at B, then drops all three names. Watch C disappear the instant <code>c = None</code> runs, while A and B keep a count of 1 each. Each is held only by the other. Then <code>gc.collect()</code> runs the actual algorithm: copy each refcount into <code>gc_refs</code>, subtract one for every reference <em>between</em> tracked objects, and whatever still has <code>gc_refs &gt; 0</code> must be referenced from outside, so it is alive. Things to try:</p>
+<ul>
+<li>Delete <code>gc.collect()</code> from the end. A and B are reported as leaked: a reference cycle without a collection pass.</li>
+<li>Replace the program with <code>x = Node("A"); y = x; del x</code> and watch the count go 1, 2, 1. <code>del</code> deletes a <em>name</em>, not an object.</li>
+<li>The visualizer's results match real CPython (checked with <code>weakref.finalize</code> on 3.11).</li>
+</ul>
+<div class="code-tabs">
+<pre><code class="language-python">import gc, sys, weakref
+
+class Node:
+    def __init__(self, name):
+        self.name, self.next = name, None
+
+a = Node(&quot;A&quot;)
+print(sys.getrefcount(a))          # 2: 'a' plus the temporary argument reference
+
+freed = []
+c = Node(&quot;C&quot;)
+weakref.finalize(c, freed.append, &quot;C&quot;)
+c = None                           # refcount hits 0: freed right here, deterministically
+print(freed)                       # ['C']
+
+x, y = Node(&quot;X&quot;), Node(&quot;Y&quot;)
+x.next, y.next = y, x              # a cycle
+weakref.finalize(x, freed.append, &quot;X&quot;)
+del x, y                           # both still have refcount 1: NOT freed yet
+print(freed)                       # ['C']
+print(gc.collect() &gt;= 2, freed)    # True ['C', 'X']: the cycle detector found them
+
+# Avoid the cycle: hold back-pointers (child -&gt; parent) as weak references.
+parent = Node(&quot;P&quot;)
+child_parent = weakref.ref(parent)   # call child_parent() to get it, or None once freed
+</code></pre>
+</div>
+<p>A few facts that matter in practice:</p>
+<ul>
+<li><strong>Immortal objects</strong> (PEP 683, Python 3.12+): <code>None</code>, <code>True</code>, small ints and interned strings have a fixed refcount that is never updated, so shared read-only data stays on shared memory pages after <code>fork()</code>.</li>
+<li><strong>Refcount writes break copy-on-write.</strong> A forked worker that merely <em>reads</em> a big inherited dict still writes to each object's refcount, so the page gets copied. Call <code>gc.freeze()</code> before forking so the cycle collector at least does not touch those objects.</li>
+<li><strong>The free-threaded build</strong> (3.13t/3.14t, PEP 703) replaces plain refcounts with <em>biased</em> reference counting (cheap for the owning thread, atomic for others), because unsynchronised counts were the main reason for the GIL.</li>
+<li><strong>Python 3.14</strong> makes the cycle collector incremental, which shortens the long pauses that a full collection of a big heap used to cause.</li>
+</ul>
+<h2 id="javascript-and-typescript-v8s-scavenger-and-mark-compact">JavaScript and TypeScript: V8's scavenger and mark-compact</h2>
+<p>V8 (Chrome, Node, Deno, Edge) splits the heap into a small <strong>young generation</strong> (a few MB to tens of MB) and an <strong>old generation</strong>. The two use different algorithms because their objects behave differently:</p>
+<ul>
+<li>Young objects are collected by a <strong>scavenger</strong>: a copying collector over two equal <em>semi-spaces</em>. Only survivors are touched, so the cost is proportional to what survives, which is usually very little.</li>
+<li>Old objects are collected by <strong>mark-sweep-compact</strong>, with marking done mostly concurrently and incrementally (the <em>Orinoco</em> project), and compaction only for fragmented pages.</li>
+</ul>
+<div class="viz mg-wide" data-viz="memory-and-gc-scavenge"></div>
+
+<p>This is Cheney's algorithm (1970). Two pointers walk the to-space: everything between <strong>scan</strong> and <strong>free</strong> is a queue of copied objects whose fields still need scanning. Each copied object leaves a <strong>forwarding pointer</strong> behind, so a second reference to it (the cycle B ⇄ D) is just redirected and the object is copied exactly once. E survived a scavenge before, so it is <strong>promoted</strong> straight to the old generation. Things to try:</p>
+<ul>
+<li>Add <code>root&gt;A</code> and see how the work grows with each survivor, while dead objects never cost anything.</li>
+<li>Make E point at more young objects: a promoted object's fields can point back into the young generation, which is exactly what V8's remembered set and write barrier exist for.</li>
+<li>Put every object in the "survived before" list: everything is promoted, and the old generation fills with data that will die soon. That is the JavaScript version of the .NET mid-life crisis.</li>
+</ul>
+<p>For allocation-heavy Node services, <code>--max-semi-space-size</code> (in MB) makes the young generation bigger so fewer objects are promoted prematurely; <code>--max-old-space-size</code> sets the old-generation limit. Measure both with <code>--trace-gc</code> before and after.</p>
+<h2 id="the-runtimes-side-by-side">The runtimes side by side</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>.NET</th>
+<th>JVM (G1 / ZGC)</th>
+<th>Go</th>
+<th>CPython</th>
+<th>V8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Strategy</td>
+<td>Generational, compacting, concurrent (background) gen2</td>
+<td>Region-based generational; ZGC concurrent relocation</td>
+<td>Concurrent tri-colour mark-sweep, non-moving</td>
+<td>Refcounting + generational cycle detector</td>
+<td>Generational: scavenger + concurrent mark-compact</td>
+</tr>
+<tr>
+<td>Young collection</td>
+<td>Copying gen0/gen1</td>
+<td>Evacuating eden/survivor regions</td>
+<td>None (escape analysis instead)</td>
+<td>Freed at refcount 0</td>
+<td>Semi-space scavenge</td>
+</tr>
+<tr>
+<td>Typical pause</td>
+<td>Gen0/1: &lt; 1–10 ms; BGC keeps gen2 mostly concurrent</td>
+<td>G1: 5–50 ms; ZGC: &lt; 1 ms</td>
+<td>10–500 µs</td>
+<td>None for refcounting; cycle pass proportional to tracked objects</td>
+<td>~1 ms scavenge; old-gen pauses short</td>
+</tr>
+<tr>
+<td>Main knobs</td>
+<td>Server/Workstation, concurrent, <code>GCHeapHardLimit</code>, <code>GCConserveMemory</code>, DATAS</td>
+<td>Collector choice, <code>-Xmx</code> / <code>MaxRAMPercentage</code>, <code>MaxGCPauseMillis</code></td>
+<td><code>GOGC</code>, <code>GOMEMLIMIT</code></td>
+<td><code>gc.set_threshold</code>, <code>gc.freeze</code>, <code>gc.disable</code></td>
+<td><code>--max-old-space-size</code>, <code>--max-semi-space-size</code></td>
+</tr>
+<tr>
+<td>Large objects</td>
+<td>LOH (≥ 85,000 B), POH for pinned</td>
+<td>Humongous regions (≥ half a region)</td>
+<td>Spans of their own size class</td>
+<td><code>pymalloc</code> only up to 512 B; bigger go to <code>malloc</code></td>
+<td>Large-object space</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pause-time-vs-throughput-the-trade-off-every-collector-makes">Pause time vs throughput: the trade-off every collector makes</h2>
+<p>There is no best garbage collector, only a position on three axes that pull against each other:</p>
+<ul>
+<li><strong>Pause time (latency):</strong> how long your threads are stopped. This drives p99 and p999.</li>
+<li><strong>Throughput:</strong> the fraction of CPU time your code gets instead of the GC. This drives cost per request.</li>
+<li><strong>Footprint:</strong> how much memory the heap needs beyond the live data. This drives container size and cost.</li>
+</ul>
+<p>Concurrent collectors cut pauses by doing work <em>while</em> your threads run, but they need barriers (a small tax on every pointer write or read), extra GC threads, and headroom so the application can keep allocating during the cycle. Stop-the-world collectors are simpler and faster in total, but the whole application waits.</p>
+<div class="viz mg-wide" data-viz="memory-and-gc-pauses"></div>
+
+<p>The same application (4 cores, 48 ms of wall time, the same live heap and allocation rate) runs under six collectors. Each row is a core and each cell one millisecond, coloured by the legend: app running, GC work on that core, stopped (stop-the-world) or allocation assist. The heap row shows how much memory each collector needed. With the defaults (live heap 48 MB, 2 MB/ms per core):</p>
+<table>
+<thead>
+<tr>
+<th>Collector</th>
+<th>Worst pause</th>
+<th>App throughput</th>
+<th>Peak heap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.NET Workstation, concurrent off</td>
+<td>8 ms</td>
+<td>67%</td>
+<td>86 MB</td>
+</tr>
+<tr>
+<td>.NET Workstation + background GC</td>
+<td>1 ms</td>
+<td>76%</td>
+<td>134 MB</td>
+</tr>
+<tr>
+<td>.NET Server GC</td>
+<td>1 ms</td>
+<td>83%</td>
+<td>134 MB</td>
+</tr>
+<tr>
+<td>JVM G1</td>
+<td>2 ms</td>
+<td>75%</td>
+<td>142 MB</td>
+</tr>
+<tr>
+<td>JVM ZGC (generational)</td>
+<td>&lt; 1 ms</td>
+<td>93%</td>
+<td>148 MB</td>
+</tr>
+<tr>
+<td>Go, GOGC=100</td>
+<td>&lt; 1 ms</td>
+<td>79%</td>
+<td>152 MB</td>
+</tr>
+</tbody>
+</table>
+<p>It is a model, not a benchmark, but the <em>shape</em> is real: the non-concurrent collector has the smallest heap and worst pauses; every low-pause collector pays in memory. Push the live heap to 60 MB and watch the stop-the-world pause grow with it, while the concurrent collectors' pauses barely move. Pick Go and raise the allocation rate to 3 or 4: goroutines are drafted into marking (assists), so GC cost hides inside your own request latency.</p>
+<h3 id="net-workstation-vs-server-gc">.NET: Workstation vs Server GC</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Workstation GC</th>
+<th>Server GC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Heaps</td>
+<td>One</td>
+<td>One per logical core (or adaptive with DATAS)</td>
+</tr>
+<tr>
+<td>Who collects</td>
+<td>The thread that triggered the GC</td>
+<td>Dedicated high-priority GC threads, one per heap</td>
+</tr>
+<tr>
+<td>gen0 budget</td>
+<td>Small</td>
+<td>Large, so fewer GCs</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>Lower</td>
+<td>Higher (much higher on many-core boxes without DATAS)</td>
+</tr>
+<tr>
+<td>Default for</td>
+<td>Console apps, desktop apps</td>
+<td>ASP.NET Core apps</td>
+</tr>
+<tr>
+<td>Best for</td>
+<td>Desktop apps, small containers, many processes per machine</td>
+<td>Services with high allocation rates and spare cores</td>
+</tr>
+</tbody>
+</table>
+<p>Both run <strong>background GC</strong> for gen2 by default (<code>&lt;ConcurrentGarbageCollection&gt;true&lt;/ConcurrentGarbageCollection&gt;</code>). Configure them in the project file or <code>runtimeconfig.json</code> (<code>System.GC.Server</code>, <code>System.GC.Concurrent</code>, <code>System.GC.HeapHardLimit</code>, <code>System.GC.ConserveMemory</code>), or with <code>DOTNET_gcServer=1</code> at run time.</p>
+<div class="insight">
+<p><strong>Server GC in a 1-CPU container is mostly overhead</strong></p>
+<p>Server GC was designed for dedicated many-core machines. In a 1–2 CPU container it brings little except a bigger footprint, so before .NET 9 the usual fix for "my pod uses 3× the memory of my laptop" was Workstation GC. From .NET 9, DATAS scales the number of heaps to the load. Measure; do not copy someone else's GC settings.</p>
+</div>
+<h2 id="managed-memory-leaks-references-you-forgot">Managed memory leaks: references you forgot</h2>
+<p>A garbage collector cannot leak an unreachable object. Every "memory leak" in C#, Java, Go, Python or JavaScript is an object that is still <strong>reachable</strong> from a root but will never be used again. The heap graph tells the story: each GC still frees memory, so the graph is a sawtooth, but the <em>floor</em> (the live set after each full GC) keeps rising until the process is killed.</p>
+<div class="viz mg-wide" data-viz="memory-and-gc-leak"></div>
+
+<p>Pick a leak, step through it and read the <strong>retention path</strong> at the end: the chain from a GC root to the leaked objects. That chain is exactly what a heap-dump tool shows you ("GC root path", "paths to GC roots", "retainers"). Then switch the version to <strong>fixed</strong> with the same requests and watch the floor go flat. The five classics:</p>
+<table>
+<thead>
+<tr>
+<th>Leak</th>
+<th>Why it is reachable</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Event handler never unsubscribed</strong></td>
+<td>A long-lived publisher's event holds a delegate, and the delegate holds its target (the subscriber)</td>
+<td><code>-=</code> in <code>Dispose</code>, weak events, or scope the publisher to the subscriber</td>
+</tr>
+<tr>
+<td><strong>Static cache without eviction</strong></td>
+<td>A static dictionary is a root, and every entry stays forever</td>
+<td>A size bound and eviction: <code>MemoryCache</code> with <code>SizeLimit</code>, Caffeine, <code>functools.lru_cache(maxsize=...)</code>, an LRU in Go</td>
+</tr>
+<tr>
+<td><strong>Closure captures a big object</strong></td>
+<td>A callback that lives long (a timer, a handler, a cached <code>Func</code>) captured a variable that references a large object</td>
+<td>Capture only the small value you need; null it out; do not cache closures over request data</td>
+</tr>
+<tr>
+<td><strong>Timer never disposed</strong></td>
+<td>The runtime's timer queue is a root, the timer references its callback, and the callback references its owner</td>
+<td>Dispose or stop timers; use <code>PeriodicTimer</code> / <code>ScheduledFuture.cancel</code> / <code>ticker.Stop()</code> / <code>clearInterval</code></td>
+</tr>
+<tr>
+<td><strong>Unbounded queue</strong></td>
+<td>The producer outruns the consumer, and the queue holds everything in between</td>
+<td>A bounded channel or queue with backpressure (see <a href="concurrency-async.html">Concurrency and Async</a>)</td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs">
+<pre><code class="language-csharp">// LEAK: the singleton PriceFeed holds every OrderView that ever subscribed.
+public sealed class OrderView : IDisposable
+{
+    private readonly PriceFeed _feed;
+    public OrderView(PriceFeed feed) { _feed = feed; _feed.PriceChanged += OnPrice; }
+    private void OnPrice(object? s, PriceEventArgs e) { /* update UI */ }
+
+    public void Dispose() =&gt; _feed.PriceChanged -= OnPrice;   // FIX: unsubscribe
+}
+
+// LEAK: static and unbounded. FIX: a bounded cache with expiry.
+static readonly Dictionary&lt;string, Report&gt; Cache = new();      // grows forever
+static readonly MemoryCache Bounded = new(new MemoryCacheOptions { SizeLimit = 10_000 });
+</code></pre>
+<pre><code class="language-java">// LEAK: a static map keyed by request ID, never cleaned up.
+static final Map&lt;String, Session&gt; SESSIONS = new HashMap&lt;&gt;();
+
+// FIX: bounded, with eviction (Caffeine), or tie the lifetime to the request.
+static final Cache&lt;String, Session&gt; BOUNDED = Caffeine.newBuilder()
+        .maximumSize(10_000)
+        .expireAfterAccess(Duration.ofMinutes(30))
+        .build();
+
+// LEAK: ThreadLocal on a pooled thread lives as long as the thread (forever).
+static final ThreadLocal&lt;byte[]&gt; BUF = ThreadLocal.withInitial(() -&gt; new byte[1 &lt;&lt; 20]);
+void handle() {
+    try { /* use BUF.get() */ } finally { BUF.remove(); }   // FIX: remove when done
+}
+</code></pre>
+<pre><code class="language-python">import functools
+
+class PriceService:
+    # LEAK: lru_cache on a method keeps 'self' (and every argument) alive in a
+    # class-level cache, so service instances are never freed.
+    @functools.lru_cache(maxsize=None)
+    def price(self, sku: str) -&gt; float:
+        return 9.99
+
+# FIX: a bounded cache on a plain function, or a per-instance cache.
+@functools.lru_cache(maxsize=4096)
+def price(sku: str) -&gt; float:
+    return 9.99
+</code></pre>
+<pre><code class="language-go">// LEAK: a goroutine blocked forever on a channel nobody reads or closes.
+// It keeps its stack and everything it references alive.
+func fetchAll(urls []string) string {
+    ch := make(chan string)              // unbuffered
+    for _, u := range urls {
+        go func() { ch &lt;- get(u) }()     // only the first send is received...
+    }
+    return &lt;-ch                          // ...the other goroutines block forever
+}
+// FIX: make(chan string, len(urls)), or pass a context and select on ctx.Done().
+
+// LEAK: a small substring keeps a huge string's backing array alive.
+func firstLine(body string) string {
+    line, _, _ := strings.Cut(body, &quot;\n&quot;)
+    return strings.Clone(line)           // FIX: copy it so the big body can be freed
+}
+</code></pre>
+<pre><code class="language-typescript">// LEAK: setInterval keeps its closure, and the closure keeps 'report' (50 MB) alive.
+function startPolling(report: BigReport) {
+  setInterval(() =&gt; console.log(report.title), 1000);  // never cleared
+}
+
+// FIX: keep only what you need, and return a way to stop.
+function startPollingFixed(report: BigReport): () =&gt; void {
+  const title = report.title;                           // capture a small value
+  const id = setInterval(() =&gt; console.log(title), 1000);
+  return () =&gt; clearInterval(id);
+}
+
+// FIX for per-object metadata: a WeakMap does not keep its keys alive.
+const meta = new WeakMap&lt;object, { seen: number }&gt;();
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>"The GC will clean it up" does not apply to resources</strong></p>
+<p>A leaked <code>HttpClient</code> per request, an undisposed <code>FileStream</code>, a JDBC <code>Connection</code> not closed, an unclosed Go <code>resp.Body</code>: these leak <em>sockets, file handles and connection-pool slots</em>, not just memory. The GC may not run for minutes, because it only reacts to memory pressure, and it knows nothing about how scarce sockets are. You run out of handles long before memory. Deterministic cleanup is covered below.</p>
+</div>
+<h2 id="pooling-reuse-instead-of-allocate">Pooling: reuse instead of allocate</h2>
+<p>When a hot path allocates big, short-lived buffers (I/O buffers, serialisation scratch space, image tiles), allocation volume drives GC frequency, and in .NET anything over 85,000 bytes lands on the LOH. <strong>Pooling</strong> keeps a set of buffers and hands them out again: rent, use, return.</p>
+<div class="viz mg-wide" data-viz="memory-and-gc-pool"></div>
+
+<p>The visualizer serves requests with a 64 KB buffer each, with a few in flight at once. Compare the four modes on the same input:</p>
+<ul>
+<li><strong><code>new byte[64 KB]</code> per request</strong>: one LOH-sized allocation per request. GCs happen regularly, and each one is a gen2.</li>
+<li><strong><code>ArrayPool</code> Rent / Return</strong>: the pool only ever allocates as many arrays as there are concurrent requests (3 for 12 requests by default) and GCs stop.</li>
+<li><strong>Bug: forgot to Return</strong>: the pool keeps allocating new arrays. You get the cost of pooling <em>plus</em> the cost of allocating. Not catastrophic, just wasted effort.</li>
+<li><strong>Bug: Return, then keep using it</strong>: another request rents the same array while the first is still writing. Data from one request shows up in another. This is the bug from the opening story, and it is a <em>security</em> bug when buffers carry customer data.</li>
+</ul>
+<div class="code-tabs">
+<pre><code class="language-csharp">using System.Buffers;
+
+async Task CopyAsync(Stream source, Stream destination, CancellationToken ct)
+{
+    byte[] buffer = ArrayPool&lt;byte&gt;.Shared.Rent(64 * 1024);   // may return a LARGER array
+    try
+    {
+        int read;
+        while ((read = await source.ReadAsync(buffer.AsMemory(0, 64 * 1024), ct)) &gt; 0)
+            await destination.WriteAsync(buffer.AsMemory(0, read), ct);   // only use [0, read)
+    }
+    finally
+    {
+        ArrayPool&lt;byte&gt;.Shared.Return(buffer, clearArray: true);  // exactly once; clear if sensitive
+    }
+    // Never touch 'buffer' after Return, and never Return it twice.
+}
+</code></pre>
+<pre><code class="language-java">// No JDK byte-array pool, and pooling SMALL objects usually loses to a young GC.
+// Pool what is expensive to create: direct buffers, connections, threads.
+ByteBuf buf = PooledByteBufAllocator.DEFAULT.directBuffer(64 * 1024);  // Netty
+try {
+    buf.writeBytes(payload);
+    channel.writeAndFlush(buf.retain());
+} finally {
+    buf.release();          // reference-counted: release exactly once
+}
+</code></pre>
+<pre><code class="language-python"># Pooling objects rarely pays in CPython: allocation is already a free-list pop.
+# What does pay: reusing ONE buffer and reading into it, with zero-copy views.
+def copy(src, dst, size=64 * 1024):
+    buf = bytearray(size)
+    view = memoryview(buf)
+    while n := src.readinto(buf):     # fills the existing buffer, no new bytes object
+        dst.write(view[:n])           # a view, not a copy
+</code></pre>
+<pre><code class="language-go">var bufPool = sync.Pool{
+    New: func() any { return new(bytes.Buffer) },   // store pointers, not values
+}
+
+func render(w io.Writer, v Page) error {
+    buf := bufPool.Get().(*bytes.Buffer)
+    buf.Reset()                         // pooled objects come back dirty
+    defer bufPool.Put(buf)              // the pool may drop it at any GC: it is a cache, not a store
+    if err := tmpl.Execute(buf, v); err != nil {
+        return err
+    }
+    _, err := w.Write(buf.Bytes())
+    return err
+}
+</code></pre>
+<pre><code class="language-typescript">// Node already pools small Buffers internally (Buffer.allocUnsafe under 4 KB).
+// For hot game loops or streaming parsers, keep a fixed set of typed arrays.
+class Float32Pool {
+  private free: Float32Array[] = [];
+  constructor(private readonly size: number) {}
+  rent(): Float32Array { return this.free.pop() ?? new Float32Array(this.size); }
+  return(a: Float32Array): void { a.fill(0); this.free.push(a); }
+}
+</code></pre>
+</div>
+<div class="compare">
+<div class="good">
+<h4 id="pool-when">Pool when</h4>
+<ul>
+<li>Objects are <strong>large</strong> (≥ 85 KB in .NET, humongous in G1) or <strong>expensive to create</strong> (connections, threads, compiled regexes, <code>HttpClient</code> handlers).</li>
+<li>A profile shows allocation or GC time on that exact path.</li>
+<li>The lifetime is short and obvious: rent and return in the same method, ideally in <code>try</code>/<code>finally</code> or <code>defer</code>.</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="do-not-pool-when">Do not pool when</h4>
+<ul>
+<li>Objects are small and short-lived. A young GC of dead objects is nearly free, and a pool adds synchronisation, keeps objects alive (making them old), and makes old-to-young pointers.</li>
+<li>Ownership is unclear (the buffer is passed across <code>await</code>s, threads or callbacks). One mistake turns a performance win into data corruption.</li>
+<li>You have not measured. Pooling makes code harder to read and review.</li>
+</ul>
+</div>
+</div>
+<p>Pooling as an architecture pattern (connection pools, worker pools, bulkheads) is covered in <a href="performance-patterns.html">Performance Patterns</a>. Here it is only about memory.</p>
+<h2 id="views-instead-of-copies-span-memory-and-slices">Views instead of copies: Span, Memory and slices</h2>
+<p>The cheapest allocation is the one you never make. A lot of garbage in real services comes from <strong>copying pieces of data you only want to look at</strong>: <code>Split</code> to read one field, <code>Substring</code> to compare a prefix, <code>ToArray()</code> to pass part of a buffer, <code>bytes[a:b]</code> to parse a header. Every runtime has a way to make a <strong>view</strong> (a pointer plus a length into existing memory) instead of a copy.</p>
+<div class="viz mg-wide" data-viz="memory-and-gc-span"></div>
+
+<p>The default parses <code>id=42;name=Ada;role=admin</code>. With <strong>Split + Substring</strong>, every piece becomes a new string, plus the array that <code>Split</code> returns: 13 allocations and 480 bytes to read a 25-character string. Switch to <strong>ReadOnlySpan&lt;char&gt; slicing</strong>: every piece is a window (start, length) over the original string and the heap row stays empty. Then try a longer input and watch the copy version's bytes grow with it.</p>
+<h3 id="c-spant-readonlyspant-and-memoryt">C#: Span&lt;T&gt;, ReadOnlySpan&lt;T&gt; and Memory&lt;T&gt;</h3>
+<ul>
+<li><strong><code>Span&lt;T&gt;</code> / <code>ReadOnlySpan&lt;T&gt;</code></strong> is a <code>ref struct</code>: a reference plus a length, over an array, a string, <code>stackalloc</code> memory or native memory. Slicing it (<code>span[2..5]</code>) is free. It can only live on the stack: it cannot be a field of a class, be boxed, be captured by a lambda, or live across an <code>await</code> (C# 13 allows span locals in async methods, but still not across an <code>await</code>). Those rules are what make it safe and fast.</li>
+<li><strong><code>Memory&lt;T&gt;</code> / <code>ReadOnlyMemory&lt;T&gt;</code></strong> is the heap-friendly version. Store it in a field, pass it across <code>await</code>, then call <code>.Span</code> when you actually process the data.</li>
+<li>Most of the BCL accepts spans: <code>int.Parse(ReadOnlySpan&lt;char&gt;)</code>, <code>Utf8Parser</code>, <code>Stream.ReadAsync(Memory&lt;byte&gt;)</code>, <code>string.Create</code>, <code>MemoryExtensions.Split</code> (.NET 9+), <code>System.IO.Pipelines</code>, <code>Utf8JsonReader</code>.</li>
+</ul>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Zero allocations: every piece is a view over the input.
+static (int Id, string? Name) Parse(ReadOnlySpan&lt;char&gt; s)
+{
+    int id = 0;
+    string? name = null;
+    foreach (Range r in s.Split(';'))                 // .NET 9+: yields Ranges, no string[]
+    {
+        ReadOnlySpan&lt;char&gt; part = s[r];
+        int eq = part.IndexOf('=');
+        if (eq &lt; 0) continue;
+        ReadOnlySpan&lt;char&gt; key = part[..eq], value = part[(eq + 1)..];
+        switch (key)
+        {
+            case &quot;id&quot;: id = int.Parse(value); break;  // parses the span directly
+            case &quot;name&quot;: name = value.ToString(); break;  // allocate only what you keep
+        }
+    }
+    return (id, name);
+}
+
+// Across an await, carry Memory&lt;T&gt; and take .Span in synchronous code.
+static async Task&lt;int&gt; CountLinesAsync(Stream s, Memory&lt;byte&gt; buffer)
+{
+    int lines = 0, read;
+    while ((read = await s.ReadAsync(buffer)) &gt; 0)
+        lines += buffer.Span[..read].Count((byte)'\n');
+    return lines;
+}
+</code></pre>
+<pre><code class="language-java">// No Span in Java: parse by index. parseInt(CharSequence, begin, end, radix) is Java 9+.
+static int parseId(String s) {
+    int start = 0;
+    while (start &lt; s.length()) {
+        int end = s.indexOf(';', start);
+        if (end &lt; 0) end = s.length();
+        int eq = s.indexOf('=', start);
+        if (eq &gt; 0 &amp;&amp; eq &lt; end &amp;&amp; s.regionMatches(start, &quot;id&quot;, 0, 2) &amp;&amp; eq - start == 2) {
+            return Integer.parseInt(s, eq + 1, end, 10);   // no substring
+        }
+        start = end + 1;
+    }
+    return -1;
+}
+// Views over bytes: ByteBuffer.slice(), MemorySegment.asSlice(). substring() copies.
+</code></pre>
+<pre><code class="language-python"># str and bytes slicing COPY. memoryview slices are views over bytes-like objects.
+data = b&quot;id=42;name=Ada;role=admin&quot;
+view = memoryview(data)
+
+part = view[3:5]                 # no copy: a window into 'data'
+print(bytes(part), int(bytes(part)))   # b'42' 42 (bytes() copies just the 2 bytes you keep)
+
+# Find fields by index instead of split():
+def field(buf: bytes, key: bytes) -&gt; bytes:
+    i = buf.find(key + b&quot;=&quot;)
+    if i &lt; 0:
+        return b&quot;&quot;
+    j = buf.find(b&quot;;&quot;, i)
+    return buf[i + len(key) + 1 : j if j &gt;= 0 else len(buf)]
+
+print(field(data, b&quot;name&quot;))      # b'Ada'
+</code></pre>
+<pre><code class="language-go">// Go strings and slices are already views: a substring shares the original bytes.
+func parse(s string) (id int, name string, err error) {
+    for part := range strings.SplitSeq(s, &quot;;&quot;) { // Go 1.24+: an iterator, no []string
+        key, value, ok := strings.Cut(part, &quot;=&quot;)  // two views, no allocation
+        if !ok {
+            continue
+        }
+        switch key {
+        case &quot;id&quot;:
+            if id, err = strconv.Atoi(value); err != nil {
+                return 0, &quot;&quot;, err
+            }
+        case &quot;name&quot;:
+            name = strings.Clone(value) // copy only if you keep it AND s is big
+        }
+    }
+    return id, name, nil
+}
+</code></pre>
+<pre><code class="language-typescript">// Typed arrays: subarray() is a view, slice() is a copy.
+const bytes = new TextEncoder().encode(&quot;id=42;name=Ada;role=admin&quot;);
+const view = bytes.subarray(3, 5);         // shares memory with 'bytes'
+const copy = bytes.slice(3, 5);            // new ArrayBuffer
+
+// Strings: parse by index; avoid split() on hot paths.
+function parseId(s: string): number {
+  const i = s.indexOf(&quot;id=&quot;);
+  if (i &lt; 0) return -1;
+  let n = 0;
+  for (let k = i + 3; k &lt; s.length &amp;&amp; s.charCodeAt(k) !== 59 /* ; */; k++) {
+    n = n * 10 + (s.charCodeAt(k) - 48);
+  }
+  return n;
+}
+</code></pre>
+</div>
+<h3 id="view-or-copy-know-which-one-you-have">View or copy? Know which one you have</h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>C#</th>
+<th>Java</th>
+<th>Python</th>
+<th>Go</th>
+<th>TypeScript</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sub-string</td>
+<td><code>Substring</code>: copy; <code>AsSpan(a, n)</code>: view</td>
+<td><code>substring</code>: copy</td>
+<td><code>s[a:b]</code>: copy</td>
+<td><code>s[a:b]</code>: <strong>view</strong></td>
+<td><code>slice</code>: copy (V8 may internally keep a "sliced string" that pins the parent)</td>
+</tr>
+<tr>
+<td>Sub-array</td>
+<td><code>arr[a..b]</code>: copy; <code>AsSpan()[a..b]</code>: view</td>
+<td><code>copyOfRange</code>: copy; <code>ByteBuffer.slice()</code>: view</td>
+<td><code>lst[a:b]</code>: copy; <code>memoryview[a:b]</code>: view</td>
+<td><code>a[i:j]</code>: <strong>view</strong> that can still <code>append</code> into the parent</td>
+<td><code>slice</code>: copy; <code>subarray</code>: view</td>
+</tr>
+</tbody>
+</table>
+<p>Views are fast and dangerous for the same reason: they share memory. Two bugs follow from that. A small view can <strong>keep a huge parent alive</strong> (a 10-byte Go substring of a 50 MB response body pins all 50 MB), and a writable view can <strong>change data someone else is reading</strong>. Go makes the second one easy to hit.</p>
+<h3 id="go-slices-one-backing-array-two-views">Go slices: one backing array, two views</h3>
+<p>A Go slice is a three-word header: pointer, length, capacity. <code>b := a[:2]</code> creates a new header over the <em>same</em> array, with the remaining capacity of <code>a</code>. If you <code>append</code> to <code>b</code> while it has spare capacity, the append writes into <code>a</code>'s array.</p>
+<div class="viz mg-wide" data-viz="memory-and-gc-slices"></div>
+
+<p>With the defaults, <code>b := a[:2]</code> and appending <code>90, 91, 92, 93</code> overwrites <code>a[2]</code>, <code>a[3]</code> and <code>a[4]</code> before <code>b</code> runs out of capacity and moves to a new array. The program prints <code>[1 2 90 91 92] [1 2 90 91 92 93]</code>. Things to try:</p>
+<ul>
+<li>Switch to <strong><code>b := a[:k:k]</code></strong> (a full slice expression sets the capacity to <code>k</code>). The first <code>append</code> must allocate a new array, and <code>a</code> is untouched: <code>[1 2 3 4 5] [1 2 90 91 92 93]</code>.</li>
+<li>Append only <code>7, 8</code>. Both fit in the spare capacity, so <code>b</code> never moves and both values land in <code>a</code>: <code>[1 2 7 8 5]</code>.</li>
+<li>Watch the capacities when <code>b</code> grows. Go roughly doubles small slices, then rounds up to a memory size class, so <code>cap</code> is not always exactly double.</li>
+</ul>
+<div class="tip">
+<p><strong>Rules for sharing slices safely</strong></p>
+<ul>
+<li>Returning <code>buf[:n]</code> from a function that reuses <code>buf</code> gives the caller a view that will be overwritten. Return a copy (<code>slices.Clone</code>, Go 1.21+) if the caller keeps it.</li>
+<li>Handing a sub-slice to code that might <code>append</code>: use <code>a[lo:hi:hi]</code> or <code>slices.Clip</code>.</li>
+<li>Keeping a small piece of a big buffer for a long time: copy it so the big buffer can be collected.</li>
+</ul>
+</div>
+<h2 id="deterministic-cleanup-dispose-close-defer">Deterministic cleanup: dispose, close, defer</h2>
+<p>Garbage collection reclaims <strong>memory</strong>. It does not reliably release anything else: files, sockets, database connections, locks, native handles, GPU buffers, temporary files. A collector runs when <em>memory</em> is short, which may be minutes after you stopped using a socket, or never. Every language therefore has a construct that releases a resource at a known point, whether the code exits normally or with an exception.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// using declaration: Dispose() runs at the end of the scope, even on exceptions.
+await using var conn = new SqlConnection(cs);      // IAsyncDisposable
+await conn.OpenAsync(ct);
+using var reader = File.OpenText(path);            // IDisposable
+
+// Implementing it: a type that OWNS a disposable field is disposable itself.
+public sealed class ReportWriter : IDisposable
+{
+    private readonly FileStream _file = File.Create(&quot;report.csv&quot;);
+    private bool _disposed;
+    public void Dispose()
+    {
+        if (_disposed) return;
+        _file.Dispose();
+        _disposed = true;
+    }
+}
+// Wrap raw OS handles in SafeHandle instead of writing a finalizer (~ReportWriter()).
+</code></pre>
+<pre><code class="language-java">// try-with-resources: close() runs in reverse order, even on exceptions.
+try (var conn = dataSource.getConnection();
+     var stmt = conn.prepareStatement(&quot;SELECT id FROM orders WHERE status = ?&quot;)) {
+    stmt.setString(1, &quot;OPEN&quot;);
+    try (var rs = stmt.executeQuery()) {
+        while (rs.next()) process(rs.getLong(1));
+    }
+}
+// finalize() is deprecated for removal (JEP 421). For a safety net, use java.lang.ref.Cleaner.
+</code></pre>
+<pre><code class="language-python"># with: __exit__ runs even on exceptions.
+with open(&quot;report.csv&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f, db.connect() as conn:
+    for row in conn.execute(&quot;SELECT id FROM orders&quot;):
+        f.write(f&quot;{row[0]}\n&quot;)
+
+# Write your own context manager for any acquire/release pair:
+from contextlib import contextmanager
+
+@contextmanager
+def temp_setting(obj, name, value):
+    old = getattr(obj, name)
+    setattr(obj, name, value)
+    try:
+        yield obj
+    finally:
+        setattr(obj, name, old)
+</code></pre>
+<pre><code class="language-go">f, err := os.Open(path)
+if err != nil {
+    return err
+}
+defer f.Close() // runs when the function returns, in LIFO order
+
+resp, err := http.Get(url)
+if err != nil {
+    return err
+}
+defer resp.Body.Close() // forgetting this leaks a connection
+
+// defer runs at FUNCTION exit, not loop-iteration exit. In a loop, move the body
+// into its own function, or close explicitly.
+// For a safety net on GC, runtime.AddCleanup (Go 1.24+) replaces runtime.SetFinalizer.
+</code></pre>
+<pre><code class="language-typescript">// TypeScript 5.2+ explicit resource management (Node 24+, modern browsers):
+class TempDir implements Disposable {
+  constructor(readonly path: string) {}
+  [Symbol.dispose](): void { rmSync(this.path, { recursive: true, force: true }); }
+}
+
+function build(): void {
+  using dir = new TempDir(mkdtempSync(&quot;build-&quot;));   // disposed at the end of the block
+  // ... use dir.path ...
+}
+
+// Older targets: try/finally is the same guarantee.
+const handle = await open(&quot;report.csv&quot;, &quot;w&quot;);
+try { await handle.write(&quot;id\n&quot;); } finally { await handle.close(); }
+</code></pre>
+</div>
+<h3 id="why-finalizers-are-a-last-resort">Why finalizers are a last resort</h3>
+<p>A <strong>finalizer</strong> (<code>~T()</code> in C#, <code>finalize()</code> in Java, <code>__del__</code> in Python, <code>runtime.SetFinalizer</code> in Go, <code>FinalizationRegistry</code> in JavaScript) runs some time after the GC notices an object is unreachable. It looks like a destructor but behaves very differently:</p>
+<ul>
+<li><strong>No timing guarantee.</strong> It runs when the GC happens to collect that object, possibly never before the process exits.</li>
+<li><strong>Extra GC cost.</strong> In .NET a finalizable object survives at least one extra collection (it is promoted while it waits in the finalization queue), and so does everything it references.</li>
+<li><strong>One thread.</strong> .NET and Java run finalizers on a single finalizer thread. One slow or blocked finalizer stalls them all, and the queue grows into a leak.</li>
+<li><strong>No order.</strong> Objects a finalizer touches may already have been finalized.</li>
+</ul>
+<p>Use them only as a <em>safety net</em> behind a proper <code>Dispose</code>/<code>close</code>, and prefer the modern tools: <code>SafeHandle</code> (.NET), <code>Cleaner</code> (Java), <code>weakref.finalize</code> (Python), <code>runtime.AddCleanup</code> (Go). In C#, call <code>GC.SuppressFinalize(this)</code> from <code>Dispose</code> if the type has a finalizer, so a disposed object skips the queue.</p>
+<h2 id="tooling-see-the-heap-instead-of-guessing">Tooling: see the heap instead of guessing</h2>
+<p><a href="performance-cadence.html">Performance Cadence</a> covers profiling and benchmarking in general. For memory you need three specific views, and every runtime has tools for all three:</p>
+<ol>
+<li><strong>Counters over time</strong>: heap size, GC count per generation, % time in GC, allocation rate. They tell you <em>whether</em> there is a problem and what shape it has (a sawtooth with a rising floor means a leak; very frequent GCs mean allocation volume).</li>
+<li><strong>Allocation profile</strong>: <em>which code</em> allocates the most bytes. Use it to fix GC pressure.</li>
+<li><strong>Heap snapshot or dump</strong>: <em>what is alive</em> right now, grouped by type, with the path from a GC root. Use it to fix leaks.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Counters</th>
+<th>Allocation profile</th>
+<th>Heap snapshot / dump</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.NET</td>
+<td><code>dotnet-counters monitor -n MyApp</code> (GC heap size, gen0/1/2 counts, % time in GC, allocation rate)</td>
+<td><code>dotnet-trace collect --profile gc-verbose</code>, Visual Studio or PerfView allocation view, BenchmarkDotNet <code>[MemoryDiagnoser]</code></td>
+<td><code>dotnet-gcdump collect -p PID</code> (small, types and roots only), <code>dotnet-dump analyze</code> with <code>dumpheap -stat</code> and <code>gcroot</code></td>
+</tr>
+<tr>
+<td>JVM</td>
+<td><code>jstat -gcutil PID 1s</code>, <code>-Xlog:gc*:file=gc.log</code></td>
+<td>JFR (<code>jcmd PID JFR.start duration=60s filename=rec.jfr</code>) in JDK Mission Control, async-profiler <code>-e alloc</code>, JMH <code>-prof gc</code></td>
+<td><code>jcmd PID GC.heap_dump heap.hprof</code>, <code>-XX:+HeapDumpOnOutOfMemoryError</code>, Eclipse MAT dominator tree</td>
+</tr>
+<tr>
+<td>Go</td>
+<td><code>GODEBUG=gctrace=1</code>, <code>runtime/metrics</code></td>
+<td><code>go tool pprof -sample_index=alloc_space .../debug/pprof/heap</code>, <code>go test -bench . -benchmem</code></td>
+<td><code>pprof</code> with <code>-sample_index=inuse_space</code>, plus the goroutine profile for goroutine leaks</td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>gc.get_stats()</code>, process RSS</td>
+<td><code>tracemalloc</code> snapshots and <code>compare_to</code>, <code>memray run</code> + flame graph</td>
+<td><code>gc.get_objects()</code>, <code>objgraph.show_growth()</code>, <code>gc.get_referrers()</code>, memray live mode</td>
+</tr>
+<tr>
+<td>Node / browser</td>
+<td><code>process.memoryUsage()</code>, <code>--trace-gc</code>, Performance panel</td>
+<td>DevTools Memory: <em>Allocation sampling</em> and <em>Allocations on timeline</em></td>
+<td>DevTools heap snapshots (compare two), <code>v8.writeHeapSnapshot()</code>, <code>--heapsnapshot-near-heap-limit=2</code></td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Quick in-process numbers (good for tests and health endpoints):
+long before = GC.GetAllocatedBytesForCurrentThread();
+var result = BuildReport(orders);
+long allocated = GC.GetAllocatedBytesForCurrentThread() - before;
+
+var info = GC.GetGCMemoryInfo();
+Console.WriteLine($&quot;heap {info.HeapSizeBytes / 1_048_576} MB, gen2 GCs {GC.CollectionCount(2)}, &quot; +
+                  $&quot;pause {info.PauseTimePercentage}%&quot;);
+
+// From a shell:
+//   dotnet-counters monitor -n OrderApi --counters System.Runtime
+//   dotnet-gcdump collect -n OrderApi        (then open the .gcdump in VS or PerfView)
+</code></pre>
+<pre><code class="language-java">// Programmatic view of every collector and pool:
+for (var gc : ManagementFactory.getGarbageCollectorMXBeans()) {
+    System.out.printf(&quot;%s: %d collections, %d ms%n&quot;,
+            gc.getName(), gc.getCollectionCount(), gc.getCollectionTime());
+}
+// From a shell:
+//   jcmd &lt;pid&gt; GC.class_histogram | head -20
+//   jcmd &lt;pid&gt; JFR.start duration=60s filename=rec.jfr
+</code></pre>
+<pre><code class="language-python">import tracemalloc
+
+tracemalloc.start()
+before = tracemalloc.take_snapshot()
+
+cache = [str(i) * 10 for i in range(100_000)]     # the code under suspicion
+
+after = tracemalloc.take_snapshot()
+for stat in after.compare_to(before, &quot;lineno&quot;)[:3]:
+    print(stat)          # file:line, size delta and count delta, biggest first
+current, peak = tracemalloc.get_traced_memory()
+print(f&quot;current={current / 1e6:.1f} MB peak={peak / 1e6:.1f} MB&quot;)
+tracemalloc.stop()
+</code></pre>
+<pre><code class="language-go">import (
+    &quot;net/http&quot;
+    _ &quot;net/http/pprof&quot; // registers /debug/pprof/* handlers
+)
+
+func main() {
+    go http.ListenAndServe(&quot;localhost:6060&quot;, nil)
+    // ...
+}
+
+// Allocation hot spots (bytes allocated since start):
+//   go tool pprof -sample_index=alloc_space http://localhost:6060/debug/pprof/heap
+// What is live right now (leaks):
+//   go tool pprof -sample_index=inuse_space http://localhost:6060/debug/pprof/heap
+// Leaked goroutines:
+//   curl http://localhost:6060/debug/pprof/goroutine?debug=1
+</code></pre>
+<pre><code class="language-typescript">import { writeHeapSnapshot } from &quot;node:v8&quot;;
+
+const mb = (n: number) =&gt; (n / 1_048_576).toFixed(1);
+setInterval(() =&gt; {
+  const m = process.memoryUsage();
+  console.log(`rss ${mb(m.rss)} heapUsed ${mb(m.heapUsed)} external ${mb(m.external)}`);
+}, 10_000).unref();
+
+// Take one snapshot, run traffic, take another, and compare them in Chrome DevTools
+// (Memory tab &gt; Load &gt; &quot;Comparison&quot; view, sorted by # Delta).
+process.on(&quot;SIGUSR2&quot;, () =&gt; console.log(&quot;wrote&quot;, writeHeapSnapshot()));
+</code></pre>
+</div>
+<h3 id="a-leak-hunt-step-by-step">A leak hunt, step by step</h3>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · CONFIRM</small><strong>Is the floor rising?</strong><p>Plot heap size after each full GC over hours. A rising floor is a leak. A high but flat floor is just a big working set.</p></div>
+<div class="flow-step"><small>2 · TWO SNAPSHOTS</small><strong>Before and after load</strong><p>Warm up, take a heap snapshot, run N requests, force or wait for a full GC, take another.</p></div>
+<div class="flow-step"><small>3 · DIFF</small><strong>Sort by count delta</strong><p>The type whose count grew by about N (or a multiple of N) is your suspect. Ignore types that only grew by a constant.</p></div>
+<div class="flow-step"><small>4 · ROOT PATH</small><strong>Who holds it?</strong><p>Ask for the path to a GC root (gcroot, MAT "path to GC roots", DevTools retainers). The first long-lived object on the path is the bug.</p></div>
+<div class="flow-step"><small>5 · VERIFY</small><strong>Flat floor again</strong><p>Fix, rerun the same load and confirm the floor stays flat. Add a test that asserts allocations or live objects if it regressed before.</p></div>
+</div>
+
+<h2 id="when-not-to-optimise-allocations">When NOT to optimise allocations</h2>
+<p>Allocation tuning has the worst effort-to-benefit ratio in performance work when it is done without data. Modern collectors are extremely good at short-lived garbage, and readable code is worth far more than a few kilobytes per request. Follow the <a href="performance-cadence.html">Performance Cadence</a>: a goal, a profile, then one change.</p>
+<div class="compare">
+<div class="good">
+<h4 id="do-it-up-front-these-are-design-not-micro-optimisation">Do it up front: these are design, not micro-optimisation</h4>
+<ul>
+<li>Stream large data instead of loading it whole (<code>IAsyncEnumerable</code>, <code>Stream</code>, iterators, <code>io.Reader</code>, Node streams).</li>
+<li>Bound every cache and queue.</li>
+<li>Unsubscribe, dispose, close and cancel what you start.</li>
+<li>Choose value types and primitive arrays for big numeric data.</li>
+<li>Set the container memory limit <em>and</em> tell the runtime about it.</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="do-not-do-it-without-a-profile">Do NOT do it without a profile</h4>
+<ul>
+<li>Replacing LINQ, streams or comprehensions with hand-written loops everywhere.</li>
+<li>Pooling small objects "to reduce GC".</li>
+<li>Turning classes into structs to "avoid the heap" (large structs are copied on every assignment and call).</li>
+<li><code>GC.Collect()</code>, <code>System.gc()</code>, <code>runtime.GC()</code> or <code>gc.collect()</code> in application code.</li>
+<li>Tuning GC flags you copied from a blog post for a different workload.</li>
+</ul>
+</div>
+</div>
+<p>A practical threshold: if % time in GC is under about 5% and p99 meets the goal, allocation is not your problem. Look at I/O, locks and algorithms first. When GC <em>is</em> the problem, the allocation profile usually points at one or two call sites (a serializer, a logger, a string builder in a loop) and fixing those gives most of the gain.</p>
+<div class="insight">
+<p><strong>Allocation-free code is a library concern more than an application concern</strong></p>
+<p>Kestrel, <code>System.Text.Json</code>, Netty, Go's standard library and V8 builtins are written allocation-free so that <em>your</em> code can afford to allocate. Call their span-, stream- and buffer-friendly APIs; hand-roll zero-allocation code only where a profile points.</p>
+</div>
+<h2 id="pitfalls-and-war-stories">Pitfalls and war stories</h2>
+<div class="pitfall">
+<p><strong>GC.Collect() "to free memory"</strong></p>
+<p>A team added <code>GC.Collect()</code> after every batch because a dashboard showed memory "too high". p99 tripled. Each call was a blocking full GC, and it promoted every in-flight object to gen2, where it then needed <em>more</em> full GCs to die. A high heap with a flat floor is not a problem; it means the GC has not needed to work yet. Remove explicit collections and set a heap limit if memory really is constrained.</p>
+</div>
+<div class="pitfall">
+<p><strong>The blocked finalizer thread</strong></p>
+<p>A class wrapped a native SDK handle and released it in a finalizer that took a lock. One day the lock was held by a thread waiting for... memory. The single finalizer thread blocked, the finalization queue grew by millions of objects, and the process ran out of memory with a heap full of objects that were already garbage. Implement <code>IDisposable</code> with a <code>SafeHandle</code>, keep finalizers trivial, and never block in one.</p>
+</div>
+<div class="pitfall">
+<p><strong>The LOH and the 2 MB JSON string</strong></p>
+<p>An API built each response as one big <code>string</code> with <code>StringBuilder.ToString()</code> and then serialised it again to UTF-8 bytes. Each response created three LOH objects, so gen2 GCs ran every few seconds under load. Writing straight to the response body with <code>JsonSerializer.SerializeAsync(stream, ...)</code> removed the big strings entirely. The same mistake on the JVM creates humongous objects in G1, and in Node a giant <code>JSON.stringify</code> string blocks the event loop as well.</p>
+</div>
+<div class="pitfall">
+<p><strong>The 40-byte token that held a 30 MB response</strong></p>
+<p>A Node service extracted a session token from a large upstream response with <code>body.slice(i, j)</code> and cached it in a <code>Map</code>. V8 represented the result as a <em>sliced string</em> pointing into the 30 MB body, so every cached token kept a whole response alive. Heap snapshots showed thousands of 30 MB "(string)" retainers. Copying the token out fixed it, and so does storing a parsed field instead of a substring. Go has the same trap with substrings (<code>strings.Clone</code>), and older Java (before 7u6) did too.</p>
+</div>
+<h2 id="checklist">Checklist</h2>
+<div class="cheat">
+<div>
+<p><strong>Before you merge</strong></p>
+<ul>
+<li>Is every cache, queue, map and list that lives longer than a request bounded?</li>
+<li>Is every subscription, timer and background loop stopped in <code>Dispose</code>/<code>close</code>/cancel?</li>
+<li>Is every file, socket, connection and response body closed with <code>using</code>, try-with-resources, <code>with</code> or <code>defer</code>?</li>
+<li>Does any long-lived callback or closure capture request data it does not need?</li>
+</ul>
+</div>
+<div>
+<p><strong>Hot paths</strong></p>
+<ul>
+<li>Did a profile point here? (If not, stop.)</li>
+<li>Are large buffers streamed, pooled or reused, not allocated per call?</li>
+<li>Are you parsing with views (spans, <code>memoryview</code>, <code>subarray</code>, index arithmetic) instead of <code>Split</code>/<code>substring</code>?</li>
+<li>Are pooled buffers returned exactly once and never used afterwards?</li>
+</ul>
+</div>
+<div>
+<p><strong>Production</strong></p>
+<ul>
+<li>Does the runtime know the container limit (<code>MaxRAMPercentage</code>, <code>GOMEMLIMIT</code>, <code>--max-old-space-size</code>)?</li>
+<li>Are GC counters (heap, % time in GC, gen2/full counts) on a dashboard with the deploy markers?</li>
+<li>Can you take a heap dump from a live instance, and has someone practised it?</li>
+</ul>
+</div>
+</div>
+<h2 id="quiz">Quiz</h2>
+<details class="quiz">
+<summary>1. A C# method creates 10,000 small objects per request and all of them are garbage when the request ends. Is that a GC problem?</summary>
+<details class="solution">
+<summary>Show answer</summary>
+<p>Usually not. They die in gen0, and a gen0 GC only traces <em>live</em> objects, so its cost barely depends on how much garbage there is. It becomes a problem when the allocation <em>rate</em> makes gen0 GCs so frequent that requests in flight survive and get promoted (mid-life crisis), or when a profile shows GC time is significant. Measure % time in GC before changing anything.</p>
+</details>
+</details>
+<details class="quiz">
+<summary>2. Memory grows steadily, yet every GC frees hundreds of MB. Leak or not? How do you find out?</summary>
+<details class="solution">
+<summary>Show answer</summary>
+<p>Look at the <em>floor</em>: heap size right after each full GC. If the floor rises over time, it is a leak; how much each GC frees is irrelevant. Take two heap snapshots under the same load some time apart, diff by type count, and follow the retention path of the growing type to its GC root.</p>
+</details>
+</details>
+<details class="quiz">
+<summary>3. In Python, <code>a.partner = b; b.partner = a; del a, b</code>. When are the two objects freed, and what would change with a weak reference?</summary>
+<details class="solution">
+<summary>Show answer</summary>
+<p>Not at <code>del</code>: each still has a refcount of 1 from the other. They are freed when the cycle detector runs (automatically after enough allocations, or on <code>gc.collect()</code>). If one direction used <code>weakref.ref</code>, there would be no cycle in strong references, and both would be freed immediately and deterministically by refcounting.</p>
+</details>
+</details>
+<details class="quiz">
+<summary>4. Go: <code>b := a[:2]; b = append(b, 9)</code> where <code>a</code> is <code>[1 2 3]</code> with capacity 3. What is <code>a</code> now, and how do you prevent it?</summary>
+<details class="solution">
+<summary>Show answer</summary>
+<p><code>a</code> is <code>[1 2 9]</code>. <code>b</code> shares <code>a</code>'s array and has spare capacity, so <code>append</code> writes in place. Use the full slice expression <code>a[:2:2]</code> (capacity 2 forces a new array on append), <code>slices.Clip</code>, or copy with <code>slices.Clone</code>.</p>
+</details>
+</details>
+<details class="quiz">
+<summary>5. Why does Go need a write barrier during marking, and why does .NET's gen0 GC need a card table?</summary>
+<details class="solution">
+<summary>Show answer</summary>
+<p>Both protect against pointers the collector would otherwise miss. Go marks <em>concurrently</em>, so the program can store the only pointer to a white object into an already-scanned black one; the barrier shades it grey. A .NET gen0 GC does not scan gen2, so a gen2 object pointing to a gen0 object would be invisible; the write barrier marks the card for that gen2 memory so the young GC scans it as an extra root.</p>
+</details>
+</details>
+<details class="quiz">
+<summary>6. A Java service in a 4 GB container has <code>OutOfMemoryError</code> while the pod uses 1.3 GB. No <code>-Xmx</code> is set. What happened?</summary>
+<details class="solution">
+<summary>Show answer</summary>
+<p>The default <code>MaxRAMPercentage</code> is 25%, so the maximum heap was about 1 GB. Set <code>-XX:MaxRAMPercentage=75</code> (or an explicit <code>-Xmx</code>), leaving headroom for metaspace, thread stacks, direct buffers and the code cache.</p>
+</details>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div>
+<p><strong>C# / .NET</strong></p>
+<ul>
+<li>Values: <code>struct</code>, <code>Span&lt;T&gt;</code>, <code>stackalloc</code>.</li>
+<li>Buffers: <code>ArrayPool&lt;T&gt;.Shared</code>, <code>Memory&lt;T&gt;</code>, Pipelines.</li>
+<li>Cleanup: <code>using</code>, <code>await using</code>, <code>SafeHandle</code>.</li>
+<li>LOH: 85,000 B; stream big payloads.</li>
+<li>GC: Server vs Workstation, DATAS, <code>GCHeapHardLimit</code>.</li>
+<li>Tools: dotnet-counters, dotnet-gcdump.</li>
+</ul>
+</div>
+<div>
+<p><strong>Java</strong></p>
+<ul>
+<li>Values: primitives and primitive arrays.</li>
+<li>GC: G1 default; ZGC for low latency.</li>
+<li>Heap: <code>-XX:MaxRAMPercentage=75</code>.</li>
+<li>Cleanup: try-with-resources, <code>Cleaner</code>.</li>
+<li>Watch: autoboxing, humongous objects, <code>ThreadLocal</code>.</li>
+<li>Tools: JFR, <code>jcmd</code>, MAT.</li>
+</ul>
+</div>
+<div>
+<p><strong>Python</strong></p>
+<ul>
+<li>Refcount + cycle detector.</li>
+<li>Cycles: <code>weakref</code>, or <code>gc.collect()</code>.</li>
+<li>Memory: <code>__slots__</code>, <code>array</code>, NumPy.</li>
+<li>Views: <code>memoryview</code>, <code>readinto</code>.</li>
+<li>Cleanup: <code>with</code>, <code>contextlib</code>.</li>
+<li>Tools: tracemalloc, memray.</li>
+</ul>
+</div>
+<div>
+<p><strong>Go</strong></p>
+<ul>
+<li>Escape analysis: <code>-gcflags=-m</code>.</li>
+<li>Knobs: <code>GOGC</code>, <code>GOMEMLIMIT</code>.</li>
+<li>Buffers: <code>sync.Pool</code> (a cache).</li>
+<li>Slices share arrays: <code>a[lo:hi:hi]</code>, <code>slices.Clone</code>.</li>
+<li>Cleanup: <code>defer</code>, close bodies.</li>
+<li>Tools: pprof, <code>-benchmem</code>, gctrace.</li>
+</ul>
+</div>
+<div>
+<p><strong>TypeScript / Node</strong></p>
+<ul>
+<li>Young: scavenger; old: mark-compact.</li>
+<li>Limits: <code>--max-old-space-size</code>.</li>
+<li>Views: <code>subarray</code>; copies: <code>slice</code>.</li>
+<li>Leaks: timers, closures, listeners, Maps.</li>
+<li>Weak: <code>WeakMap</code>, <code>WeakRef</code>.</li>
+<li>Tools: heap snapshots, <code>--trace-gc</code>.</li>
+</ul>
+</div>
+</div>
+<h2 id="related-topics-and-further-reading">Related topics and further reading</h2>
+<ul>
+<li><a href="performance-cadence.html">Performance Cadence</a>: the measurement loop this page plugs into.</li>
+<li><a href="concurrency-async.html">Concurrency and Async</a>: tasks, closures and queues are heap objects too.</li>
+<li><a href="performance-patterns.html">Performance Patterns</a>: pooling, batching and backpressure at system scale.</li>
+<li><a href="language-mental-models.html">Language Mental Models</a> and <a href="types-and-immutability.html">Types and Immutability</a>: value vs reference semantics.</li>
+<li><a href="caching.html">Caching</a>: bounded caches and eviction, the cure for the most common leak.</li>
+<li><a href="observability.html">Observability</a>: putting GC metrics on dashboards and alerts.</li>
+</ul>
+<p>Official documentation:</p>
+<ul>
+<li>.NET: <a href="https://learn.microsoft.com/dotnet/standard/garbage-collection/fundamentals">Fundamentals of garbage collection</a>, <a href="https://learn.microsoft.com/dotnet/standard/garbage-collection/workstation-server-gc">Workstation and server GC</a>, <a href="https://learn.microsoft.com/dotnet/standard/memory-and-spans/memory-t-usage-guidelines">Memory&lt;T&gt; and Span&lt;T&gt; usage guidelines</a>, <a href="https://learn.microsoft.com/dotnet/core/diagnostics/dotnet-gcdump">dotnet-gcdump</a>.</li>
+<li>Java: <a href="https://docs.oracle.com/en/java/javase/21/gctuning/">HotSpot GC tuning guide</a>, <a href="https://wiki.openjdk.org/display/zgc">ZGC</a>, <a href="https://docs.oracle.com/en/java/java-components/jdk-mission-control/">JDK Flight Recorder</a>.</li>
+<li>Python: <a href="https://docs.python.org/3/library/gc.html">gc module</a>, <a href="https://docs.python.org/3/library/tracemalloc.html">tracemalloc</a>, <a href="https://docs.python.org/3/c-api/memory.html">Memory management</a>.</li>
+<li>Go: <a href="https://go.dev/doc/gc-guide">A guide to the Go garbage collector</a>, <a href="https://go.dev/doc/diagnostics">Diagnostics</a>, <a href="https://go.dev/blog/slices-intro">Go slices: usage and internals</a>.</li>
+<li>JavaScript: <a href="https://v8.dev/blog/trash-talk">Trash talk: the Orinoco garbage collector</a>, <a href="https://developer.chrome.com/docs/devtools/memory-problems">Fix memory problems (Chrome DevTools)</a>, <a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-2.html">Explicit resource management in TypeScript 5.2</a>.</li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="performance-cadence.html"><small>&larr; PREVIOUS</small>The Performance Cadence</a><a class="next" href="concurrency-async.html"><small>NEXT &rarr;</small>Concurrency &amp; Async</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-the-service-that-was-fast-at-9-am-and-slow-by-lunch">The problem: the service that was fast at 9 a.m. and slow by lunch</a></li>
+<li><a href="#two-places-to-put-a-value-stack-and-heap">Two places to put a value: stack and heap</a><ul>
+<li><a href="#value-vs-reference-types-per-language">Value vs reference types, per language</a></li>
+</ul>
+</li>
+<li><a href="#what-an-object-costs-headers-and-allocation">What an object costs: headers and allocation</a><ul>
+<li><a href="#allocation-itself-is-almost-free">Allocation itself is almost free</a></li>
+<li><a href="#escape-analysis-when-the-compiler-keeps-heap-objects-on-the-stack">Escape analysis: when the compiler keeps "heap" objects on the stack</a></li>
+</ul>
+</li>
+<li><a href="#reachability-what-garbage-means">Reachability: what "garbage" means</a><ul>
+<li><a href="#mark-sweep-compact">Mark, sweep, compact</a></li>
+</ul>
+</li>
+<li><a href="#the-generational-hypothesis">The generational hypothesis</a><ul>
+<li><a href="#net-gen0-gen1-gen2-loh-and-poh">.NET: gen0, gen1, gen2, LOH and POH</a></li>
+</ul>
+</li>
+<li><a href="#jvm-g1-regions-zgc-and-choosing-a-collector">JVM: G1 regions, ZGC and choosing a collector</a></li>
+<li><a href="#go-a-concurrent-non-moving-non-generational-collector">Go: a concurrent, non-moving, non-generational collector</a><ul>
+<li><a href="#gogc-and-gomemlimit">GOGC and GOMEMLIMIT</a></li>
+</ul>
+</li>
+<li><a href="#python-reference-counting-plus-a-cycle-detector">Python: reference counting plus a cycle detector</a></li>
+<li><a href="#javascript-and-typescript-v8s-scavenger-and-mark-compact">JavaScript and TypeScript: V8's scavenger and mark-compact</a></li>
+<li><a href="#the-runtimes-side-by-side">The runtimes side by side</a></li>
+<li><a href="#pause-time-vs-throughput-the-trade-off-every-collector-makes">Pause time vs throughput: the trade-off every collector makes</a><ul>
+<li><a href="#net-workstation-vs-server-gc">.NET: Workstation vs Server GC</a></li>
+</ul>
+</li>
+<li><a href="#managed-memory-leaks-references-you-forgot">Managed memory leaks: references you forgot</a></li>
+<li><a href="#pooling-reuse-instead-of-allocate">Pooling: reuse instead of allocate</a></li>
+<li><a href="#views-instead-of-copies-span-memory-and-slices">Views instead of copies: Span, Memory and slices</a><ul>
+<li><a href="#c-spant-readonlyspant-and-memoryt">C#: Span&lt;T&gt;, ReadOnlySpan&lt;T&gt; and Memory&lt;T&gt;</a></li>
+<li><a href="#view-or-copy-know-which-one-you-have">View or copy? Know which one you have</a></li>
+<li><a href="#go-slices-one-backing-array-two-views">Go slices: one backing array, two views</a></li>
+</ul>
+</li>
+<li><a href="#deterministic-cleanup-dispose-close-defer">Deterministic cleanup: dispose, close, defer</a><ul>
+<li><a href="#why-finalizers-are-a-last-resort">Why finalizers are a last resort</a></li>
+</ul>
+</li>
+<li><a href="#tooling-see-the-heap-instead-of-guessing">Tooling: see the heap instead of guessing</a><ul>
+<li><a href="#a-leak-hunt-step-by-step">A leak hunt, step by step</a></li>
+</ul>
+</li>
+<li><a href="#when-not-to-optimise-allocations">When NOT to optimise allocations</a></li>
+<li><a href="#pitfalls-and-war-stories">Pitfalls and war stories</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#quiz">Quiz</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#related-topics-and-further-reading">Related topics and further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

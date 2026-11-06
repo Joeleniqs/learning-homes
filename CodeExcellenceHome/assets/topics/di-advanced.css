@@ -1,0 +1,173 @@
+/* Topic styles for "Advanced DI: Decorators, Factories, Options & Testing" (prefix dav-). Colours come only from site variables. */
+.viz [class^="dav-"], .viz [class*=" dav-"] { overflow-wrap: normal; }
+.dav-mute { color: var(--muted); }
+
+/* wide visualizers: stage gets the full width, code + vars sit underneath side by side */
+.viz.dav-wide .viz-body.with-code { grid-template-columns: minmax(0, 1fr); }
+.viz.dav-wide .viz-side { border-left: 0; border-top: 1px solid var(--line); flex-direction: row; }
+.viz.dav-wide .viz-code { flex: 2.3 1 0; min-width: 0; }
+.viz.dav-wide .viz-vars { flex: 1 1 0; border-top: 0; border-left: 1px solid var(--line); align-content: start; }
+@media (max-width: 900px) { .viz.dav-wide .viz-side { flex-direction: column; } .viz.dav-wide .viz-vars { border-left: 0; border-top: 1px solid var(--line); } }
+
+/* ---- shared layout ---- */
+.dav-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; width: 100%; max-width: 1040px; align-items: start; }
+.dav-two.wide-left { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); }
+@media (max-width: 860px) { .dav-two, .dav-two.wide-left { grid-template-columns: minmax(0, 1fr); } }
+.dav-col.v-labeled { align-items: stretch; min-width: 0; gap: 6px; }
+.dav-full { width: 100%; max-width: 1040px; }
+.dav-full.v-labeled { align-items: stretch; }
+.dav-empty { padding: 8px 10px; border: 1.5px dashed var(--line); border-radius: 8px; color: var(--muted); font-size: 12px; text-align: center; }
+
+/* ---- chips ---- */
+.dav-chips { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.dav-chip { display: inline-flex; flex-direction: column; align-items: center; gap: 0; padding: 3px 9px; border: 1.6px solid var(--line); border-radius: 7px; background: var(--v-node); color: var(--text); font: 600 11.5px "Cascadia Code", Consolas, monospace; line-height: 1.35; transition: background .2s, border-color .2s, opacity .2s; }
+.dav-chip small { font: 600 9.5px system-ui, sans-serif; color: var(--muted); letter-spacing: .2px; }
+.dav-chip.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.dav-chip.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.dav-chip.bad, .dav-chip.fail { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.dav-chip.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.dav-chip.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.dav-chip.dim { opacity: .6; border-style: dashed; }
+
+/* ---- trace / report list ---- */
+.dav-log { margin: 0; padding: 6px 10px 6px 30px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); font-size: 12px; line-height: 1.45; display: flex; flex-direction: column; gap: 3px; min-height: 60px; }
+.dav-log li { padding-left: 4px; border-left: 3px solid transparent; }
+.dav-log li.done { border-left-color: var(--v-done); }
+.dav-log li.bad { border-left-color: var(--v-bad); background: var(--v-bad-soft); }
+.dav-log li.path { border-left-color: var(--v-path); }
+.dav-log li.active { border-left-color: var(--v-active); }
+
+/* ---- 1. multi-registration ---- */
+.dav-descs { display: flex; flex-direction: column; gap: 4px; }
+.dav-desc { display: grid; grid-template-columns: 24px auto minmax(0, 1fr); align-items: center; gap: 8px; padding: 4px 9px; border: 1.6px solid var(--line); border-radius: 7px; background: var(--v-node); transition: background .2s, border-color .2s; }
+.dav-desc code { background: none; padding: 0; font-size: 11.5px; white-space: nowrap; }
+.dav-desc small { color: var(--muted); font-size: 10.5px; text-align: right; }
+.dav-idx { font: 700 10.5px "Cascadia Code", Consolas, monospace; color: var(--muted); text-align: center; border-right: 1px dashed var(--line); }
+.dav-desc.done { border-color: var(--v-done); }
+.dav-desc.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.dav-desc.win { box-shadow: inset 4px 0 0 var(--v-path); background: var(--v-path-soft); }
+.dav-desc.all { background: var(--v-done-soft); }
+.dav-desc.ghost { opacity: .7; border-style: dashed; background: transparent; }
+.dav-desc.ghost code { text-decoration: line-through; color: var(--muted); }
+.dav-desc.ghost.bad { opacity: 1; border-color: var(--v-bad); background: var(--v-bad-soft); }
+.dav-desc.ghost.dim { opacity: .55; }
+.dav-res { display: flex; flex-direction: column; gap: 6px; padding: 8px 10px; border: 1.6px solid var(--line); border-radius: 9px; background: var(--surface); transition: border-color .2s, box-shadow .2s; }
+.dav-res b { font: 600 12px "Cascadia Code", Consolas, monospace; }
+.dav-res > span { display: flex; flex-wrap: wrap; gap: 5px; }
+.dav-res.cur { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+/* ---- 2. keyed + 5. generic registrations ---- */
+.dav-kregs, .dav-kouts { display: flex; flex-direction: column; gap: 4px; }
+.dav-kreg { display: grid; grid-template-columns: minmax(90px, auto) minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 4px 9px; border: 1.6px solid var(--line); border-radius: 7px; background: var(--v-node); font-size: 12px; transition: background .2s, border-color .2s; }
+.dav-kreg code { background: none; padding: 0; font-size: 11.5px; white-space: nowrap; }
+.dav-kreg span { font: 600 11.5px "Cascadia Code", Consolas, monospace; }
+.dav-kreg small { font: 700 9.5px system-ui, sans-serif; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); }
+.dav-kreg.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.dav-kreg.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.dav-kreg.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.dav-kreg.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.dav-kreg.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.dav-kreg.dim { opacity: .55; border-style: dashed; }
+.dav-kout { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 4px 9px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); }
+.dav-kout code { background: none; padding: 0; font-size: 11.5px; }
+.dav-kout.cur { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.dav-close { display: grid; grid-template-columns: auto auto; gap: 4px 12px; align-items: center; padding: 8px 10px; border: 1.8px solid var(--line); border-radius: 9px; background: var(--surface); font-size: 12px; }
+.dav-close code { background: none; padding: 0; font-size: 11.5px; }
+.dav-close.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.dav-close.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.dav-close.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+
+/* ---- 3. lazy / func ---- */
+.dav-lz { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 900px; }
+.dav-lzreq { display: flex; align-items: center; gap: 10px; font: 600 12px "Cascadia Code", Consolas, monospace; }
+.dav-lzlane { display: flex; flex-direction: column; gap: 6px; padding: 8px 10px; border: 1.5px solid var(--line); border-radius: 9px; background: var(--surface); min-height: 64px; }
+.dav-lzlane + .dav-lzlane { border-style: dashed; }
+
+/* ---- 4. decorator nesting ---- */
+.dav-nest { display: flex; }
+.dav-nest > * { flex: 1 1 auto; }
+.dav-layer { display: flex; flex-direction: column; gap: 6px; padding: 6px 10px 10px; border: 2px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--v-node) 70%, transparent); transition: border-color .2s, background .2s; }
+.dav-ln { font: 700 11.5px "Cascadia Code", Consolas, monospace; color: var(--muted); }
+.dav-layer.cur > .dav-ln, .dav-core.cur b { color: var(--text); }
+.dav-layer.active, .dav-core.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.dav-layer.done, .dav-core.done { border-color: var(--v-done); }
+.dav-layer.path, .dav-core.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.dav-layer.visit, .dav-core.visit { border-color: var(--v-visit); }
+.dav-layer.bad, .dav-core.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.dav-layer.dim, .dav-core.dim { opacity: .6; border-style: dashed; }
+.dav-layer.cur, .dav-core.cur { box-shadow: 0 0 0 3px var(--accent-soft); }
+.dav-core { padding: 10px; border: 2px solid var(--muted); border-radius: 9px; background: var(--surface); text-align: center; font: 700 12px "Cascadia Code", Consolas, monospace; transition: border-color .2s, background .2s; }
+
+/* ---- 6. scope tree ---- */
+.dav-scope { display: flex; flex-direction: column; gap: 6px; padding: 7px 10px 9px; border: 2px solid var(--line); border-radius: 11px; background: var(--surface); transition: border-color .2s, opacity .2s; }
+.dav-scope.root { border-color: var(--v-path); }
+.dav-scope.tenant { border-color: var(--v-visit); background: color-mix(in srgb, var(--v-visit-soft) 45%, var(--surface)); }
+.dav-scope.req { border-color: var(--v-active); border-style: dashed; background: color-mix(in srgb, var(--v-active-soft) 50%, var(--surface)); }
+.dav-scope.gone { opacity: .55; border-style: dashed; }
+.dav-scope.cur { box-shadow: 0 0 0 3px var(--accent-soft); }
+.dav-sn { font: 700 10px system-ui, sans-serif; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); }
+.dav-scope small { font-size: 10.5px; }
+.dav-tenants { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px; }
+
+/* ---- 7. modules ---- */
+.dav-mods { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; width: 100%; max-width: 1040px; }
+.dav-mod { display: flex; flex-direction: column; gap: 4px; min-width: 0; padding: 7px 9px; border: 2px solid var(--line); border-radius: 10px; background: var(--surface); transition: border-color .2s, box-shadow .2s; }
+.dav-mod > small { color: var(--muted); font-size: 10.5px; margin-top: 2px; }
+.dav-mod.cur { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.dav-mod.visit { border-color: var(--v-visit); }
+.dav-mod.bad { border-color: var(--v-bad); }
+.dav-mh { display: flex; align-items: center; justify-content: space-between; gap: 6px; font-size: 12.5px; }
+.dav-prov { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 6px; min-width: 0; padding: 3px 7px; border: 1.5px solid var(--line); border-radius: 6px; background: var(--v-node); transition: background .2s, border-color .2s; }
+.dav-prov code { background: none; padding: 0; font-size: 11px; }
+.dav-prov.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.dav-prov.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.dav-prov.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.dav-prov.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+.dav-prov.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.dav-exp, .dav-priv, .dav-glob { font: 700 9px system-ui, sans-serif; letter-spacing: .5px; text-transform: uppercase; padding: 1px 5px; border-radius: 4px; border: 1.3px solid currentColor; white-space: nowrap; }
+.dav-exp { color: var(--v-done); }
+.dav-priv { color: var(--muted); border-style: dashed; }
+.dav-glob { color: var(--accent); }
+.dav-err { width: 100%; max-width: 1040px; margin: 0; padding: 8px 12px; border: 1.5px solid var(--v-bad); border-left-width: 5px; border-radius: 8px; background: var(--v-bad-soft); color: var(--text); font: 11.5px/1.5 "Cascadia Code", Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* ---- 8. async init gantt ---- */
+.dav-gantt { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 3px 8px; width: 100%; max-width: 1040px; align-items: center; }
+.dav-gl { font: 700 10.5px "Cascadia Code", Consolas, monospace; color: var(--muted); text-align: right; }
+.dav-gaxis { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.dav-gr { display: grid; gap: 1px; height: 18px; }
+.dav-gr > span { border-radius: 2px; background: var(--v-node); border: 1px solid transparent; }
+.dav-gr > span.done { background: var(--v-done); }
+.dav-gr > span.bad { background: var(--v-bad); }
+.dav-gr > span.active { background: var(--v-active); }
+.dav-gr > span.path { background: var(--v-path-soft); border-color: var(--v-path); }
+.dav-gr > span.fail { background: var(--v-bad-soft); border-color: var(--v-bad); }
+.dav-gr > span.dim { background: var(--line); }
+.dav-gr > span.empty { background: transparent; border: 1px dashed var(--line); }
+.dav-gr > span.now { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* ---- 9. blind spots ---- */
+.dav-snip { margin: 0; padding: 8px 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--code); font: 12px/1.55 "Cascadia Code", Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+.dav-edges { display: flex; flex-direction: column; gap: 5px; }
+.dav-edge { display: grid; grid-template-columns: auto auto auto minmax(0, 1fr); align-items: center; gap: 4px 8px; padding: 5px 9px; border: 1.6px solid var(--line); border-radius: 8px; background: var(--v-node); transition: background .2s, border-color .2s; }
+.dav-edge code { background: none; padding: 0; font-size: 11.5px; white-space: nowrap; }
+.dav-edge small { color: var(--muted); font-size: 10.5px; text-align: right; }
+.dav-arrow { font: 700 12px "Cascadia Code", Consolas, monospace; color: var(--muted); white-space: nowrap; }
+.dav-edge.opaque { border-style: dashed; background: transparent; }
+.dav-edge.cur { box-shadow: 0 0 0 3px var(--accent-soft); }
+.dav-edge.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.dav-edge.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.dav-edge.path { border-color: var(--v-path); background: var(--v-path-soft); }
+.dav-edge.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+@media (max-width: 700px) { .dav-edge { grid-template-columns: auto auto auto; } .dav-edge small { grid-column: 1 / -1; text-align: left; } }
+
+/* ---- 10. options ---- */
+.dav-ofile { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 6px 12px; border: 1.6px solid var(--line); border-radius: 9px; background: var(--code); font: 12px "Cascadia Code", Consolas, monospace; transition: border-color .2s, background .2s; }
+.dav-ofile code { background: none; padding: 0; color: var(--muted); }
+.dav-ofile.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.dav-otab { display: flex; flex-direction: column; width: 100%; max-width: 980px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.dav-orow { display: grid; grid-template-columns: minmax(150px, 1.3fr) repeat(3, minmax(90px, 1fr)); align-items: center; border-top: 1px solid var(--line); transition: background .2s; }
+.dav-orow > span { padding: 4px 9px; font-size: 12px; min-width: 0; }
+.dav-orow > span + span { border-left: 1px dashed var(--line); text-align: center; }
+.dav-orow.head { border-top: 0; background: var(--bg); }
+.dav-orow.head > span { font: 700 10px system-ui, sans-serif; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); }
+.dav-orow.cur { background: color-mix(in srgb, var(--accent-soft) 60%, transparent); }

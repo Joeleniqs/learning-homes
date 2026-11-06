@@ -1,0 +1,1581 @@
+<!doctype html>
+<html lang="en" data-home="dsa-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Minimum Spanning Trees | DSA Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#4f46e5;--accent-soft:#eef0ff;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#a5b4fc;--accent-soft:#252a5c;}}:root[data-theme=dark]{--accent:#a5b4fc;--accent-soft:#252a5c;}</style>
+  <link rel="stylesheet" href="../assets/topics/minimum-spanning-trees.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/minimum-spanning-trees.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="DSA Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">DS</span>DSA Home</a>
+    <p class="sidebar-caption">Data structures &amp; algorithms, seen.<br>Every idea animated, every pattern drilled.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations</summary><ul class="topic-list"><li data-search="The Problem-Solving Playbook Foundations A visual decision map from input size, shape and question type to the right technique, plus a repeatable interview/contest workflow. pattern recognition constraints approach interview" data-slug="problem-solving-playbook"><a href="../topics/problem-solving-playbook.html">The Problem-Solving Playbook</a></li><li data-search="Complexity Analysis Foundations Big-O growth you can see, amortized cost, recursion trees and the Master theorem, and what 10^8 operations per second really buys you. big o amortized master theorem time space" data-slug="complexity-analysis"><a href="../topics/complexity-analysis.html">Complexity Analysis</a></li><li data-search="Recursion &amp; the Call Stack Foundations Watch frames push and pop, read recursion trees, design base cases and the &#x27;leap of faith&#x27;, and see where memoization comes from. call stack recursion tree divide and conquer" data-slug="recursion"><a href="../topics/recursion.html">Recursion &amp; the Call Stack</a></li></ul></details><details class="nav-track"><summary>Arrays &amp; Strings</summary><ul class="topic-list"><li data-search="Two Pointers Arrays &amp; Strings Opposite-end, same-direction and fast/slow pointers: why moving one pointer is safe, with partitioning and k-sum. pair sum partition dutch flag 3sum" data-slug="two-pointers"><a href="../topics/two-pointers.html">Two Pointers</a></li><li data-search="Sliding Window Arrays &amp; Strings Fixed and variable windows, the expand/shrink invariant, counting &#x27;at most K&#x27; tricks, and monotonic-deque windows. substring subarray window at most k" data-slug="sliding-window"><a href="../topics/sliding-window.html">Sliding Window</a></li><li data-search="Prefix Sums &amp; Difference Arrays Arrays &amp; Strings 1D/2D prefix sums, prefix + hash map for subarray targets, difference arrays for range updates, and prefix XOR. subarray sum equals k range sum 2d prefix difference array" data-slug="prefix-sums"><a href="../topics/prefix-sums.html">Prefix Sums &amp; Difference Arrays</a></li><li data-search="Binary Search Arrays &amp; Strings One boundary template to rule them all: first-true search, rotated arrays, search on the answer, and real-valued bisection. lower bound upper bound search on answer rotated monotonic predicate" data-slug="binary-search"><a href="../topics/binary-search.html">Binary Search</a></li><li data-search="Sorting Algorithms Arrays &amp; Strings Animated bubble, insertion, merge, quick, heap, counting and radix sorts; stability, quickselect and custom comparators. merge sort quick sort quickselect counting sort inversions" data-slug="sorting"><a href="../topics/sorting.html">Sorting Algorithms</a></li><li data-search="Hashing Patterns Arrays &amp; Strings How hash tables work inside, then frequency maps, grouping by canonical keys, complement lookups and rolling hashes. hash map hash set anagram two sum collision" data-slug="hashing"><a href="../topics/hashing.html">Hashing Patterns</a></li><li data-search="Monotonic Stack &amp; Queue Arrays &amp; Strings Next greater element, histogram rectangles, stock spans and sliding-window maximum, with the pop-means-answer insight. next greater largest rectangle deque trapping rain water" data-slug="monotonic-stack-queue"><a href="../topics/monotonic-stack-queue.html">Monotonic Stack &amp; Queue</a></li><li data-search="Intervals &amp; Sweep Line Arrays &amp; Strings Merge, insert and intersect intervals, meeting rooms, and event-based sweep lines on a visual timeline. merge intervals meeting rooms events skyline" data-slug="intervals-sweep-line"><a href="../topics/intervals-sweep-line.html">Intervals &amp; Sweep Line</a></li><li data-search="String Algorithms Arrays &amp; Strings KMP failure function, Z-algorithm, Rabin–Karp, Manacher&#x27;s palindromes and string hashing, each animated character by character. kmp z algorithm rabin karp manacher palindrome pattern matching" data-slug="string-algorithms"><a href="../topics/string-algorithms.html">String Algorithms</a></li></ul></details><details class="nav-track"><summary>Linked Lists, Stacks, Queues &amp; Heaps</summary><ul class="topic-list"><li data-search="Linked Lists Linked Lists, Stacks, Queues &amp; Heaps Pointer rewiring you can watch: reversal, dummy heads, fast/slow cycle detection, merging, and LRU cache design. reverse floyd cycle merge lru" data-slug="linked-lists"><a href="../topics/linked-lists.html">Linked Lists</a></li><li data-search="Stacks &amp; Queues Linked Lists, Stacks, Queues &amp; Heaps Balanced brackets, expression evaluation, min-stack, queues from stacks, deques and BFS queues. parentheses calculator deque min stack" data-slug="stacks-queues"><a href="../topics/stacks-queues.html">Stacks &amp; Queues</a></li><li data-search="Heaps &amp; Priority Queues Linked Lists, Stacks, Queues &amp; Heaps Sift-up/sift-down animated on tree and array views; top-K, two-heaps median, k-way merge and greedy scheduling. heap top k median k way merge priority queue" data-slug="heaps-priority-queues"><a href="../topics/heaps-priority-queues.html">Heaps &amp; Priority Queues</a></li></ul></details><details class="nav-track"><summary>Trees</summary><ul class="topic-list"><li data-search="Tree Traversals Trees Pre/in/post-order and level-order animated with their stacks and queues, iterative versions, Morris traversal and rebuilding trees. dfs bfs inorder level order morris" data-slug="tree-traversals"><a href="../topics/tree-traversals.html">Tree Traversals</a></li><li data-search="Binary Search Trees Trees Search, insert and delete visualized; validating with bounds, inorder tricks, k-th smallest, and why balance matters. bst validate successor avl red black" data-slug="binary-search-trees"><a href="../topics/binary-search-trees.html">Binary Search Trees</a></li><li data-search="Tree Problem Patterns Trees Return-value recursion (diameter, max path sum), top-down state, LCA, serialization, and binary lifting. lca diameter path sum binary lifting serialize" data-slug="tree-patterns"><a href="../topics/tree-patterns.html">Tree Problem Patterns</a></li><li data-search="Tries Trees Prefix trees animated insert by insert: autocomplete, word search on boards, and bitwise tries for max XOR. prefix tree autocomplete word search xor trie" data-slug="tries"><a href="../topics/tries.html">Tries</a></li><li data-search="Segment Trees, Fenwick Trees &amp; Sparse Tables Trees Range queries with point and lazy range updates, binary indexed trees decoded bit by bit, and O(1) RMQ with sparse tables. segment tree lazy propagation fenwick bit rmq" data-slug="segment-fenwick-trees"><a href="../topics/segment-fenwick-trees.html">Segment Trees, Fenwick Trees &amp; Sparse Tables</a></li></ul></details><details class="nav-track" open><summary>Graphs</summary><ul class="topic-list"><li data-search="Graph Fundamentals: BFS &amp; DFS Graphs Representations, BFS layers and DFS discovery animated on graphs and grids, components, cycle detection and multi-source BFS. bfs dfs grid islands connected components cycle" data-slug="graph-fundamentals"><a href="../topics/graph-fundamentals.html">Graph Fundamentals: BFS &amp; DFS</a></li><li data-search="Topological Sort &amp; DAGs Graphs Kahn&#x27;s in-degree queue vs DFS finishing order, cycle detection, course scheduling and DP over DAGs. kahn course schedule dag dependency order" data-slug="topological-sort"><a href="../topics/topological-sort.html">Topological Sort &amp; DAGs</a></li><li data-search="Union-Find (Disjoint Set Union) Graphs Watch forests merge with union by rank and path compression; connectivity, redundant edges, and offline queries. dsu disjoint set path compression connectivity" data-slug="union-find"><a href="../topics/union-find.html">Union-Find (Disjoint Set Union)</a></li><li data-search="Shortest Paths Graphs BFS, 0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall and A* animated, and a chart to pick the right one every time. dijkstra bellman ford floyd warshall a star 0-1 bfs" data-slug="shortest-paths"><a href="../topics/shortest-paths.html">Shortest Paths</a></li><li data-search="Minimum Spanning Trees Graphs Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems. kruskal prim mst cut property" data-slug="minimum-spanning-trees"><a href="../topics/minimum-spanning-trees.html" aria-current="page">Minimum Spanning Trees</a></li><li data-search="Advanced Graph Algorithms Graphs Strongly connected components, bridges and articulation points, bipartite checks, Euler paths, and max-flow / matching. tarjan kosaraju scc bridges euler max flow bipartite matching" data-slug="advanced-graphs"><a href="../topics/advanced-graphs.html">Advanced Graph Algorithms</a></li></ul></details><details class="nav-track"><summary>Backtracking &amp; Greedy</summary><ul class="topic-list"><li data-search="Backtracking Backtracking &amp; Greedy The choose/explore/un-choose template animated on a decision tree: subsets, permutations, combinations, N-Queens, Sudoku and pruning. subsets permutations n queens sudoku pruning" data-slug="backtracking"><a href="../topics/backtracking.html">Backtracking</a></li><li data-search="Greedy Algorithms Backtracking &amp; Greedy When a local choice is globally safe: exchange arguments, interval scheduling, jump games, gas station and Huffman coding. exchange argument interval scheduling jump game huffman" data-slug="greedy"><a href="../topics/greedy.html">Greedy Algorithms</a></li></ul></details><details class="nav-track"><summary>Dynamic Programming</summary><ul class="topic-list"><li data-search="The DP Framework Dynamic Programming Recursion → memoization → tabulation → space optimisation, visualised on one problem; how to design state and transitions. memoization tabulation state transition overlapping subproblems" data-slug="dp-framework"><a href="../topics/dp-framework.html">The DP Framework</a></li><li data-search="1D &amp; Grid DP Dynamic Programming Climbing stairs, house robber, decode ways, unique paths, min path sum, maximal square and dungeon game with animated tables. house robber unique paths grid dp maximal square" data-slug="dp-linear-grid"><a href="../topics/dp-linear-grid.html">1D &amp; Grid DP</a></li><li data-search="Knapsack Family Dynamic Programming 0/1 vs unbounded vs bounded knapsack, why loop direction matters, coin change, subset sum and target sum. knapsack coin change subset sum partition" data-slug="dp-knapsack"><a href="../topics/dp-knapsack.html">Knapsack Family</a></li><li data-search="Sequence &amp; String DP Dynamic Programming LIS with patience sorting, LCS, edit distance, palindromic subsequences, regex/wildcard matching and distinct subsequences. lis lcs edit distance regex matching palindrome" data-slug="dp-sequences-strings"><a href="../topics/dp-sequences-strings.html">Sequence &amp; String DP</a></li><li data-search="Interval &amp; Tree DP Dynamic Programming Solve by split point (burst balloons, matrix chain, stone merging) and by subtree (house robber III, tree cameras, rerooting). interval dp burst balloons matrix chain tree dp rerooting" data-slug="dp-intervals-trees"><a href="../topics/dp-intervals-trees.html">Interval &amp; Tree DP</a></li><li data-search="Bitmask &amp; Digit DP Dynamic Programming Subsets as integers: TSP, assignment and partition problems; digit DP for counting numbers with constraints. bitmask tsp digit dp subset dp" data-slug="dp-bitmask-digit"><a href="../topics/dp-bitmask-digit.html">Bitmask &amp; Digit DP</a></li><li data-search="State Machines &amp; DP Optimisations Dynamic Programming Stock-trading state machines, DP on DAGs, and speed-ups: monotonic deque, convex hull trick, divide &amp; conquer and Knuth. stock state machine convex hull trick knuth optimisation" data-slug="dp-advanced"><a href="../topics/dp-advanced.html">State Machines &amp; DP Optimisations</a></li></ul></details><details class="nav-track"><summary>Bits &amp; Math</summary><ul class="topic-list"><li data-search="Bit Manipulation Bits &amp; Math Bits drawn as switches: masks, XOR tricks, counting bits, subset enumeration and Gray codes. xor mask single number popcount subsets" data-slug="bit-manipulation"><a href="../topics/bit-manipulation.html">Bit Manipulation</a></li><li data-search="Math, Number Theory &amp; Combinatorics Bits &amp; Math GCD, sieves, fast power, modular inverses, nCr mod p, inclusion–exclusion, and the geometry primitives you need. gcd sieve modular fast exponentiation combinatorics geometry" data-slug="math-number-theory"><a href="../topics/math-number-theory.html">Math, Number Theory &amp; Combinatorics</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../CodeExcellenceHome/index.html">Code Excellence Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>DSA Home / Minimum Spanning Trees</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">GRAPHS</p><h1>Minimum Spanning Trees</h1><p class="lede">Kruskal with union-find and Prim with a heap, the cut property made visual, and MST-in-disguise problems.</p><div class="meta"><span class="level level-intermediate">Intermediate → Advanced</span><span>~40 min study</span><span>Builds on: <a href="union-find.html">Union-Find (Disjoint Set Union)</a>, <a href="heaps-priority-queues.html">Heaps &amp; Priority Queues</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="minimum-spanning-trees" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="why-minimum-spanning-trees-exist">Why minimum spanning trees exist</h2>
+<p>You have n cities and a list of roads you <strong>could</strong> build, each with a price. Every city must be reachable from every other, and you want to spend as little as possible. You don't care how long any particular trip is; you only care about the <strong>total</strong> cost of what you build. Replace roads with cables, pipes, wires or friendships, and this is the minimum spanning tree (MST) problem.</p>
+<p>The answer is always a <strong>tree</strong>. If the roads you build contain a cycle, you can delete the most expensive road on it and every city is still connected, more cheaply. So the cheapest connected network never has a cycle, and a connected graph with no cycle on n nodes is a tree with exactly <strong>n − 1 edges</strong>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 290" width="860" role="img" aria-label="The same five-node graph three times: all seven edges, an arbitrary spanning tree of weight 20, and the minimum spanning tree of weight 10">
+<text x="10" y="22" class="title">A weighted graph</text>
+<line class="edge" x1="40" y1="100" x2="150" y2="70"/>
+<text x="95" y="89" text-anchor="middle" class="mono mst-w mst-halo">4</text>
+<line class="edge" x1="150" y1="70" x2="250" y2="110"/>
+<text x="200" y="94" text-anchor="middle" class="mono mst-w mst-halo">3</text>
+<line class="edge" x1="40" y1="100" x2="80" y2="220"/>
+<text x="60" y="164" text-anchor="middle" class="mono mst-w mst-halo">2</text>
+<line class="edge" x1="150" y1="70" x2="80" y2="220"/>
+<text x="115" y="149" text-anchor="middle" class="mono mst-w mst-halo">6</text>
+<line class="edge" x1="150" y1="70" x2="210" y2="220"/>
+<text x="180" y="149" text-anchor="middle" class="mono mst-w mst-halo">5</text>
+<line class="edge" x1="250" y1="110" x2="210" y2="220"/>
+<text x="230" y="169" text-anchor="middle" class="mono mst-w mst-halo">7</text>
+<line class="edge" x1="80" y1="220" x2="210" y2="220"/>
+<text x="145" y="224" text-anchor="middle" class="mono mst-w mst-halo">1</text>
+<circle class="box" cx="40" cy="100" r="17"/>
+<text x="40" y="105" text-anchor="middle" class="mono">0</text>
+<circle class="box" cx="150" cy="70" r="17"/>
+<text x="150" y="75" text-anchor="middle" class="mono">1</text>
+<circle class="box" cx="250" cy="110" r="17"/>
+<text x="250" y="115" text-anchor="middle" class="mono">2</text>
+<circle class="box" cx="80" cy="220" r="17"/>
+<text x="80" y="225" text-anchor="middle" class="mono">3</text>
+<circle class="box" cx="210" cy="220" r="17"/>
+<text x="210" y="225" text-anchor="middle" class="mono">4</text>
+<text x="300" y="22" class="title">A spanning tree (weight 20)</text>
+<line class="edge dash dim" x1="330" y1="100" x2="440" y2="70"/>
+<text x="385" y="89" text-anchor="middle" class="mono mst-w mst-halo muted">4</text>
+<line class="edge dash dim" x1="440" y1="70" x2="540" y2="110"/>
+<text x="490" y="94" text-anchor="middle" class="mono mst-w mst-halo muted">3</text>
+<line class="edge visit" x1="330" y1="100" x2="370" y2="220"/>
+<text x="350" y="164" text-anchor="middle" class="mono mst-w mst-halo">2</text>
+<line class="edge visit" x1="440" y1="70" x2="370" y2="220"/>
+<text x="405" y="149" text-anchor="middle" class="mono mst-w mst-halo">6</text>
+<line class="edge visit" x1="440" y1="70" x2="500" y2="220"/>
+<text x="470" y="149" text-anchor="middle" class="mono mst-w mst-halo">5</text>
+<line class="edge visit" x1="540" y1="110" x2="500" y2="220"/>
+<text x="520" y="169" text-anchor="middle" class="mono mst-w mst-halo">7</text>
+<line class="edge dash dim" x1="370" y1="220" x2="500" y2="220"/>
+<text x="435" y="224" text-anchor="middle" class="mono mst-w mst-halo muted">1</text>
+<circle class="box visit" cx="330" cy="100" r="17"/>
+<text x="330" y="105" text-anchor="middle" class="mono">0</text>
+<circle class="box visit" cx="440" cy="70" r="17"/>
+<text x="440" y="75" text-anchor="middle" class="mono">1</text>
+<circle class="box visit" cx="540" cy="110" r="17"/>
+<text x="540" y="115" text-anchor="middle" class="mono">2</text>
+<circle class="box visit" cx="370" cy="220" r="17"/>
+<text x="370" y="225" text-anchor="middle" class="mono">3</text>
+<circle class="box visit" cx="500" cy="220" r="17"/>
+<text x="500" y="225" text-anchor="middle" class="mono">4</text>
+<text x="590" y="22" class="title">The minimum spanning tree (10)</text>
+<line class="edge done" x1="620" y1="100" x2="730" y2="70"/>
+<text x="675" y="89" text-anchor="middle" class="mono mst-w mst-halo">4</text>
+<line class="edge done" x1="730" y1="70" x2="830" y2="110"/>
+<text x="780" y="94" text-anchor="middle" class="mono mst-w mst-halo">3</text>
+<line class="edge done" x1="620" y1="100" x2="660" y2="220"/>
+<text x="640" y="164" text-anchor="middle" class="mono mst-w mst-halo">2</text>
+<line class="edge dash dim" x1="730" y1="70" x2="660" y2="220"/>
+<text x="695" y="149" text-anchor="middle" class="mono mst-w mst-halo muted">6</text>
+<line class="edge dash dim" x1="730" y1="70" x2="790" y2="220"/>
+<text x="760" y="149" text-anchor="middle" class="mono mst-w mst-halo muted">5</text>
+<line class="edge dash dim" x1="830" y1="110" x2="790" y2="220"/>
+<text x="810" y="169" text-anchor="middle" class="mono mst-w mst-halo muted">7</text>
+<line class="edge done" x1="660" y1="220" x2="790" y2="220"/>
+<text x="725" y="224" text-anchor="middle" class="mono mst-w mst-halo">1</text>
+<circle class="box done" cx="620" cy="100" r="17"/>
+<text x="620" y="105" text-anchor="middle" class="mono">0</text>
+<circle class="box done" cx="730" cy="70" r="17"/>
+<text x="730" y="75" text-anchor="middle" class="mono">1</text>
+<circle class="box done" cx="830" cy="110" r="17"/>
+<text x="830" y="115" text-anchor="middle" class="mono">2</text>
+<circle class="box done" cx="660" cy="220" r="17"/>
+<text x="660" y="225" text-anchor="middle" class="mono">3</text>
+<circle class="box done" cx="790" cy="220" r="17"/>
+<text x="790" y="225" text-anchor="middle" class="mono">4</text>
+<text x="10" y="262" class="small">Spanning = touches every node. Tree = connected with no cycle. With n nodes that is always exactly n − 1 edges:</text>
+<text x="10" y="280" class="small">remove one and the tree splits in two; add one and it closes a cycle. The MST is the spanning tree with the smallest total weight.</text>
+</svg>
+<figcaption>Dashed edges are left out. Both trees connect all five nodes with four edges, but the tree on the right picks 1, 2, 3 and 4 instead of 2, 5, 6 and 7. A graph can have a huge number of spanning trees (a complete graph on n nodes has n<sup>n−2</sup>), so trying them all is hopeless; the greedy rules below find the cheapest one directly.</figcaption>
+</figure>
+
+<p>This page builds on two earlier ones. <a href="union-find.html">Union-Find</a> gives Kruskal its "would this edge close a cycle?" test in near-constant time, and <a href="heaps-priority-queues.html">Heaps &amp; Priority Queues</a> gives Prim its frontier. If either feels shaky, skim it first; here they are used, not re-taught.</p>
+<div class="rule">
+<p><strong>The MST rule (the cut property).</strong> Split the nodes into any two groups. The <strong>lightest edge crossing between the groups</strong> is safe: some minimum spanning tree contains it. Every MST algorithm is this rule applied over and over to a cleverly chosen split. <strong>Kruskal</strong> scans all edges from lightest to heaviest and keeps an edge exactly when it joins two different components (union-find). <strong>Prim</strong> grows one tree and always adds the cheapest edge leaving it (a heap). Both are greedy, both never undo a choice, and both give the same total weight.</p>
+</div>
+<p>What MSTs are <strong>not</strong>: an MST does not give shortest paths. The tree path between two cities can be much longer than the direct route between them, because the MST optimises the <strong>sum of all edges built</strong>, not any individual trip. If the question is "fastest way from A to B", go to <a href="shortest-paths.html">Shortest Paths</a>. If it is "cheapest way to connect everything", or "the best possible worst edge on a route", you are in the right place.</p>
+<h2 id="why-greedy-works-cuts-and-cycles">Why greedy works: cuts and cycles</h2>
+<p>Greedy algorithms are usually wrong. MST is the famous case where greed is provably right, and the proof is one picture. Understanding it is what lets you trust Kruskal and Prim, and it is also what lets you solve the hard problems at the end of this page, which all come down to "which swaps keep the tree minimal?".</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 400" width="860" role="img" aria-label="Left: a cut separates nodes 0, 1, 2 from 3, 4, 5; four edges cross it and the lightest, 2-4 with weight 4, is highlighted. Right: the exchange argument, where an MST path crossing the cut at f is repaired by swapping f for e">
+<text x="10" y="22" class="title">A cut and its crossing edges</text>
+<rect class="box visit" x="20" y="40" width="190" height="230" rx="18"/>
+<rect class="box" x="250" y="40" width="170" height="230" rx="18"/>
+<text x="30" y="60" class="title">S</text>
+<text x="410" y="60" text-anchor="end" class="title">V − S</text>
+<line class="edge" x1="70" y1="90" x2="70" y2="230"/>
+<text x="70" y="164" text-anchor="middle" class="mono mst-w mst-halo">3</text>
+<line class="edge" x1="70" y1="90" x2="165" y2="160"/>
+<text x="117.5" y="129" text-anchor="middle" class="mono mst-w mst-halo">5</text>
+<line class="edge" x1="70" y1="230" x2="165" y2="160"/>
+<text x="117.5" y="199" text-anchor="middle" class="mono mst-w mst-halo">2</text>
+<line class="edge" x1="305" y1="90" x2="305" y2="230"/>
+<text x="305" y="164" text-anchor="middle" class="mono mst-w mst-halo">6</text>
+<line class="edge" x1="305" y1="230" x2="385" y2="160"/>
+<text x="345" y="199" text-anchor="middle" class="mono mst-w mst-halo">1</text>
+<line class="edge" x1="305" y1="90" x2="385" y2="160"/>
+<text x="345" y="129" text-anchor="middle" class="mono mst-w mst-halo">8</text>
+<line class="edge dash" x1="70" y1="90" x2="305" y2="90"/>
+<text x="187.5" y="94" text-anchor="middle" class="mono mst-w mst-halo">11</text>
+<line class="edge dash" x1="70" y1="230" x2="305" y2="230"/>
+<text x="187.5" y="234" text-anchor="middle" class="mono mst-w mst-halo">7</text>
+<line class="edge dash" x1="165" y1="160" x2="305" y2="90"/>
+<text x="235" y="129" text-anchor="middle" class="mono mst-w mst-halo">9</text>
+<line class="edge active" x1="165" y1="160" x2="305" y2="230"/>
+<text x="235" y="199" text-anchor="middle" class="mono mst-w mst-halo">4</text>
+<circle class="box visit" cx="70" cy="90" r="17"/>
+<text x="70" y="95" text-anchor="middle" class="mono">0</text>
+<circle class="box visit" cx="70" cy="230" r="17"/>
+<text x="70" y="235" text-anchor="middle" class="mono">1</text>
+<circle class="box visit" cx="165" cy="160" r="17"/>
+<text x="165" y="165" text-anchor="middle" class="mono">2</text>
+<circle class="box" cx="305" cy="90" r="17"/>
+<text x="305" y="95" text-anchor="middle" class="mono">3</text>
+<circle class="box" cx="305" cy="230" r="17"/>
+<text x="305" y="235" text-anchor="middle" class="mono">4</text>
+<circle class="box" cx="385" cy="160" r="17"/>
+<text x="385" y="165" text-anchor="middle" class="mono">5</text>
+<text x="20" y="296" class="small mono">Crossing edges: 2–4 (4), 1–4 (7), 2–3 (9), 0–3 (11).</text>
+<text x="20" y="314" class="small">The lightest one, 2–4, is in a minimum spanning tree.</text>
+<line class="edge dash" x1="440" y1="10" x2="440" y2="330"/>
+<text x="460" y="22" class="title">Why: swap it in</text>
+<rect class="box visit" x="470" y="45" width="150" height="200" rx="40"/>
+<rect class="box" x="690" y="45" width="150" height="200" rx="40"/>
+<text x="545" y="70" text-anchor="middle" class="title">S</text>
+<text x="765" y="70" text-anchor="middle" class="title">V − S</text>
+<line class="edge path" x1="525" y1="205" x2="560" y2="115"/>
+<line class="edge path" x1="740" y1="115" x2="785" y2="205"/>
+<line class="edge bad dash" x1="560" y1="115" x2="740" y2="115"/>
+<line class="edge active" x1="525" y1="205" x2="785" y2="205"/>
+<text x="650" y="105" text-anchor="middle" class="small">f (on T's path)</text>
+<text x="655" y="225" text-anchor="middle" class="small">e: lightest crossing edge</text>
+<circle class="box visit" cx="525" cy="205" r="17"/>
+<text x="525" y="210" text-anchor="middle" class="mono">u</text>
+<circle class="box visit" cx="560" cy="115" r="17"/>
+<text x="560" y="120" text-anchor="middle" class="mono">a</text>
+<circle class="box" cx="740" cy="115" r="17"/>
+<text x="740" y="120" text-anchor="middle" class="mono">b</text>
+<circle class="box" cx="785" cy="205" r="17"/>
+<text x="785" y="210" text-anchor="middle" class="mono">v</text>
+<text x="460" y="282" class="small">Let T be an MST that does not use e = u–v.</text>
+<text x="460" y="300" class="small">Adding e to T closes one cycle: e plus T's path u ⇝ v.</text>
+<text x="460" y="318" class="small">That path starts in S and ends outside, so some edge f on it crosses too.</text>
+<text x="20" y="356" class="small">Since e is the lightest crossing edge, w(e) ≤ w(f). So T − f + e is still a spanning tree (the cycle is broken at f) and weighs no more than T.</text>
+<text x="20" y="376" class="small">It is a minimum spanning tree that contains e. Every MST algorithm on this page is this one swap, applied to a cleverly chosen cut.</text>
+</svg>
+<figcaption>A <strong>cut</strong> is any split of the nodes into two sides. The <strong>cut property</strong>: the lightest edge crossing any cut belongs to some MST, and to every MST if it is strictly lightest. Kruskal and Prim differ only in which cut they look at.</figcaption>
+</figure>
+
+<h3 id="step-through-the-exchange-argument">Step through the exchange argument</h3>
+<p>Pick a side S (any set of nodes), and the visualizer walks through the proof on a real graph: it lists the crossing edges, takes the lightest one e, builds a spanning tree T that avoids e, finds the cycle that e closes in T, picks the other crossing edge f on that cycle, and swaps. Try different sides; the argument never fails.</p>
+<div class="viz" data-viz="minimum-spanning-trees-cut"></div>
+
+<p>Three things are worth noticing as you play:</p>
+<ol>
+<li><strong>The cut can be anything.</strong> Two nodes, half the graph, one lonely node. The lightest crossing edge is always safe. Algorithms differ only in which cuts they choose.</li>
+<li><strong>"Some MST", not "the MST".</strong> If two crossing edges tie for lightest, either one is safe, and they lead to different (equally cheap) trees. If all weights are distinct the MST is unique.</li>
+<li><strong>The proof is constructive.</strong> "Swap f out, put e in" is a real operation on trees, and it reappears later: critical edges, second-best MSTs and MST updates are all built from it.</li>
+</ol>
+<h3 id="the-cycle-property-what-to-throw-away">The cycle property: what to throw away</h3>
+<p>The mirror image of the cut property tells you which edges are <strong>never</strong> needed.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 230" width="860" role="img" aria-label="Left: a cycle of five nodes whose heaviest edge, weight 9, is crossed out. Right: when Kruskal rejects an edge, every edge on the tree path between its ends is lighter, so the rejected edge is the heaviest edge of a cycle">
+<text x="10" y="22" class="title">The cycle property</text>
+<line class="edge done" x1="150" y1="40" x2="230.84" y2="98.7336"/>
+<text x="190.42" y="73.3668" text-anchor="middle" class="mono mst-w mst-halo">3</text>
+<line class="edge done" x1="230.84" y1="98.7336" x2="199.962" y2="193.766"/>
+<text x="215.401" y="150.25" text-anchor="middle" class="mono mst-w mst-halo">5</text>
+<line class="edge bad dash" x1="199.962" y1="193.766" x2="100.038" y2="193.766"/>
+<text x="150" y="197.766" text-anchor="middle" class="mono mst-w mst-halo">9</text>
+<line class="edge done" x1="100.038" y1="193.766" x2="69.1602" y2="98.7336"/>
+<text x="84.5992" y="150.25" text-anchor="middle" class="mono mst-w mst-halo">2</text>
+<line class="edge done" x1="69.1602" y1="98.7336" x2="150" y2="40"/>
+<text x="109.58" y="73.3668" text-anchor="middle" class="mono mst-w mst-halo">6</text>
+<circle class="box" cx="150" cy="40" r="17"/>
+<text x="150" y="45" text-anchor="middle" class="mono">0</text>
+<circle class="box" cx="230.84" cy="98.7336" r="17"/>
+<text x="230.84" y="103.734" text-anchor="middle" class="mono">1</text>
+<circle class="box" cx="199.962" cy="193.766" r="17"/>
+<text x="199.962" y="198.766" text-anchor="middle" class="mono">2</text>
+<circle class="box" cx="100.038" cy="193.766" r="17"/>
+<text x="100.038" y="198.766" text-anchor="middle" class="mono">3</text>
+<circle class="box" cx="69.1602" cy="98.7336" r="17"/>
+<text x="69.1602" y="103.734" text-anchor="middle" class="mono">4</text>
+<text x="290" y="70" class="small">On any cycle, the strictly heaviest edge</text>
+<text x="290" y="88" class="small">is in no MST: the other four edges already</text>
+<text x="290" y="106" class="small">connect its two ends more cheaply.</text>
+<line class="edge dash" x1="560" y1="10" x2="560" y2="220"/>
+<text x="580" y="22" class="title">It is Kruskal's reject rule</text>
+<text x="580" y="60" class="small">Kruskal meets u–v after every lighter edge.</text>
+<text x="580" y="80" class="small">If find(u) == find(v), the forest already has</text>
+<text x="580" y="100" class="small">a u ⇝ v path, and every edge on it is lighter</text>
+<text x="580" y="120" class="small">(it was accepted earlier).</text>
+<text x="580" y="150" class="small">So u–v is the heaviest edge on that cycle,</text>
+<text x="580" y="170" class="small">and dropping it can never cost anything.</text>
+<text x="290" y="150" class="small">Consequence: if all weights are distinct,</text>
+<text x="290" y="168" class="small">the MST is unique. With ties there can be</text>
+<text x="290" y="186" class="small">several MSTs, all with the same total weight.</text>
+</svg>
+<figcaption>The cut property says which edges to keep; the cycle property says which edges to throw away. Kruskal uses both: accept the lightest edge across a cut, reject the heaviest edge of a cycle.</figcaption>
+</figure>
+
+<p>So the MST can be built in two opposite ways: keep adding the safe (lightest crossing) edges, or keep deleting the heaviest edge of some cycle. Kruskal does both at once: an edge that joins two components is the lightest edge across the cut around one of them, and an edge whose ends are already connected is the heaviest edge on the cycle it would close.</p>
+<p>A few consequences that come up constantly:</p>
+<ul>
+<li><strong>Distinct weights ⇒ unique MST.</strong> Ties are the only reason two MSTs can differ, and even then all MSTs have the same total and the same <strong>sorted list of edge weights</strong>.</li>
+<li><strong>Only the order of weights matters.</strong> Adding a constant to every edge, multiplying by a positive number, squaring non-negative weights, or applying any increasing function leaves the MST unchanged. That is why a "minimise the product" problem with weights &gt; 0 is an MST on <code>log w</code>, and why negative weights are perfectly fine (unlike Dijkstra).</li>
+<li><strong>The MST minimises the maximum edge too.</strong> Among all spanning trees, the MST also has the smallest possible largest edge, and the MST path between two nodes is a path whose largest edge is as small as possible. That is the bottleneck trick later on.</li>
+</ul>
+<h2 id="kruskal-sorted-edges-plus-union-find">Kruskal: sorted edges plus union-find</h2>
+<p>Kruskal's algorithm is three lines of idea:</p>
+<ol>
+<li>Sort all edges by weight, lightest first.</li>
+<li>Walk down the list. For each edge u–v, ask the union-find whether u and v are already connected.</li>
+<li>If not, <strong>take</strong> the edge (union u and v). If they are, <strong>skip</strong> it: it would close a cycle, and it is the heaviest edge on that cycle. Stop once you have n − 1 edges.</li>
+</ol>
+<p>Why is a taken edge safe? When Kruskal takes u–v, look at the cut "u's current component versus everything else". Every lighter edge crossing that cut was seen earlier, and it was skipped only if its ends were already connected, which means it does not cross this cut at all. So u–v is the lightest crossing edge, and the cut property says it is safe.</p>
+<h3 id="step-through-kruskal">Step through Kruskal</h3>
+<p>The table on the right is the sorted edge list; colours on the graph are the union-find components, and the parent array underneath is the actual DSU. When an edge is rejected, the visualizer draws the tree path that already connects its ends: that path plus the edge is the cycle that the edge would close. Watch the components merge until one colour remains.</p>
+<div class="viz" data-viz="minimum-spanning-trees-kruskal"></div>
+
+<h3 id="the-template">The template</h3>
+<div class="code-tabs">
+<pre><code class="language-python">class DSU:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.size = [1] * n
+        self.count = n                           # number of components
+
+    def find(self, x):
+        root = x
+        while self.parent[root] != root:
+            root = self.parent[root]
+        while self.parent[x] != root:            # path compression
+            self.parent[x], x = root, self.parent[x]
+        return root
+
+    def union(self, a, b):
+        ra, rb = self.find(a), self.find(b)
+        if ra == rb:
+            return False                         # already connected: a cycle
+        if self.size[ra] &lt; self.size[rb]:
+            ra, rb = rb, ra
+        self.parent[rb] = ra                     # small tree under big tree
+        self.size[ra] += self.size[rb]
+        self.count -= 1
+        return True
+
+
+def kruskal(n, edges):
+    &quot;&quot;&quot;edges: (u, v, w) with nodes 0..n-1.
+    Returns (total, tree_edges), or (None, forest_edges) if the graph is disconnected.&quot;&quot;&quot;
+    dsu = DSU(n)
+    total, tree = 0, []
+    for u, v, w in sorted(edges, key=lambda e: e[2]):
+        if len(tree) == n - 1:
+            break                                # already spanning: the rest only close cycles
+        if dsu.union(u, v):                      # joins two components: safe by the cut property
+            total += w
+            tree.append((u, v, w))
+    return (total, tree) if len(tree) == n - 1 else (None, tree)
+</code></pre>
+<pre><code class="language-csharp">public class DSU
+{
+    private readonly int[] parent, size;
+    public int Count { get; private set; }      // number of components
+
+    public DSU(int n)
+    {
+        parent = new int[n]; size = new int[n]; Count = n;
+        for (int i = 0; i &lt; n; i++) { parent[i] = i; size[i] = 1; }
+    }
+
+    public int Find(int x)
+    {
+        int root = x;
+        while (parent[root] != root) root = parent[root];
+        while (parent[x] != root) { int next = parent[x]; parent[x] = root; x = next; }
+        return root;
+    }
+
+    public bool Union(int a, int b)
+    {
+        int ra = Find(a), rb = Find(b);
+        if (ra == rb) return false;              // already connected: a cycle
+        if (size[ra] &lt; size[rb]) (ra, rb) = (rb, ra);
+        parent[rb] = ra; size[ra] += size[rb]; Count--;
+        return true;
+    }
+}
+
+// edges: (u, v, w) with nodes 0..n-1. Returns the MST weight, or -1 if disconnected.
+// Pass a list as `tree` to also collect the chosen edges.
+public long Kruskal(int n, List&lt;(int u, int v, int w)&gt; edges, List&lt;(int u, int v, int w)&gt; tree = null)
+{
+    var dsu = new DSU(n);
+    long total = 0; int taken = 0;
+    foreach (var e in edges.OrderBy(e =&gt; e.w))
+    {
+        if (taken == n - 1) break;               // already spanning
+        if (!dsu.Union(e.u, e.v)) continue;      // would close a cycle
+        total += e.w; taken++;
+        tree?.Add(e);
+    }
+    return taken == n - 1 ? total : -1;
+}
+</code></pre>
+</div>
+<p><strong>Cost:</strong> O(E log E) for the sort, plus O(E·α(V)) for the unions, so O(E log E) overall (which is the same as O(E log V), because E &lt; V²). Memory is the edge list plus two arrays of size V. If the graph is disconnected, the same loop builds a <strong>minimum spanning forest</strong>: one MST per component, and <code>dsu.count</code> tells you how many components there are.</p>
+<p>Details that matter in practice:</p>
+<ul>
+<li><strong>Sort stability doesn't matter for the total</strong>, but it decides <em>which</em> MST you get when weights tie. Problems that ask for "the" tree with ties usually accept any.</li>
+<li><strong>The early stop</strong> (<code>len(tree) == n − 1</code>) is free speed: on random inputs the last edges are the heavy ones, and they would all be rejected anyway.</li>
+<li><strong>Self-loops</strong> are rejected automatically (<code>find(u) == find(u)</code>), and <strong>parallel edges</strong> are handled automatically (the lighter copy is seen first). Neither needs special code.</li>
+</ul>
+<h2 id="prim-grow-one-tree-with-a-heap">Prim: grow one tree with a heap</h2>
+<p>Prim's algorithm starts at any node and grows a single tree. The cut is always "nodes already in the tree" versus "everything else", so the safe edge is simply the <strong>cheapest edge leaving the tree</strong>. A min-heap holds candidate edges; pop the cheapest, and if its far end is new, take it and push that node's edges.</p>
+<p>This is the <strong>lazy</strong> version: the heap may still hold edges whose far end has already joined the tree (stale entries). Instead of deleting them, you skip them when they are popped. That is the same trick Dijkstra uses, and it is why the two algorithms look almost identical: Prim's key is "weight of the one edge into the tree", Dijkstra's key is "length of the whole path from the source".</p>
+<h3 id="step-through-prim">Step through Prim</h3>
+<p>The heap is shown as a sorted list (the real heap is a tree in an array, but only its minimum matters here). Blue edges are the frontier, the purple rows are entries just pushed, and red rows are stale entries that will be skipped when they reach the top.</p>
+<div class="viz" data-viz="minimum-spanning-trees-prim"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">import heapq
+
+
+def prim(n, edges, start=0):
+    &quot;&quot;&quot;Lazy Prim. edges: (u, v, w). Returns the MST weight, or None if disconnected.&quot;&quot;&quot;
+    adj = [[] for _ in range(n)]
+    for u, v, w in edges:
+        adj[u].append((w, v))
+        adj[v].append((w, u))
+    in_tree = [False] * n
+    heap = [(0, start)]                  # (weight of the edge into node, node)
+    total = taken = 0
+    while heap and taken &lt; n:
+        w, u = heapq.heappop(heap)
+        if in_tree[u]:
+            continue                     # stale: u joined the tree through a cheaper edge
+        in_tree[u] = True
+        total += w
+        taken += 1
+        for wx, x in adj[u]:
+            if not in_tree[x]:
+                heapq.heappush(heap, (wx, x))
+    return total if taken == n else None
+</code></pre>
+<pre><code class="language-csharp">// Lazy Prim. Returns the MST weight, or -1 if the graph is disconnected.
+public long Prim(int n, List&lt;(int u, int v, int w)&gt; edges, int start = 0)
+{
+    var adj = new List&lt;(int to, int w)&gt;[n];
+    for (int i = 0; i &lt; n; i++) adj[i] = new List&lt;(int to, int w)&gt;();
+    foreach (var (u, v, w) in edges) { adj[u].Add((v, w)); adj[v].Add((u, w)); }
+    var inTree = new bool[n];
+    var heap = new PriorityQueue&lt;int, int&gt;();          // element: node, priority: edge weight into it
+    heap.Enqueue(start, 0);
+    long total = 0; int taken = 0;
+    while (taken &lt; n &amp;&amp; heap.TryDequeue(out int u, out int w))
+    {
+        if (inTree[u]) continue;                        // stale entry
+        inTree[u] = true; total += w; taken++;
+        foreach (var (x, wx) in adj[u])
+            if (!inTree[x]) heap.Enqueue(x, wx);
+    }
+    return taken == n ? total : -1;
+}
+</code></pre>
+</div>
+<p><strong>Cost:</strong> every edge is pushed at most twice (once from each end), so O(E log E) = O(E log V) time and O(E) heap memory. An <strong>eager</strong> Prim keeps at most one entry per node (with decrease-key, or with an indexed heap) and brings the heap down to O(V); in Python and C# the lazy version is simpler and just as fast in practice.</p>
+<p>The start node does not matter: any start gives an MST with the same total. If the graph is disconnected, Prim only spans the start node's component, so <code>taken &lt; n</code> is your "impossible" signal.</p>
+<h2 id="kruskal-or-prim">Kruskal or Prim?</h2>
+<p>Both are correct and both are O(E log V) with a heap. The choice is about the <strong>shape of the input</strong>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 380" width="860" role="img" aria-label="The same seven-node graph after three steps of each algorithm. Kruskal holds four separate fragments and considers edge 0-1; Prim holds one tree of four nodes and its cheapest frontier edge is 4-5">
+<text x="10" y="22" class="title">Kruskal after 3 edges: a forest of fragments</text>
+<line class="edge active" x1="90" y1="80" x2="210" y2="65"/>
+<text x="150" y="76.5" text-anchor="middle" class="mono mst-w mst-halo">4</text>
+<line class="edge" x1="210" y1="65" x2="330" y2="80"/>
+<text x="270" y="76.5" text-anchor="middle" class="mono mst-w mst-halo">8</text>
+<line class="edge done" x1="90" y1="80" x2="90" y2="195"/>
+<text x="90" y="141.5" text-anchor="middle" class="mono mst-w mst-halo">2</text>
+<line class="edge" x1="90" y1="80" x2="210" y2="180"/>
+<text x="150" y="134" text-anchor="middle" class="mono mst-w mst-halo">6</text>
+<line class="edge done" x1="210" y1="65" x2="210" y2="180"/>
+<text x="210" y="126.5" text-anchor="middle" class="mono mst-w mst-halo">3</text>
+<line class="edge" x1="330" y1="80" x2="210" y2="180"/>
+<text x="270" y="134" text-anchor="middle" class="mono mst-w mst-halo">7</text>
+<line class="edge" x1="330" y1="80" x2="330" y2="195"/>
+<text x="330" y="141.5" text-anchor="middle" class="mono mst-w mst-halo">5</text>
+<line class="edge" x1="90" y1="195" x2="210" y2="180"/>
+<text x="150" y="191.5" text-anchor="middle" class="mono mst-w mst-halo">9</text>
+<line class="edge done" x1="210" y1="180" x2="330" y2="195"/>
+<text x="270" y="191.5" text-anchor="middle" class="mono mst-w mst-halo">1</text>
+<line class="edge" x1="90" y1="195" x2="210" y2="290"/>
+<text x="150" y="246.5" text-anchor="middle" class="mono mst-w mst-halo">12</text>
+<line class="edge" x1="210" y1="180" x2="210" y2="290"/>
+<text x="210" y="239" text-anchor="middle" class="mono mst-w mst-halo">10</text>
+<line class="edge" x1="330" y1="195" x2="210" y2="290"/>
+<text x="270" y="246.5" text-anchor="middle" class="mono mst-w mst-halo">11</text>
+<circle class="box visit" cx="90" cy="80" r="17"/>
+<text x="90" y="85" text-anchor="middle" class="mono">0</text>
+<circle class="box done" cx="210" cy="65" r="17"/>
+<text x="210" y="70" text-anchor="middle" class="mono">1</text>
+<circle class="box" cx="330" cy="80" r="17"/>
+<text x="330" y="85" text-anchor="middle" class="mono">2</text>
+<circle class="box visit" cx="90" cy="195" r="17"/>
+<text x="90" y="200" text-anchor="middle" class="mono">3</text>
+<circle class="box done" cx="210" cy="180" r="17"/>
+<text x="210" y="185" text-anchor="middle" class="mono">4</text>
+<circle class="box done" cx="330" cy="195" r="17"/>
+<text x="330" y="200" text-anchor="middle" class="mono">5</text>
+<circle class="box" cx="210" cy="290" r="17"/>
+<text x="210" y="295" text-anchor="middle" class="mono">6</text>
+<text x="10" y="330" class="small">Edges in global weight order. Next: 0–1 (4) joins the</text>
+<text x="10" y="348" class="small">blue and green fragments, so it is taken.</text>
+<line class="edge dash" x1="430" y1="10" x2="430" y2="370"/>
+<text x="450" y="22" class="title">Prim after 3 edges: one growing tree</text>
+<line class="edge done" x1="530" y1="80" x2="650" y2="65"/>
+<text x="590" y="76.5" text-anchor="middle" class="mono mst-w mst-halo">4</text>
+<line class="edge visit dash" x1="650" y1="65" x2="770" y2="80"/>
+<text x="710" y="76.5" text-anchor="middle" class="mono mst-w mst-halo">8</text>
+<line class="edge done" x1="530" y1="80" x2="530" y2="195"/>
+<text x="530" y="141.5" text-anchor="middle" class="mono mst-w mst-halo">2</text>
+<line class="edge" x1="530" y1="80" x2="650" y2="180"/>
+<text x="590" y="134" text-anchor="middle" class="mono mst-w mst-halo">6</text>
+<line class="edge done" x1="650" y1="65" x2="650" y2="180"/>
+<text x="650" y="126.5" text-anchor="middle" class="mono mst-w mst-halo">3</text>
+<line class="edge visit dash" x1="770" y1="80" x2="650" y2="180"/>
+<text x="710" y="134" text-anchor="middle" class="mono mst-w mst-halo">7</text>
+<line class="edge" x1="770" y1="80" x2="770" y2="195"/>
+<text x="770" y="141.5" text-anchor="middle" class="mono mst-w mst-halo">5</text>
+<line class="edge" x1="530" y1="195" x2="650" y2="180"/>
+<text x="590" y="191.5" text-anchor="middle" class="mono mst-w mst-halo">9</text>
+<line class="edge active" x1="650" y1="180" x2="770" y2="195"/>
+<text x="710" y="191.5" text-anchor="middle" class="mono mst-w mst-halo">1</text>
+<line class="edge visit dash" x1="530" y1="195" x2="650" y2="290"/>
+<text x="590" y="246.5" text-anchor="middle" class="mono mst-w mst-halo">12</text>
+<line class="edge visit dash" x1="650" y1="180" x2="650" y2="290"/>
+<text x="650" y="239" text-anchor="middle" class="mono mst-w mst-halo">10</text>
+<line class="edge" x1="770" y1="195" x2="650" y2="290"/>
+<text x="710" y="246.5" text-anchor="middle" class="mono mst-w mst-halo">11</text>
+<circle class="box done" cx="530" cy="80" r="17"/>
+<text x="530" y="85" text-anchor="middle" class="mono">0</text>
+<circle class="box done" cx="650" cy="65" r="17"/>
+<text x="650" y="70" text-anchor="middle" class="mono">1</text>
+<circle class="box" cx="770" cy="80" r="17"/>
+<text x="770" y="85" text-anchor="middle" class="mono">2</text>
+<circle class="box done" cx="530" cy="195" r="17"/>
+<text x="530" y="200" text-anchor="middle" class="mono">3</text>
+<circle class="box done" cx="650" cy="180" r="17"/>
+<text x="650" y="185" text-anchor="middle" class="mono">4</text>
+<circle class="box" cx="770" cy="195" r="17"/>
+<text x="770" y="200" text-anchor="middle" class="mono">5</text>
+<circle class="box" cx="650" cy="290" r="17"/>
+<text x="650" y="295" text-anchor="middle" class="mono">6</text>
+<text x="450" y="330" class="small">Only edges leaving the tree matter (dashed). The cheapest,</text>
+<text x="450" y="348" class="small">4–5 (1), is popped from the heap and taken.</text>
+</svg>
+<figcaption>Both are the cut property. Kruskal's cut is "the fragment containing u versus everything else" for the lightest edge u–v that joins two fragments. Prim's cut is always "the tree so far versus the rest". Both end with the same total, 25.</figcaption>
+</figure>
+
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 330" width="860" role="img" aria-label="Bar chart on a log scale of the work each algorithm does on a sparse graph and on a dense graph. On the sparse graph Kruskal and heap Prim do about 3.5 million steps and dense Prim 10 billion; on the dense graph dense Prim does 4 million, heap Prim 22 million and Kruskal 42 million">
+<text x="10" y="22" class="title">Sparse: V = 100 000 roads, E = 200 000 (a road map, a typical edge list)</text>
+<text x="210" y="53" text-anchor="end" class="small">Kruskal  O(E log E)</text>
+<rect class="box done" x="220" y="36" width="128.258" height="24" rx="3"/>
+<text x="356.258" y="53" class="small mono">≈ 3.5 M steps</text>
+<text x="210" y="83" text-anchor="end" class="small">Heap Prim  O(E log V)</text>
+<rect class="box done" x="220" y="66" width="126.48" height="24" rx="3"/>
+<text x="354.48" y="83" class="small mono">≈ 3.3 M steps</text>
+<text x="210" y="113" text-anchor="end" class="small">Dense Prim  O(V²)</text>
+<rect class="box bad" x="220" y="96" width="370" height="24" rx="3"/>
+<text x="598" y="113" class="small mono">10 000 M steps: too slow</text>
+<text x="10" y="162" class="title">Dense: V = 2 000 points, every pair is an edge, E ≈ 2 000 000</text>
+<text x="210" y="193" text-anchor="end" class="small">Kruskal  O(E log E)</text>
+<rect class="box" x="220" y="176" width="203.627" height="24" rx="3"/>
+<text x="431.627" y="193" class="small mono">≈ 42 M, and 2 M edges in memory</text>
+<text x="210" y="223" text-anchor="end" class="small">Heap Prim  O(E log V)</text>
+<rect class="box" x="220" y="206" width="183.97" height="24" rx="3"/>
+<text x="411.97" y="223" class="small mono">≈ 22 M, heap holds up to E entries</text>
+<text x="210" y="253" text-anchor="end" class="small">Dense Prim  O(V²)</text>
+<rect class="box done" x="220" y="236" width="132.144" height="24" rx="3"/>
+<text x="360.144" y="253" class="small mono">≈ 4 M, two arrays of size V</text>
+<text x="10" y="290" class="small">Rule: given an edge list, use Kruskal (shortest code, and the DSU answers extra questions). Given points or a full matrix,</text>
+<text x="10" y="308" class="small">use dense Prim and compute each distance on the fly. Heap Prim sits in between: adjacency lists, or when you must grow from a given start.</text>
+</svg>
+<figcaption>Bars are on a log scale, so each tick of length is a factor of ten. The asymptotics only matter at the extremes: on a sparse graph a V² scan is hopeless, and on a complete graph materialising all V²/2 edges is the expensive part.</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th>Input looks like</th>
+<th>Use</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>An edge list <code>[u, v, w]</code></td>
+<td><strong>Kruskal</strong></td>
+<td>sort + DSU, 15 lines, no adjacency list needed</td>
+</tr>
+<tr>
+<td>An adjacency list, or "grow from this node"</td>
+<td><strong>Heap Prim</strong></td>
+<td>no global sort; natural with a start node</td>
+</tr>
+<tr>
+<td>Points in the plane, or a full cost matrix (complete graph)</td>
+<td><strong>Dense Prim, O(V²)</strong></td>
+<td>never materialise V²/2 edges; compute each cost on the fly</td>
+</tr>
+<tr>
+<td>You also need connectivity facts (components, which edges joined what)</td>
+<td><strong>Kruskal</strong></td>
+<td>the DSU is a by-product you can query</td>
+</tr>
+<tr>
+<td>Edges arrive sorted already, or weights are small integers</td>
+<td><strong>Kruskal</strong></td>
+<td>the sort disappears (or becomes a bucket sort)</td>
+</tr>
+<tr>
+<td>A parallel machine, or "cheapest edge out of each component" is easy to compute</td>
+<td><strong>Borůvka</strong></td>
+<td>log V rounds of independent work</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dense-prim-ov2-with-no-heap-at-all">Dense Prim: O(V²) with no heap at all</h3>
+<p>When every pair of nodes is an edge (points in the plane with a distance, a full matrix of costs), E ≈ V²/2. A heap would cost O(V² log V); Kruskal would need to build and sort all V²/2 edges. Dense Prim does better by keeping one number per node, <code>dist[v]</code> = the cheapest edge from v into the tree so far, and <strong>scanning the array</strong> to find the minimum. V rounds of an O(V) scan plus an O(V) relaxation is O(V²), which is optimal for a complete graph because you must at least look at every pair.</p>
+<div class="viz" data-viz="minimum-spanning-trees-dense"></div>
+
+<div class="code-tabs">
+<pre><code class="language-python">def prim_dense(n, cost):
+    &quot;&quot;&quot;O(V^2) Prim for complete graphs. cost(i, j) gives the edge weight
+    (return float('inf') for 'no edge'). Returns the MST weight, or None if disconnected.&quot;&quot;&quot;
+    INF = float(&quot;inf&quot;)
+    dist = [INF] * n                     # cheapest edge from v into the tree
+    in_tree = [False] * n
+    total = 0
+    if n:
+        dist[0] = 0
+    for _ in range(n):
+        u = -1
+        for i in range(n):               # O(V) scan replaces the heap
+            if not in_tree[i] and (u == -1 or dist[i] &lt; dist[u]):
+                u = i
+        if dist[u] == INF:
+            return None                  # nothing reaches the rest
+        in_tree[u] = True
+        total += dist[u]
+        for v in range(n):               # relax every edge out of u
+            if not in_tree[v]:
+                c = cost(u, v)
+                if c &lt; dist[v]:
+                    dist[v] = c
+    return total
+</code></pre>
+<pre><code class="language-csharp">// O(V^2) Prim for complete graphs. cost(i, j) returns long.MaxValue for &quot;no edge&quot;.
+// Returns the MST weight, or -1 if disconnected.
+public long PrimDense(int n, Func&lt;int, int, long&gt; cost)
+{
+    var dist = new long[n]; var inTree = new bool[n];
+    Array.Fill(dist, long.MaxValue);
+    if (n &gt; 0) dist[0] = 0;
+    long total = 0;
+    for (int k = 0; k &lt; n; k++)
+    {
+        int u = -1;
+        for (int i = 0; i &lt; n; i++)              // O(V) scan replaces the heap
+            if (!inTree[i] &amp;&amp; (u == -1 || dist[i] &lt; dist[u])) u = i;
+        if (dist[u] == long.MaxValue) return -1;
+        inTree[u] = true; total += dist[u];
+        for (int v = 0; v &lt; n; v++)              // relax every edge out of u
+            if (!inTree[v]) dist[v] = Math.Min(dist[v], cost(u, v));
+    }
+    return total;
+}
+</code></pre>
+</div>
+<p>For n = 1000 points that is about 10⁶ steps, against roughly 10⁷ for Kruskal on 5·10⁵ edges, and with no edge list in memory. If you also need the tree itself, keep a <code>link[v]</code> array (the tree node that gave <code>dist[v]</code> its value) as the visualizer does; the MST edges are <code>(link[v], v)</code> for every v except the start.</p>
+<h3 id="boruvka-every-component-picks-at-once">Borůvka: every component picks at once</h3>
+<p>The third classic algorithm is the oldest (1926). Each round, <strong>every component</strong> picks the cheapest edge leaving it, and all picks are added together. Each pick is safe by the cut property (cut = that component versus the rest), and because every component merges with at least one other, the number of components at least halves each round.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 360" width="860" role="img" aria-label="Boruvka on the seven-node graph. Round 1: every node picks its cheapest edge, which merges the graph into two components. Round 2: both components pick edge 0-1 and the MST is complete">
+<text x="10" y="22" class="title">Round 1: every component (= node) picks its cheapest edge</text>
+<line class="edge dash dim" x1="90" y1="80" x2="210" y2="65"/>
+<text x="150" y="76.5" text-anchor="middle" class="mono mst-w mst-halo muted">4</text>
+<line class="edge dash dim" x1="210" y1="65" x2="330" y2="80"/>
+<text x="270" y="76.5" text-anchor="middle" class="mono mst-w mst-halo muted">8</text>
+<line class="edge accent" x1="90" y1="80" x2="90" y2="195"/>
+<text x="90" y="141.5" text-anchor="middle" class="mono mst-w mst-halo">2</text>
+<line class="edge dash dim" x1="90" y1="80" x2="210" y2="180"/>
+<text x="150" y="134" text-anchor="middle" class="mono mst-w mst-halo muted">6</text>
+<line class="edge accent" x1="210" y1="65" x2="210" y2="180"/>
+<text x="210" y="126.5" text-anchor="middle" class="mono mst-w mst-halo">3</text>
+<line class="edge dash dim" x1="330" y1="80" x2="210" y2="180"/>
+<text x="270" y="134" text-anchor="middle" class="mono mst-w mst-halo muted">7</text>
+<line class="edge accent" x1="330" y1="80" x2="330" y2="195"/>
+<text x="330" y="141.5" text-anchor="middle" class="mono mst-w mst-halo">5</text>
+<line class="edge dash dim" x1="90" y1="195" x2="210" y2="180"/>
+<text x="150" y="191.5" text-anchor="middle" class="mono mst-w mst-halo muted">9</text>
+<line class="edge accent" x1="210" y1="180" x2="330" y2="195"/>
+<text x="270" y="191.5" text-anchor="middle" class="mono mst-w mst-halo">1</text>
+<line class="edge dash dim" x1="90" y1="195" x2="210" y2="290"/>
+<text x="150" y="246.5" text-anchor="middle" class="mono mst-w mst-halo muted">12</text>
+<line class="edge accent" x1="210" y1="180" x2="210" y2="290"/>
+<text x="210" y="239" text-anchor="middle" class="mono mst-w mst-halo">10</text>
+<line class="edge dash dim" x1="330" y1="195" x2="210" y2="290"/>
+<text x="270" y="246.5" text-anchor="middle" class="mono mst-w mst-halo muted">11</text>
+<circle class="box accent" cx="90" cy="80" r="17"/>
+<text x="90" y="85" text-anchor="middle" class="mono">0</text>
+<circle class="box accent" cx="210" cy="65" r="17"/>
+<text x="210" y="70" text-anchor="middle" class="mono">1</text>
+<circle class="box accent" cx="330" cy="80" r="17"/>
+<text x="330" y="85" text-anchor="middle" class="mono">2</text>
+<circle class="box accent" cx="90" cy="195" r="17"/>
+<text x="90" y="200" text-anchor="middle" class="mono">3</text>
+<circle class="box accent" cx="210" cy="180" r="17"/>
+<text x="210" y="185" text-anchor="middle" class="mono">4</text>
+<circle class="box accent" cx="330" cy="195" r="17"/>
+<text x="330" y="200" text-anchor="middle" class="mono">5</text>
+<circle class="box accent" cx="210" cy="290" r="17"/>
+<text x="210" y="295" text-anchor="middle" class="mono">6</text>
+<text x="10" y="330" class="small mono">Picks (highlighted): 0→3, 3→0, 1→4, 4→5, 5→4, 2→5, 6→4.</text>
+<text x="10" y="348" class="small">Result: 5 edges taken, 2 components remain.</text>
+<line class="edge dash" x1="430" y1="10" x2="430" y2="350"/>
+<text x="450" y="22" class="title">Round 2: two components, both pick 0–1 (4)</text>
+<line class="edge active" x1="530" y1="80" x2="650" y2="65"/>
+<text x="590" y="76.5" text-anchor="middle" class="mono mst-w mst-halo">4</text>
+<line class="edge dash dim" x1="650" y1="65" x2="770" y2="80"/>
+<text x="710" y="76.5" text-anchor="middle" class="mono mst-w mst-halo muted">8</text>
+<line class="edge done" x1="530" y1="80" x2="530" y2="195"/>
+<text x="530" y="141.5" text-anchor="middle" class="mono mst-w mst-halo">2</text>
+<line class="edge dash dim" x1="530" y1="80" x2="650" y2="180"/>
+<text x="590" y="134" text-anchor="middle" class="mono mst-w mst-halo muted">6</text>
+<line class="edge done" x1="650" y1="65" x2="650" y2="180"/>
+<text x="650" y="126.5" text-anchor="middle" class="mono mst-w mst-halo">3</text>
+<line class="edge dash dim" x1="770" y1="80" x2="650" y2="180"/>
+<text x="710" y="134" text-anchor="middle" class="mono mst-w mst-halo muted">7</text>
+<line class="edge done" x1="770" y1="80" x2="770" y2="195"/>
+<text x="770" y="141.5" text-anchor="middle" class="mono mst-w mst-halo">5</text>
+<line class="edge dash dim" x1="530" y1="195" x2="650" y2="180"/>
+<text x="590" y="191.5" text-anchor="middle" class="mono mst-w mst-halo muted">9</text>
+<line class="edge done" x1="650" y1="180" x2="770" y2="195"/>
+<text x="710" y="191.5" text-anchor="middle" class="mono mst-w mst-halo">1</text>
+<line class="edge dash dim" x1="530" y1="195" x2="650" y2="290"/>
+<text x="590" y="246.5" text-anchor="middle" class="mono mst-w mst-halo muted">12</text>
+<line class="edge done" x1="650" y1="180" x2="650" y2="290"/>
+<text x="650" y="239" text-anchor="middle" class="mono mst-w mst-halo">10</text>
+<line class="edge dash dim" x1="770" y1="195" x2="650" y2="290"/>
+<text x="710" y="246.5" text-anchor="middle" class="mono mst-w mst-halo muted">11</text>
+<circle class="box visit" cx="530" cy="80" r="17"/>
+<text x="530" y="85" text-anchor="middle" class="mono">0</text>
+<circle class="box done" cx="650" cy="65" r="17"/>
+<text x="650" y="70" text-anchor="middle" class="mono">1</text>
+<circle class="box done" cx="770" cy="80" r="17"/>
+<text x="770" y="85" text-anchor="middle" class="mono">2</text>
+<circle class="box visit" cx="530" cy="195" r="17"/>
+<text x="530" y="200" text-anchor="middle" class="mono">3</text>
+<circle class="box done" cx="650" cy="180" r="17"/>
+<text x="650" y="185" text-anchor="middle" class="mono">4</text>
+<circle class="box done" cx="770" cy="195" r="17"/>
+<text x="770" y="200" text-anchor="middle" class="mono">5</text>
+<circle class="box done" cx="650" cy="290" r="17"/>
+<text x="650" y="295" text-anchor="middle" class="mono">6</text>
+<text x="450" y="330" class="small mono">Total 2 + 3 + 5 + 1 + 10 + 4 = 25, the same MST.</text>
+<text x="450" y="348" class="small">Each round at least halves the component count.</text>
+</svg>
+<figcaption>Borůvka runs at most log₂ V rounds, each O(E), so O(E log V). Break ties between equal weights consistently (by edge index) or two components can pick different equal edges and close a cycle. It is the basis of parallel MST algorithms and of tricks like the XOR-MST, where "cheapest edge leaving a component" is answered by a trie.</figcaption>
+</figure>
+
+<pre><code class="language-python">def boruvka(n, edges):
+    &quot;&quot;&quot;Returns the MST weight, or None if disconnected. Ties broken by edge index.&quot;&quot;&quot;
+    dsu, total = DSU(n), 0
+    while dsu.count &gt; 1:
+        best = [-1] * n                          # cheapest edge leaving each root
+        for i, (u, v, w) in enumerate(edges):
+            ru, rv = dsu.find(u), dsu.find(v)
+            if ru == rv:
+                continue
+            for r in (ru, rv):
+                if best[r] == -1 or (w, i) &lt; (edges[best[r]][2], best[r]):
+                    best[r] = i
+        merged = False
+        for i in set(best):
+            if i != -1:
+                u, v, w = edges[i]
+                if dsu.union(u, v):
+                    total += w
+                    merged = True
+        if not merged:
+            return None                          # some component has no way out
+    return total
+</code></pre>
+<p>You will rarely write Borůvka for a plain MST; Kruskal is shorter. It earns its place when the graph is <strong>implicit</strong> and "the cheapest edge out of this component" has a clever answer. In the XOR-MST (edge weight = <code>a[i] xor a[j]</code> over all pairs), a binary trie answers that query in O(log A), and Borůvka turns an impossible V² edge set into O(V log V log A).</p>
+<h2 id="variants-and-tricks">Variants and tricks</h2>
+<h3 id="maximum-spanning-tree">Maximum spanning tree</h3>
+<p>Sort descending (or negate every weight) and run Kruskal unchanged. The cut property flips to "the <strong>heaviest</strong> crossing edge is safe". Use it when edges are capacities, reliabilities or similarities and you want the strongest tree. For "maximise the <strong>product</strong> of probabilities" with 0 &lt; p ≤ 1, a maximum spanning tree on the raw p works, because only the order matters.</p>
+<h3 id="bottleneck-minimax-paths">Bottleneck (minimax) paths</h3>
+<p>"Find a route from s to t whose <strong>largest</strong> edge is as small as possible." The answer is the s–t path inside any MST, and you don't even need the whole tree: run Kruskal and stop the moment s and t are connected. The edge that connected them is the answer.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 270" width="860" role="img" aria-label="Two routes from s to t. The top route has total 14 but contains an edge of weight 9; the bottom route has total 20 but its largest edge is 6. The shortest path is the top route and the minimax path is the bottom route">
+<line class="edge visit" x1="50" y1="135" x2="190" y2="50"/>
+<text x="120" y="96.5" text-anchor="middle" class="mono mst-w mst-halo">2</text>
+<line class="edge visit" x1="190" y1="50" x2="330" y2="50"/>
+<text x="260" y="54" text-anchor="middle" class="mono mst-w mst-halo">9</text>
+<line class="edge visit" x1="330" y1="50" x2="470" y2="135"/>
+<text x="400" y="96.5" text-anchor="middle" class="mono mst-w mst-halo">3</text>
+<line class="edge done" x1="50" y1="135" x2="150" y2="220"/>
+<text x="100" y="181.5" text-anchor="middle" class="mono mst-w mst-halo">5</text>
+<line class="edge done" x1="150" y1="220" x2="260" y2="220"/>
+<text x="205" y="224" text-anchor="middle" class="mono mst-w mst-halo">6</text>
+<line class="edge done" x1="260" y1="220" x2="370" y2="220"/>
+<text x="315" y="224" text-anchor="middle" class="mono mst-w mst-halo">5</text>
+<line class="edge done" x1="370" y1="220" x2="470" y2="135"/>
+<text x="420" y="181.5" text-anchor="middle" class="mono mst-w mst-halo">4</text>
+<circle class="box accent" cx="50" cy="135" r="17"/>
+<text x="50" y="140" text-anchor="middle" class="mono">s</text>
+<circle class="box" cx="190" cy="50" r="17"/>
+<text x="190" y="55" text-anchor="middle" class="mono">a</text>
+<circle class="box" cx="330" cy="50" r="17"/>
+<text x="330" y="55" text-anchor="middle" class="mono">b</text>
+<circle class="box accent" cx="470" cy="135" r="17"/>
+<text x="470" y="140" text-anchor="middle" class="mono">t</text>
+<circle class="box" cx="150" cy="220" r="17"/>
+<text x="150" y="225" text-anchor="middle" class="mono">c</text>
+<circle class="box" cx="260" cy="220" r="17"/>
+<text x="260" y="225" text-anchor="middle" class="mono">d</text>
+<circle class="box" cx="370" cy="220" r="17"/>
+<text x="370" y="225" text-anchor="middle" class="mono">e</text>
+<text x="260" y="30" text-anchor="middle" class="small">top: total 2 + 9 + 3 = 14, largest edge 9</text>
+<text x="260" y="262" text-anchor="middle" class="small">bottom: total 5 + 6 + 5 + 4 = 20, largest edge 6</text>
+<text x="540" y="40" class="title">Two different questions</text>
+<text x="540" y="70" class="small">Shortest path (minimise the sum): top, 14.</text>
+<text x="540" y="90" class="small">Minimax path (minimise the largest edge):</text>
+<text x="540" y="108" class="small">bottom, 6. Think "lowest bridge you must</text>
+<text x="540" y="126" class="small">cross" or "steepest climb on the route".</text>
+<text x="540" y="160" class="small">Kruskal adds 2, 3, 4, 5, 5, then 6: s and t</text>
+<text x="540" y="178" class="small">first meet when 6 is added, so the answer is 6.</text>
+<text x="540" y="212" class="small">The path between s and t inside any MST is</text>
+<text x="540" y="230" class="small">a minimax path, for every pair at once.</text>
+</svg>
+<figcaption>Bottleneck problems look like shortest-path problems but are really MST problems. Sort the edges and add them until s and t connect (the last edge added is the answer), or run Dijkstra with <code>max</code> instead of <code>+</code> (see <a href="shortest-paths.html">Shortest Paths</a>). Flip the sort to get the maximin path: the widest road, the heaviest truck that can pass.</figcaption>
+</figure>
+
+<p>Why it works: just before that edge was added, s and t were in different components of the graph made of all strictly lighter edges. Every s–t path has to leave s's component somewhere, through an edge that is no lighter. So no path can do better, and the path that now exists does exactly that well. Switch the goal to <strong>maximise the smallest edge</strong> (the widest road, the heaviest truck) and the same scan runs heaviest-first.</p>
+<div class="viz" data-viz="minimum-spanning-trees-minimax"></div>
+
+<p>Three ways to solve a bottleneck problem, all correct:</p>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Cost</th>
+<th>When it is the best fit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kruskal until s and t connect</td>
+<td>O(E log E)</td>
+<td>an edge list or a grid; one pair</td>
+</tr>
+<tr>
+<td>Dijkstra with <code>max(d, w)</code> instead of <code>d + w</code></td>
+<td>O(E log V)</td>
+<td>a start node and a grid; you may stop at t early</td>
+</tr>
+<tr>
+<td>Binary search on the answer + BFS/DSU "is s connected using edges ≤ X?"</td>
+<td>O(E log W)</td>
+<td>the check is easy but the structure is odd</td>
+</tr>
+</tbody>
+</table>
+<p>When you get <strong>many</strong> queries "is there a path from p to q using only edges &lt; L?", sort the queries by L and sweep the edges once, adding to a DSU (an offline sweep, worked through on the <a href="union-find.html">Union-Find</a> page). If the queries must be answered online, build the MST once and answer "maximum edge on the tree path" with binary lifting, or build a <strong>Kruskal reconstruction tree</strong> (every union creates a new parent node whose value is the edge weight; the answer is the value of the LCA).</p>
+<h3 id="the-virtual-node-nodes-that-cost-something-on-their-own">The virtual node: nodes that cost something on their own</h3>
+<p>Sometimes a node can be "served" either by connecting it to a neighbour or by paying its own price (dig a well, install a generator, buy a licence). Add <strong>one extra node</strong> standing for "the outside source", and give it an edge to every node i whose weight is i's own price. Now every choice is an edge, and the cheapest plan is an MST on n + 1 nodes.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 300" width="860" role="img" aria-label="Left: four houses with well costs 5, 2, 7, 4 and pipes between them. Right: the same houses plus a virtual water node 0 joined to each house by an edge whose weight is that house's well cost; the MST of weight 10 uses wells at houses 2 and 4">
+<text x="10" y="22" class="title">Nodes with a price of their own…</text>
+<line class="edge" x1="40" y1="200" x2="150" y2="200"/>
+<text x="95" y="204" text-anchor="middle" class="mono mst-w mst-halo">1</text>
+<line class="edge" x1="150" y1="200" x2="260" y2="200"/>
+<text x="205" y="204" text-anchor="middle" class="mono mst-w mst-halo">3</text>
+<line class="edge" x1="260" y1="200" x2="370" y2="200"/>
+<text x="315" y="204" text-anchor="middle" class="mono mst-w mst-halo">6</text>
+<circle class="box" cx="40" cy="200" r="17"/>
+<text x="40" y="205" text-anchor="middle" class="mono">1</text>
+<text x="40" y="232" text-anchor="middle" class="small muted">well 5</text>
+<circle class="box" cx="150" cy="200" r="17"/>
+<text x="150" y="205" text-anchor="middle" class="mono">2</text>
+<text x="150" y="232" text-anchor="middle" class="small muted">well 2</text>
+<circle class="box" cx="260" cy="200" r="17"/>
+<text x="260" y="205" text-anchor="middle" class="mono">3</text>
+<text x="260" y="232" text-anchor="middle" class="small muted">well 7</text>
+<circle class="box" cx="370" cy="200" r="17"/>
+<text x="370" y="205" text-anchor="middle" class="mono">4</text>
+<text x="370" y="232" text-anchor="middle" class="small muted">well 4</text>
+<text x="10" y="80" class="small">Each house either digs a well (its own cost)</text>
+<text x="10" y="98" class="small">or is piped to a house that has water.</text>
+<text x="10" y="116" class="small">That is not a spanning-tree problem… yet.</text>
+<line class="edge dash" x1="430" y1="10" x2="430" y2="290"/>
+<text x="450" y="22" class="title">…become edges to one virtual node</text>
+<line class="edge done" x1="480" y1="220" x2="590" y2="220"/>
+<text x="535" y="224" text-anchor="middle" class="mono mst-w mst-halo">1</text>
+<line class="edge done" x1="590" y1="220" x2="700" y2="220"/>
+<text x="645" y="224" text-anchor="middle" class="mono mst-w mst-halo">3</text>
+<line class="edge dash dim" x1="700" y1="220" x2="810" y2="220"/>
+<text x="755" y="224" text-anchor="middle" class="mono mst-w mst-halo muted">6</text>
+<line class="edge visit dash dim" x1="645" y1="70" x2="480" y2="220"/>
+<text x="550.5" y="149" text-anchor="middle" class="mono mst-w mst-halo muted">5</text>
+<line class="edge done dash" x1="645" y1="70" x2="590" y2="220"/>
+<text x="605.5" y="149" text-anchor="middle" class="mono mst-w mst-halo">2</text>
+<line class="edge visit dash dim" x1="645" y1="70" x2="700" y2="220"/>
+<text x="684.5" y="149" text-anchor="middle" class="mono mst-w mst-halo muted">7</text>
+<line class="edge done dash" x1="645" y1="70" x2="810" y2="220"/>
+<text x="739.5" y="149" text-anchor="middle" class="mono mst-w mst-halo">4</text>
+<circle class="box done" cx="480" cy="220" r="17"/>
+<text x="480" y="225" text-anchor="middle" class="mono">1</text>
+<circle class="box done" cx="590" cy="220" r="17"/>
+<text x="590" y="225" text-anchor="middle" class="mono">2</text>
+<circle class="box done" cx="700" cy="220" r="17"/>
+<text x="700" y="225" text-anchor="middle" class="mono">3</text>
+<circle class="box done" cx="810" cy="220" r="17"/>
+<text x="810" y="225" text-anchor="middle" class="mono">4</text>
+<circle class="box accent" cx="645" cy="70" r="17"/>
+<text x="645" y="75" text-anchor="middle" class="mono">0</text>
+<text x="645" y="45" text-anchor="middle" class="small muted">water source</text>
+<text x="450" y="290" class="small mono">MST: 1–2 (1) + 0–2 (2) + 2–3 (3) + 0–4 (4) = 10.</text>
+</svg>
+<figcaption>Every cost that belongs to a single node (build here, buy here, start here) becomes an edge to one extra node. Now everything is an edge, and the cheapest way to connect all n + 1 nodes is exactly the cheapest plan: an MST edge 0–i means "dig a well at i".</figcaption>
+</figure>
+
+<div class="viz" data-viz="minimum-spanning-trees-virtual"></div>
+
+<p>The trick is the same "virtual node" idea used in <a href="union-find.html">Union-Find</a> for borders and roofs, and in multi-source BFS: one fake node turns "many possible starting points" into an ordinary graph.</p>
+<h3 id="forced-and-forbidden-edges">Forced and forbidden edges</h3>
+<ul>
+<li><strong>Must include edge e:</strong> union its ends (and add its weight) before the loop, then run Kruskal as usual. The result is the cheapest spanning tree containing e.</li>
+<li><strong>Must exclude edge e:</strong> skip it in the loop. If the result is disconnected, e is a bridge and every spanning tree needs it.</li>
+</ul>
+<p>Those two operations are exactly how you classify edges. An edge is <strong>critical</strong> (in every MST) if excluding it makes the total go up or disconnects the graph. It is <strong>pseudo-critical</strong> (in some MSTs but not all) if it is not critical but forcing it in still gives the minimum total. Everything else is in no MST.</p>
+<div class="viz" data-viz="minimum-spanning-trees-critical"></div>
+
+<h3 id="second-best-mst-and-mst-through-edge-e">Second-best MST and "MST through edge e"</h3>
+<p>Take the MST T with weight W. Adding a non-tree edge e = u–v closes exactly one cycle, the tree path u ⇝ v plus e. Removing the <strong>heaviest tree edge on that path</strong> gives the cheapest spanning tree that contains e: <code>W + w(e) − maxOnPath(u, v)</code>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 280" width="860" role="img" aria-label="An MST drawn with solid edges and two non-tree edges. Adding the non-tree edge 3-5 of weight 7 closes a cycle through 3, 1, 2, 5; the heaviest tree edge on it, weight 6, is removed, so the new tree costs 1 more">
+<text x="10" y="22" class="title">Add one non-tree edge, drop the heaviest edge on the cycle</text>
+<line class="edge done" x1="60" y1="140" x2="170" y2="70"/>
+<text x="115" y="109" text-anchor="middle" class="mono mst-w mst-halo">2</text>
+<line class="edge bad dash" x1="170" y1="70" x2="300" y2="70"/>
+<text x="235" y="74" text-anchor="middle" class="mono mst-w mst-halo">6</text>
+<line class="edge path" x1="170" y1="70" x2="170" y2="210"/>
+<text x="170" y="144" text-anchor="middle" class="mono mst-w mst-halo">1</text>
+<line class="edge done" x1="300" y1="70" x2="420" y2="140"/>
+<text x="360" y="109" text-anchor="middle" class="mono mst-w mst-halo">3</text>
+<line class="edge path" x1="300" y1="70" x2="300" y2="210"/>
+<text x="300" y="144" text-anchor="middle" class="mono mst-w mst-halo">4</text>
+<line class="edge active" x1="170" y1="210" x2="300" y2="210"/>
+<text x="235" y="214" text-anchor="middle" class="mono mst-w mst-halo">7</text>
+<line class="edge dash dim" x1="60" y1="140" x2="170" y2="210"/>
+<text x="115" y="179" text-anchor="middle" class="mono mst-w mst-halo muted">9</text>
+<circle class="box" cx="60" cy="140" r="17"/>
+<text x="60" y="145" text-anchor="middle" class="mono">0</text>
+<circle class="box" cx="170" cy="70" r="17"/>
+<text x="170" y="75" text-anchor="middle" class="mono">1</text>
+<circle class="box" cx="300" cy="70" r="17"/>
+<text x="300" y="75" text-anchor="middle" class="mono">2</text>
+<circle class="box" cx="170" cy="210" r="17"/>
+<text x="170" y="215" text-anchor="middle" class="mono">3</text>
+<circle class="box" cx="420" cy="140" r="17"/>
+<text x="420" y="145" text-anchor="middle" class="mono">4</text>
+<circle class="box" cx="300" cy="210" r="17"/>
+<text x="300" y="215" text-anchor="middle" class="mono">5</text>
+<text x="480" y="60" class="small">MST T: weight 16 (solid edges).</text>
+<text x="480" y="84" class="small">Try non-tree edge 3–5 (7): it closes the cycle</text>
+<text x="480" y="102" class="small">3 → 1 → 2 → 5. The heaviest tree edge on that</text>
+<text x="480" y="120" class="small">path is 1–2 (6). Swap: 16 + 7 − 6 = 17.</text>
+<text x="480" y="150" class="small">Try 0–3 (9): path 0 → 1 → 3, max 2: 16 + 9 − 2 = 23.</text>
+<text x="480" y="180" class="small">Second-best MST = min over non-tree edges</text>
+<text x="480" y="198" class="small mono">of W + w(e) − maxOnTreePath(u, v) = 17.</text>
+<text x="480" y="232" class="small">Precompute max-on-path for all pairs with a BFS</text>
+<text x="480" y="250" class="small">from every node (O(V²)) or binary lifting (O(E log V)).</text>
+</svg>
+<figcaption>Some second-best spanning tree always differs from the MST by exactly one swap, so you only need to try each non-tree edge once. The same "max edge on the tree path" query answers <em>MST for each edge</em> (the cheapest spanning tree forced to contain edge e) and tells you whether the MST is unique (no swap with Δ = 0).</figcaption>
+</figure>
+
+<p>That one formula answers several classic questions:</p>
+<ul>
+<li><strong>Second-best MST:</strong> the minimum of that formula over all non-tree edges. (A second-best tree always differs from some MST by one swap.)</li>
+<li><strong>For every edge e, the cheapest spanning tree containing e</strong> (Codeforces 609E): W for tree edges, the formula for the rest.</li>
+<li><strong>Is the MST unique?</strong> It is unique exactly when no non-tree edge has <code>w(e) == maxOnPath(u, v)</code>.</li>
+<li><strong>An edge weight decreased:</strong> add the edge and drop the heaviest edge on the cycle it closes, in O(V). <strong>A tree edge increased:</strong> remove it and reconnect the two halves with the lightest crossing edge, in O(E).</li>
+</ul>
+<p><code>maxOnPath</code> for one pair is a DFS in O(V). For all pairs, run a BFS from every node in O(V²); for many queries on a big tree, use binary lifting (<code>up[k][v]</code> together with <code>mx[k][v]</code>, the heaviest edge on the 2ᵏ-step jump), which gives O(log V) per query.</p>
+<h3 id="msts-in-disguise">MSTs in disguise</h3>
+<p>Many problems never say "spanning tree". Look for these shapes:</p>
+<ul>
+<li><strong>"Connect all of them at minimum total cost"</strong> with a cost per pair: points (Manhattan or Euclidean), servers, islands. That is an MST, usually dense Prim.</li>
+<li><strong>"The minimum possible value of the maximum…"</strong> along a route, or "the smallest threshold that makes s and t connected": a bottleneck path. Kruskal-until-connected, Dijkstra with max, or binary search.</li>
+<li><strong>"Each item can be served alone at a price, or linked to another":</strong> a virtual node.</li>
+<li><strong>"Keep the graph connected for everybody while removing as many edges as possible":</strong> a spanning tree per person, sharing the common edges first (Remove Max Number of Edges, below).</li>
+<li><strong>"Which edges are essential?":</strong> forced/forbidden Kruskal runs (critical edges), or bridges if weights don't matter (see <a href="advanced-graphs.html">Advanced Graphs</a>).</li>
+</ul>
+<p>And a few that look like MSTs but are not:</p>
+<ul>
+<li><strong>A directed graph.</strong> "Every node reachable from the root, minimum total" is a <strong>minimum arborescence</strong>, solved by the Chu–Liu/Edmonds algorithm. Kruskal and Prim give wrong answers on directed edges.</li>
+<li><strong>Connecting only some of the nodes</strong> (a required subset, with others optional) is the <strong>Steiner tree</strong> problem, which is NP-hard in general. Small subsets: bitmask DP over the required nodes plus shortest paths.</li>
+<li><strong>A path or a route</strong> (visit everyone, minimise the length) is a travelling-salesman flavour, not a tree.</li>
+<li><strong>Minimum Score of a Path Between Two Cities</strong> asks for the smallest edge reachable at all from city 1 (walks may repeat roads), which is just the minimum edge in 1's component, not a bottleneck path.</li>
+</ul>
+<h2 id="recognize-it-when">Recognize it when</h2>
+<div class="recognize">
+<p><strong>Recognize a minimum spanning tree when</strong></p>
+<ul>
+<li>You must <strong>connect everything</strong> (all nodes reachable from each other) and pay for each <strong>edge you build</strong>, minimising the <strong>total</strong>.</li>
+<li>The input is <strong>points with a distance</strong> or a full cost matrix, and the answer is "the cheapest network": dense Prim.</li>
+<li>The answer is the <strong>best possible worst edge</strong> on a route (smallest max effort, lowest water level, widest bandwidth): a bottleneck path, the MST path between s and t.</li>
+<li>Nodes can be <strong>served on their own at a price</strong>: add a virtual node and its edges.</li>
+<li>You must decide which edges are <strong>in every / some / no</strong> optimal tree: forced and forbidden Kruskal runs.</li>
+<li>Queries ask "connected using only edges <strong>below a threshold</strong>?": sort and sweep with a DSU, or query the MST.</li>
+<li>The weights are only <strong>compared</strong>, never added along a path: any increasing transformation (log, square, negate for max) keeps the same tree.</li>
+</ul>
+</div>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Time</th>
+<th>Memory</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kruskal (sort + DSU)</td>
+<td>O(E log E)</td>
+<td>O(V + E)</td>
+<td>edge lists, sparse graphs, bottleneck queries</td>
+</tr>
+<tr>
+<td>Lazy Prim (binary heap)</td>
+<td>O(E log V)</td>
+<td>O(V + E)</td>
+<td>adjacency lists, growing from a start node</td>
+</tr>
+<tr>
+<td>Dense Prim (array scan)</td>
+<td>O(V²)</td>
+<td>O(V)</td>
+<td>complete graphs: points, matrices</td>
+</tr>
+<tr>
+<td>Borůvka</td>
+<td>O(E log V)</td>
+<td>O(V + E)</td>
+<td>implicit graphs with a fast "cheapest edge out" query; parallel</td>
+</tr>
+<tr>
+<td>Critical / pseudo-critical (2E Kruskal runs)</td>
+<td>O(E² α(V))</td>
+<td>O(V + E)</td>
+<td>E up to a few hundred</td>
+</tr>
+<tr>
+<td>Second-best MST (BFS from every node)</td>
+<td>O(V² + E log E)</td>
+<td>O(V²)</td>
+<td>V up to a few thousand</td>
+</tr>
+<tr>
+<td>Second-best MST (binary lifting)</td>
+<td>O(E log V)</td>
+<td>O(V log V)</td>
+<td>large graphs, or many "max on path" queries</td>
+</tr>
+</tbody>
+</table>
+<div class="pitfall">
+<p><strong>Pitfalls: the actual bug and its fix</strong></p>
+<ol>
+<li><strong>Not checking that the graph is connected.</strong> Kruskal happily returns the weight of a spanning <strong>forest</strong>, and Prim the weight of the start node's component. <em>Fix:</em> check <code>taken == n − 1</code> (Kruskal) or <code>taken == n</code> (Prim) and return −1 when the problem says "impossible".</li>
+<li><strong>Using an MST for shortest paths.</strong> The tree minimises the total of all edges, not the distance between two nodes. <em>Fix:</em> if the question is "from A to B, as short as possible", use <a href="shortest-paths.html">Shortest Paths</a>. Only bottleneck (max-edge) questions follow the MST.</li>
+<li><strong>Running Kruskal or Prim on a directed graph.</strong> The cut property needs undirected edges. <em>Fix:</em> a minimum arborescence (Chu–Liu/Edmonds), or check whether the problem really is undirected.</li>
+<li><strong>Off-by-one node ids.</strong> LeetCode numbers cities 1 … n; <code>DSU(n)</code> then fails on node n, and <code>DSU(n + 1)</code> leaves node 0 as an extra component so the connectivity check fails. <em>Fix:</em> subtract 1 on the way in, or use <code>n + 1</code> and expect <code>count == 2</code>.</li>
+<li><strong>Building all V² edges for points and then sorting them.</strong> For n = 1000 that is 500 000 edges and a large sort; in Python it is often too slow. <em>Fix:</em> dense Prim with on-the-fly distances.</li>
+<li><strong>Lazy Prim without the stale check.</strong> Without <code>if in_tree[u]: continue</code>, a node is added twice and its weight is counted twice. <em>Fix:</em> skip popped nodes that are already in the tree.</li>
+<li><strong>Integer overflow of the total.</strong> 10⁵ edges of weight 10⁹ is 10¹⁴. <em>Fix:</em> <code>long</code> totals in C#.</li>
+<li><strong>Comparing the "forced" run with the wrong baseline in critical-edge problems.</strong> A run that skips an edge and leaves the graph disconnected must count as "more expensive". <em>Fix:</em> return infinity (not the forest weight) when the result is not spanning.</li>
+<li><strong>Borůvka with unbroken ties.</strong> Two components may each pick a different edge of equal weight between them, and the picks together close a cycle. <em>Fix:</em> compare <code>(w, index)</code>, and still union through the DSU.</li>
+<li><strong>Minimax by the sum.</strong> Dijkstra with <code>d + w</code> minimises the total, not the largest edge. <em>Fix:</em> relax with <code>max(d, w)</code> or use Kruskal-until-connected.</li>
+<li><strong>Forgetting the virtual node in the node count.</strong> With n houses plus the source you have n + 1 nodes and need n edges. <em>Fix:</em> <code>DSU(n + 1)</code> and node 0 as the source.</li>
+</ol>
+</div>
+<h2 id="worked-problems">Worked problems</h2>
+<h3 id="1-min-cost-to-connect-all-points-medium">1. Min Cost to Connect All Points <span class="diff medium">Medium</span></h3>
+<p>Given n ≤ 1000 points on a plane, the cost of connecting two points is their Manhattan distance <code>|x1 − x2| + |y1 − y2|</code>. Return the minimum cost to make all points connected.</p>
+<p><strong>Key insight.</strong> Every pair is a possible edge, so this is an MST on a <strong>complete graph</strong> with about 500 000 edges. Building and sorting them works in C# but is wasteful; dense Prim computes each distance on the fly in O(n²) time and O(n) memory, exactly the input shape it was made for.</p>
+<details class="solution">
+<summary>Solution: dense Prim with Manhattan distance</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def min_cost_connect_points(points):
+    def manhattan(i, j):
+        return abs(points[i][0] - points[j][0]) + abs(points[i][1] - points[j][1])
+    return prim_dense(len(points), manhattan)
+</code></pre>
+<pre><code class="language-csharp">public long MinCostConnectPoints(int[][] points)
+{
+    return PrimDense(points.Length, (i, j) =&gt;
+        Math.Abs(points[i][0] - points[j][0]) + Math.Abs(points[i][1] - points[j][1]));
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(n²) time, O(n) memory. With Kruskal it is O(n² log n) time and O(n²) memory. For n up to 10⁵ points with Manhattan distance, there is a known reduction to O(n) candidate edges (for each point, only the nearest neighbour in each of 8 octants can be an MST edge), found with a sweep and a Fenwick tree; then Kruskal on those edges.</p>
+</details>
+<h3 id="2-connecting-cities-with-minimum-cost-medium">2. Connecting Cities With Minimum Cost <span class="diff medium">Medium</span></h3>
+<p>There are n cities labelled 1 … n and a list <code>connections[i] = [x, y, cost]</code> of possible bidirectional roads. Return the minimum cost to connect all cities, or −1 if it is impossible.</p>
+<p><strong>Key insight.</strong> This is the textbook MST on an edge list, so Kruskal is the shortest correct code. The only traps are the 1-based labels and the "impossible" case, which shows up as fewer than n − 1 accepted edges.</p>
+<details class="solution">
+<summary>Solution: Kruskal with a connectivity check</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def minimum_cost(n, connections):
+    total, _ = kruskal(n, [(x - 1, y - 1, c) for x, y, c in connections])
+    return -1 if total is None else total
+</code></pre>
+<pre><code class="language-csharp">public long MinimumCost(int n, int[][] connections)
+{
+    var edges = connections.Select(c =&gt; (c[0] - 1, c[1] - 1, c[2])).ToList();
+    return Kruskal(n, edges);                    // -1 when the cities can't all be connected
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(E log E) time, O(n + E) memory.</p>
+</details>
+<h3 id="3-optimize-water-distribution-in-a-village-hard">3. Optimize Water Distribution in a Village <span class="diff hard">Hard</span></h3>
+<p>There are n houses. House i can get water by building a well inside it at cost <code>wells[i − 1]</code>, or by being connected through pipes to a house that has water. <code>pipes[j] = [a, b, cost]</code> is a bidirectional pipe between houses a and b. Return the minimum total cost to supply water to every house.</p>
+<p><strong>Key insight.</strong> A well is a cost that belongs to <strong>one node</strong>, which a spanning tree cannot express. Add a virtual node 0 ("the ground water") with an edge 0–i of weight <code>wells[i − 1]</code>. Every house must be connected to node 0 through some chain of pipes and exactly one well, so the cheapest plan is an MST on n + 1 nodes. Several wells can be chosen; each is one edge to node 0.</p>
+<details class="solution">
+<summary>Solution: virtual node + Kruskal</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def min_cost_to_supply_water(n, wells, pipes):
+    edges = [(0, i + 1, cost) for i, cost in enumerate(wells)]     # node 0 = digging a well
+    edges += [(a, b, cost) for a, b, cost in pipes]
+    total, _ = kruskal(n + 1, edges)
+    return total
+</code></pre>
+<pre><code class="language-csharp">public long MinCostToSupplyWater(int n, int[] wells, int[][] pipes)
+{
+    var edges = new List&lt;(int u, int v, int w)&gt;();
+    for (int i = 0; i &lt; n; i++) edges.Add((0, i + 1, wells[i]));   // node 0 = digging a well
+    foreach (var p in pipes) edges.Add((p[0], p[1], p[2]));
+    return Kruskal(n + 1, edges);
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O((n + P) log(n + P)) time. The answer always exists, because node 0 is connected to every house.</p>
+</details>
+<h3 id="4-path-with-minimum-effort-medium">4. Path With Minimum Effort <span class="diff medium">Medium</span></h3>
+<p>Given a grid of heights, walk from the top-left to the bottom-right moving up, down, left or right. A route's <strong>effort</strong> is the largest absolute height difference between two consecutive cells on it. Return the minimum effort.</p>
+<p><strong>Key insight.</strong> "Minimise the largest step" is a <strong>bottleneck path</strong>. Every pair of adjacent cells is an edge whose weight is the height difference. Add edges from the smallest difference upward, and the first edge that connects the two corners is the answer: before it, they were separated by strictly smaller edges. Dijkstra with <code>max</code> instead of <code>+</code> also works and is shown on the <a href="shortest-paths.html">Shortest Paths</a> page; seeing both is the best way to understand why minimax problems sit between the two topics.</p>
+<details class="solution">
+<summary>Solution: Kruskal until the corners connect</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def minimum_effort_path(heights):
+    R, C = len(heights), len(heights[0])
+    if R * C == 1:
+        return 0
+    edges = []
+    for r in range(R):
+        for c in range(C):
+            i = r * C + c
+            if c + 1 &lt; C:
+                edges.append((abs(heights[r][c] - heights[r][c + 1]), i, i + 1))
+            if r + 1 &lt; R:
+                edges.append((abs(heights[r][c] - heights[r + 1][c]), i, i + C))
+    edges.sort()
+    dsu = DSU(R * C)
+    for w, a, b in edges:
+        dsu.union(a, b)
+        if dsu.find(0) == dsu.find(R * C - 1):
+            return w                     # the edge that finally joins the corners
+    return 0
+</code></pre>
+<pre><code class="language-csharp">public int MinimumEffortPath(int[][] heights)
+{
+    int R = heights.Length, C = heights[0].Length;
+    if (R * C == 1) return 0;
+    var edges = new List&lt;(int w, int a, int b)&gt;();
+    for (int r = 0; r &lt; R; r++)
+        for (int c = 0; c &lt; C; c++)
+        {
+            int i = r * C + c;
+            if (c + 1 &lt; C) edges.Add((Math.Abs(heights[r][c] - heights[r][c + 1]), i, i + 1));
+            if (r + 1 &lt; R) edges.Add((Math.Abs(heights[r][c] - heights[r + 1][c]), i, i + C));
+        }
+    edges.Sort();
+    var dsu = new DSU(R * C);
+    foreach (var (w, a, b) in edges)
+    {
+        dsu.Union(a, b);
+        if (dsu.Find(0) == dsu.Find(R * C - 1)) return w;   // the edge that joins the corners
+    }
+    return 0;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(RC log(RC)) time for the sort, O(RC) memory. Swim in Rising Water is the same problem with cell weights instead of edge weights (an edge between neighbours costs <code>max(h1, h2)</code>).</p>
+</details>
+<h3 id="5-remove-max-number-of-edges-to-keep-graph-fully-traversable-hard">5. Remove Max Number of Edges to Keep Graph Fully Traversable <span class="diff hard">Hard</span></h3>
+<p>An undirected graph on n nodes (1 … n) has three edge types: type 1 can be used only by Alice, type 2 only by Bob, type 3 by both. Remove as many edges as possible so that both Alice and Bob can still reach every node from every other. Return the number removed, or −1 if it is impossible even with all edges.</p>
+<p><strong>Key insight.</strong> Each person needs a spanning tree of their own usable edges, and we want to <strong>keep</strong> as few edges as possible. A shared edge does the job of two private edges at once, so it is never worse to take shared edges first. Run a Kruskal-style pass (all weights equal) on type-3 edges in both DSUs, then type-1 edges in Alice's DSU and type-2 in Bob's. Every edge that joined nothing new can be removed.</p>
+<details class="solution">
+<summary>Solution: two DSUs, shared edges first</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def max_num_edges_to_remove(n, edges):
+    alice, bob = DSU(n + 1), DSU(n + 1)          # node 0 is unused
+    kept = 0
+    for t, u, v in edges:
+        if t == 3:
+            joined = alice.union(u, v)
+            bob.union(u, v)                      # both DSUs are identical so far
+            kept += joined
+    for t, u, v in edges:
+        if t == 1:
+            kept += alice.union(u, v)
+        elif t == 2:
+            kept += bob.union(u, v)
+    if alice.count != 2 or bob.count != 2:       # 1 component + the unused node 0
+        return -1
+    return len(edges) - kept
+</code></pre>
+<pre><code class="language-csharp">public int MaxNumEdgesToRemove(int n, int[][] edges)
+{
+    var alice = new DSU(n + 1); var bob = new DSU(n + 1);   // node 0 is unused
+    int kept = 0;
+    foreach (var e in edges)
+        if (e[0] == 3)
+        {
+            bool joined = alice.Union(e[1], e[2]);
+            bob.Union(e[1], e[2]);                          // both DSUs are identical so far
+            if (joined) kept++;
+        }
+    foreach (var e in edges)
+    {
+        if (e[0] == 1 &amp;&amp; alice.Union(e[1], e[2])) kept++;
+        else if (e[0] == 2 &amp;&amp; bob.Union(e[1], e[2])) kept++;
+    }
+    if (alice.Count != 2 || bob.Count != 2) return -1;      // 1 component + node 0
+    return edges.Length - kept;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(E·α(n)) time, O(n) memory. Why "shared first" is safe: by the exchange argument, if an optimal solution uses a private edge where a shared edge could connect the same two components, swapping in the shared edge serves both people and never increases the count.</p>
+</details>
+<h3 id="6-find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree-hard">6. Find Critical and Pseudo-Critical Edges in Minimum Spanning Tree <span class="diff hard">Hard</span></h3>
+<p>Given a connected weighted graph with n ≤ 100 nodes and E ≤ 200 edges, return two lists of edge indices: <strong>critical</strong> edges, which appear in every MST, and <strong>pseudo-critical</strong> edges, which appear in some MSTs but not all.</p>
+<p><strong>Key insight.</strong> Compute the MST weight W once. Edge i is critical exactly when the best spanning tree <strong>without</strong> i is heavier than W (or does not exist). Otherwise, edge i is pseudo-critical exactly when the best spanning tree <strong>forced to contain</strong> i still weighs W. Both are one Kruskal run on the presorted edges. The <code>critical</code> visualizer above steps through this exact loop.</p>
+<details class="solution">
+<summary>Solution: 2E Kruskal runs, skip or force</summary>
+<div class="code-tabs">
+<pre><code class="language-python">def find_critical_and_pseudo_critical_edges(n, edges):
+    order = sorted(range(len(edges)), key=lambda i: edges[i][2])
+
+    def mst(skip=-1, force=-1):
+        dsu, total = DSU(n), 0
+        if force != -1:
+            u, v, w = edges[force]
+            dsu.union(u, v)
+            total += w
+        for i in order:
+            if i != skip:
+                u, v, w = edges[i]
+                if dsu.union(u, v):
+                    total += w
+        return total if dsu.count == 1 else float(&quot;inf&quot;)    # not spanning = infinitely bad
+
+    base = mst()
+    critical, pseudo = [], []
+    for i in range(len(edges)):
+        if mst(skip=i) &gt; base:
+            critical.append(i)
+        elif mst(force=i) == base:
+            pseudo.append(i)
+    return [critical, pseudo]
+</code></pre>
+<pre><code class="language-csharp">public IList&lt;IList&lt;int&gt;&gt; FindCriticalAndPseudoCriticalEdges(int n, int[][] edges)
+{
+    var order = Enumerable.Range(0, edges.Length).OrderBy(i =&gt; edges[i][2]).ToArray();
+    long Mst(int skip, int force)
+    {
+        var dsu = new DSU(n); long total = 0;
+        if (force != -1) { dsu.Union(edges[force][0], edges[force][1]); total += edges[force][2]; }
+        foreach (int i in order)
+            if (i != skip &amp;&amp; dsu.Union(edges[i][0], edges[i][1])) total += edges[i][2];
+        return dsu.Count == 1 ? total : long.MaxValue;      // not spanning = infinitely bad
+    }
+    long baseW = Mst(-1, -1);
+    var critical = new List&lt;int&gt;(); var pseudo = new List&lt;int&gt;();
+    for (int i = 0; i &lt; edges.Length; i++)
+    {
+        if (Mst(i, -1) &gt; baseW) critical.Add(i);
+        else if (Mst(-1, i) == baseW) pseudo.Add(i);
+    }
+    return new List&lt;IList&lt;int&gt;&gt; { critical, pseudo };
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(E log E + E²·α(n)) time, O(n + E) memory. A faster O(E log E) solution processes each group of equal-weight edges together: contract the components formed by lighter edges, then an edge of the group is in no MST if it is a self-loop after contraction, critical if it is a <strong>bridge</strong> in the group's contracted multigraph, and pseudo-critical otherwise (bridges: see <a href="advanced-graphs.html">Advanced Graphs</a>).</p>
+</details>
+<h3 id="7-second-best-minimum-spanning-tree-expert">7. Second-Best Minimum Spanning Tree <span class="diff expert">Expert</span></h3>
+<p>Given a connected undirected graph with positive weights (parallel edges allowed), return the weight of the cheapest spanning tree that is <strong>different</strong> from a fixed MST (as a set of edges), or −1 if the graph has only one spanning tree. If several MSTs tie, the answer equals the MST weight.</p>
+<p><strong>Key insight.</strong> Some second-best tree differs from the MST in exactly one swap: add a non-tree edge u–v, remove the heaviest tree edge on the path u ⇝ v. So build the MST, precompute <code>mx[s][x]</code> = the heaviest edge on the tree path from s to x (one BFS per node over the tree), and minimise <code>W + w − mx[u][v]</code> over the non-tree edges.</p>
+<details class="solution">
+<summary>Solution: MST + best single swap</summary>
+<div class="code-tabs">
+<pre><code class="language-python">from collections import deque
+
+
+def second_best_mst(n, edges):
+    order = sorted(range(len(edges)), key=lambda i: edges[i][2])
+    dsu, W, in_mst = DSU(n), 0, [False] * len(edges)
+    adj = [[] for _ in range(n)]
+    for i in order:
+        u, v, w = edges[i]
+        if dsu.union(u, v):
+            W += w
+            in_mst[i] = True
+            adj[u].append((v, w))
+            adj[v].append((u, w))
+    mx = [[0] * n for _ in range(n)]             # mx[s][x]: heaviest edge on the tree path s ~&gt; x
+    for s in range(n):
+        seen = [False] * n
+        seen[s] = True
+        q = deque([s])
+        while q:
+            x = q.popleft()
+            for y, w in adj[x]:
+                if not seen[y]:
+                    seen[y] = True
+                    mx[s][y] = max(mx[s][x], w)
+                    q.append(y)
+    best = -1
+    for i, (u, v, w) in enumerate(edges):
+        if not in_mst[i] and u != v:             # a self-loop can never be swapped in
+            cand = W + w - mx[u][v]
+            if best == -1 or cand &lt; best:
+                best = cand
+    return best
+</code></pre>
+<pre><code class="language-csharp">public long SecondBestMst(int n, int[][] edges)
+{
+    var order = Enumerable.Range(0, edges.Length).OrderBy(i =&gt; edges[i][2]).ToArray();
+    var dsu = new DSU(n); long W = 0; var inMst = new bool[edges.Length];
+    var adj = new List&lt;(int to, int w)&gt;[n];
+    for (int i = 0; i &lt; n; i++) adj[i] = new List&lt;(int to, int w)&gt;();
+    foreach (int i in order)
+    {
+        int u = edges[i][0], v = edges[i][1], w = edges[i][2];
+        if (!dsu.Union(u, v)) continue;
+        W += w; inMst[i] = true;
+        adj[u].Add((v, w)); adj[v].Add((u, w));
+    }
+    var mx = new int[n, n];                      // heaviest edge on the tree path s ~&gt; x
+    for (int s = 0; s &lt; n; s++)
+    {
+        var seen = new bool[n]; seen[s] = true;
+        var q = new Queue&lt;int&gt;(); q.Enqueue(s);
+        while (q.Count &gt; 0)
+        {
+            int x = q.Dequeue();
+            foreach (var (y, w) in adj[x])
+                if (!seen[y]) { seen[y] = true; mx[s, y] = Math.Max(mx[s, x], w); q.Enqueue(y); }
+        }
+    }
+    long best = -1;
+    for (int i = 0; i &lt; edges.Length; i++)
+    {
+        int u = edges[i][0], v = edges[i][1];
+        if (inMst[i] || u == v) continue;        // a self-loop can never be swapped in
+        long cand = W + edges[i][2] - mx[u, v];
+        if (best == -1 || cand &lt; best) best = cand;
+    }
+    return best;
+}
+</code></pre>
+</div>
+<p><strong>Complexity:</strong> O(E log E + V²) time and O(V²) memory, fine for V up to a few thousand. For large V, replace the all-pairs table with binary lifting on the MST (<code>up[k][v]</code>, <code>mx[k][v]</code>), which answers each <code>maxOnPath(u, v)</code> in O(log V) for O(E log V) total. Some judges ask for the <strong>strictly</strong> second-best tree; then also track the second-largest distinct edge on each path, and use it when <code>w == maxOnPath</code>.</p>
+</details>
+<h2 id="problem-ladder">Problem ladder</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Level</th>
+<th>The key idea</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://www.geeksforgeeks.org/problems/minimum-spanning-tree/1">Minimum Spanning Tree (GfG)</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Plain Kruskal or Prim; return the total.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://cses.fi/problemset/task/1675">Road Reparation (CSES)</a></td>
+<td><span class="diff easy">Easy</span></td>
+<td>Kruskal on 2·10⁵ edges; "IMPOSSIBLE" when fewer than n − 1 are taken.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://leetcode.com/problems/connecting-cities-with-minimum-cost/">Connecting Cities With Minimum Cost</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Kruskal with 1-based ids; −1 if not spanning.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://leetcode.com/problems/min-cost-to-connect-all-points/">Min Cost to Connect All Points</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Complete graph: dense Prim, O(n²), distances on the fly.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://leetcode.com/problems/minimum-score-of-a-path-between-two-cities/">Minimum Score of a Path Between Two Cities</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Not an MST: walks may repeat roads, so the answer is the lightest edge in city 1's component.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://leetcode.com/problems/path-with-minimum-effort/">Path With Minimum Effort</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Bottleneck path: Kruskal on grid edges until the corners connect.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://leetcode.com/problems/path-with-maximum-minimum-value/">Path With Maximum Minimum Value</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Maximin: open cells from the largest value down until the corners connect.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://leetcode.com/problems/minimize-the-maximum-edge-weight-of-graph/">Minimize the Maximum Edge Weight of Graph</a></td>
+<td><span class="diff medium">Medium</span></td>
+<td>Reverse the edges; the answer is the largest minimax distance from node 0 (the out-degree limit never binds).</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://leetcode.com/problems/swim-in-rising-water/">Swim in Rising Water</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Cells open in height order; the time the corners connect.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://leetcode.com/problems/optimize-water-distribution-in-a-village/">Optimize Water Distribution in a Village</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Virtual node 0: wells become edges, then Kruskal.</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://leetcode.com/problems/remove-max-number-of-edges-to-keep-graph-fully-traversable/">Remove Max Number of Edges to Keep Graph Fully Traversable</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Two DSUs; shared edges first.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://codeforces.com/problemset/problem/1095/F">Make It Connected (Codeforces 1095F)</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Of the n² "a_i + a_j" edges only the n − 1 from the smallest a can matter; add the offers, run Kruskal.</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://leetcode.com/problems/checking-existence-of-edge-length-limited-paths/">Checking Existence of Edge Length Limited Paths</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Offline: sort queries by limit, add lighter edges to a DSU.</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="https://leetcode.com/problems/maximum-number-of-points-from-grid-queries/">Maximum Number of Points From Grid Queries</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>A cell counts for q when its minimax value from the corner is &lt; q: sort queries, expand with a heap.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="https://leetcode.com/problems/minimum-cost-walk-in-weighted-graph/">Minimum Cost Walk in Weighted Graph</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Not an MST: AND only shrinks, so walk every edge of the component; DSU + AND per root.</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/">Find Critical and Pseudo-Critical Edges in MST</a></td>
+<td><span class="diff hard">Hard</span></td>
+<td>Skip each edge (critical if worse), force each edge (pseudo if equal).</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="https://leetcode.com/problems/checking-existence-of-edge-length-limited-paths-ii/">Checking Existence of Edge Length Limited Paths II</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Online: build the MST, answer "max edge on the tree path &lt; limit" with binary lifting.</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="https://codeforces.com/problemset/problem/609/E">Minimum Spanning Tree for Each Edge (Codeforces 609E)</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>W + w(e) − maxOnPath(u, v), with binary lifting on the MST.</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="https://cp-algorithms.com/graph/second_best_mst.html">Second Best MST (cp-algorithms)</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Best single swap; for strictly second-best also keep the second-largest edge on each path.</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="https://codeforces.com/problemset/problem/888/G">Xor-MST (Codeforces 888G)</a></td>
+<td><span class="diff expert">Expert</span></td>
+<td>Borůvka (or divide and conquer on bits) with a binary trie answering "cheapest edge out".</td>
+</tr>
+</tbody>
+</table>
+<h2 id="self-check">Self-check</h2>
+<details class="quiz">
+<summary>Does the MST contain the shortest path between every pair of nodes?</summary>
+<p>No. Take a triangle with edges A–B 2, B–C 2, A–C 3. The MST is A–B + B–C (total 4), so the tree path from A to C has length 4, while the direct edge A–C has length 3. The MST minimises the <strong>sum of all edges built</strong>, not the length of any one route. What the MST path does minimise is the <strong>largest</strong> edge on the route (the bottleneck): here max(2, 2) = 2 &lt; 3.</p>
+</details>
+<details class="quiz">
+<summary>Can MST algorithms handle negative edge weights?</summary>
+<p>Yes, with no change at all. Kruskal and Prim only <strong>compare</strong> weights, and the cut property holds for any real numbers. You could add a large constant to every edge to make them positive, and since every spanning tree has exactly n − 1 edges, every tree's total shifts by the same amount. (This is the big difference from Dijkstra, which adds weights along a path and breaks on negative edges.)</p>
+</details>
+<details class="quiz">
+<summary>Every node picks its single cheapest edge. Is the union of those edges an MST?</summary>
+<p>Each picked edge is safe (cut property, cut = that node versus the rest), so all of them belong to the MST when weights are distinct. But they are usually <strong>not enough</strong>: on 0–1 (1), 2–3 (1), 1–2 (5), nodes 0 and 1 pick 0–1, nodes 2 and 3 pick 2–3, and nobody picks 1–2. You get components, not a tree. Repeating the step on the components until one remains is exactly Borůvka's algorithm.</p>
+</details>
+<details class="quiz">
+<summary>Why can Kruskal stop as soon as it has taken n − 1 edges?</summary>
+<p>A forest on n nodes with n − 1 edges is connected: every edge taken reduced the component count by one, from n down to 1. Every later edge would have both ends in the single remaining component, so every one of them would be rejected. Stopping early skips that wasted work; on a typical input it is most of the edge list.</p>
+</details>
+<details class="quiz">
+<summary>In lazy Prim, how large can the heap get, and does it matter?</summary>
+<p>Every edge can be pushed twice (once from each end), so the heap can hold O(E) entries, of which many become stale. That makes it O(E log E) time, which equals O(E log V) since log E ≤ 2 log V. It only matters for memory on huge dense graphs, and there you should be using dense Prim anyway. An eager Prim with an indexed heap (decrease-key) keeps at most V entries.</p>
+</details>
+<details class="quiz">
+<summary>One edge weight drops. How do you update the MST without recomputing it?</summary>
+<p>If the edge is already in the tree, nothing changes: the tree only got cheaper and is still minimal. If it is not, add it: it closes one cycle with the tree path between its ends. Remove the <strong>heaviest</strong> edge on that cycle (cycle property). That is O(V) with a DFS along the tree. If an edge in the tree gets <strong>heavier</strong>, remove it, which splits the tree in two, and reconnect with the lightest edge crossing between the halves (cut property), in O(E).</p>
+</details>
+<details class="quiz">
+<summary>Your graph is directed: "every city must be reachable from the capital". Why is Kruskal wrong?</summary>
+<p>Kruskal treats u→v and v→u as the same connection and builds a tree that may need to traverse some edges backwards. In a directed graph the cut property fails: the lightest edge into a set of nodes might point the wrong way for the root. The right problem is a <strong>minimum arborescence</strong> rooted at the capital, solved by the Chu–Liu/Edmonds algorithm in O(VE): every node picks its cheapest incoming edge, cycles are contracted with adjusted weights, and the process repeats.</p>
+</details>
+<details class="quiz">
+<summary>Path With Minimum Effort: Kruskal or Dijkstra?</summary>
+<p>Both are correct. Kruskal sorts all ~2RC edges and adds them until the corners connect: simple, and the "why" is the bottleneck property of the MST. Dijkstra runs from the start with <code>max(d, w)</code> as the path cost and can stop as soon as the target is popped, so it often explores less of the grid. Binary search on the effort plus a BFS is a third option. If you only remember one, remember that the answer to "minimise the maximum" is a threshold, and all three are ways to find the smallest threshold that connects the corners.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Goal</strong>Connect all n nodes with n − 1 edges and the least total weight</div>
+<div><strong>Cut property</strong>The lightest edge crossing any cut is in some MST</div>
+<div><strong>Cycle property</strong>The heaviest edge on a cycle is in no MST (if strictly heaviest)</div>
+<div><strong>Kruskal</strong>Sort edges; take an edge iff <code>dsu.union(u, v)</code>; stop at n − 1</div>
+<div><strong>Prim</strong>Heap of <code>(w, node)</code>; pop, skip if in tree, else add and push its edges</div>
+<div><strong>Dense Prim</strong>Complete graph: <code>dist[]</code> array + O(V) scan, O(V²) total</div>
+<div><strong>Which one</strong>Edge list → Kruskal; points or matrix → dense Prim; start node → heap Prim</div>
+<div><strong>Impossible?</strong>Fewer than n − 1 edges taken (Kruskal) or fewer than n nodes reached (Prim)</div>
+<div><strong>Max spanning tree</strong>Sort descending (or negate weights)</div>
+<div><strong>Bottleneck path</strong>Add edges in order until s and t connect; the last edge is the answer</div>
+<div><strong>Own cost per node</strong>Virtual node 0 with an edge of that cost to every node</div>
+<div><strong>Critical edge</strong>Skipping it raises the total (or disconnects)</div>
+<div><strong>Pseudo-critical</strong>Not critical, and forcing it in keeps the total</div>
+<div><strong>Swap</strong>Add non-tree u–v, drop the heaviest edge on the tree path: W + w − max</div>
+<div><strong>Only order matters</strong>Any increasing transform of the weights keeps the same MST</div>
+<div><strong>Not an MST</strong>Directed graphs (arborescence), subsets of nodes (Steiner), shortest paths</div>
+</div><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="shortest-paths.html"><small>&larr; PREVIOUS</small>Shortest Paths</a><a class="next" href="advanced-graphs.html"><small>NEXT &rarr;</small>Advanced Graph Algorithms</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#why-minimum-spanning-trees-exist">Why minimum spanning trees exist</a></li>
+<li><a href="#why-greedy-works-cuts-and-cycles">Why greedy works: cuts and cycles</a><ul>
+<li><a href="#step-through-the-exchange-argument">Step through the exchange argument</a></li>
+<li><a href="#the-cycle-property-what-to-throw-away">The cycle property: what to throw away</a></li>
+</ul>
+</li>
+<li><a href="#kruskal-sorted-edges-plus-union-find">Kruskal: sorted edges plus union-find</a><ul>
+<li><a href="#step-through-kruskal">Step through Kruskal</a></li>
+<li><a href="#the-template">The template</a></li>
+</ul>
+</li>
+<li><a href="#prim-grow-one-tree-with-a-heap">Prim: grow one tree with a heap</a><ul>
+<li><a href="#step-through-prim">Step through Prim</a></li>
+</ul>
+</li>
+<li><a href="#kruskal-or-prim">Kruskal or Prim?</a><ul>
+<li><a href="#dense-prim-ov2-with-no-heap-at-all">Dense Prim: O(V²) with no heap at all</a></li>
+<li><a href="#boruvka-every-component-picks-at-once">Borůvka: every component picks at once</a></li>
+</ul>
+</li>
+<li><a href="#variants-and-tricks">Variants and tricks</a><ul>
+<li><a href="#maximum-spanning-tree">Maximum spanning tree</a></li>
+<li><a href="#bottleneck-minimax-paths">Bottleneck (minimax) paths</a></li>
+<li><a href="#the-virtual-node-nodes-that-cost-something-on-their-own">The virtual node: nodes that cost something on their own</a></li>
+<li><a href="#forced-and-forbidden-edges">Forced and forbidden edges</a></li>
+<li><a href="#second-best-mst-and-mst-through-edge-e">Second-best MST and "MST through edge e"</a></li>
+<li><a href="#msts-in-disguise">MSTs in disguise</a></li>
+</ul>
+</li>
+<li><a href="#recognize-it-when">Recognize it when</a></li>
+<li><a href="#worked-problems">Worked problems</a><ul>
+<li><a href="#1-min-cost-to-connect-all-points-medium">1. Min Cost to Connect All Points Medium</a></li>
+<li><a href="#2-connecting-cities-with-minimum-cost-medium">2. Connecting Cities With Minimum Cost Medium</a></li>
+<li><a href="#3-optimize-water-distribution-in-a-village-hard">3. Optimize Water Distribution in a Village Hard</a></li>
+<li><a href="#4-path-with-minimum-effort-medium">4. Path With Minimum Effort Medium</a></li>
+<li><a href="#5-remove-max-number-of-edges-to-keep-graph-fully-traversable-hard">5. Remove Max Number of Edges to Keep Graph Fully Traversable Hard</a></li>
+<li><a href="#6-find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree-hard">6. Find Critical and Pseudo-Critical Edges in Minimum Spanning Tree Hard</a></li>
+<li><a href="#7-second-best-minimum-spanning-tree-expert">7. Second-Best Minimum Spanning Tree Expert</a></li>
+</ul>
+</li>
+<li><a href="#problem-ladder">Problem ladder</a></li>
+<li><a href="#self-check">Self-check</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

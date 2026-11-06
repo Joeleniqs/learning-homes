@@ -1,0 +1,79 @@
+/* Sorting: SVG bars, merge-sort recursion tree, radix buckets, interval lanes, small stat panels. Variables only. */
+.so-col { display: flex; flex-direction: column; align-items: center; gap: 12px; max-width: 100%; }
+.so-svg { max-width: 100%; height: auto; overflow: visible; font: 600 11px "Cascadia Code", Consolas, monospace; }
+.so-svg .so-bar { fill: var(--v-dim); stroke: transparent; stroke-width: 2; transition: fill .2s, y .25s, height .25s; }
+.so-svg .so-bar.active { fill: var(--v-active); }
+.so-svg .so-bar.visit { fill: var(--v-visit); }
+.so-svg .so-bar.window { fill: var(--v-visit-soft); stroke: var(--v-visit); }
+.so-svg .so-bar.done { fill: var(--v-done); }
+.so-svg .so-bar.bad { fill: var(--v-bad); }
+.so-svg .so-bar.path { fill: var(--v-path); }
+.so-svg .so-bar.dim { opacity: .3; }
+.so-svg .so-v { fill: var(--text); text-anchor: middle; font-size: 12px; }
+.so-svg .so-ptr { fill: var(--accent); text-anchor: middle; font-weight: 700; }
+.so-svg .so-range { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.2; stroke-dasharray: 5 3; opacity: .55; }
+.so-svg .so-pl { stroke: var(--v-path); stroke-width: 1.6; stroke-dasharray: 6 4; }
+.so-svg .so-pl-t { fill: var(--v-path); text-anchor: start; font-size: 10.5px; }
+.so-stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.so-stat { display: flex; flex-direction: column; align-items: center; min-width: 92px; padding: 5px 12px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--surface); }
+.so-stat span { font-size: 10.5px; letter-spacing: .4px; color: var(--muted); text-transform: uppercase; }
+.so-stat b { font: 700 17px "Cascadia Code", Consolas, monospace; color: var(--text); }
+/* merge sort recursion tree: one row per depth, segments placed on an n-column grid */
+.so-tree { display: flex; flex-direction: column; gap: 8px; max-width: 100%; overflow-x: auto; padding: 2px; }
+.so-lvl { display: flex; align-items: center; gap: 10px; }
+.so-depth { width: 52px; flex: none; font-size: 10.5px; color: var(--muted); text-align: right; }
+.so-lgrid { display: grid; column-gap: 0; }
+.so-seg { display: flex; gap: 2px; justify-content: center; margin: 0 3px; padding: 3px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--surface); transition: opacity .2s, border-color .2s; }
+.so-seg.idle { opacity: .35; border-style: dashed; }
+.so-seg.split { border-style: dashed; border-color: var(--v-path); }
+.so-seg.split.cur { background: var(--v-path-soft); }
+.so-seg.merging.cur { border-color: var(--v-visit); border-width: 2px; }
+.so-seg.sorted { border-color: var(--v-done); }
+.so-seg.sorted.cur { background: var(--v-done-soft); }
+.so-seg.kid { border-color: var(--v-active); border-width: 2px; }
+.so-c { width: 36px; height: 32px; display: grid; place-items: center; border-radius: 6px; border: 1.5px solid var(--line); background: var(--v-node); font: 600 13px "Cascadia Code", Consolas, monospace; transition: background .2s, opacity .2s; }
+.so-c.empty { border-style: dashed; background: transparent; }
+.so-c.dim { opacity: .3; }
+.so-c.active { background: var(--v-active-soft); border-color: var(--v-active); }
+.so-c.visit { background: var(--v-visit-soft); border-color: var(--v-visit); }
+.so-c.visit.new { border-width: 2.5px; }
+.so-c.bad { background: var(--v-bad-soft); border-color: var(--v-bad); }
+.so-c.done { background: var(--v-done-soft); border-color: var(--v-done); }
+/* radix: numbers with a highlighted digit, and ten bucket columns */
+.so-nums { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.so-num { display: inline-flex; padding: 6px 8px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--v-node); font: 600 15px "Cascadia Code", Consolas, monospace; }
+.so-num i { font-style: normal; color: var(--muted); }
+.so-num i.pad { opacity: .35; }
+.so-num i.on { color: var(--accent); font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+.so-num.active { background: var(--v-active-soft); border-color: var(--v-active); }
+.so-num.done { background: var(--v-done-soft); border-color: var(--v-done); }
+.so-bkts { display: grid; grid-template-columns: repeat(10, minmax(46px, 1fr)); gap: 5px; max-width: 100%; }
+.so-bkt { display: flex; flex-direction: column-reverse; justify-content: flex-start; align-items: center; gap: 3px; min-height: 120px; padding: 4px 3px; border: 1.5px solid var(--line); border-top: 0; border-radius: 0 0 8px 8px; background: var(--surface); }
+.so-bkt b { font-size: 11px; color: var(--muted); }
+.so-bkt span { width: 100%; padding: 2px 0; text-align: center; border-radius: 5px; background: var(--v-node); border: 1px solid var(--line); font: 600 12px "Cascadia Code", Consolas, monospace; }
+.so-bkt span.active { background: var(--v-active-soft); border-color: var(--v-active); }
+.so-bkt.visit { border-color: var(--v-visit); background: var(--v-visit-soft); }
+/* interval lanes */
+.so-iv .so-ivr { fill: var(--v-dim); stroke: var(--muted); stroke-width: 1; }
+.so-iv .so-ivr.seen { opacity: .45; }
+.so-iv .so-ivr.active { fill: var(--v-active); stroke: var(--v-active); }
+.so-iv .so-ivr.visit { fill: var(--v-visit-soft); stroke: var(--v-visit); }
+.so-iv .so-ivr.done { fill: var(--v-done); stroke: var(--v-done); }
+.so-iv .so-ivt { fill: var(--muted); text-anchor: start; font-size: 10.5px; }
+.so-iv .so-reach { stroke: var(--v-path); stroke-width: 2; stroke-dasharray: 5 3; }
+.so-iv .so-reach-t { fill: var(--v-path); font-size: 10.5px; }
+.so-iv .so-axis { stroke: var(--line); stroke-width: 1.5; }
+.so-iv .so-tick { fill: var(--muted); text-anchor: middle; font-size: 10px; }
+/* heap edges outside the heap */
+.viz svg.v-graph .e.dim { opacity: .2; stroke-dasharray: 4 4; }
+/* Defensive: keep shared .prose table and global .path rules out of the visualizers. */
+.prose .viz table.v-grid { display: table; width: auto; border-collapse: separate; border-spacing: 3px; margin: 0; font-size: inherit; overflow: visible; }
+.prose .viz .v-grid th { padding: 2px 6px; border: 0; min-width: 0; background: none; text-align: center; vertical-align: middle; white-space: nowrap; }
+.prose .viz .v-grid td.v-gcell { min-width: 38px; padding: 0 5px; border-width: 1.5px; border-radius: 6px; vertical-align: middle; }
+.viz .v-cell.path { display: grid; grid-auto-flow: row; grid-auto-columns: auto; gap: 0; padding: 0 6px; overflow: visible; counter-reset: none; }
+.viz .v-item.path { display: block; grid-auto-columns: auto; padding: 5px 10px; overflow: visible; }
+.viz .v-ptr-under { white-space: nowrap; }
+/* Page figures */
+
+/* Legend swatch for the 'window' state (site.css has none). */
+.viz-legend .lg-window::before { border-color: var(--v-visit); border-style: dashed; background: var(--v-visit-soft); }

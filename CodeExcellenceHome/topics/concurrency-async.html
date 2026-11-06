@@ -1,0 +1,1642 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Concurrency &amp; Async | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/concurrency-async.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/concurrency-async.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track" open><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html" aria-current="page">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track"><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Concurrency &amp; Async</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">PERFORMANCE</p><h1>Concurrency &amp; Async</h1><p class="lede">Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated.</p><div class="meta"><span class="level level-intermediate">Intermediate → Expert</span><span>~75 min study</span><span>Builds on: <a href="language-mental-models.html">Cross-Language Mental Models</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="concurrency-async" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-three-bugs-that-only-show-up-under-load">The problem: three bugs that only show up under load</h2>
+<p>A checkout service passes every test. In production, three separate bugs show up within one month.</p>
+<ol>
+<li><strong>The counter is wrong.</strong> A dashboard says 9,812 orders were placed today, but the database has 10,004. The in-memory counter used <code>count++</code> from many request threads. Two threads read 41, both wrote 42, and one order disappeared from the count. No exception was thrown and no log line was written.</li>
+<li><strong>The app freezes.</strong> A developer "simplified" a desktop admin tool by calling <code>GetOrderAsync(id).Result</code> inside a button handler. It worked on their machine because the data was cached. On the first cache miss in production, the window froze forever, at 0% CPU.</li>
+<li><strong>Latency explodes at 0% CPU.</strong> The same <code>.Result</code> pattern moved into a web API. At 50 requests per second, p99 latency went from 80 ms to 40 seconds. CPU was at 6%. The thread pool had run out of threads, and every thread was blocked waiting for a continuation that needed a thread to run.</li>
+</ol>
+<p>These are the three classic concurrency failures: a <strong>race</strong>, a <strong>deadlock</strong> and <strong>starvation</strong>. All three come from one gap: not knowing <em>which thread runs which code, when</em>. This page builds that picture across C#, Java, Python, Go and TypeScript and animates each failure until you can see it coming.</p>
+<div class="rule">
+<p><strong>The rule.</strong> Use concurrency to <em>overlap waiting</em> and parallelism to <em>use more cores</em>. Never block a thread while you wait for asynchronous work. Never let two threads touch the same mutable state without a happens-before edge (a lock, an atomic or a channel). Bound every queue, fan-out and pool, and pass cancellation all the way down.</p>
+</div>
+<div class="recognize">
+<p><strong>Recognize a concurrency bug when</strong></p>
+<ul>
+<li>A number is <em>slightly</em> wrong under load and always right in tests (lost update).</li>
+<li>The process hangs at 0% CPU, and a dump shows threads waiting on each other (deadlock).</li>
+<li>Latency climbs while CPU stays low, and the thread count keeps creeping up (thread-pool starvation).</li>
+<li>A bug disappears when you add a log line or attach a debugger: timing changed, so the interleaving changed.</li>
+<li>A test is "flaky" only on the CI machine with more (or fewer) cores.</li>
+</ul>
+</div>
+<p>This is the concurrency chapter of the performance track. <a href="performance-cadence.html">Performance Cadence</a> covers how to <em>measure</em> (goals, profiles, benchmarks); this page covers the execution models you are measuring. <a href="memory-and-gc.html">Memory and GC</a> covers the other half of runtime behaviour. Batching, pooling and backpressure as optimisation patterns live in <a href="performance-patterns.html">Performance Patterns</a>. The language basics come from <a href="language-mental-models.html">Language Mental Models</a>.</p>
+<h2 id="concurrency-is-not-parallelism">Concurrency is not parallelism</h2>
+<p>These two words are used interchangeably, and that causes bad decisions.</p>
+<ul>
+<li><strong>Concurrency</strong> is about <em>structure</em>: several tasks are in progress at the same time, and their lifetimes overlap. One cook making three dishes is concurrent. While the pasta water heats, the cook chops onions.</li>
+<li><strong>Parallelism</strong> is about <em>execution</em>: several things literally run at the same instant on different cores. Three cooks are parallel.</li>
+</ul>
+<p>You can have concurrency without parallelism (a JavaScript event loop on one thread serves 10,000 sockets) and parallelism without much concurrency (one big matrix multiply split across 16 cores).</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 250" width="760" role="img" aria-label="Concurrency interleaves tasks on one core; parallelism runs them on several cores at once">
+<defs><marker id="concurrency-async-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<text x="20" y="24" class="title">Concurrency: one core, tasks interleave while others wait</text>
+<text x="20" y="58" class="small">core 1</text>
+<rect class="box active" x="80" y="42" width="60" height="26" rx="4"/><text x="110" y="60" text-anchor="middle" class="mono">A</text>
+<rect class="box visit" x="140" y="42" width="50" height="26" rx="4"/><text x="165" y="60" text-anchor="middle" class="mono">B</text>
+<rect class="box path" x="190" y="42" width="70" height="26" rx="4"/><text x="225" y="60" text-anchor="middle" class="mono">C</text>
+<rect class="box active" x="260" y="42" width="40" height="26" rx="4"/><text x="280" y="60" text-anchor="middle" class="mono">A</text>
+<rect class="box visit" x="300" y="42" width="60" height="26" rx="4"/><text x="330" y="60" text-anchor="middle" class="mono">B</text>
+<rect class="box path" x="360" y="42" width="40" height="26" rx="4"/><text x="380" y="60" text-anchor="middle" class="mono">C</text>
+<text x="80" y="92" class="small muted">A waits on the network while B and C run. Total time ≈ sum of CPU work, not sum of waits.</text>
+<text x="20" y="134" class="title">Parallelism: several cores, tasks run at the same instant</text>
+<text x="20" y="168" class="small">core 1</text>
+<rect class="box active" x="80" y="152" width="200" height="26" rx="4"/><text x="180" y="170" text-anchor="middle" class="mono">A</text>
+<text x="20" y="200" class="small">core 2</text>
+<rect class="box visit" x="80" y="184" width="170" height="26" rx="4"/><text x="165" y="202" text-anchor="middle" class="mono">B</text>
+<text x="20" y="232" class="small">core 3</text>
+<rect class="box path" x="80" y="216" width="190" height="26" rx="4"/><text x="175" y="234" text-anchor="middle" class="mono">C</text>
+<path class="edge accent" d="M300 197 L420 197" marker-end="url(#concurrency-async-ar)"/>
+<text x="430" y="170" class="small">Total time ≈ the longest task.</text>
+<text x="430" y="190" class="small">Only helps when the work is CPU-bound</text>
+<text x="430" y="210" class="small">and can be split. Coordination (locks,</text>
+<text x="430" y="230" class="small">merging results) eats into the gain.</text>
+</svg>
+<figcaption>Concurrency overlaps waiting. Parallelism overlaps computing. I/O-bound services need the first; CPU-bound jobs need the second.</figcaption>
+</figure>
+
+<p>The practical question is always: <strong>what is the work waiting on?</strong></p>
+<table>
+<thead>
+<tr>
+<th>Work is mostly…</th>
+<th>What helps</th>
+<th>What does not help</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Waiting on I/O (HTTP, database, disk, queue)</td>
+<td>Concurrency: async/await, goroutines, virtual threads, an event loop</td>
+<td>More cores. The CPU is idle anyway.</td>
+</tr>
+<tr>
+<td>Computing (parsing, image work, compression, ML)</td>
+<td>Parallelism: one worker per core, data parallel loops, processes in Python</td>
+<td>More async. <code>await</code> does not make arithmetic faster.</td>
+</tr>
+<tr>
+<td>Waiting on a lock or a shared resource</td>
+<td>Less sharing: partition, shard, immutable data, message passing</td>
+<td>More threads. They only queue on the same lock.</td>
+</tr>
+<tr>
+<td>Waiting on a slow downstream with a limit</td>
+<td>A concurrency limit (semaphore, bounded pool) plus backpressure</td>
+<td>Unbounded fan-out. It overloads the downstream and gets slower.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="five-execution-models-on-the-same-work">Five execution models on the same work</h3>
+<p>Every runtime picks a point in the same design space: how many OS threads exist, and what happens to a thread when its task waits. The visualizer runs the <strong>same tasks</strong> under five models. Each task is a list of CPU segments (<code>C3</code> = 3 ticks of computing) and I/O segments (<code>I4</code> = 4 ticks of waiting). Step through, then read the final frame, which compares every model on the same input.</p>
+<div class="viz ca-wide" data-viz="concurrency-async-models"></div>
+
+<p>Things to try:</p>
+<ul>
+<li>Keep the default (three tasks, mostly I/O) and switch between <strong>sequential</strong> and <strong>event loop</strong>. The event loop uses one thread and still overlaps all the waits.</li>
+<li>Use <code>C5; C5; C5</code> with 2 cores. Now <strong>event loop</strong> is no better than sequential, because nothing waits. <strong>Threads</strong> and <strong>async on a pool</strong> use both cores; <strong>Python threads + GIL</strong> cannot.</li>
+<li>Use four tasks of <code>C1 I6 C1</code>. <strong>Thread per task</strong> finishes as fast as async, but needs four blocked OS threads. At 10,000 tasks that is 10,000 stacks.</li>
+</ul>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 285" width="760" role="img" aria-label="The five concurrency models across five languages">
+<text x="20" y="24" class="title">Who runs your code: the five models</text>
+<rect class="box" x="20" y="40" width="140" height="205" rx="8"/><text x="90" y="62" text-anchor="middle" class="title">OS threads</text>
+<text x="90" y="86" text-anchor="middle" class="small">1 task = 1 thread</text><text x="90" y="106" text-anchor="middle" class="small">blocking calls OK</text><text x="90" y="126" text-anchor="middle" class="small">~1 MB stack each</text><text x="90" y="146" text-anchor="middle" class="small">OS schedules</text>
+<path class="edge dash" d="M34 164 L146 164"/><text x="90" y="186" text-anchor="middle" class="small">Java platform</text><text x="90" y="204" text-anchor="middle" class="small">C# new Thread</text><text x="90" y="222" text-anchor="middle" class="small">C/C++ pthreads</text>
+<rect class="box active" x="170" y="40" width="140" height="205" rx="8"/><text x="240" y="62" text-anchor="middle" class="title">Pool + async</text>
+<text x="240" y="86" text-anchor="middle" class="small">few threads, many tasks</text><text x="240" y="106" text-anchor="middle" class="small">await frees the thread</text><text x="240" y="126" text-anchor="middle" class="small">continuations queued</text><text x="240" y="146" text-anchor="middle" class="small">colored functions</text>
+<path class="edge dash" d="M184 164 L296 164"/><text x="240" y="186" text-anchor="middle" class="small">C# Task</text><text x="240" y="204" text-anchor="middle" class="small">Rust Tokio</text><text x="240" y="222" text-anchor="middle" class="small">Kotlin coroutines</text>
+<rect class="box visit" x="320" y="40" width="140" height="205" rx="8"/><text x="390" y="62" text-anchor="middle" class="title">Green threads (M:N)</text>
+<text x="390" y="86" text-anchor="middle" class="small">blocking-style code</text><text x="390" y="106" text-anchor="middle" class="small">runtime parks the task</text><text x="390" y="126" text-anchor="middle" class="small">KB-sized stacks</text><text x="390" y="146" text-anchor="middle" class="small">no colored functions</text>
+<path class="edge dash" d="M334 164 L446 164"/><text x="390" y="186" text-anchor="middle" class="small">Go goroutines</text><text x="390" y="204" text-anchor="middle" class="small">Java virtual threads</text><text x="390" y="222" text-anchor="middle" class="small">Erlang processes</text>
+<rect class="box path" x="470" y="40" width="140" height="205" rx="8"/><text x="540" y="62" text-anchor="middle" class="title">Event loop</text>
+<text x="540" y="86" text-anchor="middle" class="small">exactly one thread</text><text x="540" y="106" text-anchor="middle" class="small">no data races in JS code</text><text x="540" y="126" text-anchor="middle" class="small">CPU work blocks all</text><text x="540" y="146" text-anchor="middle" class="small">callbacks / promises</text>
+<path class="edge dash" d="M484 164 L596 164"/><text x="540" y="186" text-anchor="middle" class="small">Node.js, browsers</text><text x="540" y="204" text-anchor="middle" class="small">Python asyncio</text><text x="540" y="222" text-anchor="middle" class="small">Redis, nginx</text>
+<rect class="box bad" x="620" y="40" width="120" height="205" rx="8"/><text x="680" y="62" text-anchor="middle" class="title">Threads + GIL</text>
+<text x="680" y="86" text-anchor="middle" class="small">real OS threads</text><text x="680" y="106" text-anchor="middle" class="small">one runs bytecode</text><text x="680" y="126" text-anchor="middle" class="small">I/O releases GIL</text><text x="680" y="146" text-anchor="middle" class="small">CPU: use processes</text>
+<path class="edge dash" d="M634 164 L726 164"/><text x="680" y="186" text-anchor="middle" class="small">CPython ≤ 3.12</text><text x="680" y="204" text-anchor="middle" class="small">CRuby (GVL)</text><text x="680" y="222" text-anchor="middle" class="small">3.13t: optional</text>
+<text x="380" y="272" text-anchor="middle" class="small muted">Parallel CPU across cores: threads, pool, green threads (and processes). Not: a single event loop, GIL threads.</text>
+</svg>
+<figcaption>Most real systems mix models: Node has a libuv thread pool behind its event loop; asyncio offloads to threads with <code>to_thread</code>; .NET runs async tasks on its thread pool.</figcaption>
+</figure>
+
+<h2 id="threads-thread-pools-and-work-stealing">Threads, thread pools and work stealing</h2>
+<p>An <strong>OS thread</strong> is the unit the kernel schedules. It has its own stack, registers and thread-local storage. It is expensive in three ways:</p>
+<ul>
+<li><strong>Memory.</strong> Each thread reserves a stack: 1 MB by default for .NET and Java on Windows, and often 8 MB of virtual address space on Linux (most of it never touched). 10,000 threads is gigabytes of reservation.</li>
+<li><strong>Creation.</strong> Creating a thread is a system call plus allocating the stack: tens of microseconds.</li>
+<li><strong>Context switches.</strong> When more threads are runnable than there are cores, the kernel swaps them in and out. Each switch costs a few microseconds and, worse, cold CPU caches.</li>
+</ul>
+<p>So nobody creates a thread per work item. A <strong>thread pool</strong> keeps a few threads alive (roughly one per core for CPU work) and feeds them a queue of work items. The pool's queue design matters a lot. One shared queue needs a lock that every push and pop goes through, so with many cores the lock itself becomes the bottleneck. Modern pools give <strong>each worker its own double-ended queue (deque)</strong>:</p>
+<ul>
+<li>The worker pushes and pops at the <strong>newest</strong> end (LIFO). That needs no lock, and the newest item's data is still in the cache.</li>
+<li>An idle worker <strong>steals</strong> from the <strong>oldest</strong> end of a victim's deque. Old items in a divide-and-conquer job are the <em>big</em> unsplit pieces, so one steal gets a lot of work. Thieves and the owner work at opposite ends, so they rarely collide.</li>
+</ul>
+<div class="viz ca-wide" data-viz="concurrency-async-stealing"></div>
+
+<p>Run the default, then switch to <strong>one shared global queue</strong> with the same inputs. Count the red lock-wait cells. This is why .NET's ThreadPool (per-thread local queues since .NET 4), Java's <code>ForkJoinPool</code> (which also backs parallel streams and virtual threads), Go's scheduler and Rust's Tokio all use work stealing.</p>
+<div class="insight">
+<p><strong>What the pool does not know</strong></p>
+<p>A pool sizes itself for CPU work: about one thread per core. It cannot tell a thread that is <em>computing</em> from a thread that is <em>blocked</em> in <code>Thread.Sleep</code>, <code>.Result</code> or a synchronous socket read. A blocked thread is a lost core. The .NET pool notices that its queue is not draining and slowly injects extra threads. The JVM <code>ForkJoinPool</code> can compensate only through <code>ManagedBlocker</code>. Neither can save you from blocking at scale. That is the root of thread-pool starvation, covered below.</p>
+</div>
+<p>The pool APIs per language:</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// CPU-bound work: queue it to the shared ThreadPool.
+Task&lt;int&gt; t = Task.Run(() =&gt; CountPrimes(0, 5_000_000));
+
+// Data parallelism: partitions the range across pool threads.
+long total = 0;
+Parallel.For(0, chunks.Length, () =&gt; 0L,
+    (i, _, local) =&gt; local + Checksum(chunks[i]),           // per-thread subtotal
+    local =&gt; Interlocked.Add(ref total, local));            // merge once per thread
+</code></pre>
+<pre><code class="language-java">// A fixed pool for CPU work: one thread per core.
+try (ExecutorService cpu = Executors.newFixedThreadPool(
+        Runtime.getRuntime().availableProcessors())) {      // AutoCloseable since Java 19
+    Future&lt;Integer&gt; f = cpu.submit(() -&gt; countPrimes(0, 5_000_000));
+    System.out.println(f.get());
+}
+
+// Divide and conquer: ForkJoinPool with work stealing.
+class SumTask extends RecursiveTask&lt;Long&gt; {
+    final int[] a; final int lo, hi;
+    SumTask(int[] a, int lo, int hi) { this.a = a; this.lo = lo; this.hi = hi; }
+    protected Long compute() {
+        if (hi - lo &lt;= 10_000) { long s = 0; for (int i = lo; i &lt; hi; i++) s += a[i]; return s; }
+        int mid = (lo + hi) &gt;&gt;&gt; 1;
+        SumTask right = new SumTask(a, mid, hi);
+        right.fork();                                      // push onto my deque
+        return new SumTask(a, lo, mid).compute() + right.join();
+    }
+}
+long sum = ForkJoinPool.commonPool().invoke(new SumTask(data, 0, data.length));
+</code></pre>
+<pre><code class="language-python">from concurrent.futures import ProcessPoolExecutor
+
+def count_primes(lo: int, hi: int) -&gt; int:
+    return sum(1 for n in range(max(lo, 2), hi) if all(n % d for d in range(2, int(n**0.5) + 1)))
+
+# CPU-bound: processes, because the GIL lets one thread run Python bytecode at a time.
+if __name__ == &quot;__main__&quot;:
+    ranges = [(i, i + 50_000) for i in range(0, 200_000, 50_000)]
+    with ProcessPoolExecutor() as pool:                    # one process per core by default
+        print(sum(pool.map(count_primes, *zip(*ranges))))
+</code></pre>
+<pre><code class="language-go">// Go has no pool API: goroutines are cheap and the runtime is the pool.
+// You bound parallelism yourself, here with a fixed number of workers.
+func sumParallel(a []int) int {
+    workers := runtime.GOMAXPROCS(0)
+    parts := make([]int, workers)
+    var wg sync.WaitGroup
+    chunk := (len(a) + workers - 1) / workers
+    for w := 0; w &lt; workers; w++ {
+        lo, hi := w*chunk, min((w+1)*chunk, len(a))
+        if lo &gt;= hi {
+            break
+        }
+        wg.Add(1)
+        go func() {
+            defer wg.Done()
+            s := 0
+            for _, v := range a[lo:hi] {
+                s += v
+            }
+            parts[w] = s // each goroutine writes its own slot: no sharing
+        }()
+    }
+    wg.Wait()
+    total := 0
+    for _, s := range parts {
+        total += s
+    }
+    return total
+}
+</code></pre>
+<pre><code class="language-typescript">// Node: CPU work must leave the event loop. worker_threads gives real threads.
+import { Worker, isMainThread, parentPort, workerData } from &quot;node:worker_threads&quot;;
+import { availableParallelism } from &quot;node:os&quot;;
+
+if (isMainThread) {
+  const n = availableParallelism();
+  const results = await Promise.all(
+    Array.from({ length: n }, (_, i) =&gt;
+      new Promise&lt;number&gt;((resolve, reject) =&gt; {
+        const w = new Worker(new URL(import.meta.url), { workerData: { part: i, of: n } });
+        w.once(&quot;message&quot;, resolve);
+        w.once(&quot;error&quot;, reject);
+      })));
+  console.log(results.reduce((a, b) =&gt; a + b, 0));
+} else {
+  const { part, of } = workerData as { part: number; of: number };
+  parentPort!.postMessage(countPrimesInSlice(part, of)); // messages are copied, not shared
+}
+</code></pre>
+</div>
+<h2 id="net-task-asyncawait-and-the-thread-pool">.NET: Task, async/await and the thread pool</h2>
+<h3 id="what-the-compiler-does-with-await">What the compiler does with <code>await</code></h3>
+<p>An <code>async</code> method is not run on "a new thread". The C# compiler rewrites it into a <strong>state machine</strong>: a struct with a <code>state</code> field, fields for every local that lives across an <code>await</code>, and a <code>MoveNext()</code> method containing your code cut into pieces at each <code>await</code>.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 260" width="760" role="img" aria-label="An async method split into states at each await">
+<text x="20" y="24" class="title">GetOrderAsync after compilation: one MoveNext, three entry points</text>
+<rect class="box" x="20" y="40" width="335" height="200" rx="8"/>
+<text x="34" y="64" class="mono">switch (state) {</text>
+<text x="34" y="86" class="mono">case -1: Log("start");</text>
+<text x="54" y="106" class="mono">a1 = db.QueryAsync(id).GetAwaiter();</text>
+<text x="54" y="126" class="mono">if (!a1.IsCompleted) { state = 0;</text>
+<text x="74" y="146" class="mono">register; return; }</text>
+<text x="34" y="166" class="mono">case 0: row = a1.GetResult();</text>
+<text x="54" y="186" class="mono">... same for pricing, state = 1</text>
+<text x="34" y="206" class="mono">case 1: price = a2.GetResult();</text>
+<text x="54" y="226" class="mono">SetResult(new Order(row, price)); }</text>
+<rect class="box active" x="370" y="44" width="170" height="44" rx="6"/><text x="455" y="64" text-anchor="middle" class="small">1. runs synchronously</text><text x="455" y="80" text-anchor="middle" class="small">on the caller's thread</text>
+<rect class="box path" x="370" y="104" width="170" height="44" rx="6"/><text x="455" y="124" text-anchor="middle" class="small">2. I/O pending: save state,</text><text x="455" y="140" text-anchor="middle" class="small">register continuation, return</text>
+<rect class="box visit" x="370" y="164" width="170" height="44" rx="6"/><text x="455" y="184" text-anchor="middle" class="small">3. I/O done: MoveNext again</text><text x="455" y="200" text-anchor="middle" class="small">jumps to case 0</text>
+<path class="edge accent" d="M540 66 L600 66 L600 126 L540 126" marker-end="url(#concurrency-async-ar)"/>
+<path class="edge accent" d="M540 126 L620 126 L620 186 L540 186" marker-end="url(#concurrency-async-ar)"/>
+<text x="630" y="96" class="small">await</text><text x="640" y="160" class="small">"there is</text><text x="640" y="176" class="small">no thread"</text>
+<text x="370" y="236" class="small muted">The locals (id, row, price) are fields, so they survive the return.</text>
+</svg>
+<figcaption>No thread waits for the database. The state machine is parked on the heap, and the I/O completion port calls MoveNext when the bytes arrive.</figcaption>
+</figure>
+
+<p>Four facts follow from that picture, and most async bugs come from forgetting one of them:</p>
+<ol>
+<li><strong>It starts synchronously.</strong> Everything before the first incomplete <code>await</code> runs on the caller's thread. A "fire and forget" async method that does 200 ms of CPU work before its first await blocks the caller for 200 ms.</li>
+<li><strong>An already-completed await does not suspend.</strong> If the awaited task is done (cache hit, buffered data), execution just continues: no allocation and no thread hop.</li>
+<li><strong>After a real suspension, the rest may run on a different thread.</strong> Thread-local state, <code>[ThreadStatic]</code> fields and locks taken before the await do not come with you. You cannot <code>await</code> inside a <code>lock</code> block for exactly this reason.</li>
+<li><strong>Where the continuation runs is decided by the captured context.</strong> That is the <code>SynchronizationContext</code> (UI frameworks, old ASP.NET) or the <code>TaskScheduler</code>. With neither, it runs on the thread pool.</li>
+</ol>
+<p>Step through the state machine, the queues and the threads. Start with the default (a UI thread calling <code>.Result</code>), which deadlocks. Then change one input at a time.</p>
+<div class="viz ca-wide" data-viz="concurrency-async-await"></div>
+
+<p>What to notice:</p>
+<ul>
+<li><strong>UI + <code>.Result</code> + plain await = deadlock.</strong> The continuation is posted to the UI thread, and the UI thread is blocked waiting for that same continuation.</li>
+<li><strong>The same code with "both hit a cache" does not deadlock.</strong> Nothing really suspends. This is why the bug ships: it only appears on the first slow call.</li>
+<li><strong><code>ConfigureAwait(false)</code> inside the library</strong> avoids that deadlock, because the continuation goes to the pool. The UI is still frozen while it waits, though. The real fix is to await in the handler.</li>
+<li><strong>"none" (ASP.NET Core)</strong> has no SynchronizationContext, so <code>.Result</code> cannot deadlock this way. It still burns a pool thread per request, which leads straight to the next problem.</li>
+</ul>
+<h3 id="thread-pool-starvation">Thread-pool starvation</h3>
+<p>Blocking on async code (<code>.Result</code>, <code>.Wait()</code>, <code>GetAwaiter().GetResult()</code>) inside a pool thread is called <strong>sync over async</strong>. It holds a thread for the whole I/O. It also needs a <em>second</em> pool thread to run the inner method's continuation, and that continuation waits in the same FIFO queue as new requests. Under load, every thread is blocked, new requests take the threads that free up and block them too, and the pool only adds threads slowly. Throughput collapses at near-zero CPU.</p>
+<div class="viz ca-wide" data-viz="concurrency-async-starvation"></div>
+
+<p>Compare the two modes with the same inputs: async serves the same load with the starting threads and a flat latency, while sync over async grows the pool and still falls behind. In a real service the symptoms are:</p>
+<ul>
+<li><code>dotnet-counters monitor -n MyApp System.Runtime</code> shows <strong>ThreadPool Queue Length</strong> above zero and climbing, and <strong>ThreadPool Thread Count</strong> rising by about one per second.</li>
+<li>CPU is low, yet latency is high.</li>
+<li>A dump (<code>dotnet-dump analyze</code>, then <code>clrstack -all</code>) shows hundreds of threads in <code>Task.Wait</code> or <code>ManualResetEventSlim.Wait</code>.</li>
+</ul>
+<div class="pitfall">
+<p><strong>"Just raise the minimum thread count"</strong></p>
+<p><code>ThreadPool.SetMinThreads(500, 500)</code> makes the graph look better for a while, because the pool skips its slow injection. You now have 500 blocked threads (500 MB of reserved stacks, more context switches), and the cliff simply moves to a higher load. Use it as a stopgap during an incident at most. The fix is to make the call chain async all the way up.</p>
+</div>
+<h3 id="async-all-the-way-the-rules">Async all the way: the rules</h3>
+<div class="code-tabs" data-labels="Bad,Good">
+<pre><code class="language-csharp">public class OrdersController : ControllerBase
+{
+    [HttpGet(&quot;{id}&quot;)]
+    public IActionResult Get(int id)
+    {
+        var order = _repo.GetOrderAsync(id).Result;   // blocks a pool thread for the whole query
+        return Ok(order);
+    }
+
+    [HttpPost]
+    public async void Post(OrderDto dto)               // async void: exceptions crash the process,
+    {                                                  // and nobody can await it
+        await _repo.SaveAsync(dto);
+    }
+
+    public Task&lt;int&gt; ParseAll(string[] files) =&gt;
+        Task.Run(async () =&gt; {                         // pointless hop: the work is I/O
+            int n = 0;
+            foreach (var f in files) n += (await File.ReadAllLinesAsync(f)).Length;
+            return n;
+        });
+}
+</code></pre>
+<pre><code class="language-csharp">public class OrdersController : ControllerBase
+{
+    [HttpGet(&quot;{id}&quot;)]
+    public async Task&lt;ActionResult&lt;Order&gt;&gt; Get(int id, CancellationToken ct)
+    {
+        var order = await _repo.GetOrderAsync(id, ct); // thread returns to the pool during the query
+        return order is null ? NotFound() : Ok(order);
+    }
+
+    [HttpPost]
+    public async Task&lt;IActionResult&gt; Post(OrderDto dto, CancellationToken ct)
+    {
+        await _repo.SaveAsync(dto, ct);                // exceptions flow to the caller
+        return Accepted();
+    }
+
+    public async Task&lt;int&gt; ParseAll(string[] files, CancellationToken ct)
+    {
+        var counts = await Task.WhenAll(files.Select(async f =&gt;
+            (await File.ReadAllLinesAsync(f, ct)).Length));
+        return counts.Sum();
+    }
+}
+</code></pre>
+</div>
+<p>The rules, each with its reason:</p>
+<ul>
+<li><strong>Never block on a Task</strong> (<code>.Result</code>, <code>.Wait()</code>, <code>.GetAwaiter().GetResult()</code>) in code that can run on the pool or a UI thread. The only safe places are <code>Main</code> before anything async starts (and C# has <code>async Task Main</code> anyway) or a dedicated thread you own.</li>
+<li><strong>No <code>async void</code></strong> except event handlers. Exceptions in <code>async void</code> go to the SynchronizationContext or crash the process, and the caller cannot await completion.</li>
+<li><strong>Use <code>Task.Run</code> for CPU work, not for I/O.</strong> It moves work <em>to</em> the pool. Wrapping an already-async call in <code>Task.Run</code> adds a hop and hides nothing.</li>
+<li><strong>Accept and pass a <code>CancellationToken</code></strong> on every async API. ASP.NET Core gives you <code>HttpContext.RequestAborted</code> as an action parameter.</li>
+<li><strong>Do not hold a lock across an await.</strong> Use <code>SemaphoreSlim.WaitAsync</code> for async mutual exclusion.</li>
+</ul>
+<h3 id="configureawaitfalse-when-it-matters">ConfigureAwait(false): when it matters</h3>
+<p><code>ConfigureAwait(false)</code> means "I do not need to resume on the captured context". Guidance as of .NET 8+:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Use <code>ConfigureAwait(false)</code>?</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>General-purpose <strong>library</strong> (NuGet package)</td>
+<td>Yes, on every await</td>
+<td>It might be called from a UI app or legacy ASP.NET; avoids the deadlock above and an unnecessary hop to the UI thread.</td>
+</tr>
+<tr>
+<td><strong>ASP.NET Core</strong> app code</td>
+<td>Optional, no effect</td>
+<td>There is no SynchronizationContext. Many teams omit it for readability.</td>
+</tr>
+<tr>
+<td><strong>UI</strong> app code (WPF, WinForms, MAUI)</td>
+<td>No, where you touch UI afterwards</td>
+<td>You <em>want</em> to resume on the UI thread to update controls.</td>
+</tr>
+<tr>
+<td>Code after the await that needs <code>HttpContext</code> (classic ASP.NET)</td>
+<td>No</td>
+<td>The context carries the request's culture and identity.</td>
+</tr>
+</tbody>
+</table>
+<p><code>ConfigureAwait(false)</code> only affects the await it is on, and only when that await actually suspends. One plain await deeper in the chain is enough to capture the context again. .NET 8 added <code>ConfigureAwaitOptions</code> (<code>SuppressThrowing</code>, <code>ForceYielding</code>) for advanced cases.</p>
+<h3 id="task-vs-valuetask">Task vs ValueTask</h3>
+<p><code>Task&lt;T&gt;</code> is a class, so every <em>asynchronously completing</em> call allocates one. For methods that usually complete synchronously (a buffered stream read, a cache hit), <code>ValueTask&lt;T&gt;</code> is a struct that wraps either a result or a task, so the fast path allocates nothing.</p>
+<div class="compare">
+<div class="good">
+<h4 id="use-valuetaskt-when">Use <code>ValueTask&lt;T&gt;</code> when</h4>
+<ul>
+<li>The method is on a hot path <strong>and</strong> usually completes synchronously (profiling shows <code>Task</code> allocations).</li>
+<li>You implement an interface that already uses it: <code>IAsyncEnumerator&lt;T&gt;.MoveNextAsync</code>, <code>IAsyncDisposable.DisposeAsync</code>, <code>Stream.ReadAsync(Memory&lt;byte&gt;)</code>.</li>
+</ul>
+</div>
+<div class="bad">
+<h4 id="rules-you-must-follow-with-valuetask">Rules you must follow with <code>ValueTask</code></h4>
+<ul>
+<li>Await it <strong>exactly once</strong>. Never await it twice or from two places.</li>
+<li>Never call <code>.Result</code> unless <code>IsCompletedSuccessfully</code> is true.</li>
+<li>Never call <code>WhenAll</code> on it directly; call <code>.AsTask()</code> first.</li>
+<li>Default to <code>Task&lt;T&gt;</code> for everything else. It is simpler and safe to cache, share and await many times.</li>
+</ul>
+</div>
+</div>
+<h2 id="java-platform-threads-virtual-threads-and-structured-concurrency">Java: platform threads, virtual threads and structured concurrency</h2>
+<p>For 25 years, Java's answer was <strong>one platform (OS) thread per request</strong> plus pools. It is simple: blocking code, readable stack traces, debuggers that work. But it caps a server at a few thousand concurrent requests, so the ecosystem built reactive libraries (<code>CompletableFuture</code>, Reactor, RxJava) that are fast but hard to read and debug.</p>
+<p><strong>Virtual threads</strong> (final in Java 21, JEP 444) bring back the simple style at async scale. A virtual thread is a <code>Thread</code> object scheduled by the JVM, not the OS. When it blocks on I/O, a lock or <code>sleep</code>, the JVM <strong>unmounts</strong> it: its stack frames are copied to the heap and the underlying <strong>carrier</strong> thread (from a <code>ForkJoinPool</code> with one carrier per core) runs another virtual thread. When the I/O completes, the virtual thread is mounted again, possibly on a different carrier. That is the same M:N idea as Go.</p>
+<div class="code-tabs">
+<pre><code class="language-java">// One virtual thread per task. Blocking calls are fine: they unmount, not block a carrier.
+try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+    List&lt;Future&lt;Order&gt;&gt; futures = ids.stream()
+        .map(id -&gt; executor.submit(() -&gt; orderClient.fetch(id)))   // plain blocking HTTP call
+        .toList();
+    for (var f : futures) process(f.get());
+}   // close() waits for all tasks
+
+// Limit concurrency against a downstream: a Semaphore, NOT a small pool of virtual threads.
+private static final Semaphore DB_PERMITS = new Semaphore(20);
+Order load(long id) throws InterruptedException {
+    DB_PERMITS.acquire();
+    try { return repository.findById(id); }
+    finally { DB_PERMITS.release(); }
+}
+</code></pre>
+<pre><code class="language-java">// CompletableFuture: the pre-Loom async style, still useful for composition.
+CompletableFuture&lt;Order&gt; order = CompletableFuture.supplyAsync(() -&gt; orders.fetch(id), ioPool);
+CompletableFuture&lt;Price&gt; price = CompletableFuture.supplyAsync(() -&gt; pricing.quote(sku), ioPool);
+CompletableFuture&lt;Invoice&gt; invoice = order
+    .thenCombine(price, Invoice::new)           // runs when both complete
+    .orTimeout(2, TimeUnit.SECONDS)              // Java 9+
+    .exceptionally(ex -&gt; Invoice.failed(ex));
+// Pass an explicit executor: the default commonPool is sized for CPU work.
+</code></pre>
+<pre><code class="language-java">// Structured concurrency (preview: JDK 21-24 shape shown; JDK 25 uses StructuredTaskScope.open()).
+// Subtasks cannot outlive the scope; if one fails, the others are cancelled.
+Invoice build(long id, String sku) throws Exception {
+    try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+        Subtask&lt;Order&gt; order = scope.fork(() -&gt; orders.fetch(id));
+        Subtask&lt;Price&gt; price = scope.fork(() -&gt; pricing.quote(sku));
+        scope.join().throwIfFailed();            // waits for both; first failure cancels the other
+        return new Invoice(order.get(), price.get());
+    }
+}
+</code></pre>
+</div>
+<div class="pitfall">
+<p><strong>Virtual-thread traps</strong></p>
+<ul>
+<li><strong>Pinning.</strong> Before Java 24 (JEP 491), blocking inside a <code>synchronized</code> block <strong>pinned</strong> the virtual thread to its carrier, so a few pinned threads could exhaust all carriers. On Java 21–23, prefer <code>ReentrantLock</code> around blocking calls, and find pinning with <code>-Djdk.tracePinnedThreads=full</code> or the JFR event <code>jdk.VirtualThreadPinned</code>. Native calls (JNI) still pin.</li>
+<li><strong>Do not pool virtual threads.</strong> They are cheap; create one per task. A pool of 10 virtual threads is just a slow way of writing a semaphore.</li>
+<li><strong>ThreadLocal caches</strong> (for example one <code>SimpleDateFormat</code> per thread) become one per <em>task</em>, so with a million virtual threads you get a million copies. Use <code>ScopedValue</code> (preview) or immutable shared objects.</li>
+<li><strong>CPU-bound work gains nothing.</strong> There are still only as many carriers as cores.</li>
+</ul>
+</div>
+<h2 id="python-the-gil-threads-processes-and-asyncio">Python: the GIL, threads, processes and asyncio</h2>
+<p>CPython protects its interpreter state (reference counts, object internals) with the <strong>Global Interpreter Lock</strong>. Only the thread holding the GIL executes Python bytecode. Threads are real OS threads, but:</p>
+<ul>
+<li><strong>I/O releases the GIL.</strong> <code>socket.recv</code>, <code>time.sleep</code>, file reads and most C extensions that do heavy work (NumPy, hashlib on large inputs, zlib) release it. So threads <em>do</em> overlap I/O.</li>
+<li><strong>Pure-Python CPU work does not run in parallel.</strong> A thread holding the GIL is asked to drop it every <em>switch interval</em> (<code>sys.getswitchinterval()</code>, 5 ms by default). Two CPU-bound threads just take turns, plus switching overhead. Use <code>multiprocessing</code> or <code>ProcessPoolExecutor</code>: separate interpreters, separate GILs, at the cost of pickling the arguments and results.</li>
+<li><strong>The GIL does not make your code thread-safe.</strong> <code>counter += 1</code> is several bytecodes (load, add, store), and a switch can happen between them. You still need <code>threading.Lock</code>.</li>
+</ul>
+<div class="callout">
+<p><strong>Free-threaded Python.</strong> Python 3.13 ships an optional, experimental <strong>free-threaded build</strong> (PEP 703, usually installed as <code>python3.13t</code>) with no GIL. Python 3.14 makes it officially supported (PEP 779) but still optional, not the default. Pure-Python code can then use all cores with threads; single-threaded code runs somewhat slower, and C extensions must declare support or the GIL is re-enabled at import. Check with <code>sys._is_gil_enabled()</code>. Plan for it, but do not assume it in production yet.</p>
+</div>
+<p><strong>asyncio</strong> is Python's event loop. One thread runs coroutines; <code>await</code> on I/O suspends the coroutine and the loop runs another. It scales to tens of thousands of sockets in one thread, <em>as long as nothing blocks the loop</em>. A single <code>requests.get()</code> or <code>time.sleep(1)</code> inside a coroutine freezes every other coroutine for that long.</p>
+<div class="code-tabs">
+<pre><code class="language-python">import asyncio
+
+async def fetch(i: int) -&gt; str:
+    await asyncio.sleep(0.1)          # stands in for an HTTP call with an async client (httpx, aiohttp)
+    if i == 3:
+        raise ValueError(f&quot;job {i} failed&quot;)
+    return f&quot;result {i}&quot;
+
+async def main() -&gt; None:
+    # TaskGroup (3.11+): structured concurrency. If one task fails, the rest are cancelled,
+    # and all errors come back as an ExceptionGroup.
+    try:
+        async with asyncio.TaskGroup() as tg:
+            tasks = [tg.create_task(fetch(i)) for i in range(5)]
+    except* ValueError as eg:
+        print(&quot;failed:&quot;, [str(e) for e in eg.exceptions])
+
+    # A deadline for a whole block (3.11+).
+    try:
+        async with asyncio.timeout(0.05):
+            await fetch(0)
+    except TimeoutError:
+        print(&quot;timed out&quot;)
+
+    # Blocking code must leave the loop: to_thread (3.9+) runs it on a worker thread.
+    data = await asyncio.to_thread(lambda: sum(range(1_000_000)))
+    print(data)
+
+asyncio.run(main())
+</code></pre>
+<pre><code class="language-python"># The GIL does not protect compound operations.
+import threading
+
+counter = 0
+lock = threading.Lock()
+
+def unsafe(n: int) -&gt; None:
+    global counter
+    for _ in range(n):
+        counter += 1          # LOAD, ADD, STORE: a switch can land in between
+
+def safe(n: int) -&gt; None:
+    global counter
+    for _ in range(n):
+        with lock:
+            counter += 1
+
+for fn in (unsafe, safe):
+    counter = 0
+    threads = [threading.Thread(target=fn, args=(200_000,)) for _ in range(4)]
+    for t in threads: t.start()
+    for t in threads: t.join()
+    print(fn.__name__, counter)   # unsafe may print less than 800000 (more likely on 3.13t)
+</code></pre>
+</div>
+<h2 id="go-goroutines-channels-and-the-gmp-scheduler">Go: goroutines, channels and the G/M/P scheduler</h2>
+<p>A <strong>goroutine</strong> is a function running on Go's own scheduler. It starts with a 2 KB stack that grows and shrinks as needed, so a server can run hundreds of thousands of them. You write plain blocking code (<code>conn.Read</code>, <code>time.Sleep</code>, <code>&lt;-ch</code>), and the runtime turns each block into a cheap park/unpark. There is no <code>async</code> keyword, so there are no "colored" functions: any function can block.</p>
+<p>The scheduler has three kinds of objects:</p>
+<ul>
+<li><strong>G</strong>: a goroutine (stack, instruction pointer, status).</li>
+<li><strong>M</strong>: an OS thread ("machine").</li>
+<li><strong>P</strong>: a <em>processor</em>, a scheduling slot with its own local run queue. There are exactly <code>GOMAXPROCS</code> Ps (the number of CPUs by default; since Go 1.25 it also respects container CPU limits). An M must hold a P to run Go code.</li>
+</ul>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 270" width="760" role="img" aria-label="Go scheduler: Ps with local run queues, Ms as OS threads, a global queue, the netpoller and syscalls">
+<text x="20" y="24" class="title">G / M / P: goroutines are multiplexed onto threads through processors</text>
+<rect class="box active" x="30" y="50" width="200" height="120" rx="8"/><text x="130" y="72" text-anchor="middle" class="title">P0</text>
+<rect class="box" x="45" y="84" width="70" height="28" rx="5"/><text x="80" y="103" text-anchor="middle" class="mono">M0</text>
+<rect class="box active" x="135" y="84" width="80" height="28" rx="5"/><text x="175" y="103" text-anchor="middle" class="mono">G1 runs</text>
+<text x="45" y="134" class="small">local run queue:</text>
+<rect class="box visit" x="45" y="140" width="34" height="22" rx="4"/><text x="62" y="156" text-anchor="middle" class="mono">G4</text>
+<rect class="box visit" x="83" y="140" width="34" height="22" rx="4"/><text x="100" y="156" text-anchor="middle" class="mono">G5</text>
+<rect class="box active" x="260" y="50" width="200" height="120" rx="8"/><text x="360" y="72" text-anchor="middle" class="title">P1</text>
+<rect class="box" x="275" y="84" width="70" height="28" rx="5"/><text x="310" y="103" text-anchor="middle" class="mono">M1</text>
+<rect class="box active" x="365" y="84" width="80" height="28" rx="5"/><text x="405" y="103" text-anchor="middle" class="mono">G2 runs</text>
+<text x="275" y="134" class="small">local run queue: empty</text>
+<text x="275" y="156" class="small">→ steals half of P0's</text>
+<path class="edge dash" d="M275 150 Q200 190 120 165" marker-end="url(#concurrency-async-ar)"/>
+<rect class="box visit" x="500" y="50" width="240" height="50" rx="8"/><text x="620" y="72" text-anchor="middle" class="title">global run queue</text><text x="620" y="90" text-anchor="middle" class="small">new work from outside, preempted Gs</text>
+<rect class="box path" x="500" y="114" width="240" height="56" rx="8"/><text x="620" y="136" text-anchor="middle" class="title">netpoller</text><text x="620" y="154" text-anchor="middle" class="small">G3 parked on a socket: no thread used</text>
+<rect class="box bad" x="30" y="200" width="430" height="50" rx="8"/><text x="245" y="222" text-anchor="middle" class="title">M2 in a blocking syscall with G6</text><text x="245" y="240" text-anchor="middle" class="small">its P was handed to another M, so Go code keeps running on GOMAXPROCS threads</text>
+<text x="500" y="200" class="small">Network I/O → netpoller (cheap).</text>
+<text x="500" y="220" class="small">File I/O, cgo → blocks an M; runtime</text>
+<text x="500" y="240" class="small">starts another M to keep Ps busy.</text>
+</svg>
+<figcaption>The number of Ps caps parallelism. The number of Ms can be larger, because threads stuck in syscalls do not hold a P.</figcaption>
+</figure>
+
+<p>Step through it. Goroutine scripts use <code>R</code> (run), <code>N</code> (wait on the network) and <code>S</code> (a blocking syscall such as a file read):</p>
+<div class="viz ca-wide" data-viz="concurrency-async-gmp"></div>
+
+<p>Try <code>GOMAXPROCS = 1</code> with the default goroutines: still correct, but everything is interleaved on one P. Then try the second preset (<code>S5</code> syscalls) and watch the M count rise above the P count. Since Go 1.14, goroutines are also <strong>preempted asynchronously</strong>, so a tight loop without function calls can no longer hog a P forever.</p>
+<h3 id="channels-and-select">Channels and select</h3>
+<p>"Do not communicate by sharing memory; instead, share memory by communicating." A <strong>channel</strong> is a typed, synchronised queue.</p>
+<ul>
+<li>An <strong>unbuffered</strong> channel (<code>make(chan T)</code>) is a rendezvous: the send blocks until a receiver takes the value. That is a synchronisation point as well as a data transfer.</li>
+<li>A <strong>buffered</strong> channel (<code>make(chan T, 64)</code>) accepts up to 64 values without a receiver, then blocks the sender. That is backpressure for free.</li>
+<li><strong><code>select</code></strong> waits on several channel operations and takes whichever is ready first. With <code>ctx.Done()</code> as one case, every wait becomes cancellable.</li>
+</ul>
+<pre><code class="language-go">func worker(ctx context.Context, jobs &lt;-chan Job, results chan&lt;- Result) error {
+    for {
+        select {
+        case &lt;-ctx.Done():
+            return ctx.Err()                       // cancelled or deadline exceeded
+        case j, ok := &lt;-jobs:
+            if !ok {
+                return nil                         // producer closed the channel: done
+            }
+            r, err := process(ctx, j)
+            if err != nil {
+                return err
+            }
+            select {                               // the send must be cancellable too,
+            case results &lt;- r:                     // or a slow consumer leaks this goroutine
+            case &lt;-ctx.Done():
+                return ctx.Err()
+            }
+        }
+    }
+}
+</code></pre>
+<div class="pitfall">
+<p><strong>Goroutine leaks</strong></p>
+<p>A goroutine blocked forever on a channel that nobody will ever read or close is never collected: its stack and everything it references stay alive. The classic case is a request handler that starts a goroutine to call a backend, then times out and returns. The goroutine finishes later, tries <code>results &lt;- r</code> on an unbuffered channel nobody reads, and blocks forever. Fixes: give the channel a buffer of 1, or <code>select</code> on <code>ctx.Done()</code> for every send and receive. Watch <code>runtime.NumGoroutine()</code> or the goroutine profile in <code>pprof</code> for steady growth.</p>
+</div>
+<h2 id="javascript-and-typescript-the-event-loop">JavaScript and TypeScript: the event loop</h2>
+<p>JavaScript runs your code on <strong>one thread</strong>. There are no data races between two pieces of JS, because two pieces of JS never run at the same instant. Concurrency comes from the <strong>event loop</strong>: the host (browser or Node) does I/O and timers in the background and queues callbacks for the single thread to run.</p>
+<p>Two queues decide the order, and the difference between them explains almost every "why did this print first?" question:</p>
+<ul>
+<li><strong>Task queue</strong> (macrotasks): timer callbacks, I/O callbacks, UI events, <code>MessageChannel</code>. The loop runs <strong>one</strong> task at a time.</li>
+<li><strong>Microtask queue</strong>: promise reactions (<code>.then</code>, the code after <code>await</code>) and <code>queueMicrotask</code>. After each task, the loop <strong>drains the whole microtask queue</strong>, including microtasks queued while draining, before it takes the next task or renders.</li>
+</ul>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 230" width="760" role="img" aria-label="Event loop: run one task, drain all microtasks, render, repeat">
+<text x="20" y="24" class="title">One turn of the event loop</text>
+<rect class="box visit" x="30" y="60" width="150" height="56" rx="8"/><text x="105" y="84" text-anchor="middle" class="title">1. one task</text><text x="105" y="102" text-anchor="middle" class="small">script, timer, I/O, click</text>
+<rect class="box path" x="230" y="60" width="170" height="56" rx="8"/><text x="315" y="84" text-anchor="middle" class="title">2. ALL microtasks</text><text x="315" y="102" text-anchor="middle" class="small">.then, await, queueMicrotask</text>
+<rect class="box" x="450" y="60" width="130" height="56" rx="8"/><text x="515" y="84" text-anchor="middle" class="title">3. render</text><text x="515" y="102" text-anchor="middle" class="small">browser, ~60 Hz</text>
+<rect class="box dim" x="630" y="60" width="110" height="56" rx="8"/><text x="685" y="84" text-anchor="middle" class="title">4. wait</text><text x="685" y="102" text-anchor="middle" class="small">epoll / IOCP</text>
+<path class="edge accent" d="M180 88 L226 88" marker-end="url(#concurrency-async-ar)"/>
+<path class="edge accent" d="M400 88 L446 88" marker-end="url(#concurrency-async-ar)"/>
+<path class="edge accent" d="M580 88 L626 88" marker-end="url(#concurrency-async-ar)"/>
+<path class="edge accent" d="M685 116 L685 160 L105 160 L105 120" marker-end="url(#concurrency-async-ar)"/>
+<path class="edge dash" d="M290 60 Q315 30 340 60" marker-end="url(#concurrency-async-ar)"/>
+<text x="350" y="42" class="small">microtasks can queue more microtasks</text>
+<text x="30" y="190" class="small">A long task (a 200 ms loop) delays timers, clicks and rendering by 200 ms.</text>
+<text x="30" y="210" class="small">An endless microtask chain starves tasks and rendering completely.</text>
+</svg>
+<figcaption>Node adds its own phases (timers, poll, check for <code>setImmediate</code>) and runs <code>process.nextTick</code> callbacks even before promise microtasks, but the task/microtask rule is the same.</figcaption>
+</figure>
+
+<p>Pick a program and predict the console output before you press Run. Each program's output was checked against real Node.</p>
+<div class="viz ca-wide" data-viz="concurrency-async-eventloop"></div>
+
+<div class="code-tabs" data-labels="Bad,Good">
+<pre><code class="language-typescript">// Sequential awaits: total latency = sum of the three calls.
+async function dashboard(userId: string) {
+  const user = await fetchJson(`/users/${userId}`);
+  const orders = await fetchJson(`/orders?user=${userId}`);   // does not depend on user
+  const recs = await fetchJson(`/recs?user=${userId}`);       // does not depend on orders
+  return { user, orders, recs };
+}
+
+// CPU work on the event loop: every request waits for this one.
+app.post(&quot;/report&quot;, (req, res) =&gt; {
+  const pdf = renderPdfSync(req.body);       // 400 ms of CPU, nothing else runs
+  res.send(pdf);
+});
+</code></pre>
+<pre><code class="language-typescript">// Independent calls start together: total latency = the slowest call.
+async function dashboard(userId: string, signal: AbortSignal) {
+  const [user, orders, recs] = await Promise.all([
+    fetchJson(`/users/${userId}`, { signal }),
+    fetchJson(`/orders?user=${userId}`, { signal }),
+    fetchJson(`/recs?user=${userId}`, { signal }),
+  ]);
+  return { user, orders, recs };
+}
+
+// CPU work goes to a worker thread pool (piscina, or worker_threads directly).
+app.post(&quot;/report&quot;, async (req, res) =&gt; {
+  const pdf = await pdfPool.run(req.body);   // event loop stays free
+  res.send(pdf);
+});
+</code></pre>
+</div>
+<p>Choose the right combinator:</p>
+<table>
+<thead>
+<tr>
+<th>Combinator</th>
+<th>Resolves when</th>
+<th>Rejects when</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Promise.all</code></td>
+<td>all fulfil</td>
+<td>the <strong>first</strong> rejection (others keep running)</td>
+<td>independent calls that must all succeed</td>
+</tr>
+<tr>
+<td><code>Promise.allSettled</code></td>
+<td>all settle</td>
+<td>never</td>
+<td>best-effort batches; inspect each result</td>
+</tr>
+<tr>
+<td><code>Promise.any</code></td>
+<td>the first fulfils</td>
+<td>all reject (<code>AggregateError</code>)</td>
+<td>redundant replicas, hedged requests</td>
+</tr>
+<tr>
+<td><code>Promise.race</code></td>
+<td>the first settles</td>
+<td>the first settles with a rejection</td>
+<td>timeouts (prefer <code>AbortSignal.timeout</code>)</td>
+</tr>
+</tbody>
+</table>
+<div class="insight">
+<p><strong>None of the combinators cancel anything</strong></p>
+<p>When <code>Promise.all</code> rejects, the other promises keep running. A promise is a <em>result</em>, not a handle to the work. To stop the work, pass an <code>AbortSignal</code> to every call and abort it. <code>AbortSignal.timeout(ms)</code> and <code>AbortSignal.any([a, b])</code> (Node 20+, modern browsers) build deadlines and combined cancellation without hand-written timers.</p>
+</div>
+<h2 id="shared-state-races-locks-and-atomics">Shared state: races, locks and atomics</h2>
+<h3 id="the-lost-update-step-by-step">The lost update, step by step</h3>
+<p><code>count++</code> looks like one operation. The CPU does three: <strong>read</strong> the value into a register, <strong>add</strong> one, <strong>write</strong> it back. If another thread writes in between your read and your write, you overwrite its update with a value computed from stale data. This is a <strong>data race</strong>: two threads touch the same memory, at least one writes, and nothing orders the accesses.</p>
+<p>The scheduler string decides who runs each step (<code>A</code> or <code>B</code>). The default schedule loses an update. Change the mode to a lock, a CAS loop or <code>Interlocked.Increment</code> and the final count is always right, whatever the schedule. Then type your own schedules and try to break them.</p>
+<div class="viz ca-wide" data-viz="concurrency-async-race"></div>
+
+<p>What each fix does:</p>
+<ul>
+<li><strong>Lock.</strong> Only one thread can be between <code>lock</code> and unlock at a time, so read-add-write becomes one indivisible step <em>as seen by other threads that also take the lock</em>. The cost is waiting: B parks while A holds the lock.</li>
+<li><strong>Compare-and-swap (CAS).</strong> A single CPU instruction (<code>lock cmpxchg</code> on x86): "if the value is still 41, make it 42, and tell me whether you did". If someone else changed it, retry with the new value. No thread ever waits on another; one may just retry. This is <strong>lock-free</strong>.</li>
+<li><strong>Atomic increment.</strong> The hardware does read-add-write as one instruction (<code>lock xadd</code>). It is the fastest option for a single counter.</li>
+</ul>
+<p>The same three fixes in every language:</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">private int _count;
+private readonly object _gate = new();                // .NET 9+: private readonly Lock _gate = new();
+
+public void IncrementLocked() { lock (_gate) { _count++; } }
+
+public void IncrementAtomic() =&gt; Interlocked.Increment(ref _count);
+
+public void AddMaxCas(int candidate)                  // CAS loop for something with no built-in atomic
+{
+    int seen, desired;
+    do
+    {
+        seen = Volatile.Read(ref _count);
+        desired = Math.Max(seen, candidate);
+        if (desired == seen) return;
+    } while (Interlocked.CompareExchange(ref _count, desired, seen) != seen);
+}
+
+// Many writers to one counter? Partition it: one per thread, sum on read.
+// ConcurrentDictionary.AddOrUpdate, Channel&lt;T&gt; and ImmutableInterlocked cover most real cases.
+</code></pre>
+<pre><code class="language-java">private int count;
+private final ReentrantLock lock = new ReentrantLock();
+
+void incrementLocked() {
+    lock.lock();
+    try { count++; } finally { lock.unlock(); }       // always unlock in finally
+}
+
+private final AtomicInteger atomic = new AtomicInteger();
+void incrementAtomic() { atomic.incrementAndGet(); }
+
+void addMax(int candidate) {                           // CAS loop, packaged
+    atomic.accumulateAndGet(candidate, Math::max);
+}
+
+// Hot counter written by many threads: LongAdder spreads writes over cells.
+private final LongAdder requests = new LongAdder();
+void onRequest() { requests.increment(); }            // sum() when you read it
+</code></pre>
+<pre><code class="language-python">import threading
+from collections import Counter
+
+count = 0
+lock = threading.Lock()
+
+def increment_locked() -&gt; None:
+    global count
+    with lock:               # the only portable way in Python; there is no public atomic int
+        count += 1
+
+# Better: avoid shared counters. Each worker counts locally, then merge once.
+def worker(items: list[str]) -&gt; Counter:
+    local = Counter()
+    for it in items:
+        local[it] += 1
+    return local
+
+totals = sum((worker(chunk) for chunk in [[&quot;a&quot;, &quot;b&quot;], [&quot;a&quot;]]), Counter())
+print(totals)                # Counter({'a': 2, 'b': 1})
+</code></pre>
+<pre><code class="language-go">type Stats struct {
+    mu    sync.Mutex
+    count int
+    hits  atomic.Int64 // Go 1.19+ typed atomics
+}
+
+func (s *Stats) IncrementLocked() {
+    s.mu.Lock()
+    defer s.mu.Unlock()
+    s.count++
+}
+
+func (s *Stats) Hit() { s.hits.Add(1) }
+
+func (s *Stats) AddMax(candidate int64) {
+    for {
+        seen := s.hits.Load()
+        if candidate &lt;= seen || s.hits.CompareAndSwap(seen, candidate) {
+            return
+        }
+    }
+}
+
+// Find races before production: go test -race ./...
+</code></pre>
+<pre><code class="language-typescript">// Plain JS objects are never shared between threads, so count++ is safe on the event loop.
+// The race moves to the *async* level: a read and a write separated by an await.
+let stock = 1;
+async function buy(): Promise&lt;boolean&gt; {
+  if (stock &gt; 0) {               // both callers can pass this check...
+    await chargeCard();          // ...because each yields here
+    stock--;                     // stock ends at -1: oversold
+    return true;
+  }
+  return false;
+}
+
+// Real shared memory exists only with SharedArrayBuffer + worker_threads: use Atomics.
+const shared = new Int32Array(new SharedArrayBuffer(4));
+Atomics.add(shared, 0, 1);
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Async code has races too, even on one thread</strong></p>
+<p>The TypeScript example oversells with no threads at all. Any <code>await</code> between a <em>check</em> and an <em>act</em> is a gap where another task can run. The same bug appears with C# <code>async</code> methods on a single-threaded SynchronizationContext and with Python <code>asyncio</code>. Fix it by doing the check and the act with no await in between, by using an async lock (<code>SemaphoreSlim(1,1)</code>, <code>asyncio.Lock</code>), or best of all by letting the database enforce it: <code>UPDATE stock SET n = n - 1 WHERE id = @id AND n &gt; 0</code> and check the affected row count.</p>
+</div>
+<h3 id="the-lock-toolbox">The lock toolbox</h3>
+<table>
+<thead>
+<tr>
+<th>Primitive</th>
+<th>Lets in</th>
+<th>Use when</th>
+<th>Per language</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mutex / lock</strong></td>
+<td>1 thread</td>
+<td>protecting a small invariant (a counter plus a list that must agree)</td>
+<td>C# <code>lock</code> / <code>Lock</code>, Java <code>synchronized</code> / <code>ReentrantLock</code>, Python <code>threading.Lock</code>, Go <code>sync.Mutex</code></td>
+</tr>
+<tr>
+<td><strong>Read-write lock</strong></td>
+<td>many readers <strong>or</strong> 1 writer</td>
+<td>reads vastly outnumber writes and the read section is not tiny</td>
+<td><code>ReaderWriterLockSlim</code>, <code>ReentrantReadWriteLock</code> / <code>StampedLock</code>, Go <code>sync.RWMutex</code></td>
+</tr>
+<tr>
+<td><strong>Semaphore</strong></td>
+<td>N holders</td>
+<td>limiting concurrency (20 DB calls at once), not protecting data</td>
+<td><code>SemaphoreSlim</code>, <code>java.util.concurrent.Semaphore</code>, <code>asyncio.Semaphore</code>, Go buffered channel or <code>x/sync/semaphore</code></td>
+</tr>
+<tr>
+<td><strong>Async lock</strong></td>
+<td>1 task, across awaits</td>
+<td>the critical section contains an <code>await</code></td>
+<td><code>SemaphoreSlim(1,1).WaitAsync</code>, <code>asyncio.Lock</code>, <code>async-mutex</code> (npm)</td>
+</tr>
+<tr>
+<td><strong>Once / lazy</strong></td>
+<td>first caller initialises</td>
+<td>one-time initialisation</td>
+<td><code>Lazy&lt;T&gt;</code>, holder idiom, <code>functools.cache</code>, <code>sync.Once</code> / <code>sync.OnceValue</code></td>
+</tr>
+<tr>
+<td><strong>Condition / event</strong></td>
+<td>wake waiters on a state change</td>
+<td>"wait until the queue is non-empty"</td>
+<td><code>Monitor.Wait/Pulse</code>, <code>Condition</code>, <code>threading.Condition</code>, <code>sync.Cond</code> (prefer channels)</td>
+</tr>
+</tbody>
+</table>
+<div class="tip">
+<p><strong>Rules for locks that do not hurt</strong></p>
+<ul>
+<li>Keep the critical section <strong>short</strong>: no I/O, no logging, no callbacks into unknown code inside a lock.</li>
+<li>Lock on a <strong>private</strong> object, never on <code>this</code>, a <code>Type</code> or an interned string that outside code can also lock.</li>
+<li>A read-write lock is slower than a plain mutex when sections are short. Measure before switching.</li>
+<li>Prefer <strong>not sharing</strong> to any lock: thread-local accumulation, partitioning by key, or one owner per piece of state.</li>
+</ul>
+</div>
+<h3 id="deadlock-the-cycle">Deadlock: the cycle</h3>
+<p>A deadlock needs four conditions at once (the <strong>Coffman conditions</strong>): mutual exclusion, <em>hold and wait</em> (a thread holds one lock while waiting for another), no preemption (locks are not taken away), and a <strong>circular wait</strong>. Remove any one and deadlock is impossible. In practice you remove the cycle.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 760 230" width="760" role="img" aria-label="Two threads taking two locks in opposite order form a cycle; a global order breaks it">
+<text x="20" y="24" class="title">Opposite lock order makes a cycle</text>
+<circle class="box active" cx="80" cy="80" r="26"/><text x="80" y="85" text-anchor="middle" class="mono">T1</text>
+<circle class="box active" cx="300" cy="80" r="26"/><text x="300" y="85" text-anchor="middle" class="mono">T2</text>
+<rect class="box bad" x="50" y="160" width="60" height="36" rx="6"/><text x="80" y="183" text-anchor="middle" class="mono">A</text>
+<rect class="box bad" x="270" y="160" width="60" height="36" rx="6"/><text x="300" y="183" text-anchor="middle" class="mono">B</text>
+<path class="edge bad" d="M80 160 L80 108" marker-end="url(#concurrency-async-ar)"/><text x="88" y="140" class="small">held by</text>
+<path class="edge bad" d="M300 160 L300 108" marker-end="url(#concurrency-async-ar)"/><text x="308" y="140" class="small">held by</text>
+<path class="edge bad dash" d="M104 92 L276 170" marker-end="url(#concurrency-async-ar)"/><text x="112" y="58" class="small">T1 wants B</text>
+<path class="edge bad dash" d="M276 92 L104 170" marker-end="url(#concurrency-async-ar)"/><text x="268" y="58" text-anchor="end" class="small">T2 wants A</text>
+<text x="420" y="24" class="title">Fix: everyone locks A before B</text>
+<circle class="box active" cx="470" cy="80" r="26"/><text x="470" y="85" text-anchor="middle" class="mono">T1</text>
+<circle class="box dim" cx="690" cy="80" r="26"/><text x="690" y="85" text-anchor="middle" class="mono">T2</text>
+<rect class="box done" x="440" y="160" width="60" height="36" rx="6"/><text x="470" y="183" text-anchor="middle" class="mono">A</text>
+<rect class="box done" x="660" y="160" width="60" height="36" rx="6"/><text x="690" y="183" text-anchor="middle" class="mono">B</text>
+<path class="edge done" d="M470 160 L470 108" marker-end="url(#concurrency-async-ar)"/>
+<path class="edge done" d="M494 92 L666 170" marker-end="url(#concurrency-async-ar)"/>
+<path class="edge dash" d="M666 92 L494 170" marker-end="url(#concurrency-async-ar)"/><text x="658" y="58" text-anchor="end" class="small">T2 waits for A first</text>
+<text x="420" y="218" class="small muted">T2 holds nothing while it waits, so no cycle can form.</text>
+</svg>
+<figcaption>The wait-for graph: an edge from a lock to the thread that holds it, and from a thread to the lock it wants. A deadlock is a cycle in this graph.</figcaption>
+</figure>
+
+<p>The dining philosophers: N threads sit in a ring with one lock between each pair, and each needs both neighbouring locks. With the <strong>naive</strong> strategy and a fair scheduler, everyone takes their left lock and the cycle closes. Switch to <strong>global order</strong> (the last thread takes the lower-numbered lock first, which breaks the ring) or <strong>tryLock + back-off</strong> (give up your lock if the second is busy, wait a random time, retry; watch for <em>livelock</em>, where everyone keeps backing off in step).</p>
+<div class="viz ca-wide" data-viz="concurrency-async-deadlock"></div>
+
+<div class="code-tabs" data-labels="Bad,Good">
+<pre><code class="language-csharp">// Transfer locks the source first, then the destination.
+// Transfer(a, b) and Transfer(b, a) at the same time: each holds one, waits for the other.
+public static void Transfer(Account from, Account to, decimal amount)
+{
+    lock (from)
+    {
+        lock (to)
+        {
+            from.Balance -= amount;
+            to.Balance += amount;
+        }
+    }
+}
+</code></pre>
+<pre><code class="language-csharp">// Always lock in a global order (here: by Id), whatever the direction of the transfer.
+public static void Transfer(Account from, Account to, decimal amount)
+{
+    var (first, second) = from.Id &lt; to.Id ? (from, to) : (to, from);
+    lock (first.Gate)
+    {
+        lock (second.Gate)
+        {
+            from.Balance -= amount;
+            to.Balance += amount;
+        }
+    }
+}
+// Better still for money: one database transaction, and let the database detect deadlocks.
+</code></pre>
+</div>
+<p>Other deadlock shapes you will meet:</p>
+<ul>
+<li><strong>Sync over async</strong> on a single-threaded context (shown in the await visualizer): a thread waits for a continuation that only it can run.</li>
+<li><strong>Lock plus callback.</strong> You hold a lock and raise an event; the handler calls back into a method that takes another lock, which a second thread holds while waiting for yours.</li>
+<li><strong>Pool-induced deadlock.</strong> All N threads of a bounded pool run tasks that submit a subtask to the <em>same</em> pool and wait for it. The subtasks never get a thread.</li>
+<li><strong>Database deadlocks.</strong> Two transactions update rows in opposite order. The database detects the cycle and kills one victim; your code must retry (<a href="resilience.html">Resilience</a>).</li>
+<li><strong>Go "all goroutines are asleep".</strong> The Go runtime detects a <em>global</em> deadlock (every goroutine blocked) and crashes with that message. A partial deadlock (some goroutines stuck) is not detected; it looks like a leak.</li>
+</ul>
+<h3 id="memory-visibility-why-it-works-on-my-machine">Memory visibility: why "it works on my machine"</h3>
+<p>Atomicity is half of the problem. The other half is <strong>visibility and ordering</strong>. Compilers and CPUs reorder reads and writes, and each core has caches and store buffers. Without synchronisation, thread B may <em>never</em> see thread A's write, or may see writes in a different order than A made them.</p>
+<pre><code class="language-csharp">// Broken: the JIT may hoist the read of _stop out of the loop, so it never sees true.
+private bool _stop;
+void Worker() { while (!_stop) { DoWork(); } }
+void Stop() =&gt; _stop = true;
+
+// Broken: another thread can see _ready == true but _data == null (reordered writes).
+_data = Load();
+_ready = true;
+</code></pre>
+<p>Every memory model (the C# ECMA/CLR model, the Java Memory Model, the Go memory model, C++11) defines <strong>happens-before</strong>: if action X happens-before Y, then Y sees X's effects. You get happens-before edges from:</p>
+<ul>
+<li><strong>Unlocking a lock</strong> → a later lock of the same lock.</li>
+<li><strong>Writing a volatile/atomic</strong> → a later read of it (<code>volatile</code> in C# and Java, <code>Volatile.Read/Write</code>, <code>AtomicXxx</code>, Go <code>sync/atomic</code>).</li>
+<li><strong>Sending on a channel</strong> → the matching receive completing (Go).</li>
+<li><strong>Starting a thread</strong> → its first action; a thread's last action → <code>Join</code> returning; a task completing → <code>await</code> resuming.</li>
+<li><strong>Publishing through a concurrent collection</strong> (<code>ConcurrentQueue</code>, <code>BlockingQueue</code>, <code>Channel&lt;T&gt;</code>).</li>
+</ul>
+<div class="rule">
+<p><strong>Rule of thumb.</strong> If two threads touch the same variable and one of them writes, every access must go through the same lock, an atomic, or a channel. "It is only a bool" is not an exception: use <code>volatile</code>, <code>Volatile.Read/Write</code>, <code>AtomicBoolean</code> or <code>atomic.Bool</code>, or better, a <code>CancellationToken</code> / <code>context.Context</code>.</p>
+</div>
+<h3 id="immutability-and-message-passing">Immutability and message passing</h3>
+<p>The cheapest synchronisation is none. Data that <strong>never changes after construction</strong> can be shared by any number of threads without locks, because there are no writes to race with. Data that is <strong>owned by one thread at a time</strong> and handed over through a queue needs no locks either: the queue provides the happens-before edge, and the sender stops touching the data.</p>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>How</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Immutable snapshots</td>
+<td>build a new object, publish its reference atomically</td>
+<td>C# <code>record</code> + <code>ImmutableDictionary</code> + <code>Interlocked.Exchange</code>, Java <code>record</code> + <code>List.copyOf</code>, Python frozen dataclass, Go copy-on-write behind <code>atomic.Pointer[T]</code></td>
+</tr>
+<tr>
+<td>Confinement</td>
+<td>only one thread ever touches the object</td>
+<td>a UI thread's controls, a per-request <code>DbContext</code>, a goroutine that owns a map</td>
+</tr>
+<tr>
+<td>Message passing / actors</td>
+<td>state lives in one owner; others send it messages</td>
+<td>Go channels, <code>Channel&lt;T&gt;</code> consumer, Akka/Orleans actors, Erlang processes</td>
+</tr>
+<tr>
+<td>Partitioning</td>
+<td>shard state by key so each shard has one owner</td>
+<td>Kafka partitions, per-core counters, <code>ConcurrentDictionary</code> stripes</td>
+</tr>
+</tbody>
+</table>
+<p><a href="types-and-immutability.html">Types and Immutability</a> covers immutable types in depth; <a href="functional-patterns.html">Functional Patterns</a> shows how pure functions make parallel code trivially safe.</p>
+<h2 id="producer-consumer-and-backpressure">Producer / consumer and backpressure</h2>
+<p>A <strong>producer/consumer pipeline</strong> decouples the code that creates work from the code that processes it, through a queue. The essential design decision is <strong>what happens when the queue is full</strong>, because a producer that is faster than its consumers fills any queue eventually:</p>
+<ul>
+<li><strong>Wait</strong> (backpressure): the producer blocks or awaits until there is room. Nothing is lost; the slowdown propagates upstream to whoever can deal with it.</li>
+<li><strong>Drop</strong>: keep the newest, keep the oldest, or reject the write. Right for telemetry, UI updates and sensor samples, where fresh data beats complete data.</li>
+<li><strong>Unbounded</strong>: never full, until the process runs out of memory. Latency grows without limit because every item waits behind all the earlier ones.</li>
+</ul>
+<div class="viz ca-wide" data-viz="concurrency-async-channel"></div>
+
+<p>Run <strong>Wait</strong> with 2 producers and 1 consumer, then switch to <strong>Unbounded</strong> with the same inputs. Same throughput, but the queue (and each item's wait) keeps growing. Then try <strong>DropOldest</strong> with a capacity of 2. <a href="performance-patterns.html">Performance Patterns</a> covers backpressure as a system-wide design; here is the in-process building block in each language:</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">var channel = Channel.CreateBounded&lt;Order&gt;(new BoundedChannelOptions(100)
+{
+    FullMode = BoundedChannelFullMode.Wait,           // or DropOldest / DropNewest / DropWrite
+    SingleReader = false,
+    SingleWriter = false,
+});
+
+async Task ProduceAsync(CancellationToken ct)
+{
+    await foreach (var order in source.ReadAllAsync(ct))
+        await channel.Writer.WriteAsync(order, ct);   // awaits when the channel is full
+    channel.Writer.Complete();                        // tells consumers: no more items
+}
+
+async Task ConsumeAsync(CancellationToken ct)
+{
+    await foreach (var order in channel.Reader.ReadAllAsync(ct))
+        await HandleAsync(order, ct);
+}
+
+// 1 producer, 4 consumers:
+await Task.WhenAll(ProduceAsync(ct), ConsumeAsync(ct), ConsumeAsync(ct), ConsumeAsync(ct), ConsumeAsync(ct));
+</code></pre>
+<pre><code class="language-java">BlockingQueue&lt;Order&gt; queue = new ArrayBlockingQueue&lt;&gt;(100);  // bounded
+Order POISON = new Order(-1);                                 // end-of-stream marker
+
+Thread.ofVirtual().start(() -&gt; {
+    try {
+        for (Order o : source) queue.put(o);                  // blocks when full
+        for (int i = 0; i &lt; 4; i++) queue.put(POISON);        // one marker per consumer
+    } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+});
+
+for (int i = 0; i &lt; 4; i++) {
+    Thread.ofVirtual().start(() -&gt; {
+        try {
+            for (Order o = queue.take(); o != POISON; o = queue.take()) handle(o);
+        } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+    });
+}
+// offer(o, 50, MILLISECONDS) returns false instead of waiting forever: a drop policy.
+</code></pre>
+<pre><code class="language-python">import asyncio
+
+async def producer(q: asyncio.Queue, n: int) -&gt; None:
+    for i in range(n):
+        await q.put(i)              # waits while the queue is full
+    await q.join()                  # wait until every item has been processed
+
+async def consumer(name: str, q: asyncio.Queue) -&gt; None:
+    while True:
+        item = await q.get()
+        try:
+            await asyncio.sleep(0.01)  # handle the item
+        finally:
+            q.task_done()
+
+async def main() -&gt; None:
+    q: asyncio.Queue[int] = asyncio.Queue(maxsize=10)   # maxsize=0 would be unbounded
+    workers = [asyncio.create_task(consumer(f&quot;c{i}&quot;, q)) for i in range(4)]
+    await producer(q, 100)
+    for w in workers:
+        w.cancel()                  # consumers loop forever; cancel them when the work is done
+    await asyncio.gather(*workers, return_exceptions=True)
+    print(&quot;all items processed&quot;)
+
+asyncio.run(main())
+</code></pre>
+<pre><code class="language-go">func pipeline(ctx context.Context, orders []Order) error {
+    ch := make(chan Order, 100) // bounded: sends block when full
+    g, ctx := errgroup.WithContext(ctx)
+
+    g.Go(func() error {
+        defer close(ch) // closing is how the producer says &quot;no more&quot;
+        for _, o := range orders {
+            select {
+            case ch &lt;- o:
+            case &lt;-ctx.Done():
+                return ctx.Err()
+            }
+        }
+        return nil
+    })
+
+    for i := 0; i &lt; 4; i++ {
+        g.Go(func() error {
+            for o := range ch { // ends when ch is closed and drained
+                if err := handle(ctx, o); err != nil {
+                    return err // cancels ctx for everyone
+                }
+            }
+            return nil
+        })
+    }
+    return g.Wait()
+}
+</code></pre>
+<pre><code class="language-typescript">// Node streams have backpressure built in: pipeline() pauses the source
+// when the destination's buffer (highWaterMark) is full.
+import { pipeline } from &quot;node:stream/promises&quot;;
+import { createReadStream, createWriteStream } from &quot;node:fs&quot;;
+import { Transform } from &quot;node:stream&quot;;
+
+await pipeline(
+  createReadStream(&quot;orders.ndjson&quot;),
+  new Transform({
+    objectMode: true,
+    highWaterMark: 16,                         // at most 16 items buffered
+    async transform(chunk, _enc, done) {
+      try { done(null, await enrich(chunk)); } catch (e) { done(e as Error); }
+    },
+  }),
+  createWriteStream(&quot;enriched.ndjson&quot;),
+  { signal: AbortSignal.timeout(60_000) },
+);
+</code></pre>
+</div>
+<h2 id="cancellation-pass-it-all-the-way-down">Cancellation: pass it all the way down</h2>
+<p>Cancellation in every modern runtime is <strong>cooperative</strong>. Nobody kills a thread from outside (that leaves locks held and state half-written). Instead, the caller signals "please stop", and the code checks the signal at safe points: before starting expensive work, inside loops, and by passing it to every I/O call, which then aborts the socket read or the database command.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Signal</th>
+<th>Check / observe</th>
+<th>Deadline</th>
+<th>Propagate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C#</td>
+<td><code>CancellationTokenSource</code> → <code>CancellationToken</code></td>
+<td><code>ct.ThrowIfCancellationRequested()</code>, pass <code>ct</code> to every <code>...Async</code></td>
+<td><code>cts.CancelAfter(2s)</code> / <code>new CancellationTokenSource(2s)</code></td>
+<td><code>CreateLinkedTokenSource(ct)</code></td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>Future.cancel(true)</code> / <code>Thread.interrupt()</code></td>
+<td><code>InterruptedException</code>, <code>Thread.interrupted()</code></td>
+<td><code>future.get(2, SECONDS)</code>, <code>orTimeout</code></td>
+<td>structured scope shutdown</td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>task.cancel()</code></td>
+<td><code>CancelledError</code> raised at the next <code>await</code></td>
+<td><code>asyncio.timeout(2)</code></td>
+<td>TaskGroup cancels siblings</td>
+</tr>
+<tr>
+<td>Go</td>
+<td><code>context.WithCancel</code> → <code>cancel()</code></td>
+<td><code>&lt;-ctx.Done()</code>, <code>ctx.Err()</code>; pass <code>ctx</code> first</td>
+<td><code>context.WithTimeout(ctx, 2*time.Second)</code></td>
+<td>derived contexts</td>
+</tr>
+<tr>
+<td>TS</td>
+<td><code>AbortController</code> → <code>signal</code></td>
+<td><code>signal.throwIfAborted()</code>, pass <code>signal</code> to <code>fetch</code></td>
+<td><code>AbortSignal.timeout(2000)</code></td>
+<td><code>AbortSignal.any([a, b])</code></td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs">
+<pre><code class="language-csharp">public async Task&lt;Report&gt; BuildAsync(int id, CancellationToken ct)
+{
+    using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+    cts.CancelAfter(TimeSpan.FromSeconds(2));             // our own deadline, on top of the caller's
+
+    var rows = await _db.QueryAsync(id, cts.Token);       // the query is cancelled server-side
+    foreach (var row in rows)
+    {
+        cts.Token.ThrowIfCancellationRequested();         // safe point in a CPU loop
+        Accumulate(row);
+    }
+    return Finish();
+}
+// Catch OperationCanceledException at the edge (middleware), not in every method.
+</code></pre>
+<pre><code class="language-java">Report build(long id) throws Exception {
+    try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+        var rows = scope.fork(() -&gt; db.query(id));          // interrupted if the scope shuts down
+        scope.joinUntil(Instant.now().plusSeconds(2));      // deadline: throws TimeoutException
+        scope.throwIfFailed();
+        return finish(rows.get());
+    }
+}
+</code></pre>
+<pre><code class="language-python">import asyncio
+
+async def build(report_id: int) -&gt; str:
+    try:
+        async with asyncio.timeout(2):                       # raises TimeoutError at the deadline
+            rows = await query(report_id)
+            return finish(rows)
+    except asyncio.CancelledError:
+        await release_resources()                            # clean up, then re-raise
+        raise                                                # never swallow CancelledError
+
+async def query(i: int) -&gt; list[int]:
+    await asyncio.sleep(0.1)
+    return [i]
+
+def finish(rows: list[int]) -&gt; str:
+    return f&quot;{len(rows)} rows&quot;
+
+async def release_resources() -&gt; None:
+    pass
+
+print(asyncio.run(build(7)))
+</code></pre>
+<pre><code class="language-go">func Build(ctx context.Context, id int) (Report, error) {
+    ctx, cancel := context.WithTimeout(ctx, 2*time.Second)
+    defer cancel() // always call cancel to release the timer
+
+    rows, err := db.QueryContext(ctx, &quot;SELECT ... WHERE id = $1&quot;, id)
+    if err != nil {
+        return Report{}, err // context.DeadlineExceeded or context.Canceled
+    }
+    defer rows.Close()
+    var r Report
+    for rows.Next() {
+        if err := ctx.Err(); err != nil {
+            return Report{}, err
+        }
+        r.Accumulate(rows)
+    }
+    return r, rows.Err()
+}
+</code></pre>
+<pre><code class="language-typescript">export async function build(id: number, signal?: AbortSignal): Promise&lt;Report&gt; {
+  const deadline = AbortSignal.timeout(2_000);
+  const combined = signal ? AbortSignal.any([signal, deadline]) : deadline;
+
+  const res = await fetch(`/api/reports/${id}/rows`, { signal: combined });
+  const rows: Row[] = await res.json();
+  const report = new Report();
+  for (const row of rows) {
+    combined.throwIfAborted();          // safe point
+    report.accumulate(row);
+  }
+  return report;
+}
+</code></pre>
+</div>
+<h2 id="fan-out-fan-in-with-bounded-parallelism">Fan-out / fan-in with bounded parallelism</h2>
+<p><strong>Fan-out</strong> starts many operations; <strong>fan-in</strong> collects their results. The two decisions are <strong>how many at once</strong> and <strong>what happens when one fails</strong>. Unbounded fan-out (<code>Task.WhenAll(ids.Select(Fetch))</code> over 10,000 ids) sends 10,000 requests to a dependency that can handle 50, and everything gets slower, including other callers. Without cancellation, one early failure still lets all the other jobs run to completion for nothing.</p>
+<div class="viz ca-wide" data-viz="concurrency-async-fanout"></div>
+
+<p>Experiments:</p>
+<ul>
+<li>Set the limit to 8 (no limit) and the dependency capacity to 3: everything slows down because the dependency is overloaded.</li>
+<li>Default inputs, then switch to <strong>fail fast</strong>: the jobs after the failure are cancelled and the wasted work drops.</li>
+<li>Set a deadline of 12 to see a timeout cancel the stragglers.</li>
+</ul>
+<div class="code-tabs">
+<pre><code class="language-csharp">// .NET 6+: bounded and fail-fast in one call.
+await Parallel.ForEachAsync(ids,
+    new ParallelOptions { MaxDegreeOfParallelism = 8, CancellationToken = ct },
+    async (id, token) =&gt;
+    {
+        var item = await _client.GetAsync(id, token);   // first exception cancels token
+        await _store.SaveAsync(item, token);
+    });
+
+// When you need the results: SemaphoreSlim + WhenAll.
+using var gate = new SemaphoreSlim(8);
+var results = await Task.WhenAll(ids.Select(async id =&gt;
+{
+    await gate.WaitAsync(ct);
+    try { return await _client.GetAsync(id, ct); }
+    finally { gate.Release(); }
+}));
+</code></pre>
+<pre><code class="language-java">// Virtual thread per task + a semaphore as the limit + structured scope for fail-fast.
+List&lt;Item&gt; fetchAll(List&lt;Long&gt; ids) throws Exception {
+    var permits = new Semaphore(8);
+    try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+        List&lt;Subtask&lt;Item&gt;&gt; tasks = ids.stream()
+            .map(id -&gt; scope.fork(() -&gt; {
+                permits.acquire();
+                try { return client.get(id); } finally { permits.release(); }
+            }))
+            .toList();
+        scope.join().throwIfFailed();
+        return tasks.stream().map(Subtask::get).toList();
+    }
+}
+</code></pre>
+<pre><code class="language-python">import asyncio
+
+async def fetch(i: int) -&gt; int:
+    await asyncio.sleep(0.05)
+    return i * 10
+
+async def fetch_all(ids: list[int], limit: int = 8) -&gt; list[int]:
+    sem = asyncio.Semaphore(limit)
+
+    async def one(i: int) -&gt; int:
+        async with sem:                    # at most `limit` fetches in flight
+            return await fetch(i)
+
+    async with asyncio.TaskGroup() as tg:  # fail fast: an exception cancels the rest
+        tasks = [tg.create_task(one(i)) for i in ids]
+    return [t.result() for t in tasks]
+
+print(asyncio.run(fetch_all(list(range(20)))))
+</code></pre>
+<pre><code class="language-go">func FetchAll(ctx context.Context, ids []int) ([]Item, error) {
+    g, ctx := errgroup.WithContext(ctx) // first error cancels ctx
+    g.SetLimit(8)                       // at most 8 goroutines at once
+    items := make([]Item, len(ids))
+    for i, id := range ids {
+        g.Go(func() error { // Go 1.22+: i and id are per-iteration
+            it, err := client.Get(ctx, id)
+            if err != nil {
+                return err
+            }
+            items[i] = it // distinct index per goroutine: no race
+            return nil
+        })
+    }
+    return items, g.Wait()
+}
+</code></pre>
+<pre><code class="language-typescript">// A tiny concurrency limiter (p-limit does the same).
+async function mapLimit&lt;T, R&gt;(items: T[], limit: number,
+  fn: (item: T, signal: AbortSignal) =&gt; Promise&lt;R&gt;): Promise&lt;R[]&gt; {
+  const controller = new AbortController();
+  const results = new Array&lt;R&gt;(items.length);
+  let next = 0;
+  async function worker() {
+    while (next &lt; items.length) {
+      const i = next++;                       // safe: single-threaded between awaits
+      try { results[i] = await fn(items[i], controller.signal); }
+      catch (e) { controller.abort(e); throw e; }   // fail fast
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+  return results;
+}
+</code></pre>
+</div>
+<h2 id="when-not-to-go-async-or-parallel">When NOT to go async or parallel</h2>
+<p>Concurrency has real costs: harder debugging, non-deterministic tests, coordination overhead and new failure modes. Skip it when:</p>
+<div class="compare">
+<div class="bad">
+<h4 id="do-not-add-concurrency-when">Do not add concurrency when</h4>
+<ul>
+<li><strong>The work is tiny.</strong> Parallelising a loop over 1,000 integers costs more in scheduling than it saves. As a rough guide, each parallel chunk should take well over 100 µs.</li>
+<li><strong>The work is CPU-bound and you reach for async.</strong> <code>async</code> does not add cores. Make it parallel or leave it synchronous.</li>
+<li><strong>The bottleneck is shared.</strong> Ten threads writing to one SQLite file, one lock or one rate-limited API just queue up.</li>
+<li><strong>Order matters and the steps depend on each other.</strong> A pipeline of strictly sequential steps gains nothing.</li>
+<li><strong>A sync API is all you have, in a short-lived tool.</strong> A CLI that reads three files does not need async I/O.</li>
+<li><strong>The machine is already saturated.</strong> A web server already handles requests concurrently; parallelising inside each request steals cores from the other requests.</li>
+</ul>
+</div>
+<div class="good">
+<h4 id="do-add-it-when">Do add it when</h4>
+<ul>
+<li>The code <strong>waits</strong> on I/O and handles many requests (servers, crawlers, gateways): async, goroutines or virtual threads.</li>
+<li>Several <strong>independent</strong> calls sit on the latency path: fan them out (with a limit).</li>
+<li>A big <strong>CPU</strong> job runs on an otherwise idle machine and can be split into independent chunks.</li>
+<li>A UI must stay responsive while work happens.</li>
+<li>Producers and consumers run at different speeds and a bounded queue smooths bursts.</li>
+</ul>
+</div>
+</div>
+<div class="pitfall">
+<p><strong>Amdahl's law sets the ceiling</strong></p>
+<p>If 10% of a job is inherently sequential, no number of cores makes it more than 10 times faster: speed-up = 1 / (s + (1 − s) / N). With s = 0.1 and N = 16 you get 6.4×, not 16×. Measure the sequential part first (<a href="performance-cadence.html">Performance Cadence</a> shows how to profile it), and shrink it before you buy cores.</p>
+</div>
+<h3 id="decision-guide">Decision guide</h3>
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · WAITING OR COMPUTING?</small><strong>Profile it</strong><p>Low CPU and high latency means waiting: go to 2. High CPU means computing: go to 3.</p></div>
+<div class="flow-step"><small>2 · WAITING</small><strong>Overlap the waits</strong><p>async/await (C#, TS, Python), goroutines (Go), virtual threads (Java 21+). Add a concurrency limit and pass cancellation.</p></div>
+<div class="flow-step"><small>3 · COMPUTING</small><strong>Use cores</strong><p>Parallel.For / PLINQ, ForkJoin / parallel streams, worker goroutines, ProcessPoolExecutor, worker_threads. One worker per core.</p></div>
+<div class="flow-step"><small>4 · SHARED STATE?</small><strong>Avoid, then protect</strong><p>Immutable data, confinement or channels first. Otherwise an atomic for one value, a lock for an invariant.</p></div>
+<div class="flow-step"><small>5 · VERIFY</small><strong>Race detectors and load tests</strong><p>go test -race, stress tests, dotnet-counters, JFR, thread dumps under load.</p></div>
+</div>
+
+<h2 id="pitfalls-and-war-stories">Pitfalls and war stories</h2>
+<div class="pitfall">
+<p><strong>The static Dictionary that hung the server</strong></p>
+<p>A service cached lookups in a <code>static Dictionary&lt;string, Rate&gt;</code> and wrote to it from request threads. Usually fine. Then one day several threads sat at 100% CPU forever. Concurrent writes had corrupted the dictionary's internal bucket chain into a loop, so <code>TryGetValue</code> spun endlessly. Non-thread-safe collections do not just lose data under concurrent writes; they can corrupt themselves. Use <code>ConcurrentDictionary</code> (or <code>ConcurrentHashMap</code>, or a <code>sync.Map</code> / a mutex-guarded map in Go, where concurrent map writes crash the process with "fatal error: concurrent map writes").</p>
+</div>
+<div class="pitfall">
+<p><strong>Fire and forget, forgotten</strong></p>
+<p><code>_ = SendEmailAsync(order);</code> in a controller. The request returns, the DI scope is disposed, and the email task then uses a disposed <code>DbContext</code>. Exceptions vanish because nobody awaits the task. Background work belongs in a queue processed by a hosted service (<code>BackgroundService</code> + <code>Channel&lt;T&gt;</code>), a message broker, or at least a tracked task with its own scope and logging.</p>
+</div>
+<div class="pitfall">
+<p><strong>The asyncio service that "randomly" froze</strong></p>
+<p>One endpoint used the synchronous <code>requests</code> library inside an <code>async def</code>. Each call blocked the event loop for the whole HTTP round trip, so every other request on that worker froze too. p99 matched the slowest backend. Run with <code>PYTHONASYNCIODEBUG=1</code> (or <code>loop.set_debug(True)</code>) and asyncio logs every callback that takes over 100 ms. The fix is an async client (<code>httpx.AsyncClient</code>) or <code>await asyncio.to_thread(...)</code>.</p>
+</div>
+<h2 id="checklist">Checklist</h2>
+<div class="cheat">
+<div>
+<p><strong>Before you merge concurrent code</strong></p>
+<ul>
+<li>Is the work waiting or computing, and did you choose the model to match?</li>
+<li>Is every fan-out bounded, and is every queue bounded with a stated full policy?</li>
+<li>Is cancellation (token, context, signal) accepted and passed down to every I/O call?</li>
+<li>Is there no <code>.Result</code>, <code>.Wait()</code>, <code>time.sleep</code> or sync I/O on an async path?</li>
+</ul>
+</div>
+<div>
+<p><strong>Shared state</strong></p>
+<ul>
+<li>List every variable two threads can touch. Is each guarded by one lock, an atomic or a channel?</li>
+<li>Are locks always taken in one global order, and never held across I/O or awaits?</li>
+<li>Are collections shared between threads concurrent ones?</li>
+<li>Is there any check-then-act separated by an <code>await</code>?</li>
+</ul>
+</div>
+<div>
+<p><strong>Operations</strong></p>
+<ul>
+<li>Do dashboards show thread-pool queue length, goroutine count or event-loop lag?</li>
+<li>Has the code run under a race detector (<code>go test -race</code>) or a stress test with more threads than cores?</li>
+<li>Is background work tracked, logged and shut down gracefully?</li>
+<li>Are timeouts set at every network boundary (<a href="resilience.html">Resilience</a>)?</li>
+</ul>
+</div>
+</div>
+<h2 id="quiz">Quiz</h2>
+<details class="quiz">
+<summary>1. A C# method does <code>await Task.Delay(1000)</code> 1,000 times concurrently. How many threads are blocked during that second?</summary>
+<details class="solution">
+<summary>Show answer</summary>
+<p>None. <code>Task.Delay</code> registers a timer; each awaiting method is a state machine object on the heap. When the timers fire, continuations are queued to the thread pool and run briefly on a few threads. Replace it with <code>Thread.Sleep(1000)</code> inside <code>Task.Run</code> and you need 1,000 pool threads (and you will starve the pool).</p>
+</details>
+</details>
+<details class="quiz">
+<summary>2. Why does <code>GetDataAsync().Result</code> deadlock in a WPF button handler but not in an ASP.NET Core controller?</summary>
+<details class="solution">
+<summary>Show answer</summary>
+<p>WPF installs a <code>DispatcherSynchronizationContext</code>, so the <code>await</code> inside <code>GetDataAsync</code> posts its continuation to the UI thread, which is blocked in <code>.Result</code> waiting for that continuation. ASP.NET Core has no SynchronizationContext, so the continuation runs on another pool thread and <code>.Result</code> eventually returns. It is still wrong in ASP.NET Core: it holds a pool thread for the whole wait and causes starvation under load.</p>
+</details>
+</details>
+<details class="quiz">
+<summary>3. Python: four threads each run a pure-Python loop for 1 second of CPU. Roughly how long does the whole thing take with the GIL, and how do you fix it?</summary>
+<details class="solution">
+<summary>Show answer</summary>
+<p>About 4 seconds (sometimes slightly more, because of switching). Only one thread runs bytecode at a time. Use <code>ProcessPoolExecutor</code> (about 1 second on 4+ cores, plus process start-up and pickling), move the hot loop into a C extension or NumPy that releases the GIL, or try the free-threaded 3.13t/3.14t build.</p>
+</details>
+</details>
+<details class="quiz">
+<summary>4. What does this print in Node? <code>setTimeout(() =&gt; log("T"), 0); Promise.resolve().then(() =&gt; log("P")); log("S");</code></summary>
+<details class="solution">
+<summary>Show answer</summary>
+<p><code>S</code>, <code>P</code>, <code>T</code>. The script is the current task, so <code>S</code> logs first. When the task ends, the loop drains all microtasks (<code>P</code>) before it takes the next task, the timer callback (<code>T</code>).</p>
+</details>
+</details>
+<details class="quiz">
+<summary>5. Two goroutines call <code>transfer(a, b)</code> and <code>transfer(b, a)</code>, each locking the source then the destination. What can happen, and what are two fixes?</summary>
+<details class="solution">
+<summary>Show answer</summary>
+<p>A deadlock: each holds one mutex and waits for the other. If no other goroutine can run, the runtime crashes with "all goroutines are asleep - deadlock!"; otherwise those two goroutines just hang forever. Fixes: lock in a global order (by account id), or route all transfers through one goroutine that owns the balances (message passing), or use a database transaction.</p>
+</details>
+</details>
+<details class="quiz">
+<summary>6. A Java 21 service moved to virtual threads, and throughput got <em>worse</em> under load. Thread dumps show carriers blocked inside <code>synchronized</code> blocks that call a JDBC driver. What is happening?</summary>
+<details class="solution">
+<summary>Show answer</summary>
+<p>Pinning. Before Java 24, a virtual thread that blocks inside <code>synchronized</code> cannot unmount, so it holds its carrier thread. With only one carrier per core, a few pinned threads stall everything. Replace <code>synchronized</code> with <code>ReentrantLock</code> around blocking calls (or upgrade to Java 24+, JEP 491), and confirm with the JFR event <code>jdk.VirtualThreadPinned</code>.</p>
+</details>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div>
+<p><strong>C# / .NET</strong></p>
+<ul>
+<li>I/O: <code>async Task</code> + <code>await</code>, all the way up.</li>
+<li>CPU: <code>Task.Run</code>, <code>Parallel.For</code>, PLINQ.</li>
+<li>Limit: <code>SemaphoreSlim</code>, <code>Parallel.ForEachAsync</code>.</li>
+<li>Queue: <code>Channel.CreateBounded</code>.</li>
+<li>Cancel: <code>CancellationToken</code>.</li>
+<li>Atomic: <code>Interlocked</code>; lock: <code>lock</code> / <code>Lock</code>.</li>
+</ul>
+</div>
+<div>
+<p><strong>Java</strong></p>
+<ul>
+<li>I/O: virtual threads (21+).</li>
+<li>CPU: fixed pool, <code>ForkJoinPool</code>, parallel streams.</li>
+<li>Limit: <code>Semaphore</code>.</li>
+<li>Queue: <code>ArrayBlockingQueue</code>.</li>
+<li>Cancel: interrupts, <code>StructuredTaskScope</code>.</li>
+<li>Atomic: <code>AtomicXxx</code>, <code>LongAdder</code>; lock: <code>ReentrantLock</code>.</li>
+</ul>
+</div>
+<div>
+<p><strong>Python</strong></p>
+<ul>
+<li>I/O: <code>asyncio</code> + <code>TaskGroup</code>; threads for sync SDKs.</li>
+<li>CPU: <code>ProcessPoolExecutor</code> (GIL).</li>
+<li>Limit: <code>asyncio.Semaphore</code>.</li>
+<li>Queue: <code>asyncio.Queue(maxsize=…)</code>.</li>
+<li>Cancel: <code>task.cancel()</code>, <code>asyncio.timeout</code>.</li>
+<li>Lock: <code>threading.Lock</code>, <code>asyncio.Lock</code>.</li>
+</ul>
+</div>
+<div>
+<p><strong>Go</strong></p>
+<ul>
+<li>I/O and CPU: goroutines.</li>
+<li>Limit: <code>errgroup.SetLimit</code>, buffered channel.</li>
+<li>Queue: <code>make(chan T, n)</code>.</li>
+<li>Cancel: <code>context.Context</code>.</li>
+<li>Atomic: <code>atomic.Int64</code>; lock: <code>sync.Mutex</code>.</li>
+<li>Check: <code>go test -race</code>.</li>
+</ul>
+</div>
+<div>
+<p><strong>TypeScript / Node</strong></p>
+<ul>
+<li>I/O: <code>async</code>/<code>await</code>, <code>Promise.all</code>.</li>
+<li>CPU: <code>worker_threads</code>, piscina.</li>
+<li>Limit: p-limit or a worker pool.</li>
+<li>Queue: streams with <code>highWaterMark</code>.</li>
+<li>Cancel: <code>AbortController</code>, <code>AbortSignal.timeout</code>.</li>
+<li>Never block the event loop.</li>
+</ul>
+</div>
+</div>
+<h2 id="related-topics-and-further-reading">Related topics and further reading</h2>
+<ul>
+<li><a href="performance-cadence.html">Performance Cadence</a>: measure first; this page is part of its track.</li>
+<li><a href="memory-and-gc.html">Memory and GC</a>: what all those tasks, closures and buffers cost the heap.</li>
+<li><a href="performance-patterns.html">Performance Patterns</a>: batching, pooling and backpressure at system scale.</li>
+<li><a href="resilience.html">Resilience</a>: timeouts, retries and bulkheads around concurrent calls.</li>
+<li><a href="request-pipeline.html">Request Pipeline</a>: where request cancellation tokens come from.</li>
+<li><a href="di-lifetimes.html">DI Lifetimes</a>: why scoped services must not cross threads or outlive their request.</li>
+<li><a href="types-and-immutability.html">Types and Immutability</a> and <a href="functional-patterns.html">Functional Patterns</a>: sharing without locks.</li>
+<li><a href="observability.html">Observability</a>: thread-pool, goroutine and event-loop metrics.</li>
+</ul>
+<p>Official documentation:</p>
+<ul>
+<li>.NET: <a href="https://learn.microsoft.com/dotnet/csharp/asynchronous-programming/">Asynchronous programming with async and await</a>, <a href="https://devblogs.microsoft.com/dotnet/configureawait-faq/">ConfigureAwait FAQ</a>, <a href="https://learn.microsoft.com/dotnet/core/extensions/channels">System.Threading.Channels</a>, <a href="https://learn.microsoft.com/dotnet/core/diagnostics/debug-threadpool-starvation">Debug thread-pool starvation</a>.</li>
+<li>Java: <a href="https://openjdk.org/jeps/444">Virtual threads (JEP 444)</a>, <a href="https://openjdk.org/jeps/505">Structured concurrency (JEP 505)</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/package-summary.html">java.util.concurrent</a>.</li>
+<li>Python: <a href="https://docs.python.org/3/library/asyncio.html">asyncio</a>, <a href="https://docs.python.org/3/library/concurrent.futures.html">concurrent.futures</a>, <a href="https://docs.python.org/3/howto/free-threading-python.html">Free-threaded CPython</a>.</li>
+<li>Go: <a href="https://go.dev/doc/effective_go#concurrency">Effective Go: concurrency</a>, <a href="https://go.dev/ref/mem">The Go memory model</a>, <a href="https://pkg.go.dev/golang.org/x/sync/errgroup">errgroup</a>.</li>
+<li>JavaScript: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Event_loop">The event loop (MDN)</a>, <a href="https://nodejs.org/en/learn/asynchronous-work/event-loop-timers-and-nexttick">Node.js event loop</a>, <a href="https://developer.mozilla.org/docs/Web/API/AbortController">AbortController</a>.</li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="memory-and-gc.html"><small>&larr; PREVIOUS</small>Memory, Allocation &amp; Garbage Collection</a><a class="next" href="performance-patterns.html"><small>NEXT &rarr;</small>Performance Patterns &amp; Anti-Patterns</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-three-bugs-that-only-show-up-under-load">The problem: three bugs that only show up under load</a></li>
+<li><a href="#concurrency-is-not-parallelism">Concurrency is not parallelism</a><ul>
+<li><a href="#five-execution-models-on-the-same-work">Five execution models on the same work</a></li>
+</ul>
+</li>
+<li><a href="#threads-thread-pools-and-work-stealing">Threads, thread pools and work stealing</a></li>
+<li><a href="#net-task-asyncawait-and-the-thread-pool">.NET: Task, async/await and the thread pool</a><ul>
+<li><a href="#what-the-compiler-does-with-await">What the compiler does with await</a></li>
+<li><a href="#thread-pool-starvation">Thread-pool starvation</a></li>
+<li><a href="#async-all-the-way-the-rules">Async all the way: the rules</a></li>
+<li><a href="#configureawaitfalse-when-it-matters">ConfigureAwait(false): when it matters</a></li>
+<li><a href="#task-vs-valuetask">Task vs ValueTask</a></li>
+</ul>
+</li>
+<li><a href="#java-platform-threads-virtual-threads-and-structured-concurrency">Java: platform threads, virtual threads and structured concurrency</a></li>
+<li><a href="#python-the-gil-threads-processes-and-asyncio">Python: the GIL, threads, processes and asyncio</a></li>
+<li><a href="#go-goroutines-channels-and-the-gmp-scheduler">Go: goroutines, channels and the G/M/P scheduler</a><ul>
+<li><a href="#channels-and-select">Channels and select</a></li>
+</ul>
+</li>
+<li><a href="#javascript-and-typescript-the-event-loop">JavaScript and TypeScript: the event loop</a></li>
+<li><a href="#shared-state-races-locks-and-atomics">Shared state: races, locks and atomics</a><ul>
+<li><a href="#the-lost-update-step-by-step">The lost update, step by step</a></li>
+<li><a href="#the-lock-toolbox">The lock toolbox</a></li>
+<li><a href="#deadlock-the-cycle">Deadlock: the cycle</a></li>
+<li><a href="#memory-visibility-why-it-works-on-my-machine">Memory visibility: why "it works on my machine"</a></li>
+<li><a href="#immutability-and-message-passing">Immutability and message passing</a></li>
+</ul>
+</li>
+<li><a href="#producer-consumer-and-backpressure">Producer / consumer and backpressure</a></li>
+<li><a href="#cancellation-pass-it-all-the-way-down">Cancellation: pass it all the way down</a></li>
+<li><a href="#fan-out-fan-in-with-bounded-parallelism">Fan-out / fan-in with bounded parallelism</a></li>
+<li><a href="#when-not-to-go-async-or-parallel">When NOT to go async or parallel</a><ul>
+<li><a href="#decision-guide">Decision guide</a></li>
+</ul>
+</li>
+<li><a href="#pitfalls-and-war-stories">Pitfalls and war stories</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#quiz">Quiz</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#related-topics-and-further-reading">Related topics and further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

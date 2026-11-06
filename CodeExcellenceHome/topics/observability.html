@@ -1,0 +1,1548 @@
+<!doctype html>
+<html lang="en" data-home="code-excellence-home">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Observability: Logs, Metrics &amp; Traces | Code Excellence Home</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>:root{--accent:#c2410c;--accent-soft:#fff1e8;}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--accent:#fdba74;--accent-soft:#3a2214;}}:root[data-theme=dark]{--accent:#fdba74;--accent-soft:#3a2214;}</style>
+  <link rel="stylesheet" href="../assets/topics/observability.css">
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/viz-core.js" defer></script>
+  <script src="../assets/viz/observability.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Code Excellence Home navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark">CE</span>Code Excellence Home</a>
+    <p class="sidebar-caption">Engineering craft across languages.<br>Patterns, pipelines, performance, production.</p>
+    <label class="search-label" for="topic-search">Find a topic</label>
+    <input id="topic-search" type="search" placeholder="Search title, track or idea..." autocomplete="off">
+    <nav aria-label="Topics">
+      <a class="home-link" href="../index.html">Learning path</a>
+      <details class="nav-track"><summary>Foundations of Craft</summary><ul class="topic-list"><li data-search="Design Principles: SOLID, DRY, KISS, YAGNI Foundations of Craft Each principle shown as a before/after picture of the dependency graph, with the trade-offs and the ways each one is over-applied. solid srp open closed liskov interface segregation dependency inversion coupling cohesion" data-slug="design-principles"><a href="../topics/design-principles.html">Design Principles: SOLID, DRY, KISS, YAGNI</a></li><li data-search="Cross-Language Mental Models Foundations of Craft Value vs reference, stack vs heap, generics, closures, interfaces vs traits vs duck typing, and nullability, compared across C#, Java, Python, Go and TS. value type reference generics closures interfaces null safety memory model" data-slug="language-mental-models"><a href="../topics/language-mental-models.html">Cross-Language Mental Models</a></li><li data-search="Clean Code &amp; Refactoring Foundations of Craft Naming, function shape, comments, code smells and safe step-by-step refactorings, animated as small transformations. naming code smells refactoring readability functions" data-slug="clean-code"><a href="../topics/clean-code.html">Clean Code &amp; Refactoring</a></li><li data-search="Types, Immutability &amp; Domain Modelling Foundations of Craft Make illegal states unrepresentable: value objects, records, sum types, immutability and parse-don&#x27;t-validate. records value objects discriminated union immutability primitive obsession" data-slug="types-and-immutability"><a href="../topics/types-and-immutability.html">Types, Immutability &amp; Domain Modelling</a></li><li data-search="Error Handling Strategies Foundations of Craft Exceptions vs result types vs error values (Go) vs Option, error boundaries, and what to catch, wrap, log or let crash. exceptions result type go errors fail fast error boundary" data-slug="error-handling"><a href="../topics/error-handling.html">Error Handling Strategies</a></li></ul></details><details class="nav-track"><summary>Design Patterns</summary><ul class="topic-list"><li data-search="Creational Patterns Design Patterns Factory Method, Abstract Factory, Builder, Prototype and Singleton, and why DI containers replaced most singletons. factory builder singleton prototype abstract factory" data-slug="creational-patterns"><a href="../topics/creational-patterns.html">Creational Patterns</a></li><li data-search="Structural Patterns Design Patterns Adapter, Decorator, Proxy, Facade, Composite, Bridge and Flyweight, drawn as wrappers you can see objects pass through. decorator adapter proxy facade composite" data-slug="structural-patterns"><a href="../topics/structural-patterns.html">Structural Patterns</a></li><li data-search="Behavioral Patterns Design Patterns Strategy, Observer, Command, Chain of Responsibility, State, Template Method, Visitor, Mediator and Iterator, with animated message flow. strategy observer command chain of responsibility state machine visitor mediator" data-slug="behavioral-patterns"><a href="../topics/behavioral-patterns.html">Behavioral Patterns</a></li><li data-search="Functional Patterns in Mainstream Languages Design Patterns Pure functions, composition, higher-order functions, pipelines, map/filter/reduce, and how functions replace many OO patterns. pure functions composition linq streams monads higher order" data-slug="functional-patterns"><a href="../topics/functional-patterns.html">Functional Patterns in Mainstream Languages</a></li><li data-search="Anti-Patterns &amp; Code Smells Design Patterns God objects, anemic models, service locator, primitive obsession, shotgun surgery and their escape routes. god object service locator anemic smells" data-slug="anti-patterns"><a href="../topics/anti-patterns.html">Anti-Patterns &amp; Code Smells</a></li></ul></details><details class="nav-track"><summary>Architecture</summary><ul class="topic-list"><li data-search="Application Architecture Styles Architecture Layered, hexagonal (ports &amp; adapters), clean/onion and vertical slices compared as dependency diagrams, and when each one fits. hexagonal clean architecture onion vertical slice layers" data-slug="application-architecture"><a href="../topics/application-architecture.html">Application Architecture Styles</a></li><li data-search="Domain-Driven Design Essentials Architecture Bounded contexts, aggregates, entities vs value objects, domain events and repositories, without the ceremony. ddd aggregate bounded context domain events" data-slug="domain-driven-design"><a href="../topics/domain-driven-design.html">Domain-Driven Design Essentials</a></li><li data-search="Services, Messaging &amp; Events Architecture Modular monolith vs microservices, sync vs async calls, queues and pub/sub, the outbox pattern, sagas, CQRS and event sourcing. microservices outbox saga cqrs event sourcing pub sub idempotent consumer" data-slug="distributed-architecture"><a href="../topics/distributed-architecture.html">Services, Messaging &amp; Events</a></li></ul></details><details class="nav-track"><summary>Dependency Injection</summary><ul class="topic-list"><li data-search="DI Fundamentals Dependency Injection From &#x27;new&#x27; everywhere to the composition root: constructor injection, pure DI, and what a container actually does (animated resolution). ioc composition root constructor injection container pure di" data-slug="di-fundamentals"><a href="../topics/di-fundamentals.html">DI Fundamentals</a></li><li data-search="Lifetimes, Scopes &amp; Captive Dependencies Dependency Injection Singleton, scoped and transient visualised across requests; captive dependencies, disposal, thread safety and scope validation. singleton scoped transient captive dependency dispose scope" data-slug="di-lifetimes"><a href="../topics/di-lifetimes.html">Lifetimes, Scopes &amp; Captive Dependencies</a></li><li data-search="DI Across Languages &amp; Frameworks Dependency Injection .NET Microsoft.Extensions.DependencyInjection, Spring, Dagger/Guice, Go (manual, Wire, Fx), Python and TypeScript (NestJS, InversifyJS) side by side. spring dagger guice wire fx nestjs inversify fastapi depends" data-slug="di-across-languages"><a href="../topics/di-across-languages.html">DI Across Languages &amp; Frameworks</a></li><li data-search="Advanced DI: Decorators, Factories, Options &amp; Testing Dependency Injection Keyed services, factories and Lazy&lt;T&gt;, decorators and interception, the options pattern, modules, and swapping dependencies in tests. keyed services decorator factory options pattern interception testing" data-slug="di-advanced"><a href="../topics/di-advanced.html">Advanced DI: Decorators, Factories, Options &amp; Testing</a></li></ul></details><details class="nav-track"><summary>Request Pipelines &amp; Middleware</summary><ul class="topic-list"><li data-search="The Request Delegate Pipeline Request Pipelines &amp; Middleware Build ASP.NET Core&#x27;s RequestDelegate chain from scratch, watch a request go in and the response come back out, then compare Express/Koa, Go handlers, servlet filters and ASGI. requestdelegate use run map onion chain of responsibility asgi express" data-slug="request-pipeline"><a href="../topics/request-pipeline.html">The Request Delegate Pipeline</a></li><li data-search="Middleware Patterns &amp; Ordering Request Pipelines &amp; Middleware Exception handling, logging and correlation, auth, CORS, rate limiting and compression: what goes where in the order and why getting it wrong breaks things. middleware order exception middleware correlation id cors filters" data-slug="middleware-patterns"><a href="../topics/middleware-patterns.html">Middleware Patterns &amp; Ordering</a></li><li data-search="Outbound Pipelines &amp; Interceptors Request Pipelines &amp; Middleware HttpClient DelegatingHandlers, OkHttp/Axios interceptors, gRPC interceptors and MediatR-style behaviors: the same onion on the client side. delegatinghandler httpclientfactory interceptor grpc mediatr pipeline behavior" data-slug="outbound-pipelines"><a href="../topics/outbound-pipelines.html">Outbound Pipelines &amp; Interceptors</a></li></ul></details><details class="nav-track"><summary>API Development</summary><ul class="topic-list"><li data-search="REST API Design API Development Resources, verbs and status codes, problem details, pagination, filtering, idempotency keys, ETags, versioning and evolution without breaking clients. rest http status codes pagination idempotency versioning openapi etag" data-slug="api-design"><a href="../topics/api-design.html">REST API Design</a></li><li data-search="Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE API Development The same feature built five ways, with a decision chart for latency, streaming, browser support and team cost. grpc graphql websockets sse protobuf streaming" data-slug="api-protocols"><a href="../topics/api-protocols.html">Choosing a Protocol: REST, gRPC, GraphQL, WebSockets, SSE</a></li><li data-search="API Security: AuthN, AuthZ &amp; Rate Limiting API Development OAuth 2.0 and OIDC flows animated, JWT validation step by step, scopes vs roles vs policies, API keys, mTLS and rate-limiting algorithms. oauth oidc jwt authorization rate limiting token bucket" data-slug="api-security"><a href="../topics/api-security.html">API Security: AuthN, AuthZ &amp; Rate Limiting</a></li></ul></details><details class="nav-track"><summary>Data &amp; Caching</summary><ul class="topic-list"><li data-search="Caching: When To, When Not To, and How Data &amp; Caching Cache-aside, read/write-through, write-behind, eviction policies, TTLs, stampedes, invalidation, HTTP caching and distributed caches, with a decision tree for whether to cache at all. cache aside write through lru ttl stampede invalidation redis http caching memory cache" data-slug="caching"><a href="../topics/caching.html">Caching: When To, When Not To, and How</a></li><li data-search="Data Access Patterns Data &amp; Caching ORMs vs micro-ORMs vs SQL, N+1 made visible, transactions and isolation levels animated, connection pooling, and optimistic concurrency. orm n+1 transactions isolation connection pool repository unit of work" data-slug="data-access"><a href="../topics/data-access.html">Data Access Patterns</a></li></ul></details><details class="nav-track"><summary>Performance</summary><ul class="topic-list"><li data-search="The Performance Cadence Performance The measure → profile → hypothesise → change → verify loop, benchmarking done right (BenchmarkDotNet, JMH, go test -bench, pyperf, tinybench), and setting budgets. benchmark profiling benchmarkdotnet jmh flame graph latency percentiles" data-slug="performance-cadence"><a href="../topics/performance-cadence.html">The Performance Cadence</a></li><li data-search="Memory, Allocation &amp; Garbage Collection Performance Generational GC animated; .NET, JVM, Go and Python memory managers compared; allocation hot spots, Span/pooling, and leak hunting. gc allocation span array pool memory leak escape analysis" data-slug="memory-and-gc"><a href="../topics/memory-and-gc.html">Memory, Allocation &amp; Garbage Collection</a></li><li data-search="Concurrency &amp; Async Performance Threads, thread pools, async/await state machines, goroutines and channels, the event loop, locks vs lock-free, and the classic deadlocks, all animated. async await thread pool goroutines event loop deadlock race condition channels" data-slug="concurrency-async"><a href="../topics/concurrency-async.html">Concurrency &amp; Async</a></li><li data-search="Performance Patterns &amp; Anti-Patterns Performance Batching, pooling, streaming, lazy loading, precomputation, back-pressure, plus the sync-over-async and chatty-I/O traps. batching pooling streaming backpressure chatty io" data-slug="performance-patterns"><a href="../topics/performance-patterns.html">Performance Patterns &amp; Anti-Patterns</a></li></ul></details><details class="nav-track" open><summary>Production Excellence</summary><ul class="topic-list"><li data-search="Resilience Patterns Production Excellence Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, fallbacks and load shedding, simulated live (Polly, resilience4j, and friends). retry circuit breaker timeout bulkhead polly resilience4j jitter" data-slug="resilience"><a href="../topics/resilience.html">Resilience Patterns</a></li><li data-search="Observability: Logs, Metrics &amp; Traces Production Excellence Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable. opentelemetry structured logging metrics tracing correlation slo" data-slug="observability"><a href="../topics/observability.html" aria-current="page">Observability: Logs, Metrics &amp; Traces</a></li><li data-search="Configuration, Feature Flags &amp; Secrets Production Excellence Layered configuration, the options pattern, twelve-factor apps, feature flags and safe rollouts, and secret management with managed identity. configuration feature flags secrets key vault twelve factor" data-slug="configuration-and-secrets"><a href="../topics/configuration-and-secrets.html">Configuration, Feature Flags &amp; Secrets</a></li><li data-search="Testing Strategy Production Excellence The test pyramid and trophy, unit vs integration vs contract tests, mocks vs fakes vs stubs, TDD in practice, and property-based tests. unit test integration test mocks fakes tdd contract test property based" data-slug="testing-strategy"><a href="../topics/testing-strategy.html">Testing Strategy</a></li><li data-search="Secure Coding Fundamentals Production Excellence The OWASP Top 10 as attack animations: injection, broken access control, SSRF, deserialization, and the coding habits that prevent them. owasp injection xss ssrf csrf input validation" data-slug="security-fundamentals"><a href="../topics/security-fundamentals.html">Secure Coding Fundamentals</a></li><li data-search="Code Review, Git &amp; Engineering Habits Production Excellence What great reviewers look for, small PRs, commit hygiene, ADRs and docs-as-code, and turning feedback into lasting skill. code review pull requests git adr documentation" data-slug="code-review-and-collaboration"><a href="../topics/code-review-and-collaboration.html">Code Review, Git &amp; Engineering Habits</a></li></ul></details>
+      <p class="no-results" hidden>No matching topics.</p>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="nav-caption">LEARNING HOMES</span>
+      <ul class="home-switch"><li><a href="../../index.html">All learning homes</a></li><li><a href="../../DSAHome/index.html">DSA Home</a></li></ul>
+      <button id="theme-toggle" type="button" aria-pressed="false" hidden>Dark appearance</button>
+      <p>Static site. No analytics.<br>Progress stays in your browser.</p>
+    </div>
+  </aside>
+  <div class="page">
+    <header class="topbar"><span>Code Excellence Home / Observability: Logs, Metrics &amp; Traces</span><span class="local-badge">LEARNING REFERENCE</span></header>
+    <main id="main" tabindex="-1"><section class="hero"><p class="eyebrow">PRODUCTION EXCELLENCE</p><h1>Observability: Logs, Metrics &amp; Traces</h1><p class="lede">Structured logging, RED/USE metrics, distributed tracing with OpenTelemetry, and how to make a 3 a.m. incident debuggable.</p><div class="meta"><span class="level level-intermediate">Intermediate → Advanced</span><span>~55 min study</span><span>Builds on: <a href="middleware-patterns.html">Middleware Patterns &amp; Ordering</a></span><span>Updated <time datetime="2026-11-03">2026-11-03</time></span><button class="mastery" type="button" data-slug="observability" aria-pressed="false">Mark as mastered</button></div></section><div class="reading-layout"><article class="prose"><h2 id="the-problem-flying-blind-at-3-am">The problem: flying blind at 3 a.m.</h2>
+<p>The pager goes off at 03:12: "checkout latency SLO burning". You open the service's logs and find 40,000 lines a minute that look like <code>Processing order...</code> and <code>Done.</code>. None of them says which request was slow. The dashboard shows average latency, which has barely moved. There is no trace, so you cannot tell whether the time went to the database, the pricing service or the payment gateway. Forty minutes later someone remembers that v42 went out at 02:40, and you roll it back on a hunch. It works. Nobody ever finds out why.</p>
+<p>Every part of that night is an observability failure: logs with no structure or correlation, metrics that average away the tail, no traces, and an alert that fired without any path from symptom to cause. <strong>Observability is the ability to answer a new question about your running system without shipping new code.</strong> You get it by emitting the right signals, with the right shape, linked by the same ids, before the incident.</p>
+<div class="rule">
+<p><strong>The rule.</strong> Emit <strong>metrics</strong> to detect (cheap, aggregated, alertable), <strong>traces</strong> to localize (where in the call graph), <strong>logs</strong> to explain (what happened to this one request), and <strong>profiles</strong> to find hot code. Put the same <code>trace_id</code> on all of them, alert on <strong>symptoms users feel</strong> (SLO burn), and never put unbounded values in metric labels or secrets in logs.</p>
+</div>
+<div class="recognize">
+<p><strong>Recognize that your observability is not good enough when</strong></p>
+<ul>
+<li>An incident review says "we added logging and redeployed to find out".</li>
+<li>Log lines are sentences built with string interpolation, so you search them with regexes.</li>
+<li>Dashboards show averages, and nobody can say what the p99 was yesterday.</li>
+<li>You cannot follow one request from the edge to the database across services.</li>
+<li>Alerts fire on CPU &gt; 80% at night and get acknowledged without action.</li>
+<li>The metrics bill doubled after someone added a <code>user_id</code> label.</li>
+</ul>
+</div>
+<h2 id="four-signals-four-questions">Four signals, four questions</h2>
+<p>Each signal type is optimised for a different question, and they are cheap or expensive in different ways. Metrics are numbers aggregated in-process, so their cost does not grow with traffic. Logs and traces are per-event, so their cost does. Profiles are statistical samples of what the CPU or heap is doing.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 900 330" width="900" role="img" aria-label="Metrics, traces, logs and profiles: what question each answers, and how they link">
+<defs><marker id="observability-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box visit" x="20" y="40" width="200" height="150" rx="10"/>
+<text x="120" y="66" text-anchor="middle" class="title">Metrics</text>
+<text x="120" y="88" text-anchor="middle" class="small">"Is it broken? How badly?</text>
+<text x="120" y="104" text-anchor="middle" class="small">Since when? Which route?"</text>
+<text x="120" y="130" text-anchor="middle" class="small muted">counters, gauges, histograms</text>
+<text x="120" y="148" text-anchor="middle" class="small muted">cost ~ series, not traffic</text>
+<text x="120" y="172" text-anchor="middle" class="small mono">DETECT + ALERT</text>
+<rect class="box active" x="245" y="40" width="200" height="150" rx="10"/>
+<text x="345" y="66" text-anchor="middle" class="title">Traces</text>
+<text x="345" y="88" text-anchor="middle" class="small">"Where in the call graph</text>
+<text x="345" y="104" text-anchor="middle" class="small">did the time or error go?"</text>
+<text x="345" y="130" text-anchor="middle" class="small muted">spans with parent ids</text>
+<text x="345" y="148" text-anchor="middle" class="small muted">cost ~ traffic x sample rate</text>
+<text x="345" y="172" text-anchor="middle" class="small mono">LOCALIZE</text>
+<rect class="box done" x="470" y="40" width="200" height="150" rx="10"/>
+<text x="570" y="66" text-anchor="middle" class="title">Logs</text>
+<text x="570" y="88" text-anchor="middle" class="small">"What exactly happened</text>
+<text x="570" y="104" text-anchor="middle" class="small">to THIS request, and why?"</text>
+<text x="570" y="130" text-anchor="middle" class="small muted">structured events</text>
+<text x="570" y="148" text-anchor="middle" class="small muted">cost ~ traffic x verbosity</text>
+<text x="570" y="172" text-anchor="middle" class="small mono">EXPLAIN</text>
+<rect class="box path" x="695" y="40" width="185" height="150" rx="10"/>
+<text x="787" y="66" text-anchor="middle" class="title">Profiles</text>
+<text x="787" y="88" text-anchor="middle" class="small">"Which code burns CPU</text>
+<text x="787" y="104" text-anchor="middle" class="small">or holds memory?"</text>
+<text x="787" y="130" text-anchor="middle" class="small muted">sampled stacks, heap</text>
+<text x="787" y="148" text-anchor="middle" class="small muted">cost ~ sample rate</text>
+<text x="787" y="172" text-anchor="middle" class="small mono">OPTIMISE</text>
+<rect class="box accent" x="120" y="250" width="660" height="56" rx="10"/>
+<text x="450" y="273" text-anchor="middle" class="title">Shared context: trace_id, span_id, service, version, route, region</text>
+<text x="450" y="292" text-anchor="middle" class="small muted">exemplars link a histogram bucket to a trace; every log line carries the trace id</text>
+<path class="edge accent" d="M120 192 L200 248" marker-end="url(#observability-ar)"/>
+<path class="edge accent" d="M345 192 L360 248" marker-end="url(#observability-ar)"/>
+<path class="edge accent" d="M570 192 L540 248" marker-end="url(#observability-ar)"/>
+<path class="edge accent" d="M787 192 L700 248" marker-end="url(#observability-ar)"/>
+<text x="450" y="22" text-anchor="middle" class="small muted">usual investigation order: left to right</text>
+</svg>
+<figcaption>The four signals and the shared context that turns them into one story. Without that shared context you have four separate tools; with it, you click from an alert to a trace to the exact log lines.</figcaption>
+</figure>
+
+<p>Pick an incident and step through how each signal does. Notice that no signal wins every time. A memory leak is invisible to traces, and a single customer's failed order is invisible to metrics.</p>
+<div class="viz" data-viz="observability-pillars"></div>
+
+<div class="compare">
+<div class="good">
+<p><strong>Metrics are good at</strong></p>
+<ul>
+<li>Alerting: cheap to evaluate every 30 seconds for months.</li>
+<li>Trends and capacity: "requests per second per region for the last 90 days".</li>
+<li>Fixed cost: a counter costs the same at 10 or 10,000 req/s.</li>
+</ul>
+</div>
+<div class="bad">
+<p><strong>Metrics are bad at</strong></p>
+<ul>
+<li>Single events: one failed order disappears in a rate.</li>
+<li>High-cardinality questions: "which user?" cannot be a label.</li>
+<li>Explaining <em>why</em>: they tell you p99 went up, not which code path.</li>
+</ul>
+</div>
+</div>
+<div class="compare">
+<div class="good">
+<p><strong>Logs and traces are good at</strong></p>
+<ul>
+<li>Rich context per event: ids, payload sizes, decisions taken, errors.</li>
+<li>High cardinality is free: <code>user_id</code>, <code>order_id</code> and <code>sku</code> are just fields.</li>
+<li>Following one request end to end.</li>
+</ul>
+</div>
+<div class="bad">
+<p><strong>Logs and traces are bad at</strong></p>
+<ul>
+<li>Cost: volume grows with traffic, so you sample or pay.</li>
+<li>Alerting: counting log lines to alert is slow and fragile; emit a metric instead.</li>
+<li>Long retention: weeks at full fidelity gets expensive fast.</li>
+</ul>
+</div>
+</div>
+<div class="insight">
+<p><strong>Events vs aggregates.</strong> Some teams ("observability 2.0") emit one wide structured event per request with dozens of fields and derive metrics from those events at query time. It is powerful for exploring unknown questions, and it is the logical end of "structured logging + tracing". Most stacks still keep pre-aggregated metrics for alerting, because evaluating an alert over raw events every 30 seconds costs far more.</p>
+</div>
+<h2 id="structured-logging">Structured logging</h2>
+<p>A log line is a record, not a sentence. A <strong>structured</strong> log line is a set of named fields (<code>level</code>, <code>timestamp</code>, <code>message</code>, <code>order_id</code>, <code>elapsed_ms</code>, <code>trace_id</code>) rendered as JSON or logfmt, so a log store can filter, group and aggregate on fields instead of parsing text.</p>
+<h3 id="message-templates-not-string-interpolation">Message templates, not string interpolation</h3>
+<p>The single most important logging habit is to pass values as <strong>arguments to a template</strong>, not to build the string yourself. The template (<code>"Order {OrderId} took {Elapsed} ms"</code>) stays constant, so every event of that kind can be grouped. The values become typed, queryable fields. And when the level is disabled, the logger can skip all the work.</p>
+<div class="viz" data-viz="observability-templates"></div>
+
+<div class="code-tabs" data-labels="Bad,Good">
+<pre><code class="language-csharp">// The string is built before LogDebug runs, even when Debug is off.
+// Every message is unique, so you cannot group by &quot;kind of event&quot;.
+// Elapsed is now text inside a sentence: querying &quot;&gt; 500&quot; needs a regex.
+_log.LogDebug($&quot;Cache miss for {key}&quot;);
+_log.LogInformation($&quot;Order {order.Id} took {sw.ElapsedMilliseconds} ms&quot;);
+_log.LogInformation(&quot;Order &quot; + order.Id + &quot; failed: &quot; + ex.Message); // and the stack trace is lost
+</code></pre>
+<pre><code class="language-csharp">// The template is a constant; values are captured as named properties.
+// If Debug is disabled, nothing is formatted or allocated for the value.
+_log.LogDebug(&quot;Cache miss for {CacheKey}&quot;, key);
+_log.LogInformation(&quot;Order {OrderId} took {ElapsedMs} ms&quot;, order.Id, sw.ElapsedMilliseconds);
+_log.LogError(ex, &quot;Order {OrderId} failed&quot;, order.Id); // exception as its own field, with the stack
+
+// Hot path: source-generated, no boxing, no params array, IsEnabled checked for you.
+static partial class Log
+{
+    [LoggerMessage(EventId = 1001, Level = LogLevel.Information,
+        Message = &quot;Order {OrderId} took {ElapsedMs} ms&quot;)]
+    public static partial void OrderTook(ILogger logger, Guid orderId, long elapsedMs);
+}
+</code></pre>
+</div>
+<p>The same rule applies everywhere, with different syntax: SLF4J <code>{}</code> placeholders, Python's <code>%s</code> style with <code>logger.info("…%s", x)</code> (never an f-string), Go's key-value pairs, and pino's merge object as the first argument. Two caveats:</p>
+<ul>
+<li><strong>Placeholder formatting is lazy, argument evaluation is not.</strong> <code>log.debug("{}", expensive())</code> still calls <code>expensive()</code>. Guard it with <code>isDebugEnabled()</code> / <code>IsEnabled(LogLevel.Debug)</code>, or pass a supplier (<code>log.atDebug().addArgument(() -&gt; expensive())</code> in SLF4J 2).</li>
+<li><strong>Property names are a schema.</strong> <code>OrderId</code> in one service and <code>order_id</code> in another breaks cross-service queries. Agree on names; OpenTelemetry's semantic conventions (<code>http.request.method</code>, <code>db.system</code>, <code>user.id</code>) are a good default.</li>
+</ul>
+<h3 id="structured-logging-in-five-ecosystems">Structured logging in five ecosystems</h3>
+<p>The shapes are the same everywhere: a JSON sink, a logger per component, a way to attach <strong>context</strong> (order id, tenant, trace id) once per request so every line below it carries those fields, and named values on each event. What differs is how each runtime carries that per-request context across <code>await</code> points and threads.</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Microsoft.Extensions.Logging (ILogger) as the API, Serilog as the backend.
+// dotnet add package Serilog.AspNetCore
+using Serilog;
+using Serilog.Formatting.Compact;
+
+builder.Services.AddSerilog((services, cfg) =&gt; cfg
+    .ReadFrom.Configuration(builder.Configuration)   // levels per namespace from appsettings
+    .Enrich.FromLogContext()                         // include BeginScope / LogContext properties
+    .WriteTo.Console(new RenderedCompactJsonFormatter()));
+
+public sealed class CheckoutHandler(ILogger&lt;CheckoutHandler&gt; log)
+{
+    public async Task HandleAsync(Order order, CancellationToken ct)
+    {
+        // Scope = context for every line inside it. It flows across awaits (AsyncLocal).
+        using var scope = log.BeginScope(new Dictionary&lt;string, object&gt;
+        {
+            [&quot;OrderId&quot;] = order.Id,
+            [&quot;TenantId&quot;] = order.TenantId,
+        });
+        var sw = Stopwatch.StartNew();
+        await PriceAsync(order, ct);
+        log.LogInformation(&quot;Priced {ItemCount} items in {ElapsedMs} ms&quot;,
+            order.Items.Count, sw.ElapsedMilliseconds);
+    }
+}
+// {&quot;@t&quot;:&quot;...&quot;,&quot;@m&quot;:&quot;Priced 3 items in 41 ms&quot;,&quot;@i&quot;:&quot;a1b2c3d4&quot;,&quot;ItemCount&quot;:3,&quot;ElapsedMs&quot;:41,
+//  &quot;OrderId&quot;:&quot;8812&quot;,&quot;TenantId&quot;:&quot;acme&quot;,&quot;TraceId&quot;:&quot;4bf92f35...&quot;,&quot;SpanId&quot;:&quot;00f067aa...&quot;}
+</code></pre>
+<pre><code class="language-java">// SLF4J 2 as the API, Logback as the backend, MDC for per-request context.
+// JSON output: Logback 1.3+ JsonEncoder or logstash-logback-encoder in logback.xml.
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+
+public final class CheckoutHandler {
+    private static final Logger log = LoggerFactory.getLogger(CheckoutHandler.class);
+
+    public void handle(Order order) {
+        // MDC is thread-local: fine for thread-per-request and virtual threads,
+        // but it does NOT follow work you hand to another executor. Copy it explicitly
+        // (MDC.getCopyOfContextMap / setContextMap) or use OpenTelemetry's context.
+        try (var a = MDC.putCloseable(&quot;orderId&quot;, order.id());
+             var b = MDC.putCloseable(&quot;tenantId&quot;, order.tenantId())) {
+            long start = System.nanoTime();
+            price(order);
+            log.atInfo()
+               .setMessage(&quot;Priced items&quot;)
+               .addKeyValue(&quot;itemCount&quot;, order.items().size())
+               .addKeyValue(&quot;elapsedMs&quot;, (System.nanoTime() - start) / 1_000_000)
+               .log();
+        }
+    }
+}
+</code></pre>
+<pre><code class="language-python"># structlog on top of the standard library; contextvars carry per-request context
+# across await points (each asyncio Task gets its own copy of the context).
+import logging, time
+import structlog
+from structlog.contextvars import bind_contextvars, clear_contextvars, merge_contextvars
+
+structlog.configure(
+    processors=[
+        merge_contextvars,                         # pull in bound context
+        structlog.processors.add_log_level,
+        structlog.processors.TimeStamper(fmt=&quot;iso&quot;),
+        structlog.processors.dict_tracebacks,      # exceptions as structured data
+        structlog.processors.JSONRenderer(),
+    ],
+    wrapper_class=structlog.make_filtering_bound_logger(logging.INFO),
+)
+log = structlog.get_logger()
+
+async def handle(order):
+    clear_contextvars()                            # do this at the start of each request
+    bind_contextvars(order_id=order.id, tenant_id=order.tenant_id)
+    start = time.perf_counter()
+    await price(order)
+    log.info(&quot;items_priced&quot;, item_count=len(order.items),
+             elapsed_ms=round((time.perf_counter() - start) * 1000))
+# {&quot;item_count&quot;: 3, &quot;elapsed_ms&quot;: 41, &quot;order_id&quot;: &quot;8812&quot;, &quot;tenant_id&quot;: &quot;acme&quot;,
+#  &quot;event&quot;: &quot;items_priced&quot;, &quot;level&quot;: &quot;info&quot;, &quot;timestamp&quot;: &quot;...&quot;}
+</code></pre>
+<pre><code class="language-go">// log/slog (standard library since Go 1.21). Context travels explicitly:
+// a *slog.Logger with attributes, or a context.Context the handler reads.
+package checkout
+
+import (
+    &quot;context&quot;
+    &quot;log/slog&quot;
+    &quot;os&quot;
+    &quot;time&quot;
+)
+
+func NewLogger() *slog.Logger {
+    return slog.New(slog.NewJSONHandler(os.Stdout, &amp;slog.HandlerOptions{Level: slog.LevelInfo}))
+}
+
+func Handle(ctx context.Context, log *slog.Logger, o Order) error {
+    log = log.With(&quot;order_id&quot;, o.ID, &quot;tenant_id&quot;, o.TenantID) // context for every line below
+    start := time.Now()
+    if err := price(ctx, o); err != nil {
+        log.ErrorContext(ctx, &quot;pricing failed&quot;, &quot;err&quot;, err)
+        return err
+    }
+    log.InfoContext(ctx, &quot;items priced&quot;,
+        &quot;item_count&quot;, len(o.Items),
+        slog.Duration(&quot;elapsed&quot;, time.Since(start)))
+    return nil
+}
+</code></pre>
+<pre><code class="language-typescript">// pino: fast JSON logging for Node. Child loggers carry context;
+// AsyncLocalStorage makes the request's child logger available after any await.
+import pino from &quot;pino&quot;;
+import { AsyncLocalStorage } from &quot;node:async_hooks&quot;;
+
+const base = pino({ level: process.env.LOG_LEVEL ?? &quot;info&quot; });
+const store = new AsyncLocalStorage&lt;pino.Logger&gt;();
+export const log = (): pino.Logger =&gt; store.getStore() ?? base;
+
+// middleware: one child logger per request
+app.use((req, _res, next) =&gt;
+  store.run(base.child({ requestId: req.headers[&quot;x-request-id&quot;] }), next));
+
+export async function handle(order: Order): Promise&lt;void&gt; {
+  const l = log().child({ orderId: order.id, tenantId: order.tenantId });
+  const start = performance.now();
+  await price(order);
+  // merge object first, message second: fields stay fields
+  l.info({ itemCount: order.items.length, elapsedMs: Math.round(performance.now() - start) },
+         &quot;items priced&quot;);
+}
+</code></pre>
+</div>
+<div class="insight">
+<p><strong>Why the context mechanisms differ.</strong> .NET (<code>AsyncLocal</code>), Python (<code>contextvars</code>) and Node (<code>AsyncLocalStorage</code>) all have an <em>implicit async context</em> that flows through <code>await</code>, so a scope set at the top of a request reaches every line. Java's MDC is a <code>ThreadLocal</code>, which is perfect for one thread per request but is lost when you hop executors. Go has no implicit context at all by design: you pass <code>ctx</code> and a logger explicitly, which is more typing but never surprising. In-process correlation middleware is covered in <a href="middleware-patterns.html">Middleware Patterns</a>; this page is about what crosses the network.</p>
+</div>
+<h3 id="log-levels-what-each-one-is-for">Log levels: what each one is for</h3>
+<p>Levels are a contract with whoever reads the logs at 3 a.m. Use them consistently, and make the minimum level configurable per namespace without a redeploy (see <a href="configuration-and-secrets.html">Configuration &amp; Secrets</a>).</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Use it for</th>
+<th>Example</th>
+<th>In production</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Trace / Verbose</strong></td>
+<td>Step-by-step internals, payloads</td>
+<td>"Parsed header X-Foo=…"</td>
+<td>Off. Turn on for one namespace, briefly.</td>
+</tr>
+<tr>
+<td><strong>Debug</strong></td>
+<td>Diagnostic decisions a developer needs</td>
+<td>"Cache miss for {Key}", "Retrying in {Delay}"</td>
+<td>Usually off, or sampled</td>
+</tr>
+<tr>
+<td><strong>Information</strong></td>
+<td>Normal, notable business events</td>
+<td>"Order {OrderId} placed", "Started on port {Port}"</td>
+<td>On. Keep it to a few lines per request.</td>
+</tr>
+<tr>
+<td><strong>Warning</strong></td>
+<td>Unexpected but handled; might need attention</td>
+<td>"Retry {Attempt} for {Dependency}", "Config X deprecated"</td>
+<td>On. Never sampled.</td>
+</tr>
+<tr>
+<td><strong>Error</strong></td>
+<td>This operation failed; a human may need to act</td>
+<td>"Payment {OrderId} failed" + exception</td>
+<td>On. Never sampled. Usually also a metric.</td>
+</tr>
+<tr>
+<td><strong>Critical / Fatal</strong></td>
+<td>The process or a core capability is down</td>
+<td>"Cannot reach database at startup"</td>
+<td>On. Often followed by exit.</td>
+</tr>
+</tbody>
+</table>
+<div class="tip">
+<p><strong>Log an error once, where it is handled.</strong> If every layer catches, logs and rethrows, one failure becomes five ERROR lines with five stack traces. Let exceptions propagate with context (wrap them, add fields to the span), and log at the boundary that decides what to do: the request handler, the message consumer, the background job loop.</p>
+</div>
+<h3 id="volume-control-levels-sampling-and-flush-on-error">Volume control: levels, sampling and flush-on-error</h3>
+<p>At high traffic even Information logs are expensive. There are three levers, applied in this order: drop below the minimum level (free), then <strong>sample</strong>, but never sample warnings or errors. <em>How</em> you sample decides whether the lines you keep still tell a story. Compare per-line, per-trace and flush-on-error sampling below, and count the failing requests that kept their full context.</p>
+<div class="viz" data-viz="observability-levels"></div>
+
+<ul>
+<li><strong>Per-line random sampling</strong> keeps the right <em>volume</em> but shreds stories: you get the error line without the five lines that led to it.</li>
+<li><strong>Per-trace sampling</strong> hashes the trace id, so every service keeps or drops the <em>same</em> requests. Stories stay whole, but only for the lucky ones.</li>
+<li><strong>Flush-on-error</strong> buffers a request's lines in memory and writes them only if the request fails (or is slow). This keeps full context for every failure at a fraction of the volume. It costs memory per in-flight request, and you lose the buffer if the process crashes.</li>
+<li><strong>Rate limiting per message template</strong> ("at most 10/s of 'Cache miss for {Key}'") stops one noisy line from drowning everything else.</li>
+</ul>
+<h3 id="what-never-to-log">What never to log</h3>
+<p>Logs are copied to more places (log shippers, vendors, laptops, support tickets) and kept longer than almost any other data, with weaker access control than your database. Treat them as public-ish.</p>
+<table>
+<thead>
+<tr>
+<th>Never log</th>
+<th>Why</th>
+<th>Log this instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Passwords, API keys, tokens, connection strings, <code>Authorization</code> / <code>Cookie</code> headers</td>
+<td>Anyone with log access can impersonate the user or service</td>
+<td><code>token_present=true</code>, key id or last 4 characters of the key's hash</td>
+</tr>
+<tr>
+<td>Full card numbers, CVV, bank details</td>
+<td>PCI DSS scope for your whole log pipeline</td>
+<td>Last 4 digits, card brand</td>
+</tr>
+<tr>
+<td>Personal data (email, phone, address, national ids, health data)</td>
+<td>GDPR and similar laws: retention, deletion and access requests apply to logs too</td>
+<td>A stable internal user id, or a keyed hash</td>
+</tr>
+<tr>
+<td>Whole request or response bodies</td>
+<td>They contain all of the above, sooner or later</td>
+<td>Size, content type, the specific fields you need</td>
+</tr>
+<tr>
+<td>Free text typed by users</td>
+<td>Unbounded, may contain anything</td>
+<td>Length, language, a classification</td>
+</tr>
+</tbody>
+</table>
+<p>Redact at the source, by type, so a careless <code>log.info(user)</code> cannot leak. Each ecosystem has an idiomatic hook:</p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Microsoft.Extensions.Compliance.Redaction: classify data, redact at the logger.
+// dotnet add package Microsoft.Extensions.Compliance.Redaction Microsoft.Extensions.Telemetry
+public static class Taxonomy
+{
+    public static DataClassification Private =&gt; new(&quot;Shop&quot;, &quot;Private&quot;);
+}
+public sealed class PrivateDataAttribute() : DataClassificationAttribute(Taxonomy.Private);
+
+static partial class Log
+{
+    [LoggerMessage(Level = LogLevel.Information, Message = &quot;Signed up {Email}&quot;)]
+    public static partial void SignedUp(ILogger logger, [PrivateData] string email);
+}
+
+builder.Logging.EnableRedaction();
+builder.Services.AddRedaction(r =&gt;
+    r.SetRedactor&lt;ErasingRedactor&gt;(new DataClassificationSet(Taxonomy.Private)));
+// Email is erased before any sink sees it. Use a HMAC redactor instead if you
+// need to correlate the same user across lines without storing the address.
+</code></pre>
+<pre><code class="language-java">// Make sensitive types unable to print themselves. toString() is what
+// SLF4J placeholders, string concatenation and most JSON encoders fall back to.
+public record Email(String value) {
+    @Override public String toString() {
+        int at = value.indexOf('@');
+        return at &gt; 0 ? &quot;***&quot; + value.substring(at) : &quot;***&quot;;   // keep the domain only
+    }
+}
+
+public record ApiKey(String value) {
+    @Override public String toString() { return &quot;ApiKey[redacted]&quot;; }
+}
+
+log.info(&quot;Signed up {}&quot;, new Email(&quot;ana@example.com&quot;));   // Signed up ***@example.com
+// For JSON encoders that serialise fields directly, add masking in the encoder too
+// (logstash-logback-encoder has a MaskingJsonGeneratorDecorator for field paths).
+</code></pre>
+<pre><code class="language-python"># A structlog processor that redacts by key name, anywhere in the event dict.
+import structlog
+
+SENSITIVE = {&quot;password&quot;, &quot;token&quot;, &quot;authorization&quot;, &quot;api_key&quot;, &quot;card_number&quot;, &quot;email&quot;}
+
+def redact(_, __, event: dict) -&gt; dict:
+    def scrub(v):
+        if isinstance(v, dict):
+            return {k: (&quot;[REDACTED]&quot; if k.lower() in SENSITIVE else scrub(x)) for k, x in v.items()}
+        if isinstance(v, list):
+            return [scrub(x) for x in v]
+        return v
+    return scrub(event)
+
+structlog.configure(processors=[redact, structlog.processors.JSONRenderer()])
+structlog.get_logger().info(&quot;login&quot;, user={&quot;id&quot;: 7, &quot;email&quot;: &quot;ana@example.com&quot;}, password=&quot;hunter2&quot;)
+# {&quot;user&quot;: {&quot;id&quot;: 7, &quot;email&quot;: &quot;[REDACTED]&quot;}, &quot;password&quot;: &quot;[REDACTED]&quot;, &quot;event&quot;: &quot;login&quot;}
+</code></pre>
+<pre><code class="language-go">// slog.LogValuer: a type decides how it is logged, wherever it is logged.
+type Secret string
+
+func (Secret) LogValue() slog.Value { return slog.StringValue(&quot;[REDACTED]&quot;) }
+
+type Email string
+
+func (e Email) LogValue() slog.Value {
+    if i := strings.IndexByte(string(e), '@'); i &gt; 0 {
+        return slog.StringValue(&quot;***&quot; + string(e)[i:])
+    }
+    return slog.StringValue(&quot;***&quot;)
+}
+
+log.Info(&quot;signed up&quot;, &quot;email&quot;, Email(&quot;ana@example.com&quot;), &quot;api_key&quot;, Secret(&quot;sk_live_123&quot;))
+// {&quot;msg&quot;:&quot;signed up&quot;,&quot;email&quot;:&quot;***@example.com&quot;,&quot;api_key&quot;:&quot;[REDACTED]&quot;}
+// HandlerOptions.ReplaceAttr can also redact by key name for types you do not own.
+</code></pre>
+<pre><code class="language-typescript">// pino's built-in redaction by path (compiled once, fast at runtime).
+import pino from &quot;pino&quot;;
+
+const log = pino({
+  redact: {
+    paths: [&quot;password&quot;, &quot;*.password&quot;, &quot;req.headers.authorization&quot;, &quot;req.headers.cookie&quot;,
+            &quot;user.email&quot;, &quot;card.number&quot;],
+    censor: &quot;[REDACTED]&quot;,
+  },
+});
+
+log.info({ user: { id: 7, email: &quot;ana@example.com&quot; }, password: &quot;hunter2&quot; }, &quot;login&quot;);
+// {&quot;level&quot;:30,&quot;user&quot;:{&quot;id&quot;:7,&quot;email&quot;:&quot;[REDACTED]&quot;},&quot;password&quot;:&quot;[REDACTED]&quot;,&quot;msg&quot;:&quot;login&quot;}
+</code></pre>
+</div>
+<div class="warn">
+<p><strong>Exceptions leak too.</strong> A database driver's exception message can contain the connection string; an HTTP client's can contain the full URL with a <code>?api_key=</code> query parameter; a validation error can echo the input. Review what your exception types put in <code>Message</code>, and scrub URLs before logging them. Secret scanning on your log store is a good safety net (see <a href="configuration-and-secrets.html">Configuration &amp; Secrets</a>).</p>
+</div>
+<h2 id="correlation-one-id-across-every-hop">Correlation: one id across every hop</h2>
+<p>A request that touches a gateway, three services, a queue and an email worker leaves log lines in six places. Without a shared id, joining them means guessing by timestamp. The fix is to <strong>create a trace context at the edge and carry it on every outbound call and every message</strong>, so each service's logs, spans and errors carry the same <code>trace_id</code>.</p>
+<p>The W3C Trace Context standard makes that header the same everywhere, so a .NET service, a Java service and a Node worker all understand each other:</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 210" width="860" role="img" aria-label="Anatomy of the W3C traceparent header">
+<text x="430" y="26" text-anchor="middle" class="title">traceparent: version - trace-id - parent-id - flags</text>
+<rect class="box" x="40" y="48" width="60" height="40" rx="6"/>
+<text x="70" y="73" text-anchor="middle" class="mono">00</text>
+<rect class="box accent" x="110" y="48" width="380" height="40" rx="6"/>
+<text x="300" y="73" text-anchor="middle" class="mono">4bf92f3577b34da6a3ce929d0e0e4736</text>
+<rect class="box active" x="500" y="48" width="210" height="40" rx="6"/>
+<text x="605" y="73" text-anchor="middle" class="mono">00f067aa0ba902b7</text>
+<rect class="box done" x="720" y="48" width="60" height="40" rx="6"/>
+<text x="750" y="73" text-anchor="middle" class="mono">01</text>
+<text x="70" y="112" text-anchor="middle" class="small">version</text>
+<text x="300" y="112" text-anchor="middle" class="small">trace-id: 16 random bytes</text>
+<text x="300" y="128" text-anchor="middle" class="small muted">same for the WHOLE request, every service</text>
+<text x="605" y="112" text-anchor="middle" class="small">parent-id: 8 bytes</text>
+<text x="605" y="128" text-anchor="middle" class="small muted">the CALLER's span id; changes per hop</text>
+<text x="750" y="112" text-anchor="middle" class="small">flags</text>
+<text x="750" y="128" text-anchor="middle" class="small muted">01 = sampled</text>
+<rect class="box visit" x="40" y="150" width="740" height="42" rx="6"/>
+<text x="410" y="168" text-anchor="middle" class="small">tracestate: vendor-specific extras (optional) · baggage: app key=value pairs that also propagate</text>
+<text x="410" y="184" text-anchor="middle" class="small muted">baggage is sent to every downstream service: never put secrets or personal data in it</text>
+</svg>
+<figcaption>The W3C <code>traceparent</code> header. The trace id is the correlation id; the parent id lets the receiver attach its span to the caller's span; the sampled flag makes every service agree whether this trace is recorded.</figcaption>
+</figure>
+
+<p>Follow a request through five services. Then switch propagation to <strong>lost at the queue</strong> (a consumer that does not read the message headers) and to <strong>none</strong>, and try to answer the support question at the end.</p>
+<div class="viz ob-wide" data-viz="observability-correlation"></div>
+
+<div class="callout">
+<p><strong>Queues and background jobs are where context dies.</strong> HTTP clients are auto-instrumented in every OpenTelemetry SDK, so the header gets added for you. Messages are not always: you must write the context into message headers (or attributes) when producing and extract it when consuming. For batch consumers, one consumer span can <em>link</em> to many producer spans instead of having one parent. The same applies to scheduled jobs: start a new trace, and log the id of whatever triggered it.</p>
+</div>
+<div class="code-tabs">
+<pre><code class="language-csharp">// .NET: Activity is the span. HttpClient propagates traceparent automatically.
+// For a message bus, inject and extract with the configured propagator.
+using OpenTelemetry;
+using OpenTelemetry.Context.Propagation;
+
+static readonly ActivitySource Source = new(&quot;Shop.Orders&quot;);
+static readonly TextMapPropagator Prop = Propagators.DefaultTextMapPropagator;
+
+// producer
+using (var act = Source.StartActivity(&quot;orders publish&quot;, ActivityKind.Producer))
+{
+    var headers = new Dictionary&lt;string, string&gt;();
+    Prop.Inject(new PropagationContext(act!.Context, Baggage.Current), headers,
+        (h, k, v) =&gt; h[k] = v);
+    await bus.PublishAsync(orderPlaced, headers);
+}
+
+// consumer
+var parent = Prop.Extract(default, msg.Headers,
+    (h, k) =&gt; h.TryGetValue(k, out var v) ? [v] : []);
+using var span = Source.StartActivity(&quot;orders process&quot;, ActivityKind.Consumer,
+    parent.ActivityContext);
+</code></pre>
+<pre><code class="language-java">// Java: the OpenTelemetry Java agent instruments Kafka, JMS, RabbitMQ and HTTP clients.
+// Manual inject/extract for anything it does not know about:
+TextMapPropagator prop = openTelemetry.getPropagators().getTextMapPropagator();
+
+// producer
+Span span = tracer.spanBuilder(&quot;orders publish&quot;).setSpanKind(SpanKind.PRODUCER).startSpan();
+try (Scope s = span.makeCurrent()) {
+    Map&lt;String, String&gt; headers = new HashMap&lt;&gt;();
+    prop.inject(Context.current(), headers, Map::put);
+    bus.publish(orderPlaced, headers);
+} finally { span.end(); }
+
+// consumer
+Context parent = prop.extract(Context.current(), msg.headers(), new TextMapGetter&lt;&gt;() {
+    public Iterable&lt;String&gt; keys(Map&lt;String, String&gt; c) { return c.keySet(); }
+    public String get(Map&lt;String, String&gt; c, String k) { return c == null ? null : c.get(k); }
+});
+Span consume = tracer.spanBuilder(&quot;orders process&quot;).setParent(parent)
+        .setSpanKind(SpanKind.CONSUMER).startSpan();
+</code></pre>
+<pre><code class="language-python"># Python: opentelemetry.propagate uses the globally configured propagator (W3C by default).
+from opentelemetry import trace
+from opentelemetry.propagate import inject, extract
+from opentelemetry.trace import SpanKind
+
+tracer = trace.get_tracer(&quot;shop.orders&quot;)
+
+# producer
+with tracer.start_as_current_span(&quot;orders publish&quot;, kind=SpanKind.PRODUCER):
+    headers: dict[str, str] = {}
+    inject(headers)                      # adds traceparent (and tracestate, baggage)
+    bus.publish(order_placed, headers=headers)
+
+# consumer
+ctx = extract(msg.headers)
+with tracer.start_as_current_span(&quot;orders process&quot;, context=ctx, kind=SpanKind.CONSUMER):
+    handle(msg)
+</code></pre>
+<pre><code class="language-go">// Go: context.Context carries the span; propagation.MapCarrier adapts a map.
+import (
+    &quot;go.opentelemetry.io/otel&quot;
+    &quot;go.opentelemetry.io/otel/propagation&quot;
+    &quot;go.opentelemetry.io/otel/trace&quot;
+)
+
+var tracer = otel.Tracer(&quot;shop/orders&quot;)
+
+// producer
+ctx, span := tracer.Start(ctx, &quot;orders publish&quot;, trace.WithSpanKind(trace.SpanKindProducer))
+headers := propagation.MapCarrier{}
+otel.GetTextMapPropagator().Inject(ctx, headers)
+bus.Publish(ctx, orderPlaced, headers)
+span.End()
+
+// consumer
+ctx = otel.GetTextMapPropagator().Extract(context.Background(), propagation.MapCarrier(msg.Headers))
+ctx, span = tracer.Start(ctx, &quot;orders process&quot;, trace.WithSpanKind(trace.SpanKindConsumer))
+defer span.End()
+</code></pre>
+<pre><code class="language-typescript">// Node: @opentelemetry/api propagation with the active context.
+import { context, propagation, trace, SpanKind } from &quot;@opentelemetry/api&quot;;
+
+const tracer = trace.getTracer(&quot;shop.orders&quot;);
+
+// producer
+await tracer.startActiveSpan(&quot;orders publish&quot;, { kind: SpanKind.PRODUCER }, async (span) =&gt; {
+  const headers: Record&lt;string, string&gt; = {};
+  propagation.inject(context.active(), headers);
+  await bus.publish(orderPlaced, headers);
+  span.end();
+});
+
+// consumer
+const parent = propagation.extract(context.active(), msg.headers);
+await context.with(parent, () =&gt;
+  tracer.startActiveSpan(&quot;orders process&quot;, { kind: SpanKind.CONSUMER }, async (span) =&gt; {
+    try { await handle(msg); } finally { span.end(); }
+  }));
+</code></pre>
+</div>
+<p>To get the trace id into every log line, let the logging library read the current span. Serilog and <code>Microsoft.Extensions.Logging</code> include <code>TraceId</code>/<code>SpanId</code> from <code>Activity.Current</code>; the OpenTelemetry Java agent puts <code>trace_id</code> and <code>span_id</code> into the Logback/Log4j MDC; Python's <code>opentelemetry-instrumentation-logging</code> adds <code>otelTraceID</code> to records; Go's <code>otelslog</code> bridge and pino's <code>@opentelemetry/instrumentation-pino</code> do the same. Then <strong>return the trace id to the caller</strong> in error responses (<code>traceId</code> in a Problem Details body), so a support ticket starts with the one id that finds everything.</p>
+<h2 id="metrics-four-instrument-types">Metrics: four instrument types</h2>
+<p>A metric is a named number, with <strong>labels</strong> (also called attributes or dimensions) that split it into time series. <code>http_requests_total{route="/checkout", status="500"}</code> is one series. Each instrument type answers a different kind of question:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>What it records</th>
+<th>Question it answers</th>
+<th>Examples</th>
+<th>Gotcha</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Counter</strong></td>
+<td>A monotonically increasing total</td>
+<td>"How many per second?" (you query its <em>rate</em>)</td>
+<td>requests, errors, bytes sent, retries</td>
+<td>Never decrements. Resets on restart, which rate() handles.</td>
+</tr>
+<tr>
+<td><strong>Gauge</strong></td>
+<td>A value that goes up and down, sampled now</td>
+<td>"How much right now?"</td>
+<td>queue depth, pool in-use, memory, temperature</td>
+<td>Sampling misses spikes between scrapes.</td>
+</tr>
+<tr>
+<td><strong>Histogram</strong></td>
+<td>Counts of observations per bucket, plus sum and count</td>
+<td>"What is the distribution? p50/p99? Share under 300 ms?"</td>
+<td>request duration, payload size, batch size</td>
+<td>Bucket layout fixes your precision. Each bucket is a series.</td>
+</tr>
+<tr>
+<td><strong>Summary</strong></td>
+<td>Quantiles computed in the client</td>
+<td>"p99 of <em>this</em> instance"</td>
+<td>legacy client-side latency</td>
+<td><strong>Cannot be aggregated</strong> across instances. Prefer histograms.</td>
+</tr>
+</tbody>
+</table>
+<p>Up-down counters (OpenTelemetry's <code>UpDownCounter</code>, e.g. active requests) and observable/asynchronous instruments (a callback reads the value at collection time, e.g. <code>ObservableGauge</code> for queue length) are variations on these. The rule of thumb: <strong>counters for events, histograms for durations and sizes, gauges for current levels.</strong></p>
+<div class="code-tabs">
+<pre><code class="language-csharp">// System.Diagnostics.Metrics is the .NET API; OpenTelemetry exports it.
+public sealed class CheckoutMetrics
+{
+    private readonly Counter&lt;long&gt; _orders;
+    private readonly Histogram&lt;double&gt; _duration;
+
+    public CheckoutMetrics(IMeterFactory factory)
+    {
+        var meter = factory.Create(&quot;Shop.Checkout&quot;);
+        _orders = meter.CreateCounter&lt;long&gt;(&quot;shop.orders&quot;, unit: &quot;{order}&quot;);
+        _duration = meter.CreateHistogram&lt;double&gt;(&quot;shop.checkout.duration&quot;, unit: &quot;s&quot;,
+            advice: new InstrumentAdvice&lt;double&gt;
+            { HistogramBucketBoundaries = [0.05, 0.1, 0.2, 0.3, 0.5, 1, 2] });
+        meter.CreateObservableGauge(&quot;shop.cart.pending&quot;, () =&gt; PendingCarts.Count);
+    }
+
+    public void Completed(string paymentMethod, string outcome, double seconds)
+    {
+        var tags = new TagList { { &quot;payment.method&quot;, paymentMethod }, { &quot;outcome&quot;, outcome } };
+        _orders.Add(1, tags);
+        _duration.Record(seconds, tags);
+    }
+}
+</code></pre>
+<pre><code class="language-java">// Micrometer (Spring Boot's default facade); exports to Prometheus, OTLP and others.
+@Component
+public final class CheckoutMetrics {
+    private final MeterRegistry registry;
+
+    public CheckoutMetrics(MeterRegistry registry, PendingCarts carts) {
+        this.registry = registry;
+        Gauge.builder(&quot;shop.cart.pending&quot;, carts, PendingCarts::size).register(registry);
+    }
+
+    public void completed(String paymentMethod, String outcome, Duration took) {
+        registry.counter(&quot;shop.orders&quot;, &quot;payment.method&quot;, paymentMethod, &quot;outcome&quot;, outcome)
+                .increment();
+        Timer.builder(&quot;shop.checkout.duration&quot;)
+             .tags(&quot;payment.method&quot;, paymentMethod, &quot;outcome&quot;, outcome)
+             .publishPercentileHistogram()        // buckets, so percentiles aggregate
+             .serviceLevelObjectives(Duration.ofMillis(300))  // a bucket boundary at the SLO
+             .register(registry)
+             .record(took);
+    }
+}
+</code></pre>
+<pre><code class="language-python"># OpenTelemetry metrics API (prometheus_client is the other common choice).
+from opentelemetry import metrics
+
+meter = metrics.get_meter(&quot;shop.checkout&quot;)
+orders = meter.create_counter(&quot;shop.orders&quot;, unit=&quot;{order}&quot;)
+duration = meter.create_histogram(&quot;shop.checkout.duration&quot;, unit=&quot;s&quot;)
+meter.create_observable_gauge(
+    &quot;shop.cart.pending&quot;,
+    callbacks=[lambda _opts: [metrics.Observation(pending_carts.count())]],
+)
+
+def completed(payment_method: str, outcome: str, seconds: float) -&gt; None:
+    attrs = {&quot;payment.method&quot;: payment_method, &quot;outcome&quot;: outcome}
+    orders.add(1, attrs)
+    duration.record(seconds, attrs)
+# Bucket boundaries are set on the SDK side with a View
+# (ExplicitBucketHistogramAggregation(boundaries=[0.05, 0.1, 0.2, 0.3, 0.5, 1, 2])).
+</code></pre>
+<pre><code class="language-go">// OpenTelemetry Go metrics API.
+var (
+    meter       = otel.Meter(&quot;shop/checkout&quot;)
+    orders, _   = meter.Int64Counter(&quot;shop.orders&quot;, metric.WithUnit(&quot;{order}&quot;))
+    duration, _ = meter.Float64Histogram(&quot;shop.checkout.duration&quot;, metric.WithUnit(&quot;s&quot;),
+        metric.WithExplicitBucketBoundaries(0.05, 0.1, 0.2, 0.3, 0.5, 1, 2))
+)
+
+func Completed(ctx context.Context, paymentMethod, outcome string, took time.Duration) {
+    attrs := metric.WithAttributes(
+        attribute.String(&quot;payment.method&quot;, paymentMethod),
+        attribute.String(&quot;outcome&quot;, outcome))
+    orders.Add(ctx, 1, attrs)
+    duration.Record(ctx, took.Seconds(), attrs)
+}
+</code></pre>
+<pre><code class="language-typescript">// OpenTelemetry JS metrics API (prom-client is the other common choice).
+import { metrics } from &quot;@opentelemetry/api&quot;;
+
+const meter = metrics.getMeter(&quot;shop.checkout&quot;);
+const orders = meter.createCounter(&quot;shop.orders&quot;, { unit: &quot;{order}&quot; });
+const duration = meter.createHistogram(&quot;shop.checkout.duration&quot;, {
+  unit: &quot;s&quot;,
+  advice: { explicitBucketBoundaries: [0.05, 0.1, 0.2, 0.3, 0.5, 1, 2] },
+});
+meter.createObservableGauge(&quot;shop.cart.pending&quot;)
+  .addCallback((r) =&gt; r.observe(pendingCarts.size));
+
+export function completed(paymentMethod: string, outcome: string, seconds: number): void {
+  const attrs = { &quot;payment.method&quot;: paymentMethod, outcome };
+  orders.add(1, attrs);
+  duration.record(seconds, attrs);
+}
+</code></pre>
+</div>
+<h3 id="cardinality-the-label-that-costs-a-fortune">Cardinality: the label that costs a fortune</h3>
+<p>Every unique combination of label values is its own time series, with its own memory in the collector and the store. The count <strong>multiplies</strong>: 4 methods × 40 routes × 8 status codes × 30 pods is already 38,400 combinations, and a histogram with 12 buckets stores 15 series for each of them. Add one unbounded label and the product explodes. Edit the label list and watch where it goes wrong.</p>
+<div class="viz" data-viz="observability-cardinality"></div>
+
+<div class="compare">
+<div class="good">
+<p><strong>Good labels (bounded, low cardinality)</strong></p>
+<ul>
+<li><code>method</code>, <code>route</code> <strong>template</strong> (<code>/orders/{id}</code>), <code>status_class</code> (<code>2xx</code>, <code>5xx</code>)</li>
+<li><code>region</code>, <code>availability_zone</code>, <code>version</code>, <code>outcome</code></li>
+<li><code>payment.method</code> from a fixed enum, <code>tenant_tier</code> (free / pro / enterprise)</li>
+</ul>
+</div>
+<div class="bad">
+<p><strong>Bad labels (unbounded)</strong></p>
+<ul>
+<li><code>user_id</code>, <code>order_id</code>, <code>session_id</code>, <code>trace_id</code>, <code>email</code></li>
+<li>The <strong>raw URL path</strong> (<code>/orders/8812</code>): one series per order</li>
+<li>Error <em>messages</em>, exception text, SQL text, timestamps</li>
+<li><code>tenant_id</code> when you have 50,000 tenants (use tiers, or a separate per-tenant pipeline)</li>
+</ul>
+</div>
+</div>
+<div class="tip">
+<p><strong>Put the unbounded value on the span or log line instead.</strong> A trace attribute <code>user.id=8812</code> costs a few bytes on one event. As a metric label, it creates a new series that lives for hours. If you need "top 10 tenants by error rate", use a log/trace analytics query or exemplars, not a label. Protect yourself with guard rails too: OpenTelemetry SDK views can drop attributes, and most SDKs cap series per instrument (the .NET and Java SDKs default to 2,000) and send the overflow to an <code>otel.metric.overflow</code> series.</p>
+</div>
+<h3 id="percentiles-histograms-and-why-averages-lie">Percentiles, histograms and why averages lie</h3>
+<p>Latency distributions are skewed: most requests are fast, a few are very slow, and those few are what users complain about. <strong>The average hides the tail</strong>, so you track percentiles: p50 (the typical user), p95, p99 (the unlucky one in a hundred; on a page that makes 50 calls, most page loads include at least one p99 call).</p>
+<p>There is a second trap. Each pod can tell you <em>its</em> p99, but <strong>you cannot average percentiles</strong> to get the fleet's p99. The correct method is to record a histogram on every pod, <strong>add up the bucket counts</strong> across pods, and estimate the percentile from the merged buckets. That is exactly what Prometheus <code>histogram_quantile(0.99, sum by (le) (rate(..._bucket[5m])))</code> does. Run the simulation with two healthy pods and one slow one:</p>
+<div class="viz" data-viz="observability-histogram"></div>
+
+<ul>
+<li>The bucket estimate's error is bounded by the width of the bucket the percentile lands in. Coarse buckets around your SLO threshold mean a vague answer to the one question you care about.</li>
+<li><strong>Put a bucket boundary exactly on each SLO threshold</strong> (300 ms above). Then "share of requests ≤ 300 ms" is exact: it is just a bucket count divided by the total.</li>
+<li>Newer formats remove the guesswork: Prometheus <strong>native histograms</strong> and OpenTelemetry <strong>exponential histograms</strong> pick bucket boundaries automatically with a bounded relative error (a few percent) at every scale.</li>
+</ul>
+<h3 id="red-and-use-what-to-measure-first">RED and USE: what to measure first</h3>
+<p>Two checklists cover almost every service. <strong>RED</strong> describes the work a service does, from the caller's point of view. <strong>USE</strong> describes each resource the work runs on. When RED says "it hurts", USE tells you which resource is the bottleneck.</p>
+<div class="compare">
+<div class="good">
+<p><strong>RED (per endpoint / operation)</strong></p>
+<ul>
+<li><strong>Rate</strong>: requests per second.</li>
+<li><strong>Errors</strong>: failed requests per second (or the error ratio).</li>
+<li><strong>Duration</strong>: the latency <em>distribution</em> (a histogram, read as p50/p95/p99).</li>
+</ul>
+<p>These are your user-facing symptoms and the inputs to SLOs.</p>
+</div>
+<div class="good">
+<p><strong>USE (per resource: CPU, memory, pool, queue, disk)</strong></p>
+<ul>
+<li><strong>Utilization</strong>: share of time or capacity in use.</li>
+<li><strong>Saturation</strong>: work waiting that cannot be served yet (queue length, waiters).</li>
+<li><strong>Errors</strong>: resource-level failures (timeouts acquiring, OOM, disk errors).</li>
+</ul>
+<p>Saturation is the early-warning signal: it rises <em>before</em> latency and errors do.</p>
+</div>
+</div>
+<p>Ramp traffic past what a database connection pool can serve. Watch the order in which the signals move: utilization pins at 100%, then the waiter count (saturation) grows, then p99 latency climbs, and only at the end do errors appear when callers time out waiting for a connection.</p>
+<div class="viz" data-viz="observability-red-use"></div>
+
+<p>With the defaults, the pool of 10 connections tops out around 250 requests per second. Saturation crosses its threshold about 16 seconds before errors cross 1%, and p99 flattens at the 1-second acquire timeout because the slow requests turn into errors instead. An alert on pool <strong>saturation</strong> would have bought those 16 seconds; an alert on errors alone fires once users are already failing. Google's SRE book calls the combination of latency, traffic, errors and saturation the <strong>four golden signals</strong>.</p>
+<h2 id="distributed-tracing-with-opentelemetry">Distributed tracing with OpenTelemetry</h2>
+<p>A <strong>trace</strong> is the tree of work done for one request. Each node is a <strong>span</strong>: a named, timed operation (<code>GET /checkout</code>, <code>SELECT orders</code>, <code>POST pricing/batch</code>) with a start time, a duration, a status, attributes (<code>http.response.status_code=200</code>, <code>db.system=postgresql</code>) and the id of its <strong>parent</strong> span. The root span has no parent. Spans from different services join into one tree because the <code>traceparent</code> header carries the trace id and the caller's span id across the wire.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 880 250" width="880" role="img" aria-label="A trace as a tree of spans and as a waterfall on a time axis">
+<text x="150" y="22" text-anchor="middle" class="title">As a tree (parent → child)</text>
+<rect class="box accent" x="70" y="38" width="160" height="34" rx="6"/><text x="150" y="60" text-anchor="middle" class="small">GET /checkout (root)</text>
+<rect class="box visit" x="10" y="110" width="130" height="34" rx="6"/><text x="75" y="132" text-anchor="middle" class="small">SELECT cart</text>
+<rect class="box active" x="160" y="110" width="140" height="34" rx="6"/><text x="230" y="132" text-anchor="middle" class="small">POST pricing/batch</text>
+<rect class="box done" x="160" y="190" width="140" height="34" rx="6"/><text x="230" y="212" text-anchor="middle" class="small">pricing: SELECT rules</text>
+<path class="edge" d="M130 72 L80 110"/><path class="edge" d="M170 72 L225 110"/><path class="edge dash" d="M230 144 L230 190"/>
+<text x="290" y="172" class="small muted">other service</text>
+<text x="600" y="22" text-anchor="middle" class="title">As a waterfall (x = time)</text>
+<path class="edge" d="M360 228 L860 228"/>
+<text x="360" y="244" class="small muted">0 ms</text><text x="840" y="244" class="small muted">120 ms</text>
+<rect class="box accent" x="360" y="38" width="480" height="26" rx="4"/><text x="370" y="56" class="small">GET /checkout · 120 ms</text>
+<rect class="box visit" x="372" y="80" width="90" height="26" rx="4"/><text x="380" y="98" class="small">SELECT cart · 22</text>
+<rect class="box active" x="470" y="122" width="300" height="26" rx="4"/><text x="480" y="140" class="small">POST pricing/batch · 75 ms</text>
+<rect class="box done" x="520" y="164" width="190" height="26" rx="4"/><text x="530" y="182" class="small">SELECT rules · 47 ms</text>
+<text x="805" y="98" text-anchor="end" class="small muted">gaps = time in this span's own code</text>
+</svg>
+<figcaption>The same trace two ways. The tree shows <em>who called whom</em>; the waterfall shows <em>when</em>, which makes sequential waits (a staircase) and parallel work (stacked bars) obvious.</figcaption>
+</figure>
+
+<h3 id="reading-a-waterfall-the-n1-staircase">Reading a waterfall: the N+1 staircase</h3>
+<p>The single most common latency bug a trace reveals is a <strong>staircase</strong>: the same span repeated in sequence, once per item. Switch between sequential N+1 calls, one batched call and a parallel fan-out, and compare the critical path. Parallel fan-out shortens the request but still sends N calls to the dependency; batching shortens it <em>and</em> cuts the load. Batching and round-trip reduction are covered in <a href="performance-patterns.html">Performance Patterns</a> and <a href="data-access.html">Data Access</a>.</p>
+<div class="viz" data-viz="observability-waterfall"></div>
+
+<h3 id="auto-vs-manual-instrumentation">Auto vs manual instrumentation</h3>
+<p>OpenTelemetry has two layers. <strong>Auto-instrumentation</strong> hooks well-known libraries (HTTP servers and clients, gRPC, database drivers, message clients) and gives you the skeleton of every trace with no code changes. <strong>Manual instrumentation</strong> adds the spans and attributes only your code knows about: "price cart", <code>cart.items=12</code>, <code>pricing.batched=false</code>. You want both: auto for coverage, manual for meaning.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>.NET</th>
+<th>Java</th>
+<th>Python</th>
+<th>Go</th>
+<th>Node / TS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Auto, zero code</strong></td>
+<td>OpenTelemetry .NET auto-instrumentation (profiler-based)</td>
+<td>Java agent <code>-javaagent:opentelemetry-javaagent.jar</code> (bytecode)</td>
+<td><code>opentelemetry-instrument python app.py</code> (monkey-patching)</td>
+<td>eBPF auto-instrumentation (limited); mostly library wrappers</td>
+<td><code>--require @opentelemetry/auto-instrumentations-node/register</code></td>
+</tr>
+<tr>
+<td><strong>Library instrumentation</strong></td>
+<td><code>AddAspNetCoreInstrumentation()</code>, <code>AddHttpClientInstrumentation()</code>; many libraries emit <code>Activity</code> natively</td>
+<td>Spring Boot starter, Micrometer Tracing bridge</td>
+<td><code>opentelemetry-instrumentation-fastapi</code>, <code>-requests</code>, <code>-sqlalchemy</code></td>
+<td><code>otelhttp</code>, <code>otelgrpc</code>, <code>otelsql</code> wrappers</td>
+<td><code>@opentelemetry/instrumentation-http</code>, <code>-express</code>, <code>-pg</code></td>
+</tr>
+<tr>
+<td><strong>Manual span API</strong></td>
+<td><code>ActivitySource.StartActivity</code></td>
+<td><code>Tracer.spanBuilder(...)</code></td>
+<td><code>tracer.start_as_current_span</code></td>
+<td><code>tracer.Start(ctx, ...)</code></td>
+<td><code>tracer.startActiveSpan</code></td>
+</tr>
+<tr>
+<td><strong>Why it looks like this</strong></td>
+<td>.NET had <code>Activity</code> before OTel, so OTel adopted it</td>
+<td>The JVM can rewrite bytecode at load time</td>
+<td>Dynamic language: patch modules at import</td>
+<td>No runtime hooks by design: explicit <code>ctx</code> everywhere</td>
+<td><code>AsyncLocalStorage</code> gives implicit context</td>
+</tr>
+</tbody>
+</table>
+<div class="code-tabs">
+<pre><code class="language-csharp">// Program.cs: OpenTelemetry for traces, metrics and logs, exported over OTLP.
+// dotnet add package OpenTelemetry.Extensions.Hosting OpenTelemetry.Exporter.OpenTelemetryProtocol
+//   OpenTelemetry.Instrumentation.AspNetCore OpenTelemetry.Instrumentation.Http
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(r =&gt; r.AddService(&quot;checkout&quot;, serviceVersion: &quot;42.0.0&quot;))
+    .WithTracing(t =&gt; t
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddSource(&quot;Shop.Checkout&quot;))                 // our manual spans
+    .WithMetrics(m =&gt; m
+        .AddAspNetCoreInstrumentation()
+        .AddMeter(&quot;Shop.Checkout&quot;))
+    .UseOtlpExporter();                              // OTEL_EXPORTER_OTLP_ENDPOINT
+
+public sealed class Pricing(HttpClient http)
+{
+    private static readonly ActivitySource Source = new(&quot;Shop.Checkout&quot;);
+
+    public async Task&lt;Prices&gt; PriceAsync(Cart cart, CancellationToken ct)
+    {
+        using var span = Source.StartActivity(&quot;price cart&quot;);   // null when not sampled
+        span?.SetTag(&quot;cart.items&quot;, cart.Items.Count);
+        try
+        {
+            return await http.GetFromJsonAsync&lt;Prices&gt;($&quot;/prices?skus={cart.SkuList}&quot;, ct)
+                   ?? throw new InvalidOperationException(&quot;empty pricing response&quot;);
+        }
+        catch (Exception ex)
+        {
+            span?.SetStatus(ActivityStatusCode.Error, ex.GetType().Name);
+            span?.AddException(ex);
+            throw;
+        }
+    }
+}
+</code></pre>
+<pre><code class="language-java">// Auto: java -javaagent:opentelemetry-javaagent.jar -Dotel.service.name=checkout -jar app.jar
+// Manual spans on top, with the API only (the agent supplies the SDK):
+import io.opentelemetry.api.GlobalOpenTelemetry;
+import io.opentelemetry.api.trace.*;
+import io.opentelemetry.context.Scope;
+
+public final class Pricing {
+    private static final Tracer tracer = GlobalOpenTelemetry.getTracer(&quot;shop.checkout&quot;);
+
+    public Prices price(Cart cart) {
+        Span span = tracer.spanBuilder(&quot;price cart&quot;).startSpan();
+        try (Scope ignored = span.makeCurrent()) {        // children attach to this span
+            span.setAttribute(&quot;cart.items&quot;, cart.items().size());
+            return client.prices(cart.skus());
+        } catch (RuntimeException e) {
+            span.recordException(e);
+            span.setStatus(StatusCode.ERROR);
+            throw e;
+        } finally {
+            span.end();                                    // always end, or it never exports
+        }
+    }
+    // With the agent you can also annotate: @WithSpan(&quot;price cart&quot;) + @SpanAttribute
+}
+</code></pre>
+<pre><code class="language-python"># Auto: pip install opentelemetry-distro opentelemetry-exporter-otlp
+#       opentelemetry-bootstrap -a install
+#       OTEL_SERVICE_NAME=checkout opentelemetry-instrument uvicorn app:app
+from opentelemetry import trace
+from opentelemetry.trace import Status, StatusCode
+
+tracer = trace.get_tracer(&quot;shop.checkout&quot;)
+
+async def price_cart(cart) -&gt; dict:
+    with tracer.start_as_current_span(&quot;price cart&quot;) as span:
+        span.set_attribute(&quot;cart.items&quot;, len(cart.items))
+        try:
+            resp = await http.get(&quot;/prices&quot;, params={&quot;skus&quot;: &quot;,&quot;.join(cart.skus)})
+            resp.raise_for_status()
+            return resp.json()
+        except Exception as exc:
+            span.record_exception(exc)
+            span.set_status(Status(StatusCode.ERROR))
+            raise
+# start_as_current_span records exceptions by default; it is shown explicitly here.
+</code></pre>
+<pre><code class="language-go">// Go: wrap the handler and the client; pass ctx everywhere.
+import (
+    &quot;go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp&quot;
+    &quot;go.opentelemetry.io/otel&quot;
+    &quot;go.opentelemetry.io/otel/attribute&quot;
+    &quot;go.opentelemetry.io/otel/codes&quot;
+)
+
+var tracer = otel.Tracer(&quot;shop/checkout&quot;)
+var client = &amp;http.Client{Transport: otelhttp.NewTransport(http.DefaultTransport)}
+
+func PriceCart(ctx context.Context, cart Cart) (Prices, error) {
+    ctx, span := tracer.Start(ctx, &quot;price cart&quot;)
+    defer span.End()
+    span.SetAttributes(attribute.Int(&quot;cart.items&quot;, len(cart.Items)))
+
+    req, _ := http.NewRequestWithContext(ctx, http.MethodGet, pricingURL(cart), nil)
+    resp, err := client.Do(req) // child span + traceparent header, because ctx carries the span
+    if err != nil {
+        span.RecordError(err)
+        span.SetStatus(codes.Error, &quot;pricing call failed&quot;)
+        return Prices{}, err
+    }
+    defer resp.Body.Close()
+    return decodePrices(resp.Body)
+}
+
+// main: http.Handle(&quot;/checkout&quot;, otelhttp.NewHandler(checkoutHandler, &quot;POST /checkout&quot;))
+</code></pre>
+<pre><code class="language-typescript">// Auto: node --require @opentelemetry/auto-instrumentations-node/register dist/server.js
+//   with OTEL_SERVICE_NAME=checkout and OTEL_EXPORTER_OTLP_ENDPOINT set.
+import { trace, SpanStatusCode } from &quot;@opentelemetry/api&quot;;
+
+const tracer = trace.getTracer(&quot;shop.checkout&quot;);
+
+export async function priceCart(cart: Cart): Promise&lt;Prices&gt; {
+  return tracer.startActiveSpan(&quot;price cart&quot;, async (span) =&gt; {
+    span.setAttribute(&quot;cart.items&quot;, cart.items.length);
+    try {
+      const res = await fetch(`${PRICING}/prices?skus=${cart.skus.join(&quot;,&quot;)}`);
+      if (!res.ok) throw new Error(`pricing ${res.status}`);
+      return (await res.json()) as Prices;
+    } catch (err) {
+      span.recordException(err as Error);
+      span.setStatus({ code: SpanStatusCode.ERROR });
+      throw err;
+    } finally {
+      span.end();
+    }
+  });
+}
+</code></pre>
+</div>
+<div class="tip">
+<p><strong>Ship to a Collector, not straight to a vendor.</strong> Point every SDK at an OpenTelemetry Collector (as a sidecar, a node agent or a gateway). The Collector batches, retries, redacts attributes, does tail sampling, and fans out to whatever back ends you use. Switching vendor becomes a Collector config change, not a redeploy of every service. Configure SDKs through the standard <code>OTEL_*</code> environment variables (<code>OTEL_SERVICE_NAME</code>, <code>OTEL_EXPORTER_OTLP_ENDPOINT</code>, <code>OTEL_TRACES_SAMPLER</code>), which every language SDK reads.</p>
+</div>
+<h3 id="sampling-head-vs-tail">Sampling: head vs tail</h3>
+<p>Keeping every span of every request is rarely affordable. <strong>Head sampling</strong> decides at the root, before the request runs, usually by hashing the trace id (<code>TraceIdRatioBased</code>), and the decision travels in the <code>sampled</code> flag so every service agrees. It is cheap, but it is blind: it keeps 10% of your errors, not all of them. <strong>Tail sampling</strong> waits until the trace is complete, then keeps it if it was slow, failed, or matches a rule. Run both on the same traffic:</p>
+<div class="viz" data-viz="observability-sampling"></div>
+
+<ul>
+<li>Use <code>ParentBased(TraceIdRatioBased(r))</code> in SDKs, so a service never breaks a trace its caller decided to keep.</li>
+<li>Tail sampling lives in the Collector (<code>tail_sampling</code> processor) and needs a load-balancing exporter in front so all spans of a trace reach the same Collector instance.</li>
+<li>Sampling changes the meaning of counts. <strong>Derive RED metrics from unsampled data</strong> (the SDK metrics, or a span-metrics connector placed before the sampler), never by counting sampled spans.</li>
+</ul>
+<h2 id="slis-slos-and-error-budgets">SLIs, SLOs and error budgets</h2>
+<p>An <strong>SLI</strong> (service level indicator) is a ratio of good events to valid events, measured where users feel it: "requests to <code>POST /checkout</code> that succeed in under 400 ms, divided by all requests". An <strong>SLO</strong> is the target for that SLI over a window: "99.9% over 30 days". The <strong>error budget</strong> is what is left: 0.1% of requests may fail, which is about 43 minutes of full outage a month. The budget turns reliability into a number both product and engineering can spend: when it is healthy, ship faster; when it is gone, pause risky releases and fix reliability.</p>
+<figure class="figure">
+<svg class="dg" viewBox="0 0 860 170" width="860" role="img" aria-label="From SLI to SLO to error budget to alerts and policy">
+<defs><marker id="observability-ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-accent"/></marker></defs>
+<rect class="box visit" x="10" y="40" width="180" height="90" rx="10"/>
+<text x="100" y="64" text-anchor="middle" class="title">SLI</text>
+<text x="100" y="86" text-anchor="middle" class="small">good / valid events</text>
+<text x="100" y="104" text-anchor="middle" class="small muted">ok AND &lt; 400 ms</text>
+<rect class="box accent" x="230" y="40" width="180" height="90" rx="10"/>
+<text x="320" y="64" text-anchor="middle" class="title">SLO</text>
+<text x="320" y="86" text-anchor="middle" class="small">SLI ≥ 99.9%</text>
+<text x="320" y="104" text-anchor="middle" class="small muted">over 30 days, rolling</text>
+<rect class="box active" x="450" y="40" width="180" height="90" rx="10"/>
+<text x="540" y="64" text-anchor="middle" class="title">Error budget</text>
+<text x="540" y="86" text-anchor="middle" class="small">0.1% may be bad</text>
+<text x="540" y="104" text-anchor="middle" class="small muted">burn rate = speed of spending</text>
+<rect class="box done" x="670" y="20" width="180" height="56" rx="10"/>
+<text x="760" y="44" text-anchor="middle" class="title">Alerts</text>
+<text x="760" y="62" text-anchor="middle" class="small muted">fast burn → page</text>
+<rect class="box path" x="670" y="94" width="180" height="56" rx="10"/>
+<text x="760" y="118" text-anchor="middle" class="title">Policy</text>
+<text x="760" y="136" text-anchor="middle" class="small muted">budget gone → freeze</text>
+<path class="edge accent" d="M192 85 L228 85" marker-end="url(#observability-ar2)"/>
+<path class="edge accent" d="M412 85 L448 85" marker-end="url(#observability-ar2)"/>
+<path class="edge accent" d="M632 75 L668 52" marker-end="url(#observability-ar2)"/>
+<path class="edge accent" d="M632 95 L668 120" marker-end="url(#observability-ar2)"/>
+</svg>
+<figcaption>An SLI is measured, an SLO is chosen, and the error budget is the difference. Alerts watch how fast the budget burns; the policy says what happens when it runs out.</figcaption>
+</figure>
+
+<h3 id="burn-rate-alerts-alert-on-symptoms-at-the-right-speed">Burn-rate alerts: alert on symptoms, at the right speed</h3>
+<p>A <strong>burn rate</strong> of 1 spends the whole budget in exactly the SLO window; a burn rate of 14.4 spends 2% of a 30-day budget in one hour. The Google SRE workbook's <strong>multiwindow, multi-burn-rate</strong> alerts page when the burn is fast <em>and</em> still happening (a long window to be sure, a short window to stop paging once it recovers), and open a ticket for slow leaks:</p>
+<table>
+<thead>
+<tr>
+<th>Severity</th>
+<th>Long window</th>
+<th>Short window</th>
+<th>Burn rate</th>
+<th>Budget spent when it fires</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Page</td>
+<td>1 hour</td>
+<td>5 minutes</td>
+<td>14.4</td>
+<td>2%</td>
+</tr>
+<tr>
+<td>Page</td>
+<td>6 hours</td>
+<td>30 minutes</td>
+<td>6</td>
+<td>5%</td>
+</tr>
+<tr>
+<td>Ticket</td>
+<td>3 days</td>
+<td>6 hours</td>
+<td>1</td>
+<td>10%</td>
+</tr>
+</tbody>
+</table>
+<p>Pick a scenario: a <strong>slow leak</strong> (from day 12 the error rate doubles to 0.2%, a burn rate of 2; nothing looks alarming, yet the budget is gone by day 25), a <strong>45-minute outage</strong> at 10% errors, a <strong>5-minute blip</strong> and a healthy month. Compare the multiwindow alerts with the naive "error ratio over the last 5 minutes is above the budget" alert.</p>
+<div class="viz ob-wide" data-viz="observability-burn"></div>
+
+<div class="compare">
+<div class="good">
+<p><strong>Alert on symptoms (page a human)</strong></p>
+<ul>
+<li>SLO burn rate on availability and latency SLIs.</li>
+<li>"No successful checkouts in 10 minutes" for low-traffic critical paths.</li>
+<li>Synthetic probes failing from outside the network.</li>
+<li>Every page must be <strong>urgent, actionable and user-visible</strong>, with a runbook link.</li>
+</ul>
+</div>
+<div class="bad">
+<p><strong>Do not page on causes</strong></p>
+<ul>
+<li>CPU &gt; 80%, memory &gt; 70%, one pod restarted, a disk at 75%.</li>
+<li>A single error log line, or one failed health probe.</li>
+<li>These go on dashboards, or become <em>tickets</em> when they predict trouble (disk full in 4 days).</li>
+<li>If nobody acts on an alert, delete it or downgrade it: alert fatigue is how real pages get missed.</li>
+</ul>
+</div>
+</div>
+<h2 id="health-checks-liveness-readiness-and-startup">Health checks: liveness, readiness and startup</h2>
+<p>An orchestrator (Kubernetes, Azure Container Apps, ECS, a load balancer) asks your process three different questions. Mixing them up is one of the most common ways to turn a small outage into a big one.</p>
+<table>
+<thead>
+<tr>
+<th>Probe</th>
+<th>Question</th>
+<th>On failure</th>
+<th>Should check</th>
+<th>Must NOT check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Startup</strong></td>
+<td>"Have you finished booting?"</td>
+<td>Keep waiting; kill only after the whole budget (<code>failureThreshold × periodSeconds</code>)</td>
+<td>That the app finished init (migrations, cache warm-up, JIT)</td>
+<td>Anything slow that is not part of boot</td>
+</tr>
+<tr>
+<td><strong>Liveness</strong></td>
+<td>"Are you stuck beyond self-repair?"</td>
+<td><strong>Restart the container</strong></td>
+<td>That the process can serve: the event loop or thread pool responds, no deadlock</td>
+<td><strong>Dependencies.</strong> A DB outage is not fixed by restarting you.</td>
+</tr>
+<tr>
+<td><strong>Readiness</strong></td>
+<td>"Should I send you traffic right now?"</td>
+<td>Remove from the load balancer; keep running</td>
+<td>Warm caches, critical dependencies reachable, not shutting down, not overloaded</td>
+<td>Optional dependencies (degrade instead)</td>
+</tr>
+</tbody>
+</table>
+<p>Watch three pods boot slowly and then lose their database for 30 seconds. Then try the two classic mistakes: a liveness probe that checks the database (every pod restarts, and they all reconnect at once when the DB returns) and no startup probe (liveness kills the pod before it ever finishes booting).</p>
+<div class="viz" data-viz="observability-health"></div>
+
+<div class="code-tabs">
+<pre><code class="language-csharp">// ASP.NET Core health checks: tag checks, then map one endpoint per probe.
+builder.Services.AddHealthChecks()
+    .AddCheck(&quot;self&quot;, () =&gt; HealthCheckResult.Healthy(), tags: [&quot;live&quot;])
+    .AddCheck&lt;WarmupHealthCheck&gt;(&quot;warmup&quot;, tags: [&quot;ready&quot;, &quot;startup&quot;])
+    .AddNpgSql(connString, name: &quot;db&quot;, tags: [&quot;ready&quot;]);  // AspNetCore.HealthChecks.NpgSql
+
+app.MapHealthChecks(&quot;/healthz/live&quot;,    new() { Predicate = c =&gt; c.Tags.Contains(&quot;live&quot;) });
+app.MapHealthChecks(&quot;/healthz/ready&quot;,   new() { Predicate = c =&gt; c.Tags.Contains(&quot;ready&quot;) });
+app.MapHealthChecks(&quot;/healthz/startup&quot;, new() { Predicate = c =&gt; c.Tags.Contains(&quot;startup&quot;) });
+
+public sealed class WarmupHealthCheck(WarmupState state) : IHealthCheck
+{
+    public Task&lt;HealthCheckResult&gt; CheckHealthAsync(HealthCheckContext ctx, CancellationToken ct) =&gt;
+        Task.FromResult(state.Done ? HealthCheckResult.Healthy() : HealthCheckResult.Unhealthy(&quot;warming&quot;));
+}
+</code></pre>
+<pre><code class="language-java">// Spring Boot Actuator exposes /actuator/health/liveness and /readiness out of the box
+// (enabled automatically on Kubernetes). Choose which indicators join which group:
+// application.yaml
+//   management.endpoint.health.probes.enabled: true
+//   management.endpoint.health.group.readiness.include: readinessState,db
+//   management.endpoint.health.group.liveness.include: livenessState     # never db
+//
+// Flip readiness yourself, e.g. during warm-up or graceful shutdown:
+@Component
+class Warmup implements ApplicationListener&lt;ApplicationReadyEvent&gt; {
+    private final ApplicationEventPublisher events;
+    Warmup(ApplicationEventPublisher events) { this.events = events; }
+
+    public void onApplicationEvent(ApplicationReadyEvent e) {
+        AvailabilityChangeEvent.publish(events, this, ReadinessState.REFUSING_TRAFFIC);
+        warmCaches();
+        AvailabilityChangeEvent.publish(events, this, ReadinessState.ACCEPTING_TRAFFIC);
+    }
+}
+</code></pre>
+<pre><code class="language-python"># FastAPI: three cheap endpoints. Liveness answers from the event loop only.
+from fastapi import FastAPI, Response
+
+app = FastAPI()
+state = {&quot;warm&quot;: False, &quot;draining&quot;: False}
+
+@app.get(&quot;/healthz/live&quot;)
+async def live() -&gt; dict:
+    return {&quot;status&quot;: &quot;ok&quot;}                       # if the loop is blocked, this times out
+
+@app.get(&quot;/healthz/startup&quot;)
+async def startup(resp: Response) -&gt; dict:
+    if not state[&quot;warm&quot;]:
+        resp.status_code = 503
+    return {&quot;warm&quot;: state[&quot;warm&quot;]}
+
+@app.get(&quot;/healthz/ready&quot;)
+async def ready(resp: Response) -&gt; dict:
+    db_ok = await db.ping(timeout=0.5)            # short timeout: probes must be fast
+    ok = state[&quot;warm&quot;] and db_ok and not state[&quot;draining&quot;]
+    resp.status_code = 200 if ok else 503
+    return {&quot;warm&quot;: state[&quot;warm&quot;], &quot;db&quot;: db_ok, &quot;draining&quot;: state[&quot;draining&quot;]}
+</code></pre>
+<pre><code class="language-go">// Go: an atomic flag for readiness; liveness does no I/O.
+var ready atomic.Bool
+
+func main() {
+    mux := http.NewServeMux()
+    mux.HandleFunc(&quot;GET /healthz/live&quot;, func(w http.ResponseWriter, _ *http.Request) {
+        w.WriteHeader(http.StatusOK)
+    })
+    mux.HandleFunc(&quot;GET /healthz/ready&quot;, func(w http.ResponseWriter, r *http.Request) {
+        ctx, cancel := context.WithTimeout(r.Context(), 500*time.Millisecond)
+        defer cancel()
+        if !ready.Load() || db.PingContext(ctx) != nil {
+            http.Error(w, &quot;not ready&quot;, http.StatusServiceUnavailable)
+            return
+        }
+        w.WriteHeader(http.StatusOK)
+    })
+    go func() { warmCaches(); ready.Store(true) }()
+    // on SIGTERM: ready.Store(false), wait a few seconds for endpoints to update, then Shutdown(ctx)
+    http.ListenAndServe(&quot;:8080&quot;, mux)
+}
+</code></pre>
+<pre><code class="language-typescript">// NestJS with @nestjs/terminus: one controller, separate checks per probe.
+@Controller(&quot;healthz&quot;)
+export class HealthController {
+  constructor(
+    private readonly health: HealthCheckService,
+    private readonly db: TypeOrmHealthIndicator,
+    private readonly warmup: WarmupIndicator,
+  ) {}
+
+  @Get(&quot;live&quot;) @HealthCheck()
+  live() { return this.health.check([]); }                     // process answers = alive
+
+  @Get(&quot;startup&quot;) @HealthCheck()
+  startup() { return this.health.check([() =&gt; this.warmup.isWarm(&quot;warmup&quot;)]); }
+
+  @Get(&quot;ready&quot;) @HealthCheck()
+  ready() {
+    return this.health.check([
+      () =&gt; this.warmup.isWarm(&quot;warmup&quot;),
+      () =&gt; this.db.pingCheck(&quot;db&quot;, { timeout: 500 }),
+    ]);
+  }
+}
+</code></pre>
+</div>
+<div class="warn">
+<p><strong>Readiness that checks a shared dependency can still take everything down.</strong> If every pod's readiness pings the database and the database blips, <em>all</em> pods go unready at once and the load balancer has nowhere to send traffic, so users get connection errors instead of a friendly degraded response. Some teams therefore keep readiness local (warm-up, draining, overload) and handle dependency failures in the request path with <a href="resilience.html">timeouts, circuit breakers and fallbacks</a>. Either way, never put dependencies in liveness, and set readiness <code>failureThreshold</code> above 1 if your dependency blips often.</p>
+</div>
+<h2 id="putting-it-together-investigating-a-slow-checkout">Putting it together: investigating a slow checkout</h2>
+<p>Here is the 3 a.m. page from the top of this page, done properly. A canary of v42 is serving part of the traffic. Step through how each signal hands off to the next: the SLO alert detects, RED metrics narrow it, a <code>version</code> label splits it, an <strong>exemplar</strong> jumps from a histogram bucket to one slow trace, the trace localizes, the logs explain, and the same SLI confirms the fix. Change the canary share and see how it changes the size of the signal.</p>
+<div class="viz" data-viz="observability-investigate"></div>
+
+<div class="flow" markdown="0">
+<div class="flow-step"><small>1 · DETECT</small><strong>SLO burn alert</strong><p>A symptom users feel, with a burn rate that says how urgent it is.</p></div>
+<div class="flow-step"><small>2 · SCOPE</small><strong>RED by route</strong><p>Rate flat, errors flat, duration up since minute 30: something got slower.</p></div>
+<div class="flow-step"><small>3 · SPLIT</small><strong>Bounded labels</strong><p>version, region, route. Only v42 is slow.</p></div>
+<div class="flow-step"><small>4 · JUMP</small><strong>Exemplar → trace</strong><p>A trace id stored on the slow bucket.</p></div>
+<div class="flow-step"><small>5 · LOCALIZE</small><strong>Waterfall</strong><p>A staircase of 12 pricing calls: N+1.</p></div>
+<div class="flow-step"><small>6 · EXPLAIN</small><strong>Logs by trace_id</strong><p>"batch lookups disabled": a config default changed.</p></div>
+<div class="flow-step"><small>7 · MITIGATE</small><strong>Flip, then verify</strong><p>Flag back on; confirm with the SLI that paged.</p></div>
+<div class="flow-step"><small>8 · LEARN</small><strong>Guard it</strong><p>A test for one pricing call per checkout, plus config review.</p></div>
+</div>
+
+<p>Notice what made each hop possible: a histogram with <strong>exemplars</strong>, a bounded <code>version</code> label, a trace that crossed the service boundary, structured log fields, and one trace id on all of them. Each is a decision made long before the incident. Notice too that the fix was a <strong>configuration flag</strong>, which is why safe configuration and feature flags get their own page: <a href="configuration-and-secrets.html">Configuration &amp; Secrets</a>.</p>
+<h2 id="when-to-use-what-and-when-not-to">When to use what, and when not to</h2>
+<div class="compare">
+<div class="good">
+<p><strong>Do this from day one</strong></p>
+<ul>
+<li>Structured JSON logs to stdout, with a trace id on every line.</li>
+<li>OpenTelemetry SDK with auto-instrumentation, exporting to a Collector.</li>
+<li>RED metrics per route as histograms, with an SLO bucket boundary.</li>
+<li>Liveness, readiness and startup endpoints that answer different questions.</li>
+<li>One SLO for the most important user journey, with burn-rate alerts.</li>
+</ul>
+</div>
+<div class="bad">
+<p><strong>Do not do this</strong></p>
+<ul>
+<li>Log every request and response body "in case we need it".</li>
+<li>Add a metric label for anything with an id in its name.</li>
+<li>Build a dashboard for every metric you have; build them for questions you ask.</li>
+<li>Page on resource thresholds; use them for diagnosis.</li>
+<li>Write your own tracing headers: use W3C Trace Context.</li>
+</ul>
+</div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Reach for</th>
+<th>Not</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Is the service healthy right now?"</td>
+<td>RED metrics + SLO burn</td>
+<td>Grepping logs</td>
+</tr>
+<tr>
+<td>"Why did <em>this</em> order fail?"</td>
+<td>Logs and the trace for that order's trace id</td>
+<td>A metric with an <code>order_id</code> label</td>
+</tr>
+<tr>
+<td>"Which hop is slow?"</td>
+<td>Trace waterfall, then span metrics</td>
+<td>Timestamps in logs from five services</td>
+</tr>
+<tr>
+<td>"Which code is using CPU?"</td>
+<td>Continuous profiler / flame graph (<a href="performance-cadence.html">Performance Cadence</a>)</td>
+<td>More spans around every function</td>
+</tr>
+<tr>
+<td>"Is it getting worse over weeks?"</td>
+<td>Metrics with long retention</td>
+<td>Traces (too expensive to keep)</td>
+</tr>
+<tr>
+<td>Low-traffic batch job</td>
+<td>Logs + a "last success" timestamp gauge + a heartbeat alert</td>
+<td>Rate-based SLO (too few events)</td>
+</tr>
+<tr>
+<td>A library you publish</td>
+<td><code>ILogger</code>/SLF4J/<code>logging</code>/<code>slog</code> <em>interfaces</em>, <code>ActivitySource</code>/OTel API only</td>
+<td>Configuring sinks or exporters inside the library</td>
+</tr>
+</tbody>
+</table>
+<div class="insight">
+<p><strong>What it costs.</strong> Observability spend commonly lands at 5–15% of infrastructure cost, and it is dominated by log volume and metric cardinality. Spans, metrics and logs also cost CPU in your process: a span is roughly a microsecond and a few hundred bytes; a disabled log call with a template is nanoseconds; an enabled JSON log line with ten fields is a few microseconds. That is cheap per request and expensive in a tight loop. Instrument operations, not iterations.</p>
+</div>
+<h2 id="pitfalls-and-war-stories">Pitfalls and war stories</h2>
+<div class="pitfall">
+<p><strong>The label that cost more than the service</strong>
+A team added <code>customer_id</code> as a label on the request duration histogram to answer one sales question. With 40,000 customers × 12 buckets × 20 routes the metrics back end ran out of memory, ingestion dropped <em>all</em> metrics for that tenant, and the alerting went blind for an afternoon. <strong>Fix:</strong> remove the label, put <code>customer.id</code> on spans, answer per-customer questions with trace or log analytics, and configure a cardinality limit on the SDK view.</p>
+</div>
+<div class="pitfall">
+<p><strong>The health check that restarted the fleet</strong>
+A liveness endpoint called the database "to be thorough". During a 40-second failover, every pod failed liveness three times and was restarted. They all came back at once, opened their full connection pools against the freshly promoted primary, and knocked it over again. A 40-second blip became a 25-minute outage. <strong>Fix:</strong> liveness checks only the process; dependency checks belong in readiness (or in the request path with a circuit breaker).</p>
+</div>
+<div class="pitfall">
+<p><strong>The trace that stopped at the queue</strong>
+Traces showed <code>POST /orders</code> finishing in 30 ms, while customers waited minutes for confirmation emails. The work happened after a message queue, whose consumer started a fresh trace for every message. Nobody could connect a slow email to its order. <strong>Fix:</strong> inject <code>traceparent</code> into message headers on publish and extract it on consume (or add span links for batches), then put queue <em>age</em> (time from publish to consume) on a dashboard.</p>
+</div>
+<div class="pitfall">
+<p><strong>The access token in the request log</strong>
+A debug middleware logged all request headers. It was turned on in production for an investigation and left on. Six months later a vendor with log access was breached, and every <code>Authorization: Bearer</code> token from that period was in the dump. <strong>Fix:</strong> allow-list the headers you log, redact by type at the logger, run secret scanning on log storage, and make debug-level overrides expire automatically.</p>
+</div>
+<div class="pitfall">
+<p><strong>Averaging percentiles on the dashboard</strong>
+Each of 20 pods exported a summary with its own p99, and the dashboard showed <code>avg(p99)</code>. One pod on a degraded node had a p99 of 4 s, but the average stayed under the 500 ms threshold, and the alert never fired for two days. <strong>Fix:</strong> export histograms, sum the buckets across pods, compute the quantile once; also alert per pod or per zone for outliers.</p>
+</div>
+<div class="pitfall">
+<p><strong>Sampled-away errors</strong>
+Head sampling at 1% kept costs down, but when a rare payment error hit 0.05% of requests, there were almost no traces of it to look at. <strong>Fix:</strong> tail-sample in the Collector with policies that keep all errors and slow traces, and use flush-on-error buffering for logs.</p>
+</div>
+<h2 id="checklist">Checklist</h2>
+<ul>
+<li>[ ] Logs are structured (JSON), use message templates with named fields, and carry <code>trace_id</code>, <code>span_id</code>, <code>service</code> and <code>version</code>.</li>
+<li>[ ] Log levels follow a written convention; errors are logged once, where they are handled; levels are configurable per namespace at runtime.</li>
+<li>[ ] Sensitive data is redacted at the logger by type or path; request bodies and auth headers are never logged.</li>
+<li>[ ] W3C <code>traceparent</code> propagates over HTTP, gRPC <strong>and</strong> messages; trace ids are returned in error responses.</li>
+<li>[ ] RED metrics per route are histograms with a bucket boundary on each SLO threshold; no unbounded labels; SDK cardinality limits are set.</li>
+<li>[ ] USE metrics exist for every pool, queue and resource that can saturate.</li>
+<li>[ ] OpenTelemetry auto-instrumentation is on, manual spans add business attributes, and everything exports to a Collector.</li>
+<li>[ ] Sampling is parent-based, errors and slow traces are kept (tail sampling), and RED metrics are computed before sampling.</li>
+<li>[ ] At least one SLO on a critical user journey, with multiwindow burn-rate alerts that link to runbooks.</li>
+<li>[ ] Pages are symptom-based only; resource thresholds go to dashboards or tickets.</li>
+<li>[ ] Separate liveness, readiness and startup probes; liveness checks no dependencies.</li>
+<li>[ ] Exemplars link histograms to traces; dashboards let you go from alert → trace → logs in three clicks.</li>
+</ul>
+<h2 id="quiz">Quiz</h2>
+<details class="quiz">
+<summary>Why is <code>log.LogInformation($"Order {id} took {ms} ms")</code> worse than <code>log.LogInformation("Order {OrderId} took {ElapsedMs} ms", id, ms)</code>, even if the output text is identical?</summary>
+<p>The interpolated string is built before the call, even when the level is disabled (wasted CPU and allocations). Every message is unique, so you cannot group events by template. And <code>id</code> and <code>ms</code> become text in a sentence instead of typed fields you can filter (<code>ElapsedMs &gt; 500</code>) and aggregate. The template version keeps the template constant and the values structured.</p>
+</details>
+<details class="quiz">
+<summary>A metric has labels method (4 values), route (50), status (6) and region (3). It is a histogram with 10 buckets. Roughly how many series is that, and what happens if you add <code>user_id</code>?</summary>
+<p>4 × 50 × 6 × 3 = 3,600 label combinations. A 10-bucket histogram stores 10 buckets + <code>+Inf</code> + <code>_sum</code> + <code>_count</code> = 13 series each, so about 46,800 series at most. Adding <code>user_id</code> multiplies that by the number of active users: with 100,000 users, billions of potential series. Put the user id on spans or logs instead.</p>
+</details>
+<details class="quiz">
+<summary>Three pods report p99 latencies of 120 ms, 130 ms and 900 ms with equal traffic. Is the fleet p99 about 383 ms?</summary>
+<p>Not necessarily, and you cannot tell from these numbers. The fleet p99 is the latency exceeded by 1% of <em>all</em> requests. The fast pods contribute almost nothing above 130 ms, so that 1% must come almost entirely from the slow pod, which holds a third of the traffic: the fleet p99 is roughly the slow pod's <strong>p97</strong>. That could be anywhere between about 130 ms and 900 ms depending on the shape of its distribution. Averaging percentiles has no statistical meaning; merge the histogram buckets and compute the quantile once.</p>
+</details>
+<details class="quiz">
+<summary>Your SLO is 99.9% over 30 days. An incident causes a 1-hour burn rate of 14.4. What fraction of the monthly budget does that hour spend, and why is that the classic paging threshold?</summary>
+<p>Burn rate 14.4 for 1 hour spends 14.4 / 720 hours = 2% of the budget. At that speed the whole budget is gone in about 2 days, which is urgent enough to wake someone, while the 1-hour window filters out blips. A 5-minute short window makes the alert stop as soon as the burn ends.</p>
+</details>
+<details class="quiz">
+<summary>Your liveness probe checks the database. What happens during a 60-second database failover?</summary>
+<p>Every pod fails liveness, so the orchestrator restarts all of them. Restarting cannot fix the database; it only adds boot time, drops in-flight requests and causes a thundering herd of reconnections when the database returns. Liveness should check only the process itself; put the database in readiness or handle it with resilience patterns.</p>
+</details>
+<details class="quiz">
+<summary>Head sampling at 5% is cheap. When is it the wrong choice, and what do you use instead?</summary>
+<p>When the traces you care about are rare (errors, slow requests, one customer's failure): head sampling decides before the outcome is known, so it keeps only 5% of them. Use tail sampling in the Collector to keep all errors and slow traces plus a percentage of the rest, or combine generous head sampling with tail policies.</p>
+</details>
+<details class="quiz">
+<summary>An order message is published to a queue by service A and consumed by service B. B's spans show up as separate traces. What is missing?</summary>
+<p>Context propagation through the message. A must inject <code>traceparent</code> (and <code>tracestate</code>/<code>baggage</code>) into the message headers when publishing, and B must extract it and start its consumer span with that parent (or link to it, for batch consumers). HTTP clients are auto-instrumented; many message clients are not.</p>
+</details>
+<h2 id="cheat-sheet">Cheat sheet</h2>
+<div class="cheat">
+<div><strong>Signals</strong>Metrics detect, traces localize, logs explain, profiles find hot code. Same trace_id on all of them.</div>
+<div><strong>Logs</strong>JSON, message templates, named fields, trace_id, one error log where handled, redact at the source.</div>
+<div><strong>Levels</strong>Debug off in prod; Info = notable events; Warn/Error never sampled; levels changeable at runtime.</div>
+<div><strong>Context</strong>.NET AsyncLocal/scopes, Java MDC (thread-local), Python contextvars, Go explicit ctx, Node AsyncLocalStorage.</div>
+<div><strong>Propagation</strong>W3C traceparent = version-traceid-parentid-flags. Inject on publish, extract on consume.</div>
+<div><strong>Metric types</strong>Counter for events, histogram for durations and sizes, gauge for levels. Avoid summaries.</div>
+<div><strong>Cardinality</strong>Series = product of label values. No ids, raw paths or messages as labels.</div>
+<div><strong>Percentiles</strong>Merge histogram buckets, then compute. Never average percentiles. Bucket boundary on each SLO threshold.</div>
+<div><strong>RED / USE</strong>Rate, errors, duration per route; utilization, saturation, errors per resource.</div>
+<div><strong>Tracing</strong>OTel SDK + auto-instrumentation + manual business spans → Collector. ParentBased sampler.</div>
+<div><strong>Sampling</strong>Head = cheap, blind. Tail = keeps errors/slow, needs a Collector tier. Metrics before sampling.</div>
+<div><strong>SLOs</strong>SLI = good/valid. Budget = 1 − SLO. Page at burn 14.4 (1h/5m) and 6 (6h/30m); ticket at 1 (3d/6h).</div>
+<div><strong>Probes</strong>Startup = booted? Liveness = stuck? (no dependencies) Readiness = send traffic?</div>
+</div>
+<h2 id="related-topics-and-further-reading">Related topics and further reading</h2>
+<p>Before this: <a href="middleware-patterns.html">Middleware Patterns</a> (in-process correlation and logging middleware) and <a href="request-pipeline.html">Request Pipeline</a>. Next: <a href="configuration-and-secrets.html">Configuration &amp; Secrets</a> for runtime log levels and safe flags, <a href="resilience.html">Resilience</a> for what to do once a dependency is unhealthy, <a href="outbound-pipelines.html">Outbound Pipelines</a> for instrumented HTTP clients, <a href="distributed-architecture.html">Distributed Architecture</a> for traces across queues and sagas, and <a href="performance-cadence.html">Performance Cadence</a> for profiles and benchmarks. <a href="security-fundamentals.html">Security Fundamentals</a> goes deeper on data classification.</p>
+<ul>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a>, <a href="https://opentelemetry.io/docs/specs/semconv/">semantic conventions</a> and the <a href="https://opentelemetry.io/docs/collector/">Collector</a></li>
+<li><a href="https://www.w3.org/TR/trace-context/">W3C Trace Context</a> and <a href="https://www.w3.org/TR/baggage/">W3C Baggage</a></li>
+<li>.NET: <a href="https://learn.microsoft.com/dotnet/core/extensions/logging">Logging in .NET</a>, <a href="https://learn.microsoft.com/dotnet/core/extensions/logger-message-generator">compile-time logging source generation</a>, <a href="https://learn.microsoft.com/dotnet/core/diagnostics/observability-with-otel">.NET observability with OpenTelemetry</a> and <a href="https://learn.microsoft.com/aspnet/core/host-and-deploy/health-checks">health checks in ASP.NET Core</a></li>
+<li>Java: <a href="https://www.slf4j.org/manual.html">SLF4J manual</a>, <a href="https://logback.qos.ch/manual/">Logback</a>, <a href="https://docs.micrometer.io/micrometer/reference/">Micrometer</a> and <a href="https://docs.spring.io/spring-boot/reference/actuator/index.html">Spring Boot Actuator</a></li>
+<li>Python: <a href="https://docs.python.org/3/howto/logging.html">logging HOWTO</a>, <a href="https://docs.python.org/3/library/contextvars.html">contextvars</a> and <a href="https://www.structlog.org/">structlog</a></li>
+<li>Go: <a href="https://pkg.go.dev/log/slog">log/slog</a></li>
+<li>Node: <a href="https://getpino.io/">pino</a> and <a href="https://nodejs.org/api/async_context.html">AsyncLocalStorage</a></li>
+<li><a href="https://prometheus.io/docs/practices/histograms/">Prometheus: histograms and summaries</a> and <a href="https://prometheus.io/docs/practices/naming/">metric and label naming</a></li>
+<li><a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/">Kubernetes: liveness, readiness and startup probes</a></li>
+<li>Google SRE: <a href="https://sre.google/sre-book/monitoring-distributed-systems/">Monitoring distributed systems</a> and <a href="https://sre.google/workbook/alerting-on-slos/">Alerting on SLOs</a></li>
+<li><a href="https://www.brendangregg.com/usemethod.html">Brendan Gregg: the USE method</a></li>
+</ul><nav class="pager" aria-label="Next and previous topics"><a class="prev" href="resilience.html"><small>&larr; PREVIOUS</small>Resilience Patterns</a><a class="next" href="configuration-and-secrets.html"><small>NEXT &rarr;</small>Configuration, Feature Flags &amp; Secrets</a></nav></article><aside class="on-this-page" aria-label="On this page"><strong>ON THIS PAGE</strong><div class="toc">
+<ul>
+<li><a href="#the-problem-flying-blind-at-3-am">The problem: flying blind at 3 a.m.</a></li>
+<li><a href="#four-signals-four-questions">Four signals, four questions</a></li>
+<li><a href="#structured-logging">Structured logging</a><ul>
+<li><a href="#message-templates-not-string-interpolation">Message templates, not string interpolation</a></li>
+<li><a href="#structured-logging-in-five-ecosystems">Structured logging in five ecosystems</a></li>
+<li><a href="#log-levels-what-each-one-is-for">Log levels: what each one is for</a></li>
+<li><a href="#volume-control-levels-sampling-and-flush-on-error">Volume control: levels, sampling and flush-on-error</a></li>
+<li><a href="#what-never-to-log">What never to log</a></li>
+</ul>
+</li>
+<li><a href="#correlation-one-id-across-every-hop">Correlation: one id across every hop</a></li>
+<li><a href="#metrics-four-instrument-types">Metrics: four instrument types</a><ul>
+<li><a href="#cardinality-the-label-that-costs-a-fortune">Cardinality: the label that costs a fortune</a></li>
+<li><a href="#percentiles-histograms-and-why-averages-lie">Percentiles, histograms and why averages lie</a></li>
+<li><a href="#red-and-use-what-to-measure-first">RED and USE: what to measure first</a></li>
+</ul>
+</li>
+<li><a href="#distributed-tracing-with-opentelemetry">Distributed tracing with OpenTelemetry</a><ul>
+<li><a href="#reading-a-waterfall-the-n1-staircase">Reading a waterfall: the N+1 staircase</a></li>
+<li><a href="#auto-vs-manual-instrumentation">Auto vs manual instrumentation</a></li>
+<li><a href="#sampling-head-vs-tail">Sampling: head vs tail</a></li>
+</ul>
+</li>
+<li><a href="#slis-slos-and-error-budgets">SLIs, SLOs and error budgets</a><ul>
+<li><a href="#burn-rate-alerts-alert-on-symptoms-at-the-right-speed">Burn-rate alerts: alert on symptoms, at the right speed</a></li>
+</ul>
+</li>
+<li><a href="#health-checks-liveness-readiness-and-startup">Health checks: liveness, readiness and startup</a></li>
+<li><a href="#putting-it-together-investigating-a-slow-checkout">Putting it together: investigating a slow checkout</a></li>
+<li><a href="#when-to-use-what-and-when-not-to">When to use what, and when not to</a></li>
+<li><a href="#pitfalls-and-war-stories">Pitfalls and war stories</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#quiz">Quiz</a></li>
+<li><a href="#cheat-sheet">Cheat sheet</a></li>
+<li><a href="#related-topics-and-further-reading">Related topics and further reading</a></li>
+</ul>
+</div>
+</aside></div></main>
+    <footer><span>Built for deliberate practice. Progress is saved only in this browser, at this address: <a href="../index.html#progress">back it up or move it</a>.</span>
+      <a href="../guide.html">Authoring guide &amp; component gallery</a>
+    </footer>
+  </div>
+</body>
+</html>

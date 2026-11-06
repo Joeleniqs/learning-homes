@@ -1,0 +1,132 @@
+/* Functional patterns topic: visualizer and figure styles. Colours come only from theme variables. */
+.viz[data-viz^="functional-patterns-"] .viz-stage { padding: 16px 14px; gap: 12px; }
+.viz[data-viz^="functional-patterns-"] .viz-code li { font-size: 12px; }
+.viz[data-viz^="functional-patterns-"] .viz-legend .lg-accent::before { border-color: var(--accent); background: var(--accent-soft); }
+
+/* svg text helpers (inside svg.dg) */
+svg.dg .fp-t { font-size: 12.5px; font-weight: 650; }
+svg.dg .fp-s { font-size: 10.5px; fill: var(--muted); }
+svg.dg .fp-lbl, svg.dg .fp-chip-t { font: 11px "Cascadia Code", Consolas, monospace; paint-order: stroke; stroke: var(--surface); stroke-width: 6px; stroke-linejoin: round; }
+svg.dg .fp-chip-t { font-size: 13px; font-weight: 700; fill: var(--v-active); }
+svg.dg text.fp-bad { fill: var(--v-bad); font-weight: 700; }
+svg.dg .fp-dim { opacity: .38; }
+svg.dg .edge.fp-dimline { opacity: .3; }
+svg.fp-svg { flex: 0 1 auto; }
+
+/* layout */
+.fp-split { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; justify-content: center; width: 100%; }
+.fp-split-l { flex: 1 1 420px; min-width: 0; display: flex; justify-content: center; }
+.fp-split-r { flex: 0 1 260px; display: flex; flex-direction: column; gap: 10px; }
+.fp-col { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; }
+.fp-col .v-cells { flex-wrap: wrap; }
+.fp-muted { color: var(--muted); font-style: italic; }
+
+/* key/value panels and stat chips */
+.fp-kv { border: 1px solid var(--line); border-radius: 8px; min-width: 190px; background: var(--surface); font: 12px "Cascadia Code", Consolas, monospace; overflow: hidden; }
+.fp-kv-h { padding: 4px 10px; font: 700 10.5px "Segoe UI", system-ui, sans-serif; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line); background: var(--code); }
+.fp-kv-r { display: flex; justify-content: space-between; gap: 14px; padding: 3px 10px; border-left: 3px solid transparent; }
+.fp-kv-r > span:first-child { font-weight: 650; }
+.fp-kv-r.done { border-left-color: var(--v-done); background: var(--v-done-soft); }
+.fp-kv-r.bad { border-left-color: var(--v-bad); background: var(--v-bad-soft); }
+.fp-kv-r.active { border-left-color: var(--v-active); background: var(--v-active-soft); }
+.fp-kv-r.path { border-left-color: var(--v-path); background: var(--v-path-soft); }
+.fp-kv-r.cur { box-shadow: inset 0 0 0 1.5px var(--v-active); }
+.fp-kv-r.empty { color: var(--muted); }
+.fp-stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-content: flex-start; }
+.fp-stat { border: 1.5px solid var(--line); border-radius: 8px; padding: 5px 12px; text-align: center; background: var(--surface); min-width: 92px; }
+.fp-stat b { display: block; font: 700 15px "Cascadia Code", Consolas, monospace; }
+.fp-stat span { font-size: 10.5px; color: var(--muted); }
+.fp-stat.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.fp-stat.bad { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.fp-stat.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.fp-stat.path { border-color: var(--v-path); background: var(--v-path-soft); }
+
+/* in-stage code panel (used when the code depends on a select) */
+.fp-codebox { width: 100%; max-width: 900px; border: 1px solid var(--line); border-radius: 8px; background: var(--code); overflow: hidden; }
+.fp-codebox .fp-kv-h { background: var(--surface); }
+.fp-code { margin: 0; padding: 8px 0; list-style: none; counter-reset: fpln; overflow-x: auto; font: 12px/1.6 "Cascadia Code", Consolas, monospace; }
+.prose .fp-code li, .fp-code li { margin: 0; padding: 0 12px 0 6px; white-space: pre; counter-increment: fpln; border-left: 3px solid transparent; font-size: 12px; line-height: 1.6; }
+.fp-code li::before { content: counter(fpln); display: inline-block; width: 22px; color: var(--muted); opacity: .6; font-size: 10.5px; }
+.fp-code li.cur { background: var(--v-active-soft); border-left-color: var(--v-active); }
+
+/* document, output, tables */
+.fp-doc { min-width: 220px; max-width: 340px; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--bg); font: 15px "Cascadia Code", Consolas, monospace; white-space: pre-wrap; word-break: break-all; }
+.fp-caret { display: inline-block; width: 2px; height: 1.1em; vertical-align: -3px; margin-left: 1px; background: var(--accent); }
+.prose pre.fp-out, pre.fp-out { margin: 0; min-width: 220px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--code); font: 12px/1.55 "Cascadia Code", Consolas, monospace; white-space: pre; }
+pre.fp-sql { margin-top: 10px; border-color: var(--v-done); }
+.prose table.fp-tbl, table.fp-tbl { border-collapse: collapse; margin: 6px 0 0; font: 12px "Cascadia Code", Consolas, monospace; width: auto; display: table; }
+.prose table.fp-tbl th, .prose table.fp-tbl td, table.fp-tbl th, table.fp-tbl td { border: 1px solid var(--line); padding: 3px 6px; min-width: 0; text-align: center; background: var(--surface); }
+.prose table.fp-tbl th, table.fp-tbl th { font: 700 10px "Segoe UI", system-ui, sans-serif; letter-spacing: .2px; text-transform: uppercase; color: var(--muted); background: var(--code); }
+table.fp-tbl tr.cur td { background: var(--v-active-soft); font-weight: 700; }
+table.fp-tbl td.ok { background: var(--v-done-soft); color: var(--text); font-weight: 700; }
+table.fp-tbl td.no { background: var(--v-bad-soft); color: var(--text); }
+
+.fp-scroll { max-width: 100%; overflow-x: auto; align-self: stretch; }
+.fp-scroll > table.fp-tbl { margin: 6px auto 0; }
+.fp-scroll > pre.fp-out { margin: 10px auto 0; width: fit-content; max-width: 100%; }
+
+pre.fp-out.fp-sql { white-space: pre-wrap; }
+
+/* status variants used by this topic */
+.fp-stat.ok { border-color: var(--v-done); background: var(--v-done-soft); }
+.fp-stat.warn { border-color: var(--v-bad); background: var(--v-bad-soft); }
+.fp-kv-r.no { border-left-color: var(--v-bad); background: var(--v-bad-soft); }
+svg.dg .box.dim { opacity: .4; }
+svg.v-graph .e.dash { stroke-dasharray: 5 4; opacity: .7; }
+svg.v-graph .n.dim { opacity: .55; }
+svg.v-graph .n.dim circle { stroke-dasharray: 4 3; }
+
+/* pipeline columns */
+.fp-pipe { display: flex; align-items: flex-start; gap: 6px; max-width: 100%; overflow-x: auto; padding-bottom: 4px; }
+.fp-pipe-arrow { align-self: center; color: var(--muted); font-size: 18px; padding: 0 2px; }
+.fp-pcol { display: flex; flex-direction: column; gap: 4px; min-width: 74px; align-items: stretch; }
+.fp-pcol-h { font: 700 10.5px "Cascadia Code", Consolas, monospace; color: var(--muted); text-align: center; padding: 3px 6px; border-bottom: 2px solid var(--line); white-space: nowrap; }
+.fp-pcol-h.on { color: var(--v-active); border-bottom-color: var(--v-active); }
+.fp-cell { position: relative; border: 1.5px solid var(--line); border-radius: 6px; padding: 3px 8px; text-align: center; font: 600 13px "Cascadia Code", Consolas, monospace; background: var(--surface); white-space: nowrap; }
+.fp-cell small { display: block; font-size: 9.5px; font-weight: 400; color: var(--muted); }
+.fp-cell.active { border-color: var(--v-active); background: var(--v-active-soft); }
+.fp-cell.done { border-color: var(--v-done); background: var(--v-done-soft); }
+.fp-cell.bad { border-color: var(--v-bad); background: var(--v-bad-soft); text-decoration: line-through; }
+.fp-cell.accent { border-color: var(--accent); background: var(--accent-soft); }
+.fp-cell.dim { opacity: .4; border-style: dashed; }
+.fp-cell.empty { color: var(--muted); border-style: dashed; }
+.fp-cell.cur { box-shadow: 0 0 0 2px var(--v-active); }
+
+/* closure output and errors */
+.fp-out { font: 13px "Cascadia Code", Consolas, monospace; }
+.fp-out b { display: inline-block; min-width: 22px; padding: 1px 6px; margin: 0 2px; border-radius: 5px; text-align: center; }
+.fp-out b.fp-ok { background: var(--v-done-soft); border: 1.5px solid var(--v-done); }
+.fp-out b.fp-no { background: var(--v-bad-soft); border: 1.5px solid var(--v-bad); }
+.fp-err { max-width: 640px; padding: 6px 10px; border: 1.5px solid var(--v-bad); border-radius: 6px; background: var(--v-bad-soft); font: 12px "Cascadia Code", Consolas, monospace; }
+
+/* pattern-matching arms */
+.fp-arms { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--surface); min-width: 340px; max-width: 100%; }
+.fp-arm { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 5px 10px; border-left: 4px solid transparent; border-top: 1px solid var(--line); font-size: 12.5px; }
+.fp-arm code { font: 12px "Cascadia Code", Consolas, monospace; background: none; padding: 0; }
+.fp-arm span { color: var(--muted); font-size: 12px; }
+.fp-arm em { font: 700 10px "Segoe UI", system-ui, sans-serif; text-transform: uppercase; letter-spacing: .5px; color: var(--v-bad); font-style: normal; }
+.fp-arm.active { border-left-color: var(--v-active); background: var(--v-active-soft); }
+.fp-arm.done { border-left-color: var(--v-done); background: var(--v-done-soft); }
+.fp-arm.dim { opacity: .5; }
+.fp-arm.unreach, .fp-arm.missing { border-left-color: var(--v-bad); }
+.fp-arm.missing { border-left-style: dashed; background: var(--v-bad-soft); }
+.fp-foot { margin: 6px auto 0; max-width: 640px; font-size: 11.5px; color: var(--muted); text-align: center; }
+.fp-scroll > table.fp-tbl td { text-align: left; }
+
+/* functional core / imperative shell zones */
+.fp-zones { display: flex; align-items: stretch; gap: 6px; max-width: 100%; overflow-x: auto; }
+.fp-zone { border: 1.5px solid var(--line); border-radius: 8px; background: var(--surface); min-width: 170px; display: flex; flex-direction: column; gap: 4px; padding-bottom: 8px; }
+.fp-zone .fp-kv-h { margin-bottom: 4px; }
+.fp-zone.shell { border-color: var(--v-path); }
+.fp-zone.core { border-color: var(--accent); background: var(--accent-soft); }
+.fp-zone.mixed { border-color: var(--v-bad); min-width: 340px; }
+.fp-zone.on { box-shadow: 0 0 0 2px var(--v-active); }
+.fp-io, .fp-cmd, .fp-acct { margin: 0 8px; padding: 3px 8px; border-radius: 5px; font: 12px "Cascadia Code", Consolas, monospace; white-space: nowrap; }
+.fp-io { border: 1.5px dashed var(--v-path); background: var(--v-path-soft); }
+.fp-io.ok { border-style: solid; border-color: var(--v-done); background: var(--v-done-soft); }
+.fp-io.cur { border-style: solid; border-color: var(--v-active); background: var(--v-active-soft); }
+.fp-io.plain { border: 1px solid var(--line); background: none; }
+.fp-io.empty, .fp-cmd.empty { color: var(--muted); border: 1px dashed var(--line); background: none; }
+.fp-cmd { border: 1.5px solid var(--accent); background: var(--surface); }
+.fp-acct { border: 1px solid var(--line); }
+.fp-acct.cur { border-color: var(--v-active); background: var(--v-active-soft); }
